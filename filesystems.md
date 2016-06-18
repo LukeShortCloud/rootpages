@@ -1,5 +1,7 @@
 # File Systems
 * [Types](#types)
+  * ext4
+  * XFS
   * BtrFS
 * Network
   * NFS
@@ -10,7 +12,7 @@
 
 ## Types
 | Name (mount type) | OS | Notes |  File Size Limit | Inode Limit | Partition Size Limit |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | Fat16 (vfat) | DOS | no journaling | 2GiB | | 2GiB |
 | Fat32 (vfat) | DOS | no journaling, generally cross platform compatible | 4GiB | | 8TiB |
 | NTFS (ntfs-3g)  | Windows | journaling, encryption, compression | 2TiB | | 256TiB |
