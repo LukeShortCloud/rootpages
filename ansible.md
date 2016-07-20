@@ -7,13 +7,14 @@
   * [Directory Structure](#playbooks---directory-structure)
   * [Modules](#playbooks---modules)
     * [Command and Shell](#playbooks---modules---command-and-shell)
-    * [Files and Templates](#playbooks---modules---files-and-templates)
+    * [Copy Files and Templates](#playbooks---modules---copy-files-and-templates)
+    * [Debug](#playbooks---modules---debug)
     * [Service](#playbooks---modules---service)
     * [Package Managers](#playbooks---modules---package-managers)
       * [Yum](#playbooks---modules---package-managers---yum)
 
 ## Introduction
-Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2]
+Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create [Playbooks](#playbooks) to automate deployment of configurations and/or services.
 
 Sources:
 
@@ -106,8 +107,10 @@ Sources:
 3. "Ansible Best Practices."
 
 ## Command Usage
+Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
+
 ## Playbooks
-Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory.
+Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at [https://github.com/ansible/ansible-examples](https://github.com/ansible/ansible-examples).
 
 ### Playbooks - Directory Structure
 
@@ -151,17 +154,26 @@ A Playbook can be self-contained entirely into one file. However, especially for
 └── site.yml = This is typically the default Playbook file to execute. Any name and any number of Playbook files can be used here to include different roles.
 ```
 
-* site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used.
-  * Example syntax:
+
+* Examples:
+  * site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used. [2]
 
 ```
+# FILE: site.yml
 ---
 include: nginx.yml
 include: php-fpm.yml
 ```
+```
+# FILE: nginx.yml
+---
+- hosts: webnodes
+  roles:
+    - common
+    - nginx
+```
 
-* roles/`<ROLENAME>`/vars/main.yml = Global variables for a role.
-  * Example syntax:
+  * roles/`<ROLENAME>`/vars/main.yml = Global variables for a role.
 
 ```
 ---
@@ -169,10 +181,9 @@ memcache_hosts=192.168.1.11,192.168.1.12,192.168.1.13
 ldap_ip=192.168.10.1
 ```
 
-* group_vars/ and host_vars/ = These files define variables for hosts and/or groups. Details about this can be found in the [Variables](#configuration---inventory---variables) section.
+  * group_vars/ and host_vars/ = These files define variables for hosts and/or groups. Details about this can be found in the [Variables](#configuration---inventory---variables) section.
 
-* templates/ = Template configuration files for services. The files in here end with a ".j2" suffix to signify that it uses the Jinja2 template engine. [1]
-  * Example syntax:
+  * templates/ = Template configuration files for services. The files in here end with a ".j2" suffix to signify that it uses the Jinja2 template engine. [1]
 
 ```
 <html>
@@ -183,6 +194,7 @@ ldap_ip=192.168.10.1
 Sources:
 
 1. "An Ansible Tutorial."
+2. “Ansible Best Practices.”
 
 
 ## Playbooks - Modules
@@ -207,8 +219,8 @@ Sources:
 1. "Ansible Command Module."
 2. "Ansible Shell Module."
 
-### Playbooks - Modules - Files and Templates
-Both the file and template modules provide ways to managing and configuring various files. The file module is used to handle files that will not be modified [1] and templates are to be used when Ansible will fill in the variables. [2] Most of the attributes are the same between the two.
+### Playbooks - Modules - Copy Files and Templates
+The copy, file and template modules provide ways to managing and configuring various files. The file module is used to handle file creation/modification [1], templates are to be used when Ansible needs to fill in the variables [2] and copy is used for copying files and folders. Most of the attributes are the same between the three modules.
 
 Common options:
 * src = Define the source file or template. If a full path is not given, Ansible will check in the roles/`<ROLENAME>`/files/ directory for a file or roles/`<ROLENAME>`/templates/ for a template.
@@ -225,8 +237,8 @@ Common options:
   * directory = Create all subdirectories in the destination folder.
   * absent = Delete destination folders. [1]
 
-Example:
-* Copy a template from roles/`<ROLE>`/templates/ and set the permissions for the file.
+* Example:
+  * Copy a template from roles/`<ROLE>`/templates/ and set the permissions for the file.
 ```
 template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody
 ```
@@ -235,6 +247,24 @@ Sources:
 
 1. "Ansible File Module."
 2. "Ansible Template Module."
+
+### Playbooks - Modules - Debug
+The debug module is used for helping facilitate troubleshooting. It prints out specified information to standard output.
+
+* Options:
+  * msg = Display a message.
+  * var = Display a variable.
+  * verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]
+
+* Example:
+  * Print Ansible's hostname of the current server that the script is being run on.
+```
+debug: msg=The inventory host name is {{ inventory_hostname }}
+```
+
+Sources:
+
+1. "Ansible Debug Module."
 
 ### Playbooks - Modules - Service
 The service module is used to handle system services.
@@ -350,3 +380,4 @@ Sources:
 * "Ansible Yum Repository Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Command Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Shell Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
+* "Ansible Debug Module." Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html
