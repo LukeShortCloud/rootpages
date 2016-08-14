@@ -1,14 +1,21 @@
 # Ansible 2
+
+* [Introduction](#introduction)
 * [Configuration](#configuration)
   * [Inventory](#configuration---inventory)
     * [Variables](#configuration---inventory---variables)
 * [Command Usage](#command-usage)
 * [Playbooks](#playbooks)
   * [Directory Structure](#playbooks---directory-structure)
+  * [Functions](#playbooks---functions)
+    * [Loops](#playbooks---functions---loops)
+    * [Prompts](#playbooks---functions---prompts)
+    * [Tags](#playbooks---functions---tags)
   * [Modules](#playbooks---modules)
     * [Command and Shell](#playbooks---modules---command-and-shell)
     * [Copy Files and Templates](#playbooks---modules---copy-files-and-templates)
     * [Debug](#playbooks---modules---debug)
+    * [Git](#playbooks---modules---git)
     * [Service](#playbooks---modules---service)
     * [Package Managers](#playbooks---modules---package-managers)
       * [Yum](#playbooks---modules---package-managers---yum)
@@ -100,11 +107,61 @@ In the Playbook and/or template files, these variables can then be referenced wh
 Hello world from {{ domain_name }}!
 ```
 
+Variables can be defined as a list or nested lists.
+
+Syntax:
+```
+<VARIABLE>: [ '<ITEM1>', '<ITEM2>', '<ITEM3>' ]
+```
+```
+<VARIABLE>:
+ - [ [ '<ITEMA>', '<ITEMB>' ] ]
+ - [ [ '<ITEM1>', '<ITEM2>' ] ]
+```
+
+Examples:
+```
+colors: [ 'blue', 'red', 'green' ]
+```
+```
+cars:
+ - [ 'sports', 'sedan' ]
+ - [ 'suv', 'pickup' ]
+```
+
+Lists can be called by their array position, starting at "0." Alternatively they can be called by the subvariable name.
+
+Syntax:
+```
+{{ item.0 }}
+```
+```
+{{ item.0.<SUBVARIABLE> }}
+```
+
+Example:
+```
+# variables
+members:
+ - name: Frank
+   contact:
+    - address: "111 Puppet Drive"
+    - phone: "1111111111"
+```
+```
+- debug: msg="Contact {{ item.name }} at {{ item.contact.phone }}"
+ with_items:
+  - {{ members }}
+```
+
+[4]
+
 Sources:
 
 1. "Ansible Inventory"
 2. "Ansible Variables."
 3. "Ansible Best Practices."
+4. "Ansible Loops."
 
 ## Command Usage
 Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
@@ -118,6 +175,8 @@ A Playbook can be self-contained entirely into one file. However, especially for
 
 * Layout:
 ```
+├── group_vars/
+├── host_vars/
 ├── roles/
 │   └── general/
 │       ├── defaults/
@@ -137,6 +196,8 @@ A Playbook can be self-contained entirely into one file. However, especially for
 
 * Layout Explained:
 ```
+├── group_vars/ = Group specific variables. The "all" file can be used to define global variables for all hosts.
+├── host_vars/ = Host specific variables.
 ├── roles/ = This directory should contain all of the different roles.
 │   └── general/ = A role name. This can be anything.
 │       ├── defaults/ = Define default variables. If any variables are defined elsewhere, these will be overriden.
@@ -196,6 +257,132 @@ Sources:
 1. "An Ansible Tutorial."
 2. “Ansible Best Practices.”
 
+
+## Playbooks - Functions
+
+### Playbooks - Functions - Loops
+
+Loops are a great way to reuse modules with multiple items. Essentially these are "for" loops. These loops can even utilize flattened lists to run an action on multiple items at once.
+
+Variable syntax:
+```
+{{ item }}
+```
+
+Loop syntax:
+```
+with_items:
+  - <ITEM1>
+  - <ITEM2>
+  - <ITEM3>
+```
+
+Example:
+```
+package: name={{ item }} state=latest
+with_items:
+ - nginx
+ - php-fpm
+ - mysql
+```
+
+Flattened example:
+```
+---
+# variables
+web_services: [ 'nginx', 'httpd', 'mysql' ]
+```
+```
+service: name={{ item }} state=restarted
+with_flattened:
+ - "{{ web_services }}"
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Loops."
+
+### Playbooks - Functions - Prompts
+
+Prompts can be used to assign a user's input as a variable.
+
+Syntax:
+```
+vars_prompt:
+  - name: "<VARIABLE>"
+    prompt: "<PROMPT TEXT>"
+```
+
+Options:
+ * confirm = Prompt the user twice and then verify that the input is the same.
+ * encrypt = Encrypt the text.
+   * md5_crypt
+   * sha256_crypt
+   * sha512_crypt
+ * salt = Specify a string to use as a salt for encrypting.
+ * salt_size = Specify the length to use for a randomly generated salt. The default is 8.
+
+Examples:
+```
+vars_prompt:
+  - name: "zipcode"
+    prompt: "Enter your zipcode."
+```
+```
+vars_prompt:
+  - name: "pw"
+    prompt: "Password:"
+    encrypt: "sha512_crypt"
+    salt_size: 12
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Prompts."
+
+### Playbooks - Functions - Tags
+
+Each task in a tasks file can have a tag associted to it. This should be appended to the end of the task. This is useful for debugging and seperating tasks into specific groups. Here is the syntax:
+
+Single tag syntax:
+```
+tags: <TAG>
+```
+
+Multiple tags syntax:
+```
+tags:
+ - <TAG1>
+ - <TAG2>
+ - <TAG3>
+```
+Run only tasks with the defined tasks:
+```
+# ansible-playbook --tags <TAG1,TAG2,TAG3,etc.>
+```
+Example:
+```
+# head webserver.yml
+---
+- package: name=nginx state=latest
+  tags:
+   - yum
+   - rpm
+   - nginx
+```
+```
+# ansible-playbook --tags yum webserver.yml webnode1
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Tags."
 
 ## Playbooks - Modules
 
@@ -265,6 +452,22 @@ debug: msg=The inventory host name is {{ inventory_hostname }}
 Sources:
 
 1. "Ansible Debug Module."
+
+### Playbooks - Modules - Git
+
+Git is a utlity used for provisioning and versioning software. Ansible has built-in support for handling most Git-related tasks.
+
+Options:
+* repo = The full path of the repository.
+* dest = The path to place/use the repository
+* update = Pull the latest version from the Git server. The default is "yes."
+* version = Switch to a different branch or tag.
+* ssh_opts = If using SSH, specify custom SSH options.
+* force = Overriden local changes. The default is "yes."
+
+Source:
+
+1. "Ansible Git Module"
 
 ### Playbooks - Modules - Service
 The service module is used to handle system services.
@@ -362,7 +565,7 @@ Sources:
 
 
 ---
-Sources:
+Bibliography:
 
 * Lorin Hochstein *Ansible Up & Running* (Sebastopol: O'Reilly Media, Inc., 2015).
 * "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
@@ -381,3 +584,8 @@ Sources:
 * "Ansible Command Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Shell Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Debug Module." Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html
+* "Ansible Git Module." Ansible Documentation. June 22, 2016. Accessed July 30, 2016. http://docs.ansible.com/ansible/git_module.html
+* "Ansible Tags." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_tags.html
+* "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html
+* "Ansible Using Lookups." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html
+* "Ansible Loops." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_loops.html

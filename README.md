@@ -6,6 +6,10 @@ All Root Pages are written in the markdown language. Many users will likely want
 ```
 # pip install markdown
 # python -m markdown README.md > README.html
+```
+
+Once Root Pages is in HTML it will be viewable by any web browser. For the command line there are the standard "elinks" and "lynx" web browsers. Generally Chromium (Chrome) or Ice Weasel (Firefox) will be available on graphical installations of Linux, too.
+```
 # elinks README.html
 ```
 

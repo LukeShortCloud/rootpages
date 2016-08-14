@@ -8,11 +8,16 @@
   * XFS
   * ZFS
 * LVM
-* RAIDs
- * mdadm
-* Network
+* [RAIDs](#raids)
+ * [mdadm](#raids---mdadm)
+* [Network](#network)
   * NFS
   * SMB/CIFS
+  * [iSCSI](#network---iscsi)
+    * [Target](#network---iscsi---target)
+    * [Initiator](#network---iscsi---initiator)
+  * Ceph
+
 
 ## Types
 | Name (mount type) | OS | Notes |  File Size Limit | File Count (Inode) Limit | Partition Size Limit |
@@ -72,6 +77,202 @@ Source:
 
 1. "Preventing a btrfs Nightmare." Jupiter Boradcasting. July 6, 2014.
 http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
+
+# RAIDs
+
+RAID officially stands for "Redundant Array of Independent Disks." The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.
+
+
+| Level | Minimum Drives | Benefit | Fallbacks |
+| ----- | -------------- | ------- | --------- |
+| 0 | 2 | Speed and increased drive space. I/O operations are equally spread to each disk. | No redudnacy. |
+| 1 | 2 | Redundancy. If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds. |
+| 5 | 3 | Speed, space, and redudnancy. It can also recover from a failed drive without any affect on performance. | Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time. |
+| 6 | 4 | This is an enhanced RAID 5 that can survive up to 2 drive failures. | See the other RAID 5 fallbacks.
+| 10 | 4 | Speed, space, and redudnacy. This uses both RAID 1 and 0. | Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime. |
+
+[1]
+
+Source:
+
+1. "RAID levels 0, 1, 2, 3, 4, 5, 6, 0+1, 1+0 features explained in detail." GOLINUXHUB. April 09, 2016. Accessed August 13th, 2016. http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html
+
+## RAIDs - mdadm
+
+Most software RAIDs in Linux are handled by the "mdadm" utility and the "md_mod" kernel module. Creating a new RAID requires specifying the RAID level and the partitions you will use to create it.
+
+Syntax:
+```
+# mdadm --create --level=<LEVEL> --raid-devices=<NUMBER_OF_DISKS> /dev/md<DEVICE_NUMBER_TO_CREATE> /dev/sd<PARTITION1> /dev/sd<PARTITION2>
+```
+
+Example:
+```
+# mdadm --create --level=10 --raid-devices=4 /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1
+```
+
+Then to automatically create the partition layout file run this:
+```
+# echo 'DEVICE partitions' > /etc/mdadm.conf
+# mdadm --detail --scan >> /etc/mdadm.conf
+```
+
+Finally, you can initalize the RAID.
+```
+# mdadm --assemble --scan
+```
+
+[1]
+
+1. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID
+
+# Network
+
+## Network - iSCSI
+
+The "Inernet Small Computer Systems Interface" (also known as "Internet SCSI" or simply "iSCSI") is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.
+
+
+### Network - iSCSI Target
+
+For setting up a target storage, these are the general steps to follow in order:
+* Create a backstores device.
+* Create an iSCSI domain.
+* Create a network portal to listen on.
+* Create a LUN associated with the backstores.
+* Create an ACL.
+* Optionally configure ACLs.
+
+* First, start and enable the iSCSI service to start on bootup.
+```
+# systemctl enable target && systemctl start target
+```
+
+* Create a storage device. This is typically either a block device or a file.
+  * Block syntax:
+```
+# targetcli
+> cd /backstores/block/
+> create iscsidisk1 dev=/dev/sd<DISK>
+```
+  * File syntax:
+```
+# targetcli
+> cd /backstore/fileio/
+> create iscsidisk1 /<PATH_TO_DISK>.img <SIZE_IN_MB>M
+```
+
+* A special iSCSI Qualified Name (IQN) is required to create a Target Portal Group (TPG). The syntax is "iqn.YYYY-MM.tld.domain.subdomain:exportname."
+  * Syntax:
+```
+> cd /iscsi
+> create iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>
+```
+  * Example:
+```
+> cd /iscsi
+> create iqn.2016-01.com.example.server:iscsidisk
+> ls
+```
+
+* Create a portal for the iSCSI device to be accessible on.
+  * Syntax:
+```
+> cd /iscsi/iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>/tpg1
+> portals/ create
+```
+  * Example:
+```
+> cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+> ls
+o- tpg1
+	o- acls
+	o- luns
+	o- portals
+> portals/ create
+> ls
+o- tpg1
+	o- acls
+	o- luns
+	o- portals
+		o- 0.0.0.0:3260
+```
+
+* Create a LUN.
+  * Syntax:
+```
+> luns/ create /backstores/block/<DEVICE>
+```
+  * Example:
+```
+> luns/ create /backstores/block/iscsidisk
+```
+
+* Create a blank ACL. By default, this will allow any user to access this iSCSI target.
+  * Syntax:
+```
+> acls/ create iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
+```
+  * Example:
+```
+> acls/ create iqn.2016-01.com.example.server:client
+```
+
+* Optionally, add a username and password.
+  * Syntax:
+```
+> cd acls/iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
+> set auth userid=<USER>
+> set auth password=<PASSWORD>
+```
+  *  Example:
+```
+> cd acls/iqn.2016-01.com.example.server:client
+> set auth userid=toor
+> set auth password=pass
+```
+
+* Finally, make sure that both the TCP and UDP port 3260 are open in the firewall.
+
+[1]
+
+### Network - iSCSI - Initiator
+
+This should be configured on the client server.
+
+* In the initiator configuration file, specify the IQN along with the ACL used to access it.
+  * Example:
+```
+# vim /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.2016-01.com.example.server:client
+```
+
+* Start and enable the iSCSI initiator to load on bootup.
+```
+# systemctl start iscsi && systemctl enable iscsi
+```
+
+* Once started, the iSCSI device should be able to be attached.
+  * Syntax:
+```
+# iscsiadm --mode node --targetname <IQN>:<iSCSI_DEVICE> --portal <iSCSI_SERVER_IP> --login
+```
+  * Example:
+```
+# iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login
+```
+
+* Verify that a new "iscsi" device exists.
+```
+# lsblk --scsi
+```
+
+[1]
+
+1. "RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target." CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
+
+
+
 
 
 
