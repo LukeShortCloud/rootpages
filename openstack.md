@@ -3,6 +3,7 @@
 * [Overview](#overview)
 * [Configurations](#configurations)
   * [Nova](#configurations---nova)
+    * [Hypervisors](#configurations---nova---hypervisors) 
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
@@ -15,7 +16,6 @@ This guide is aimed to help guide System Administrators through OpenStack. It is
 
 * OpenStack Liberty
 * CentOS 7 (Linux)
-* KVM/Qemu Virtualization
 
 Most things mentioned here should be able to be applied to other similar environments.
 
@@ -32,14 +32,47 @@ OpenStack has a large range of services. The essential ones required for a basic
 
 # Configurations
 
-This section will focus on important settings for each configuration file.
+This section will focus on important settings for each service's configuration files.
+
+## Configurations - Keystone
+
+### Configurations - Keystone - Token Provider
+
+The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend.
+
+#### Scenario #1 - UUID (default)
+
+* [ token ] provider = uuid
+
+#### Scenario #2 - PKI
+
+* [ token ] provider = pki
+* Create the certificates. A new directory "/etc/keystone/ssl/" will be used to store these files.
+```
+# keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
+```
+
+#### Scenario #3 - Fernet (fastest token creation)
+
+* [ token ] provider = fernet
+* [ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/
+* Create the Fernet keys:
+```
+# mkdir /etc/keystone/fernet-keys/
+# chmod 750 /etc/keystone/fernet-keys/
+# keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+```
+
+[2]
+
+Sources:
+
+1. http://docs.openstack.org/developer/keystone/configuration.html
+2. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
 
 ## Configurations - Nova
 
 * /etc/nova/nova.conf
-	* [ DEFAULT ] compute_driver = libvirt.LibvirtDriver
-	* [ libvirt ] virt_type = kvm
-	  * Use KVM for virtualization.
 	* [ libvirt ] inject_key = false
 	  * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api."
 	* [ DEFAULT ] enabled_apis = ec2,osapi_compute,metadata
@@ -47,6 +80,53 @@ This section will focus on important settings for each configuration file.
 	* [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova
 	* [ database ] connection = mysql://nova:password@10.1.1.1/nova
 	  * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
+
+### Configurations - Nova - Hypervisors
+
+Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. This is configured in the /etc/nova/nova.conf file. [1]
+
+#### Scenario #1 - KVM
+
+* [DEFAULT] compute_driver = libvirt.LibvirtDriver
+* [libvirt] virt_type = kvm
+
+[2]
+
+#### Scenario #2 - Xen
+
+* [DEFAULT] compute_driver = libvirt.LibvirtDriver
+* [libvirt] virt_type = xen
+
+[3]
+
+#### Scenario #3 - LXC
+
+* [DEFAULT] compute_driver = libvirt.LibvirtDriver
+* [libvirt] virt_type = lxc
+
+[4]
+
+#### Scenario #4 - Docker
+
+Docker is not available by default in OpenStack. First it must be installed before configuring it in Nova.
+```
+# git clone https://github.com/openstack/nova-docker.git
+# cd nova-docker/
+# pip install -r requirements.txt
+# python setup.py install
+```
+
+* [DEFAULT] compute_driver=novadocker.virt.docker.DockerDriver
+
+[5]
+
+Sources:
+
+1. "Hypervisors." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html
+2. "KVM." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/kvm.html
+3. "Xen." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/xen_libvirt.html
+4. "LXC." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/lxc.html
+5. "nova-docker." GitHub.com. December, 2015. Accessed August 28th, 2016. https://github.com/openstack/nova-docker
 
 ## Configurations - Neutron
 

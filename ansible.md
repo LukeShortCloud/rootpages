@@ -8,14 +8,20 @@
 * [Playbooks](#playbooks)
   * [Directory Structure](#playbooks---directory-structure)
   * [Functions](#playbooks---functions)
+    * [Facts]
+    * [Ignore Errors](#playbooks---functions---ignore-errors)
     * [Loops](#playbooks---functions---loops)
     * [Prompts](#playbooks---functions---prompts)
+    * [Register](#playbooks---functions---register)
     * [Tags](#playbooks---functions---tags)
+    * [When](#playbooks---functions---when)
   * [Modules](#playbooks---modules)
     * [Command and Shell](#playbooks---modules---command-and-shell)
     * [Copy Files and Templates](#playbooks---modules---copy-files-and-templates)
     * [Debug](#playbooks---modules---debug)
     * [Git](#playbooks---modules---git)
+    * [MySQL Database]
+    * [MySQL User]
     * [Service](#playbooks---modules---service)
     * [Package Managers](#playbooks---modules---package-managers)
       * [Yum](#playbooks---modules---package-managers---yum)
@@ -57,9 +63,12 @@ dns-ca
 dns-mx
 ```
 
-Variables are created for a host and/or group using the tag ":vars". Then any custom variable can be defined and associated with a string. Here is an example below. These can also be defined in seperate files as explained in [Inventory - Variables](#inventory---variables).
+Variables are created for a host and/or group using the tag ":vars". Then any custom variable can be defined and associated with a string. A host specificially can also have it's variables defined on the same line as it's Ansible inventory variables. A few examples are listed below. These can also be defined in seperate files as explained in [Inventory - Variables](#inventory---variables).
 ```
-[examplehost:vars]
+examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True
+```
+```
+[examplegroup:vars]
 domain_name=examplehost.tld
 domain_ip=192.168.7.7
 ```
@@ -74,15 +83,17 @@ Common Inventory Options:
 * ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the "--ask-pass" option to ansible when running tasks.
 * ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).
 * ansible_ssh_common_args = Append additionally SSH command-line arguments.
-* ansilbe_sudo = Use "sudo" to run commands without being root. Valid options are "false" (this is the default) or "true".
-* ansible_sudo_user = Specify the user to use "sudo" with.
-* ansible_su = Switch to the root user once logged in as the SSH user.
-* ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available, such as Arch Linux, a custom install of Python 2 can be used instead.[1]
+* ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available, such as Arch Linux, a custom install of Python 2 can be used instead. [1]
+* ansible_become = Set to "true" or "yes" to become a different user than the ansible_user once logged in.
+  * ansible_become_method = Pick a method for switching users. Valid options are: sudo, su, pbrun, pfexec, doas, or dzdo.
+  * ansible_become_user = Specify the user to become.
+  * ansible_become_pass = Optionally ues a password to change users. [5]
+
 
 Here is an example of common Ansible options that can be used.
 ```
 localhost ansible_connection=local
-dns1 ansible_host=192.168.1.53 ansilbe_port=2222 ansible_sudo=true ansible_sudo_user=cloud
+dns1 ansible_host=192.168.1.53 ansilbe_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo
 dns2 ansible_host=192.168.1.54
 /home/user/ubuntu1604 ansible_connection=chroot
 ```
@@ -105,6 +116,12 @@ hello_string: Hello World!
 In the Playbook and/or template files, these variables can then be referenced when enclosed by double braces "{{" and "}}". [2]
 ```
 Hello world from {{ domain_name }}!
+```
+
+Varialbes from other hosts or groups can also be refereneced.
+```
+{{ groupvars['<GROUPNAME>']['<VARIABLE>'] }}
+{{ hostvars['<HOSTNAME>']['<VARIABLE>'] }}
 ```
 
 Variables can be defined as a list or nested lists.
@@ -162,6 +179,7 @@ Sources:
 2. "Ansible Variables."
 3. "Ansible Best Practices."
 4. "Ansible Loops."
+5. "Ansible Become (Privlege Escalation)"
 
 ## Command Usage
 Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
@@ -214,7 +232,6 @@ A Playbook can be self-contained entirely into one file. However, especially for
 │           └── main.yml
 └── site.yml = This is typically the default Playbook file to execute. Any name and any number of Playbook files can be used here to include different roles.
 ```
-
 
 * Examples:
   * site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used. [2]
@@ -304,6 +321,18 @@ Sources:
 
 1. "Ansible Loops."
 
+### Playbooks - Functions - Ignore Errors
+
+Playbooks, by default, will stop running if it fails to run a command. If it's okay to continue then the "ignore_errors" option can be appeneded below the command. This will allow the Playbook to continue onto the next step.
+
+```
+ignore_errors: yes
+```
+
+Sources:
+
+1. "Ansible Error Handling In Playbooks."
+
 ### Playbooks - Functions - Prompts
 
 Prompts can be used to assign a user's input as a variable.
@@ -344,6 +373,37 @@ Sources:
 
 1. "Ansible Prompts."
 
+### Playbooks - Functions - Register
+
+The output of commands can be saved to a variable. The attributes that are saved are:
+
+* changed = If something was ran, this would be set to "true."
+* stdout = The standard output of the command.
+* stdout_lines = The standard output of the command is seperated by the newline characters into a list.
+* stderr = The stanard error of the command.
+
+[1]
+
+Syntax:
+```
+register: cmd_output
+```
+
+Example:
+```
+- command: echo Hello World
+  register: hello
+- debug: msg="We heard you"
+  when: "'Hello World' in hello.stdout"
+```
+
+[2]
+
+Sources:
+
+1. "Ansible - some random useful things."
+2. "Ansible Error Handling In Playbooks."
+
 ### Playbooks - Functions - Tags
 
 Each task in a tasks file can have a tag associted to it. This should be appended to the end of the task. This is useful for debugging and seperating tasks into specific groups. Here is the syntax:
@@ -383,6 +443,31 @@ Example:
 Sources:
 
 1. "Ansible Tags."
+
+### Playbooks - Functions - When
+
+The "when" function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an "if" statement in programming langauges. It is usually the last line to a sub-task.
+
+"When" Example:
+```
+- package: name=httpd state=latest
+  when: ansible_os_family == "CentOS"
+```
+"Or" example:
+```
+when: ansible_os_family == "CentOS" or when: ansible_os_family == "Debian"
+```
+"And" example, using a cleaner style:
+```
+when: (ansible_os_family == "Fedora") and
+      (ansible_distribution_major_version == "25")
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Conditionals."
 
 ## Playbooks - Modules
 
@@ -585,7 +670,11 @@ Bibliography:
 * "Ansible Shell Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Debug Module." Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html
 * "Ansible Git Module." Ansible Documentation. June 22, 2016. Accessed July 30, 2016. http://docs.ansible.com/ansible/git_module.html
-* "Ansible Tags." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_tags.html
-* "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html
-* "Ansible Using Lookups." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html
-* "Ansible Loops." Ansible Documentation. August 05, 2016. Accessed August 13th, 2016. http://docs.ansible.com/ansible/playbooks_loops.html
+* "Ansible Tags." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_tags.html
+* "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html
+* "Ansible Using Lookups." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html
+* "Ansible Loops." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_loops.html
+* "Ansible Conditionals." Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html
+* "Ansible Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html
+* "Ansible - some random useful things." Code Poets. August 4, 2014. Accessed August 27th, 2016. https://codepoets.co.uk/2014/ansible-random-things/
+* "Ansible Become (Privlege Escalation)" Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/become.html
