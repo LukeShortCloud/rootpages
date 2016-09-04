@@ -2,8 +2,10 @@
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Configurations](#configurations)
+  * [Keystone](#configurations---keystone)
+    * [Token Provider](#configurations---keystone---token-provider)
   * [Nova](#configurations---nova)
-    * [Hypervisors](#configurations---nova---hypervisors) 
+    * [Hypervisors](#configurations---nova---hypervisors)
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
@@ -26,7 +28,7 @@ OpenStack has a large range of services. The essential ones required for a basic
 * Keystone
   * Authentication
 * Nova
-  * Virtualization
+  * Compute
 * Neutron
   * Networking
 
@@ -38,7 +40,7 @@ This section will focus on important settings for each service's configuration f
 
 ### Configurations - Keystone - Token Provider
 
-The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend.
+The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend. These are configured in the /etc/keystone/keystone.conf file.
 
 #### Scenario #1 - UUID (default)
 
@@ -143,7 +145,7 @@ By default, Neutron does not provide any DNS resolvers. This means that DNS will
 
 * Nothing needs to be configured.
 
-#### Scenario #2 - Do not provide resolvers
+#### Scenario #3 - Do not provide resolvers
 
 * /etc/neutron/dhcp_agent.ini
   * [ DEFAULT ] dnsmasq_local_resolv = True
@@ -199,8 +201,7 @@ A few general tips for getting the fastest OpenStack performance.
 * KeyStone
   * Switch to Fernet keys.
     * Creation of tokens is significantly faster.
-    * [ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/
-	* [ token ] provider = fernet
+    * Refer to [Configurations - Keystone - Token Provider](#configurations---keystone---token-provider).
 * Neutron
   * Use distributed virtual routing (DVR).
     * This offloads a lot of networking resources onto the compute nodes.
