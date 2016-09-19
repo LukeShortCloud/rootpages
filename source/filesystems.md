@@ -11,7 +11,7 @@
 * [RAIDs](#raids)
  * [mdadm](#raids---mdadm)
 * [Network](#network)
-  * NFS
+  * [NFS](#network---nfs)
   * SMB/CIFS
   * [iSCSI](#network---iscsi)
     * [Target](#network---iscsi---target)
@@ -127,6 +127,48 @@ Finally, you can initalize the RAID.
 1. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID
 
 # Network
+
+## Network - NFS
+
+The Network File System (NFS) aims to universally provide a way to remotely mount directories between servers. All subdirectories from a shared directory will also be available.
+
+Ports:
+* 111 TCP/UDP
+* 2049 TCP/UDP
+* 4045 TCP/UDP
+
+On the server, the /etc/exports file is used to manage NFS exports. Here a directory can be specified to be shared via NFS to a specific IP address or CIDR range. After adjusting the exports, the NFS daemon will need to be restarted.
+
+Example:
+```
+# vim /etc/exports
+/path/to/dir 192.168.0.0/24(rw,no_root_squash)
+# systemctl restart nfs
+```
+
+NFS export options:
+* rw = The directory will be writable.
+* ro (default) = The directory will be read-only.
+* no_root_squash = Allow remote root users to access the directory and create files owned by root.
+* root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically "nobody").
+* all_squash = All files are created as the anonymouse user.
+* sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish.
+* async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory.
+* sec = Specify a type of Kerberos authentication to use.
+  * krb5 = Use Kerberos for authentication only.
+
+[1]
+
+On Red Hat Enterprise Linux systems, the exported directory will need to have the "nfs_t" file context for SELinux to work properly.
+
+```
+# semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
+# restorecon -R "/path/to/dir"
+```
+
+Sources:
+
+1. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html
 
 ## Network - iSCSI
 

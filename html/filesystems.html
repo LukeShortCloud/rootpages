@@ -1,0 +1,308 @@
+<h1 id="file-systems">File Systems</h1>
+<ul>
+<li><a href="#types">Types</a></li>
+<li><a href="#btrfs">BtrFS</a>
+<ul>
+<li><a href="#btrfs-mount-options">BtrFS Mount Options</a></li>
+<li><a href="#btrfs-raids">BtrFS RAIDs</a></li>
+<li><a href="#btrfs-limitations">BtrFS Limitations</a></li>
+</ul></li>
+<li>ext4</li>
+<li>XFS</li>
+<li>ZFS</li>
+<li>LVM</li>
+<li><a href="#raids">RAIDs</a></li>
+<li><a href="#raids---mdadm">mdadm</a></li>
+<li><a href="#network">Network</a></li>
+<li><a href="#network---nfs">NFS</a></li>
+<li>SMB/CIFS</li>
+<li><a href="#network---iscsi">iSCSI</a>
+<ul>
+<li><a href="#network---iscsi---target">Target</a></li>
+<li><a href="#network---iscsi---initiator">Initiator</a></li>
+</ul></li>
+<li>Ceph</li>
+</ul>
+<h2 id="types">Types</h2>
+<table style="width:33%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name (mount type)</th>
+<th>OS</th>
+<th>Notes</th>
+<th>File Size Limit</th>
+<th>File Count (Inode) Limit</th>
+<th>Partition Size Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fat16 (vfat)</td>
+<td>DOS</td>
+<td>no journaling</td>
+<td>2GiB</td>
+<td></td>
+<td>2GiB</td>
+</tr>
+<tr class="even">
+<td>Fat32 (vfat)</td>
+<td>DOS</td>
+<td>no journaling, generally cross platform compatible</td>
+<td>4GiB</td>
+<td>268,173,300 [2]</td>
+<td>8TiB</td>
+</tr>
+<tr class="odd">
+<td>NTFS (ntfs-3g)</td>
+<td>Windows</td>
+<td>journaling, encryption, compression</td>
+<td>2TiB</td>
+<td>2^32 - 1 [2]</td>
+<td>256TiB</td>
+</tr>
+<tr class="even">
+<td>ext4</td>
+<td>Linux</td>
+<td>journaling, less fragmentation, better performance</td>
+<td>16TiB</td>
+<td>2^32 - 1 [2]</td>
+<td>1EiB</td>
+</tr>
+<tr class="odd">
+<td>XFS[1]</td>
+<td>Linux</td>
+<td>journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system</td>
+<td>8 EiB (theoretically up to 16EiB)</td>
+<td>2^64 - 1</td>
+<td>8 EiB (theoretically up to 16EiB)</td>
+</tr>
+<tr class="even">
+<td>BtrFS[3]</td>
+<td>Linux</td>
+<td>journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system</td>
+<td>8EiB (theoretically up to 16EiB)</td>
+<td>2^64 - 1</td>
+<td>8EiB (theoretically up to 16EiB)</td>
+</tr>
+<tr class="odd">
+<td>tmpfs</td>
+<td>Linux</td>
+<td>RAM and swap</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ramfs</td>
+<td>Linux</td>
+<td>RAM (no swap)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>[1]</p>
+<p>Sources: 1. &quot;Linux File systems Explained.&quot; Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained 2. &quot;How many files can I put in a directory?&quot; Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory 3. &quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</p>
+<h3 id="btrfs">BtrFS</h3>
+<p>BtrFS stands for the &quot;B-tree filesystem.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS [1].</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;What’s All This I Hear About Btrfs For Linux.&quot; The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</li>
+</ol>
+<h4 id="btrfs-mount-options">BtrFS Mount Options</h4>
+<p>Common options include: * autodefrag = Automatically defragement the file system. This can negatively impact performance. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvolume = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [1]</p>
+<p>Source: 1. &quot;Mount Options&quot; BtrFS Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options</p>
+<h4 id="btrfs-raids">BtrFS RAIDs</h4>
+<p>In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are supported. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Using Btrfs with Multiple Devices&quot; BtrFS Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</li>
+</ol>
+<h4 id="btrfs-limitations">BtrFS Limitations</h4>
+<p>Known limitations: * The &quot;df&quot; (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, &quot;btrfs filesystem df&quot; should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions. * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output. [1] * # btrfs balance start / * # btrfs defragment -r /</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Preventing a btrfs Nightmare.&quot; Jupiter Boradcasting. July 6, 2014. http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/</li>
+</ol>
+<h1 id="raids">RAIDs</h1>
+<p>RAID officially stands for &quot;Redundant Array of Independent Disks.&quot; The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.</p>
+<table style="width:54%;">
+<colgroup>
+<col width="8%" />
+<col width="20%" />
+<col width="11%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Minimum Drives</th>
+<th>Benefit</th>
+<th>Fallbacks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>2</td>
+<td>Speed and increased drive space. I/O operations are equally spread to each disk.</td>
+<td>No redudnacy.</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2</td>
+<td>Redundancy. If one drive fails, a second drive will have an exact copy of all of the data.</td>
+<td>Slower write speeds.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>3</td>
+<td>Speed, space, and redudnancy. It can also recover from a failed drive without any affect on performance.</td>
+<td>Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>4</td>
+<td>This is an enhanced RAID 5 that can survive up to 2 drive failures.</td>
+<td>See the other RAID 5 fallbacks.</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>4</td>
+<td>Speed, space, and redudnacy. This uses both RAID 1 and 0.</td>
+<td>Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime.</td>
+</tr>
+</tbody>
+</table>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;RAID levels 0, 1, 2, 3, 4, 5, 6, 0+1, 1+0 features explained in detail.&quot; GOLINUXHUB. April 09, 2016. Accessed August 13th, 2016. http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html</li>
+</ol>
+<h2 id="raids---mdadm">RAIDs - mdadm</h2>
+<p>Most software RAIDs in Linux are handled by the &quot;mdadm&quot; utility and the &quot;md_mod&quot; kernel module. Creating a new RAID requires specifying the RAID level and the partitions you will use to create it.</p>
+<p>Syntax:</p>
+<pre><code># mdadm --create --level=&lt;LEVEL&gt; --raid-devices=&lt;NUMBER_OF_DISKS&gt; /dev/md&lt;DEVICE_NUMBER_TO_CREATE&gt; /dev/sd&lt;PARTITION1&gt; /dev/sd&lt;PARTITION2&gt;</code></pre>
+<p>Example:</p>
+<pre><code># mdadm --create --level=10 --raid-devices=4 /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1</code></pre>
+<p>Then to automatically create the partition layout file run this:</p>
+<pre><code># echo &#39;DEVICE partitions&#39; &gt; /etc/mdadm.conf
+# mdadm --detail --scan &gt;&gt; /etc/mdadm.conf</code></pre>
+<p>Finally, you can initalize the RAID.</p>
+<pre><code># mdadm --assemble --scan</code></pre>
+<p>[1]</p>
+<ol style="list-style-type: decimal">
+<li>&quot;RAID.&quot; Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID</li>
+</ol>
+<h1 id="network">Network</h1>
+<h2 id="network---nfs">Network - NFS</h2>
+<p>The Network File System (NFS) aims to universally provide a way to remotely mount directories between servers. All subdirectories from a shared directory will also be available.</p>
+<p>Ports: * 111 TCP/UDP * 2049 TCP/UDP * 4045 TCP/UDP</p>
+<p>On the server, the /etc/exports file is used to manage NFS exports. Here a directory can be specified to be shared via NFS to a specific IP address or CIDR range. After adjusting the exports, the NFS daemon will need to be restarted.</p>
+<p>Example:</p>
+<pre><code># vim /etc/exports
+/path/to/dir 192.168.0.0/24(rw,no_root_squash)
+# systemctl restart nfs</code></pre>
+<p>NFS export options: * rw = The directory will be writable. * ro (default) = The directory will be read-only. * no_root_squash = Allow remote root users to access the directory and create files owned by root. * root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically &quot;nobody&quot;). * all_squash = All files are created as the anonymouse user. * sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish. * async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory. * sec = Specify a type of Kerberos authentication to use. * krb5 = Use Kerberos for authentication only.</p>
+<p>[1]</p>
+<p>On Red Hat Enterprise Linux systems, the exported directory will need to have the &quot;nfs_t&quot; file context for SELinux to work properly.</p>
+<pre><code># semanage fcontext -a -t nfs_t &quot;/path/to/dir{/.*)?&quot;
+# restorecon -R &quot;/path/to/dir&quot;</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;NFS SERVER CONFIGURATION.&quot; Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html</li>
+</ol>
+<h2 id="network---iscsi">Network - iSCSI</h2>
+<p>The &quot;Inernet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
+<h3 id="network---iscsi-target">Network - iSCSI Target</h3>
+<p>For setting up a target storage, these are the general steps to follow in order: * Create a backstores device. * Create an iSCSI domain. * Create a network portal to listen on. * Create a LUN associated with the backstores. * Create an ACL. * Optionally configure ACLs.</p>
+<ul>
+<li><p>First, start and enable the iSCSI service to start on bootup.</p>
+<pre><code># systemctl enable target &amp;&amp; systemctl start target</code></pre></li>
+<li>Create a storage device. This is typically either a block device or a file.</li>
+<li><p>Block syntax:</p>
+<pre><code># targetcli
+&gt; cd /backstores/block/
+&gt; create iscsidisk1 dev=/dev/sd&lt;DISK&gt;</code></pre></li>
+<li><p>File syntax:</p>
+<pre><code># targetcli
+&gt; cd /backstore/fileio/
+&gt; create iscsidisk1 /&lt;PATH_TO_DISK&gt;.img &lt;SIZE_IN_MB&gt;M</code></pre></li>
+<li>A special iSCSI Qualified Name (IQN) is required to create a Target Portal Group (TPG). The syntax is &quot;iqn.YYYY-MM.tld.domain.subdomain:exportname.&quot;</li>
+<li><p>Syntax:</p>
+<pre><code>&gt; cd /iscsi
+&gt; create iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ISCSINAME&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code>&gt; cd /iscsi
+&gt; create iqn.2016-01.com.example.server:iscsidisk
+&gt; ls</code></pre></li>
+<li>Create a portal for the iSCSI device to be accessible on.</li>
+<li><p>Syntax:</p>
+<pre><code>&gt; cd /iscsi/iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ISCSINAME&gt;/tpg1
+&gt; portals/ create</code></pre></li>
+<li><p>Example:</p>
+<pre><code>&gt; cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+&gt; ls
+o- tpg1
+o- acls
+o- luns
+o- portals
+&gt; portals/ create
+&gt; ls
+o- tpg1
+o- acls
+o- luns
+o- portals
+    o- 0.0.0.0:3260</code></pre></li>
+<li>Create a LUN.</li>
+<li><p>Syntax:</p>
+<pre><code>&gt; luns/ create /backstores/block/&lt;DEVICE&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code>&gt; luns/ create /backstores/block/iscsidisk</code></pre></li>
+<li>Create a blank ACL. By default, this will allow any user to access this iSCSI target.</li>
+<li><p>Syntax:</p>
+<pre><code>&gt; acls/ create iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ACL_NAME&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code>&gt; acls/ create iqn.2016-01.com.example.server:client</code></pre></li>
+<li>Optionally, add a username and password.</li>
+<li><p>Syntax:</p>
+<pre><code>&gt; cd acls/iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ACL_NAME&gt;
+&gt; set auth userid=&lt;USER&gt;
+&gt; set auth password=&lt;PASSWORD&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code>&gt; cd acls/iqn.2016-01.com.example.server:client
+&gt; set auth userid=toor
+&gt; set auth password=pass</code></pre></li>
+<li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall.</p></li>
+</ul>
+<p>[1]</p>
+<h3 id="network---iscsi---initiator">Network - iSCSI - Initiator</h3>
+<p>This should be configured on the client server.</p>
+<ul>
+<li>In the initiator configuration file, specify the IQN along with the ACL used to access it.</li>
+<li><p>Example:</p>
+<pre><code># vim /etc/iscsi/initiatorname.iscsi
+InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
+<li><p>Start and enable the iSCSI initiator to load on bootup.</p>
+<pre><code># systemctl start iscsi &amp;&amp; systemctl enable iscsi</code></pre></li>
+<li>Once started, the iSCSI device should be able to be attached.</li>
+<li><p>Syntax:</p>
+<pre><code># iscsiadm --mode node --targetname &lt;IQN&gt;:&lt;iSCSI_DEVICE&gt; --portal &lt;iSCSI_SERVER_IP&gt; --login</code></pre></li>
+<li><p>Example:</p>
+<pre><code># iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login</code></pre></li>
+<li><p>Verify that a new &quot;iscsi&quot; device exists.</p>
+<pre><code># lsblk --scsi</code></pre></li>
+</ul>
+<p>[1]</p>
+<ol style="list-style-type: decimal">
+<li>&quot;RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target.&quot; CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/</li>
+</ol>

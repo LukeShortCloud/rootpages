@@ -8,16 +8,21 @@
 * [Playbooks](#playbooks)
   * [Directory Structure](#playbooks---directory-structure)
   * [Functions](#playbooks---functions)
-    * [Facts]
+    * [Async](#playbooks---functions---async)
     * [Ignore Errors](#playbooks---functions---ignore-errors)
+    * [Include]
     * [Loops](#playbooks---functions---loops)
     * [Prompts](#playbooks---functions---prompts)
+    * [Roles](#playbooks---functions---roles)
+    * [Run Once](#playbooks---functions---run-once)
     * [Register](#playbooks---functions---register)
+    * [Set Fact](#playbooks---functions---set-fact)
     * [Tags](#playbooks---functions---tags)
     * [When](#playbooks---functions---when)
   * [Modules](#playbooks---modules)
     * [Command and Shell](#playbooks---modules---command-and-shell)
     * [Copy Files and Templates](#playbooks---modules---copy-files-and-templates)
+    * [Cron](#playbooks---modules---cron)
     * [Debug](#playbooks---modules---debug)
     * [Git](#playbooks---modules---git)
     * [MySQL Database]
@@ -25,6 +30,7 @@
     * [Service](#playbooks---modules---service)
     * [Package Managers](#playbooks---modules---package-managers)
       * [Yum](#playbooks---modules---package-managers---yum)
+      * [Apt]
 
 ## Introduction
 Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create [Playbooks](#playbooks) to automate deployment of configurations and/or services.
@@ -173,6 +179,27 @@ members:
 
 [4]
 
+The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.
+
+* extra vars
+* task vars
+* block vars
+* role and include vars
+* set_facts
+* registered vars
+* play vars_files
+* play vars_prompt
+* play vars
+* host facts
+* playbook host_vars
+* playbook group_vars
+* inventory host_vars
+* inventory group_vars
+* inventory vars
+* role defaults
+
+[2]
+
 Sources:
 
 1. "Ansible Inventory"
@@ -277,6 +304,28 @@ Sources:
 
 ## Playbooks - Functions
 
+### Playbooks - Functions - Async
+
+The "async" function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set.
+
+Syntax:
+```
+async: <SECONDS_TO_RUN>
+```
+
+Example #1:
+```
+- command: bash /usr/local/bin/example.sh
+  async: 15
+  poll: 5
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Asynchronous Actions and Polling."
+
 ### Playbooks - Functions - Loops
 
 Loops are a great way to reuse modules with multiple items. Essentially these are "for" loops. These loops can even utilize flattened lists to run an action on multiple items at once.
@@ -373,6 +422,51 @@ Sources:
 
 1. "Ansible Prompts."
 
+### Playbooks - Functions - Run Once
+
+In some situations a command should only need to be run on one node. A good example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.
+
+Syntax:
+```
+run_once: true
+```
+
+This can also be assigned to a specific node.
+```
+run_once:
+delegate_to: <HOST>
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Delegation, Rolling Updates, and Local Actions."
+
+### Playbooks - Functions - Roles
+
+A Playbook consists of roles. Each role that needs to be run needs to be specified. [1] It's important to note that individual roles cannot call other roles. Instead, an "include" statement could be used to find the relative path. [2]
+
+Syntax:
+```
+roles:
+  - <ROLE1>
+  - <ROLE2>
+```
+
+Example:
+```
+roles:
+  - common
+  - httpd
+  - sql
+```
+
+Sources:
+
+1. "Ansible Playbook Roles and Include Statements."
+2. "Ansible: Include Role in a Role?"
+
 ### Playbooks - Functions - Register
 
 The output of commands can be saved to a variable. The attributes that are saved are:
@@ -384,25 +478,64 @@ The output of commands can be saved to a variable. The attributes that are saved
 
 [1]
 
+The result of an action is saved as one of these three values. They can then be referenced later.
+* succeeded
+* failed
+* skipped
+
+[3]
+
 Syntax:
 ```
 register: cmd_output
 ```
 
-Example:
+Example #1:
 ```
 - command: echo Hello World
   register: hello
 - debug: msg="We heard you"
   when: "'Hello World' in hello.stdout"
 ```
-
 [2]
+
+Example #2:
+```
+- copy: src=example.conf dest=/etc/example.conf
+  register: copy_example
+- debug: msg="Copying example.conf failed."
+  when: copy_example|failed
+```
+
+[3]
 
 Sources:
 
 1. "Ansible - some random useful things."
 2. "Ansible Error Handling In Playbooks."
+3. "Ansible Conditionals."
+
+### Playbooks - Functions - Set Fact
+
+New variables can be defined set the "set_fact" module. These are added to the available variables/facts tied to a inventory host.
+
+Syntax:
+```
+set_fact:
+  <VARIABLE_NAME1>: <VARIABLE_VALUE1>
+  <VARIABLE_NAME2>: <VARIABLE_VALUE2>
+```
+
+Example:
+```
+- set_fact:
+    is_installed: True
+    sql_server: mariadb
+```
+
+Sources:
+
+1. "Ansible Set host facts from a task."
 
 ### Playbooks - Functions - Tags
 
@@ -492,11 +625,13 @@ Sources:
 2. "Ansible Shell Module."
 
 ### Playbooks - Modules - Copy Files and Templates
+
 The copy, file and template modules provide ways to managing and configuring various files. The file module is used to handle file creation/modification [1], templates are to be used when Ansible needs to fill in the variables [2] and copy is used for copying files and folders. Most of the attributes are the same between the three modules.
 
 Common options:
 * src = Define the source file or template. If a full path is not given, Ansible will check in the roles/`<ROLENAME>`/files/ directory for a file or roles/`<ROLENAME>`/templates/ for a template.
 * dest (or path) = This is the full path to where the file should be copied to on the destination server.
+* remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False.
 * owner = Set the user owner.
 * group = Set the group owner.
 * mode = Set the octal or symbloc permissions. If using octal, it has to be four digits. The first digit is generally the flag "0" to indicate no special permissions.
@@ -537,6 +672,48 @@ debug: msg=The inventory host name is {{ inventory_hostname }}
 Sources:
 
 1. "Ansible Debug Module."
+
+### Playbooks - Modules - Cron
+
+The cron module is used to manage crontab entries. Crons are scheduled/automated tasks that run on Unix-like systems.
+
+Options:
+* user = Modify the specified user's crontab.
+* job = Provide a command to run when the cron reaches the correct
+* minute
+* hour
+* weeekday = Specify the weekday as a number 0 through 6 where 0 is Sunday and 6 is Saturday.
+* month
+* day = Specify the day number in the 30 day month.
+* backup = Backup the existing crontab. The "backup_file" variable provides the backed up file name.
+  * yes
+  * no
+* state
+  * present = add the crontab
+  * absent = remove an existing entry
+* special_time
+  * reboot
+  * yearly or annually
+  * monthly
+  * weekly
+  * daily
+  * hourly
+
+Example #1:
+```
+cron: job="/usr/bin/wall This actually works" minute="*/1" user=ubuntu
+```
+
+Example #2:
+```
+cron: job="/usr/bin/yum -y update" weekday=0 hour=6 backup=yes
+```
+
+[1]
+
+Sources:
+
+1. "Ansible cron - Manage cron.d and crontab entries."
 
 ### Playbooks - Modules - Git
 
@@ -677,4 +854,10 @@ Bibliography:
 * "Ansible Conditionals." Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html
 * "Ansible Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html
 * "Ansible - some random useful things." Code Poets. August 4, 2014. Accessed August 27th, 2016. https://codepoets.co.uk/2014/ansible-random-things/
-* "Ansible Become (Privlege Escalation)" Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/become.html
+* "Ansible Become (Privlege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/become.html
+* "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html
+* "Ansible Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_async.html
+* "Ansible Set host facts from a task." Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/set_fact_module.html
+* "Ansible Playbook Roles and Include Statements." Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_roles.html
+* "Ansible: Include Role in a Role?" StackOverflow. October 24, 2014. http://stackoverflow.com/questions/26551422/ansible-include-role-in-a-role
+* "Ansible cron - Manage cron.d and crontab entries." Ansible Documentation. September 13, 2014. Accessed September 15th, 2016. http://docs.ansible.com/ansible/cron_module.html

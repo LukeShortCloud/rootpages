@@ -1,0 +1,565 @@
+<h1 id="ansible-2">Ansible 2</h1>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#configuration---inventory">Inventory</a>
+<ul>
+<li><a href="#configuration---inventory---variables">Variables</a></li>
+</ul></li>
+<li><a href="#command-usage">Command Usage</a></li>
+<li><a href="#playbooks">Playbooks</a></li>
+<li><a href="#playbooks---directory-structure">Directory Structure</a></li>
+<li><a href="#playbooks---functions">Functions</a>
+<ul>
+<li><a href="#playbooks---functions---async">Async</a></li>
+<li><a href="#playbooks---functions---ignore-errors">Ignore Errors</a></li>
+<li>[Include]</li>
+<li><a href="#playbooks---functions---loops">Loops</a></li>
+<li><a href="#playbooks---functions---prompts">Prompts</a></li>
+<li><a href="#playbooks---functions---roles">Roles</a></li>
+<li><a href="#playbooks---functions---run-once">Run Once</a></li>
+<li><a href="#playbooks---functions---register">Register</a></li>
+<li><a href="#playbooks---functions---set-fact">Set Fact</a></li>
+<li><a href="#playbooks---functions---tags">Tags</a></li>
+<li><a href="#playbooks---functions---when">When</a></li>
+</ul></li>
+<li><a href="#playbooks---modules">Modules</a>
+<ul>
+<li><a href="#playbooks---modules---command-and-shell">Command and Shell</a></li>
+<li><a href="#playbooks---modules---copy-files-and-templates">Copy Files and Templates</a></li>
+<li><a href="#playbooks---modules---cron">Cron</a></li>
+<li><a href="#playbooks---modules---debug">Debug</a></li>
+<li><a href="#playbooks---modules---git">Git</a></li>
+<li>[MySQL Database]</li>
+<li>[MySQL User]</li>
+<li><a href="#playbooks---modules---service">Service</a></li>
+<li><a href="#playbooks---modules---package-managers">Package Managers</a></li>
+<li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
+<li>[Apt]</li>
+</ul></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create <a href="#playbooks">Playbooks</a> to automate deployment of configurations and/or services.</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>Hochstein, <em>Ansible Up &amp; Running</em>, 2.</li>
+<li>&quot;An Ansible Tutorial.&quot;</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<h3 id="configuration---inventory">Configuration - Inventory</h3>
+<p>Default file: /etc/ansible/hosts</p>
+<p>The hosts file is referred to as the &quot;inventory&quot; for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts.</p>
+<p>The general syntax is:</p>
+<pre><code>[GROUPNAME]
+SERVER1NAME
+SERVER2NAME</code></pre>
+<p>Groups are created by using brackets &quot;[&quot; and &quot;]&quot; to specify the name. In this example, the group name is &quot;dns-us&quot; and contains three servers.</p>
+<pre><code>[dns-us]
+dns-us1
+dns-us2
+dns-us3</code></pre>
+<p>A group can also be created from other groups by using the &quot;:children&quot; tag.</p>
+<pre><code>[dns-global:children]
+dns-us
+dns-ca
+dns-mx</code></pre>
+<p>Variables are created for a host and/or group using the tag &quot;:vars&quot;. Then any custom variable can be defined and associated with a string. A host specificially can also have it's variables defined on the same line as it's Ansible inventory variables. A few examples are listed below. These can also be defined in seperate files as explained in <a href="#inventory---variables">Inventory - Variables</a>.</p>
+<pre><code>examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True</code></pre>
+<pre><code>[examplegroup:vars]
+domain_name=examplehost.tld
+domain_ip=192.168.7.7</code></pre>
+<p>There are a large number of customizations that can be used to suit most server's access requirements.</p>
+<p>Common Inventory Options: * ansible_host = The IP address or hostname of the server. * ansible_port = A custom SSH port (i.e., if not using the standard port 22). * ansible_connection = These options specify how to log in to execute tasks. Valid options are &quot;ssh&quot; to remotely connect to the server (this is the default behavior), &quot;local&quot; to run as the current user, and &quot;chroot&quot; to change into a different main root file system. * ansible_user = The SSH user. * ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the &quot;--ask-pass&quot; option to ansible when running tasks. * ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s). * ansible_ssh_common_args = Append additionally SSH command-line arguments. * ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available, such as Arch Linux, a custom install of Python 2 can be used instead. [1] * ansible_become = Set to &quot;true&quot; or &quot;yes&quot; to become a different user than the ansible_user once logged in. * ansible_become_method = Pick a method for switching users. Valid options are: sudo, su, pbrun, pfexec, doas, or dzdo. * ansible_become_user = Specify the user to become. * ansible_become_pass = Optionally ues a password to change users. [5]</p>
+<p>Here is an example of common Ansible options that can be used.</p>
+<pre><code>localhost ansible_connection=local
+dns1 ansible_host=192.168.1.53 ansilbe_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo
+dns2 ansible_host=192.168.1.54
+/home/user/ubuntu1604 ansible_connection=chroot</code></pre>
+<h3 id="configuration---inventory---variables">Configuration - Inventory - Variables</h3>
+<p>Variables that Playbooks will use can be defined for specific hosts and/or groups. * /etc/ansible/host_vars/ = Create a file named after the host. * /etc/ansible/group_vars/ = Create a file named after the group of hosts. * all = This file can exist under the above directories to define global variables for all hosts and/or groups.</p>
+<p>The files in these directories can have any name and do not require an extension. It is assumed that they are YAML files. Here is an example for a host variable file.</p>
+<pre><code>---
+domain_name: examplehost.tld
+domain_ip: 192.168.10.1
+hello_string: Hello World!</code></pre>
+<p>In the Playbook and/or template files, these variables can then be referenced when enclosed by double braces &quot;{{&quot; and &quot;}}&quot;. [2]</p>
+<pre><code>Hello world from {{ domain_name }}!</code></pre>
+<p>Varialbes from other hosts or groups can also be refereneced.</p>
+<pre><code>{{ groupvars[&#39;&lt;GROUPNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}
+{{ hostvars[&#39;&lt;HOSTNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}</code></pre>
+<p>Variables can be defined as a list or nested lists.</p>
+<p>Syntax:</p>
+<pre><code>&lt;VARIABLE&gt;: [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39;, &#39;&lt;ITEM3&gt;&#39; ]</code></pre>
+<pre><code>&lt;VARIABLE&gt;:
+ - [ [ &#39;&lt;ITEMA&gt;&#39;, &#39;&lt;ITEMB&gt;&#39; ] ]
+ - [ [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39; ] ]</code></pre>
+<p>Examples:</p>
+<pre><code>colors: [ &#39;blue&#39;, &#39;red&#39;, &#39;green&#39; ]</code></pre>
+<pre><code>cars:
+ - [ &#39;sports&#39;, &#39;sedan&#39; ]
+ - [ &#39;suv&#39;, &#39;pickup&#39; ]</code></pre>
+<p>Lists can be called by their array position, starting at &quot;0.&quot; Alternatively they can be called by the subvariable name.</p>
+<p>Syntax:</p>
+<pre><code>{{ item.0 }}</code></pre>
+<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre>
+<p>Example:</p>
+<pre><code># variables
+members:
+ - name: Frank
+   contact:
+    - address: &quot;111 Puppet Drive&quot;
+    - phone: &quot;1111111111&quot;</code></pre>
+<pre><code>- debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot;
+ with_items:
+  - {{ members }}</code></pre>
+<p>[4]</p>
+<p>The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.</p>
+<ul>
+<li>extra vars</li>
+<li>task vars</li>
+<li>block vars</li>
+<li>role and include vars</li>
+<li>set_facts</li>
+<li>registered vars</li>
+<li>play vars_files</li>
+<li>play vars_prompt</li>
+<li>play vars</li>
+<li>host facts</li>
+<li>playbook host_vars</li>
+<li>playbook group_vars</li>
+<li>inventory host_vars</li>
+<li>inventory group_vars</li>
+<li>inventory vars</li>
+<li>role defaults</li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Inventory&quot;</li>
+<li>&quot;Ansible Variables.&quot;</li>
+<li>&quot;Ansible Best Practices.&quot;</li>
+<li>&quot;Ansible Loops.&quot;</li>
+<li>&quot;Ansible Become (Privlege Escalation)&quot;</li>
+</ol>
+<h2 id="command-usage">Command Usage</h2>
+<p>Refer to Root Page's &quot;Linux Commands&quot; guide in the &quot;Deployment&quot; section.</p>
+<h2 id="playbooks">Playbooks</h2>
+<p>Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at <a href="https://github.com/ansible/ansible-examples" class="uri">https://github.com/ansible/ansible-examples</a>.</p>
+<h3 id="playbooks---directory-structure">Playbooks - Directory Structure</h3>
+<p>A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into seperate files and directories.</p>
+<ul>
+<li><p>Layout:</p>
+<pre><code>├── group_vars/
+├── host_vars/
+├── roles/
+│   └── general/
+│       ├── defaults/
+│       │   └── main.yml
+│       ├── files/
+│       ├── handlers/
+│       │   └── main.yml
+│       ├── meta/
+│       │   └── main.yml
+│       ├── tasks/
+│       │   └── main.yml
+│       ├── templates/
+│       └── vars/
+│           └── main.yml
+└── site.yml</code></pre></li>
+<li><p>Layout Explained:</p>
+<pre><code>├── group_vars/ = Group specific variables. The &quot;all&quot; file can be used to define global variables for all hosts.
+├── host_vars/ = Host specific variables.
+├── roles/ = This directory should contain all of the different roles.
+│   └── general/ = A role name. This can be anything.
+│       ├── defaults/ = Define default variables. If any variables are defined elsewhere, these will be overriden.
+│       │   └── main.yml = Each main.yml file is executed as the first file. Additional seperation of operations can be split into different files that can be accessed via &quot;include:&quot; statements.
+│       ├── files/ = Store static files that are not modified.
+│       ├── handlers/ = Specify alias commands that can be called using the &quot;notify:&quot; method.
+│       │   └── main.yml
+│       ├── meta/ = Specify role depdencies. These can be other roles and/or Playbooks.
+│       │   └── main.yml
+│       ├── tasks/
+│       │   └── main.yml = The tasks&#39; main file is executed first for the entire role.
+│       ├── templates/ = Store dynamic files that will be generated based on variables.
+│       └── vars/ = Define role-specific variables.
+│           └── main.yml
+└── site.yml = This is typically the default Playbook file to execute. Any name and any number of Playbook files can be used here to include different roles.</code></pre></li>
+<li>Examples:</li>
+<li><p>site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used. [2]</p></li>
+</ul>
+<pre><code># FILE: site.yml
+---
+include: nginx.yml
+include: php-fpm.yml</code></pre>
+<pre><code># FILE: nginx.yml
+---
+- hosts: webnodes
+  roles:
+    - common
+    - nginx</code></pre>
+<ul>
+<li>roles/<code>&lt;ROLENAME&gt;</code>/vars/main.yml = Global variables for a role.</li>
+</ul>
+<pre><code>---
+memcache_hosts=192.168.1.11,192.168.1.12,192.168.1.13
+ldap_ip=192.168.10.1</code></pre>
+<ul>
+<li><p>group_vars/ and host_vars/ = These files define variables for hosts and/or groups. Details about this can be found in the <a href="#configuration---inventory---variables">Variables</a> section.</p></li>
+<li><p>templates/ = Template configuration files for services. The files in here end with a &quot;.j2&quot; suffix to signify that it uses the Jinja2 template engine. [1]</p></li>
+</ul>
+<pre><code>&lt;html&gt;
+&lt;body&gt;My domain name is {{ domain }}&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;An Ansible Tutorial.&quot;</li>
+<li>“Ansible Best Practices.”</li>
+</ol>
+<h2 id="playbooks---functions">Playbooks - Functions</h2>
+<h3 id="playbooks---functions---async">Playbooks - Functions - Async</h3>
+<p>The &quot;async&quot; function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set.</p>
+<p>Syntax:</p>
+<pre><code>async: &lt;SECONDS_TO_RUN&gt;</code></pre>
+<p>Example #1:</p>
+<pre><code>- command: bash /usr/local/bin/example.sh
+  async: 15
+  poll: 5</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Asynchronous Actions and Polling.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---loops">Playbooks - Functions - Loops</h3>
+<p>Loops are a great way to reuse modules with multiple items. Essentially these are &quot;for&quot; loops. These loops can even utilize flattened lists to run an action on multiple items at once.</p>
+<p>Variable syntax:</p>
+<pre><code>{{ item }}</code></pre>
+<p>Loop syntax:</p>
+<pre><code>with_items:
+  - &lt;ITEM1&gt;
+  - &lt;ITEM2&gt;
+  - &lt;ITEM3&gt;</code></pre>
+<p>Example:</p>
+<pre><code>package: name={{ item }} state=latest
+with_items:
+ - nginx
+ - php-fpm
+ - mysql</code></pre>
+<p>Flattened example:</p>
+<pre><code>---
+# variables
+web_services: [ &#39;nginx&#39;, &#39;httpd&#39;, &#39;mysql&#39; ]</code></pre>
+<pre><code>service: name={{ item }} state=restarted
+with_flattened:
+ - &quot;{{ web_services }}&quot;</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Loops.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---ignore-errors">Playbooks - Functions - Ignore Errors</h3>
+<p>Playbooks, by default, will stop running if it fails to run a command. If it's okay to continue then the &quot;ignore_errors&quot; option can be appeneded below the command. This will allow the Playbook to continue onto the next step.</p>
+<pre><code>ignore_errors: yes</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---prompts">Playbooks - Functions - Prompts</h3>
+<p>Prompts can be used to assign a user's input as a variable.</p>
+<p>Syntax:</p>
+<pre><code>vars_prompt:
+  - name: &quot;&lt;VARIABLE&gt;&quot;
+    prompt: &quot;&lt;PROMPT TEXT&gt;&quot;</code></pre>
+<p>Options: * confirm = Prompt the user twice and then verify that the input is the same. * encrypt = Encrypt the text. * md5_crypt * sha256_crypt * sha512_crypt * salt = Specify a string to use as a salt for encrypting. * salt_size = Specify the length to use for a randomly generated salt. The default is 8.</p>
+<p>Examples:</p>
+<pre><code>vars_prompt:
+  - name: &quot;zipcode&quot;
+    prompt: &quot;Enter your zipcode.&quot;</code></pre>
+<pre><code>vars_prompt:
+  - name: &quot;pw&quot;
+    prompt: &quot;Password:&quot;
+    encrypt: &quot;sha512_crypt&quot;
+    salt_size: 12</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Prompts.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---run-once">Playbooks - Functions - Run Once</h3>
+<p>In some situations a command should only need to be run on one node. A good example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.</p>
+<p>Syntax:</p>
+<pre><code>run_once: true</code></pre>
+<p>This can also be assigned to a specific node.</p>
+<pre><code>run_once:
+delegate_to: &lt;HOST&gt;</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---roles">Playbooks - Functions - Roles</h3>
+<p>A Playbook consists of roles. Each role that needs to be run needs to be specified. [1] It's important to note that individual roles cannot call other roles. Instead, an &quot;include&quot; statement could be used to find the relative path. [2]</p>
+<p>Syntax:</p>
+<pre><code>roles:
+  - &lt;ROLE1&gt;
+  - &lt;ROLE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>roles:
+  - common
+  - httpd
+  - sql</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
+<li>&quot;Ansible: Include Role in a Role?&quot;</li>
+</ol>
+<h3 id="playbooks---functions---register">Playbooks - Functions - Register</h3>
+<p>The output of commands can be saved to a variable. The attributes that are saved are:</p>
+<ul>
+<li>changed = If something was ran, this would be set to &quot;true.&quot;</li>
+<li>stdout = The standard output of the command.</li>
+<li>stdout_lines = The standard output of the command is seperated by the newline characters into a list.</li>
+<li>stderr = The stanard error of the command.</li>
+</ul>
+<p>[1]</p>
+<p>The result of an action is saved as one of these three values. They can then be referenced later. * succeeded * failed * skipped</p>
+<p>[3]</p>
+<p>Syntax:</p>
+<pre><code>register: cmd_output</code></pre>
+<p>Example #1:</p>
+<pre><code>- command: echo Hello World
+  register: hello
+- debug: msg=&quot;We heard you&quot;
+  when: &quot;&#39;Hello World&#39; in hello.stdout&quot;</code></pre>
+<p>[2]</p>
+<p>Example #2:</p>
+<pre><code>- copy: src=example.conf dest=/etc/example.conf
+  register: copy_example
+- debug: msg=&quot;Copying example.conf failed.&quot;
+  when: copy_example|failed</code></pre>
+<p>[3]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible - some random useful things.&quot;</li>
+<li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
+<li>&quot;Ansible Conditionals.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---set-fact">Playbooks - Functions - Set Fact</h3>
+<p>New variables can be defined set the &quot;set_fact&quot; module. These are added to the available variables/facts tied to a inventory host.</p>
+<p>Syntax:</p>
+<pre><code>set_fact:
+  &lt;VARIABLE_NAME1&gt;: &lt;VARIABLE_VALUE1&gt;
+  &lt;VARIABLE_NAME2&gt;: &lt;VARIABLE_VALUE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- set_fact:
+    is_installed: True
+    sql_server: mariadb</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Set host facts from a task.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---tags">Playbooks - Functions - Tags</h3>
+<p>Each task in a tasks file can have a tag associted to it. This should be appended to the end of the task. This is useful for debugging and seperating tasks into specific groups. Here is the syntax:</p>
+<p>Single tag syntax:</p>
+<pre><code>tags: &lt;TAG&gt;</code></pre>
+<p>Multiple tags syntax:</p>
+<pre><code>tags:
+ - &lt;TAG1&gt;
+ - &lt;TAG2&gt;
+ - &lt;TAG3&gt;</code></pre>
+<p>Run only tasks with the defined tasks:</p>
+<pre><code># ansible-playbook --tags &lt;TAG1,TAG2,TAG3,etc.&gt;</code></pre>
+<p>Example:</p>
+<pre><code># head webserver.yml
+---
+- package: name=nginx state=latest
+  tags:
+   - yum
+   - rpm
+   - nginx</code></pre>
+<pre><code># ansible-playbook --tags yum webserver.yml webnode1</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Tags.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---when">Playbooks - Functions - When</h3>
+<p>The &quot;when&quot; function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an &quot;if&quot; statement in programming langauges. It is usually the last line to a sub-task.</p>
+<p>&quot;When&quot; Example:</p>
+<pre><code>- package: name=httpd state=latest
+  when: ansible_os_family == &quot;CentOS&quot;</code></pre>
+<p>&quot;Or&quot; example:</p>
+<pre><code>when: ansible_os_family == &quot;CentOS&quot; or when: ansible_os_family == &quot;Debian&quot;</code></pre>
+<p>&quot;And&quot; example, using a cleaner style:</p>
+<pre><code>when: (ansible_os_family == &quot;Fedora&quot;) and
+      (ansible_distribution_major_version == &quot;25&quot;)</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Conditionals.&quot;</li>
+</ol>
+<h2 id="playbooks---modules">Playbooks - Modules</h2>
+<h3 id="playbooks---modules---command-and-shell">Playbooks - Modules - Command and Shell</h3>
+<p>Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell enviornment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficent. [1]</p>
+<p>Common options: * executable = Set the executable shell binary. * chdir = Change directories before running the command.</p>
+<p>Example:</p>
+<pre><code>- shell: echo &quot;Hello world&quot; &gt;&gt; /tmp/hello_world.txt
+  args:
+    executable: /bin/bash</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Command Module.&quot;</li>
+<li>&quot;Ansible Shell Module.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---copy-files-and-templates">Playbooks - Modules - Copy Files and Templates</h3>
+<p>The copy, file and template modules provide ways to managing and configuring various files. The file module is used to handle file creation/modification [1], templates are to be used when Ansible needs to fill in the variables [2] and copy is used for copying files and folders. Most of the attributes are the same between the three modules.</p>
+<p>Common options: * src = Define the source file or template. If a full path is not given, Ansible will check in the roles/<code>&lt;ROLENAME&gt;</code>/files/ directory for a file or roles/<code>&lt;ROLENAME&gt;</code>/templates/ for a template. * dest (or path) = This is the full path to where the file should be copied to on the destination server. * remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False. * owner = Set the user owner. * group = Set the group owner. * mode = Set the octal or symbloc permissions. If using octal, it has to be four digits. The first digit is generally the flag &quot;0&quot; to indicate no special permissions. * setype = Set SELinux file permissions. * state = Specify the state the file should be created in. * file = Copy the file. * link = Create a soft link shortcut. * hard = Create a hard link reference. * touch = Create an empty file. * directory = Create all subdirectories in the destination folder. * absent = Delete destination folders. [1]</p>
+<ul>
+<li>Example:</li>
+<li><p>Copy a template from roles/<code>&lt;ROLE&gt;</code>/templates/ and set the permissions for the file.</p>
+<pre><code>template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody</code></pre></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible File Module.&quot;</li>
+<li>&quot;Ansible Template Module.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---debug">Playbooks - Modules - Debug</h3>
+<p>The debug module is used for helping facilitate troubleshooting. It prints out specified information to standard output.</p>
+<ul>
+<li>Options:</li>
+<li>msg = Display a message.</li>
+<li>var = Display a variable.</li>
+<li><p>verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]</p></li>
+<li>Example:</li>
+<li><p>Print Ansible's hostname of the current server that the script is being run on.</p>
+<pre><code>debug: msg=The inventory host name is {{ inventory_hostname }}</code></pre></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Debug Module.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---cron">Playbooks - Modules - Cron</h3>
+<p>The cron module is used to manage crontab entries. Crons are scheduled/automated tasks that run on Unix-like systems.</p>
+<p>Options: * user = Modify the specified user's crontab. * job = Provide a command to run when the cron reaches the correct * minute * hour * weeekday = Specify the weekday as a number 0 through 6 where 0 is Sunday and 6 is Saturday. * month * day = Specify the day number in the 30 day month. * backup = Backup the existing crontab. The &quot;backup_file&quot; variable provides the backed up file name. * yes * no * state * present = add the crontab * absent = remove an existing entry * special_time * reboot * yearly or annually * monthly * weekly * daily * hourly</p>
+<p>Example #1:</p>
+<pre><code>cron: job=&quot;/usr/bin/wall This actually works&quot; minute=&quot;*/1&quot; user=ubuntu</code></pre>
+<p>Example #2:</p>
+<pre><code>cron: job=&quot;/usr/bin/yum -y update&quot; weekday=0 hour=6 backup=yes</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---git">Playbooks - Modules - Git</h3>
+<p>Git is a utlity used for provisioning and versioning software. Ansible has built-in support for handling most Git-related tasks.</p>
+<p>Options: * repo = The full path of the repository. * dest = The path to place/use the repository * update = Pull the latest version from the Git server. The default is &quot;yes.&quot; * version = Switch to a different branch or tag. * ssh_opts = If using SSH, specify custom SSH options. * force = Overriden local changes. The default is &quot;yes.&quot;</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Git Module&quot;</li>
+</ol>
+<h3 id="playbooks---modules---service">Playbooks - Modules - Service</h3>
+<p>The service module is used to handle system services.</p>
+<p>Options: * name = Specify the service name. * enabled = Enable the service to start on boot or not. Valid options are &quot;yes&quot; or &quot;no.&quot; * sleep = When restarted a service, specify the amount of time (in seconds) to wait before starting a service after stopping it. * state = Specify what state the service should be in. * started = Start the service. * stopped = Stop the service. * restarted = Stop and then start the service. * reloaded = If supported by the service, it will reload it's configuration file without restarting it's main thread. [1]</p>
+<p>Exmaple: * Restart the Apache service &quot;httpd.&quot;</p>
+<pre><code>service: name=httpd state=restarted sleep=3</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Service Module.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---package-managers">Playbooks - Modules - Package Managers</h3>
+<p>Ansible has the ability to add, remove, or update software packages. Almost every popular package manager is supported. [1] This can generically be handled by the &quot;package&quot; module or the specific module for the operating system's package manager.</p>
+<p>Options:</p>
+<ul>
+<li>name = Specify the package name.</li>
+<li>state = Specify how to change the package state.</li>
+<li>present = Install the package.</li>
+<li>latest = Update the package (or install, if necessary).</li>
+<li>absent = Uninstall the package.</li>
+<li>use = Specify the package manager to use.</li>
+<li>auto = Automatically detect the package manager to use. This is the default.</li>
+<li>apt = Use Debian's Apt package manager.</li>
+<li>yum = Use Red Hat's yum package manager. [2]</li>
+</ul>
+<p>Example: * Update the MariaDB package.</p>
+<pre><code>package: name=mariadb state=latest</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Packaging Modules.&quot;</li>
+<li>&quot;Ansible Generic OS package manager.&quot;</li>
+</ol>
+<h3 id="playbooks---modules---package-managers---yum">Playbooks - Modules - Package Managers - Yum</h3>
+<p>There are two commands to primarily handel Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
+<ul>
+<li>yum options:</li>
+<li>name = Specify the package name.</li>
+<li>state = Specify the package state.
+<ul>
+<li>{present|installed|latest} = Any of these will install the package.</li>
+<li>{absent|removed} = Any of these will uninstall the package.</li>
+</ul></li>
+<li>enablerepo = Temporarily enable a repository.</li>
+<li>disablerepo = Temporarily disable a repository.</li>
+<li>disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;.</li>
+<li><p>conf_file = Specify a Yum configuration file to use. [1]</p></li>
+<li>yum example:</li>
+<li><p>Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
+<pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre></li>
+<li>yum_repository options:</li>
+<li>name = Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent).</li>
+<li>baseurl = Provide the URL of the repository.</li>
+<li>mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl.</li>
+<li>description = Required. Provide a description of the repository.</li>
+<li>enabled = Enable the repository permanently to be active. The default is &quot;yes.&quot;</li>
+<li>exclude = List packages that should be excluded from being accessed from this repository.</li>
+<li>gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot;</li>
+<li>gpgkey = Specify a URL to the GPG key.</li>
+<li>state = Specify a state for the repository file.
+<ul>
+<li>present = Install the Yum repository file. This is the default.</li>
+<li>absent = Delete the repository file. [2]</li>
+</ul></li>
+<li>yum_repository example:</li>
+<li><p>Install the RepoForge Yum repository.</p>
+<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Yum Module.&quot;</li>
+<li>&quot;Ansible Yum Repository Module.&quot;</li>
+</ol>
+<hr />
+<p>Bibliography:</p>
+<ul>
+<li>Lorin Hochstein <em>Ansible Up &amp; Running</em> (Sebastopol: O'Reilly Media, Inc., 2015).</li>
+<li>&quot;An Ansible Tutorial.&quot; Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial</li>
+<li>&quot;Intro to Playbooks.&quot; Ansible Documentation. June 22, 2016. Accessed June 24, 2016. http://docs.ansible.com/ansible/playbooks_intro.html</li>
+<li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/faq.html</li>
+<li>&quot;Ansible Inventory.&quot; Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html</li>
+<li>&quot;Ansible Variables.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_variables.html</li>
+<li>&quot;Ansible Best Practices.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_best_practices.html</li>
+<li>&quot;Ansible File Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/file_module.html</li>
+<li>&quot;Ansible Template Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/template_module.html</li>
+<li>&quot;Ansible Service Module.&quot; Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/service_module.html</li>
+<li>&quot;Ansible Packaging Modules.&quot; Ansible Documentation. June 22, 2016. Access July 10, 2016. http://docs.ansible.com/ansible/list_of_packaging_modules.html</li>
+<li>&quot;Ansible Generic OS package manager&quot; Ansible Documentation. June 22, 2016. Access July 10, 2016. http://docs.ansible.com/ansible/package_module.html</li>
+<li>&quot;Ansible Yum Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_module.html</li>
+<li>&quot;Ansible Yum Repository Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
+<li>&quot;Ansible Command Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
+<li>&quot;Ansible Shell Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
+<li>&quot;Ansible Debug Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html</li>
+<li>&quot;Ansible Git Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 30, 2016. http://docs.ansible.com/ansible/git_module.html</li>
+<li>&quot;Ansible Tags.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_tags.html</li>
+<li>&quot;Ansible Prompts.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html</li>
+<li>&quot;Ansible Using Lookups.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html</li>
+<li>&quot;Ansible Loops.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_loops.html</li>
+<li>&quot;Ansible Conditionals.&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html</li>
+<li>&quot;Ansible Error Handling In Playbooks.&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html</li>
+<li>&quot;Ansible - some random useful things.&quot; Code Poets. August 4, 2014. Accessed August 27th, 2016. https://codepoets.co.uk/2014/ansible-random-things/</li>
+<li>&quot;Ansible Become (Privlege Escalation).&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/become.html</li>
+<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html</li>
+<li>&quot;Ansible Asynchronous Actions and Polling.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_async.html</li>
+<li>&quot;Ansible Set host facts from a task.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/set_fact_module.html</li>
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_roles.html</li>
+<li>&quot;Ansible: Include Role in a Role?&quot; StackOverflow. October 24, 2014. http://stackoverflow.com/questions/26551422/ansible-include-role-in-a-role</li>
+<li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot; Ansible Documentation. September 13, 2014. Accessed September 15th, 2016. http://docs.ansible.com/ansible/cron_module.html</li>
+</ul>

@@ -9,6 +9,8 @@
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
+* [Testing](#testing)
+  * [Tempest](#testing---tempest)
 * [Performance](#performance)
 
 
@@ -193,6 +195,54 @@ Assuming authentication is already configured, set these options for the OpenSta
 Source:
 
 1. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
+
+# Testing
+
+## Testing - Tempest
+
+Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. 
+
+The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources:
+* http://docs.openstack.org/developer/tempest/sampleconf.html
+* http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample
+
+
+* Provide credentials to a user with the "admin" role.
+```
+admin_username
+admin_password
+admin_project_name
+admin_domain_name
+```
+
+* Specify the Keystone version to use. Valid options are "v2" and "v3."
+```
+auth_version
+```
+
+* Provide the Keystone endpoint for v2 (uri) or v3 (uri_v3).
+```
+uri
+uri_v3
+```
+
+* Two different size flavor IDs should be given.
+```
+flavor_ref
+flavor_ref_alt
+```
+
+* Two different image IDs should be given.
+```
+image_ref
+image_ref_alt
+```
+
+[1]
+
+Sources:
+
+1. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
 
 # Performance
 

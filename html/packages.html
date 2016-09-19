@@ -1,0 +1,65 @@
+<h1 id="packages">Packages</h1>
+<ul>
+<li><a href="#deb---debian">DEB - Debian</a></li>
+<li><a href="#rpm---rhel">RPM - RHEL</a></li>
+<li><a href="#rpm---adding-a-repository">Adding a Repository</a></li>
+<li><a href="#rpm---creating-a-repository">Creating a Repository</a></li>
+<li><a href="#rpm---creating-an-rpm">Creating an RPM</a></li>
+<li><a href="#pkgbuild---arch">PKGBUILD - Arch</a></li>
+</ul>
+<h2 id="deb---debian">DEB - Debian</h2>
+<h2 id="rpm---rhel">RPM - RHEL</h2>
+<h3 id="rpm---adding-a-repository">RPM - Adding a Repository</h3>
+<p>Repositories (someitmes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
+<p>On Red Hat based systems, the repositories are all defined as text files with the &quot;.repo&quot; extension in this directory.</p>
+<pre><code># ls /etc/yum.repos.d/</code></pre>
+<p>Here are some common options for repository files: * [] = This should be the first part of a repository, with the name being inside the brackets. * name = This should be similar to the name from the brackets. However, this friendly name can be different and is usually ignored. * baseurl = The location of the repository. Valid location types include &quot;http://&quot;, &quot;ftp://&quot;, and &quot;file://&quot; for using the local file system. * mirrorlist = Instead of a baseurl, a link to a list of repository mirrors can be given. * enabled = Enable or disable a repository with a &quot;1&quot; or &quot;0&quot;. The default is value is &quot;1&quot;. [1] * gpgcheck = Force a GPG encryption check against signed packages. Enable or disable with a &quot;1&quot; or &quot;0&quot;. * gpgkey = Specify the path to the GPG key.</p>
+<p>Variables for repository files: * $releasever = The RHEL release version. This is typically the major operating system versioning number such as &quot;5&quot; or &quot;6&quot;. * $basearch = The CPU architecture. For most modern PCs this is typically either automatically filled in as &quot;x86_64&quot; for 64-bit operating systems or &quot;i386&quot; for 32-bit. [2]</p>
+<p>At the bare minimum, a repository file needs to include a name and a baseurl.</p>
+<pre><code>[example-repo]
+name=example-repo
+baseurl=file:///var/www/html/example-repo/</code></pre>
+<p>Here is an example repository file for the official CentOS 7 repository using a mirrorlist.</p>
+<pre><code>[base]
+name=CentOS-$releasever - Base
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os&amp;infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Fedora 24 System Administrator's Guide&quot; Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System_Administrators_Guide/sec-Setting_repository_Options.html</li>
+<li>&quot;yum.conf - Configuration file for yum(8).&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf</li>
+</ol>
+<h3 id="rpm---creating-a-repository">RPM - Creating a Repository</h3>
+<p>Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is &quot;centos/<span class="math inline"><em>r</em><em>e</em><em>l</em><em>e</em><em>a</em><em>s</em><em>e</em><em>v</em><em>e</em><em>r</em>/</span>basearch/&quot; where $releasever is the release version and $basearch is the CPU architecture. However, any directory can be used.</p>
+<p>In this example, a default Apache web server will have the repository access via the URL &quot;http://localhost/centos/7/x86_64/.&quot; Be sure to place your RPMs in this directory. [1]</p>
+<pre><code># yum install createrepo
+# mkdir -p /var/www/html/centos/7/x86_64/</code></pre>
+<pre><code># createrepo /var/www/html/centos/7/x86_64/</code></pre>
+<p>The &quot;createrepo&quot; command will create 4 or 5 files. * repomd.xml = An index for the other repository metadata files. * primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc. * filelists.xml = Contains the full listing of every directory and file. * other.xml = Holds a changelog of all the packages. * groups.xml = If a repository has a &quot;group&quot; that should install multiple packages, the group is specified here. By default, this file is not created when running &quot;createrepo&quot; without any arguments. [2]</p>
+<p>If new packages are added and/or signed via a GPG key then the repository cache needs to be updated again. [1]</p>
+<pre><code># createrepo --update /var/www/html/centos/7/x86_64/</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;createrepo(8) - Linux man page.&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo</li>
+<li>&quot;createrepo/rpm metadata.&quot; createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/</li>
+</ol>
+<h3 id="rpm---creating-an-rpm">RPM - Creating an RPM</h3>
+<p>Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM. The most common options are: * Name = The name of the program. * Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;). * Release = Start with &quot;1%{?dist}&quot; for the first build of the RPM. Increase the number if the package is ever rebuilt. Start from &quot;1%{?dist}&quot; if a new version of the actual program is being built. * Summary = One sentence describing the package. A period is not allowed at the end. * BuildRoot = The directory that contains all of the RPM packages. The directory structure under here should mirror the files location in relation to the top-level root &quot;/&quot;. For example, &quot;/bin/bash&quot; would be placed under &quot;$RPM_BUILD_ROOT/bin/bash&quot;. * BuildArch = The architecture that the program is meant to run on. This is generally either &quot;x86_64&quot; or &quot;i386&quot;. If the code is not dependent on the CPU (for example, Java or bash scripts) then &quot;noarch&quot; can be used. * Requires = List the RPM packages that are dependencies needed for your program to work. * License = The license of the program. * URL = A URL link to the program's or, if that is not available, the developer's website.</p>
+<p>Sample SPEC file:</p>
+<pre><code>Name: My First RPM
+Version: 1.0.0
+Release: 1%{?dist}
+Summary: This is my first RPM
+License: GPLv3
+URL: http://example.tld/</code></pre>
+<p>If you want to build the RPM, simply run:</p>
+<pre><code># rpmbuild -bb &lt;SPECFILE&gt;.spec</code></pre>
+<p>In case you also want to build a source RPM (SRPM) run:</p>
+<pre><code># rpmbuild -ba &lt;SPECFILE&gt;.spec</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How to create an RPM package.&quot; Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package</li>
+</ol>
+<h2 id="pkgbuild---arch">PKGBUILD - Arch</h2>

@@ -1,0 +1,228 @@
+<h1 id="openstack">OpenStack</h1>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#configurations">Configurations</a></li>
+<li><a href="#configurations---keystone">Keystone</a>
+<ul>
+<li><a href="#configurations---keystone---token-provider">Token Provider</a></li>
+</ul></li>
+<li><a href="#configurations---nova">Nova</a>
+<ul>
+<li><a href="#configurations---nova---hypervisors">Hypervisors</a></li>
+</ul></li>
+<li><a href="#configurations---neutron">Neutron</a>
+<ul>
+<li><a href="#configurations---neutron---dns">DNS</a></li>
+<li><a href="#configurations---neutron---metadata">Metadata</a></li>
+</ul></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#testing---tempest">Tempest</a></li>
+<li><a href="#performance">Performance</a></li>
+</ul>
+<h1 id="inroduction">Inroduction</h1>
+<p>This guide is aimed to help guide System Administrators through OpenStack. It is assumed that the cloud is using these industry standard software:</p>
+<ul>
+<li>OpenStack Liberty</li>
+<li>CentOS 7 (Linux)</li>
+</ul>
+<p>Most things mentioned here should be able to be applied to other similar environments.</p>
+<h1 id="overview">Overview</h1>
+<p>OpenStack has a large range of services. The essential ones required for a basic cloud are:</p>
+<ul>
+<li>Keystone</li>
+<li>Authentication</li>
+<li>Nova</li>
+<li>Compute</li>
+<li>Neutron</li>
+<li>Networking</li>
+</ul>
+<h1 id="configurations">Configurations</h1>
+<p>This section will focus on important settings for each service's configuration files.</p>
+<h2 id="configurations---keystone">Configurations - Keystone</h2>
+<h3 id="configurations---keystone---token-provider">Configurations - Keystone - Token Provider</h3>
+<p>The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend. These are configured in the /etc/keystone/keystone.conf file.</p>
+<h4 id="scenario-1---uuid-default">Scenario #1 - UUID (default)</h4>
+<ul>
+<li>[ token ] provider = uuid</li>
+</ul>
+<h4 id="scenario-2---pki">Scenario #2 - PKI</h4>
+<ul>
+<li>[ token ] provider = pki</li>
+<li><p>Create the certificates. A new directory &quot;/etc/keystone/ssl/&quot; will be used to store these files.</p>
+<pre><code># keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
+</ul>
+<h4 id="scenario-3---fernet-fastest-token-creation">Scenario #3 - Fernet (fastest token creation)</h4>
+<ul>
+<li>[ token ] provider = fernet</li>
+<li>[ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/</li>
+<li><p>Create the Fernet keys:</p>
+<pre><code># mkdir /etc/keystone/fernet-keys/
+# chmod 750 /etc/keystone/fernet-keys/
+# keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>http://docs.openstack.org/developer/keystone/configuration.html</li>
+<li>&quot;OpenStack Keystone Fernet tokens.&quot; Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/</li>
+</ol>
+<h2 id="configurations---nova">Configurations - Nova</h2>
+<ul>
+<li>/etc/nova/nova.conf
+<ul>
+<li>[ libvirt ] inject_key = false</li>
+<li>Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be &quot;openstack-nova-api&quot; or &quot;openstack-nova-metadata-api.&quot;</li>
+<li>[ DEFAULT ] enabled_apis = ec2,osapi_compute,metadata</li>
+<li>Enable support for Amazon EC2, the Nova API, and Nova's metadata API. If &quot;metedata&quot; is specified here, then the &quot;openstack-nova-api&quot; handles the metadata and not &quot;openstack-nova-metadata-api.&quot;</li>
+<li>[ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova</li>
+<li>[ database ] connection = mysql://nova:password@10.1.1.1/nova</li>
+<li>For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user &quot;nova&quot; with a password called &quot;password&quot;, it connects to the IP address &quot;10.1.1.1&quot; and it is using the database &quot;nova.&quot;</li>
+</ul></li>
+</ul>
+<h3 id="configurations---nova---hypervisors">Configurations - Nova - Hypervisors</h3>
+<p>Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. This is configured in the /etc/nova/nova.conf file. [1]</p>
+<h4 id="scenario-1---kvm">Scenario #1 - KVM</h4>
+<ul>
+<li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
+<li>[libvirt] virt_type = kvm</li>
+</ul>
+<p>[2]</p>
+<h4 id="scenario-2---xen">Scenario #2 - Xen</h4>
+<ul>
+<li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
+<li>[libvirt] virt_type = xen</li>
+</ul>
+<p>[3]</p>
+<h4 id="scenario-3---lxc">Scenario #3 - LXC</h4>
+<ul>
+<li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
+<li>[libvirt] virt_type = lxc</li>
+</ul>
+<p>[4]</p>
+<h4 id="scenario-4---docker">Scenario #4 - Docker</h4>
+<p>Docker is not available by default in OpenStack. First it must be installed before configuring it in Nova.</p>
+<pre><code># git clone https://github.com/openstack/nova-docker.git
+# cd nova-docker/
+# pip install -r requirements.txt
+# python setup.py install</code></pre>
+<ul>
+<li>[DEFAULT] compute_driver=novadocker.virt.docker.DockerDriver</li>
+</ul>
+<p>[5]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Hypervisors.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html</li>
+<li>&quot;KVM.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/kvm.html</li>
+<li>&quot;Xen.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/xen_libvirt.html</li>
+<li>&quot;LXC.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/lxc.html</li>
+<li>&quot;nova-docker.&quot; GitHub.com. December, 2015. Accessed August 28th, 2016. https://github.com/openstack/nova-docker</li>
+</ol>
+<h2 id="configurations---neutron">Configurations - Neutron</h2>
+<h3 id="configurations---neutron---dns">Configurations - Neutron - DNS</h3>
+<p>By default, Neutron does not provide any DNS resolvers. This means that DNS will not work. It is possible to either provide a default list of name servers or configure Neutron to refer to the relevant /etc/resolv.conf file on the server.</p>
+<h4 id="scenario-1---define-default-resolvers-recommended">Scenario #1 - Define default resolvers (recommended)</h4>
+<ul>
+<li>/etc/neutron/dhcp_agent.ini</li>
+<li>[ DEFAULT ] dnsmasq_dns_servers = 8.8.8.8,8.8.4.4</li>
+</ul>
+<h4 id="scenario-2---leave-resolvers-to-be-configured-by-the-subnet-details">Scenario #2 - Leave resolvers to be configured by the subnet details</h4>
+<ul>
+<li>Nothing needs to be configured.</li>
+</ul>
+<h4 id="scenario-3---do-not-provide-resolvers">Scenario #3 - Do not provide resolvers</h4>
+<ul>
+<li>/etc/neutron/dhcp_agent.ini</li>
+<li>[ DEFAULT ] dnsmasq_local_resolv = True</li>
+</ul>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Name resolution for instances.&quot; OpenStack Documentation. August 09, 2016. Accessed August 13th, 2016. http://docs.openstack.org/mitaka/networking-guide/config-dns-resolution.html</li>
+</ol>
+<h3 id="configurations---neutron---metadata">Configurations - Neutron - Metadata</h3>
+<p>The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with &quot;cloud-init&quot; on the instance to configure SSH keys and other post-boot tasks.</p>
+<p>Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/recieving requests.</p>
+<ul>
+<li>/etc/neutron/metadata_agent.ini</li>
+<li>[ DEFAULT ] nova_metadata_ip = CONTROLLER_IP</li>
+<li>[ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY</li>
+<li>/etc/nova/nova.conf</li>
+<li>[ DEFAULT ] enabled_apis = ec2,osapi_compute,metadata</li>
+<li>[ neutron ] service_metadata_proxy = True</li>
+<li>[ neutron ] metadata_proxy_shared_secret = SECRET_KEY</li>
+</ul>
+<h4 id="scenario-1---dhcp-namespace-recommended-for-dvr">Scenario #1 - DHCP Namespace (recommended for DVR)</h4>
+<ul>
+<li>/etc/neutron/dhcp_agent.ini</li>
+<li>[ DEFAULT ] force_metadata = True</li>
+<li>[ DEFAULT ] enable_isolated_metadata = True</li>
+<li>[ DEFAULT ] enable_metadata_network = True</li>
+<li>/etc/neutron</li>
+<li>[ DEFAULT ] enable_metadata_proxy = False</li>
+</ul>
+<h4 id="scenario-2---router-namespace">Scenario #2 - Router Namespace</h4>
+<ul>
+<li>/etc/neutron//dhcp_agent.ini</li>
+<li>[ DEFAULT ] force_metadata = False</li>
+<li>[ DEFAULT ] enable_isolated_metadata = True</li>
+<li>[ DEFAULT ] enable_metadata_network = False</li>
+<li>/etc/neutron/l3_agent.ini</li>
+<li>[ DEFAULT ] enable_metadata_proxy = True</li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Introduction of Metadata Service in OpenStack.&quot; VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/</li>
+</ol>
+<h1 id="testing">Testing</h1>
+<h2 id="testing---tempest">Testing - Tempest</h2>
+<p>Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack.</p>
+<p>The sample configuration flie &quot;/etc/tempest/tempest.conf.sample&quot; should be copied to &quot;/etc/tempest/tempest.conf&quot; and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources: * http://docs.openstack.org/developer/tempest/sampleconf.html * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample</p>
+<ul>
+<li><p>Provide credentials to a user with the &quot;admin&quot; role.</p>
+<pre><code>admin_username
+admin_password
+admin_project_name
+admin_domain_name</code></pre></li>
+<li><p>Specify the Keystone version to use. Valid options are &quot;v2&quot; and &quot;v3.&quot;</p>
+<pre><code>auth_version</code></pre></li>
+<li><p>Provide the Keystone endpoint for v2 (uri) or v3 (uri_v3).</p>
+<pre><code>uri
+uri_v3</code></pre></li>
+<li><p>Two different size flavor IDs should be given.</p>
+<pre><code>flavor_ref
+flavor_ref_alt</code></pre></li>
+<li><p>Two different image IDs should be given.</p>
+<pre><code>image_ref
+image_ref_alt</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Tempest Configuration Guide.&quot; Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html</li>
+</ol>
+<h1 id="performance">Performance</h1>
+<p>A few general tips for getting the fastest OpenStack performance.</p>
+<ul>
+<li>KeyStone</li>
+<li>Switch to Fernet keys.
+<ul>
+<li>Creation of tokens is significantly faster.</li>
+<li>Refer to <a href="#configurations---keystone---token-provider">Configurations - Keystone - Token Provider</a>.</li>
+</ul></li>
+<li>Neutron</li>
+<li>Use distributed virtual routing (DVR).
+<ul>
+<li>This offloads a lot of networking resources onto the compute nodes.</li>
+</ul></li>
+<li>General</li>
+<li>Utilize /etc/hosts.
+<ul>
+<li>Ensure that all of your domain names (including the public IP) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Altneratively, consider setting up a recursive DNS server on the controller nodes.</li>
+</ul></li>
+<li>Use memcache.
+<ul>
+<li>This is generally configured by an option called &quot;memcache_servers&quot; in the configuration files for most services. Consider using &quot;CouchBase&quot; for its ease of clustering and redudancy support.</li>
+</ul></li>
+</ul>

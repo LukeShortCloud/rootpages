@@ -1,0 +1,60 @@
+#!/bin/bash
+
+install_dir="${HOME}/rp"
+
+if [[ ${rp_browser} == "" ]]
+    then echo "DEBUG - no browser exists"
+    rp_browser=""
+
+    if [[ `which elinks` ]];
+        then rp_browser="w3m"
+    elif [[ `which elinks` ]]
+        then rp_browser="elinks"
+    elif [[ `which links` ]]
+        then rp_browser="links"
+    elif [[ `which lynx` ]]
+        then rp_browser="lynx"
+    else
+        >&2 echo "Unable to find a suitable CLI web browser."
+        exit 1
+    fi
+
+fi
+
+rp_usage() {
+    echo "Usage:"
+    echo -e "\t--list\tList the available Root Pages"
+    echo -e "\t[TOPIC].html\tView the Root Pages topic" 
+    echo -e "\t--help\tPrint out the command usage"
+}
+
+rp_list() {
+    \ls ${install_dir}/html
+}
+
+if [[ "$#" -gt 1 ]]
+    then echo "Too many arguments."
+    rp_usage
+    exit 1
+elif [[ "$#" -lt 1 ]]
+    then echo "Too few arguments."
+    rp_usage 
+    exit 1
+elif [[ "${1}" == "--list" ]]
+    then rp_list
+    exit 0
+elif [[ "${1}" == "--help" ]]
+    then rp_usage
+    exit 0
+else
+
+    if [[ ! `\ls ${install_dir}/html/${1}` ]]
+        then echo "These are the available topics:"
+        rp_list
+        exit 1
+    else
+        ${rp_browser} ${install_dir}/html/${1}
+        exit 0
+    fi
+
+fi
