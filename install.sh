@@ -13,7 +13,7 @@ echo ${export_cmd} >> ${HOME}/.bashrc
 # delete any old/outdated Root Pages files
 rm -rf ${install_dir}/html/*
 # copy over the latest files
-cp -f -R ${html_dir}/ ${install_dir}/html/
+cp -f -R ${html_dir}/* ${install_dir}/html/
 # replace the old "rp" script
 cp -f ./rp ${install_dir}/bin/rp
 # make sure it has executable permissions
