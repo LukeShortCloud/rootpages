@@ -7,7 +7,7 @@ install_dir="${HOME}/rp"
 if [[ ${rp_browser} == "" ]]
     then rp_browser=""
 
-    if [[ `which elinks` ]];
+    if [[ `which w3m` ]];
         then rp_browser="w3m"
     elif [[ `which elinks` ]]
         then rp_browser="elinks"
