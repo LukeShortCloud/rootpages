@@ -5,7 +5,7 @@ install_dir="${HOME}/rp"
 # if no web browser is configured for Root Pages
 # then one will automatically be found
 if [[ ${rp_browser} == "" ]]
-    rp_browser=""
+    then rp_browser=""
 
     if [[ `which elinks` ]];
         then rp_browser="w3m"
