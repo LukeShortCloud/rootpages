@@ -1,4 +1,5 @@
 # OpenStack
+
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Configurations](#configurations)
@@ -9,16 +10,21 @@
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
+* [Automation](#automation)
+  * [Heat](#automation---heat)
+    * [Resources](#automation---heat---resources)
+  * [Vagrant](#automation---vagrant)
 * [Testing](#testing)
   * [Tempest](#testing---tempest)
 * [Performance](#performance)
 
 
-# Inroduction
+
+# Introduction
 
 This guide is aimed to help guide System Administrators through OpenStack. It is assumed that the cloud is using these industry standard software:
 
-* OpenStack Liberty
+* OpenStack Mitaka
 * CentOS 7 (Linux)
 
 Most things mentioned here should be able to be applied to other similar environments.
@@ -78,10 +84,10 @@ Sources:
 
 * /etc/nova/nova.conf
 	* [ libvirt ] inject_key = false
-	  * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api."
-	* [ DEFAULT ] enabled_apis = ec2,osapi_compute,metadata
-	  * Enable support for Amazon EC2, the Nova API, and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
-	* [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova
+	  * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
+	* [ DEFAULT ] enabled_apis = osapi_compute,metadata
+	  * Enable support for the Nova API, and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
+	* [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
 	* [ database ] connection = mysql://nova:password@10.1.1.1/nova
 	  * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
 
@@ -183,7 +189,7 @@ Assuming authentication is already configured, set these options for the OpenSta
 
 #### Scenario #2 - Router Namespace
 
-* /etc/neutron//dhcp_agent.ini
+* /etc/neutron/dhcp_agent.ini
   * [ DEFAULT ] force_metadata = False
   * [ DEFAULT ] enable_isolated_metadata = True
   * [ DEFAULT ] enable_metadata_network = False
@@ -196,11 +202,141 @@ Source:
 
 1. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
 
+# Automation
+
+Automating deployments can be accomplished in a few ways. The built-in OpenStack way is via Orhcestration as a Service (OaaS), typically handled by Heat. It is also possible to use Ansible or Vagrant to automate OpenStack deploys.
+
+## Automation - Heat
+
+Heat is used to orchestrate the deployment of multiple OpenStack components at once. It can also install and configure software on newly built instances.
+
+## Automation - Heat - Resources
+
+Heat templates are made of multiple resources. All of the different resource types are listed here [http://docs.openstack.org/developer/heat/template_guide/openstack.html](http://docs.openstack.org/developer/heat/template_guide/openstack.html). Resources use properties to create a component. If no name is specified (for example, a network name), a random string will be used. Most properties also accept either an exact ID of a resource or a reference to a dynamically generated resource (which will provide it's ID once it has been created).
+
+This section will go over examples of the more common modules.
+
+Syntax:
+```
+<DESCRIPTIVE_OBJECT_NAME>:
+    type: <HEAT_RESOURCE_TYPE>
+    properties:
+        <PROPERTY_1>: <VALUE_1>
+        <PROPERTY_2>: <VALUE_2>
+```
+
+* Create a network, assigned to the "internal_network" object.
+```
+internal_network: {type: 'OS::Neutron::Net'}
+```
+
+* Create a subnet for the created network.
+```
+internal_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      ip_version: 4
+      cidr: 10.0.0.0/24
+      dns_nameservers: [8.8.4.4, 8.8.8.8]
+      network_id: {get_resource: internal_network}
+```
+
+* Create a port. This object can be used during the instance creation.
+```
+subnet_port:
+    type: OS::Neutron::Port
+    properties:
+        fixed_ips:
+            - subnet_id: {get_resource: internal_subnet}
+        network: {get_resource: internal_network}
+```
+
+* Create a key pair called "HeatKeyPair."
+```
+ssh_keys:
+    type: OS::Nova::KeyPair
+    properties:
+        name: HeatKeyPair
+        public_key: HeatKeyPair
+        save_private_key: true
+```
+
+* Create an instance using the "m1.small" flavor, "centos7" image, assign the subnet port creaetd by "subnet_port" and use the "default" security group.
+```
+instance_creation:
+  type: OS::Nova::Server
+  properties:
+    flavor: m1.small
+    image: centos7
+    networks:
+        - port: {get_resource: subnet_port}
+    security_groups: {default}
+```
+
+* Allocate an IP from the "ext-net" floating IP pool.
+```
+floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties: {pool: ext-net}
+```
+
+* Allocate a a floating IP to the created instance from a "instance_creation" function. Alternatively, a specific instance's ID can be defined here.
+```
+floating_ip_association:
+    type: OS::Nova::FloatingIPAssociation
+    properties:
+	    floating_ip: {get_resource: floating_ip}
+		server_id: {get_resource: instance_creation}
+```
+
+Sources:
+
+1. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
+
+
+## Automation - Vagrant
+
+Vagrant is a tool to automate the deployment of virtual machines. A "Vagrantfile" file is used to initalize the instance. An example is provided below. Note that Vagrant currently does not support Keystone's v3 API.
+
+```
+require 'vagrant-openstack-provider'
+
+Vagrant.configure('2') do |config|
+
+  config.vm.box       = 'vagrant-openstack'
+  config.ssh.username = 'cloud-user'
+
+  config.vm.provider :openstack do |os|
+    os.openstack_auth_url = 'http://controller1/v2.0/tokens'
+    os.username           = 'openstackUser'
+    os.password           = 'openstackPassword'
+    os.tenant_name        = 'myTenant'
+    os.flavor             = 'm1.small'
+    os.image              = 'centos'
+    os.networks           = "vagrant-net"
+    os.floating_ip_pool   = 'publicNetwork'
+    os.keypair_name       = "private_key"
+  end
+end
+```
+
+Once those settings are configured for the end user's cloud environment, it can be created by running:
+
+```
+$ vagrant up --provider=openstack
+```
+
+[1]
+
+Sources:
+
+1. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. Accessed September 24, 2016. April 30, 2016. https://github.com/ggiamarchi/vagrant-openstack-provider
+
 # Testing
 
 ## Testing - Tempest
 
-Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. 
+Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. This software is a rolling release aimed towards verifying the latest OpenStack release in development but it should also work for older versions as well.
 
 The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources:
 * http://docs.openstack.org/developer/tempest/sampleconf.html

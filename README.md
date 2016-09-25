@@ -48,7 +48,7 @@ The only file that is not an HTML or viewable via the "rp" command is currently 
 
 Root Pages is a rolling release. As new information is commited, it is shortly pushed into master after a quick review for technical writing standards and correct citation usage.
 
-All updates should be added to the Markdown files in the "source/" directory of this project. The recommended Markdown editor to use is [Haroopad](http://pad.haroopress.com/user.html). This is due to it's minimalist design, strong webpage support, cross platform nature, and the free price tag. Of course, any markdown editor can be used to contribute to these documents (even GitHub's!). These documents are currently in English but translations are always welcome!
+All updates should be added to the Markdown files in the "markdown/" directory of this project. The recommended Markdown editor to use is [Haroopad](http://pad.haroopress.com/user.html). This is due to it's minimalist design, strong webpage support, cross platform nature, and the free price tag. Of course, any markdown editor can be used to contribute to these documents (even GitHub's!). These documents are currently in English but translations are always welcome!
 
 A few quick notes about technical documentation:
 * Everything should be written in the 3rd person.

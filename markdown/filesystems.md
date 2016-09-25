@@ -12,7 +12,7 @@
  * [mdadm](#raids---mdadm)
 * [Network](#network)
   * [NFS](#network---nfs)
-  * SMB/CIFS
+  * [SMB](#network---smb)
   * [iSCSI](#network---iscsi)
     * [Target](#network---iscsi---target)
     * [Initiator](#network---iscsi---initiator)
@@ -26,8 +26,8 @@
 | Fat32 (vfat) | DOS | no journaling, generally cross platform compatible | 4GiB | 268,173,300 [2] | 8TiB |
 | NTFS (ntfs-3g)  | Windows | journaling, encryption, compression | 2TiB | 2^32 - 1 [2] | 256TiB |
 | ext4 | Linux | journaling, less fragmentation, better performance | 16TiB | 2^32 - 1 [2] | 1EiB |
-| XFS[1] | Linux | journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system | 8 EiB (theoretically up to 16EiB) | 2^64 - 1 | 8 EiB (theoretically up to 16EiB)
-| BtrFS[3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 2^64 - 1 | 8EiB (theoretically up to 16EiB) |
+| XFS [1] | Linux | journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system | 8 EiB (theoretically up to 16EiB) | 2^64 - 1 | 8 EiB (theoretically up to 16EiB)
+| BtrFS [3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 2^64 - 1 | 8EiB (theoretically up to 16EiB) |
 | tmpfs | Linux | RAM and swap | | | |
 | ramfs | Linux | RAM (no swap) | | | | |
 [1]
@@ -132,7 +132,7 @@ Finally, you can initalize the RAID.
 
 The Network File System (NFS) aims to universally provide a way to remotely mount directories between servers. All subdirectories from a shared directory will also be available.
 
-Ports:
+NFS Ports:
 * 111 TCP/UDP
 * 2049 TCP/UDP
 * 4045 TCP/UDP
@@ -169,6 +169,56 @@ On Red Hat Enterprise Linux systems, the exported directory will need to have th
 Sources:
 
 1. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html
+
+## Network - SMB
+
+The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventualy replaced with newer versions of SMB. On Linux, the "Samba" service is typically used for setting up SMB share. [1]
+
+SMB Ports:
+* 137 UDP
+* 138 UDP
+* 139 TCP
+* 445 TCP
+
+Configuration - Global:
+* [global]
+  * workgroup = Define a WORKGROUP name.
+  * interfaces = Specify the interfaces to listen on.
+  * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
+
+
+Configuration - Share:
+* [smb] = The share can be named anything.
+  * path = The path to the directory to share (required).
+  * writable = Use "yes" or "no." This specifies if the folder share is wirtable.
+  * read only = Use "yes" or "no." This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions.
+  * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a "+" to the front of the name.
+  * comment = Place a comment about the share. [2]
+
+Verify the Samba configuration.
+```
+# testparm
+# smbclient //localhost/<SHARE_NAME> -U <SMB_USER1>%<SMB_USER1_PASS>
+```
+
+The Linux user for accessing the SMB share will need to be created and have their password added to the Samba configuration. These are stored in a binary file at "/var/lib/samba/passdb.tdb." This can be updated by running:
+```
+# useradd <SMB_USER1>
+# smbpasswd -a <SMB_USER1>
+```
+
+On Red Hat Enterprise Linux systems, the exported directory will need to have the "samba_share_t" file context for SELinux to work properly. [3]
+
+```
+# semanage fcontext -a -t samba_share_t "/path/to/dir{/.*)?"
+# restorecon -R "/path/to/dir"
+```
+
+Sources:
+
+1. "The Difference between CIFS and SMB." VARONIS. February 14, 1024. Accessed September 18th, 2016. https://blog.varonis.com/the-difference-between-cifs-and-smb/
+2. "The Samba Configuration File." SAMBA. September 26th, 2003. Accessed September 18th, 2016. https://www.samba.org/samba/docs/using_samba/ch06.html
+3. "RHEL7: Provide SMB network shares to specific clients." CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/
 
 ## Network - iSCSI
 

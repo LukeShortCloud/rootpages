@@ -15,7 +15,7 @@
 <li><a href="#raids---mdadm">mdadm</a></li>
 <li><a href="#network">Network</a></li>
 <li><a href="#network---nfs">NFS</a></li>
-<li>SMB/CIFS</li>
+<li><a href="#network---smb">SMB</a></li>
 <li><a href="#network---iscsi">iSCSI</a>
 <ul>
 <li><a href="#network---iscsi---target">Target</a></li>
@@ -77,7 +77,7 @@
 <td>1EiB</td>
 </tr>
 <tr class="odd">
-<td>XFS[1]</td>
+<td>XFS [1]</td>
 <td>Linux</td>
 <td>journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system</td>
 <td>8 EiB (theoretically up to 16EiB)</td>
@@ -85,7 +85,7 @@
 <td>8 EiB (theoretically up to 16EiB)</td>
 </tr>
 <tr class="even">
-<td>BtrFS[3]</td>
+<td>BtrFS [3]</td>
 <td>Linux</td>
 <td>journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system</td>
 <td>8EiB (theoretically up to 16EiB)</td>
@@ -206,7 +206,7 @@
 <h1 id="network">Network</h1>
 <h2 id="network---nfs">Network - NFS</h2>
 <p>The Network File System (NFS) aims to universally provide a way to remotely mount directories between servers. All subdirectories from a shared directory will also be available.</p>
-<p>Ports: * 111 TCP/UDP * 2049 TCP/UDP * 4045 TCP/UDP</p>
+<p>NFS Ports: * 111 TCP/UDP * 2049 TCP/UDP * 4045 TCP/UDP</p>
 <p>On the server, the /etc/exports file is used to manage NFS exports. Here a directory can be specified to be shared via NFS to a specific IP address or CIDR range. After adjusting the exports, the NFS daemon will need to be restarted.</p>
 <p>Example:</p>
 <pre><code># vim /etc/exports
@@ -220,6 +220,26 @@
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;NFS SERVER CONFIGURATION.&quot; Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html</li>
+</ol>
+<h2 id="network---smb">Network - SMB</h2>
+<p>The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventualy replaced with newer versions of SMB. On Linux, the &quot;Samba&quot; service is typically used for setting up SMB share. [1]</p>
+<p>SMB Ports: * 137 UDP * 138 UDP * 139 TCP * 445 TCP</p>
+<p>Configuration - Global: * [global] * workgroup = Define a WORKGROUP name. * interfaces = Specify the interfaces to listen on. * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, &quot;127.&quot; would be a wildcard for anything in the 127.0.0.0/8 range.</p>
+<p>Configuration - Share: * [smb] = The share can be named anything. * path = The path to the directory to share (required). * writable = Use &quot;yes&quot; or &quot;no.&quot; This specifies if the folder share is wirtable. * read only = Use &quot;yes&quot; or &quot;no.&quot; This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions. * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a &quot;+&quot; to the front of the name. * comment = Place a comment about the share. [2]</p>
+<p>Verify the Samba configuration.</p>
+<pre><code># testparm
+# smbclient //localhost/&lt;SHARE_NAME&gt; -U &lt;SMB_USER1&gt;%&lt;SMB_USER1_PASS&gt;</code></pre>
+<p>The Linux user for accessing the SMB share will need to be created and have their password added to the Samba configuration. These are stored in a binary file at &quot;/var/lib/samba/passdb.tdb.&quot; This can be updated by running:</p>
+<pre><code># useradd &lt;SMB_USER1&gt;
+# smbpasswd -a &lt;SMB_USER1&gt;</code></pre>
+<p>On Red Hat Enterprise Linux systems, the exported directory will need to have the &quot;samba_share_t&quot; file context for SELinux to work properly. [3]</p>
+<pre><code># semanage fcontext -a -t samba_share_t &quot;/path/to/dir{/.*)?&quot;
+# restorecon -R &quot;/path/to/dir&quot;</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;The Difference between CIFS and SMB.&quot; VARONIS. February 14, 1024. Accessed September 18th, 2016. https://blog.varonis.com/the-difference-between-cifs-and-smb/</li>
+<li>&quot;The Samba Configuration File.&quot; SAMBA. September 26th, 2003. Accessed September 18th, 2016. https://www.samba.org/samba/docs/using_samba/ch06.html</li>
+<li>&quot;RHEL7: Provide SMB network shares to specific clients.&quot; CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/</li>
 </ol>
 <h2 id="network---iscsi">Network - iSCSI</h2>
 <p>The &quot;Inernet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
