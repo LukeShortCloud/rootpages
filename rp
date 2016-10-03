@@ -30,7 +30,8 @@ rp_usage() {
 }
 
 rp_list() {
-    \ls ${install_dir}/html
+    # list the HTML topics without the ".html" extension
+    \ls ${install_dir}/html | cut -d\. -f1
 }
 
 if [[ "$#" -gt 1 ]]
@@ -49,12 +50,15 @@ elif [[ "${1}" == "--help" ]]
     exit 0
 else
 
-    if [[ ! `\ls ${install_dir}/html/${1}` ]]
+    topic_path="${install_dir}/html/${1}.html"
+
+    if [[ ! $(\ls ${topic_path}) ]]
         then echo "These are the available topics:"
         rp_list
         exit 1
     else
-        ${rp_browser} ${install_dir}/html/${1}
+        # load the Root Pages topic, it is assumed to be an HTML page
+        ${rp_browser} ${topic_path}
         exit 0
     fi
 

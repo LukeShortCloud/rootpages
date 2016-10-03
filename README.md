@@ -2,6 +2,7 @@
 
 Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide an expanded alternative to "info" and/or "man" pages.
 
+
 ## Usage
 
 All Root Pages are written in the Markdown language and then compiled into HTML. For the command line there are the standard "elinks" and "lynx" web browsers. Generally Chromium (Chrome) or Ice Weasel (Firefox) will be available on graphical installations of Linux, too.
@@ -26,12 +27,20 @@ Examples:
 $ rp --help
 Usage:
        	--list 	List the available Root Pages guides
-       	[TOPIC].html   	View the Root Pages topic
+       	[TOPIC]   	View the Root Pages topic
        	--help 	Print out the command usage
 $ rp --list
-ansible.html   		dns.html       		packages.html
-bootloaders.html       	filesystems.html
-clustering.html		openstack.html
+ansible
+bootloaders
+clustering
+dns_servers
+file_systems
+http_servers
+mail_servers
+monitoring
+openstack
+packages
+security
 $ rp ansible.html
 ```
 
@@ -43,6 +52,7 @@ $ export rp_browser="firefox"
 ```
 
 The only file that is not an HTML or viewable via the "rp" command is currently the "linux_commands.xlsx" Excel spreadsheet. It is not formatted in CSV or TSV due to the unique styling that it uses to help organize different sections. A lot of good command line references can be found here.
+
 
 ## Development
 
@@ -63,9 +73,15 @@ $ bash build.sh
 
 Once the HTML files have finished generating, commit the changes and submit a pull request.
 
+
 ## Legal
+
+
 ### License - GPLv3
+
 Root Pages and all of its content is provided under the GPLv3. Why? We believe that all information should be free information. Knowledge is power and we strongly believe that everyone deserves to learn and grow to their fullest potentional.
 
+
 ### Plagerism
+
 Root Pages strives to provide proper citation to the original authors to give credit where due. If there are any reports of plagerism, please send an e-mail to ```ekultails``` ```at``` ```gmail.com``` to ensure it gets addressed accordingly.
