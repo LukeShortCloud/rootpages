@@ -4,8 +4,10 @@
   * [Installing GRUB 2](#installing-grub-2)
   * [GRUB 2 Recovery](#grub-2-recovery)
 
+
 ## GRUB 2
 GRUB stands for the GRand Unified Bootloader. It was designed to be cross platform compatible with most operating systems including BSD, Linux, and Windows variants.
+
 
 ### Configuring GRUB 2
 
@@ -19,19 +21,33 @@ Important files:
 
 Common Options:
 * /etc/default/grub
-  * GRUB_DEFAULT = The default menu entry to autoboot into. Valid options are:
-     * Use the menu position "0", use the selected menu option from the last boot "saved", or verbosely specific the menu name to load.
+  * GRUB_DEFAULT = The default menu entry to autoboot into.
+    * saved = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.
+    * Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at 0.
+    * Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)."
+```
+# grep ^menuentry /boot/grub2/grub.cfg
+```
+```
+menuentry 'CentOS Linux (3.10.0-327.18.2.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.18.2.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
+```
+```
+menuentry 'CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.13.1.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
+```
+
   * GRUB_TIMEOUT = Set the timeout (in seconds) before booting into the default menu entry.
   * GRUB_CMDLINE_LINUX = Append kernel options to the end of the "linux" line. These can later be seen in the operating system in /proc/cmdline. This applies to both the normal and recovery mode options.
   * GRUB_CMDLINE_LINUX_DEFAULT = The same as the above setting except this option does not affect the recovery kernel options.
   * GRUB_DISABLE_LINUX_UUID = If set to "true", devices from /dev/ will be used for specifying the root instead of the UUID. The default is "false" which will use UUIDs.
   * GRUB_BACKGROUND = Specify the full path to a custom image for GRUB's menu background.
- 
+
 [1]
-  
+
 
 Source:
+
 1. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015. https://help.ubuntu.com/community/Grub2/Setup
+
 
 ### Installing GRUB 2
 
@@ -60,6 +76,7 @@ Source:
 
 1. "GRUB." Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB
 2. "GRUB2-INSTALL MAN PAGE." Mankier. Feburary 26, 2014. https://www.mankier.com/8/grub2-install
+
 
 ### GRUB 2 Recovery
 In cases where GRUB fails (because it was installed incorrectly), the end-user is automatically switched into GRUB's rescue shell.  Only a few commands are available for use.
@@ -101,7 +118,7 @@ grub rescue> normal
 
 For recovering from a corrupt GRUB installation, fully change root into the environment from a live CD, USB, or PXE network boot. Then you can modify configuration files and re-install GRUB using the same commands used during the installation.
 
-In this example, /dev/sda2 is the root partition and /dev/sda1 is the boot partition.
+In this example, /dev/sda2 is the root partition and /dev/sda1 is the boot partition. [1]
 ```
 # mount /dev/sda2 /mnt
 # mount /dev/sda1 /mnt/boot
@@ -112,7 +129,7 @@ In this example, /dev/sda2 is the root partition and /dev/sda1 is the boot parti
 # /bin/bash
 # export PATH="$PATH:/sbin:/bin"
 ```
-[1]
+
 
 If you need to recover GRUB from a chroot that is based on a LVM on the host node, make sure that LVM tools are installed on the guest. This way it can properly see the logical volume as a block device.
 ```

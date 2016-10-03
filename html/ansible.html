@@ -13,7 +13,7 @@
 <ul>
 <li><a href="#playbooks---functions---async">Async</a></li>
 <li><a href="#playbooks---functions---ignore-errors">Ignore Errors</a></li>
-<li>[Include]</li>
+<li><a href="#playbooks---functions---include">Include</a></li>
 <li><a href="#playbooks---functions---loops">Loops</a></li>
 <li><a href="#playbooks---functions---prompts">Prompts</a></li>
 <li><a href="#playbooks---functions---roles">Roles</a></li>
@@ -26,16 +26,14 @@
 <li><a href="#playbooks---modules">Modules</a>
 <ul>
 <li><a href="#playbooks---modules---command-and-shell">Command and Shell</a></li>
-<li><a href="#playbooks---modules---copy-files-and-templates">Copy Files and Templates</a></li>
+<li><a href="#playbooks---modules---copy,-files,-and-templates">Copy, Files, and Templates</a></li>
 <li><a href="#playbooks---modules---cron">Cron</a></li>
 <li><a href="#playbooks---modules---debug">Debug</a></li>
 <li><a href="#playbooks---modules---git">Git</a></li>
-<li>[MySQL Database]</li>
-<li>[MySQL User]</li>
+<li><a href="#playbooks---modules---mysql-database-and-user">MySQL Database and User</a></li>
 <li><a href="#playbooks---modules---service">Service</a></li>
 <li><a href="#playbooks---modules---package-managers">Package Managers</a></li>
 <li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
-<li>[Apt]</li>
 </ul></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
@@ -225,7 +223,7 @@ ldap_ip=192.168.10.1</code></pre>
   async: 15
   poll: 5</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Asynchronous Actions and Polling.&quot;</li>
 </ol>
@@ -252,14 +250,25 @@ web_services: [ &#39;nginx&#39;, &#39;httpd&#39;, &#39;mysql&#39; ]</code></pre>
 with_flattened:
  - &quot;{{ web_services }}&quot;</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Loops.&quot;</li>
+</ol>
+<h3 id="playbooks---functions---include">Playbooks - Functions - Include</h3>
+<p>Other task files and Playbooks can be included. The functions in them will immediately run. Variables can be defined for the inclusion as well. [1]</p>
+<p>Syntax:</p>
+<pre><code>include:</code></pre>
+<pre><code>include: &lt;TASK&gt;.yml &lt;VAR1&gt;=&lt;VAULE1&gt; &lt;VAR2&gt;=&lt;VALUE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
 </ol>
 <h3 id="playbooks---functions---ignore-errors">Playbooks - Functions - Ignore Errors</h3>
 <p>Playbooks, by default, will stop running if it fails to run a command. If it's okay to continue then the &quot;ignore_errors&quot; option can be appeneded below the command. This will allow the Playbook to continue onto the next step.</p>
 <pre><code>ignore_errors: yes</code></pre>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
 </ol>
@@ -280,7 +289,7 @@ with_flattened:
     encrypt: &quot;sha512_crypt&quot;
     salt_size: 12</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Prompts.&quot;</li>
 </ol>
@@ -292,7 +301,7 @@ with_flattened:
 <pre><code>run_once:
 delegate_to: &lt;HOST&gt;</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot;</li>
 </ol>
@@ -378,7 +387,7 @@ delegate_to: &lt;HOST&gt;</code></pre>
    - nginx</code></pre>
 <pre><code># ansible-playbook --tags yum webserver.yml webnode1</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Tags.&quot;</li>
 </ol>
@@ -393,43 +402,63 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <pre><code>when: (ansible_os_family == &quot;Fedora&quot;) and
       (ansible_distribution_major_version == &quot;25&quot;)</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Conditionals.&quot;</li>
 </ol>
 <h2 id="playbooks---modules">Playbooks - Modules</h2>
 <h3 id="playbooks---modules---command-and-shell">Playbooks - Modules - Command and Shell</h3>
 <p>Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell enviornment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficent. [1]</p>
+<p>Syntax:</p>
+<pre><code>command:</code></pre>
+<pre><code>shell:</code></pre>
 <p>Common options: * executable = Set the executable shell binary. * chdir = Change directories before running the command.</p>
 <p>Example:</p>
 <pre><code>- shell: echo &quot;Hello world&quot; &gt;&gt; /tmp/hello_world.txt
   args:
     executable: /bin/bash</code></pre>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Command Module.&quot;</li>
 <li>&quot;Ansible Shell Module.&quot;</li>
 </ol>
-<h3 id="playbooks---modules---copy-files-and-templates">Playbooks - Modules - Copy Files and Templates</h3>
+<h3 id="playbooks---modules---copy-files-and-templates">Playbooks - Modules - Copy, Files, and Templates</h3>
 <p>The copy, file and template modules provide ways to managing and configuring various files. The file module is used to handle file creation/modification [1], templates are to be used when Ansible needs to fill in the variables [2] and copy is used for copying files and folders. Most of the attributes are the same between the three modules.</p>
-<p>Common options: * src = Define the source file or template. If a full path is not given, Ansible will check in the roles/<code>&lt;ROLENAME&gt;</code>/files/ directory for a file or roles/<code>&lt;ROLENAME&gt;</code>/templates/ for a template. * dest (or path) = This is the full path to where the file should be copied to on the destination server. * remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False. * owner = Set the user owner. * group = Set the group owner. * mode = Set the octal or symbloc permissions. If using octal, it has to be four digits. The first digit is generally the flag &quot;0&quot; to indicate no special permissions. * setype = Set SELinux file permissions. * state = Specify the state the file should be created in. * file = Copy the file. * link = Create a soft link shortcut. * hard = Create a hard link reference. * touch = Create an empty file. * directory = Create all subdirectories in the destination folder. * absent = Delete destination folders. [1]</p>
+<p>Syntax:</p>
+<pre><code>copy:</code></pre>
+<pre><code>files:</code></pre>
+<pre><code>templates:</code></pre>
+<p>Common options:</p>
 <ul>
+<li>src = Define the source file or template. If a full path is not given, Ansible will check in the roles/<code>&lt;ROLENAME&gt;</code>/files/ directory for a file or roles/<code>&lt;ROLENAME&gt;</code>/templates/ for a template. If the src path ends with a &quot;/&quot; then only the files within that directory will be copied (not the directory itself).</li>
+<li>dest (or path) = This is the full path to where the file should be copied to on the destination server.</li>
+<li>remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False.</li>
+<li>owner = Set the user owner.</li>
+<li>group = Set the group owner.</li>
+<li>mode = Set the octal or symbloc permissions. If using octal, it has to be four digits. The first digit is generally the flag &quot;0&quot; to indicate no special permissions.</li>
+<li>setype = Set SELinux file permissions.</li>
+<li>state = Specify the state the file should be created in.</li>
+<li>file = Copy the file.</li>
+<li>link = Create a soft link shortcut.</li>
+<li>hard = Create a hard link reference.</li>
+<li>touch = Create an empty file.</li>
+<li>directory = Create all subdirectories in the destination folder.</li>
+<li><p>absent = Delete destination folders. [1]</p></li>
 <li>Example:</li>
 <li><p>Copy a template from roles/<code>&lt;ROLE&gt;</code>/templates/ and set the permissions for the file.</p>
 <pre><code>template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody</code></pre></li>
 </ul>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible File Module.&quot;</li>
 <li>&quot;Ansible Template Module.&quot;</li>
 </ol>
 <h3 id="playbooks---modules---debug">Playbooks - Modules - Debug</h3>
 <p>The debug module is used for helping facilitate troubleshooting. It prints out specified information to standard output.</p>
+<p>Syntax:</p>
+<pre><code>debug:</code></pre>
+<p>Options: * msg = Display a message. * var = Display a variable. * verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]</p>
 <ul>
-<li>Options:</li>
-<li>msg = Display a message.</li>
-<li>var = Display a variable.</li>
-<li><p>verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]</p></li>
 <li>Example:</li>
 <li><p>Print Ansible's hostname of the current server that the script is being run on.</p>
 <pre><code>debug: msg=The inventory host name is {{ inventory_hostname }}</code></pre></li>
@@ -440,18 +469,22 @@ delegate_to: &lt;HOST&gt;</code></pre>
 </ol>
 <h3 id="playbooks---modules---cron">Playbooks - Modules - Cron</h3>
 <p>The cron module is used to manage crontab entries. Crons are scheduled/automated tasks that run on Unix-like systems.</p>
+<p>Syntax:</p>
+<pre><code>cron:</code></pre>
 <p>Options: * user = Modify the specified user's crontab. * job = Provide a command to run when the cron reaches the correct * minute * hour * weeekday = Specify the weekday as a number 0 through 6 where 0 is Sunday and 6 is Saturday. * month * day = Specify the day number in the 30 day month. * backup = Backup the existing crontab. The &quot;backup_file&quot; variable provides the backed up file name. * yes * no * state * present = add the crontab * absent = remove an existing entry * special_time * reboot * yearly or annually * monthly * weekly * daily * hourly</p>
 <p>Example #1:</p>
 <pre><code>cron: job=&quot;/usr/bin/wall This actually works&quot; minute=&quot;*/1&quot; user=ubuntu</code></pre>
 <p>Example #2:</p>
 <pre><code>cron: job=&quot;/usr/bin/yum -y update&quot; weekday=0 hour=6 backup=yes</code></pre>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot;</li>
 </ol>
 <h3 id="playbooks---modules---git">Playbooks - Modules - Git</h3>
 <p>Git is a utlity used for provisioning and versioning software. Ansible has built-in support for handling most Git-related tasks.</p>
+<p>Syntax:</p>
+<pre><code>git:</code></pre>
 <p>Options: * repo = The full path of the repository. * dest = The path to place/use the repository * update = Pull the latest version from the Git server. The default is &quot;yes.&quot; * version = Switch to a different branch or tag. * ssh_opts = If using SSH, specify custom SSH options. * force = Overriden local changes. The default is &quot;yes.&quot;</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -459,15 +492,35 @@ delegate_to: &lt;HOST&gt;</code></pre>
 </ol>
 <h3 id="playbooks---modules---service">Playbooks - Modules - Service</h3>
 <p>The service module is used to handle system services.</p>
+<p>Syntax:</p>
+<pre><code>service:</code></pre>
 <p>Options: * name = Specify the service name. * enabled = Enable the service to start on boot or not. Valid options are &quot;yes&quot; or &quot;no.&quot; * sleep = When restarted a service, specify the amount of time (in seconds) to wait before starting a service after stopping it. * state = Specify what state the service should be in. * started = Start the service. * stopped = Stop the service. * restarted = Stop and then start the service. * reloaded = If supported by the service, it will reload it's configuration file without restarting it's main thread. [1]</p>
 <p>Exmaple: * Restart the Apache service &quot;httpd.&quot;</p>
 <pre><code>service: name=httpd state=restarted sleep=3</code></pre>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Service Module.&quot;</li>
 </ol>
+<h3 id="playbooks---modules---mysql-database-and-user">Playbooks - Modules - MySQL Database and User</h3>
+<p>MySQL databases and users can be managed via Ansible. It requires the &quot;MySQLdb&quot; Python library and the &quot;mysql&quot; and &quot;mysqldump&quot; binaries.</p>
+<p>MySQL Database Syntax:</p>
+<pre><code>mysql_db:</code></pre>
+<p>MySQL User Syntax:</p>
+<pre><code>mysql_user:</code></pre>
+<p>Options: * name = Specify the database name. The word &quot;all&quot; can be used to control all databases. * state * present = Create the database. * absent = Delete the database. * dump = Backup the database. * import = Import a database. * target = Specify a dump or import location. * config_file = Speicfy the user configuration file. Default: &quot;~/.my.cnf.&quot; Alternatively, login credentials can be manually specified. * login_host = The MySQL server's IP or hostname. Default: &quot;localhost.&quot; * login_user = The MySQL username to login as. * login_password = The MySQL user's password. * login_port = The MySQL port to connect to. Default: &quot;3306.&quot; * login_unix_socket = On Unix, a socket file can be used to connect to MySQL instead of a host and port. * connection_timeout = How long to wait (in seconds) before closing the MySQL connection. The default is &quot;30.&quot; [1] * priv (mysql_user) = The privileges for the MySQL user. [2]</p>
+<p>Example #1:</p>
+<pre><code>mysql_db: name=toorsdb state=present config_file=/secrets/.my.cnf</code></pre>
+<p>Example #2:</p>
+<pre><code>mysql_user: name=toor login_user=root login_password=supersecret priv=somedb.*:ALL state=present</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansiblem mysql_db - Add or remove MySQL databases from a remote host.&quot;</li>
+<li>&quot;Ansible mysql_user - Adds or removes a user from a MySQL database.&quot;</li>
+</ol>
 <h3 id="playbooks---modules---package-managers">Playbooks - Modules - Package Managers</h3>
 <p>Ansible has the ability to add, remove, or update software packages. Almost every popular package manager is supported. [1] This can generically be handled by the &quot;package&quot; module or the specific module for the operating system's package manager.</p>
+<p>Syntax:</p>
+<pre><code>package:</code></pre>
 <p>Options:</p>
 <ul>
 <li>name = Specify the package name.</li>
@@ -489,39 +542,16 @@ delegate_to: &lt;HOST&gt;</code></pre>
 </ol>
 <h3 id="playbooks---modules---package-managers---yum">Playbooks - Modules - Package Managers - Yum</h3>
 <p>There are two commands to primarily handel Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
-<ul>
-<li>yum options:</li>
-<li>name = Specify the package name.</li>
-<li>state = Specify the package state.
-<ul>
-<li>{present|installed|latest} = Any of these will install the package.</li>
-<li>{absent|removed} = Any of these will uninstall the package.</li>
-</ul></li>
-<li>enablerepo = Temporarily enable a repository.</li>
-<li>disablerepo = Temporarily disable a repository.</li>
-<li>disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;.</li>
-<li><p>conf_file = Specify a Yum configuration file to use. [1]</p></li>
-<li>yum example:</li>
-<li><p>Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
-<pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre></li>
-<li>yum_repository options:</li>
-<li>name = Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent).</li>
-<li>baseurl = Provide the URL of the repository.</li>
-<li>mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl.</li>
-<li>description = Required. Provide a description of the repository.</li>
-<li>enabled = Enable the repository permanently to be active. The default is &quot;yes.&quot;</li>
-<li>exclude = List packages that should be excluded from being accessed from this repository.</li>
-<li>gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot;</li>
-<li>gpgkey = Specify a URL to the GPG key.</li>
-<li>state = Specify a state for the repository file.
-<ul>
-<li>present = Install the Yum repository file. This is the default.</li>
-<li>absent = Delete the repository file. [2]</li>
-</ul></li>
-<li>yum_repository example:</li>
-<li><p>Install the RepoForge Yum repository.</p>
-<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre></li>
-</ul>
+<p>Yum Syntax:</p>
+<pre><code>yum:</code></pre>
+<p>Options: * name = Specify the package name. * state = Specify the package state. * {present|installed|latest} = Any of these will install the package. * {absent|removed} = Any of these will uninstall the package. * enablerepo = Temporarily enable a repository. * disablerepo = Temporarily disable a repository. * disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;. * conf_file = Specify a Yum configuration file to use. [1]</p>
+<p>Example: * Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
+<pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre>
+<p>Yum Repository Syntax:</p>
+<pre><code>yum_repository:</code></pre>
+<p>Options: * name = Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent). * baseurl = Provide the URL of the repository. * mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl. * description = Required. Provide a description of the repository. * enabled = Enable the repository permanently to be active. The default is &quot;yes.&quot; * exclude = List packages that should be excluded from being accessed from this repository. * gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot; * gpgkey = Specify a URL to the GPG key. * state = Specify a state for the repository file. * present = Install the Yum repository file. This is the default. * absent = Delete the repository file. [2]</p>
+<p>Example: * Install the RepoForge Yum repository.</p>
+<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Yum Module.&quot;</li>
@@ -552,14 +582,16 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible Prompts.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html</li>
 <li>&quot;Ansible Using Lookups.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html</li>
 <li>&quot;Ansible Loops.&quot; Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_loops.html</li>
-<li>&quot;Ansible Conditionals.&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html</li>
-<li>&quot;Ansible Error Handling In Playbooks.&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html</li>
-<li>&quot;Ansible - some random useful things.&quot; Code Poets. August 4, 2014. Accessed August 27th, 2016. https://codepoets.co.uk/2014/ansible-random-things/</li>
-<li>&quot;Ansible Become (Privlege Escalation).&quot; Ansible Documentation. August 24, 2016. Accessed August 27th, 2016. http://docs.ansible.com/ansible/become.html</li>
-<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html</li>
-<li>&quot;Ansible Asynchronous Actions and Polling.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_async.html</li>
-<li>&quot;Ansible Set host facts from a task.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/set_fact_module.html</li>
-<li>&quot;Ansible Playbook Roles and Include Statements.&quot; Ansible Documentation. September 1, 2016. Accessed September 11th, 2016. http://docs.ansible.com/ansible/playbooks_roles.html</li>
+<li>&quot;Ansible Conditionals.&quot; Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html</li>
+<li>&quot;Ansible Error Handling In Playbooks.&quot; Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html</li>
+<li>&quot;Ansible - some random useful things.&quot; Code Poets. August 4, 2014. Accessed August 27, 2016. https://codepoets.co.uk/2014/ansible-random-things/</li>
+<li>&quot;Ansible Become (Privlege Escalation).&quot; Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html</li>
+<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html</li>
+<li>&quot;Ansible Asynchronous Actions and Polling.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html</li>
+<li>&quot;Ansible Set host facts from a task.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/set_fact_module.html</li>
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_roles.html</li>
 <li>&quot;Ansible: Include Role in a Role?&quot; StackOverflow. October 24, 2014. http://stackoverflow.com/questions/26551422/ansible-include-role-in-a-role</li>
-<li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot; Ansible Documentation. September 13, 2014. Accessed September 15th, 2016. http://docs.ansible.com/ansible/cron_module.html</li>
+<li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot; Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html</li>
+<li>&quot;Ansiblem mysql_db - Add or remove MySQL databases from a remote host.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html</li>
+<li>&quot;Ansiblem mysql_user - Adds or removes a user from a MySQL database.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html</li>
 </ul>

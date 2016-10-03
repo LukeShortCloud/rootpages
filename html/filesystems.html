@@ -1,13 +1,12 @@
 <h1 id="file-systems">File Systems</h1>
 <ul>
 <li><a href="#types">Types</a></li>
-<li><a href="#btrfs">BtrFS</a>
+<li><a href="#types---btrfs">BtrFS</a>
 <ul>
-<li><a href="#btrfs-mount-options">BtrFS Mount Options</a></li>
-<li><a href="#btrfs-raids">BtrFS RAIDs</a></li>
-<li><a href="#btrfs-limitations">BtrFS Limitations</a></li>
+<li><a href="#types---btrfs---btrfs-raids">BtrFS RAIDs</a></li>
+<li><a href="#types---btrfs---btrfs-limitations">BtrFS Limitations</a></li>
 </ul></li>
-<li>ext4</li>
+<li><a href="#types---ext4">ext4</a></li>
 <li>XFS</li>
 <li>ZFS</li>
 <li>LVM</li>
@@ -111,27 +110,39 @@
 </tbody>
 </table>
 <p>[1]</p>
-<p>Sources: 1. &quot;Linux File systems Explained.&quot; Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained 2. &quot;How many files can I put in a directory?&quot; Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory 3. &quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</p>
-<h3 id="btrfs">BtrFS</h3>
-<p>BtrFS stands for the &quot;B-tree filesystem.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS [1].</p>
-<p>Source:</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Linux File systems Explained.&quot; Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained</li>
+<li>&quot;How many files can I put in a directory?&quot; Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory</li>
+<li>&quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</li>
+</ol>
+<h2 id="types---btrfs">Types - BtrFS</h2>
+<p>BtrFS stands for the &quot;B-tree filesystem.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
+<p>Common mount options: * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvolume = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [2]</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;What’s All This I Hear About Btrfs For Linux.&quot; The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</li>
+<li>&quot;Mount Options&quot; BtrFS Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options</li>
 </ol>
-<h4 id="btrfs-mount-options">BtrFS Mount Options</h4>
-<p>Common options include: * autodefrag = Automatically defragement the file system. This can negatively impact performance. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvolume = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [1]</p>
-<p>Source: 1. &quot;Mount Options&quot; BtrFS Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options</p>
-<h4 id="btrfs-raids">BtrFS RAIDs</h4>
+<h3 id="types---btrfs---btrfs-raids">Types - BtrFS - BtrFS RAIDs</h3>
 <p>In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are supported. [1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Using Btrfs with Multiple Devices&quot; BtrFS Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</li>
 </ol>
-<h4 id="btrfs-limitations">BtrFS Limitations</h4>
+<h3 id="types---btrfs---btrfs-limitations">Types - BtrFS - BtrFS Limitations</h3>
 <p>Known limitations: * The &quot;df&quot; (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, &quot;btrfs filesystem df&quot; should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions. * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output. [1] * # btrfs balance start / * # btrfs defragment -r /</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Preventing a btrfs Nightmare.&quot; Jupiter Boradcasting. July 6, 2014. http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/</li>
+</ol>
+<h2 id="types---ext4">Types - ext4</h2>
+<p>The Extended File System 4 (ext4) is the default file system for most Linux operating systems. It's focus is on performance and reliability. It is also backwards compatible with ext3 file systems. [1]</p>
+<p>Mount options: * ro = Mount as read-only. * data * journal = All data is saved in the journal before writing it to the storage device. This is the safest option. * ordered = All data is written to the storage device before updating the journal's metadata. * writeback = Data can be written to the drive at the same time it updates the journal. * barrier * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure. * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase. * noacl = Disable the Linux extended access control lists. * nouser_xattr = Disable extended file attributes. * errors = Specify what happens when there is an error in the filesystem. * remount-ro = Automatically remound the partition into a read-only mode. * continue = Ignore the error. * panic = Shutdown the operating system if any errors are found. * discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files. * nodiscard = Disables TRIM. [2]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Linux File Systems: Ext2 vs Ext3 vs Ext4.&quot; The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4</li>
+<li>&quot;Ext4 Filesystem.&quot; Kernel Documentation. May 29, 2015. Accessed October 1, 2016. https://kernel.org/doc/Documentation/filesystems/ext4.txt</li>
 </ol>
 <h1 id="raids">RAIDs</h1>
 <p>RAID officially stands for &quot;Redundant Array of Independent Disks.&quot; The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.</p>
@@ -302,9 +313,8 @@ o- portals
 <pre><code>&gt; cd acls/iqn.2016-01.com.example.server:client
 &gt; set auth userid=toor
 &gt; set auth password=pass</code></pre></li>
-<li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall.</p></li>
+<li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]</p></li>
 </ul>
-<p>[1]</p>
 <h3 id="network---iscsi---initiator">Network - iSCSI - Initiator</h3>
 <p>This should be configured on the client server.</p>
 <ul>

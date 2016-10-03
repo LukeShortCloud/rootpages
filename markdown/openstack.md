@@ -7,6 +7,7 @@
     * [Token Provider](#configurations---keystone---token-provider)
   * [Nova](#configurations---nova)
     * [Hypervisors](#configurations---nova---hypervisors)
+    * [CPU Pinning](#configurations---nova---cpu-pinning)
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
@@ -137,6 +138,69 @@ Sources:
 3. "Xen." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/xen_libvirt.html
 4. "LXC." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/lxc.html
 5. "nova-docker." GitHub.com. December, 2015. Accessed August 28th, 2016. https://github.com/openstack/nova-docker
+
+### Configurations - Nova - CPU Pinning
+
+Verify that the processor(s) has hardware support for non-uniform memory access (NUMA). If it does, NUMA may still need to be turned on in the BIOS. NUMA nodes are the physical processors. These processors are then mapped to specific sectors of RAM. [1]
+
+```
+# lscpu | grep NUMA
+NUMA node(s):          2
+NUMA node0 CPU(s):     0-9,20-29
+NUMA node1 CPU(s):     10-19,30-39
+```
+```
+# numactl --hardware
+available: 2 nodes (0-1)
+node 0 cpus: 0 1 2 3 4 5 6 7 8 9 20 21 22 23 24 25 26 27 28 29
+node 0 size: 49046 MB
+node 0 free: 31090 MB
+node 1 cpus: 10 11 12 13 14 15 16 17 18 19 30 31 32 33 34 35 36 37 38 39
+node 1 size: 49152 MB
+node 1 free: 31066 MB
+node distances:
+node   0   1
+  0:  10  21
+  1:  21  10
+```
+```
+# virsh nodeinfo | grep NUMA
+NUMA cell(s):        2
+```
+
+[1][3]
+
+#### Configuration
+
+* Append the two NUMA filters.
+```
+# vim /etc/nova/nova.conf
+[ DEFAULT ] scheduler_default_filters = RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImageProp
+ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopologyFilter,AggregateInstanceExtraSpecsFilter
+```
+
+* Restart the Nova scheduler service on the controller node(s).
+```
+# systemctl restart openstack-nova-scheduler
+```
+
+* Set the aggregate/availability zone to allow pinning.
+```
+# nova aggregate-set-metadata <AGGREGATE_ZONE> pinned=true
+```
+
+* Modify a flavor to provide dedicated CPU pinning.
+```
+# nova flavor-key <FLAVOR_ID> set hw:cpu_policy=dedicated
+```
+
+[1][2][3]
+
+Sources:
+
+1. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
+2. http://docs.openstack.org/admin-guide/compute-flavors.html
+3. http://www.stratoscale.com/blog/openstack/cpu-pinning-and-numa-awareness/
 
 ## Configurations - Neutron
 
