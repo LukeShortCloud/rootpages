@@ -1,6 +1,7 @@
 <h1 id="ansible-2">Ansible 2</h1>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#configuration">Configuration</a></li>
 <li><a href="#configuration---inventory">Inventory</a>
 <ul>
@@ -43,6 +44,32 @@
 <li>Hochstein, <em>Ansible Up &amp; Running</em>, 2.</li>
 <li>&quot;An Ansible Tutorial.&quot;</li>
 </ol>
+<h2 id="installation">Installation</h2>
+<p>Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
+<p>RHEL:</p>
+<pre><code># yum installe epel-release
+# yum install ansible</code></pre>
+<p>Debian:</p>
+<pre><code># apt-get install software-properties-common
+# apt-add-repository ppa:ansible/ansible
+# apt-get update
+# apt-get install ansible</code></pre>
+<p>Source code:</p>
+<pre><code># git clone git://github.com/ansible/ansible.git
+# cd ansible/
+# git branch -a | grep stable
+# git checkout remotes/origin/stable-2.2
+# git submodule update --init --recursive
+# source ./hacking/env-setup</code></pre>
+<p>Source code updates:</p>
+<pre><code># git pull --rebase
+# git submodule update --init --recursive</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Installation.&quot;</li>
+<li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot;</li>
+</ol>
 <h2 id="configuration">Configuration</h2>
 <h3 id="configuration---inventory">Configuration - Inventory</h3>
 <p>Default file: /etc/ansible/hosts</p>
@@ -83,33 +110,45 @@ hello_string: Hello World!</code></pre>
 <p>In the Playbook and/or template files, these variables can then be referenced when enclosed by double braces &quot;{{&quot; and &quot;}}&quot;. [2]</p>
 <pre><code>Hello world from {{ domain_name }}!</code></pre>
 <p>Varialbes from other hosts or groups can also be refereneced.</p>
+<ul>
+<li><p>Syntax:</p>
 <pre><code>{{ groupvars[&#39;&lt;GROUPNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}
 {{ hostvars[&#39;&lt;HOSTNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}</code></pre>
+<pre><code>${groupvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}
+${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
+<li><p>Example:</p>
+<pre><code>command: echo ${hostvars.db3.hostname}</code></pre></li>
+</ul>
 <p>Variables can be defined as a list or nested lists.</p>
-<p>Syntax:</p>
+<ul>
+<li><p>Syntax:</p>
 <pre><code>&lt;VARIABLE&gt;: [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39;, &#39;&lt;ITEM3&gt;&#39; ]</code></pre>
-<pre><code>&lt;VARIABLE&gt;:
- - [ [ &#39;&lt;ITEMA&gt;&#39;, &#39;&lt;ITEMB&gt;&#39; ] ]
- - [ [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39; ] ]</code></pre>
-<p>Examples:</p>
+``` <VARIABLE>:</li>
+<li>[ [ '<ITEMA>', '<ITEMB>' ] ]</li>
+<li><p>[ [ '<ITEM1>', '<ITEM2>' ] ] ```</p></li>
+<li><p>Examples:</p>
 <pre><code>colors: [ &#39;blue&#39;, &#39;red&#39;, &#39;green&#39; ]</code></pre>
-<pre><code>cars:
- - [ &#39;sports&#39;, &#39;sedan&#39; ]
- - [ &#39;suv&#39;, &#39;pickup&#39; ]</code></pre>
+``` cars:</li>
+<li>[ 'sports', 'sedan' ]</li>
+<li><p>[ 'suv', 'pickup' ] ```</p></li>
+</ul>
 <p>Lists can be called by their array position, starting at &quot;0.&quot; Alternatively they can be called by the subvariable name.</p>
-<p>Syntax:</p>
+<ul>
+<li><p>Syntax:</p>
 <pre><code>{{ item.0 }}</code></pre>
-<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre>
-<p>Example:</p>
-<pre><code># variables
-members:
- - name: Frank
-   contact:
-    - address: &quot;111 Puppet Drive&quot;
-    - phone: &quot;1111111111&quot;</code></pre>
-<pre><code>- debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot;
- with_items:
-  - {{ members }}</code></pre>
+<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre></li>
+<li>Example: ``` members:</li>
+<li>name: Frank contact:
+<ul>
+<li>address: &quot;111 Puppet Drive&quot;</li>
+<li><p>phone: &quot;1111111111&quot;</p>
+<pre><code></code></pre></li>
+</ul></li>
+<li>debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot; with_items:
+<ul>
+<li>{{ members }} ```</li>
+</ul></li>
+</ul>
 <p>[4]</p>
 <p>The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.</p>
 <ul>
@@ -594,4 +633,6 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot; Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html</li>
 <li>&quot;Ansiblem mysql_db - Add or remove MySQL databases from a remote host.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html</li>
 <li>&quot;Ansiblem mysql_user - Adds or removes a user from a MySQL database.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html</li>
+<li>&quot;Ansiblem Installation.&quot; Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
+<li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot; Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ</li>
 </ul>

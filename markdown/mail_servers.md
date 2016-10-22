@@ -9,13 +9,15 @@
   * Courier
   * Dovecot
 
+
 # Mail Servers
 
 Mail transfer agents (MTAs) are servers that are used to receive local e-mail and send outgoing e-mail.
 
+
 ## Mail Servers - Postfix
 
-
+Configuration options:
 * myhostname = The hostname of the mail server.
   * Default: If a fully qualified domain name (FQDN) is configured on the Unix machine then Postfix will use that.
 * mynetworks = Define the networks that are allowed to send e-mails.
@@ -23,6 +25,7 @@ Mail transfer agents (MTAs) are servers that are used to receive local e-mail an
 * mydestination =  Define allowed destinations for e-mails.
   * Default: $myhostname localhost.$mydomain localhost
 * relayhost = Define the server to forward mail to. [1]
+
 
 ### Mail Servers - Postfix - Null Client Configuration
 

@@ -8,6 +8,7 @@
 
 Monit is a complete service monitoring software. It has a web interface that is available by default on the localhost interface via port 2812. It can detect if a service is down and restart it. Automatically alerts can also be configured.
 
+
 ### Monit - Configuration
 
 Install monit:
@@ -51,7 +52,10 @@ check process nginx with pidfile /var/run/nginx.pid
 start program = "/bin/systemctl start nginx"
 stop program = "/bin/systemctl stop nginx"
 ```
-
+* check system `<NAME>`
+  * Check system resources.
+  * Checks:
+    * IF `<RESOURCE>` `<OPERATOR>` THEN `<ACTION>`
 * check process `<SERVICE_NAME>` with pidfile `<PATH_TO_PIDFILE>`
   * Verify that the PID is running.
   * Checks:
@@ -73,15 +77,16 @@ stop program = "/bin/systemctl stop nginx"
   * Execute a script and verify it's exit code.
   * Checks:
     * IF STATUS `<OPERATOR>` `<EXIT_CODE>` THEN `<ACTION>`
-* check host `<HOSTNAME>` ADDRESS `<IP_ADDRESS>`
+* check host `<HOSTNAME>` WITH ADDRESS `<IP_ADDRESS>`
   * Verify that the remote host is accessible.
   * Checks:
+    * IF FAILED PING[4|6] [COUNT `<NUMBER_VALUE>`] [SIZE `<MTU_SIZE>`] [TIMEOUT `<NUMBER_VALUE>` `<TIME_UNIT>`] [ADDRESS `<IP_ADDRES>`] THEN `<ACTION>`
     * IF FAILED PORT `<PORT_NUMBER>` [TYPE `[TCP|UDP]`] [PROTOCOL `<PROTOCOL>`]
-* check network `<NETWORK_NAME>` ADDRESS `<IP_ADDRESS>`
+* check network `<NETWORK_NAME>` WITH INTERFACE `<INTERFACE>`
   * Verify that an IP address exists on the local machine. This is useful for failover type load balancers.
   * Checks:
-    * IF FAILED PING[4|6] [COUNT `<NUMBER_VALUE>`] [SIZE `<MTU_SIZE>`] [TIMEOUT `<NUMBER_VALUE>` `<TIME_UNIT>`]
-     [ADDRESS `<IP_ADDRES>`] THEN `<ACTION>`
+    * IF FAILED LINK THEN `<ACTION>` 
+    * IF SATURATION `<OPERATOR>` `<PERCENT>` THEN `<ACTION>`
 * check filesystem `<FILESYSTEM_NAME>`with path `<PATH_TO_DEVICE>`
   * Verify statistics about a filesystem.
     * `<PATH_TO_DEVICE>` can be a block device, mount, or directory.
@@ -115,7 +120,7 @@ Valid time units:
 
 Valid resources:
 
-* CPU [user|system|wait]
+* CPU([user|system|wait])
 * THREADS
 * CHILDREN
 * TOTAL MEMORY `<SIZE_UNIT>`

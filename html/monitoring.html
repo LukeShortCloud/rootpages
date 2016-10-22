@@ -30,6 +30,12 @@
 start program = &quot;/bin/systemctl start nginx&quot;
 stop program = &quot;/bin/systemctl stop nginx&quot;</code></pre>
 <ul>
+<li>check system <code>&lt;NAME&gt;</code></li>
+<li>Check system resources.</li>
+<li>Checks:
+<ul>
+<li>IF <code>&lt;RESOURCE&gt;</code> <code>&lt;OPERATOR&gt;</code> THEN <code>&lt;ACTION&gt;</code></li>
+</ul></li>
 <li>check process <code>&lt;SERVICE_NAME&gt;</code> with pidfile <code>&lt;PATH_TO_PIDFILE&gt;</code></li>
 <li>Verify that the PID is running.</li>
 <li>Checks:
@@ -57,17 +63,19 @@ stop program = &quot;/bin/systemctl stop nginx&quot;</code></pre>
 <ul>
 <li>IF STATUS <code>&lt;OPERATOR&gt;</code> <code>&lt;EXIT_CODE&gt;</code> THEN <code>&lt;ACTION&gt;</code></li>
 </ul></li>
-<li>check host <code>&lt;HOSTNAME&gt;</code> ADDRESS <code>&lt;IP_ADDRESS&gt;</code></li>
+<li>check host <code>&lt;HOSTNAME&gt;</code> WITH ADDRESS <code>&lt;IP_ADDRESS&gt;</code></li>
 <li>Verify that the remote host is accessible.</li>
 <li>Checks:
 <ul>
+<li>IF FAILED PING[4|6] [COUNT <code>&lt;NUMBER_VALUE&gt;</code>] [SIZE <code>&lt;MTU_SIZE&gt;</code>] [TIMEOUT <code>&lt;NUMBER_VALUE&gt;</code> <code>&lt;TIME_UNIT&gt;</code>] [ADDRESS <code>&lt;IP_ADDRES&gt;</code>] THEN <code>&lt;ACTION&gt;</code></li>
 <li>IF FAILED PORT <code>&lt;PORT_NUMBER&gt;</code> [TYPE <code>[TCP|UDP]</code>] [PROTOCOL <code>&lt;PROTOCOL&gt;</code>]</li>
 </ul></li>
-<li>check network <code>&lt;NETWORK_NAME&gt;</code> ADDRESS <code>&lt;IP_ADDRESS&gt;</code></li>
+<li>check network <code>&lt;NETWORK_NAME&gt;</code> WITH INTERFACE <code>&lt;INTERFACE&gt;</code></li>
 <li>Verify that an IP address exists on the local machine. This is useful for failover type load balancers.</li>
 <li>Checks:
 <ul>
-<li>IF FAILED PING[4|6] [COUNT <code>&lt;NUMBER_VALUE&gt;</code>] [SIZE <code>&lt;MTU_SIZE&gt;</code>] [TIMEOUT <code>&lt;NUMBER_VALUE&gt;</code> <code>&lt;TIME_UNIT&gt;</code>] [ADDRESS <code>&lt;IP_ADDRES&gt;</code>] THEN <code>&lt;ACTION&gt;</code></li>
+<li>IF FAILED LINK THEN <code>&lt;ACTION&gt;</code></li>
+<li>IF SATURATION <code>&lt;OPERATOR&gt;</code> <code>&lt;PERCENT&gt;</code> THEN <code>&lt;ACTION&gt;</code></li>
 </ul></li>
 <li>check filesystem <code>&lt;FILESYSTEM_NAME&gt;</code>with path <code>&lt;PATH_TO_DEVICE&gt;</code></li>
 <li>Verify statistics about a filesystem.
@@ -106,7 +114,7 @@ stop program = &quot;/bin/systemctl stop nginx&quot;</code></pre>
 </ul>
 <p>Valid resources:</p>
 <ul>
-<li>CPU [user|system|wait]</li>
+<li>CPU([user|system|wait])</li>
 <li>THREADS</li>
 <li>CHILDREN</li>
 <li>TOTAL MEMORY <code>&lt;SIZE_UNIT&gt;</code></li>

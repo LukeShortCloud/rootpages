@@ -14,15 +14,7 @@
 <h1 id="mail-servers">Mail Servers</h1>
 <p>Mail transfer agents (MTAs) are servers that are used to receive local e-mail and send outgoing e-mail.</p>
 <h2 id="mail-servers---postfix">Mail Servers - Postfix</h2>
-<ul>
-<li>myhostname = The hostname of the mail server.</li>
-<li>Default: If a fully qualified domain name (FQDN) is configured on the Unix machine then Postfix will use that.</li>
-<li>mynetworks = Define the networks that are allowed to send e-mails.</li>
-<li>Default: 127.0.0.0/8</li>
-<li>mydestination = Define allowed destinations for e-mails.</li>
-<li>Default: <span class="math inline"><em>m</em><em>y</em><em>h</em><em>o</em><em>s</em><em>t</em><em>n</em><em>a</em><em>m</em><em>e</em><em>l</em><em>o</em><em>c</em><em>a</em><em>l</em><em>h</em><em>o</em><em>s</em><em>t</em>.</span>mydomain localhost</li>
-<li>relayhost = Define the server to forward mail to. [1]</li>
-</ul>
+<p>Configuration options: * myhostname = The hostname of the mail server. * Default: If a fully qualified domain name (FQDN) is configured on the Unix machine then Postfix will use that. * mynetworks = Define the networks that are allowed to send e-mails. * Default: 127.0.0.0/8 * mydestination = Define allowed destinations for e-mails. * Default: <span class="math inline"><em>m</em><em>y</em><em>h</em><em>o</em><em>s</em><em>t</em><em>n</em><em>a</em><em>m</em><em>e</em><em>l</em><em>o</em><em>c</em><em>a</em><em>l</em><em>h</em><em>o</em><em>s</em><em>t</em>.</span>mydomain localhost * relayhost = Define the server to forward mail to. [1]</p>
 <h3 id="mail-servers---postfix---null-client-configuration">Mail Servers - Postfix - Null Client Configuration</h3>
 <p>In a null client configuration, mail is not accepted by the mail server. It only forwards local e-mails to another MTA.</p>
 <p>Example - Forward all e-mails from the localhost to the server at the 10.0.0.1 address.</p>

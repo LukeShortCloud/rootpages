@@ -3,22 +3,28 @@
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Configurations](#configurations)
+  * [Common](#configurations---common)
+    * [Database](#configurations---common---database)
   * [Keystone](#configurations---keystone)
     * [Token Provider](#configurations---keystone---token-provider)
+    * [API v3](#configurations---keystone---api-v3)
   * [Nova](#configurations---nova)
     * [Hypervisors](#configurations---nova---hypervisors)
     * [CPU Pinning](#configurations---nova---cpu-pinning)
   * [Neutron](#configurations---neutron)
     * [DNS](#configurations---neutron---dns)
     * [Metadata](#configurations---neutron---metadata)
+    * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
+    * [Quality of Service](#configurations---neutron---quality-of-service)
+* [Command Line Interface Utilities](#command-line-interface-utilities)
 * [Automation](#automation)
   * [Heat](#automation---heat)
     * [Resources](#automation---heat---resources)
+    * [Parameters](#automation---heat---parameters)
   * [Vagrant](#automation---vagrant)
 * [Testing](#testing)
   * [Tempest](#testing---tempest)
 * [Performance](#performance)
-
 
 
 # Introduction
@@ -29,6 +35,7 @@ This guide is aimed to help guide System Administrators through OpenStack. It is
 * CentOS 7 (Linux)
 
 Most things mentioned here should be able to be applied to other similar environments.
+
 
 # Overview
 
@@ -41,11 +48,60 @@ OpenStack has a large range of services. The essential ones required for a basic
 * Neutron
   * Networking
 
+
 # Configurations
 
 This section will focus on important settings for each service's configuration files.
 
+
+## Configurations - Common
+
+These are general configuration options that apply to most OpenStack configuration files.
+
+
+### Configurations - Common - Database
+
+Different database backends can be used by the API services on the controller nodes.
+
+* MariaDB/MySQL. Requires "PyMySQL." Starting with Liberty, this is prefered over using "mysql://" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1]
+```
+[ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>/<DATABASE>
+```
+* PostgreSQL. Requires "psycopg2." [2]
+```
+[ database ] connection = postgresql://<USER>:<PASSWORD>@<MYSQL_HOST>/<DATABASE>
+```
+* SQLite.
+```
+[ database ] connection = sqlite:///<DATABASE>.sqlite
+```
+
+Sources:
+
+1. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. Jun 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
+2. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
+
+
 ## Configurations - Keystone
+
+
+### Configurations - Keystone - API v3
+
+In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the "Q" release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
+
+* /etc/keystone/keystone-paste.ini
+  * [pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
+  * [pipeline:admin_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
+  * [composite:main] /v2.0 = public_api
+  * [composite:admin] /v2.0 = admin_api
+
+[2]
+
+Sources:
+
+1. "Mitaka Series Release Notes." Accessed October 16, 2016. http://docs.openstack.org/releasenotes/keystone/mitaka.html
+2. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
+
 
 ### Configurations - Keystone - Token Provider
 
@@ -78,8 +134,9 @@ The token provider is used to create and delete tokens for authentication. Diffe
 
 Sources:
 
-1. http://docs.openstack.org/developer/keystone/configuration.html
+1. "Configuring Keystone." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html
 2. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
+
 
 ## Configurations - Nova
 
@@ -91,6 +148,7 @@ Sources:
 	* [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
 	* [ database ] connection = mysql://nova:password@10.1.1.1/nova
 	  * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
+
 
 ### Configurations - Nova - Hypervisors
 
@@ -138,6 +196,7 @@ Sources:
 3. "Xen." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/xen_libvirt.html
 4. "LXC." OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/lxc.html
 5. "nova-docker." GitHub.com. December, 2015. Accessed August 28th, 2016. https://github.com/openstack/nova-docker
+
 
 ### Configurations - Nova - CPU Pinning
 
@@ -202,7 +261,9 @@ Sources:
 2. http://docs.openstack.org/admin-guide/compute-flavors.html
 3. http://www.stratoscale.com/blog/openstack/cpu-pinning-and-numa-awareness/
 
+
 ## Configurations - Neutron
+
 
 ### Configurations - Neutron - DNS
 
@@ -228,6 +289,7 @@ Sources:
 
 1. "Name resolution for instances." OpenStack Documentation. August 09, 2016. Accessed August 13th, 2016. http://docs.openstack.org/mitaka/networking-guide/config-dns-resolution.html
 
+
 ### Configurations - Neutron - Metadata
 
 The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with "cloud-init" on the instance to configure SSH keys and other post-boot tasks.
@@ -238,7 +300,7 @@ Assuming authentication is already configured, set these options for the OpenSta
   * [ DEFAULT ] nova_metadata_ip = CONTROLLER_IP
   * [ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY
 * /etc/nova/nova.conf
-  * [ DEFAULT ] enabled_apis = ec2,osapi_compute,metadata
+  * [ DEFAULT ] enabled_apis = osapi_compute,metadata
   * [ neutron ] service_metadata_proxy = True
   * [ neutron ] metadata_proxy_shared_secret = SECRET_KEY
 
@@ -266,13 +328,146 @@ Source:
 
 1. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
 
+
+### Configurations - Neutron - Load-Balancing-as-a-Service
+
+Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end.
+
+* /etc/neutron/neutron.conf
+  * [ DEFAULT ] service_plugins = `<PLUGINS>`, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+    * Append the LBaaSv2 service plugin.
+* /etc/neutron/lbaas_agent.ini
+  * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+    * This is for Neutron with the OpenVSwitch backend only.
+  * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+    * This is for Neutron with the Linux Bridge backend only.
+
+#### Scenario #1 - HAProxy (recommended for it's maturity)
+
+* /etc/neutron/neutron_lbaas.conf
+  * [ service_providers ] service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
+* /etc/neutron/lbaas_agent.ini
+  * [ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
+  * [ haproxy ] user_group = haproxy
+    * Specify the group that HAProxy runs as. In RHEL, it's "haproxy."
+
+#### Scenario #2 - Octavia
+
+* /etc/neutron/neutron_lbaas.conf
+  * [ service_providers ] service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
+
+[1]
+
+Source:
+
+1. http://docs.openstack.org/draft/networking-guide/config-lbaas.html
+
+
+### Configurations - Neutron - Quality of Service
+
+The Quality of Service (QoS) plugin can be used to rate limit the amount of bandwidth that is allowed through a network port.
+
+* /etc/neutron/neutron.conf
+  * [ DEFAULT ] service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
+    * Append the QoS plugin to the list of service_plugins.
+* /etc/neutron/plugins/ml2/openvswitch_agent.ini
+  * [ml2] extension_drivers = qos
+    * Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.
+* /etc/neutron/plugins/ml2/ml2_conf.ini
+  * [agent] extensions = qos
+    * Lastly, append the QoS extension to the moduler layer 2 configuration.
+
+[1]
+
+Source:
+
+1. "Quality of Service (QoS)." OpenStack Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.openstack.org/draft/networking-guide/config-qos.html
+
+
+# Command Line Interface Utilities
+
+The OpenStack CLI resources used to be handled by seperate commands. These have all been modified and are managed by the universal "openstack" command. The various options and arguments are explained in Root Pages' OpenStack section [Linux Commands excel sheet](https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx).
+
+For the CLI utilies to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.
+
+* Add the credentials to a text file This is generally ends with the ".sh" extension to signify it's a shell file. A few default variables are filled in below.
+  * Keystone v2.0
+```
+# unset any variables used
+unset OS_PROJECT_ID
+unset OS_PROJECT_NAME
+unset OS_PROJECT_DOMAIN_ID
+unset OS_PROJECT_DOMAIN_NAME
+unset OS_USER_ID
+unset OS_USER_NAME
+unset OS_USER_DOMAIN_ID
+unset OS_USER_DOMAIN_NAME
+unset OS_REGION_ID
+unset OS_REGION_NAME
+# fill in the project, user, and endpoint details
+export PROJECT_ID=
+export PROJECT_NAME=
+export OS_USERNAME=
+export OS_PASSWORD=
+export OS_REGION_NAME="RegionOne"
+export OS_AUTH_URL="http://controller1:5000/v2.0"
+export OS_AUTH_VERSION="2.0"
+```
+  * Keystone v3
+```
+# unset any variables used
+unset OS_PROJECT_ID
+unset OS_PROJECT_NAME
+unset OS_PROJECT_DOMAIN_ID
+unset OS_PROJECT_DOMAIN_NAME
+unset OS_USER_ID
+unset OS_USER_NAME
+unset OS_USER_DOMAIN_ID
+unset OS_USER_DOMAIN_NAME
+unset OS_REGION_ID
+unset OS_REGION_NAME
+# fill in the project, user, and endpoint details
+export OS_PROJECT_ID=
+export OS_PROJECT_NAME=
+export OS_PROJECT_DOMAIN_NAME="default"
+export OS_USERID=
+export OS_USERNAME=
+export OS_PASSWORD=
+export OS_USER_DOMAIN_NAME="default"
+export OS_REGION_NAME="RegionOne"
+export OS_AUTH_URL="http://controller1:5000/v3"
+export OS_AUTH_VERSION="3"
+```
+
+* Source the credential file to load it into the shell environment:
+```
+$ source <USER_CREDENTIALS_FILE>.sh
+```
+
+* View the available command line options.
+```
+$ openstack help
+```
+```
+$ openstack help <OPTION>
+```
+
+[1]
+
+Source:
+
+1. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
+
+
 # Automation
 
 Automating deployments can be accomplished in a few ways. The built-in OpenStack way is via Orhcestration as a Service (OaaS), typically handled by Heat. It is also possible to use Ansible or Vagrant to automate OpenStack deploys.
 
+
 ## Automation - Heat
 
 Heat is used to orchestrate the deployment of multiple OpenStack components at once. It can also install and configure software on newly built instances.
+
 
 ## Automation - Heat - Resources
 
@@ -289,12 +484,17 @@ Syntax:
         <PROPERTY_2>: <VALUE_2>
 ```
 
+For referencing created resources (for example, creating a subnet in a created network) the "get_resource" function should be used.
+```
+{ get_resource: <OBJECT_NAME> }
+```
+
 * Create a network, assigned to the "internal_network" object.
 ```
 internal_network: {type: 'OS::Neutron::Net'}
 ```
 
-* Create a subnet for the created network.
+* Create a subnet for the created network. Required properties: network name or ID.
 ```
 internal_subnet:
     type: OS::Neutron::Subnet
@@ -305,7 +505,7 @@ internal_subnet:
       network_id: {get_resource: internal_network}
 ```
 
-* Create a port. This object can be used during the instance creation.
+* Create a port. This object can be used during the instance creation. Required properties: network name or ID.
 ```
 subnet_port:
     type: OS::Neutron::Port
@@ -315,7 +515,24 @@ subnet_port:
         network: {get_resource: internal_network}
 ```
 
-* Create a key pair called "HeatKeyPair."
+* Create a router associated with the public "ext-net" network.
+```
+external_router:
+    type: OS::Neutron::Router
+    properties:
+        external_gateway_info: [ network: ext-net ]
+```
+
+* Attach a port from the network to the router.
+```
+external_router_interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+        router: {get_resource: external_router}
+        subnet: {get_resource: internal_subnet}
+```
+
+* Create a key pair called "HeatKeyPair." Required property: name.
 ```
 ssh_keys:
     type: OS::Nova::KeyPair
@@ -341,7 +558,7 @@ instance_creation:
 ```
 floating_ip:
     type: OS::Neutron::FloatingIP
-    properties: {pool: ext-net}
+    properties: {floating_network: ext-net}
 ```
 
 * Allocate a a floating IP to the created instance from a "instance_creation" function. Alternatively, a specific instance's ID can be defined here.
@@ -353,9 +570,57 @@ floating_ip_association:
 		server_id: {get_resource: instance_creation}
 ```
 
-Sources:
+Source:
 
 1. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
+
+
+## Automation - Heat - Parameters
+
+Parameters allow users to input custom variables for Heat templates.
+
+Options:
+* type = The input type. This can be a string, number, JSON, a comma seperated list or a boolean.
+* label = String. The text presented to the end-user for the fillable entry.
+* description = String. Detailed information about the parameter.
+* default = A default value for the parameter.
+* constraints = A parameter has to match a specified constrant. Any number of constraints can be used from the available ones below.
+  * length = How long a string can be.
+  * range = How big a number can be.
+  * allowed_values = Allow only one of these specific values to be used.
+  * allowed_pattern = Allow only a value matching a regular expression.
+  * custom_constraint = A full list of custom service constraints can be found at [http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint](#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint).
+* hidden = Boolean. Specify if the text entered should be hidden or not. Default: false.
+* immutable = Boolean. Specify whether this variable can be changed. Default: false.
+
+Syntax:
+```
+parameters:
+	<CUSTOM_NAME>:
+    	type: string
+        label: <LABEL>
+        description: <DESCRIPTION>
+        default: <DEFAULT_VALUE>
+        constraints:
+        	- length: { min: <MINIMUM_NUMBER>, max: <MAXIMUM_NUMBER> }
+        	- range: { min: <MINIMUM_NUMBER>, max: <MAXIMUM_NUMBER> }
+        	- allowed_values: [ <VALUE1>, <VALUE2>, <VALUE3> ]
+        	- allowed_pattern: <REGULAR_EXPRESSION>
+        	- custom_constrant: <CONSTRAINT>
+		hidden: <BOOLEAN>
+        immutable: <BOOLEAN>
+```
+
+For referencing this parameter elsewhere in the Heat template, use this syntax for the variable:
+```
+{ get_param: <CUSTOM_NAME> }
+```
+
+[1]
+
+Source:
+
+1. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template_guide/hot_spec.html
 
 
 ## Automation - Vagrant
@@ -392,11 +657,13 @@ $ vagrant up --provider=openstack
 
 [1]
 
-Sources:
+Source:
 
 1. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. Accessed September 24, 2016. April 30, 2016. https://github.com/ggiamarchi/vagrant-openstack-provider
 
+
 # Testing
+
 
 ## Testing - Tempest
 
@@ -440,9 +707,10 @@ image_ref_alt
 
 [1]
 
-Sources:
+Source:
 
 1. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
+
 
 # Performance
 
@@ -457,6 +725,6 @@ A few general tips for getting the fastest OpenStack performance.
     * This offloads a lot of networking resources onto the compute nodes.
 * General
   * Utilize /etc/hosts.
-    * Ensure that all of your domain names (including the public IP) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Altneratively, consider setting up a recursive DNS server on the controller nodes.
+    * Ensure that all of your domain names (including the public IP) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
   * Use memcache.
     * This is generally configured by an option called "memcache_servers" in the configuration files for most services. Consider using "CouchBase" for its ease of clustering and redudancy support.

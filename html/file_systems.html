@@ -139,7 +139,7 @@
 <h2 id="types---ext4">Types - ext4</h2>
 <p>The Extended File System 4 (ext4) is the default file system for most Linux operating systems. It's focus is on performance and reliability. It is also backwards compatible with ext3 file systems. [1]</p>
 <p>Mount options: * ro = Mount as read-only. * data * journal = All data is saved in the journal before writing it to the storage device. This is the safest option. * ordered = All data is written to the storage device before updating the journal's metadata. * writeback = Data can be written to the drive at the same time it updates the journal. * barrier * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure. * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase. * noacl = Disable the Linux extended access control lists. * nouser_xattr = Disable extended file attributes. * errors = Specify what happens when there is an error in the filesystem. * remount-ro = Automatically remound the partition into a read-only mode. * continue = Ignore the error. * panic = Shutdown the operating system if any errors are found. * discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files. * nodiscard = Disables TRIM. [2]</p>
-<p>Source:</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Linux File Systems: Ext2 vs Ext3 vs Ext4.&quot; The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4</li>
 <li>&quot;Ext4 Filesystem.&quot; Kernel Documentation. May 29, 2015. Accessed October 1, 2016. https://kernel.org/doc/Documentation/filesystems/ext4.txt</li>
@@ -299,7 +299,7 @@ o- portals
 <pre><code>&gt; luns/ create /backstores/block/&lt;DEVICE&gt;</code></pre></li>
 <li><p>Example:</p>
 <pre><code>&gt; luns/ create /backstores/block/iscsidisk</code></pre></li>
-<li>Create a blank ACL. By default, this will allow any user to access this iSCSI target.</li>
+<li><p>Create a blank ACL. By default, this will allow any user to access this iSCSI target.</p></li>
 <li><p>Syntax:</p>
 <pre><code>&gt; acls/ create iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ACL_NAME&gt;</code></pre></li>
 <li><p>Example:</p>
@@ -313,6 +313,8 @@ o- portals
 <pre><code>&gt; cd acls/iqn.2016-01.com.example.server:client
 &gt; set auth userid=toor
 &gt; set auth password=pass</code></pre></li>
+<li><p>Any ACL rules that were created can be overriden by turning off authentication entirely.</p>
+<pre><code>&gt; set attribute authentication=0</code></pre></li>
 <li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]</p></li>
 </ul>
 <h3 id="network---iscsi---initiator">Network - iSCSI - Initiator</h3>

@@ -1,6 +1,7 @@
 # Ansible 2
 
 * [Introduction](#introduction)
+* [Installation](#installation)
 * [Configuration](#configuration)
   * [Inventory](#configuration---inventory)
     * [Variables](#configuration---inventory---variables)
@@ -39,6 +40,49 @@ Sources:
 
 1. Hochstein, *Ansible Up & Running*, 2.
 2. "An Ansible Tutorial."
+
+
+## Installation
+
+Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]
+
+RHEL:
+```
+# yum installe epel-release
+# yum install ansible
+```
+
+Debian:
+```
+# apt-get install software-properties-common
+# apt-add-repository ppa:ansible/ansible
+# apt-get update
+# apt-get install ansible
+```
+
+
+Source code:
+```
+# git clone git://github.com/ansible/ansible.git
+# cd ansible/
+# git branch -a | grep stable
+# git checkout remotes/origin/stable-2.2
+# git submodule update --init --recursive
+# source ./hacking/env-setup
+```
+
+Source code updates:
+```
+# git pull --rebase
+# git submodule update --init --recursive
+```
+
+[1]
+
+Sources:
+
+1. "Ansible Installation."
+2. "Ansible 2.2.0 RC1 is ready for testing."
 
 
 ## Configuration
@@ -128,14 +172,25 @@ Hello world from {{ domain_name }}!
 ```
 
 Varialbes from other hosts or groups can also be refereneced.
+
+* Syntax:
 ```
 {{ groupvars['<GROUPNAME>']['<VARIABLE>'] }}
 {{ hostvars['<HOSTNAME>']['<VARIABLE>'] }}
 ```
+```
+${groupvars.<HOSTNAME>.<VARIABLE>}
+${hostvars.<HOSTNAME>.<VARIABLE>}
+```
+
+* Example:
+```
+command: echo ${hostvars.db3.hostname}
+```
 
 Variables can be defined as a list or nested lists.
 
-Syntax:
+* Syntax:
 ```
 <VARIABLE>: [ '<ITEM1>', '<ITEM2>', '<ITEM3>' ]
 ```
@@ -145,7 +200,7 @@ Syntax:
  - [ [ '<ITEM1>', '<ITEM2>' ] ]
 ```
 
-Examples:
+* Examples:
 ```
 colors: [ 'blue', 'red', 'green' ]
 ```
@@ -157,7 +212,7 @@ cars:
 
 Lists can be called by their array position, starting at "0." Alternatively they can be called by the subvariable name.
 
-Syntax:
+* Syntax:
 ```
 {{ item.0 }}
 ```
@@ -165,9 +220,8 @@ Syntax:
 {{ item.0.<SUBVARIABLE> }}
 ```
 
-Example:
+* Example:
 ```
-# variables
 members:
  - name: Frank
    contact:
@@ -175,9 +229,9 @@ members:
     - phone: "1111111111"
 ```
 ```
-- debug: msg="Contact {{ item.name }} at {{ item.contact.phone }}"
- with_items:
-  - {{ members }}
+ - debug: msg="Contact {{ item.name }} at {{ item.contact.phone }}"
+   with_items:
+    - {{ members }}
 ```
 
 [4]
@@ -1014,3 +1068,5 @@ Bibliography:
 * "Ansible cron - Manage cron.d and crontab entries." Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html
 * "Ansiblem mysql_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html
 * "Ansiblem mysql_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html
+* "Ansiblem Installation." Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html
+* "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ

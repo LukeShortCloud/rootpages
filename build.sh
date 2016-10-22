@@ -9,7 +9,7 @@ destination_dir="./html"
 # remove the existing compiled HTML pages
 rm -rf ${destination_dir}/*
 
-for md in `\ls ${source_dir} | cut -d\. -f1`;
+for page in `\ls ${source_dir} | cut -d\. -f1`;
     # regenerate the HTML pages
-    do pandoc ${source_dir}/${md}.md > ${destination_dir}/${md}.html
+    do pandoc ${source_dir}/${page}.md > ${destination_dir}/${page}.html
 done

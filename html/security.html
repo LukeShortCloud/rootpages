@@ -1,16 +1,14 @@
 <h1 id="security">Security</h1>
 <ul>
-<li>Permissions</li>
-<li>Ownership
-<ul>
-<li>Extended ACL</li>
-</ul></li>
-<li>Access
+<li><a href="#permissions">Permissions</a></li>
+<li><a href="#permissions---user,-group,-and-other">User, Group, and Other</a></li>
+<li>Special
 <ul>
 <li>sticky</li>
 <li>setuid</li>
 <li>setguid</li>
 </ul></li>
+<li>Attributes</li>
 <li>Firewalls</li>
 <li>iptables</li>
 <li>firewalld</li>
@@ -23,21 +21,43 @@
 <li><a href="#authentication---kerberos---configuration">Configuration</a></li>
 </ul></li>
 </ul>
+<h1 id="permissions">Permissions</h1>
+<h2 id="permissions---user-group-and-other">Permissions - User, Group, and Other</h2>
+<p>Normal Linux flie permissions are grouped into three categories: owner, group, and other users access. Permissions can be defined for what the user, group, or anyone else can do to the file. This can be defined with letters or numbers.</p>
+<ul>
+<li>read (r,4) = Read access.</li>
+<li>write (w,2) = Write access.</li>
+<li>execute (x,1) = Executable access.</li>
+</ul>
+<p>The addition of these numbers makes up the entire access. For example, &quot;rwx&quot; would equal &quot;777.&quot; [1]</p>
+<pre><code>-rwxr-xr--. 1 root bob 0 Oct 22 13:11 example_file.txt</code></pre>
+<pre><code>user (root): rwx = 7
+group (bob): r-x = 5
+other: r-- = 4</code></pre>
+<p>These permissions can be modified with the &quot;chmod&quot; command.</p>
+<p>Example (numbers):</p>
+<pre><code># chmod 775</code></pre>
+<p>Example (letters):</p>
+<pre><code># chmod g+w,o+x</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Understanding Linux File Permissions.&quot; Linux.com. May 18, 2010. Accessed October 22, 2016. https://www.linux.com/learn/understanding-linux-file-permissions</li>
+</ol>
 <h1 id="authentication">Authentication</h1>
 <h2 id="authentication---kerberos">Authentication - Kerberos</h2>
 <p>Kerberos provides authentication for services over a network. A Kerberos server provides remote users with a &quot;ticket&quot; to use after they log in. This ticket is used to validate authentication with various services including FTP, SSH, NFS, etc. [1]</p>
 <p>Ports: * 88 TCP/UDP * 464 TCP/UDP * 749 TCP/UDP * 6620 TCP/UDP * 6621 TCP/UDP * 6623 TCP/UDP [2]</p>
 <h3 id="authentication---kerberos---configuration">Authentication - Kerberos - Configuration</h3>
 <p>The Kerbero sever is referred to as the Kerberos Distribution Center (KDC). These packages will need to be installed for the service:</p>
-<p>RHEL</p>
+<p>RHEL:</p>
 <pre><code># yum install krb5-server krb5-workstation pam_krb5</code></pre>
-<p>Ubuntu</p>
+<p>Debian:</p>
 <pre><code># apt-get install krb5-kdc krb5-admin-server libpam-krb5</code></pre>
-<p>Arch</p>
-<pre><code># pamcan -S krb5 pam-krb5</code></pre>
 <p>The principal database needs to be generated. First replace &quot;EXAMPLE.COM&quot; with the domain to be used. For this example, the realm &quot;ROOTPAGES.TLD&quot; will be used.</p>
 <ul>
-<li><p>/var/kerberos/krb5kdc/kdc.conf</p>
+<li>/var/kerberos/krb5kdc/kdc.conf</li>
+</ul>
 <pre><code>[kdcdefaults]
  kdc_ports = 88
  kdc_tcp_ports = 88
@@ -48,13 +68,14 @@
   dict_file = /usr/share/dict/words
   admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
   supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
- }</code></pre></li>
+ }</code></pre>
+<ul>
 <li><p>/var/kerberos/krb5kdc/adm5.acl</p>
 <pre><code>*/admin@ROOTPAGES.TLD   *</code></pre></li>
 </ul>
 <p>The principal is made by running the command below. It will create a new database and associated files for the realm &quot;ROOTPAGES.TLD.&quot;</p>
 <pre><code># kdb5_util create -s -r ROOTPAGES.TLD</code></pre>
-<p>Uncomment all of the lines in /etc/krb5.conf and then replace all references to &quot;example.com&quot; and EXAMPLE.COM&quot; with the server's domain name/realm.</p>
+<p>Uncomment all of the lines in /etc/krb5.conf and then replace all references to &quot;example.com&quot; and EXAMPLE.COM&quot; with the server's domain name/realm. [3] For testing, &quot;rdns=false&quot; and &quot;ignore_acceptor_hostname=true&quot; in the &quot;[libdefaults]&quot; section should be used to prevent DNS issues. [4]</p>
 <pre><code>[logging]
  default = FILE:/var/log/krb5libs.log
  kdc = FILE:/var/log/krb5kdc.log
@@ -109,4 +130,5 @@ $ klist</code></pre>
 <li>&quot;Kerberos.&quot; Ubuntu Documentation. November 18, 2014. Accessed September 25, 2016. https://help.ubuntu.com/community/Kerberos</li>
 <li>&quot;Configuring Your Firewall to Work With Kerberos V5.&quot; Accessed September 25, 2016. https://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-admin/Configuring-Your-Firewall-to-Work-With-Kerberos-V5.html</li>
 <li>&quot;CentOS 7 Configure Kerberos KDC and Client.&quot; theurbanpengiun. September 5, 2016. Accessed September 25, 2016. https://www.youtube.com/watch?v=7Q-Xx0I8PXc</li>
+<li>&quot;Principal names and DNS.&quot; MIT Kerberos Documentation. Accessed October 22, 2016. https://web.mit.edu/kerberos/krb5-1.13/doc/admin/princ_dns.html</li>
 </ol>

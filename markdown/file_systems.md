@@ -104,7 +104,7 @@ Mount options:
 * discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files.
 * nodiscard = Disables TRIM. [2]
 
-Source:
+Sources:
 
 1. "Linux File Systems: Ext2 vs Ext3 vs Ext4." The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4
 2. "Ext4 Filesystem." Kernel Documentation. May 29, 2015. Accessed October 1, 2016. https://kernel.org/doc/Documentation/filesystems/ext4.txt
@@ -333,6 +333,7 @@ o- tpg1
 ```
 
 * Create a blank ACL. By default, this will allow any user to access this iSCSI target.
+
   * Syntax:
 ```
 > acls/ create iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
@@ -354,6 +355,11 @@ o- tpg1
 > cd acls/iqn.2016-01.com.example.server:client
 > set auth userid=toor
 > set auth password=pass
+```
+
+* Any ACL rules that were created can be overriden by turning off authentication entirely.
+```
+> set attribute authentication=0
 ```
 
 * Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]
