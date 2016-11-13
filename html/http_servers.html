@@ -1,12 +1,14 @@
 <h1 id="http-servers">HTTP Servers</h1>
 <ul>
-<li><a href="#apache-2.4">Apache 2.4</a></li>
+<li><a href="#apache-2.4">Apache 2.4</a>
+<ul>
 <li><a href="#apache---configuration">Configuration</a></li>
 <li><a href="#apache---virtual-hosts">Virtual Hosts</a></li>
-<li><a href="#apache---directories">Directorties</a></li>
+<li><a href="#apache---files,-directories,-and-locations">Files, Directories, and Locations</a></li>
 <li><a href="#apache---authentication">Authentication</a></li>
 <li><a href="#apache---cgi">CGI</a></li>
 <li><a href="#apache---selinux">SELinux</a></li>
+</ul></li>
 <li>Nginx</li>
 <li>Lighttpd</li>
 </ul>
@@ -22,7 +24,42 @@
 <pre><code>/etc/http/conf/httpd.conf</code></pre>
 <p>Debian/Ubuntu</p>
 <pre><code>/etc/apache2/apache2.conf</code></pre>
-<p>Main Options: * ServerRoot = Specify what directory Apache should use as a relative path. * Example: ServerRoot &quot;/etc/httpd&quot; * Listen = What port (and optionally aaddress) Apache should listen on. * Example #1: Listen 127.0.0.1:80 * Example #2: Listen 443 * User = The user that Apache should be run as. * Example: User apache * Group = The group that Apache should be run with. * ServerAdmin = Provide an e-mail address that will get e-mails when there are any errors. * LogLevel = Specify how verbose logging should be. * error * warn * info * debug * ErrorDocument = Provide a custom page for specific error numbers. This can either be text, a file, script, or redirect. * Example #1: ErrorDocument 500 &quot;Contact your System Administrator for help. Thank you.&quot; * Examlpe #2: ErrorDocument 403 &quot;/cgi-bin/you_didnt_say_the_magic_word.py&quot; * ErrorLog = The file to use for the error log. * CustomLog = The file to use for logging Apache access information. * IncludeOptional = Specify what directory (under ServerRoot) to load other configurations from. * Example: IncludeOptional conf.d/*.conf</p>
+<p>Options:</p>
+<ul>
+<li>ServerRoot = Specify what directory Apache should use as a relative path.
+<ul>
+<li>Example: ServerRoot &quot;/etc/httpd&quot;</li>
+</ul></li>
+<li>Listen = What port (and optionally aaddress) Apache should listen on.
+<ul>
+<li>Example #1: Listen 127.0.0.1:80</li>
+<li>Example #2: Listen 443</li>
+</ul></li>
+<li>User = The user that Apache should be run as.
+<ul>
+<li>Example: User apache</li>
+</ul></li>
+<li>Group = The group that Apache should be run with.</li>
+<li>ServerAdmin = Provide an e-mail address that will get e-mails when there are any errors.</li>
+<li>LogLevel = Specify how verbose logging should be.
+<ul>
+<li>error</li>
+<li>warn</li>
+<li>info</li>
+<li>debug</li>
+</ul></li>
+<li>ErrorDocument = Provide a custom page for specific error numbers. This can either be text, a file, script, or redirect.
+<ul>
+<li>Example #1: ErrorDocument 500 &quot;Contact your System Administrator for help. Thank you.&quot;</li>
+<li>Examlpe #2: ErrorDocument 403 &quot;/cgi-bin/you_didnt_say_the_magic_word.py&quot;</li>
+</ul></li>
+<li>ErrorLog = The file to use for the error log.</li>
+<li>CustomLog = The file to use for logging Apache access information.</li>
+<li>IncludeOptional = Specify what directory (under ServerRoot) to load other configurations from.
+<ul>
+<li>Example: IncludeOptional conf.d/*.conf</li>
+</ul></li>
+</ul>
 <p>[1]</p>
 <p>Verify that the configuration is correct with one of these commands:</p>
 <pre><code># apachectl configtest</code></pre>
@@ -36,7 +73,14 @@
 <p>Syntax:</p>
 <pre><code>&lt;VirtualHost *:80&gt;
 &lt;/VirtualHost&gt;</code></pre>
-<p>Options: * ServerName = The main domain name for the virtual host. * ServerAlias = Other domains associated with the virtual host * DocumentRoot = The directory where the domain loads its files from. * DirectoryIndex = The main file that is loaded up in a directory, if found. Default: &quot;index.html&quot; or &quot;index.htm.&quot; * LogLevel, ErroLog, and CustomLog = Refer to the <a href="#apache---configuration">Apache Configuration</a> section.</p>
+<p>Options:</p>
+<ul>
+<li>ServerName = The main domain name for the virtual host.</li>
+<li>ServerAlias = Other domains associated with the virtual host</li>
+<li>DocumentRoot = The directory where the domain loads its files from.</li>
+<li>DirectoryIndex = The main file that is loaded up in a directory, if found. Default: &quot;index.html&quot; or &quot;index.htm.&quot;</li>
+<li>LogLevel, ErroLog, and CustomLog = Refer to the <a href="#apache---configuration">Apache Configuration</a> section.</li>
+</ul>
 <p>Example:</p>
 <pre><code>&lt;VirtualHost 127.0.0.1:80&gt;
   ServerName  rootpages.tld
@@ -68,8 +112,38 @@
 <pre><code>&lt;Location &quot;/path/to/location&quot;&gt;
 &lt;/Location&gt;</code></pre></li>
 </ul>
-<p>Options: * Require = Set an access control list to allow certain hosts or IPs. * all = Apply the rule to all hosts. * host = Apply the rule to a specific host. * ip = Apply the rule to an IP address * granted = Allow the matched rule. * denied = Deny th ematched rule. * Require not [all|host|ip] = Deny access to a host or IP. This should be configured after a Require rule. [1] * Options = Specify attributes of the matched area. Enable an option with a &quot;+&quot; or disable it with &quot;-&quot;. If no sign is present, Apache assumes it should be enabled. If at least one option requires a sign then all of the other options will need a sign. * All = Allow of the options. * ExecGI = Allow CGI scripts to be executed. * Includes = Allow HTML include functionality to include files server-side. * IncludesNOEXEC = The same as Includes but it does not allow HTML files to execute commands or scripts. * Indexes = Show the content of a directory if the DirectoryIndex is not found. * FollowSymLinks = Allow symlinks to different directories. [2]</p>
-<p>Source:</p>
+<p>Options:</p>
+<ul>
+<li>Require = Set an access control list to allow certain hosts or IPs.
+<ul>
+<li>all = Apply the rule to all hosts.</li>
+<li>host = Apply the rule to a specific host.</li>
+<li>ip = Apply the rule to an IP address
+<ul>
+<li>granted = Allow the matched rule.</li>
+<li>denied = Deny th ematched rule.</li>
+</ul></li>
+</ul></li>
+<li>Require not [all|host|ip] = Deny access to a host or IP. This should be configured after a Require rule. [1]</li>
+<li>Options = Specify attributes of the matched area. Enable an option with a &quot;+&quot; or disable it with &quot;-&quot;. If no sign is present, Apache assumes it should be enabled. If at least one option requires a sign then all of the other options will need a sign.
+<ul>
+<li>All = Allow of the options.</li>
+<li>ExecGI = Allow CGI scripts to be executed.</li>
+<li>Includes = Allow HTML include functionality to include files server-side.</li>
+<li>IncludesNOEXEC = The same as Includes but it does not allow HTML files to execute commands or scripts.</li>
+<li>Indexes = Show the content of a directory if the DirectoryIndex is not found.</li>
+<li>FollowSymLinks = Allow symlinks to different directories. [2]</li>
+</ul></li>
+</ul>
+<p>A combination of a &quot;Require all&quot; or &quot;Require not all&quot; and then an explicit allow/deny list can only be used within a &quot;RequireAll&quot; block.</p>
+<pre><code>&lt;Directory &quot;/var/www/html&quot;&gt;
+    &lt;RequireAll&gt;
+        Require all granted
+        Require not ip 192.168.14.19
+        Require not host server.hostname.tld
+    &lt;/RequireAll&gt;
+&lt;/Directory&gt;</code></pre>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Access Control.&quot; Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/access.html</li>
 <li>&quot;Options Directive.&quot; Apache HTTP Server Project. Accessed October 1, 2016. http://httpd.apache.org/docs/2.4/mod/core.html#options</li>

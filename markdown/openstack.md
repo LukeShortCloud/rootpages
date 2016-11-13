@@ -3,27 +3,27 @@
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Configurations](#configurations)
-  * [Common](#configurations---common)
-    * [Database](#configurations---common---database)
-  * [Keystone](#configurations---keystone)
-    * [Token Provider](#configurations---keystone---token-provider)
-    * [API v3](#configurations---keystone---api-v3)
-  * [Nova](#configurations---nova)
-    * [Hypervisors](#configurations---nova---hypervisors)
-    * [CPU Pinning](#configurations---nova---cpu-pinning)
-  * [Neutron](#configurations---neutron)
-    * [DNS](#configurations---neutron---dns)
-    * [Metadata](#configurations---neutron---metadata)
-    * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
-    * [Quality of Service](#configurations---neutron---quality-of-service)
+    * [Common](#configurations---common)
+        * [Database](#configurations---common---database)
+    * [Keystone](#configurations---keystone)
+        * [Token Provider](#configurations---keystone---token-provider)
+        * [API v3](#configurations---keystone---api-v3)
+    * [Nova](#configurations---nova)
+        * [Hypervisors](#configurations---nova---hypervisors)
+        * [CPU Pinning](#configurations---nova---cpu-pinning)
+    * [Neutron](#configurations---neutron)
+        * [DNS](#configurations---neutron---dns)
+        * [Metadata](#configurations---neutron---metadata)
+        * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
+        * [Quality of Service](#configurations---neutron---quality-of-service)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
 * [Automation](#automation)
-  * [Heat](#automation---heat)
-    * [Resources](#automation---heat---resources)
-    * [Parameters](#automation---heat---parameters)
-  * [Vagrant](#automation---vagrant)
+    * [Heat](#automation---heat)
+        * [Resources](#automation---heat---resources)
+        * [Parameters](#automation---heat---parameters)
+    * [Vagrant](#automation---vagrant)
 * [Testing](#testing)
-  * [Tempest](#testing---tempest)
+    * [Tempest](#testing---tempest)
 * [Performance](#performance)
 
 
@@ -90,10 +90,10 @@ Sources:
 In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the "Q" release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
 
 * /etc/keystone/keystone-paste.ini
-  * [pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
-  * [pipeline:admin_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
-  * [composite:main] /v2.0 = public_api
-  * [composite:admin] /v2.0 = admin_api
+    * [pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
+    * [pipeline:admin_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
+    * [composite:main] /v2.0 = public_api
+    * [composite:admin] /v2.0 = admin_api
 
 [2]
 
@@ -141,13 +141,13 @@ Sources:
 ## Configurations - Nova
 
 * /etc/nova/nova.conf
-	* [ libvirt ] inject_key = false
-	  * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
-	* [ DEFAULT ] enabled_apis = osapi_compute,metadata
-	  * Enable support for the Nova API, and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
-	* [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
-	* [ database ] connection = mysql://nova:password@10.1.1.1/nova
-	  * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
+    * [ libvirt ] inject_key = false
+	    * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
+    * [ DEFAULT ] enabled_apis = osapi_compute,metadata
+	    * Enable support for the Nova API, and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
+    * [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
+    * [ database ] connection = mysql://nova:password@10.1.1.1/nova
+	    * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
 
 
 ### Configurations - Nova - Hypervisors
@@ -229,6 +229,7 @@ NUMA cell(s):        2
 
 [1][3]
 
+
 #### Configuration
 
 * Append the two NUMA filters.
@@ -272,7 +273,7 @@ By default, Neutron does not provide any DNS resolvers. This means that DNS will
 #### Scenario #1 - Define default resolvers (recommended)
 
 * /etc/neutron/dhcp_agent.ini
-  * [ DEFAULT ] dnsmasq_dns_servers = 8.8.8.8,8.8.4.4
+    * [ DEFAULT ] dnsmasq_dns_servers = 8.8.8.8,8.8.4.4
 
 #### Scenario #2 - Leave resolvers to be configured by the subnet details
 
@@ -281,11 +282,11 @@ By default, Neutron does not provide any DNS resolvers. This means that DNS will
 #### Scenario #3 - Do not provide resolvers
 
 * /etc/neutron/dhcp_agent.ini
-  * [ DEFAULT ] dnsmasq_local_resolv = True
+    * [ DEFAULT ] dnsmasq_local_resolv = True
 
 [1]
 
-Sources:
+Source:
 
 1. "Name resolution for instances." OpenStack Documentation. August 09, 2016. Accessed August 13th, 2016. http://docs.openstack.org/mitaka/networking-guide/config-dns-resolution.html
 
@@ -297,30 +298,30 @@ The metadata service provides useful information about the instance from the IP 
 Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/recieving requests.
 
 * /etc/neutron/metadata_agent.ini
-  * [ DEFAULT ] nova_metadata_ip = CONTROLLER_IP
-  * [ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY
+    * [ DEFAULT ] nova_metadata_ip = CONTROLLER_IP
+    * [ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY
 * /etc/nova/nova.conf
-  * [ DEFAULT ] enabled_apis = osapi_compute,metadata
-  * [ neutron ] service_metadata_proxy = True
-  * [ neutron ] metadata_proxy_shared_secret = SECRET_KEY
+    * [ DEFAULT ] enabled_apis = osapi_compute,metadata
+    * [ neutron ] service_metadata_proxy = True
+    * [ neutron ] metadata_proxy_shared_secret = SECRET_KEY
 
 #### Scenario #1 - DHCP Namespace (recommended for DVR)
 
 * /etc/neutron/dhcp_agent.ini
-  * [ DEFAULT ] force_metadata = True
-  * [ DEFAULT ] enable_isolated_metadata = True
-  * [ DEFAULT ] enable_metadata_network = True
+    * [ DEFAULT ] force_metadata = True
+    * [ DEFAULT ] enable_isolated_metadata = True
+    * [ DEFAULT ] enable_metadata_network = True
 * /etc/neutron
-  * [ DEFAULT ] enable_metadata_proxy = False
+    * [ DEFAULT ] enable_metadata_proxy = False
 
 #### Scenario #2 - Router Namespace
 
 * /etc/neutron/dhcp_agent.ini
-  * [ DEFAULT ] force_metadata = False
-  * [ DEFAULT ] enable_isolated_metadata = True
-  * [ DEFAULT ] enable_metadata_network = False
+    * [ DEFAULT ] force_metadata = False
+    * [ DEFAULT ] enable_isolated_metadata = True
+    * [ DEFAULT ] enable_metadata_network = False
 * /etc/neutron/l3_agent.ini
-  * [ DEFAULT ] enable_metadata_proxy = True
+    * [ DEFAULT ] enable_metadata_proxy = True
 
 [1]
 
@@ -334,27 +335,27 @@ Source:
 Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end.
 
 * /etc/neutron/neutron.conf
-  * [ DEFAULT ] service_plugins = `<PLUGINS>`, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
-    * Append the LBaaSv2 service plugin.
-* /etc/neutron/lbaas_agent.ini
-  * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-    * This is for Neutron with the OpenVSwitch backend only.
-  * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-    * This is for Neutron with the Linux Bridge backend only.
+    * [ DEFAULT ] service_plugins = `<PLUGINS>`, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+        * Append the LBaaSv2 service plugin.
+*   /etc/neutron/lbaas_agent.ini
+    * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+        * This is for Neutron with the OpenVSwitch backend only.
+    * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+        * This is for Neutron with the Linux Bridge backend only.
 
 #### Scenario #1 - HAProxy (recommended for it's maturity)
 
 * /etc/neutron/neutron_lbaas.conf
-  * [ service_providers ] service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
+    * [ service_providers ] service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 * /etc/neutron/lbaas_agent.ini
-  * [ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
-  * [ haproxy ] user_group = haproxy
-    * Specify the group that HAProxy runs as. In RHEL, it's "haproxy."
+    * [ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
+    * [ haproxy ] user_group = haproxy
+        * Specify the group that HAProxy runs as. In RHEL, it's "haproxy."
 
 #### Scenario #2 - Octavia
 
 * /etc/neutron/neutron_lbaas.conf
-  * [ service_providers ] service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
+    * [ service_providers ] service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
 
 [1]
 
@@ -368,14 +369,14 @@ Source:
 The Quality of Service (QoS) plugin can be used to rate limit the amount of bandwidth that is allowed through a network port.
 
 * /etc/neutron/neutron.conf
-  * [ DEFAULT ] service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
-    * Append the QoS plugin to the list of service_plugins.
+    * [ DEFAULT ] service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
+        * Append the QoS plugin to the list of service_plugins.
 * /etc/neutron/plugins/ml2/openvswitch_agent.ini
-  * [ml2] extension_drivers = qos
-    * Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.
+    * [ml2] extension_drivers = qos
+        * Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.
 * /etc/neutron/plugins/ml2/ml2_conf.ini
-  * [agent] extensions = qos
-    * Lastly, append the QoS extension to the moduler layer 2 configuration.
+    * [agent] extensions = qos
+        * Lastly, append the QoS extension to the moduler layer 2 configuration.
 
 [1]
 
@@ -676,33 +677,52 @@ The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copie
 
 * Provide credentials to a user with the "admin" role.
 ```
+[auth]
 admin_username
 admin_password
 admin_project_name
 admin_domain_name
+default_credentials_domain_name = Default
 ```
 
 * Specify the Keystone version to use. Valid options are "v2" and "v3."
 ```
+[identity]
 auth_version
 ```
 
-* Provide the Keystone endpoint for v2 (uri) or v3 (uri_v3).
+* Provide the admin Keystone endpoint for v2 (uri) or v3 (uri_v3).
 ```
+[identity]
 uri
 uri_v3
 ```
 
 * Two different size flavor IDs should be given.
 ```
+[compute]
 flavor_ref
 flavor_ref_alt
 ```
 
 * Two different image IDs should be given.
 ```
+[compute]
 image_ref
 image_ref_alt
+```
+
+* Define what services should be tested for the specific cloud.
+```
+[service_available]
+cinder = true
+neutron = true
+glance = true
+swift = false
+nova = true
+heat = false
+sahara = false
+ironic = false
 ```
 
 [1]

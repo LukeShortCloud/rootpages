@@ -1,12 +1,12 @@
 # HTTP Servers
 
 * [Apache 2.4](#apache-2.4)
-  * [Configuration](#apache---configuration)
-  * [Virtual Hosts](#apache---virtual-hosts)
-  * [Directorties](#apache---directories)
-  * [Authentication](#apache---authentication)
-  * [CGI](#apache---cgi)
-  * [SELinux](#apache---selinux)
+    * [Configuration](#apache---configuration)
+    * [Virtual Hosts](#apache---virtual-hosts)
+    * [Files, Directories, and Locations](#apache---files,-directories,-and-locations)
+    * [Authentication](#apache---authentication)
+    * [CGI](#apache---cgi)
+    * [SELinux](#apache---selinux)
 * Nginx
 * Lighttpd
 
@@ -18,6 +18,7 @@ The Apache HTTP Server Project is designed to provide a versatile open source HT
 Source:
 
 1. "The Number One HTTP Server On The Internet." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/
+
 
 ## Apache - Configuration
 
@@ -33,28 +34,29 @@ Debian/Ubuntu
 /etc/apache2/apache2.conf
 ```
 
-Main Options:
+Options:
+
 * ServerRoot = Specify what directory Apache should use as a relative path.
-  * Example: ServerRoot "/etc/httpd"
+    * Example: ServerRoot "/etc/httpd"
 * Listen = What port (and optionally aaddress) Apache should listen on.
-  * Example #1: Listen 127.0.0.1:80
-  * Example #2: Listen 443
+    * Example #1: Listen 127.0.0.1:80
+    * Example #2: Listen 443
 * User = The user that Apache should be run as.
-  * Example: User apache
+    * Example: User apache
 * Group = The group that Apache should be run with.
 * ServerAdmin = Provide an e-mail address that will get e-mails when there are any errors.
 * LogLevel = Specify how verbose logging should be.
-  * error
-  * warn
-  * info
-  * debug
+    * error
+    * warn
+    * info
+    * debug
 * ErrorDocument = Provide a custom page for specific error numbers. This can either be text, a file, script, or redirect.
-  * Example #1: ErrorDocument 500 "Contact your System Administrator for help. Thank you."
-  * Examlpe #2: ErrorDocument 403 "/cgi-bin/you_didnt_say_the_magic_word.py"
+    * Example #1: ErrorDocument 500 "Contact your System Administrator for help. Thank you."
+    * Examlpe #2: ErrorDocument 403 "/cgi-bin/you_didnt_say_the_magic_word.py"
 * ErrorLog = The file to use for the error log.
 * CustomLog = The file to use for logging Apache access information.
 * IncludeOptional = Specify what directory (under ServerRoot) to load other configurations from.
-  * Example: IncludeOptional conf.d/*.conf
+    * Example: IncludeOptional conf.d/*.conf
 
 [1]
 
@@ -82,6 +84,7 @@ Syntax:
 ```
 
 Options:
+
 * ServerName = The main domain name for the virtual host.
 * ServerAlias = Other domains associated with the virtual host
 * DocumentRoot = The directory where the domain loads its files from.
@@ -107,6 +110,7 @@ Source:
 
 1. "Set up Apache virtual hosts on Ubuntu." Rackspace Network Support. July 8, 2016. Accessed October 1, 2016. https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/
 
+
 ## Apache - Files, Directories, and Locations
 
 Different settings can be used on items based on if a matched file, directory, or location is found. Regular expressions can be used to match different areas.
@@ -130,25 +134,35 @@ Different settings can be used on items based on if a matched file, directory, o
 </Location>
 ```
 
-
 Options:
+
 * Require = Set an access control list to allow certain hosts or IPs.
-  * all = Apply the rule to all hosts.
-  * host = Apply the rule to a specific host.
-  * ip = Apply the rule to an IP address
-    * granted = Allow the matched rule.
-    * denied = Deny th ematched rule.
+    * all = Apply the rule to all hosts.
+    * host = Apply the rule to a specific host.
+    * ip = Apply the rule to an IP address
+        * granted = Allow the matched rule.
+        * denied = Deny th ematched rule.
 * Require not [all|host|ip] = Deny access to a host or IP. This should be configured after a Require rule. [1]
 * Options = Specify attributes of the matched area. Enable an option with a "+" or disable it with "-". If no sign is present, Apache assumes it should be enabled. If at least one option requires a sign then all of the other options will need a sign.
-  * All = Allow of the options.
-  * ExecGI = Allow CGI scripts to be executed.
-  * Includes = Allow HTML include functionality to include files server-side.
-  * IncludesNOEXEC = The same as Includes but it does not allow HTML files to execute commands or scripts.
-  * Indexes = Show the content of a directory if the DirectoryIndex is not found.
-  * FollowSymLinks = Allow symlinks to different directories. [2]
+    * All = Allow of the options.
+    * ExecGI = Allow CGI scripts to be executed.
+    * Includes = Allow HTML include functionality to include files server-side.
+    * IncludesNOEXEC = The same as Includes but it does not allow HTML files to execute commands or scripts.
+    * Indexes = Show the content of a directory if the DirectoryIndex is not found.
+    * FollowSymLinks = Allow symlinks to different directories. [2]
 
+A combination of a "Require all" or "Require not all" and then an explicit allow/deny list can only be used within a "RequireAll" block.
+```
+<Directory "/var/www/html">
+    <RequireAll>
+        Require all granted
+        Require not ip 192.168.14.19
+        Require not host server.hostname.tld
+    </RequireAll>
+</Directory>
+```
 
-Source:
+Sources:
 
 1. "Access Control." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/access.html
 2. "Options Directive." Apache HTTP Server Project. Accessed October 1, 2016. http://httpd.apache.org/docs/2.4/mod/core.html#options

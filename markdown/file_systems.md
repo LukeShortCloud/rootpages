@@ -1,21 +1,22 @@
 # File Systems
+
 * [Types](#types)
-  * [BtrFS](#types---btrfs)
-    * [BtrFS RAIDs](#types---btrfs---btrfs-raids)
-    * [BtrFS Limitations](#types---btrfs---btrfs-limitations)
-  * [ext4](#types---ext4)
-  * XFS
-  * ZFS
+    * [BtrFS](#types---btrfs)
+        * [BtrFS RAIDs](#types---btrfs---btrfs-raids)
+        * [BtrFS Limitations](#types---btrfs---btrfs-limitations)
+    * [ext4](#types---ext4)
+    * XFS
+    * ZFS
 * LVM
 * [RAIDs](#raids)
- * [mdadm](#raids---mdadm)
+    * [mdadm](#raids---mdadm)
 * [Network](#network)
-  * [NFS](#network---nfs)
-  * [SMB](#network---smb)
-  * [iSCSI](#network---iscsi)
-    * [Target](#network---iscsi---target)
-    * [Initiator](#network---iscsi---initiator)
-  * Ceph
+    * [NFS](#network---nfs)
+    * [SMB](#network---smb)
+    * [iSCSI](#network---iscsi)
+        * [Target](#network---iscsi---target)
+        * [Initiator](#network---iscsi---initiator)
+    * Ceph
 
 
 ## Types
@@ -38,6 +39,7 @@ Sources:
 2. "How many files can I put in a directory?" Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory
 3. "BtrFS Main Page." BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page
 
+
 ## Types - BtrFS
 
 BtrFS stands for the "B-tree filesystem." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
@@ -45,9 +47,9 @@ BtrFS stands for the "B-tree filesystem." The file system is commonly referred t
 Common mount options:
 * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.
 * compress = File system compression can be used. Valid options are:
-  * zlib = Higher compression
-  * lzo = Faster file system performance
-  * no = Disable compression (default)
+    * zlib = Higher compression
+    * lzo = Faster file system performance
+    * no = Disable compression (default)
 * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost.
 * subvolume = Mount a subvolume contained inside a BtrFS file system.
 * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support.
@@ -72,9 +74,9 @@ Source:
 
 Known limitations:
 * The "df" (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, "btrfs filesystem df" should be used to view disk space usage on mount points and "btrfs filesystem show" for partitions.
-  * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output. [1]
-    * \# btrfs balance start /
-    * \# btrfs defragment -r /
+    * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output. [1]
+        * \# btrfs balance start /
+        * \# btrfs defragment -r /
 
 Source:
 
@@ -89,18 +91,18 @@ The Extended File System 4 (ext4) is the default file system for most Linux oper
 Mount options:
 * ro = Mount as read-only.
 * data
-  * journal = All data is saved in the journal before writing it to the storage device. This is the safest option.
-  * ordered = All data is written to the storage device before updating the journal's metadata.
-  * writeback = Data can be written to the drive at the same time it updates the journal.
+    * journal = All data is saved in the journal before writing it to the storage device. This is the safest option.
+    * ordered = All data is written to the storage device before updating the journal's metadata.
+    * writeback = Data can be written to the drive at the same time it updates the journal.
 * barrier
-  * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure.
-  * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase.
+    * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure.
+    * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase.
 * noacl = Disable the Linux extended access control lists.
 * nouser_xattr = Disable extended file attributes.
 * errors = Specify what happens when there is an error in the filesystem.
-  * remount-ro = Automatically remound the partition into a read-only mode.
-  * continue = Ignore the error.
-  * panic = Shutdown the operating system if any errors are found.
+    * remount-ro = Automatically remound the partition into a read-only mode.
+    * continue = Ignore the error.
+    * panic = Shutdown the operating system if any errors are found.
 * discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files.
 * nodiscard = Disables TRIM. [2]
 
@@ -156,7 +158,10 @@ Finally, you can initalize the RAID.
 
 [1]
 
+Source:
+
 1. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID
+
 
 # Network
 
@@ -171,11 +176,13 @@ NFS Ports:
 
 On the server, the /etc/exports file is used to manage NFS exports. Here a directory can be specified to be shared via NFS to a specific IP address or CIDR range. After adjusting the exports, the NFS daemon will need to be restarted.
 
-Example:
+* Syntax:
 ```
-# vim /etc/exports
+<DIRECTORY> <ALLOWED_HOST>(<OPTIONS>)
+```
+* Example:
+```
 /path/to/dir 192.168.0.0/24(rw,no_root_squash)
-# systemctl restart nfs
 ```
 
 NFS export options:
@@ -187,7 +194,7 @@ NFS export options:
 * sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish.
 * async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory.
 * sec = Specify a type of Kerberos authentication to use.
-  * krb5 = Use Kerberos for authentication only.
+    * krb5 = Use Kerberos for authentication only.
 
 [1]
 
@@ -198,9 +205,10 @@ On Red Hat Enterprise Linux systems, the exported directory will need to have th
 # restorecon -R "/path/to/dir"
 ```
 
-Sources:
+Source:
 
 1. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html
+
 
 ## Network - SMB
 
@@ -214,18 +222,18 @@ SMB Ports:
 
 Configuration - Global:
 * [global]
-  * workgroup = Define a WORKGROUP name.
-  * interfaces = Specify the interfaces to listen on.
-  * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
+    * workgroup = Define a WORKGROUP name.
+    * interfaces = Specify the interfaces to listen on.
+    * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
 
 
 Configuration - Share:
 * [smb] = The share can be named anything.
-  * path = The path to the directory to share (required).
-  * writable = Use "yes" or "no." This specifies if the folder share is wirtable.
-  * read only = Use "yes" or "no." This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions.
-  * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a "+" to the front of the name.
-  * comment = Place a comment about the share. [2]
+    * path = The path to the directory to share (required).
+    * writable = Use "yes" or "no." This specifies if the folder share is wirtable.
+    * read only = Use "yes" or "no." This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions.
+    * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a "+" to the front of the name.
+    * comment = Place a comment about the share. [2]
 
 Verify the Samba configuration.
 ```
@@ -261,11 +269,11 @@ The "Inernet Small Computer Systems Interface" (also known as "Internet SCSI" or
 
 For setting up a target storage, these are the general steps to follow in order:
 * Create a backstores device.
-* Create an iSCSI domain.
+* Create an iSCSI target.
 * Create a network portal to listen on.
 * Create a LUN associated with the backstores.
 * Create an ACL.
-* Optionally configure ACLs.
+* Optionally configure ACL rules.
 
 * First, start and enable the iSCSI service to start on bootup.
 ```
@@ -307,19 +315,19 @@ For setting up a target storage, these are the general steps to follow in order:
 ```
   * Example:
 ```
-> cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
-> ls
-o- tpg1
-	o- acls
-	o- luns
-	o- portals
-> portals/ create
-> ls
-o- tpg1
-	o- acls
-	o- luns
-	o- portals
-		o- 0.0.0.0:3260
+  > cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+  > ls
+  o- tpg1
+      o- acls
+      o- luns
+      o- portals
+  > portals/ create
+  > ls
+  o- tpg1
+      o- acls
+      o- luns
+      o- portals
+          o- 0.0.0.0:3260
 ```
 
 * Create a LUN.
@@ -357,9 +365,11 @@ o- tpg1
 > set auth password=pass
 ```
 
-* Any ACL rules that were created can be overriden by turning off authentication entirely.
+* Any ACL rules that were created can be overriden by turning off authentication entirely. 
 ```
 > set attribute authentication=0
+> set attribute generate_node_acls=1
+> set attribute demo_mode_write_protect=0
 ```
 
 * Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]
@@ -370,6 +380,11 @@ o- tpg1
 This should be configured on the client server.
 
 * In the initiator configuration file, specify the IQN along with the ACL used to access it.
+  * Syntax:
+```
+# vim /etc/iscsi/initiatorname.iscsi
+InitiatorName=<IQN>:<ACL>
+```
   * Example:
 ```
 # vim /etc/iscsi/initiatorname.iscsi
@@ -384,7 +399,7 @@ InitiatorName=iqn.2016-01.com.example.server:client
 * Once started, the iSCSI device should be able to be attached.
   * Syntax:
 ```
-# iscsiadm --mode node --targetname <IQN>:<iSCSI_DEVICE> --portal <iSCSI_SERVER_IP> --login
+# iscsiadm --mode node --targetname <IQN>:<TARGET> --portal <iSCSI_SERVER_IP> --login
 ```
   * Example:
 ```

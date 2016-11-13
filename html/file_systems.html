@@ -1,6 +1,7 @@
 <h1 id="file-systems">File Systems</h1>
 <ul>
-<li><a href="#types">Types</a></li>
+<li><a href="#types">Types</a>
+<ul>
 <li><a href="#types---btrfs">BtrFS</a>
 <ul>
 <li><a href="#types---btrfs---btrfs-raids">BtrFS RAIDs</a></li>
@@ -9,10 +10,14 @@
 <li><a href="#types---ext4">ext4</a></li>
 <li>XFS</li>
 <li>ZFS</li>
+</ul></li>
 <li>LVM</li>
-<li><a href="#raids">RAIDs</a></li>
+<li><a href="#raids">RAIDs</a>
+<ul>
 <li><a href="#raids---mdadm">mdadm</a></li>
-<li><a href="#network">Network</a></li>
+</ul></li>
+<li><a href="#network">Network</a>
+<ul>
 <li><a href="#network---nfs">NFS</a></li>
 <li><a href="#network---smb">SMB</a></li>
 <li><a href="#network---iscsi">iSCSI</a>
@@ -21,6 +26,7 @@
 <li><a href="#network---iscsi---initiator">Initiator</a></li>
 </ul></li>
 <li>Ceph</li>
+</ul></li>
 </ul>
 <h2 id="types">Types</h2>
 <table style="width:33%;">
@@ -211,6 +217,7 @@
 <p>Finally, you can initalize the RAID.</p>
 <pre><code># mdadm --assemble --scan</code></pre>
 <p>[1]</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;RAID.&quot; Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID</li>
 </ol>
@@ -219,16 +226,18 @@
 <p>The Network File System (NFS) aims to universally provide a way to remotely mount directories between servers. All subdirectories from a shared directory will also be available.</p>
 <p>NFS Ports: * 111 TCP/UDP * 2049 TCP/UDP * 4045 TCP/UDP</p>
 <p>On the server, the /etc/exports file is used to manage NFS exports. Here a directory can be specified to be shared via NFS to a specific IP address or CIDR range. After adjusting the exports, the NFS daemon will need to be restarted.</p>
-<p>Example:</p>
-<pre><code># vim /etc/exports
-/path/to/dir 192.168.0.0/24(rw,no_root_squash)
-# systemctl restart nfs</code></pre>
+<ul>
+<li><p>Syntax:</p>
+<pre><code>&lt;DIRECTORY&gt; &lt;ALLOWED_HOST&gt;(&lt;OPTIONS&gt;)</code></pre></li>
+<li><p>Example:</p>
+<pre><code>/path/to/dir 192.168.0.0/24(rw,no_root_squash)</code></pre></li>
+</ul>
 <p>NFS export options: * rw = The directory will be writable. * ro (default) = The directory will be read-only. * no_root_squash = Allow remote root users to access the directory and create files owned by root. * root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically &quot;nobody&quot;). * all_squash = All files are created as the anonymouse user. * sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish. * async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory. * sec = Specify a type of Kerberos authentication to use. * krb5 = Use Kerberos for authentication only.</p>
 <p>[1]</p>
 <p>On Red Hat Enterprise Linux systems, the exported directory will need to have the &quot;nfs_t&quot; file context for SELinux to work properly.</p>
 <pre><code># semanage fcontext -a -t nfs_t &quot;/path/to/dir{/.*)?&quot;
 # restorecon -R &quot;/path/to/dir&quot;</code></pre>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;NFS SERVER CONFIGURATION.&quot; Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html</li>
 </ol>
@@ -255,7 +264,7 @@
 <h2 id="network---iscsi">Network - iSCSI</h2>
 <p>The &quot;Inernet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
 <h3 id="network---iscsi-target">Network - iSCSI Target</h3>
-<p>For setting up a target storage, these are the general steps to follow in order: * Create a backstores device. * Create an iSCSI domain. * Create a network portal to listen on. * Create a LUN associated with the backstores. * Create an ACL. * Optionally configure ACLs.</p>
+<p>For setting up a target storage, these are the general steps to follow in order: * Create a backstores device. * Create an iSCSI target. * Create a network portal to listen on. * Create a LUN associated with the backstores. * Create an ACL. * Optionally configure ACL rules.</p>
 <ul>
 <li><p>First, start and enable the iSCSI service to start on bootup.</p>
 <pre><code># systemctl enable target &amp;&amp; systemctl start target</code></pre></li>
@@ -281,19 +290,19 @@
 <pre><code>&gt; cd /iscsi/iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ISCSINAME&gt;/tpg1
 &gt; portals/ create</code></pre></li>
 <li><p>Example:</p>
-<pre><code>&gt; cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
-&gt; ls
-o- tpg1
-o- acls
-o- luns
-o- portals
-&gt; portals/ create
-&gt; ls
-o- tpg1
-o- acls
-o- luns
-o- portals
-    o- 0.0.0.0:3260</code></pre></li>
+<pre><code>  &gt; cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+  &gt; ls
+  o- tpg1
+  o- acls
+  o- luns
+  o- portals
+  &gt; portals/ create
+  &gt; ls
+  o- tpg1
+  o- acls
+  o- luns
+  o- portals
+      o- 0.0.0.0:3260</code></pre></li>
 <li>Create a LUN.</li>
 <li><p>Syntax:</p>
 <pre><code>&gt; luns/ create /backstores/block/&lt;DEVICE&gt;</code></pre></li>
@@ -314,13 +323,18 @@ o- portals
 &gt; set auth userid=toor
 &gt; set auth password=pass</code></pre></li>
 <li><p>Any ACL rules that were created can be overriden by turning off authentication entirely.</p>
-<pre><code>&gt; set attribute authentication=0</code></pre></li>
+<pre><code>&gt; set attribute authentication=0
+&gt; set attribute generate_node_acls=1
+&gt; set attribute demo_mode_write_protect=0</code></pre></li>
 <li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]</p></li>
 </ul>
 <h3 id="network---iscsi---initiator">Network - iSCSI - Initiator</h3>
 <p>This should be configured on the client server.</p>
 <ul>
 <li>In the initiator configuration file, specify the IQN along with the ACL used to access it.</li>
+<li><p>Syntax:</p>
+<pre><code># vim /etc/iscsi/initiatorname.iscsi
+InitiatorName=&lt;IQN&gt;:&lt;ACL&gt;</code></pre></li>
 <li><p>Example:</p>
 <pre><code># vim /etc/iscsi/initiatorname.iscsi
 InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
@@ -328,7 +342,7 @@ InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
 <pre><code># systemctl start iscsi &amp;&amp; systemctl enable iscsi</code></pre></li>
 <li>Once started, the iSCSI device should be able to be attached.</li>
 <li><p>Syntax:</p>
-<pre><code># iscsiadm --mode node --targetname &lt;IQN&gt;:&lt;iSCSI_DEVICE&gt; --portal &lt;iSCSI_SERVER_IP&gt; --login</code></pre></li>
+<pre><code># iscsiadm --mode node --targetname &lt;IQN&gt;:&lt;TARGET&gt; --portal &lt;iSCSI_SERVER_IP&gt; --login</code></pre></li>
 <li><p>Example:</p>
 <pre><code># iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login</code></pre></li>
 <li><p>Verify that a new &quot;iscsi&quot; device exists.</p>

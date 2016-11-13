@@ -1,6 +1,7 @@
 <h1 id="sql">SQL</h1>
 <ul>
-<li><a href="#mariadb">MariaDB</a></li>
+<li><a href="#mariadb">MariaDB</a>
+<ul>
 <li><a href="#mariadb---configuration">Configuration</a></li>
 <li><a href="#mariadb---table-engines">Table Engines</a>
 <ul>
@@ -13,6 +14,7 @@
 <ul>
 <li>Galera</li>
 <li><a href="#mariadb---clustering---maxscale">MaxScale</a></li>
+</ul></li>
 </ul></li>
 </ul>
 <h1 id="mariadb">MariaDB</h1>
@@ -41,7 +43,7 @@ gpgcheck=1
 &gt; install soname &#39;ha_cassandra.so&#39;;</code></pre></li>
 <li><p>Configure the default Cassandra rpc/client IP to connect to.</p>
 <pre><code>&gt; SET GLOBAL cassandra_default_thrift_host=&#39;&lt;CASSANDRA_IP&gt;&#39;</code></pre></li>
-<li><p>The Cassandra table has to be created with the &quot;COMPACT STORAGE&quot; option. Otherwise, MariaDB will be unable to access the table.</p>
+<li><p>The Cassandra table has to be created with the &quot;COMPACT STORAGE&quot; option. Otherwise, MariaDB will be unable to access the table properly.</p>
 <pre><code>$ cqlsh
 &gt; CREATE TABLE &lt;NAME&gt; (&lt;VALUE1&gt; &lt;TYPE&gt; PRIMARY KEY, &lt;VALUE2&gt; &lt;TYPE&gt;) WITH COMPACT STORAGE;</code></pre></li>
 <li><p>Create a Cassandra table within a database. MariaDB needs to know the keyspace and the column/table to map to as well as what IP address to use to connect to Cassandra.</p>
@@ -66,14 +68,42 @@ gpgcheck=1
 <p>RHEL Install [1]:</p>
 <pre><code># yum install https://downloads.mariadb.com/MaxScale/2.0.1/rhel/7/x86_64/maxscale-2.0.1-1.rhel.7.x86_64.rpm</code></pre>
 <p>MaxScale requires the configuration of a listener that is associated with a router that serves requests to/from a list of servers.</p>
-<p>Listener options: * [NAME] * type=listener * service = Specify the back-end service to use. This is usually a router. * protocol=MySQLClient * address = Specify the address to listen on. * port=3306</p>
+<p>Listener options:</p>
+<ul>
+<li>[NAME]</li>
+<li>type=listener</li>
+<li>service = Specify the back-end service to use. This is usually a router.</li>
+<li>protocol=MySQLClient</li>
+<li>address = Specify the address to listen on.</li>
+<li>port=3306</li>
+</ul>
 <p>Listener example:</p>
 <pre><code>[listener]
 type=listener
 service=&quot;Read Write Service&quot;
 protocol=MySQLClient
 port=3306</code></pre>
-<p>Router options: * [NAME] * type=service * router * readconnroute = Load balance requests. * readwritesplit = Send write requests to one node and read queries to all nodes. * schemarouter = Shard databases. Requests to a particular database will be routed to a specific server. * binlogrouter = Copy binary logs from servers other servers. If a backend server fails, MaxScale will replace it and serve read requests from the available binary log. * router_options * master = Write only. * slave = Read only. * master,slave = Read and write. * servers = A comma seperated list of back-end servers. * user = Specify a MySQL user to connect as. * passwd = Specify the password for the MySQL user.</p>
+<p>Router options:</p>
+<ul>
+<li>[NAME]</li>
+<li>type=service</li>
+<li>router
+<ul>
+<li>readconnroute = Load balance requests.</li>
+<li>readwritesplit = Send write requests to one node and read queries to all nodes.</li>
+<li>schemarouter = Shard databases. Requests to a particular database will be routed to a specific server.</li>
+<li>binlogrouter = Copy binary logs from servers other servers. If a backend server fails, MaxScale will replace it and serve read requests from the available binary log.</li>
+</ul></li>
+<li>router_options
+<ul>
+<li>master = Write only.</li>
+<li>slave = Read only.</li>
+<li>master,slave = Read and write.</li>
+</ul></li>
+<li>servers = A comma seperated list of back-end servers.</li>
+<li>user = Specify a MySQL user to connect as.</li>
+<li>passwd = Specify the password for the MySQL user.</li>
+</ul>
 <p>Example:</p>
 <pre><code>[Read Write Service]
 type=service
@@ -81,10 +111,22 @@ router=readwritesplit
 servers=server1,server2,server3
 user=maxscale
 passwd=123456</code></pre>
-<p>Server options: * [NAME] * type=server * address = Specify the address of the MySQL server. * port= Specify the MySQL port (default: 3306). * protocol=MySQLBackend</p>
+<p>Server options:</p>
+<ul>
+<li>[NAME]</li>
+<li>type=server</li>
+<li>address = Specify the address of the MySQL server.</li>
+<li>port= Specify the MySQL port (default: 3306).</li>
+<li>protocol=MySQLBackend</li>
+</ul>
 <p>[2]</p>
+<p>For replication, a maxscale MySQL user needs &quot;REPLICATION SET&quot; and &quot;SELECT&quot; grants for all databases.</p>
+<pre><code>GRANT REPLICATION SET, SELCT ON *.* TO &#39;maxscale&#39;@&#39;%&#39; IDENTIFIED BY &#39;securepassword123&#39;;</code></pre>
+<p>In a master-slave configuration, at least two servers are required to be running. This is because MaxScale is unsure if other nodes are present and cannot determine if a server is a master or a slave. This will prevent it from working properly and this error will occur for all connections. [3] It is ideal to follow the qorum theory by having 3 servers to support a failed host properly.</p>
+<pre><code>ERROR 1045 (28000): failed to create new session</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;MariaDB MaxScale Installation Guide.&quot; MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/mariadb-maxscale-installation-guide/</li>
 <li>&quot;MaxScale Configuration &amp; Usage Scenarios.&quot; MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-configuration-usage-scenarios/</li>
+<li>&quot;Issue with MaxScale when slaves are broken.&quot; MaxScale Google Groups. August 28, 2014. Accessed November 12, 2016. https://groups.google.com/forum/#!topic/maxscale/HK49D15s21s</li>
 </ol>

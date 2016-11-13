@@ -2,7 +2,8 @@
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#overview">Overview</a></li>
-<li><a href="#configurations">Configurations</a></li>
+<li><a href="#configurations">Configurations</a>
+<ul>
 <li><a href="#configurations---common">Common</a>
 <ul>
 <li><a href="#configurations---common---database">Database</a></li>
@@ -24,16 +25,21 @@
 <li><a href="#configurations---neutron---load-balancing-as-a-service">Load-Balancing-as-a-Service</a></li>
 <li><a href="#configurations---neutron---quality-of-service">Quality of Service</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#command-line-interface-utilities">Command Line Interface Utilities</a></li>
-<li><a href="#automation">Automation</a></li>
+<li><a href="#automation">Automation</a>
+<ul>
 <li><a href="#automation---heat">Heat</a>
 <ul>
 <li><a href="#automation---heat---resources">Resources</a></li>
 <li><a href="#automation---heat---parameters">Parameters</a></li>
 </ul></li>
 <li><a href="#automation---vagrant">Vagrant</a></li>
-<li><a href="#testing">Testing</a></li>
+</ul></li>
+<li><a href="#testing">Testing</a>
+<ul>
 <li><a href="#testing---tempest">Tempest</a></li>
+</ul></li>
 <li><a href="#performance">Performance</a></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
@@ -76,11 +82,13 @@
 <h3 id="configurations---keystone---api-v3">Configurations - Keystone - API v3</h3>
 <p>In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the &quot;Q&quot; release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
 <ul>
-<li>/etc/keystone/keystone-paste.ini</li>
+<li>/etc/keystone/keystone-paste.ini
+<ul>
 <li>[pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service</li>
 <li>[pipeline:admin_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service</li>
 <li>[composite:main] /v2.0 = public_api</li>
 <li>[composite:admin] /v2.0 = admin_api</li>
+</ul></li>
 </ul>
 <p>[2]</p>
 <p>Sources:</p>
@@ -119,13 +127,19 @@
 <ul>
 <li>/etc/nova/nova.conf
 <ul>
-<li>[ libvirt ] inject_key = false</li>
+<li>[ libvirt ] inject_key = false
+<ul>
 <li>Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be &quot;openstack-nova-api&quot; or &quot;openstack-nova-metadata-api&quot; depending on your setup.</li>
-<li>[ DEFAULT ] enabled_apis = osapi_compute,metadata</li>
+</ul></li>
+<li>[ DEFAULT ] enabled_apis = osapi_compute,metadata
+<ul>
 <li>Enable support for the Nova API, and Nova's metadata API. If &quot;metedata&quot; is specified here, then the &quot;openstack-nova-api&quot; handles the metadata and not &quot;openstack-nova-metadata-api.&quot;</li>
+</ul></li>
 <li>[ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api</li>
-<li>[ database ] connection = mysql://nova:password@10.1.1.1/nova</li>
+<li>[ database ] connection = mysql://nova:password@10.1.1.1/nova
+<ul>
 <li>For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user &quot;nova&quot; with a password called &quot;password&quot;, it connects to the IP address &quot;10.1.1.1&quot; and it is using the database &quot;nova.&quot;</li>
+</ul></li>
 </ul></li>
 </ul>
 <h3 id="configurations---nova---hypervisors">Configurations - Nova - Hypervisors</h3>
@@ -212,8 +226,10 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>By default, Neutron does not provide any DNS resolvers. This means that DNS will not work. It is possible to either provide a default list of name servers or configure Neutron to refer to the relevant /etc/resolv.conf file on the server.</p>
 <h4 id="scenario-1---define-default-resolvers-recommended">Scenario #1 - Define default resolvers (recommended)</h4>
 <ul>
-<li>/etc/neutron/dhcp_agent.ini</li>
+<li>/etc/neutron/dhcp_agent.ini
+<ul>
 <li>[ DEFAULT ] dnsmasq_dns_servers = 8.8.8.8,8.8.4.4</li>
+</ul></li>
 </ul>
 <h4 id="scenario-2---leave-resolvers-to-be-configured-by-the-subnet-details">Scenario #2 - Leave resolvers to be configured by the subnet details</h4>
 <ul>
@@ -221,11 +237,13 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 </ul>
 <h4 id="scenario-3---do-not-provide-resolvers">Scenario #3 - Do not provide resolvers</h4>
 <ul>
-<li>/etc/neutron/dhcp_agent.ini</li>
+<li>/etc/neutron/dhcp_agent.ini
+<ul>
 <li>[ DEFAULT ] dnsmasq_local_resolv = True</li>
+</ul></li>
 </ul>
 <p>[1]</p>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Name resolution for instances.&quot; OpenStack Documentation. August 09, 2016. Accessed August 13th, 2016. http://docs.openstack.org/mitaka/networking-guide/config-dns-resolution.html</li>
 </ol>
@@ -233,31 +251,43 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with &quot;cloud-init&quot; on the instance to configure SSH keys and other post-boot tasks.</p>
 <p>Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/recieving requests.</p>
 <ul>
-<li>/etc/neutron/metadata_agent.ini</li>
+<li>/etc/neutron/metadata_agent.ini
+<ul>
 <li>[ DEFAULT ] nova_metadata_ip = CONTROLLER_IP</li>
 <li>[ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY</li>
-<li>/etc/nova/nova.conf</li>
+</ul></li>
+<li>/etc/nova/nova.conf
+<ul>
 <li>[ DEFAULT ] enabled_apis = osapi_compute,metadata</li>
 <li>[ neutron ] service_metadata_proxy = True</li>
 <li>[ neutron ] metadata_proxy_shared_secret = SECRET_KEY</li>
+</ul></li>
 </ul>
 <h4 id="scenario-1---dhcp-namespace-recommended-for-dvr">Scenario #1 - DHCP Namespace (recommended for DVR)</h4>
 <ul>
-<li>/etc/neutron/dhcp_agent.ini</li>
+<li>/etc/neutron/dhcp_agent.ini
+<ul>
 <li>[ DEFAULT ] force_metadata = True</li>
 <li>[ DEFAULT ] enable_isolated_metadata = True</li>
 <li>[ DEFAULT ] enable_metadata_network = True</li>
-<li>/etc/neutron</li>
+</ul></li>
+<li>/etc/neutron
+<ul>
 <li>[ DEFAULT ] enable_metadata_proxy = False</li>
+</ul></li>
 </ul>
 <h4 id="scenario-2---router-namespace">Scenario #2 - Router Namespace</h4>
 <ul>
-<li>/etc/neutron/dhcp_agent.ini</li>
+<li>/etc/neutron/dhcp_agent.ini
+<ul>
 <li>[ DEFAULT ] force_metadata = False</li>
 <li>[ DEFAULT ] enable_isolated_metadata = True</li>
 <li>[ DEFAULT ] enable_metadata_network = False</li>
-<li>/etc/neutron/l3_agent.ini</li>
+</ul></li>
+<li>/etc/neutron/l3_agent.ini
+<ul>
 <li>[ DEFAULT ] enable_metadata_proxy = True</li>
+</ul></li>
 </ul>
 <p>[1]</p>
 <p>Source:</p>
@@ -267,12 +297,15 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <h3 id="configurations---neutron---load-balancing-as-a-service">Configurations - Neutron - Load-Balancing-as-a-Service</h3>
 <p>Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end.</p>
 <ul>
-<li>/etc/neutron/neutron.conf</li>
+<li>/etc/neutron/neutron.conf
+<ul>
 <li>[ DEFAULT ] service_plugins = <code>&lt;PLUGINS&gt;</code>, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
 <ul>
 <li>Append the LBaaSv2 service plugin.</li>
 </ul></li>
-<li>/etc/neutron/lbaas_agent.ini</li>
+</ul></li>
+<li>/etc/neutron/lbaas_agent.ini
+<ul>
 <li>[ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 <ul>
 <li>This is for Neutron with the OpenVSwitch backend only.</li>
@@ -281,22 +314,29 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <ul>
 <li>This is for Neutron with the Linux Bridge backend only.</li>
 </ul></li>
+</ul></li>
 </ul>
 <h4 id="scenario-1---haproxy-recommended-for-its-maturity">Scenario #1 - HAProxy (recommended for it's maturity)</h4>
 <ul>
-<li>/etc/neutron/neutron_lbaas.conf</li>
+<li>/etc/neutron/neutron_lbaas.conf
+<ul>
 <li>[ service_providers ] service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default</li>
-<li>/etc/neutron/lbaas_agent.ini</li>
+</ul></li>
+<li>/etc/neutron/lbaas_agent.ini
+<ul>
 <li>[ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver</li>
 <li>[ haproxy ] user_group = haproxy
 <ul>
 <li>Specify the group that HAProxy runs as. In RHEL, it's &quot;haproxy.&quot;</li>
 </ul></li>
+</ul></li>
 </ul>
 <h4 id="scenario-2---octavia">Scenario #2 - Octavia</h4>
 <ul>
-<li>/etc/neutron/neutron_lbaas.conf</li>
+<li>/etc/neutron/neutron_lbaas.conf
+<ul>
 <li>[ service_providers ] service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default</li>
+</ul></li>
 </ul>
 <p>[1]</p>
 <p>Source:</p>
@@ -306,20 +346,26 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <h3 id="configurations---neutron---quality-of-service">Configurations - Neutron - Quality of Service</h3>
 <p>The Quality of Service (QoS) plugin can be used to rate limit the amount of bandwidth that is allowed through a network port.</p>
 <ul>
-<li>/etc/neutron/neutron.conf</li>
+<li>/etc/neutron/neutron.conf
+<ul>
 <li>[ DEFAULT ] service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
 <ul>
 <li>Append the QoS plugin to the list of service_plugins.</li>
 </ul></li>
-<li>/etc/neutron/plugins/ml2/openvswitch_agent.ini</li>
+</ul></li>
+<li>/etc/neutron/plugins/ml2/openvswitch_agent.ini
+<ul>
 <li>[ml2] extension_drivers = qos
 <ul>
 <li>Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.</li>
 </ul></li>
-<li>/etc/neutron/plugins/ml2/ml2_conf.ini</li>
+</ul></li>
+<li>/etc/neutron/plugins/ml2/ml2_conf.ini
+<ul>
 <li>[agent] extensions = qos
 <ul>
 <li>Lastly, append the QoS extension to the moduler layer 2 configuration.</li>
+</ul></li>
 </ul></li>
 </ul>
 <p>[1]</p>
@@ -520,21 +566,37 @@ end</code></pre>
 <p>The sample configuration flie &quot;/etc/tempest/tempest.conf.sample&quot; should be copied to &quot;/etc/tempest/tempest.conf&quot; and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources: * http://docs.openstack.org/developer/tempest/sampleconf.html * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample</p>
 <ul>
 <li><p>Provide credentials to a user with the &quot;admin&quot; role.</p>
-<pre><code>admin_username
+<pre><code>[auth]
+admin_username
 admin_password
 admin_project_name
-admin_domain_name</code></pre></li>
+admin_domain_name
+default_credentials_domain_name = Default</code></pre></li>
 <li><p>Specify the Keystone version to use. Valid options are &quot;v2&quot; and &quot;v3.&quot;</p>
-<pre><code>auth_version</code></pre></li>
-<li><p>Provide the Keystone endpoint for v2 (uri) or v3 (uri_v3).</p>
-<pre><code>uri
+<pre><code>[identity]
+auth_version</code></pre></li>
+<li><p>Provide the admin Keystone endpoint for v2 (uri) or v3 (uri_v3).</p>
+<pre><code>[identity]
+uri
 uri_v3</code></pre></li>
 <li><p>Two different size flavor IDs should be given.</p>
-<pre><code>flavor_ref
+<pre><code>[compute]
+flavor_ref
 flavor_ref_alt</code></pre></li>
 <li><p>Two different image IDs should be given.</p>
-<pre><code>image_ref
+<pre><code>[compute]
+image_ref
 image_ref_alt</code></pre></li>
+<li><p>Define what services should be tested for the specific cloud.</p>
+<pre><code>[service_available]
+cinder = true
+neutron = true
+glance = true
+swift = false
+nova = true
+heat = false
+sahara = false
+ironic = false</code></pre></li>
 </ul>
 <p>[1]</p>
 <p>Source:</p>

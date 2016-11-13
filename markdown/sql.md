@@ -1,15 +1,15 @@
 # SQL
 
 * [MariaDB](#mariadb)
-  * [Configuration](#mariadb---configuration)
-  * [Table Engines](#mariadb---table-engines)
-    * InnoDB
-    * MyISAM
-    * Aria
-    * [CassandraSE](#mariadb---table-engines---cassandrase)
-  * [Clustering](#mariadb---clustering)
-    * Galera
-    * [MaxScale](#mariadb---clustering---maxscale)
+    * [Configuration](#mariadb---configuration)
+    * [Table Engines](#mariadb---table-engines)
+        * InnoDB
+        * MyISAM
+        * Aria
+        * [CassandraSE](#mariadb---table-engines---cassandrase)
+    * [Clustering](#mariadb---clustering)
+        * Galera
+        * [MaxScale](#mariadb---clustering---maxscale)
 
 
 # MariaDB
@@ -27,7 +27,6 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 # yum install MariaDB-server MariaDB-client
 ```
-
 
 Source:
 
@@ -59,7 +58,7 @@ The Cassandra storage engine is missing from the official RHEL 7 repositories bu
 > SET GLOBAL cassandra_default_thrift_host='<CASSANDRA_IP>'
 ```
 
-* The Cassandra table has to be created with the "COMPACT STORAGE" option. Otherwise, MariaDB will be unable to access the table.
+* The Cassandra table has to be created with the "COMPACT STORAGE" option. Otherwise, MariaDB will be unable to access the table properly.
 ```
 $ cqlsh
 > CREATE TABLE <NAME> (<VALUE1> <TYPE> PRIMARY KEY, <VALUE2> <TYPE>) WITH COMPACT STORAGE;
@@ -90,6 +89,7 @@ Source:
 
 1. "About MariaDB MaxScale." MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb-enterprise/about-mariadb-maxscale/
 
+
 ### MariaDB - Clustering - Maxscale - Configuration
 
 The latest version of MariaDB's MaxScale can be found at [https://mariadb.com/downloads/maxscale](https://mariadb.com/downloads/maxscale).
@@ -103,6 +103,7 @@ MaxScale requires the configuration of a listener that is associated with a rout
 
 
 Listener options:
+
 * [NAME]
 * type=listener
 * service = Specify the back-end service to use. This is usually a router.
@@ -111,6 +112,7 @@ Listener options:
 * port=3306
 
 Listener example:
+
 ```
 [listener]
 type=listener
@@ -120,22 +122,24 @@ port=3306
 ```
 
 Router options:
+
 * [NAME]
 * type=service
 * router
-  * readconnroute = Load balance requests.
-  * readwritesplit = Send write requests to one node and read queries to all nodes.
-  * schemarouter = Shard databases. Requests to a particular database will be routed to a specific server.
-  * binlogrouter = Copy binary logs from servers other servers. If a backend server fails, MaxScale will replace it and serve read requests from the available binary log.
+    * readconnroute = Load balance requests.
+    * readwritesplit = Send write requests to one node and read queries to all nodes.
+    * schemarouter = Shard databases. Requests to a particular database will be routed to a specific server.
+    * binlogrouter = Copy binary logs from servers other servers. If a backend server fails, MaxScale will replace it and serve read requests from the available binary log.
 * router_options
-  * master = Write only.
-  * slave = Read only.
-  * master,slave = Read and write.
+    * master = Write only.
+    * slave = Read only.
+    * master,slave = Read and write.
 * servers = A comma seperated list of back-end servers.
 * user = Specify a MySQL user to connect as.
 * passwd = Specify the password for the MySQL user.
 
 Example:
+
 ```
 [Read Write Service]
 type=service
@@ -146,6 +150,7 @@ passwd=123456
 ```
 
 Server options:
+
 * [NAME]
 * type=server
 * address = Specify the address of the MySQL server.
@@ -154,7 +159,18 @@ Server options:
 
 [2]
 
+For replication, a maxscale MySQL user needs "REPLICATION SET" and "SELECT" grants for all databases.
+```
+GRANT REPLICATION SET, SELCT ON *.* TO 'maxscale'@'%' IDENTIFIED BY 'securepassword123';
+```
+
+In a master-slave configuration, at least two servers are required to be running. This is because MaxScale is unsure if other nodes are present and cannot determine if a server is a master or a slave. This will prevent it from working properly and this error will occur for all connections. [3] It is ideal to follow the qorum theory by having 3 servers to support a failed host properly.
+```
+ERROR 1045 (28000): failed to create new session
+```
+
 Sources:
 
 1. "MariaDB MaxScale Installation Guide." MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/mariadb-maxscale-installation-guide/
 2. "MaxScale Configuration & Usage Scenarios." MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-configuration-usage-scenarios/
+3. "Issue with MaxScale when slaves are broken." MaxScale Google Groups. August 28, 2014. Accessed November 12, 2016. https://groups.google.com/forum/#!topic/maxscale/HK49D15s21s
