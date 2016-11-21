@@ -2,6 +2,7 @@
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#configurations">Configurations</a>
 <ul>
 <li><a href="#configurations---common">Common</a>
@@ -52,13 +53,29 @@
 <h1 id="overview">Overview</h1>
 <p>OpenStack has a large range of services. The essential ones required for a basic cloud are:</p>
 <ul>
-<li>Keystone</li>
-<li>Authentication</li>
-<li>Nova</li>
-<li>Compute</li>
-<li>Neutron</li>
-<li>Networking</li>
+<li>Keystone = Authentication</li>
+<li>Nova = Compute</li>
+<li>Neutron = Networking</li>
 </ul>
+<h1 id="installation">Installation</h1>
+<p>It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code.</p>
+<p>PackStack (RHEL)</p>
+<pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
+# yum install packstack
+# packstack --gen-answer-file &lt;FLIE&gt;
+# packstack --answer-file &lt;FILE&gt;</code></pre>
+<p>OpenStack Ansible (Ubuntu LTS)</p>
+<pre><code># apt-get install git
+# git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+# cd /opt/openstack-ansible/
+# git checkout 13.3.7
+# scripts/bootstrap-ansible.sh
+# scripts/bootstrap-aio.sh</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html</li>
+<li>http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
+</ol>
 <h1 id="configurations">Configurations</h1>
 <p>This section will focus on important settings for each service's configuration files.</p>
 <h2 id="configurations---common">Configurations - Common</h2>

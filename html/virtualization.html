@@ -1,0 +1,52 @@
+<h1 id="virtualization">Virtualization</h1>
+<ul>
+<li>Hardware Virtualization
+<ul>
+<li>KVM</li>
+<li>Xen</li>
+</ul></li>
+<li><a href="#containers">Containers</a>
+<ul>
+<li><a href="#containers---docker">Docker</a>
+<ul>
+<li><a href="#containers---docker---networking">Networking</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="containers">Containers</h1>
+<p>Containers are a type of software virtualization. Using a directory structure that contains an entire operating system (typically referred to as a chroot), containers can easily spin up and utilize system resources without the overhead of full hardware allocation. It is not possible to use seperate kernels with this approach.</p>
+<h2 id="containers---docker">Containers - Docker</h2>
+<p>Docker creates containers using the LXC kernel module on Linux.</p>
+<p>A command is run to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spun in the background. A workaround for this is to append <code>&amp;&amp; tail -f /dev/null</code> to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Get started with Docker.&quot; Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted</li>
+</ol>
+<h3 id="containers---docker---networking">Containers - Docker - Networking</h3>
+<p>Networking is automatically bridged to the public interface and set up with a NAT. This allows full communication to/from the container, provided that the necessary ports are open in the firewall and configured in the Docker image.</p>
+<p>Networking issues from within a container are commonly due to network packet size (MTU) issues. There are a few work-a-rounds.</p>
+<ol style="list-style-type: decimal">
+<li><p>Configure the default MTU size for Docker deployments by modifying the daemon's process settings. This value should generally be below the default of 1500.</p>
+<pre><code># vim /etc/sysconfig/docker
+OPTIONS=&#39;--selinux-enabled --log-driver=journald --mtu 1400&#39;
+# systemctl daemon-reload</code></pre>
+<p>OR</p>
+<pre><code># vim /usr/lib/systemd/system/docker.service
+ExecStart=/usr/bin/docker-current daemon \
+      --exec-opt native.cgroupdriver=systemd --mtu 1400 \
+      $OPTIONS \
+      $DOCKER_STORAGE_OPTIONS \
+      $DOCKER_NETWORK_OPTIONS \
+      $ADD_REGISTRY \
+      $BLOCK_REGISTRY \
+      $INSECURE_REGISTRY
+# systemctl daemon-reload
+# systemclt restart docker</code></pre></li>
+<li><p>Forward all packets between the Docker link through the physical link.</p>
+<pre><code># iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code></pre></li>
+</ol>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;containers in docker 1.11 does not get same MTU as host #22297.&quot; Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297</li>
+</ol>

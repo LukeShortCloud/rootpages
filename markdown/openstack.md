@@ -2,6 +2,7 @@
 
 * [Introduction](#introduction)
 * [Overview](#overview)
+* [Installation](#installation)
 * [Configurations](#configurations)
     * [Common](#configurations---common)
         * [Database](#configurations---common---database)
@@ -41,12 +42,37 @@ Most things mentioned here should be able to be applied to other similar environ
 
 OpenStack has a large range of services. The essential ones required for a basic cloud are:
 
-* Keystone
-  * Authentication
-* Nova
-  * Compute
-* Neutron
-  * Networking
+* Keystone = Authentication
+* Nova = Compute
+* Neutron = Networking
+
+
+# Installation
+
+It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code.
+
+PackStack (RHEL)
+```
+# yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
+# yum install packstack
+# packstack --gen-answer-file <FLIE>
+# packstack --answer-file <FILE>
+```
+
+OpenStack Ansible (Ubuntu LTS)
+```
+# apt-get install git
+# git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+# cd /opt/openstack-ansible/
+# git checkout 13.3.7
+# scripts/bootstrap-ansible.sh
+# scripts/bootstrap-aio.sh
+```
+
+Sources:
+
+1. http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html
+2. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
 # Configurations

@@ -19,11 +19,14 @@
 <ul>
 <li><a href="#playbooks---jinga2-templates---loops">Loops</a></li>
 </ul></li>
+<li><a href="#playbooks---containers">Containers</a></li>
 <li><a href="#playbooks---main-modules">Main Modules</a>
 <ul>
 <li><a href="#playbooks---main-modules---async">Async</a></li>
 <li><a href="#playbooks---main-modules---ignore-errors">Ignore Errors</a></li>
 <li><a href="#playbooks---main-modules---include">Include</a></li>
+<li><a href="#playbooks---main-modules---include-role">Include Role</a></li>
+<li><a href="#playbooks---main-modules---include-variables">Include Variables</a></li>
 <li><a href="#playbooks---main-modules---gather-facts">Gather Facts</a></li>
 <li><a href="#playbooks---main-modules---loops">Loops</a></li>
 <li><a href="#playbooks---main-modules---prompts">Prompts</a></li>
@@ -32,6 +35,7 @@
 <li><a href="#playbooks---main-modules---register">Register</a></li>
 <li><a href="#playbooks---main-modules---set-fact">Set Fact</a></li>
 <li><a href="#playbooks---main-modules---tags">Tags</a></li>
+<li><a href="#playbooks---main-modules---wait-for">Wait For</a></li>
 <li><a href="#playbooks---main-modules---when">When</a></li>
 </ul></li>
 <li><a href="#playbooks---modules">Modules</a>
@@ -46,6 +50,7 @@
 <li><a href="#playbooks---modules---package-managers">Package Managers</a>
 <ul>
 <li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
+<li><a href="#playbooks---modules---package-managers---apt">Apt</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -517,8 +522,56 @@ priority={{ count }}
 <ol style="list-style-type: decimal">
 <li>&quot;Jinga Template Designer Documentation.&quot;</li>
 </ol>
+<h2 id="playbooks---containers">Playbooks - Containers</h2>
+<p>The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
+<p>Install Ansible Container into a Python virtual environment. This helps to seperate Python packages provided by the operating system's package manager. [1]</p>
+<pre><code>$ virtualenv ansible-container
+$ ansible-container/bin/pip install -U pip setuptools
+$ ansible-container/bin/pip install ansible-container</code></pre>
+<p>Ansible Container Directory Structure:</p>
+<ul>
+<li>ansible/ = The &quot;ansible-container&quot; command should be run in the directory above &quot;ansible.&quot;
+<ul>
+<li>container.yml = An Ansible file that mirrors Docker Compose syntax is used to define how to create the Docker container. Common settings include the image to use, ports to open, commands to run, etc.</li>
+<li>requirements.txt = Python depedencies to install.</li>
+<li>requirements.yml = Ansible depedencies to install from Ansible Galaxy.</li>
+<li>ansible.cfg = Ansible configuration for the container.</li>
+</ul></li>
+</ul>
+<p>container.yml</p>
+<pre><code>version: &quot;2&quot;
+services:
+  web:
+    image: &quot;ubuntu:trusty&quot;
+    ports:
+      - &quot;80:80&quot;
+    command: [&quot;/usr/bin/dumb-init&quot;, &quot;/usr/sbin/apache2ctl&quot;, &quot;-D&quot;, &quot;FOREGROUND&quot;]
+    dev_overrides:
+      environment:
+        - &quot;DEBUG=1&quot;</code></pre>
+<p>All of the Docker Compose options as specified at <a href="https://docs.docker.com/compose/compose-file/" class="uri">https://docs.docker.com/compose/compose-file/</a>.</p>
+<p>Common options:</p>
+<ul>
+<li>version = The version of Docker Compose to use. Valid options are &quot;1&quot;, &quot;2&quot;, and &quot;2.1.&quot;</li>
+<li><p>services = This is where various Docker containers can be defined. A unique name should be provided to each different container. These names are used as the hosts in the Playbook file.</p>
+<pre><code>services:
+https:</code></pre>
+```</li>
+<li>hosts: https ```</li>
+<li>ports = Specify the host node port to map to the container port. ``` ports:</li>
+<li>&quot;443:443&quot; ```</li>
+<li><p>image = The Docker image to use.</p>
+<pre><code>image: &quot;centos:7&quot;</code></pre></li>
+<li><p>command = Run a shell command, providing all of the arguements seperated via a list. This is the default command run to start the container.</p></li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Container README.&quot;</li>
+<li>&quot;Ansible Container.&quot;</li>
+</ol>
 <h2 id="playbooks---main-modules">Playbooks - Main Modules</h2>
-<p>Root Pages refers to generic Playbook-related modules as the &quot;main modules.&quot;</p>
+<p>Root Pages refers to generic Playbook-related modules as the &quot;main modules.&quot; This is not to be confused with official naming of &quot;core modules&quot; which is a mixture of both the main and regular modules mentioned in this guide.</p>
 <h3 id="playbooks---main-modules---async">Playbooks - Main Modules - Async</h3>
 <p>The &quot;async&quot; function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set.</p>
 <p>Syntax:</p>
@@ -590,8 +643,51 @@ with_flattened:
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
 </ol>
+<h3 id="playbooks---main-modules---include-role">Playbooks - Main Modules - Include Role</h3>
+<p>Starting in Ansible 2.2, other roles can be included in tasks.</p>
+<p>Options:</p>
+<ul>
+<li>name = Name of the role to include.</li>
+<li>{defaults|tasks|vars}_from = Include a specific file from the role's defaults, tasks, or vars directory.</li>
+<li>private = Boolean. Specify if the variables from this role should be available to the rest of the Playbook (False) or not (True).</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>inlcude_role:</code></pre>
+<p>Example:</p>
+<pre><code>include_role: name=ldap task_from=rhel.yml</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible include_role - Load and execute a role.&quot;</li>
+</ol>
+<h3 id="playbooks---main-modules---include-variables">Playbooks - Main Modules - Include Variables</h3>
+<p>Additional variables can be defined within a Playbook file. These can be openly added to the <code>include_vars</code> module via YAML syntax.</p>
+<p>Options:</p>
+<ul>
+<li>file = Specify a filename to source variables from.</li>
+<li>name = Store variables from a file into a specified variable.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>include_vars: &lt;VARIABLE&gt;</code></pre>
+<p>Examples:</p>
+<pre><code>- hosts: all
+  include_vars:
+   - gateway: &quot;192.168.0.1&quot;
+   - netmask: &quot;255.255.255.0&quot;
+  roles:
+    - addressing</code></pre>
+<pre><code>- hosts: all
+  include_vars: file=monitor_vars.yml
+  roles:
+    - nagios</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible include_vars - Load variables from files, dynamically within a task.&quot;</li>
+</ol>
 <h3 id="playbooks---main-modules---ignore-errors">Playbooks - Main Modules - Ignore Errors</h3>
 <p>Playbooks, by default, will stop running if it fails to run a command. If it's okay to continue then the &quot;ignore_errors&quot; option can be appeneded below the command. This will allow the Playbook to continue onto the next step.</p>
+<p>Syntax:</p>
+<pre><code>ignore_errors: &lt;BOOLEAN&gt;</code></pre>
+<p>Example:</p>
 <pre><code>ignore_errors: yes</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -726,6 +822,34 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Tags.&quot;</li>
+</ol>
+<h3 id="playbooks---main-modules---wait-for">Playbooks - Main Modules - Wait For</h3>
+<p>A condition can be searched for before continuing on to the next task.</p>
+<p>Syntax:</p>
+<pre><code>wait_for:</code></pre>
+<p>Example:</p>
+<pre><code>wait_for: timeout=60</code></pre>
+<p>Common options:</p>
+<ul>
+<li>delay = How long to wait (in seconds) before running the wait_for check.</li>
+<li>path = A file to check.</li>
+<li>host = A host to check a connection to.</li>
+<li>port = A port to check on the specified host.</li>
+<li>connect_timeout = How long to wait (in seconds) before retrying the connection.</li>
+<li>search_regex = A regular expression string to match from either a port or file.</li>
+<li>state
+<ul>
+<li>started = Check for a open port.</li>
+<li>stopped = Check for a closed port.</li>
+<li>drained = Check for active connections to the port.</li>
+<li>present = Check for a file.</li>
+<li>absent = Verify a file does not exist.</li>
+</ul></li>
+<li>timeout = How long to wait (in seconds) before continuing on.</li>
+</ul>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible wait_for - Waits for a condition before continuing.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---when">Playbooks - Main Modules - When</h3>
 <p>The &quot;when&quot; function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an &quot;if&quot; statement in programming langauges. It is usually the last line to a sub-task.</p>
@@ -895,6 +1019,35 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible Yum Module.&quot;</li>
 <li>&quot;Ansible Yum Repository Module.&quot;</li>
 </ol>
+<h3 id="playbooks---modules---package-managers---apt">Playbooks - Modules - Package Managers - Apt</h3>
+<p>Apt is used to install and manage packages on Debian based operating systems.</p>
+<p>Options:</p>
+<ul>
+<li>name = The package name.</li>
+<li>state
+<ul>
+<li>present = Install the package.</li>
+<li>latest = Update the package.</li>
+<li>absent = Uninstall the package.</li>
+<li>build-dep = Install the build depedencies for the source code.</li>
+</ul></li>
+<li>update_cache = Update the Apt cache (apt-get update). Default: no.</li>
+<li>deb = Install a specified *.deb file.</li>
+<li>autoremove = Remove all dependencies that are no longer required.</li>
+<li>purge = Delete configuration files.</li>
+<li>install_recommends = Install recommended packages.</li>
+<li>upgrade
+<ul>
+<li>no = Do not upgrade any system packages (default).</li>
+<li>yes = Update all of the system packages (apt-get upgrade).</li>
+<li>full = Update all of the system packages and uninstall older, conflicting packages (apt-get full-upgrade).</li>
+<li>dist = Upgrade the operating system (apt-get dist-ugprade).</li>
+</ul></li>
+</ul>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;apt - Manages apt-packages.&quot;</li>
+</ol>
 <hr />
 <h2 id="bibliography">Bibliography</h2>
 <ul>
@@ -938,4 +1091,10 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible Vault.&quot; Ansible Documentation. October 31, 2016. Accessed November 6, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
 <li>&quot;Organizing Group Vars Files in Ansible.&quot; toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/</li>
 <li>&quot;Ansible Glossary.&quot; Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
+<li>&quot;Ansible Container README.&quot; Ansible GitHub. October, 2016. Accessed November 19, 2016. https://github.com/ansible/ansible-container</li>
+<li>&quot;Ansible Container.&quot; Ansible Documentation. September 26, 2016. Accessed November 19, 2016 .http://docs.ansible.com/ansible-container/</li>
+<li>&quot;Ansible apt - Manages apt-packages.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/apt_module.html</li>
+<li>&quot;Ansible include_vars - Load variables from files, dynamically within a task.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html</li>
+<li>&quot;Ansible include_role - Load and execute a role.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html</li>
+<li>&quot;Ansible wait_for - Waits for a condition before continuing.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html</li>
 </ul>

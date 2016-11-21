@@ -116,13 +116,13 @@ Sources:
 
 RAID officially stands for "Redundant Array of Independent Disks." The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.
 
-| Level | Minimum Drives | Benefit | Fallbacks |
-| ----- | -------------- | ------- | --------- |
-| 0 | 2 | Speed and increased drive space. I/O operations are equally spread to each disk. | No redudnacy. |
-| 1 | 2 | Redundancy. If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds. |
-| 5 | 3 | Speed, space, and redudnancy. It can also recover from a failed drive without any affect on performance. | Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time. |
-| 6 | 4 | This is an enhanced RAID 5 that can survive up to 2 drive failures. | See the other RAID 5 fallbacks.
-| 10 | 4 | Speed, space, and redudnacy. This uses both RAID 1 and 0. | Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime. |
+| Level | Minimum Drives | Benefits | Fallbacks | Speed | More Storage | Redudancy | Minimum Drive Failure Tolerance
+| ----- | -------------- | ------- | --------- | ----- | ------------ | --------- |
+| 0 | 2 | I/O operations are equally spread to each disk. | No redudnacy. | X | X | | 0 |
+| 1 | 2 | If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds. | | | X | 1 |
+| 5 | 3 | ====This can recover from a failed drive without any affect on performance. | Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time. | X | X | X | 1 |
+| 6 | 4 | This is an enhanced RAID 5 that can survive up to 2 drive failures. | Refer to the RAID 5 fallbacks. | X | X | X | 2 |
+| 10 | 4 | Speed, space, and redudnacy. This uses both RAID 1 and 0. | Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime. | X | X | X | 2 |
 
 [1]
 

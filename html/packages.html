@@ -1,15 +1,17 @@
 <h1 id="packages">Packages</h1>
 <ul>
-<li><a href="#deb---debian">DEB - Debian</a></li>
-<li><a href="#rpm---rhel">RPM - RHEL</a></li>
+<li>DEB - Debian</li>
+<li><a href="#rpm---rhel">RPM - RHEL</a>
+<ul>
 <li><a href="#rpm---adding-a-repository">Adding a Repository</a></li>
 <li><a href="#rpm---creating-a-repository">Creating a Repository</a></li>
 <li><a href="#rpm---creating-an-rpm">Creating an RPM</a></li>
+</ul></li>
 <li><a href="#pkgbuild---arch">PKGBUILD - Arch</a></li>
+<li>Flatpak</li>
 </ul>
-<h2 id="deb---debian">DEB - Debian</h2>
-<h2 id="rpm---rhel">RPM - RHEL</h2>
-<h3 id="rpm---adding-a-repository">RPM - Adding a Repository</h3>
+<h1 id="rpm---rhel">RPM - RHEL</h1>
+<h2 id="rpm---adding-a-repository">RPM - Adding a Repository</h2>
 <p>Repositories (someitmes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
 <p>On Red Hat based systems, the repositories are all defined as text files with the &quot;.repo&quot; extension in this directory.</p>
 <pre><code># ls /etc/yum.repos.d/</code></pre>
@@ -26,12 +28,12 @@ mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&
 #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
-<p>Source:</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Fedora 24 System Administrator's Guide&quot; Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System_Administrators_Guide/sec-Setting_repository_Options.html</li>
 <li>&quot;yum.conf - Configuration file for yum(8).&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf</li>
 </ol>
-<h3 id="rpm---creating-a-repository">RPM - Creating a Repository</h3>
+<h2 id="rpm---creating-a-repository">RPM - Creating a Repository</h2>
 <p>Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is &quot;centos/<span class="math inline"><em>r</em><em>e</em><em>l</em><em>e</em><em>a</em><em>s</em><em>e</em><em>v</em><em>e</em><em>r</em>/</span>basearch/&quot; where $releasever is the release version and $basearch is the CPU architecture. However, any directory can be used.</p>
 <p>In this example, a default Apache web server will have the repository access via the URL &quot;http://localhost/centos/7/x86_64/.&quot; Be sure to place your RPMs in this directory. [1]</p>
 <pre><code># yum install createrepo
@@ -40,13 +42,25 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
 <p>The &quot;createrepo&quot; command will create 4 or 5 files. * repomd.xml = An index for the other repository metadata files. * primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc. * filelists.xml = Contains the full listing of every directory and file. * other.xml = Holds a changelog of all the packages. * groups.xml = If a repository has a &quot;group&quot; that should install multiple packages, the group is specified here. By default, this file is not created when running &quot;createrepo&quot; without any arguments. [2]</p>
 <p>If new packages are added and/or signed via a GPG key then the repository cache needs to be updated again. [1]</p>
 <pre><code># createrepo --update /var/www/html/centos/7/x86_64/</code></pre>
-<p>Source:</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;createrepo(8) - Linux man page.&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo</li>
 <li>&quot;createrepo/rpm metadata.&quot; createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/</li>
 </ol>
-<h3 id="rpm---creating-an-rpm">RPM - Creating an RPM</h3>
-<p>Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM. The most common options are: * Name = The name of the program. * Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;). * Release = Start with &quot;1%{?dist}&quot; for the first build of the RPM. Increase the number if the package is ever rebuilt. Start from &quot;1%{?dist}&quot; if a new version of the actual program is being built. * Summary = One sentence describing the package. A period is not allowed at the end. * BuildRoot = The directory that contains all of the RPM packages. The directory structure under here should mirror the files location in relation to the top-level root &quot;/&quot;. For example, &quot;/bin/bash&quot; would be placed under &quot;$RPM_BUILD_ROOT/bin/bash&quot;. * BuildArch = The architecture that the program is meant to run on. This is generally either &quot;x86_64&quot; or &quot;i386&quot;. If the code is not dependent on the CPU (for example, Java or bash scripts) then &quot;noarch&quot; can be used. * Requires = List the RPM packages that are dependencies needed for your program to work. * License = The license of the program. * URL = A URL link to the program's or, if that is not available, the developer's website.</p>
+<h2 id="rpm---creating-an-rpm">RPM - Creating an RPM</h2>
+<p>Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.</p>
+<p>Common options:</p>
+<ul>
+<li>Name = The name of the program.</li>
+<li>Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;).</li>
+<li>Release = Start with &quot;1%{?dist}&quot; for the first build of the RPM. Increase the number if the package is ever rebuilt. Start from &quot;1%{?dist}&quot; if a new version of the actual program is being built.</li>
+<li>Summary = One sentence describing the package. A period is not allowed at the end.</li>
+<li>BuildRoot = The directory that contains all of the RPM packages. The directory structure under here should mirror the files location in relation to the top-level root &quot;/&quot;. For example, &quot;/bin/bash&quot; would be placed under &quot;$RPM_BUILD_ROOT/bin/bash&quot;.</li>
+<li>BuildArch = The architecture that the program is meant to run on. This is generally either &quot;x86_64&quot; or &quot;i386&quot;. If the code is not dependent on the CPU (for example, Java or bash scripts) then &quot;noarch&quot; can be used.</li>
+<li>Requires = List the RPM packages that are dependencies needed for your program to work.</li>
+<li>License = The license of the program.</li>
+<li>URL = A URL link to the program's or, if that is not available, the developer's website.</li>
+</ul>
 <p>Sample SPEC file:</p>
 <pre><code>Name: My First RPM
 Version: 1.0.0
@@ -63,3 +77,49 @@ URL: http://example.tld/</code></pre>
 <li>&quot;How to create an RPM package.&quot; Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package</li>
 </ol>
 <h2 id="pkgbuild---arch">PKGBUILD - Arch</h2>
+<p>Arch Linux packages are design to be simple and easy to create. A PKGBUILD file is compressed with a software's contents into a XZ tarball. This can contain either the source code or compiled program.</p>
+<p>Required Variables:</p>
+<ul>
+<li>pkgname = Name of the software.</li>
+<li>pkgver = Version of the software.</li>
+<li>pkgrel = Version of the package (only increase if the PKGBUILD file has been modified and not the software).</li>
+<li>arch = The architecture the software is built for. Any architecture that applies should be defined. Valid options: x86_64, i686, arm (armv5), armv6h, armv7h, aarch64 (armv8 64-bit), or any.</li>
+</ul>
+<p>Optional Variables:</p>
+<ul>
+<li>pkgdesc = A brief description of the software.</li>
+<li>url = The URL of the software's website.</li>
+<li>license = The license of the software. Valid options: GPL, BSD, MIT, Apache, etc.</li>
+<li>depends = List other package version dependencies.</li>
+<li>optdepends = List optional dependencies and a brief description.</li>
+<li>makedepends = List packages required to build the software from source.</li>
+<li>provides = List tools that are provided by the package but do not necessarily have file names.</li>
+<li>conflicts = List any conflicting packages.</li>
+<li>replaces = List packages that this software should replace.</li>
+</ul>
+<p>[1]</p>
+<p>Functions</p>
+<p>Required:</p>
+<ul>
+<li>build()
+<ul>
+<li><p>For building the software, PKGBUILD will need to move into the directory that the XZ tarball was extracted to. This is automatically generated as the &quot;srcdir&quot; variable. In most situations this should be the package name and version seperated by a dash.</p>
+<pre><code>$ cd &quot;${srcdir}&quot;</code></pre>
+<p>OR</p>
+<pre><code>$ cd &quot;${pkgname}-${pkgver}&quot;</code></pre></li>
+</ul></li>
+<li>package()
+<ul>
+<li><p>These are the steps to copy and/or modify files from the &quot;srcdir&quot; to be placed in the &quot;pkgdir&quot; to represent where they will be installed on an end-user's system. This acts as the top-level directory of a Linux filesystem hierarchy.</p>
+<pre><code>$ cd &quot;${pkgdir}&quot;</code></pre></li>
+<li><p>An example of installing compiled source code using a Make file.</p>
+<pre><code>$ make DESTDIR=&quot;${pkgdir}&quot; install</code></pre>
+<p>[2][3]</p></li>
+</ul></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;PKGBUILD.&quot; Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD</li>
+<li>&quot;Creating packages.&quot; Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating_packages</li>
+<li>&quot;PKGBUILD(5) Manual Page.&quot; Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html</li>
+</ol>

@@ -152,51 +152,72 @@
 </ol>
 <h1 id="raids">RAIDs</h1>
 <p>RAID officially stands for &quot;Redundant Array of Independent Disks.&quot; The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.</p>
-<table style="width:54%;">
+<table style="width:94%;">
 <colgroup>
 <col width="8%" />
 <col width="20%" />
 <col width="11%" />
+<col width="13%" />
+<col width="8%" />
+<col width="18%" />
 <col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>Level</th>
 <th>Minimum Drives</th>
-<th>Benefit</th>
+<th>Benefits</th>
 <th>Fallbacks</th>
+<th>Speed</th>
+<th>More Storage</th>
+<th>Redudancy</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>0</td>
 <td>2</td>
-<td>Speed and increased drive space. I/O operations are equally spread to each disk.</td>
+<td>I/O operations are equally spread to each disk.</td>
 <td>No redudnacy.</td>
+<td>X</td>
+<td>X</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>1</td>
 <td>2</td>
-<td>Redundancy. If one drive fails, a second drive will have an exact copy of all of the data.</td>
+<td>If one drive fails, a second drive will have an exact copy of all of the data.</td>
 <td>Slower write speeds.</td>
+<td></td>
+<td></td>
+<td>X</td>
 </tr>
 <tr class="odd">
 <td>5</td>
 <td>3</td>
-<td>Speed, space, and redudnancy. It can also recover from a failed drive without any affect on performance.</td>
+<td>====This can recover from a failed drive without any affect on performance.</td>
 <td>Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time.</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr class="even">
 <td>6</td>
 <td>4</td>
 <td>This is an enhanced RAID 5 that can survive up to 2 drive failures.</td>
-<td>See the other RAID 5 fallbacks.</td>
+<td>Refer to the RAID 5 fallbacks.</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 </tr>
 <tr class="odd">
 <td>10</td>
 <td>4</td>
 <td>Speed, space, and redudnacy. This uses both RAID 1 and 0.</td>
 <td>Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime.</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 </tr>
 </tbody>
 </table>
