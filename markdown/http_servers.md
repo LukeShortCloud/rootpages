@@ -9,6 +9,7 @@
     * [SELinux](#apache---selinux)
 * Nginx
 * Lighttpd
+* [OpenSSL](#openssl)
 
 
 # Apache 2.4
@@ -298,3 +299,46 @@ Permanetely fix SELinux permissions on a custom directory using the semanage too
 Source:
 
 1. https://wiki.centos.org/HowTos/SELinux
+
+# OpenSSL
+
+OpenSSL is a free and open source library for managing secure socket layer (SSL) and Transport Layer Security (TLS) encryption. [1]
+
+PEM files can either be a single certificate or a full encapsulation of all related certificates and keys. This is useful for distributing an SSL by using only one file.
+
+A minimal PEM file can contain just a certificate. If using a self-signed SSL, both the certificate and then the key can be included. For SSLs issued from a Certificate Authority (CA), the full syntax should be used to include all of the necessary content. It includes the domain's certificate (MY CERTIFICATE), the certificates from the CA bundle (INTERMEDIATE CERTIFICATE and ROOT CERTIFICATE), and then then domain's certificate key (RSA PRIVATE KEY).
+
+Minimal Syntax:
+```
+-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+```
+
+Full Self-signed Syntax:
+```
+-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+```
+
+Full Verified Syntax:
+```
+-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+-----BEGIN INTERMEDIATE CERTIFICATE-----
+-----END INTERMEDIATE CERTIFICATE-----
+-----BEGIN INTERMEDIATE CERTIFICATE-----
+-----END INTERMEDIATE CERTIFICATE-----
+-----BEGIN ROOT CERTIFICATE-----
+-----END ROOT CERTIFICATE-----
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+```
+
+[2]
+
+Sources:
+
+1. "Welcome to OpenSSL!" Accessed November 27, 2016. https://www.openssl.org/
+2. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed November 27, 2016. http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl

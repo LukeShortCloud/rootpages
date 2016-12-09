@@ -15,9 +15,9 @@
 <ul>
 <li><a href="#playbooks---directory-structure">Directory Structure</a></li>
 <li><a href="#playbooks---production-and-staging">Production and Staging</a></li>
-<li><a href="#playbooks---jinga2-templates">Jinga2 Templates</a>
+<li><a href="#playbooks---jinja2-templates">Jinja2 Templates</a>
 <ul>
-<li><a href="#playbooks---jinga2-templates---loops">Loops</a></li>
+<li><a href="#playbooks---jinja2-templates---loops">Loops</a></li>
 </ul></li>
 <li><a href="#playbooks---containers">Containers</a></li>
 <li><a href="#playbooks---main-modules">Main Modules</a>
@@ -47,12 +47,19 @@
 <li><a href="#playbooks---modules---git">Git</a></li>
 <li><a href="#playbooks---modules---mysql-database-and-user">MySQL Database and User</a></li>
 <li><a href="#playbooks---modules---service">Service</a></li>
+<li>Stat</li>
 <li><a href="#playbooks---modules---package-managers">Package Managers</a>
 <ul>
 <li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
 <li><a href="#playbooks---modules---package-managers---apt">Apt</a></li>
 </ul></li>
 </ul></li>
+</ul></li>
+<li><a href="#dashboards">Dashboards</a>
+<ul>
+<li>Ansible Tower</li>
+<li><a href="#dashboards---open-tower">Open Tower</a></li>
+<li><a href="#dashboards---semaphore">Semaphore</a></li>
 </ul></li>
 <li><a href="#bibliography">Bibliography</a></li>
 </ul>
@@ -117,7 +124,12 @@ domain_ip=192.168.7.7</code></pre>
 <ul>
 <li>ansible_host = The IP address or hostname of the server.</li>
 <li>ansible_port = A custom SSH port (i.e., if not using the standard port 22).</li>
-<li>ansible_connection = These options specify how to log in to execute tasks. Valid options are &quot;ssh&quot; to remotely connect to the server (this is the default behavior), &quot;local&quot; to run as the current user, and &quot;chroot&quot; to change into a different main root file system.</li>
+<li>ansible_connection = These options specify how to log in to execute tasks.
+<ul>
+<li>ssh = Run commands over a remote SSH connection (default).</li>
+<li>local = Run on the local system.</li>
+<li>chroot = Run commands in a directory using chroot.</li>
+</ul></li>
 <li>ansible_user = The SSH user.</li>
 <li>ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the &quot;--ask-pass&quot; option to ansible when running tasks.</li>
 <li>ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).</li>
@@ -138,7 +150,12 @@ dns1 ansible_host=192.168.1.53 ansilbe_port=2222 ansible_become=true ansible_bec
 dns2 ansible_host=192.168.1.54
 /home/user/ubuntu1604 ansible_connection=chroot</code></pre>
 <h3 id="configuration---inventory---variables">Configuration - Inventory - Variables</h3>
-<p>Variables that Playbooks will use can be defined for specific hosts and/or groups. * /etc/ansible/host_vars/ = Create a file named after the host. * /etc/ansible/group_vars/ = Create a file named after the group of hosts. * all = This file can exist under the above directories to define global variables for all hosts and/or groups.</p>
+<p>Variables that Playbooks will use can be defined for specific hosts and/or groups.</p>
+<ul>
+<li>/etc/ansible/host_vars/ = Create a file named after the host.</li>
+<li>/etc/ansible/group_vars/ = Create a file named after the group of hosts.</li>
+<li>all = This file can exist under the above directories to define global variables for all hosts and/or groups.</li>
+</ul>
 <p>The files in these directories can have any name and do not require an extension. It is assumed that they are YAML files. Here is an example for a host variable file.</p>
 <pre><code>---
 domain_name: examplehost.tld
@@ -187,6 +204,17 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 </ul></li>
 </ul>
 <p>[4]</p>
+<p>Using a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]</p>
+<p>Works</p>
+<pre><code>  - name: find interface facts
+    debug:
+      msg: &quot;{{ hostvars[inventory_hostname][&#39;ansible_%s&#39; | format(item)] }}&quot;
+    with_items: &quot;{{ ansible_interfaces }}&quot;</code></pre>
+<p>Does Not Work</p>
+<pre><code>  - name: find interface facts
+    debug:
+      msg: &quot;{{ ansible_%s| format(item)] }}&quot;
+    with_items: &quot;{{ ansible_interfaces }}&quot;</code></pre>
 <p>The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.</p>
 <ul>
 <li>extra vars</li>
@@ -215,6 +243,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 <li>&quot;Ansible Loops.&quot;</li>
 <li>&quot;Ansible Become (Privlege Escalation)&quot;</li>
 <li>&quot;Ansible Vault.&quot;</li>
+<li>&quot;How to loop through interface facts.&quot;</li>
 </ol>
 <h2 id="configuration---vault-encryption">Configuration - Vault Encryption</h2>
 <p>Any file in a Playbook can be encrypted. This is useful for storing sensitive username and passwords securely. A password is used to open these files after encryption. All encrypted files in a Playbook should use the same password.</p>
@@ -415,7 +444,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 <li>&quot;Ansible Best Practices.&quot;</li>
 <li>&quot;Organizing Group Vars Files in Ansible.&quot;</li>
 </ol>
-<h2 id="playbooks---jinga2-templates">Playbooks - Jinga2 Templates</h2>
+<h2 id="playbooks---jinja2-templates">Playbooks - Jinja2 Templates</h2>
 <ul>
 <li>Variables defined in Ansible can be single variables, lists, and dictionaries. This can be referenced from the template.</li>
 <li><p>Variable Syntax:</p>
@@ -430,7 +459,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
     &lt;html&gt;Welcome to localhost&lt;/html&gt;
   {% endif %}
   ...example comment #}</code></pre></li>
-<li>Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinga will not render anything that is escaped.</li>
+<li>Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinja will not render anything that is escaped.</li>
 <li><p>Escaping Syntax:</p>
 <pre><code>&#39;&#39;</code></pre>
 <pre><code>{% raw %}
@@ -438,7 +467,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 <li><p>Escaping Examples:</p>
 <pre><code>  {{ &#39;hello world&#39; }}</code></pre>
 <pre><code>  {% raw %}
-  {{ jinga.wont.replace.this }}
+  {{ jinja.wont.replace.this }}
   {% endraw %}</code></pre></li>
 </ul>
 <p>Templates can extend other templates by replacing &quot;block&quot; elements. At least two files are required. This first file defines where the blocks will be. The second file specifies that it should extend the first file and then defines the same blocks full of content that will be replaced in the first file.</p>
@@ -461,7 +490,7 @@ Hello World
 {% block body %}
 Welcome to the Hello World page!
 {% endblock %}</code></pre>
-<h3 id="playbooks---jinga2-templates---loops">Playbooks - Jinga2 Templates - Loops</h3>
+<h3 id="playbooks---jinja2-templates---loops">Playbooks - Jinja2 Templates - Loops</h3>
 <p>Loops can use standard comparison and/or logic operators.</p>
 <p>Comparison Operators:</p>
 <ul>
@@ -520,7 +549,7 @@ priority={{ count }}
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Jinga Template Designer Documentation.&quot;</li>
+<li>&quot;Jinja Template Designer Documentation.&quot;</li>
 </ol>
 <h2 id="playbooks---containers">Playbooks - Containers</h2>
 <p>The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
@@ -1048,6 +1077,24 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;apt - Manages apt-packages.&quot;</li>
 </ol>
+<h1 id="dashboards">Dashboards</h1>
+<p>Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.</p>
+<h2 id="dashboards---open-tower">Dashboards - Open Tower</h2>
+<p>Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;The Open Tower Project.&quot;</li>
+</ol>
+<h2 id="dashboards---semaphore">Dashboards - semaphore</h2>
+<p>semaphore was designed to be an unofficial open source altnerative to Ansible Tower. The latest release can be found at <a href="https://github.com/ansible-semaphore/semaphore/releases" class="uri">https://github.com/ansible-semaphore/semaphore/releases</a>.</p>
+<p>Installation</p>
+<pre><code># curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.0.4/semaphore_linux_amd64 &gt; /usr/bin/semaphore
+# /usr/bin/semaphore -setup</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;semaphore Installation.&quot;</li>
+</ol>
 <hr />
 <h2 id="bibliography">Bibliography</h2>
 <ul>
@@ -1087,7 +1134,7 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible mysql_user - Adds or removes a user from a MySQL database.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html</li>
 <li>&quot;Ansible Installation.&quot; Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
 <li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot; Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ</li>
-<li>&quot;Jinga Template Designer Documentation.&quot; Jinja2 Documentation. Accessed October 23, 2016. http://jinja.pocoo.org/docs/dev/templates/</li>
+<li>&quot;Jinja Template Designer Documentation.&quot; Jinja2 Documentation. Accessed October 23, 2016. http://jinja.pocoo.org/docs/dev/templates/</li>
 <li>&quot;Ansible Vault.&quot; Ansible Documentation. October 31, 2016. Accessed November 6, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
 <li>&quot;Organizing Group Vars Files in Ansible.&quot; toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/</li>
 <li>&quot;Ansible Glossary.&quot; Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
@@ -1097,4 +1144,7 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible include_vars - Load variables from files, dynamically within a task.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html</li>
 <li>&quot;Ansible include_role - Load and execute a role.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html</li>
 <li>&quot;Ansible wait_for - Waits for a condition before continuing.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html</li>
+<li>&quot;The Open Tower Project.&quot; Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower</li>
+<li>&quot;semaphore Installation.&quot; GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation</li>
+<li>&quot;How to loop through interface facts.&quot; Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts</li>
 </ul>

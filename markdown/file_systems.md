@@ -16,7 +16,7 @@
     * [iSCSI](#network---iscsi)
         * [Target](#network---iscsi---target)
         * [Initiator](#network---iscsi---initiator)
-    * Ceph
+    * [Ceph](#network---ceph)
 
 
 ## Types
@@ -416,6 +416,23 @@ InitiatorName=iqn.2016-01.com.example.server:client
 1. "RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target." CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
 
 
+## Network - Ceph
+
+Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and filesystems. [1]
+
+Ceph Requirements:
+
+* Fast CPU for OSD and metadata nodes.
+* 1GB RAM per 1TB of Ceph OSD storage.
+* 1GB RAM per monitor daemon.
+* 1GB RAM per metadata daemon.
+* An odd number of nodes (starting at least 3).
+[2]
+
+Sources:
+
+1. http://ceph.com/ceph-storage/
+2. http://docs.ceph.com/docs/jewel/start/hardware-recommendations/
 
 
 

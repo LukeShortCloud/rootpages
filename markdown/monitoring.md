@@ -183,6 +183,6 @@ Event Types:
 
 Sources:
 
-1. "How to Install and Setup Monit (Linux Process and Services Monitoring) Program." Tecmint. August 20, 2015. Accessed September 30, 2016. http://www.tecmint.com/how-to-install-and-setup-monit-linux-process-and-services-monitoring-program/
+1. "Installing Monit for Server Monitoring." Linode. October 15, 2015. Accessed November 22, 2016. https://www.linode.com/docs/uptime/monitoring/monitoring-servers-with-monit
 2. "Mont Documentation." Accessed September 30, 2016. https://mmonit.com/monit/documentation/monit.html
 3. "Monit Events." Accessed September 30, 2016. https://mmonit.com/documentation/http-api/Methods/Events

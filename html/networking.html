@@ -1,0 +1,206 @@
+<h1 id="networking">Networking</h1>
+<ul>
+<li><a href="#generic">Generic</a>
+<ul>
+<li>iproute2</li>
+<li>Network Manager</li>
+<li><a href="#generic---systemd">systemd</a></li>
+</ul></li>
+<li><a href="#operating-system-specific">Operating System Specific</a>
+<ul>
+<li>Debian</li>
+<li><a href="#operating-system-specific---rhel">RHEL</a></li>
+</ul></li>
+</ul>
+<h1 id="generic">Generic</h1>
+<p>The generic section will cover networking utilies that are platform agnostic.</p>
+<h2 id="generic---systemd">Generic - systemd</h2>
+<p>The systemd init system provides both &quot;systemd-networkd&quot; and systemd-resolved&quot; to control networking devices. These services have been included in systemd since version 210. [1]</p>
+<p>All systemd network settings should be configured in the directory &quot;/etc/systemd/network/.&quot; Network files should have the &quot;.network&quot; extension and NetDev files will use &quot;.netdev.&quot; Common options are listed below. [2][3]</p>
+<p>Network Settings:</p>
+<ul>
+<li>[Match] = Select the device to use.
+<ul>
+<li>Name = The device name.</li>
+<li>MACAddress = The MAC address for the device.</li>
+</ul></li>
+<li>[Network] = Network settings.
+<ul>
+<li>DHCP = Use DHCP.
+<ul>
+<li>yes, no, ipv4, or ipv6</li>
+</ul></li>
+<li>DHCPServer = Become a DHCP server.
+<ul>
+<li>yes, no</li>
+</ul></li>
+<li>Address = The IP address to use on the interface.</li>
+<li>Gateway = The default gateway.</li>
+<li>DNS = A list of DNS servers.</li>
+<li>NTP = A list of NTP servers.</li>
+<li>IPForward = Allow IP addresses to be routed based on the netfilter routing table.
+<ul>
+<li>yes, no, ipv4, ipv6</li>
+</ul></li>
+<li>IPMasquerade = Allow IPv4 addresses to be set up for source network address translation (SNAT).
+<ul>
+<li>yes, no, ipv4</li>
+</ul></li>
+<li>Bond = The name of the bond interface to use.</li>
+<li>VLAN = The name of the VLAN interface to use.</li>
+<li>VXLAN = The name of the VXLAN interface to use.</li>
+<li>Tunnel = The name of the tunnel interface to use.</li>
+</ul></li>
+<li>[Link]
+<ul>
+<li>MACAddress = Override the MAC address with a custom address.</li>
+<li>MTUBytes = The MTU size for packets.</li>
+</ul></li>
+<li>[DHCPServer] = Configure DHCP server settings.
+<ul>
+<li>PoolOffset = The offset count (not including network or broadcsat addresses) to start the IP allocation pool from.</li>
+<li>PoolSize = The number of IP addresses that can be allocated.</li>
+<li>DNS = A list of DNS servers to provide.</li>
+<li>EmitRouter = The default gateway to provide.</li>
+<li>NTP = The NTP server to provide.</li>
+<li>Timezone = The timezone to provide. [2]</li>
+</ul></li>
+</ul>
+<p>NetDev settings:</p>
+<ul>
+<li>[NetDev] = Virtual network devices.
+<ul>
+<li>Name = Create a name for the device.</li>
+<li>MACAddress = Create a MAC address for the device. A randomly generated address will be created if this option is not specified.</li>
+<li>MTUBytes = The MTU size for packets.</li>
+<li>Kind = The type of virtual network device.
+<ul>
+<li>bond = A combination of multiple NICs.</li>
+<li>bridge = Allow guests to have full passthrough access to the NIC.</li>
+<li>dummy = Drop all packets.</li>
+<li>gretap = GRE layer 2 tunnel.</li>
+<li>gre = GRE layer 3 tunnel.</li>
+<li>tap = Layer 2 tunnel.</li>
+<li>tun = Layer 3 tunnel.</li>
+<li>vlan = VLAN tagging.</li>
+<li>vxlan = VXLAN tunnel.</li>
+</ul></li>
+</ul></li>
+<li>[Bond]
+<ul>
+<li>Mode = The bond mode to use for clustering NICs.
+<ul>
+<li>balance-rr</li>
+<li>active-backup</li>
+<li>balance-xor</li>
+<li>broadcast</li>
+<li>802.3ad</li>
+<li>balance-tlb</li>
+<li>balance-alb</li>
+</ul></li>
+</ul></li>
+<li>[Tunnel] = Tunnel configurations
+<ul>
+<li>Local = The static IP address that should already be configured on another NIC. This is used to connecto to the remote tunnel IP address.</li>
+<li>Remote = The remote IP address to create a tunnel connection between.</li>
+</ul></li>
+<li>[VLAN]
+<ul>
+<li>Id = The VLAN ID.</li>
+</ul></li>
+<li>[VLAN]
+<ul>
+<li>Id = The VXLAN ID. [3]</li>
+</ul></li>
+</ul>
+<p>Static networking syntax:</p>
+<pre><code>[Match]
+name=&lt;NIC&gt;
+
+[Network]
+Address=&lt;IP_ADDRESS&gt;/&lt;CIDR&gt;
+Gateway=&lt;GATEWAY_IP_ADDRESS&gt;
+DNS=&lt;DNS_SERVER_IP_ADDRESS&gt;</code></pre>
+<p>Static networking example:</p>
+<pre><code>[Match]
+name=eth0
+
+[Network]
+Address=192.168.1.10/24
+Address=10.0.0.2/30
+Gateway=192.168.1.1
+DNS=8.8.4.4</code></pre>
+<p>[2]</p>
+<p>A Network configuration can be created for a WiFi interface. Using the &quot;wpa_supplicant&quot; service, the WiFi password can be securely saved in a different file and will automatically be used by systemd-network.</p>
+<p>WiFi syntax:</p>
+<pre><code># wpa_passphrase &lt;SSID&gt; &lt;PASSWORD&gt; &gt; /etc/wpa_supplicant/wpa_supplicant-&lt;NIC&gt;.conf
+# systemctl enable wpa_supplicant@&lt;NIC&gt;.conf
+# systemctl start wpa_supplicant@&lt;NIC&gt;.conf</code></pre>
+<p>WiFi example:</p>
+<pre><code># wpa_passphrase Guest5G password123 &gt; /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+# systemctl enable wpa_supplicant@wlan0.conf
+# systemctl start wpa_supplicant@wlan0.conf</code></pre>
+<p>[4]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How to switch from NetworkManager to systemd-networkd on Linux.&quot; Xmodulo. August 31, 2015. Accessed November 27, 2016. http://xmodulo.com/switch-from-networkmanager-to-systemd-networkd.html</li>
+<li>&quot;systemd.network — Network configuration.&quot; freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.network.html</li>
+<li>&quot;systemd.netdev — Virtual Network Device configuration.&quot; freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.netdev.html</li>
+<li>&quot;Managing WPA wireless with systemd-networkd ?&quot; Arch Linux Wiki - Networking, Server, and Protection. March 13, 2014. Accessed November 27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625</li>
+</ol>
+<h1 id="operating-system-specific">Operating System Specific</h1>
+<h2 id="operating-system-specific---rhel">Operating System Specific - RHEL</h2>
+<p>Red Hat Enterprise Linux uses their own &quot;network&quot; service. Although Network Manager has started taking it's place, the network service is more versatile and well supported.</p>
+<p>There are two udev modules that manage new device naming schemes: &quot;net.ifnames&quot; and &quot;biosdevname.&quot; Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will benamed based on their physical location and connection to the motherboard. [3]</p>
+<p>Various bridge configurations can be made. It is common to use a normal bridge for allow virtual machines to have full access to the network or use an OpenVSwitch bridge for OpenStack's software defined networking (SDN).</p>
+<p>OpenVSwitch bridge syntax (CLI):</p>
+<pre><code># ovs-vsctl add-port &lt;OVS_BRIDGE&gt; &lt;NIC&gt;
+# ovs-vsctl add-br &lt;OVS_BRIDGE&gt;</code></pre>
+<p>[1]</p>
+<p>OpenVSwitch bridge syntax (configuraiton file):</p>
+<pre><code># vim ifcfg-&lt;NIC&gt;
+DEVICE=&quot;&lt;NIC&gt;&quot;
+TYPE=&quot;OVSPort&quot;
+DEVICETYPE=&quot;ovs&quot;
+OVS_BRIDGE=&quot;&lt;OVS_BRIDGE&gt;&quot;</code></pre>
+<pre><code># vim ifcfg-&lt;OVS_BRIDGE&gt;
+DEVICE=&quot;&lt;OVS_BRIDGE&gt;&quot;
+TYPE=&quot;OVSBridge&quot;
+DEVICETYPE=&quot;ovs&quot;</code></pre>
+<p>OpenVSwitch bridge example (configuration file):</p>
+<pre><code># vim ifcfg-eth1
+DEVICE=&quot;eth1&quot;
+TYPE=&quot;OVSPort&quot;
+DEVICETYPE=&quot;ovs&quot;
+OVS_BRIDGE=&quot;br0-ovs&quot;
+BOOTPROTO=&quot;none&quot;
+ONBOOT=&quot;yes&quot;</code></pre>
+<pre><code># vim ifcfg-br0-ovs
+DEVICE=&quot;br0-ovs&quot;
+TYPE=&quot;OVSBridge&quot;
+DEVICETYPE=&quot;ovs&quot;
+IPADDR0=10.10.10.201
+PREFIX0=24
+GATEWAY=10.10.10.1
+BOOTPROTO=&quot;none&quot;
+ONBOOT=&quot;yes&quot;</code></pre>
+<p>[2]</p>
+<p>Bonding allows for multiple devices to be used as a single virtual device. The physical NICs need to be configured as bond slaves. Then a new bond configuration can be created for the bond device.</p>
+<p>Bond master syntax:</p>
+<pre><code>DEVICE=&lt;BOND_DEVICE&gt;
+BONDING_MASTER=yes
+BONDING_OPTS=&quot;mode=6&quot;</code></pre>
+<p>Bond slave syntax:</p>
+<pre><code>MASTER=&lt;BOND_DEVICE&gt;
+SLAVE=yes</code></pre>
+<p>Bond slave example:</p>
+<pre><code>MASTER=bond0
+SLAVE=yes</code></pre>
+<p>[4]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>Configuring Libvirt guests with an Open vSwitch bridge.&quot; Kashyap Chamarthy. July 13, 2013. Accessed November 27, 2016. https://kashyapc.com/2013/07/13/configuring-libvirt-guests-with-an-open-vswitch-bridge/</li>
+<li>&quot;Configure Fedora Server with Open vSwitch and Libvirt.&quot; GitHub Gist - jdoss. October 31, 2015. Accessed November 27, 2016. https://gist.github.com/jdoss/64ecd24b74792efaa794</li>
+<li>https://access.redhat.com/discussions/916973</li>
+<li>https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html</li>
+</ol>

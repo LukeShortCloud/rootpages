@@ -34,7 +34,7 @@ Networking issues from within a container are commonly due to network packet siz
 ```
 # vim /etc/sysconfig/docker
 OPTIONS='--selinux-enabled --log-driver=journald --mtu 1400'
-# systemctl daemon-reload
+# systemctl restart docker
 ```
 OR
 ```
@@ -50,7 +50,6 @@ ExecStart=/usr/bin/docker-current daemon \
 # systemctl daemon-reload
 # systemclt restart docker
 ```
-
 2. Forward all packets between the Docker link through the physical link.
 ```
 # iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu

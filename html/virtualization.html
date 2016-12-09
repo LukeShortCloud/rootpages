@@ -29,7 +29,7 @@
 <li><p>Configure the default MTU size for Docker deployments by modifying the daemon's process settings. This value should generally be below the default of 1500.</p>
 <pre><code># vim /etc/sysconfig/docker
 OPTIONS=&#39;--selinux-enabled --log-driver=journald --mtu 1400&#39;
-# systemctl daemon-reload</code></pre>
+# systemctl restart docker</code></pre>
 <p>OR</p>
 <pre><code># vim /usr/lib/systemd/system/docker.service
 ExecStart=/usr/bin/docker-current daemon \

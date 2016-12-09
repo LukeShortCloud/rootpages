@@ -10,8 +10,8 @@
 * [Playbooks](#playbooks)
     * [Directory Structure](#playbooks---directory-structure)
     * [Production and Staging](#playbooks---production-and-staging)
-    * [Jinga2 Templates](#playbooks---jinga2-templates)
-        * [Loops](#playbooks---jinga2-templates---loops)
+    * [Jinja2 Templates](#playbooks---jinja2-templates)
+        * [Loops](#playbooks---jinja2-templates---loops)
     * [Containers](#playbooks---containers)
     * [Main Modules](#playbooks---main-modules)
         * [Async](#playbooks---main-modules---async)
@@ -37,9 +37,14 @@
         * [Git](#playbooks---modules---git)
         * [MySQL Database and User](#playbooks---modules---mysql-database-and-user)
         * [Service](#playbooks---modules---service)
+        * Stat
         * [Package Managers](#playbooks---modules---package-managers)
             * [Yum](#playbooks---modules---package-managers---yum)
             * [Apt](#playbooks---modules---package-managers---apt)
+* [Dashboards](#dashboards)
+    * Ansible Tower
+    * [Open Tower](#dashboards---open-tower)
+    * [Semaphore](#dashboards---semaphore)
 * [Bibliography](#bibliography)
 
 
@@ -143,7 +148,10 @@ Common Inventory Options:
 
 * ansible_host = The IP address or hostname of the server.
 * ansible_port = A custom SSH port (i.e., if not using the standard port 22).
-* ansible_connection = These options specify how to log in to execute tasks. Valid options are "ssh" to remotely connect to the server (this is the default behavior), "local" to run as the current user, and "chroot" to change into a different main root file system.
+* ansible_connection = These options specify how to log in to execute tasks.
+    * ssh = Run commands over a remote SSH connection (default).
+    * local = Run on the local system.
+    * chroot = Run commands in a directory using chroot.
 * ansible_user = The SSH user.
 * ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the "--ask-pass" option to ansible when running tasks.
 * ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).
@@ -168,6 +176,7 @@ dns2 ansible_host=192.168.1.54
 ### Configuration - Inventory - Variables
 
 Variables that Playbooks will use can be defined for specific hosts and/or groups.
+
 * /etc/ansible/host_vars/ = Create a file named after the host.
 * /etc/ansible/group_vars/ = Create a file named after the group of hosts.
 * all = This file can exist under the above directories to define global variables for all hosts and/or groups.
@@ -250,6 +259,24 @@ members:
 
 [4]
 
+Using a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]
+
+Works
+```
+  - name: find interface facts
+    debug:
+      msg: "{{ hostvars[inventory_hostname]['ansible_%s' | format(item)] }}"
+    with_items: "{{ ansible_interfaces }}"
+```
+
+Does Not Work
+```
+  - name: find interface facts
+    debug:
+      msg: "{{ ansible_%s| format(item)] }}"
+    with_items: "{{ ansible_interfaces }}"
+```
+
 The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.
 
 * extra vars
@@ -279,6 +306,7 @@ Sources:
 4. "Ansible Loops."
 5. "Ansible Become (Privlege Escalation)"
 6. "Ansible Vault."
+7. "How to loop through interface facts."
 
 
 ## Configuration - Vault Encryption
@@ -544,7 +572,7 @@ Sources:
 2. "Organizing Group Vars Files in Ansible."
 
 
-## Playbooks - Jinga2 Templates
+## Playbooks - Jinja2 Templates
 
 * Variables defined in Ansible can be single variables, lists, and dictionaries. This can be referenced from the template.
   * Variable Syntax:
@@ -567,7 +595,7 @@ Sources:
   ...example comment #}
 ```
 
-* Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinga will not render anything that is escaped.
+* Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinja will not render anything that is escaped.
   * Escaping Syntax:
 ```
 ''
@@ -582,7 +610,7 @@ Sources:
 ```
 ```
   {% raw %}
-      {{ jinga.wont.replace.this }}
+      {{ jinja.wont.replace.this }}
   {% endraw %}
 ```
 
@@ -618,7 +646,7 @@ Welcome to the Hello World page!
 {% endblock %}
 ```
 
-### Playbooks - Jinga2 Templates - Loops
+### Playbooks - Jinja2 Templates - Loops
 
 Loops can use standard comparison and/or logic operators.
 
@@ -700,7 +728,7 @@ Example:
 
 Source:
 
-1. "Jinga Template Designer Documentation."
+1. "Jinja Template Designer Documentation."
 
 
 ## Playbooks - Containers
@@ -1608,6 +1636,37 @@ Source:
 
 1. "apt - Manages apt-packages."
 
+
+# Dashboards
+
+Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.
+
+
+## Dashboards - Open Tower
+
+Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]
+
+Source:
+
+1. "The Open Tower Project."
+
+
+## Dashboards - semaphore
+
+semaphore was designed to be an unofficial open source altnerative to Ansible Tower. The latest release can be found at [https://github.com/ansible-semaphore/semaphore/releases](https://github.com/ansible-semaphore/semaphore/releases).
+
+Installation
+```
+# curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.0.4/semaphore_linux_amd64 > /usr/bin/semaphore
+# /usr/bin/semaphore -setup
+```
+[1]
+
+Source:
+
+1. "semaphore Installation."
+
+
 ---
 ## Bibliography
 
@@ -1647,7 +1706,7 @@ Source:
 * "Ansible mysql_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html
 * "Ansible Installation." Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html
 * "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ
-* "Jinga Template Designer Documentation." Jinja2 Documentation. Accessed October 23, 2016. http://jinja.pocoo.org/docs/dev/templates/
+* "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed October 23, 2016. http://jinja.pocoo.org/docs/dev/templates/
 * "Ansible Vault." Ansible Documentation. October 31, 2016. Accessed November 6, 2016. http://docs.ansible.com/ansible/intro_installation.html
 * "Organizing Group Vars Files in Ansible." toja.io
 sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
@@ -1658,3 +1717,6 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible include_vars - Load variables from files, dynamically within a task." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html
 * "Ansible include_role - Load and execute a role." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html
 * "Ansible wait_for - Waits for a condition before continuing." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html
+* "The Open Tower Project." Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower
+* "semaphore Installation." GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation
+* "How to loop through interface facts." Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts
