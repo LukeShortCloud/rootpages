@@ -1,5 +1,6 @@
 * [Linux](#linux)
     * [Modules](#linux---modules)
+    * [I/O Schedulers](#linux---i/o-schedulers)
 * [Initial RAM Filesystem](#initial-ram-filesystem)
     * [Arch Linux (mkinitcpio)](#initial-ram-filesystem---arch-linux)
     * Debian (initramfs-tools)
@@ -27,8 +28,6 @@ View all of the loaded moudles:
 ```
 # lsmod
 ```
-
-
 
 Custom modules can be compiled for a specific kernel and copied in their respective driver directory. A few common drivers types are "iscsi", "net/ethernet", "net/wireless", "usb", "pci", "video", etc.
 ```
@@ -76,6 +75,34 @@ blacklist <MODULE>
 Source:
 
 1. "Kernel modules." The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/Kernel_modules
+
+
+## Linux - I/O Schedulers
+
+The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be uesd to adjust performance based on the hardware and/or software requirements.
+
+* Deadline = Large I/O requests are done in high-priority sectors until smaller I/O requests are about to time out. Then Deadline takes care of the small tasks before continuing with the original large I/O task. This is ideal for heavy read/write applications on a spinning disk drive.
+* Complete Fariness Queueing (CFQ) = All I/O requests are treated equally and are handled in the order that they are recieved. [1]
+* NOOP = Only basic merging of read and/or write requests and no rescheduling. This is ideal for virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling. [2] This is also ideal for physical flash based media where the hardware's firmware takes care of the sorting. [1]
+
+Temporarily change the scheduler to one of the three options:
+```
+# echo {deadline|cfg|noop} > /sys/block/<DEVICE>/queue/scheduler
+```
+
+Permanently change the scheduler by appending the existing GRUB_CMDLINE_LINUX kernel arguments:
+```
+# vim /etc/default/grub
+GRUB_CMDLINE_LINUX="elevator={deadline|cfg|noop}"
+# grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+[2]
+
+Sources:
+
+1. Linux System Programming. (Love: O’Reilly Media, Inc., 2007).
+2. "What is the suggested I/O scheduler to improve disk performance when using Red Hat Enterprise Linux with virtualization?" Red Hat Knowledgebase. December 16, 2016. Accessed December 18, 2016. https://access.redhat.com/solutions/5427
 
 
 # Initial RAM Filesystem

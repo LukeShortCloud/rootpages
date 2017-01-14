@@ -19,10 +19,15 @@
 <ul>
 <li><a href="#playbooks---jinja2-templates---loops">Loops</a></li>
 </ul></li>
+<li><a href="#playbooks---galaxy">Galaxy</a>
+<ul>
+<li><a href="#playbooks---galaxy---dependencies">Dependencies</a></li>
+</ul></li>
 <li><a href="#playbooks---containers">Containers</a></li>
 <li><a href="#playbooks---main-modules">Main Modules</a>
 <ul>
 <li><a href="#playbooks---main-modules---async">Async</a></li>
+<li>Check Mode</li>
 <li><a href="#playbooks---main-modules---ignore-errors">Ignore Errors</a></li>
 <li><a href="#playbooks---main-modules---include">Include</a></li>
 <li><a href="#playbooks---main-modules---include-role">Include Role</a></li>
@@ -36,6 +41,7 @@
 <li><a href="#playbooks---main-modules---set-fact">Set Fact</a></li>
 <li><a href="#playbooks---main-modules---tags">Tags</a></li>
 <li><a href="#playbooks---main-modules---wait-for">Wait For</a></li>
+<li>With First Found</li>
 <li><a href="#playbooks---main-modules---when">When</a></li>
 </ul></li>
 <li><a href="#playbooks---modules">Modules</a>
@@ -48,6 +54,7 @@
 <li><a href="#playbooks---modules---mysql-database-and-user">MySQL Database and User</a></li>
 <li><a href="#playbooks---modules---service">Service</a></li>
 <li>Stat</li>
+<li>Synchronize</li>
 <li><a href="#playbooks---modules---package-managers">Package Managers</a>
 <ul>
 <li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
@@ -61,6 +68,7 @@
 <li><a href="#dashboards---open-tower">Open Tower</a></li>
 <li><a href="#dashboards---semaphore">Semaphore</a></li>
 </ul></li>
+<li><a href="#python-api">Python API</a></li>
 <li><a href="#bibliography">Bibliography</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
@@ -551,6 +559,50 @@ priority={{ count }}
 <ol style="list-style-type: decimal">
 <li>&quot;Jinja Template Designer Documentation.&quot;</li>
 </ol>
+<h2 id="playbooks---galaxy">Playbooks - Galaxy</h2>
+<p>Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from <a href="https://galaxy.ansible.com/" class="uri">https://galaxy.ansible.com/</a>.</p>
+<pre><code>$ ansible-galaxy install &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></pre>
+<pre><code>$ ansible-galaxy install &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;,&lt;VERSION&gt;</code></pre>
+<pre><code>$ ansible-galaxy install --roles-path &lt;PATH&gt; &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>Ansible Galaxy</li>
+</ol>
+<h3 id="playbooks---galaxy---dependencies">Playbooks - Galaxy - Dependencies</h3>
+<p>Roles can define dependencies to other roles hosted remotely. By default, the Ansible Galaxy repository is used to pull roles from. Ansible Galaxy in itself uses GitHub.com as it's backend. Dependencies can be defined in <code>requirements.yml</code> or inside the role at <code>meta/main.yml</code>.</p>
+<p>Install the dependencies by running:</p>
+<pre><code>$ ansible-galaxy install -r requirements.yml</code></pre>
+<ul>
+<li>Dependency options:
+<ul>
+<li>src = The role to use. Valid formats are:
+<ul>
+<li><code>&lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></li>
+<li><code>https://github.com/&lt;USER&gt;/&lt;ROLE_NAME&gt;</code></li>
+<li><code>git+https://github.com/&lt;USER&gt;/&lt;ROLE_PROJECT_NAME&gt;.git</code></li>
+</ul></li>
+<li>version = The branch, tag, or commit to use. Default: master.</li>
+<li>name = Provide the role a new custom name.</li>
+<li>scm = The supply chain management (SCM) tool to use. Currently only Git (git) and Mercurial (hg) are supported. This is useful for using projects that are not hosted on GitHub.com. Default: git.</li>
+</ul></li>
+</ul>
+<p>Dependency syntax:</p>
+<pre><code>dependencies:
+  - src: &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;
+    version: &lt;VERSION&gt;
+    name: &lt;NEW_ROLE_NAME&gt;
+    scm: &lt;SCM&gt;
+  - src: &lt;USER_NAME2&gt;.&lt;ROLE_NAME2&gt;</code></pre>
+<p>Dependency example:</p>
+<pre><code>dependencies:
+  - src: https://github.com/hux/starskiller
+    version: 3101u9e243r90adf0a98avn4bmz
+    name: planetkiller</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>Ansible Galaxy</li>
+</ol>
 <h2 id="playbooks---containers">Playbooks - Containers</h2>
 <p>The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
 <p>Install Ansible Container into a Python virtual environment. This helps to seperate Python packages provided by the operating system's package manager. [1]</p>
@@ -630,7 +682,7 @@ https:</code></pre>
   roles:
    - common
    - haproxy</code></pre>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Glossary.&quot;</li>
 </ol>
@@ -1095,6 +1147,80 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;semaphore Installation.&quot;</li>
 </ol>
+<h1 id="python-api">Python API</h1>
+<p>Ansible is written in Python so it can be used programactically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilies. It is recommended to use a RESTful API from a dashboard for other languages or more advanced tasks. Below is an example from the official documentation of using the Python library for Ansible 2 [1]:</p>
+<pre><code>#!/usr/bin/env python
+
+import json
+from collections import namedtuple
+from ansible.parsing.dataloader import DataLoader
+from ansible.vars import VariableManager
+from ansible.inventory import Inventory
+from ansible.playbook.play import Play
+from ansible.executor.task_queue_manager import TaskQueueManager
+from ansible.plugins.callback import CallbackBase
+
+class ResultCallback(CallbackBase):
+    &quot;&quot;&quot;A sample callback plugin used for performing an action as results come in
+
+    If you want to collect all results into a single object for processing at
+    the end of the execution, look into utilizing the ``json`` callback plugin
+    or writing your own custom callback plugin
+    &quot;&quot;&quot;
+    def v2_runner_on_ok(self, result, **kwargs):
+        &quot;&quot;&quot;Print a json representation of the result
+
+        This method could store the result in an instance attribute for retrieval later
+        &quot;&quot;&quot;
+        host = result._host
+        print json.dumps({host.name: result._result}, indent=4)
+
+Options = namedtuple(&#39;Options&#39;, [&#39;connection&#39;, &#39;module_path&#39;, &#39;forks&#39;, &#39;become&#39;, &#39;become_method&#39;, &#39;become_user&#39;, &#39;check&#39;])
+# initialize needed objects
+variable_manager = VariableManager()
+loader = DataLoader()
+options = Options(connection=&#39;local&#39;, module_path=&#39;/path/to/mymodules&#39;, forks=100, become=None, become_method=None, become_user=None, check=False)
+passwords = dict(vault_pass=&#39;secret&#39;)
+
+# Instantiate our ResultCallback for handling results as they come in
+results_callback = ResultCallback()
+
+# create inventory and pass to var manager
+inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list=&#39;localhost&#39;)
+variable_manager.set_inventory(inventory)
+
+# create play with tasks
+play_source =  dict(
+        name = &quot;Ansible Play&quot;,
+        hosts = &#39;localhost&#39;,
+        gather_facts = &#39;no&#39;,
+        tasks = [
+            dict(action=dict(module=&#39;shell&#39;, args=&#39;ls&#39;), register=&#39;shell_out&#39;),
+            dict(action=dict(module=&#39;debug&#39;, args=dict(msg=&#39;{{shell_out.stdout}}&#39;)))
+         ]
+    )
+play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
+
+# actually run it
+tqm = None
+try:
+    tqm = TaskQueueManager(
+              inventory=inventory,
+              variable_manager=variable_manager,
+              loader=loader,
+              options=options,
+              passwords=passwords,
+              stdout_callback=results_callback,  # Use our custom callback instead of the ``default`` callback plugin
+          )
+    result = tqm.run(play)
+finally:
+    if tqm is not None:
+        tqm.cleanup()</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
+<li>https://serversforhackers.com/running-ansible-2-programmatically</li>
+</ol>
 <hr />
 <h2 id="bibliography">Bibliography</h2>
 <ul>
@@ -1147,4 +1273,5 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;The Open Tower Project.&quot; Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower</li>
 <li>&quot;semaphore Installation.&quot; GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation</li>
 <li>&quot;How to loop through interface facts.&quot; Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts</li>
+<li>&quot;Ansible Galaxy.&quot; Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html</li>
 </ul>

@@ -1,6 +1,6 @@
 # Root Pages
 
-Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide an expanded alternative to "info" and/or "man" pages.
+Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide a more general purpose alternative to the "info" documents for System Adminstrators and Engineers.
 
 
 ## Usage
@@ -20,7 +20,7 @@ Uninstall:
 $ bash uninstall.sh
 ```
 
-Root Pages is handled by the "rp" utility. It will automatically detected which CLI web browser is installed. Supply the name of the guide and it will load up in the web browser.
+Root Pages is handled by the "rp" utility. It will automatically detect an available CLI web browser. Supply the name of the guide and it will load up in the web browser.
 
 Examples:
 ```
@@ -35,15 +35,19 @@ bootloaders
 clustering
 dns_servers
 file_systems
+gui
 http_servers
+linux
 mail_servers
 monitoring
+networking
 nosql
 openstack
 packages
 security
 sql
-$ rp ansible.html
+virtualization
+$ rp ansible
 ```
 
 If a specific web browser is prefered, the "rp_browser" variable can be exported with the preferenced browser.
@@ -53,7 +57,7 @@ Example:
 $ export rp_browser="firefox"
 ```
 
-The only file that is not HTML or viewable via the "rp" command is currently the "linux_commands.xlsx" Excel spreadsheet. It is not formatted in CSV or TSV due to the unique styling that it uses to help organize different sections. A lot of good command line references can be found here.
+The only file that is not HTML or viewable via the "rp" command is currently the "linux_commands.xlsx" Excel spreadsheet. This will eventually be converted into a more CLI friendly format. A lot of good command line references can be found here.
 
 
 ## Development

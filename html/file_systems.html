@@ -25,10 +25,15 @@
 <li><a href="#network---iscsi---target">Target</a></li>
 <li><a href="#network---iscsi---initiator">Initiator</a></li>
 </ul></li>
-<li><a href="#network---ceph">Ceph</a></li>
+<li><a href="#network---ceph">Ceph</a>
+<ul>
+<li><a href="#network---ceph---quick-install">Quick Install</a></li>
+</ul></li>
 </ul></li>
 </ul>
 <h2 id="types">Types</h2>
+<p>Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation:</p>
+<pre><code>2^&lt;BIT_SIZE&gt; - 1</code></pre>
 <table style="width:33%;">
 <colgroup>
 <col width="5%" />
@@ -44,8 +49,8 @@
 <th>OS</th>
 <th>Notes</th>
 <th>File Size Limit</th>
-<th>File Count (Inode) Limit</th>
 <th>Partition Size Limit</th>
+<th>Bits</th>
 </tr>
 </thead>
 <tbody>
@@ -54,48 +59,48 @@
 <td>DOS</td>
 <td>no journaling</td>
 <td>2GiB</td>
-<td></td>
 <td>2GiB</td>
+<td>16</td>
 </tr>
 <tr class="even">
 <td>Fat32 (vfat)</td>
 <td>DOS</td>
 <td>no journaling, generally cross platform compatible</td>
 <td>4GiB</td>
-<td>268,173,300 [2]</td>
 <td>8TiB</td>
+<td>32</td>
 </tr>
 <tr class="odd">
 <td>NTFS (ntfs-3g)</td>
 <td>Windows</td>
 <td>journaling, encryption, compression</td>
 <td>2TiB</td>
-<td>2^32 - 1 [2]</td>
 <td>256TiB</td>
+<td>32</td>
 </tr>
 <tr class="even">
-<td>ext4</td>
+<td>ext4 [2]</td>
 <td>Linux</td>
 <td>journaling, less fragmentation, better performance</td>
 <td>16TiB</td>
-<td>2^32 - 1 [2]</td>
 <td>1EiB</td>
+<td>32</td>
 </tr>
 <tr class="odd">
-<td>XFS [1]</td>
+<td>XFS</td>
 <td>Linux</td>
 <td>journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system</td>
 <td>8 EiB (theoretically up to 16EiB)</td>
-<td>2^64 - 1</td>
 <td>8 EiB (theoretically up to 16EiB)</td>
+<td>64</td>
 </tr>
 <tr class="even">
 <td>BtrFS [3]</td>
 <td>Linux</td>
 <td>journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system</td>
 <td>8EiB (theoretically up to 16EiB)</td>
-<td>2^64 - 1</td>
 <td>8EiB (theoretically up to 16EiB)</td>
+<td>64</td>
 </tr>
 <tr class="odd">
 <td>tmpfs</td>
@@ -113,6 +118,14 @@
 <td></td>
 <td></td>
 </tr>
+<tr class="odd">
+<td>swap</td>
+<td>Linux</td>
+<td>A temporary storage file system to use when RAM is unavailable.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <p>[1]</p>
@@ -123,8 +136,8 @@
 <li>&quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</li>
 </ol>
 <h2 id="types---btrfs">Types - BtrFS</h2>
-<p>BtrFS stands for the &quot;B-tree filesystem.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
-<p>Common mount options: * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvolume = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [2]</p>
+<p>BtrFS stands for the &quot;B-tree file system.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
+<p>Common mount options: * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvol = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [2]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;What’s All This I Hear About Btrfs For Linux.&quot; The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</li>
@@ -144,7 +157,7 @@
 </ol>
 <h2 id="types---ext4">Types - ext4</h2>
 <p>The Extended File System 4 (ext4) is the default file system for most Linux operating systems. It's focus is on performance and reliability. It is also backwards compatible with ext3 file systems. [1]</p>
-<p>Mount options: * ro = Mount as read-only. * data * journal = All data is saved in the journal before writing it to the storage device. This is the safest option. * ordered = All data is written to the storage device before updating the journal's metadata. * writeback = Data can be written to the drive at the same time it updates the journal. * barrier * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure. * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase. * noacl = Disable the Linux extended access control lists. * nouser_xattr = Disable extended file attributes. * errors = Specify what happens when there is an error in the filesystem. * remount-ro = Automatically remound the partition into a read-only mode. * continue = Ignore the error. * panic = Shutdown the operating system if any errors are found. * discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files. * nodiscard = Disables TRIM. [2]</p>
+<p>Mount options: * ro = Mount as read-only. * data * journal = All data is saved in the journal before writing it to the storage device. This is the safest option. * ordered = All data is written to the storage device before updating the journal's metadata. * writeback = Data can be written to the drive at the same time it updates the journal. * barrier * 1 = On. The file system will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure. * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase. * noacl = Disable the Linux extended access control lists. * nouser_xattr = Disable extended file attributes. * errors = Specify what happens when there is an error in the file system. * remount-ro = Automatically remound the partition into a read-only mode. * continue = Ignore the error. * panic = Shutdown the operating system if any errors are found. * discard = Enables TRIM support. The file system will immediately free up the space from a deleted file for use with new files. * nodiscard = Disables TRIM. [2]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Linux File Systems: Ext2 vs Ext3 vs Ext4.&quot; The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4</li>
@@ -374,17 +387,42 @@ InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
 <li>&quot;RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target.&quot; CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/</li>
 </ol>
 <h2 id="network---ceph">Network - Ceph</h2>
-<p>Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and filesystems. [1]</p>
+<p>Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and file systems. [1]</p>
 <p>Ceph Requirements:</p>
 <ul>
 <li>Fast CPU for OSD and metadata nodes.</li>
 <li>1GB RAM per 1TB of Ceph OSD storage.</li>
 <li>1GB RAM per monitor daemon.</li>
 <li>1GB RAM per metadata daemon.</li>
-<li>An odd number of nodes (starting at least 3). [2]</li>
+<li>An odd number of nodes (starting at least 3 for high availability). [2]</li>
 </ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>http://ceph.com/ceph-storage/</li>
 <li>http://docs.ceph.com/docs/jewel/start/hardware-recommendations/</li>
+</ol>
+<h3 id="network---ceph---quick-install">Network - Ceph - Quick Install</h3>
+<p>This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be seperated from the OSD storage nodes.</p>
+<ul>
+<li><p>Create a new Ceph cluster group, by default called &quot;ceph.&quot;</p>
+<pre><code># ceph-deploy new &lt;SERVER1&gt;</code></pre></li>
+<li><p>Install the latest LTS release for production environments on the specified servers. SSH access is required.</p>
+<pre><code># ceph-deploy install --release jewel &lt;SERVER1&gt; &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
+<li><p>Initalize the first monitor.</p>
+<pre><code># ceph-deploy mon create-inital &lt;SERVER1&gt;</code></pre></li>
+<li><p>Install the monitor service on the other nodes.</p>
+<pre><code># ceph-deploy mon create &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
+<li><p>List the available hard drives from all of the servers. It is recommended to have a fully dedicated drive, not a partition, for each Ceph OSD.</p>
+<pre><code># ceph-deploy disk list &lt;SERVER1&gt; &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
+<li><p>Carefully select the drives to use. Then use the &quot;disk zap&quot; arguments to zero out the drive before use.</p>
+<pre><code># ceph-deploy disk zap &lt;SERVER1&gt;:&lt;DRIVE&gt; &lt;SERVER2&gt;:&lt;DRIVE&gt; &lt;SERVER3&gt;:&lt;DRIVE&gt;</code></pre></li>
+<li><p>Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but BTRS is much feature-rich with technologies such as copy-on-write (CoW) support.</p>
+<pre><code># ceph-deploy osd create --fs-type btrfs &lt;SERVER1&gt;:&lt;DRIVE&gt; &lt;SERVER2&gt;:&lt;DRIVE&gt; &lt;SERVER3&gt;:&lt;DRIVE&gt;</code></pre></li>
+<li><p>Verify it's working.</p>
+<pre><code># ceph status</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ceph Deployment. Ceph Jewel Documentation. Accessed January 14, 2016. http://docs.ceph.com/docs/jewel/rados/deployment/</li>
 </ol>

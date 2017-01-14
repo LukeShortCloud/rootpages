@@ -2,6 +2,7 @@
 <li><a href="#linux">Linux</a>
 <ul>
 <li><a href="#linux---modules">Modules</a></li>
+<li><a href="#linux---i/o-schedulers">I/O Schedulers</a></li>
 </ul></li>
 <li><a href="#initial-ram-filesystem">Initial RAM Filesystem</a>
 <ul>
@@ -41,6 +42,25 @@
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Kernel modules.&quot; The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/Kernel_modules</li>
+</ol>
+<h2 id="linux---io-schedulers">Linux - I/O Schedulers</h2>
+<p>The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be uesd to adjust performance based on the hardware and/or software requirements.</p>
+<ul>
+<li>Deadline = Large I/O requests are done in high-priority sectors until smaller I/O requests are about to time out. Then Deadline takes care of the small tasks before continuing with the original large I/O task. This is ideal for heavy read/write applications on a spinning disk drive.</li>
+<li>Complete Fariness Queueing (CFQ) = All I/O requests are treated equally and are handled in the order that they are recieved. [1]</li>
+<li>NOOP = Only basic merging of read and/or write requests and no rescheduling. This is ideal for virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling. [2] This is also ideal for physical flash based media where the hardware's firmware takes care of the sorting. [1]</li>
+</ul>
+<p>Temporarily change the scheduler to one of the three options:</p>
+<pre><code># echo {deadline|cfg|noop} &gt; /sys/block/&lt;DEVICE&gt;/queue/scheduler</code></pre>
+<p>Permanently change the scheduler by appending the existing GRUB_CMDLINE_LINUX kernel arguments:</p>
+<pre><code># vim /etc/default/grub
+GRUB_CMDLINE_LINUX=&quot;elevator={deadline|cfg|noop}&quot;
+# grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>Linux System Programming. (Love: O’Reilly Media, Inc., 2007).</li>
+<li>&quot;What is the suggested I/O scheduler to improve disk performance when using Red Hat Enterprise Linux with virtualization?&quot; Red Hat Knowledgebase. December 16, 2016. Accessed December 18, 2016. https://access.redhat.com/solutions/5427</li>
 </ol>
 <h1 id="initial-ram-filesystem">Initial RAM Filesystem</h1>
 <p>The initramfs (inital RAM filesystem) is used to boot up a system before loading the full Linux kernel. It is the successor to the initrd (inital RAM disk). A boot loader, such as GRUB, loads the initramfs first. This usually contains a minimum copy of the kernel and drivers required to boot up the system. Once the boot initalization is complete, the initramfs continues to load all of the available kernel modules. [1][2]</p>

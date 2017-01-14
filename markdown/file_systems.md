@@ -17,20 +17,29 @@
         * [Target](#network---iscsi---target)
         * [Initiator](#network---iscsi---initiator)
     * [Ceph](#network---ceph)
+        * [Quick Install](#network---ceph---quick-install)
 
 
 ## Types
 
-| Name (mount type) | OS | Notes |  File Size Limit | File Count (Inode) Limit | Partition Size Limit |
+Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation:
+
+```
+2^<BIT_SIZE> - 1
+```
+
+| Name (mount type) | OS | Notes |  File Size Limit | Partition Size Limit | Bits |
 | --- | --- | --- | --- | --- | --- |
-| Fat16 (vfat) | DOS | no journaling | 2GiB | | 2GiB |
-| Fat32 (vfat) | DOS | no journaling, generally cross platform compatible | 4GiB | 268,173,300 [2] | 8TiB |
-| NTFS (ntfs-3g)  | Windows | journaling, encryption, compression | 2TiB | 2^32 - 1 [2] | 256TiB |
-| ext4 | Linux | journaling, less fragmentation, better performance | 16TiB | 2^32 - 1 [2] | 1EiB |
-| XFS [1] | Linux | journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system | 8 EiB (theoretically up to 16EiB) | 2^64 - 1 | 8 EiB (theoretically up to 16EiB)
-| BtrFS [3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 2^64 - 1 | 8EiB (theoretically up to 16EiB) |
+| Fat16 (vfat) | DOS | no journaling | 2GiB | 2GiB | 16 |
+| Fat32 (vfat) | DOS | no journaling, generally cross platform compatible | 4GiB  | 8TiB | 32 |
+| NTFS (ntfs-3g)  | Windows | journaling, encryption, compression | 2TiB | 256TiB | 32 |
+| ext4 [2] | Linux | journaling, less fragmentation, better performance | 16TiB | 1EiB | 32 |
+| XFS | Linux | journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system | 8 EiB (theoretically up to 16EiB) | 8 EiB (theoretically up to 16EiB) | 64
+| BtrFS [3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 8EiB (theoretically up to 16EiB) | 64 |
 | tmpfs | Linux | RAM and swap | | | |
 | ramfs | Linux | RAM (no swap) | | | | |
+| swap | Linux | A temporary storage file system to use when RAM is unavailable. | | | |
+
 [1]
 
 Sources:
@@ -42,7 +51,7 @@ Sources:
 
 ## Types - BtrFS
 
-BtrFS stands for the "B-tree filesystem." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
+BtrFS stands for the "B-tree file system." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
 
 Common mount options:
 * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.
@@ -51,7 +60,7 @@ Common mount options:
     * lzo = Faster file system performance
     * no = Disable compression (default)
 * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost.
-* subvolume = Mount a subvolume contained inside a BtrFS file system.
+* subvol = Mount a subvolume contained inside a BtrFS file system.
 * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support.
 * discard = Enables TRIM support. [2]
 
@@ -95,15 +104,15 @@ Mount options:
     * ordered = All data is written to the storage device before updating the journal's metadata.
     * writeback = Data can be written to the drive at the same time it updates the journal.
 * barrier
-    * 1 = On. The filesystem will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure.
+    * 1 = On. The file system will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure.
     * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase.
 * noacl = Disable the Linux extended access control lists.
 * nouser_xattr = Disable extended file attributes.
-* errors = Specify what happens when there is an error in the filesystem.
+* errors = Specify what happens when there is an error in the file system.
     * remount-ro = Automatically remound the partition into a read-only mode.
     * continue = Ignore the error.
     * panic = Shutdown the operating system if any errors are found.
-* discard = Enables TRIM support. The filesystem will immediately free up the space from a deleted file for use with new files.
+* discard = Enables TRIM support. The file system will immediately free up the space from a deleted file for use with new files.
 * nodiscard = Disables TRIM. [2]
 
 Sources:
@@ -259,6 +268,7 @@ Sources:
 1. "The Difference between CIFS and SMB." VARONIS. February 14, 1024. Accessed September 18th, 2016. https://blog.varonis.com/the-difference-between-cifs-and-smb/
 2. "The Samba Configuration File." SAMBA. September 26th, 2003. Accessed September 18th, 2016. https://www.samba.org/samba/docs/using_samba/ch06.html
 3. "RHEL7: Provide SMB network shares to specific clients." CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/
+
 
 ## Network - iSCSI
 
@@ -418,7 +428,7 @@ InitiatorName=iqn.2016-01.com.example.server:client
 
 ## Network - Ceph
 
-Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and filesystems. [1]
+Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and file systems. [1]
 
 Ceph Requirements:
 
@@ -426,7 +436,7 @@ Ceph Requirements:
 * 1GB RAM per 1TB of Ceph OSD storage.
 * 1GB RAM per monitor daemon.
 * 1GB RAM per metadata daemon.
-* An odd number of nodes (starting at least 3).
+* An odd number of nodes (starting at least 3 for high availability).
 [2]
 
 Sources:
@@ -435,8 +445,52 @@ Sources:
 2. http://docs.ceph.com/docs/jewel/start/hardware-recommendations/
 
 
+### Network - Ceph - Quick Install
 
+This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be seperated from the OSD storage nodes.
 
+* Create a new Ceph cluster group, by default called "ceph."
+```
+# ceph-deploy new <SERVER1>
+```
 
+* Install the latest LTS release for production environments on the specified servers. SSH access is required.
+```
+# ceph-deploy install --release jewel <SERVER1> <SERVER2> <SERVER3>
+```
 
+* Initalize the first monitor.
+```
+# ceph-deploy mon create-inital <SERVER1>
+```
 
+* Install the monitor service on the other nodes.
+```
+# ceph-deploy mon create <SERVER2> <SERVER3>
+```
+
+* List the available hard drives from all of the servers. It is recommended to have a fully dedicated drive, not a partition, for each Ceph OSD.
+```
+# ceph-deploy disk list <SERVER1> <SERVER2> <SERVER3>
+```
+
+* Carefully select the drives to use. Then use the "disk zap" arguments to zero out the drive before use.
+```
+# ceph-deploy disk zap <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
+```
+
+* Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but BTRS is much feature-rich with technologies such as copy-on-write (CoW) support.
+```
+# ceph-deploy osd create --fs-type btrfs <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
+```
+
+* Verify it's working.
+```
+# ceph status
+```
+
+[1]
+
+Source:
+
+1. "Ceph Deployment. Ceph Jewel Documentation. Accessed January 14, 2016. http://docs.ceph.com/docs/jewel/rados/deployment/

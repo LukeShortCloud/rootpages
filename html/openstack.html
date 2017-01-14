@@ -2,7 +2,16 @@
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#overview">Overview</a></li>
-<li><a href="#installation">Installation</a></li>
+<li><a href="#installation">Installation</a>
+<ul>
+<li><a href="#installation---packstack">PackStack</a></li>
+<li><a href="#installation---openstack-ansible">OpenStack Ansible</a></li>
+<li><a href="#installation---tripleo">TripleO</a>
+<ul>
+<li><a href="#installation---tripleo---quick">Quick</a></li>
+<li><a href="#installation---tripleo---full">Full</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#configurations">Configurations</a>
 <ul>
 <li><a href="#configurations---common">Common</a>
@@ -25,6 +34,10 @@
 <li><a href="#configurations---neutron---metadata">Metadata</a></li>
 <li><a href="#configurations---neutron---load-balancing-as-a-service">Load-Balancing-as-a-Service</a></li>
 <li><a href="#configurations---neutron---quality-of-service">Quality of Service</a></li>
+</ul></li>
+<li><a href="#configurations---cinder">Cinder</a>
+<ul>
+<li><a href="#configurations---cinder---ceph">Ceph</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#command-line-interface-utilities">Command Line Interface Utilities</a></li>
@@ -58,23 +71,64 @@
 <li>Neutron = Networking</li>
 </ul>
 <h1 id="installation">Installation</h1>
-<p>It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code.</p>
-<p>PackStack (RHEL)</p>
+<p>It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code. This is ideal for developers and System Administrators looking for a proof of concept.</p>
+<h2 id="installation---packstack">Installation - PackStack</h2>
+<p>Supported operating systems: CentOS 7 or RHEL 7</p>
+<p>PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.</p>
 <pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
 # yum install packstack
 # packstack --gen-answer-file &lt;FLIE&gt;
 # packstack --answer-file &lt;FILE&gt;</code></pre>
-<p>OpenStack Ansible (Ubuntu LTS)</p>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;OpenStack packages.&quot; OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS. http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html</li>
+</ol>
+<h2 id="installation---openstack-ansible">Installation - OpenStack Ansible</h2>
+<p>Supported operating systems: Ubuntu 14.04 or 16.04</p>
+<p>OpenStack Ansible uses Ansible for automating the deployment of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.</p>
 <pre><code># apt-get install git
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
 # git checkout 13.3.7
 # scripts/bootstrap-ansible.sh
 # scripts/bootstrap-aio.sh</code></pre>
-<p>Sources:</p>
+<p>[1]</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html</li>
-<li>http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
+<li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. January 10, 2016. Accessed January 10, 2016. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
+</ol>
+<h2 id="installation---tripleo">Installation - TripleO</h2>
+<p>Supported operating systems: CentOS 7 or RHEL 7</p>
+<p>TripleO means &quot;OpenStack on OpenStack.&quot; The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used.</p>
+<h3 id="installation---tripleo---quick">Installation - TripleO - Quick</h3>
+<p>The &quot;TripleO-Quickstart&quot; project was created to use Ansible to automate deploying TripleO as fast as possible.</p>
+<pre><code>$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+$ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;TripleO quickstart.&quot; RDO Project. Accessed January 8, 2016. https://www.rdoproject.org/tripleo/</li>
+</ol>
+<h3 id="installation---tripleo---full">Installation - TripleO - Full</h3>
+<ul>
+<li><p>Install the EPEL for extra packages that will be required.</p>
+<pre><code># yum install epel-release</code></pre></li>
+<li><p>Install the Undercloud environment deployment tools.</p>
+<pre><code># yum install instack-undercloud</code></pre></li>
+<li><p>Deploy the Undercloud virtual machine.</p>
+<pre><code># instack–virt–setup</code></pre></li>
+<li><p>Log into the virtual machine with the provided credentials from the previous command.</p>
+<pre><code># ssh root@&lt;VIRTUAL_MACHINE_IP&gt;</code></pre></li>
+<li><p>Install TripleO from the RDO Delorean repository.</p>
+<pre><code># yum install python-tripleoclient</code></pre></li>
+<li><p>Deploy an all-in-one Undercloud on the virtual machine.</p>
+<pre><code># openstack undercloud install</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How To Install OpenStack Using TripleO.&quot; Platform9 Blog. June 27, 2016. Accessed January 8, 2017. https://platform9.com/blog/install-openstack-using-tripleo/</li>
 </ol>
 <h1 id="configurations">Configurations</h1>
 <p>This section will focus on important settings for each service's configuration files.</p>
@@ -83,9 +137,9 @@
 <h3 id="configurations---common---database">Configurations - Common - Database</h3>
 <p>Different database backends can be used by the API services on the controller nodes.</p>
 <ul>
-<li><p>MariaDB/MySQL. Requires &quot;PyMySQL.&quot; Starting with Liberty, this is prefered over using &quot;mysql://&quot; as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with &quot;MySQL-python&quot;). [1]</p>
+<li><p>MariaDB/MySQL. Requires the &quot;PyMySQL&quot; Python library. Starting with Liberty, this is prefered over using &quot;mysql://&quot; as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with &quot;MySQL-python&quot;). [1]</p>
 <pre><code>[ database ] connection = mysql+pymysql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MYSQL_HOST&gt;/&lt;DATABASE&gt;</code></pre></li>
-<li><p>PostgreSQL. Requires &quot;psycopg2.&quot; [2]</p>
+<li><p>PostgreSQL. Requires the &quot;psycopg2&quot; Python library. [2]</p>
 <pre><code>[ database ] connection = postgresql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MYSQL_HOST&gt;/&lt;DATABASE&gt;</code></pre></li>
 <li><p>SQLite.</p>
 <pre><code>[ database ] connection = sqlite:///&lt;DATABASE&gt;.sqlite</code></pre></li>
@@ -97,7 +151,7 @@
 </ol>
 <h2 id="configurations---keystone">Configurations - Keystone</h2>
 <h3 id="configurations---keystone---api-v3">Configurations - Keystone - API v3</h3>
-<p>In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the &quot;Q&quot; release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
+<p>In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the &quot;Q&quot; release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
 <ul>
 <li>/etc/keystone/keystone-paste.ini
 <ul>
@@ -114,21 +168,30 @@
 <li>&quot;Setting up an RDO deployment to be Identity V3 Only.&quot; Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/</li>
 </ol>
 <h3 id="configurations---keystone---token-provider">Configurations - Keystone - Token Provider</h3>
-<p>The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend. These are configured in the /etc/keystone/keystone.conf file.</p>
+<p>The token provider is used to create and delete tokens for authentication. Different providers can be used as the backend.</p>
 <h4 id="scenario-1---uuid-default">Scenario #1 - UUID (default)</h4>
 <ul>
+<li>/etc/keystone/keystone.conf
+<ul>
 <li>[ token ] provider = uuid</li>
+</ul></li>
 </ul>
 <h4 id="scenario-2---pki">Scenario #2 - PKI</h4>
 <ul>
+<li>/etc/keystone/keystone.conf
+<ul>
 <li>[ token ] provider = pki</li>
+</ul></li>
 <li><p>Create the certificates. A new directory &quot;/etc/keystone/ssl/&quot; will be used to store these files.</p>
 <pre><code># keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
 </ul>
 <h4 id="scenario-3---fernet-fastest-token-creation">Scenario #3 - Fernet (fastest token creation)</h4>
 <ul>
+<li>/etc/keystone/keystone.conf
+<ul>
 <li>[ token ] provider = fernet</li>
 <li>[ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/</li>
+</ul></li>
 <li><p>Create the Fernet keys:</p>
 <pre><code># mkdir /etc/keystone/fernet-keys/
 # chmod 750 /etc/keystone/fernet-keys/
@@ -160,23 +223,32 @@
 </ul></li>
 </ul>
 <h3 id="configurations---nova---hypervisors">Configurations - Nova - Hypervisors</h3>
-<p>Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. This is configured in the /etc/nova/nova.conf file. [1]</p>
+<p>Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. [1]</p>
 <h4 id="scenario-1---kvm">Scenario #1 - KVM</h4>
+<ul>
+<li>/etc/nova/nova.conf
 <ul>
 <li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
 <li>[libvirt] virt_type = kvm</li>
+</ul></li>
 </ul>
 <p>[2]</p>
 <h4 id="scenario-2---xen">Scenario #2 - Xen</h4>
 <ul>
+<li>/etc/nova/nova.conf
+<ul>
 <li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
 <li>[libvirt] virt_type = xen</li>
+</ul></li>
 </ul>
 <p>[3]</p>
 <h4 id="scenario-3---lxc">Scenario #3 - LXC</h4>
 <ul>
+<li>/etc/nova/nova.conf
+<ul>
 <li>[DEFAULT] compute_driver = libvirt.LibvirtDriver</li>
 <li>[libvirt] virt_type = lxc</li>
+</ul></li>
 </ul>
 <p>[4]</p>
 <h4 id="scenario-4---docker">Scenario #4 - Docker</h4>
@@ -186,7 +258,7 @@
 # pip install -r requirements.txt
 # python setup.py install</code></pre>
 <ul>
-<li>[DEFAULT] compute_driver=novadocker.virt.docker.DockerDriver</li>
+<li>[DEFAULT] compute_driver = novadocker.virt.docker.DockerDriver</li>
 </ul>
 <p>[5]</p>
 <p>Sources:</p>
@@ -389,6 +461,43 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Quality of Service (QoS).&quot; OpenStack Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.openstack.org/draft/networking-guide/config-qos.html</li>
+</ol>
+<h2 id="configurations---cinder">Configurations - Cinder</h2>
+<p>The Cinder service provides block devices for instances.</p>
+<h3 id="configurations---cinder---ceph">Configurations - Cinder - Ceph</h3>
+<p>Ceph has become the most popular backend to Cinder due to it's high availability and scalability.</p>
+<ul>
+<li>/etc/cinder/cinder.conf
+<ul>
+<li>[ DEFAULT ] enabled_backends = ceph
+<ul>
+<li>Use the &quot;[ ceph ]&quot; section for the backend configuration. The new &quot;[ ceph ]&quot; section can be named anything but the same name must be used here.</li>
+</ul></li>
+<li>[ DEFAULT ] volume_backend_name = volumes</li>
+<li>[ DEFAULT ] rados_connect_timeout = -1</li>
+<li>[ ceph ] volume_driver = cinder.volume.drivers.rbd.RBDDriver
+<ul>
+<li>Use Cinder's RBD Python library.</li>
+</ul></li>
+<li>[ ceph ] rbd_pool = volumes
+<ul>
+<li>This is the RBD pool to use for volumes.</li>
+</ul></li>
+<li>[ ceph ] rbd_ceph_conf = /etc/ceph/ceph.conf</li>
+<li>[ ceph ] rbd_flatten_volume_from_snapshot = false
+<ul>
+<li>Ceph supports efficent thin provisioned snapshots.</li>
+</ul></li>
+<li>[ ceph ] rbd_max_clone_depth = 5</li>
+<li>[ ceph ] rbd_store_chunk_size = 4</li>
+<li>[ ceph ] rados_connect_timeout = -1</li>
+<li>[ ceph ] glance_api_version = 2</li>
+</ul></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;BLOCK DEVICES AND OPENSTACK.&quot; Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack</li>
 </ol>
 <h1 id="command-line-interface-utilities">Command Line Interface Utilities</h1>
 <p>The OpenStack CLI resources used to be handled by seperate commands. These have all been modified and are managed by the universal &quot;openstack&quot; command. The various options and arguments are explained in Root Pages' OpenStack section <a href="https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx">Linux Commands excel sheet</a>.</p>
@@ -637,7 +746,7 @@ ironic = false</code></pre></li>
 <li>General</li>
 <li>Utilize /etc/hosts.
 <ul>
-<li>Ensure that all of your domain names (including the public IP) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.</li>
+<li>Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.</li>
 </ul></li>
 <li>Use memcache.
 <ul>

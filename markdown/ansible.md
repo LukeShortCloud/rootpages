@@ -12,9 +12,12 @@
     * [Production and Staging](#playbooks---production-and-staging)
     * [Jinja2 Templates](#playbooks---jinja2-templates)
         * [Loops](#playbooks---jinja2-templates---loops)
+    * [Galaxy](#playbooks---galaxy)
+        * [Dependencies](#playbooks---galaxy---dependencies)
     * [Containers](#playbooks---containers)
     * [Main Modules](#playbooks---main-modules)
         * [Async](#playbooks---main-modules---async)
+        * Check Mode
         * [Ignore Errors](#playbooks---main-modules---ignore-errors)
         * [Include](#playbooks---main-modules---include)
         * [Include Role](#playbooks---main-modules---include-role)
@@ -28,6 +31,7 @@
         * [Set Fact](#playbooks---main-modules---set-fact)
         * [Tags](#playbooks---main-modules---tags)
         * [Wait For](#playbooks---main-modules---wait-for)
+        * With First Found
         * [When](#playbooks---main-modules---when)
     * [Modules](#playbooks---modules)
         * [Command and Shell](#playbooks---modules---command-and-shell)
@@ -38,6 +42,7 @@
         * [MySQL Database and User](#playbooks---modules---mysql-database-and-user)
         * [Service](#playbooks---modules---service)
         * Stat
+        * Synchronize
         * [Package Managers](#playbooks---modules---package-managers)
             * [Yum](#playbooks---modules---package-managers---yum)
             * [Apt](#playbooks---modules---package-managers---apt)
@@ -45,6 +50,7 @@
     * Ansible Tower
     * [Open Tower](#dashboards---open-tower)
     * [Semaphore](#dashboards---semaphore)
+* [Python API](#python-api)
 * [Bibliography](#bibliography)
 
 
@@ -75,7 +81,6 @@ Debian:
 # apt-get update
 # apt-get install ansible
 ```
-
 
 Source code:
 ```
@@ -731,6 +736,71 @@ Source:
 1. "Jinja Template Designer Documentation."
 
 
+## Playbooks - Galaxy
+
+Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from [https://galaxy.ansible.com/](https://galaxy.ansible.com/).
+
+```
+$ ansible-galaxy install <USER_NAME>.<ROLE_NAME>
+```
+```
+$ ansible-galaxy install <USER_NAME>.<ROLE_NAME>,<VERSION>
+```
+```
+$ ansible-galaxy install --roles-path <PATH> <USER_NAME>.<ROLE_NAME>
+```
+
+Source:
+
+1. Ansible Galaxy
+
+
+### Playbooks - Galaxy - Dependencies
+
+Roles can define dependencies to other roles hosted remotely. By default, the Ansible Galaxy repository is used to pull roles from. Ansible Galaxy in itself uses GitHub.com as it's backend. Dependencies can be defined in `requirements.yml` or inside the role at `meta/main.yml`.
+
+Install the dependencies by running:
+
+```
+$ ansible-galaxy install -r requirements.yml
+```
+
+* Dependency options:
+    * src = The role to use. Valid formats are:
+        * `<USER_NAME>.<ROLE_NAME>`
+        * `https://github.com/<USER>/<ROLE_NAME>`
+        * `git+https://github.com/<USER>/<ROLE_PROJECT_NAME>.git`
+    * version = The branch, tag, or commit to use. Default: master.
+    * name = Provide the role a new custom name.
+    * scm = The supply chain management (SCM) tool to use. Currently only Git (git) and Mercurial (hg) are supported. This is useful for using projects that are not hosted on GitHub.com. Default: git.
+
+Dependency syntax:
+```
+dependencies:
+  - src: <USER_NAME>.<ROLE_NAME>
+    version: <VERSION>
+    name: <NEW_ROLE_NAME>
+    scm: <SCM>
+  - src: <USER_NAME2>.<ROLE_NAME2>
+```
+
+
+Dependency example:
+```
+dependencies:
+  - src: https://github.com/hux/starskiller
+    version: 3101u9e243r90adf0a98avn4bmz
+    name: planetkiller
+```
+
+[1]
+
+
+Source:
+
+1. Ansible Galaxy
+
+
 ## Playbooks - Containers
 
 The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.
@@ -854,7 +924,7 @@ Example:
    - haproxy
 ```
 
-Sources:
+Source:
 
 1. "Ansible Glossary."
 
@@ -1667,6 +1737,86 @@ Source:
 1. "semaphore Installation."
 
 
+
+# Python API
+
+Ansible is written in Python so it can be used programactically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilies. It is recommended to use a RESTful API from a dashboard for other languages or more advanced tasks. Below is an example from the official documentation of using the Python library for Ansible 2 [1]:
+
+```
+#!/usr/bin/env python
+
+import json
+from collections import namedtuple
+from ansible.parsing.dataloader import DataLoader
+from ansible.vars import VariableManager
+from ansible.inventory import Inventory
+from ansible.playbook.play import Play
+from ansible.executor.task_queue_manager import TaskQueueManager
+from ansible.plugins.callback import CallbackBase
+
+class ResultCallback(CallbackBase):
+    """A sample callback plugin used for performing an action as results come in
+
+    If you want to collect all results into a single object for processing at
+    the end of the execution, look into utilizing the ``json`` callback plugin
+    or writing your own custom callback plugin
+    """
+    def v2_runner_on_ok(self, result, **kwargs):
+        """Print a json representation of the result
+
+        This method could store the result in an instance attribute for retrieval later
+        """
+        host = result._host
+        print json.dumps({host.name: result._result}, indent=4)
+
+Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check'])
+# initialize needed objects
+variable_manager = VariableManager()
+loader = DataLoader()
+options = Options(connection='local', module_path='/path/to/mymodules', forks=100, become=None, become_method=None, become_user=None, check=False)
+passwords = dict(vault_pass='secret')
+
+# Instantiate our ResultCallback for handling results as they come in
+results_callback = ResultCallback()
+
+# create inventory and pass to var manager
+inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list='localhost')
+variable_manager.set_inventory(inventory)
+
+# create play with tasks
+play_source =  dict(
+        name = "Ansible Play",
+        hosts = 'localhost',
+        gather_facts = 'no',
+        tasks = [
+            dict(action=dict(module='shell', args='ls'), register='shell_out'),
+            dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
+         ]
+    )
+play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
+
+# actually run it
+tqm = None
+try:
+    tqm = TaskQueueManager(
+              inventory=inventory,
+              variable_manager=variable_manager,
+              loader=loader,
+              options=options,
+              passwords=passwords,
+              stdout_callback=results_callback,  # Use our custom callback instead of the ``default`` callback plugin
+          )
+    result = tqm.run(play)
+finally:
+    if tqm is not None:
+        tqm.cleanup()
+```
+
+Sources:
+
+1. http://docs.ansible.com/ansible/dev_guide/developing_api.html
+2. https://serversforhackers.com/running-ansible-2-programmatically
+
 ---
 ## Bibliography
 
@@ -1720,3 +1870,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "The Open Tower Project." Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower
 * "semaphore Installation." GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 * "How to loop through interface facts." Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts
+* "Ansible Galaxy." Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html

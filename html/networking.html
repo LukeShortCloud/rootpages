@@ -8,14 +8,19 @@
 </ul></li>
 <li><a href="#operating-system-specific">Operating System Specific</a>
 <ul>
+<li>Arch</li>
 <li>Debian</li>
-<li><a href="#operating-system-specific---rhel">RHEL</a></li>
+<li><a href="#operating-system-specific---rhel">RHEL</a>
+<ul>
+<li><a href="#operating-system-specific---rhel---bridging">Bridging</a></li>
+<li><a href="#operating-system-specific---rhel---bonding">Bonding</a></li>
+</ul></li>
 </ul></li>
 </ul>
 <h1 id="generic">Generic</h1>
 <p>The generic section will cover networking utilies that are platform agnostic.</p>
 <h2 id="generic---systemd">Generic - systemd</h2>
-<p>The systemd init system provides both &quot;systemd-networkd&quot; and systemd-resolved&quot; to control networking devices. These services have been included in systemd since version 210. [1]</p>
+<p>The systemd init suite provides both &quot;systemd-networkd&quot; and systemd-resolved&quot; to control networking devices. These services have been included in systemd since version 210. [1]</p>
 <p>All systemd network settings should be configured in the directory &quot;/etc/systemd/network/.&quot; Network files should have the &quot;.network&quot; extension and NetDev files will use &quot;.netdev.&quot; Common options are listed below. [2][3]</p>
 <p>Network Settings:</p>
 <ul>
@@ -150,8 +155,59 @@ DNS=8.8.4.4</code></pre>
 </ol>
 <h1 id="operating-system-specific">Operating System Specific</h1>
 <h2 id="operating-system-specific---rhel">Operating System Specific - RHEL</h2>
-<p>Red Hat Enterprise Linux uses their own &quot;network&quot; service. Although Network Manager has started taking it's place, the network service is more versatile and well supported.</p>
-<p>There are two udev modules that manage new device naming schemes: &quot;net.ifnames&quot; and &quot;biosdevname.&quot; Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will benamed based on their physical location and connection to the motherboard. [3]</p>
+<p>Red Hat Enterprise Linux uses their own &quot;network&quot; service. Although Network Manager has started taking it's place, the network service is less intrusive and better supported by most programs that rely on managing network settings.</p>
+<p>There are two udev modules that manage new device naming schemes: &quot;net.ifnames&quot; and &quot;biosdevname.&quot; Only &quot;net.ifnames&quot; is installed by default on RHEL. Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will benamed based on their physical location and connection to the motherboard. [1]</p>
+<p>Network configurations are saved in <code>/etc/sysconfig/network-scripts/</code>. The ethernet device names start with &quot;ifcfg-eth&quot; when ifnames is disabled or &quot;ifcfg-e&quot; if not.</p>
+<p>Options:</p>
+<ul>
+<li>{NAME|DEVICE} = The name of the network interface. The first device is generally &quot;eth0&quot; for ethernet or &quot;wlan0&quot; for wireless devices.</li>
+<li>ONBOOT = {yes|no}. Enable or disable this interface on startup of the system.</li>
+<li>HWADDR = The MAC address of the device.</li>
+<li>BOOTPROTO = The boot protocol to use for obtainng an IP address.
+<ul>
+<li>{none|static} = Static IP addressing. Do not use any protocol.</li>
+<li>dhcp = Dynamic IP addressing. Use DHCP to obtain IP addressing information.</li>
+<li>bootp = Dynamic IP addressing. Use BOOTP to obtain IP addressing information.</li>
+</ul></li>
+<li>DHCP_HOSTNAME = If a DHCP server requires a hostname, specify the hostname for the system.</li>
+<li>DHCPV6C = {yes|no}. Enable or disable the abillity to obtain an IPv6 address via DHCP.</li>
+<li>DHCPV6C = Specify DHCP options for IPv6.
+<ul>
+<li>-P = Prefix delegation.</li>
+<li>-S = Obtain a stateless address.</li>
+<li>-N = Revert to normal operation after using -P or -T.</li>
+<li>-T = Temporarily obtain an IPv6 address.</li>
+<li>-D = Specify a new value for the DHCP Unique Identifier (DUID).</li>
+</ul></li>
+<li>IPV6_AUTOCONF = {yes|no}. Enable or disable autoconf configuration.</li>
+<li>DNS{1,2} = The DNS nameservers to use for /etc/resolv.conf.</li>
+<li>PEERDNS = {yes|no}. Enable or disable the ability to get DNS information for /etc/resolv.conf from DHCP or IPCP.</li>
+<li>ETHTOOL_OPTS = Provide special ethtool options for the interface.</li>
+<li>IPADDR = An IPv4 address. This option's name can have a number appended to it (starting at 0) to specify multiple IP addresses.</li>
+<li>NETMASK = The IPv4 address's netmask.</li>
+<li>PREFIX = Instead of specifying a netmask, the CIDR prefix can be used.</li>
+<li>GATEWAY = The IPv4 default gateway to use. All IPv4 traffic will route out to this IP.</li>
+<li>MTU = The size of packets to use, in bytes. The default is 1500 and the maximum is 9000.</li>
+<li>IPV6INIT = {yes|no}. Enable or disable IPv6 on this interface.</li>
+<li>IPV6ADDR6 = An IPv6 address with it's CIDR prefix.</li>
+<li>IPV6ADDR_SECONDARIES = Other IPv6 addresses, comma separated, to add tot his interface.</li>
+<li>IPV6_PRIVACY=rfc3041 = Use the RFC 3041 standard to create a stateless IPv6 address using the interface's MAC address. By default, if this option is not defined, it is turned off for security concerns.</li>
+<li>IP6MTU = The size of packets to use, in bytes.</li>
+<li>MASTER = The master device for bonds.</li>
+<li>BONDING_OPTS = Additional bonding driver options.</li>
+<li>HOTPLUG = Default: yes. Activate his device if it is hot plugged into the system.</li>
+<li>LINKDELAY = The number of seconds to wait before loading up the network interface's configuration.</li>
+<li>SRCADDR = The primary source address for outgoing traffic.</li>
+<li>USERCTL = Enable or disable the ability to allow non-privileged users to manage the interface.</li>
+<li>NM_CONTROLLED = {yes|no}. Enable or disable Network Manager control over this interface.</li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Disable consistent network device naming in RHEL7.&quot; Red Hat Community Discussions. June 11, 2014. Accessed January 7, 2016. https://access.redhat.com/discussions/916973</li>
+<li>&quot;Interface Configuration Files.&quot; Accessed January 7, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html</li>
+</ol>
+<h3 id="operating-system-specific---rhel---bridging">Operating System Specific - RHEL - Bridging</h3>
 <p>Various bridge configurations can be made. It is common to use a normal bridge for allow virtual machines to have full access to the network or use an OpenVSwitch bridge for OpenStack's software defined networking (SDN).</p>
 <p>OpenVSwitch bridge syntax (CLI):</p>
 <pre><code># ovs-vsctl add-port &lt;OVS_BRIDGE&gt; &lt;NIC&gt;
@@ -185,22 +241,47 @@ GATEWAY=10.10.10.1
 BOOTPROTO=&quot;none&quot;
 ONBOOT=&quot;yes&quot;</code></pre>
 <p>[2]</p>
-<p>Bonding allows for multiple devices to be used as a single virtual device. The physical NICs need to be configured as bond slaves. Then a new bond configuration can be created for the bond device.</p>
-<p>Bond master syntax:</p>
-<pre><code>DEVICE=&lt;BOND_DEVICE&gt;
-BONDING_MASTER=yes
-BONDING_OPTS=&quot;mode=6&quot;</code></pre>
-<p>Bond slave syntax:</p>
-<pre><code>MASTER=&lt;BOND_DEVICE&gt;
-SLAVE=yes</code></pre>
-<p>Bond slave example:</p>
-<pre><code>MASTER=bond0
-SLAVE=yes</code></pre>
-<p>[4]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>Configuring Libvirt guests with an Open vSwitch bridge.&quot; Kashyap Chamarthy. July 13, 2013. Accessed November 27, 2016. https://kashyapc.com/2013/07/13/configuring-libvirt-guests-with-an-open-vswitch-bridge/</li>
 <li>&quot;Configure Fedora Server with Open vSwitch and Libvirt.&quot; GitHub Gist - jdoss. October 31, 2015. Accessed November 27, 2016. https://gist.github.com/jdoss/64ecd24b74792efaa794</li>
-<li>https://access.redhat.com/discussions/916973</li>
-<li>https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html</li>
+</ol>
+<h3 id="operating-system-specific---rhel---bonding">Operating System Specific - RHEL - Bonding</h3>
+<p>Bonding allows for multiple devices to be used as a single virtual device. The physical NICs need to be configured as bond slaves. Then a new bond configuration can be created for the bond device.</p>
+<p>Bond master syntax:</p>
+<pre><code>DEVICE=&lt;BOND_DEVICE&gt;
+BONDING_MASTER=yes
+BONDING_OPTS=&quot;mode=&lt;BONDING_MODE&gt;&quot;</code></pre>
+<p>Bond master exmaple:</p>
+<pre><code>DEVICE=bond0
+BONDING_MASTER=yes
+BONDING_OPTS=&quot;mode=balance-alb&quot;</code></pre>
+<p>Bond slave syntax:</p>
+<pre><code>MASTER=&lt;BOND_DEVICE&gt;
+SLAVE=yes</code></pre>
+<p>Bond slave example:</p>
+<pre><code>NAME=eth0
+BOOTPROTO=none
+MASTER=bond0
+SLAVE=yes</code></pre>
+<p>[1]</p>
+<p>A full list of bonding driver options for &quot;bonding_opts&quot; can be found here: <a href="https://wiki.linuxfoundation.org/networking/bonding#bonding-driver-options" class="uri">https://wiki.linuxfoundation.org/networking/bonding#bonding-driver-options</a>.</p>
+<p>Common bonding_opts options:</p>
+<ul>
+<li>mode = The bonding method to use.
+<ul>
+<li>{0|balance-rr} = Load balance using round robin. Every other request goes to/from a different interface.</li>
+<li>{1|active-backup} = Only one interface is used. If it fails, then a slave device will take over.</li>
+<li>{2|balancer-xor} = Load balance requests based on the source and destinatinon MAC addresses.</li>
+<li>{3|broadcast} = All traffic is sent out through all of the network interfaces.</li>
+<li>{4|802.3ad} = All of the network devices use the same speed and duplex configuration to follow the 802.3ad bonding standard. This requires that the network interfaces are also connected to a switch that supports IEEE 802.3ad Dynamic link aggregation. That switch must be configured to use it for it's own switch ports.</li>
+<li>{5|balance-tlb} = Adaptive transmit load balancing. Load balance outgoing requests based on the slave usage.</li>
+<li>{6|balance-alb} = Adaptive load balancing. Load balance incoming and outgoing requests based on slave usage.</li>
+</ul></li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;RHEL: Linux Bond / Team Multiple Network Interfaces (NIC) Into a Single Interface.&quot; nixCraft. March 27, 2016. Accessed January 7, 2016. https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html</li>
+<li>&quot;Bonding Interfaces.&quot; CentOS Tips and Tricks. January 22, 2013. Accessed January 7, 2016. https://wiki.centos.org/TipsAndTricks/BondingInterfaces</li>
 </ol>

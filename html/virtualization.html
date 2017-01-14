@@ -1,28 +1,181 @@
 <h1 id="virtualization">Virtualization</h1>
 <ul>
-<li>Hardware Virtualization
+<li><a href="#hardware-virtualization">Hardware Virtualization</a>
 <ul>
-<li>KVM</li>
-<li>Xen</li>
+<li><a href="#hardware-virtualization---kvm">KVM</a>
+<ul>
+<li><a href="#hardware-virtualization---kvm---performance-tweaks">Performance Tweaks</a></li>
+<li><a href="#hardware-virtualization---kvm---nested-virtualization">Nested Virtualization</a></li>
+<li><a href="#hardware-virtualization---kvm---gpu-passthrough">GPU Passthrough</a></li>
+<li>virt-manager</li>
+<li>oVirt</li>
 </ul></li>
-<li><a href="#containers">Containers</a>
+<li><a href="#hardware-virtualization---xen">Xen</a>
 <ul>
-<li><a href="#containers---docker">Docker</a>
+<li><a href="#hardware-virtualization---xen---nested-virtualization">Nested Virtualization</a></li>
+<li>XenServer</li>
+</ul></li>
+</ul></li>
+<li><a href="#software-virtualization">Software Virtualization</a>
 <ul>
-<li><a href="#containers---docker---networking">Networking</a></li>
+<li>QEMU</li>
+<li><a href="#software-virtualization---containers">Containers</a>
+<ul>
+<li><a href="#software-virtualization---containers---docker">Docker</a>
+<ul>
+<li><a href="#software-virtualization---containers---docker---networking">Networking</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
-<h1 id="containers">Containers</h1>
+<h1 id="hardware-virtualization">Hardware Virtualization</h1>
+<p>Hardware virtualization uses specially supported processors to speed up and isolate virtualized environments. Most newer CPUs support this. There is &quot;Intel VT (Virutalization Techonology)&quot; and &quot;AMD SVM (Secure Virtual Machine)&quot; for x86 processors. [1]</p>
+<p>Intel has three subtypes of virtualization:</p>
+<ul>
+<li>VT-x = Basic hardware virtualization and host seperation support.</li>
+<li>VT-d = I/O passthrough support.</li>
+<li>VT-c = Improved network I/O passthrough support.</li>
+</ul>
+<p>[2]</p>
+<p>AMD has two subtypes of virtualization:</p>
+<ul>
+<li>AMD-V = Basic hardware virtualization and host seperation support.</li>
+<li>AMD-Vi = I/O passthrough support.</li>
+</ul>
+<p>Check for Intel or AMD virtualization support:</p>
+<pre><code>$ grep vmx /proc/cpuinfo # Intel</code></pre>
+<pre><code>$ grep svm /proc/cpuinfo # AMD</code></pre>
+<p>Verify the exact subtype of virtualization:</p>
+<pre><code>$ lscpu | grep ^Virtualization # Intel or AMD</code></pre>
+<p>Hardware virtualization must be supported by both the motherboard and processor. It should also be enabled in the BIOS. [1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Linux: Find Out If CPU Support Intel VT and AMD-V Virtualization Support.&quot; February 11, 2015. nixCraft. Accessed December 18, 2016. https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/</li>
+<li>&quot;Intel VT (Virtualization Technology) Definition.&quot; TechTarget. October, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Intel-VT</li>
+</ol>
+<h2 id="hardware-virtualization---kvm">Hardware Virtualization - KVM</h2>
+<p>The &quot;Kernel-based Virtual Machine (KVM)&quot; is the default kernel module for handling hardware virtualization in Linux since the 2.6.20 kernel. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Kernel Virtual Machine.&quot; KVM. Accessed December 18, 2016. http://www.linux-kvm.org/page/Main_Page</li>
+</ol>
+<h3 id="hardware-virtualization---kvm---performance-tweaks">Hardware Virtualization - KVM - Performance Tweaks</h3>
+<p>Configuration detials for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]</p>
+<pre><code># qemu -cpu host ...</code></pre>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;cpu mode=&#39;host-passthrough&#39;&gt;</code></pre>
+<p>The network driver that provides the best performance is &quot;virtio.&quot; Some guests may not support this feature and require additional drivers.</p>
+<pre><code># qemu -net nic,model=virtio ...</code></pre>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;interface type=&#39;network&#39;&gt;
+  ...
+  &lt;model type=&#39;virtio&#39; /&gt;
+&lt;/interface&gt;****</code></pre>
+<p>Using a tap device (that will be greated to an existing interface) or a bridge will speed up network greatly.</p>
+<pre><code>... -net tap,ifname=&lt;NETWORK_DEVICE&gt; ...</code></pre>
+<pre><code>... -net bridge,br=&lt;NETWORK_BRIDGE_DEVICE&gt; ...</code></pre>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+    &lt;interface type=&#39;bridge&#39;&gt;
+...
+      &lt;source bridge=&#39;&lt;BRDIGE_DEVICE&gt;&#39;/&gt;
+      &lt;model type=&#39;virtio&#39;/&gt;
+    &lt;/interface&gt;</code></pre>
+<p>If possible, PCI passthrough provides the best performance as there is no virtualization overhead.</p>
+<pre><code># qemu -net none -device vfio-pci,host=&lt;PCI_DEVICE_ADDRESS&gt; ...</code></pre>
+<p>Raw disk partitions have the greatest speeds with the &quot;virtoio&quot; driver and cache disabled.</p>
+<pre><code># qemu -drive file=&lt;PATH_TO_STORAGE_DEVICE&gt;,cache=none,if=virtio ...</code></pre>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;disk type=&#39;...&#39; device=&#39;disk&#39;&gt;
+  ...
+  &lt;target dev=&#39;&lt;DEVICE_NAME&gt;&#39; bus=&#39;virtio&#39;/&gt;
+&lt;/disk&gt;</code></pre>
+<p>[1][2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Tuning KVM.&quot; KVM. Accessed January 7, 2016. http://www.linux-kvm.org/page/Tuning_KVM</li>
+<li>&quot;Virtio.&quot; libvirt Wiki. October 3, 2013. Accessed January 7, 2016. https://wiki.libvirt.org/page/Virtio</li>
+</ol>
+<h3 id="hardware-virtualization---kvm---nested-virtualization">Hardware Virtualization - KVM - Nested Virtualization</h3>
+<p>KVM supports nested virtualization. This allows a virtual machine full access to the processor to run another virtual machine in itself. This is disabled by default.</p>
+<h4 id="option-1---modprobe">Option #1 - Modprobe</h4>
+<ul>
+<li><p>Intel</p>
+<pre><code># vim /etc/modprobe.d/nested_virtualization.conf
+options intel nested=1</code></pre>
+<pre><code># modprobe -r kvm-intel
+# modprobe kvm-intel</code></pre></li>
+<li><p>AMD</p>
+<pre><code># vim /etc/modprobe.d/nested_virtualization.conf
+options amd nested=1</code></pre>
+<pre><code># modprobe -r kvm-amd
+# modprobe kvm-amd</code></pre></li>
+</ul>
+<h4 id="option-2---grub2">Option #2 - GRUB2</h4>
+<ul>
+<li><p>Intel</p>
+<pre><code># vim /etc/default/grub
+GRUB_CMDLINE_LINUX=&quot;console=tty0 kvm-intel.nested=1&quot;</code></pre></li>
+<li><p>AMD</p>
+<pre><code># vim /etc/default/grub
+GRUB_CMDLINE_LINUX=&quot;console=tty0 kvm-amd.nested=1&quot;</code></pre></li>
+<li><p>Then rebuild the GRUB 2 configuration.</p>
+<pre><code># grub-mkconfig -o /boot/grub/grub.cfg</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Finally, edit the virtual machine's XML configuration to change the CPU mode to be &quot;host-passthrough.&quot;</p>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;cpu mode=&#39;host-passthrough&#39;&gt;</code></pre>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How to Enable Nested KVM.&quot; Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275</li>
+<li>&quot;Configure DevStack with KVM-based Nested Virtualization.&quot; December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html</li>
+</ol>
+<h3 id="hardware-virtualization---kvm---gpu-passthrough">Hardware Virtualization - KVM - GPU Passthrough</h3>
+<p>GPU passthrough is useful for running a Windows virtual machine guest for gaming inside of Linux. It is recommended to have two video cards, one for Linux and one for the guest virtual machine. [1]</p>
+<p>Nvidia cards have a detection in the driver to see if the operating system has a hypervisor running. This can lead to a &quot;Code: 43&quot; error in the driver as it false-postively reports none. This affects Nvidia drivers starting with version 337.88. A work-a-round for this is to set a random &quot;vendor_id&quot; to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards. [2]</p>
+<pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;features&gt;
+    &lt;hyperv&gt;
+        &lt;vendor_id state=&#39;on&#39; value=&#39;123456abcdef&#39;/&gt;
+    &lt;/hyperv&gt;
+    &lt;kvm&gt;
+        &lt;hidden state=&#39;on&#39;/&gt;
+    &lt;/kvm&gt;
+&lt;/features&gt;</code></pre>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;GPU Passthrough with KVM and Debian Linux.&quot; scottlinux.com Linux Blog. August 28, 2016. Accessed December 18, 2016. https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/</li>
+<li>&quot;PCI passthrough via OVMF.&quot; Arch Linux Wiki. December 18, 2016. Accessed December 18, 2016. https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF</li>
+</ol>
+<h2 id="hardware-virtualization---xen">Hardware Virtualization - Xen</h2>
+<p>Xen is a free and open source software published under the GNU General Public License (GPL). It was originally designed to be a competitor of VMWare. It is currently owned by Citrix and offers a paid support package for it's virtual machine hypervisor/manager XenServer. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Xen Definition.&quot; TechTarget. March, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Xen</li>
+</ol>
+<h3 id="hardware-virtualization---xen---nested-virtualization">Hardware Virtualization - Xen - Nested Virtualization</h3>
+<p>Since Xen 4.4, nested virtualization has been supported by default. It needs to be configured in the guest virtual machine using &quot;nestedhvm.&quot; The &quot;hap&quot; feature also needs to be enabled for better performance and stability. Lastly, the CPU's ID needs to be modified to hide the original virtualization ID.</p>
+<pre><code>nestedhvm=1
+hap=1
+cpuid = [&#39;0x1:ecx=0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;]</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Nested Virtualization in Xen.&quot; Xen Project Wiki. December 13, 2016. Accessed December 18, 2016. https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen</li>
+</ol>
+<h1 id="software-virtualization">Software Virtualization</h1>
+<h1 id="software-virtualization---containers">Software Virtualization - Containers</h1>
 <p>Containers are a type of software virtualization. Using a directory structure that contains an entire operating system (typically referred to as a chroot), containers can easily spin up and utilize system resources without the overhead of full hardware allocation. It is not possible to use seperate kernels with this approach.</p>
-<h2 id="containers---docker">Containers - Docker</h2>
+<h3 id="software-virtualization---containers---docker">Software Virtualization - Containers - Docker</h3>
 <p>Docker creates containers using the LXC kernel module on Linux.</p>
-<p>A command is run to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spun in the background. A workaround for this is to append <code>&amp;&amp; tail -f /dev/null</code> to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]</p>
+<p>A command is run to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append <code>&amp;&amp; tail -f /dev/null</code> to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Get started with Docker.&quot; Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted</li>
 </ol>
-<h3 id="containers---docker---networking">Containers - Docker - Networking</h3>
+<h3 id="software-virtualization---containers---docker---networking">Software Virtualization - Containers - Docker - Networking</h3>
 <p>Networking is automatically bridged to the public interface and set up with a NAT. This allows full communication to/from the container, provided that the necessary ports are open in the firewall and configured in the Docker image.</p>
 <p>Networking issues from within a container are commonly due to network packet size (MTU) issues. There are a few work-a-rounds.</p>
 <ol style="list-style-type: decimal">
@@ -46,7 +199,14 @@ ExecStart=/usr/bin/docker-current daemon \
 <pre><code># iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code></pre></li>
 </ol>
 <p>[1]</p>
-<p>Source:</p>
+<p>In rare cases, the bridge networking will not be working properly. An error message similar to this may appear during creation.</p>
+<pre><code>ERROR: for &lt;CONTAINER_NAME&gt; failed to create endpoint &lt;NETWORK_ENDPOINT&gt; on network bridge: iptables failed: iptables --wait -t nat -A DOCKER -p tcp -d 0/0 --dport &lt;DESTINATION_PORT_HOST&gt; -j DNAT --to-destination &lt;IP_ADDRESS&gt;:&lt;DESTINATION_PORT_CONTAINER&gt; ! -i docker0: iptables: No chain/target/match by that name.</code></pre>
+<p>The solution is to delete the virtual &quot;docker0&quot; interface and then restart the Docker service for it to be properly recreated.</p>
+<pre><code># ip link delete docker0
+# systemctl restart docker</code></pre>
+<p>[2]</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;containers in docker 1.11 does not get same MTU as host #22297.&quot; Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297</li>
+<li>&quot;iptables failed - No chain/target/match by that name #16816.&quot; Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816</li>
 </ol>
