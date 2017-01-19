@@ -27,11 +27,18 @@
 </ul></li>
 <li><a href="#network---ceph">Ceph</a>
 <ul>
-<li><a href="#network---ceph---quick-install">Quick Install</a></li>
+<li><a href="#network---ceph---installation">Installation</a>
+<ul>
+<li><a href="#network---ceph---installation---quick">Quick</a></li>
+<li>Full</li>
+<li><a href="#ceph---installation---ceph-ansible">Ceph-Ansible</a></li>
+</ul></li>
+<li><a href="#network---ceph---repair">Repair</a></li>
+<li><a href="#network---ceph---cephfs">CephFS</a></li>
 </ul></li>
 </ul></li>
 </ul>
-<h2 id="types">Types</h2>
+<h1 id="types">Types</h1>
 <p>Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation:</p>
 <pre><code>2^&lt;BIT_SIZE&gt; - 1</code></pre>
 <table style="width:33%;">
@@ -150,14 +157,49 @@
 <li>&quot;Using Btrfs with Multiple Devices&quot; BtrFS Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</li>
 </ol>
 <h3 id="types---btrfs---btrfs-limitations">Types - BtrFS - BtrFS Limitations</h3>
-<p>Known limitations: * The &quot;df&quot; (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, &quot;btrfs filesystem df&quot; should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions. * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output. [1] * # btrfs balance start / * # btrfs defragment -r /</p>
+<p>Known limitations:</p>
+<ul>
+<li>The &quot;df&quot; (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, <code>btrfs filesystem df</code> should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions.
+<ul>
+<li>For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output.
+<ul>
+<li><code># btrfs balance start /</code></li>
+<li><code># btrfs defragment -r /</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Preventing a btrfs Nightmare.&quot; Jupiter Boradcasting. July 6, 2014. http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/</li>
 </ol>
 <h2 id="types---ext4">Types - ext4</h2>
-<p>The Extended File System 4 (ext4) is the default file system for most Linux operating systems. It's focus is on performance and reliability. It is also backwards compatible with ext3 file systems. [1]</p>
-<p>Mount options: * ro = Mount as read-only. * data * journal = All data is saved in the journal before writing it to the storage device. This is the safest option. * ordered = All data is written to the storage device before updating the journal's metadata. * writeback = Data can be written to the drive at the same time it updates the journal. * barrier * 1 = On. The file system will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure. * 0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase. * noacl = Disable the Linux extended access control lists. * nouser_xattr = Disable extended file attributes. * errors = Specify what happens when there is an error in the file system. * remount-ro = Automatically remound the partition into a read-only mode. * continue = Ignore the error. * panic = Shutdown the operating system if any errors are found. * discard = Enables TRIM support. The file system will immediately free up the space from a deleted file for use with new files. * nodiscard = Disables TRIM. [2]</p>
+<p>The Extended File System 4 (ext4) is the default file system for most Linux operating systems. It's focus is on performance and reliability. It is also backwards compatible with the ext3 file system. [1]</p>
+<p>Mount options:</p>
+<ul>
+<li>ro = Mount as read-only.</li>
+<li>data
+<ul>
+<li>journal = All data is saved in the journal before writing it to the storage device. This is the safest option.</li>
+<li>ordered = All data is written to the storage device before updating the journal's metadata.</li>
+<li>writeback = Data can be written to the drive at the same time it updates the journal.</li>
+</ul></li>
+<li>barrier
+<ul>
+<li>1 = On. The file system will ensure that data gets written to the drive in the correct order. This provides better integrity to the file system due to power failure.</li>
+<li>0 = Off. If a battery backup RAID unit is used, then the barrier is not needed as it should be able to finish the writes after a power failure. This could provide a performance increase.</li>
+</ul></li>
+<li>noacl = Disable the Linux extended access control lists.</li>
+<li>nouser_xattr = Disable extended file attributes.</li>
+<li>errors = Specify what happens when there is an error in the file system.
+<ul>
+<li>remount-ro = Automatically remound the partition into a read-only mode.</li>
+<li>continue = Ignore the error.</li>
+<li>panic = Shutdown the operating system if any errors are found.</li>
+</ul></li>
+<li>discard = Enables TRIM support. The file system will immediately free up the space from a deleted file for use with new files.</li>
+<li>nodiscard = Disables TRIM. [2]</li>
+</ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Linux File Systems: Ext2 vs Ext3 vs Ext4.&quot; The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4</li>
@@ -266,7 +308,20 @@
 <li><p>Example:</p>
 <pre><code>/path/to/dir 192.168.0.0/24(rw,no_root_squash)</code></pre></li>
 </ul>
-<p>NFS export options: * rw = The directory will be writable. * ro (default) = The directory will be read-only. * no_root_squash = Allow remote root users to access the directory and create files owned by root. * root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically &quot;nobody&quot;). * all_squash = All files are created as the anonymouse user. * sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish. * async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory. * sec = Specify a type of Kerberos authentication to use. * krb5 = Use Kerberos for authentication only.</p>
+<p>NFS export options:</p>
+<ul>
+<li>rw = The directory will be writable.</li>
+<li>ro (default) = The directory will be read-only.</li>
+<li>no_root_squash = Allow remote root users to access the directory and create files owned by root.</li>
+<li>root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically &quot;nobody&quot;).</li>
+<li>all_squash = All files are created as the anonymouse user.</li>
+<li>sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish.</li>
+<li>async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory.</li>
+<li>sec = Specify a type of Kerberos authentication to use.
+<ul>
+<li>krb5 = Use Kerberos for authentication only.</li>
+</ul></li>
+</ul>
 <p>[1]</p>
 <p>On Red Hat Enterprise Linux systems, the exported directory will need to have the &quot;nfs_t&quot; file context for SELinux to work properly.</p>
 <pre><code># semanage fcontext -a -t nfs_t &quot;/path/to/dir{/.*)?&quot;
@@ -298,10 +353,19 @@
 <h2 id="network---iscsi">Network - iSCSI</h2>
 <p>The &quot;Inernet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
 <h3 id="network---iscsi-target">Network - iSCSI Target</h3>
-<p>For setting up a target storage, these are the general steps to follow in order: * Create a backstores device. * Create an iSCSI target. * Create a network portal to listen on. * Create a LUN associated with the backstores. * Create an ACL. * Optionally configure ACL rules.</p>
+<p>For setting up a target storage, these are the general steps to follow in order:</p>
 <ul>
-<li><p>First, start and enable the iSCSI service to start on bootup.</p>
+<li>Create a backstores device.</li>
+<li>Create an iSCSI target.</li>
+<li>Create a network portal to listen on.</li>
+<li>Create a LUN associated with the backstores.</li>
+<li>Create an ACL.</li>
+<li><p>Optionally configure ACL rules.</p></li>
+<li>First, start and enable the iSCSI service to start on bootup.
+<ul>
+<li><p>Syntax:</p>
 <pre><code># systemctl enable target &amp;&amp; systemctl start target</code></pre></li>
+</ul></li>
 <li>Create a storage device. This is typically either a block device or a file.</li>
 <li><p>Block syntax:</p>
 <pre><code># targetcli
@@ -356,10 +420,13 @@
 <pre><code>&gt; cd acls/iqn.2016-01.com.example.server:client
 &gt; set auth userid=toor
 &gt; set auth password=pass</code></pre></li>
-<li><p>Any ACL rules that were created can be overriden by turning off authentication entirely.</p>
+<li>Any ACL rules that were created can be overriden by turning off authentication entirely.
+<ul>
+<li><p>Syntax:</p>
 <pre><code>&gt; set attribute authentication=0
 &gt; set attribute generate_node_acls=1
 &gt; set attribute demo_mode_write_protect=0</code></pre></li>
+</ul></li>
 <li><p>Finally, make sure that both the TCP and UDP port 3260 are open in the firewall. [1]</p></li>
 </ul>
 <h3 id="network---iscsi---initiator">Network - iSCSI - Initiator</h3>
@@ -372,36 +439,103 @@ InitiatorName=&lt;IQN&gt;:&lt;ACL&gt;</code></pre></li>
 <li><p>Example:</p>
 <pre><code># vim /etc/iscsi/initiatorname.iscsi
 InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
-<li><p>Start and enable the iSCSI initiator to load on bootup.</p>
+<li>Start and enable the iSCSI initiator to load on bootup.
+<ul>
+<li><p>Syntax:</p>
 <pre><code># systemctl start iscsi &amp;&amp; systemctl enable iscsi</code></pre></li>
+</ul></li>
 <li>Once started, the iSCSI device should be able to be attached.</li>
 <li><p>Syntax:</p>
 <pre><code># iscsiadm --mode node --targetname &lt;IQN&gt;:&lt;TARGET&gt; --portal &lt;iSCSI_SERVER_IP&gt; --login</code></pre></li>
 <li><p>Example:</p>
 <pre><code># iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login</code></pre></li>
-<li><p>Verify that a new &quot;iscsi&quot; device exists.</p>
+<li>Verify that a new &quot;iscsi&quot; device exists.
+<ul>
+<li><p>Syntax:</p>
 <pre><code># lsblk --scsi</code></pre></li>
+</ul></li>
 </ul>
 <p>[1]</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target.&quot; CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/</li>
 </ol>
 <h2 id="network---ceph">Network - Ceph</h2>
-<p>Ceph was designed to provide Reliable Autonomic Distributed Object Store (RADOS). It can store objects, blocks, and file systems. [1]</p>
+<p>Ceph has developed a concept called Reliable Autonomic Distributed Object Store (RADOS). It provides scalable, fast, and reliable software-defined storage by storing files as objects and calculating their location on the fly. Failovers will even happen automatically so no data is lost.</p>
+<p>Vocabulary:</p>
+<ul>
+<li>Object Storage Device (OSD) = The device that stores data.</li>
+<li>OSD Daemon = Handles storing all user data as objects.</li>
+<li>Ceph Block Device (RBD) = Provides a block device over the network, similar in concept to iSCSI.</li>
+<li>Ceph Object Gateway = A RESTful API which works with Amazon S3 and OpenStack Swift.</li>
+<li>Ceph Monitors (MONs) = Store and provide a map of data locations.</li>
+<li>Ceph Metadata Server (MDS) = Provides metadata about file system hierarchy for CephFS. This is not required for RBD or RGW.</li>
+<li>Ceph File System (CephFS) = A POSIX-compliant distributed file system with unlimited size.</li>
+<li>Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithim to provide metadata about an object's location.</li>
+<li>Placement Groups (PGs) = Object storage data.</li>
+</ul>
+<p>Ceph monitor nodes have a master copy of a cluster map. This contains 5 separate maps that have information about data location and the cluster's status. If an OSD fails, the monitor daemon will automatically reorganize everything and provided end-user's with an updated cluster map.</p>
+<p>Cluster map:</p>
+<ul>
+<li>Monitor map = The cluster fsid (uuid), position, name, address and port of each monitor server.
+<ul>
+<li><code># ceph mon dump</code></li>
+</ul></li>
+<li>OSD map = The cluster fsid, available pools, PG numbers, and OSDs current status.
+<ul>
+<li><code># ceph osd dump</code></li>
+</ul></li>
+<li>PG map = PG version, PG ID, ratios, and data usage statistics.
+<ul>
+<li><code># ceph pg dump</code></li>
+</ul></li>
+<li>CRUSH map = Storage devices, physical locations, rules for storing objects. It is recommended to tweak this for production clusters. A binary of the configuration must be saved and then decompiled. After changes are made, the file must be recompiled and then the configuration can be loaded.
+<ul>
+<li><code># ceph osd gestgrushmap -o &lt;NEW_COMPILED_FILE&gt;</code></li>
+<li><code># crushtool -d &lt;NEW_COMPILED_FILE&gt; &lt;NEW_DECOMPILED_FILE&gt;</code></li>
+<li><code># vim &lt;NEW_DECOMPILED_FILE&gt;</code></li>
+<li><code># crushtool -c &lt;NEW_DECOMPILED_FILE&gt; &lt;UPDATED_COMPILED_FILE&gt;</code></li>
+<li><code># ceph osd setcrushmap -i &lt;UPDATED_COMPILED_FILE&gt;</code></li>
+</ul></li>
+<li>MDS map
+<ul>
+<li><code># ceph fs dump</code></li>
+</ul></li>
+</ul>
+<p>When the end-user asks for a file, that name is combined with it's PG ID and then CRUSH hashes it to find the exact location of it on all of the OSDs. The master OSD for that file serves the content. [1]</p>
+<p>The current back-end for handling data storage is FileStore. When data is written to a Ceph OSD, it is first fully written to the OSD journal. This is a separate partition that can be on the same drive or a different drive. It is faster to have the journal on an SSD if the OSD drive is a regular spinning-disk drive.</p>
+<p>The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writting the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]</p>
+<p>The optimal number of PGs is found be using this equal (replacing the number of OSD daemons and how many replicas are desired). This number should be rounded up to the next power of 2.</p>
+<p>Syntax:</p>
+<pre><code>Total PGs = (&lt;NUMBER_OF_OSDS&gt; * 100) / &lt;REPLICATION_COUNT&gt;</code></pre>
+<p>Example:</p>
+<pre><code>1000 = (30 * 100) / 3
+2^10 = 1024
+1000 =&lt; 1024
+PGs = 1024</code></pre>
+<p>Cache pools can be configured used to cache files onto faster drives. When a file is continually being read, it will be copied to the faster drive. When a file is first written, it will go to the faster drives. After a period of time of lesser use, those files will be moved to the slow drives. [3]</p>
+<p>By modifying the CRUSH map, replication can be configured to go to a different drive, server, row, rack, datacenter, or anywhere. [4]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>Karan Singh <em>Learning Ceph</em> (Birmingham, UK: Packet Publishing, 2015)</li>
+<li>https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/</li>
+<li>&quot;CACHE POOL.&quot; Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/jewel/dev/cache-pool/</li>
+<li>&quot;CEPH MAPS.&quot; Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/master/rados/operations/crush-map/</li>
+</ol>
+<h3 id="network---ceph---installation">Network - Ceph - Installation</h3>
 <p>Ceph Requirements:</p>
 <ul>
 <li>Fast CPU for OSD and metadata nodes.</li>
 <li>1GB RAM per 1TB of Ceph OSD storage.</li>
 <li>1GB RAM per monitor daemon.</li>
 <li>1GB RAM per metadata daemon.</li>
-<li>An odd number of nodes (starting at least 3 for high availability). [2]</li>
+<li>An odd number of nodes (starting at least 3 for high availability and quorum). [1]</li>
 </ul>
-<p>Sources:</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>http://ceph.com/ceph-storage/</li>
-<li>http://docs.ceph.com/docs/jewel/start/hardware-recommendations/</li>
+<li>&quot;INTRO TO CEPH.&quot; Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/jewel/start/intro/</li>
 </ol>
-<h3 id="network---ceph---quick-install">Network - Ceph - Quick Install</h3>
+<h4 id="network---ceph---installation---quick">Network - Ceph - Installation - Quick</h4>
 <p>This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be seperated from the OSD storage nodes.</p>
 <ul>
 <li><p>Create a new Ceph cluster group, by default called &quot;ceph.&quot;</p>
@@ -424,5 +558,182 @@ InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Ceph Deployment. Ceph Jewel Documentation. Accessed January 14, 2016. http://docs.ceph.com/docs/jewel/rados/deployment/</li>
+<li>&quot;Ceph Deployment.&quot; Ceph Jewel Documentation. Accessed January 14, 2017. http://docs.ceph.com/docs/jewel/rados/deployment/</li>
+</ol>
+<h3 id="network---ceph---installation---ceph-ansible">Network - Ceph - Installation - ceph-ansible</h3>
+<p>The ceph-ansible project is used to help deploy and automate updates.</p>
+<pre><code># git clone https://github.com/ceph/ceph-ansible/
+# cd ceph-ansible/</code></pre>
+<p>Configure the Ansible inventory hosts file. This should contain the SSH connection details to access the relevant servers.</p>
+<p>Inventory hosts:</p>
+<ul>
+<li>[mons] = Monitors for tracking and locating object storage data.</li>
+<li>[osds] = Object storage device nodes for storing the user data.</li>
+<li>[mdss] = Metadata servers for CephFS. (Optional)</li>
+<li>[rwgs] = RADOS Gateways for Amazon S3 or OpenStack Swift object storage API support. (Optional)</li>
+</ul>
+<p>Example inventory:</p>
+<pre><code>ceph_monitor_01 ansible_host=192.168.20.11
+ceph_monitor_02 ansible_host=192.168.20.12
+ceph_monitor_03 ansible_host=192.168.20.13
+ceph_osd_01 ansible_host=192.168.20.101 ansible_port=2222
+ceph_osd_02 ansible_host=192.168.20.102 ansible_port=2222
+ceph_osd_03 ansible_host=192.168.20.103 ansible_port=2222
+
+[mons]
+ceph_monitor_01
+ceph_monitor_02
+ceph_monitor_03
+
+[osds]
+ceph_osd_01
+ceph_osd_02
+ceph_osd_03</code></pre>
+<p>Copy the sample configurations and modify the variables.</p>
+<pre><code># cp site.yml.sample site.yml
+# cd group_vars/
+# cp all.yml.sample all.yml
+# cp mons.yml.sample mons.yml
+# cp osds.yml.sample osds.yml</code></pre>
+<p>Common variables:</p>
+<ul>
+<li>group_vars/all.yml = Global variables.
+<ul>
+<li>ceph_origin = Specify how to install the Ceph software.
+<ul>
+<li>upstream = Use the official repositories.</li>
+<li>Upstream related variables:
+<ul>
+<li>ceph_dev: Boolean value. Use a development branch of Ceph from GitHub.</li>
+<li>ceph_dev_branch = The exact branch or commit of Ceph from GitHub to use.</li>
+<li>ceph_stable = Boolean value. Use a stable release of Ceph.</li>
+<li>ceph_stable_release = The release name to use. The LTS &quot;jewel&quot; release is recommended.</li>
+</ul></li>
+<li>distro = Use repostories already present on the system. ceph-ansible will not install Ceph repositories with this method, they must already be installed.</li>
+</ul></li>
+<li>ceph_release_num = If &quot;ceph_stable&quot; is not defined, use any specific major release number.
+<ul>
+<li>9 = infernalis</li>
+<li>10 = jewel</li>
+<li>11 = kraken</li>
+</ul></li>
+</ul></li>
+<li>group_vars/osds.yml = Object storage daemon variables.
+<ul>
+<li>devices = A list of drives to use for each OSD daemon.</li>
+<li>osd_auto_discovery = Boolean value. Default: false. Instead of manually specifying devices to use, automatically use any drive that does not have a partition table.</li>
+<li>OSD option #1:
+<ul>
+<li>journal_collocation = Boolean value. Default: false. Use the same drive for journal and data storage.</li>
+</ul></li>
+<li>OSD option #2:
+<ul>
+<li>raw_multi_journal = Boolean value. Default: false. Store journals on different hard drives.</li>
+<li>raw_journal_devices = A list of devices to use for journaling.</li>
+</ul></li>
+<li>OSD option #3:
+<ul>
+<li>osd_directory = Boolean value. Default: false. Use a specified directory for OSDs. This assumes that the end-user has already partitioned the drive and mounted it to <code>/var/lib/ceph/osd/&lt;OSD_NAME&gt;</code> or a custom directory.</li>
+<li>osd_directories = The directories to use for OSD storage.</li>
+</ul></li>
+<li>OSD option #4:
+<ul>
+<li>bluestore: Boolean value. Default: false. Use the new and experimental BlueStore file store that can provide twice the performance for drives that have both a journal and OSD for Ceph.</li>
+</ul></li>
+<li>OSD option #5:
+<ul>
+<li>dmcrypt_journal_collocation = Use Linux's &quot;dm-crypt&quot; to encrypt objects when both the journal and data are stored on the same drive.</li>
+</ul></li>
+<li>OSD option #6:
+<ul>
+<li>dmcrypt_dedicated_journal = Use Linux's &quot;dm-crypt&quot; to encrypt objects when both the journal and data are stored on the different drives.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Finally, run the Playbook to deploy the Ceph cluster.</p>
+<pre><code># ansible-playbook -i production site.yml</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;ceph-ansible Wiki.&quot; ceph-ansible GitHub. February 29, 2016. Accessed January 15, 2017. https://github.com/ceph/ceph-ansible/wiki</li>
+</ol>
+<h3 id="network---ceph---repair">Network - Ceph - Repair</h3>
+<p>Ceph automatically runs through a data integrity check called &quot;scrubbing.&quot; This checks the health of each placement group (object). Sometimes these can fail due to incosistencies, commonly a mismatch in time on the OSD servers.</p>
+<p>In this example, the placement group &quot;1.28&quot; failed to be scrubbed. This object exists on the 8, 11, and 20 OSD drives.</p>
+<ul>
+<li>Check the health information.
+<ul>
+<li><p>Example:</p>
+<pre><code># ceph health detail
+HEALTH_ERR 1 pgs inconsistent; 1 scrub errors
+pg 1.28 is active+clean+inconsistent, acting [8,11,20]
+1 scrub errors</code></pre></li>
+</ul></li>
+<li>Manually run a repair.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># ceph pg repar &lt;PLACEMENT_GROUP&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code># ceph pg repair 1.28</code></pre></li>
+</ul></li>
+<li>Find the error:
+<ul>
+<li><p>Syntax:</p>
+<pre><code># grep ERR /var/log/ceph/ceph-osd.&lt;OSD_NUMBER&gt;.log</code></pre></li>
+<li><p>Example:</p>
+<pre><code># grep ERR /var/log/ceph/ceph-osd.11.log
+2017-01-12 22:27:52.626252 7f5b511e8700 -1 log_channel(cluster) log [ERR] : 1.27 shard 12: soid 1:e4c200f7:::rbd_data.a1e002238e1f29.000000000000136d:head candidate had a read error</code></pre></li>
+</ul></li>
+<li>Find the bad file.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># find /var/lib/ceph/osd/ceph-&lt;OSD_NUMBER&gt;/current/&lt;PLACEMENT_GROUP&gt;_head/ -name &#39;*&lt;OBJECT_ID&gt;*&#39; -ls</code></pre></li>
+<li><p>Example:</p>
+<pre><code># find /var/lib/ceph/osd/ceph-11/current/1.28_head/ -name &quot;*a1e002238e1f29.000000000000136d*&quot;
+/var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\udata.b3e012238e1f29.000000000000136d__head_EF004327__1</code></pre></li>
+</ul></li>
+<li>Stop the OSD.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># systemctl stop ceph-osd@&lt;OSD_NUMBER&gt;.service</code></pre></li>
+<li><p>Example:</p>
+<pre><code># systemctl stop ceph-osd@11.service</code></pre></li>
+</ul></li>
+<li>Flush the journal to save the current files cached in memory.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># ceph-osd -i &lt;OSD_NUMBER&gt; --flush-journal</code></pre></li>
+<li><p>Example:</p>
+<pre><code># ceph-osd -i 11 --flush-journal</code></pre></li>
+</ul></li>
+<li>Move the bad object out of it's current directory in the OSD.
+<ul>
+<li><p>Example:</p>
+<pre><code># mv /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\\udata.b3e012238e1f29.000000000000136d__head_EF004327__1 /root/ceph_osd_backups/</code></pre></li>
+</ul></li>
+<li>Restart the OSD.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># systemctl restart ceph-osd@&lt;OSD_NUMBER&gt;.service</code></pre></li>
+<li><p>Example:</p>
+<pre><code># systemctl restart ceph-osd@11.service</code></pre></li>
+</ul></li>
+<li>Run another placement group repair.
+<ul>
+<li><p>Syntax:</p>
+<pre><code># ceph pg repar &lt;PLACEMENT_GROUP&gt;</code></pre></li>
+<li><p>Example:</p>
+<pre><code># ceph pg repair 1.28</code></pre></li>
+</ul></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ceph: manually repair object.&quot; April 27, 2015. Accessed January 15, 2017. http://ceph.com/planet/ceph-manually-repair-object/</li>
+</ol>
+<h3 id="network---ceph---cephfs">Network - Ceph - CephFS</h3>
+<p>CephFS has been stable since the Ceph Jewel 10.2.0 release. This also now includes repair utilities, including fsck. For clients, it is recommended to use a Linux kernel in the 4 series, or newer, to have the latest features and bug fixes for the file system. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;USING CEPHFS.&quot; Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/</li>
 </ol>

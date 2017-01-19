@@ -40,6 +40,7 @@
 <li><a href="#configurations---cinder---ceph">Ceph</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#upgrades">Upgrades</a></li>
 <li><a href="#command-line-interface-utilities">Command Line Interface Utilities</a></li>
 <li><a href="#automation">Automation</a>
 <ul>
@@ -62,18 +63,43 @@
 <li>OpenStack Mitaka</li>
 <li>CentOS 7 (Linux)</li>
 </ul>
-<p>Most things mentioned here should be able to be applied to other similar environments.</p>
+<p>Most topics mentioned in this guide can be applied to similar environments.</p>
 <h1 id="overview">Overview</h1>
-<p>OpenStack has a large range of services. The essential ones required for a basic cloud are:</p>
+<p>OpenStack has a large range of services that manage different different components in a modular way.</p>
+<p>Core services:</p>
 <ul>
 <li>Keystone = Authentication</li>
 <li>Nova = Compute</li>
 <li>Neutron = Networking</li>
 </ul>
+<p>Extra services:</p>
+<ul>
+<li>Horizon = Dashboard</li>
+<li>Swift = Object Storage</li>
+<li>Cinder = Block Storage</li>
+<li>Glance = Image</li>
+<li>Ceilometer = Telemtry</li>
+<li>Heat = Orchestration</li>
+<li>Trove = Database</li>
+<li>Sahara = Elastic Map Reduce</li>
+<li>Ironic = Bare-Metal Provisioning</li>
+<li>Zaqar = Messaging Service</li>
+<li>Manila = Shared Filesystems</li>
+<li>Designate = DNS Service</li>
+<li>Barbican = Key Management</li>
+<li>Magnum = Containers</li>
+<li>Murano = Application Catalog</li>
+<li>Congress = Governance</li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Project Navigator.&quot; OpenStack. Accessed January 15, 2017. https://www.openstack.org/software/project-navigator/</li>
+</ol>
 <h1 id="installation">Installation</h1>
 <p>It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code. This is ideal for developers and System Administrators looking for a proof of concept.</p>
 <h2 id="installation---packstack">Installation - PackStack</h2>
-<p>Supported operating systems: CentOS 7 or RHEL 7</p>
+<p>Supported operating systems: RHEL 7</p>
 <p>PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.</p>
 <pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
 # yum install packstack
@@ -99,8 +125,12 @@
 <li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. January 10, 2016. Accessed January 10, 2016. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
 </ol>
 <h2 id="installation---tripleo">Installation - TripleO</h2>
-<p>Supported operating systems: CentOS 7 or RHEL 7</p>
-<p>TripleO means &quot;OpenStack on OpenStack.&quot; The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used.</p>
+<p>Supported operating systems: RHEL 7, Fedora &gt;= 22</p>
+<p>TripleO means &quot;OpenStack on OpenStack.&quot; The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. The minimum requirement of RAM for the host node is 16GB to run all of the OpenStack services. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;tripleo-quickstart.&quot; TripleO Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart</li>
+</ol>
 <h3 id="installation---tripleo---quick">Installation - TripleO - Quick</h3>
 <p>The &quot;TripleO-Quickstart&quot; project was created to use Ansible to automate deploying TripleO as fast as possible.</p>
 <pre><code>$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
@@ -177,6 +207,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 </ul></li>
 </ul>
 <h4 id="scenario-2---pki">Scenario #2 - PKI</h4>
+<p>PKI tokens are deprecated and will be removed in the Ocata release. [3]</p>
 <ul>
 <li>/etc/keystone/keystone.conf
 <ul>
@@ -202,6 +233,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Configuring Keystone.&quot; OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html</li>
 <li>&quot;OpenStack Keystone Fernet tokens.&quot; Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/</li>
+<li>&quot;Newton Series Release Notes.&quot; OpenStack Documentation. Accessed January 15, 2016. http://docs.openstack.org/releasenotes/keystone/newton.html</li>
 </ol>
 <h2 id="configurations---nova">Configurations - Nova</h2>
 <ul>
@@ -498,6 +530,23 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;BLOCK DEVICES AND OPENSTACK.&quot; Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack</li>
+</ol>
+<h1 id="upgrades">Upgrades</h1>
+<p>Upgrading a produciton OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:</p>
+<ul>
+<li>Backup configuration files and databases.</li>
+<li>Review the release notes of the OpenStack services that will be upgraded. These will contain details of deprecations and new configuration changes. <a href="https://releases.openstack.org/" class="uri">https://releases.openstack.org/</a></li>
+<li>Update configuration files. Sample configurations can be found at <code>http://docs.openstack.org/&lt;RELEASE&gt;/config-reference/</code>.</li>
+<li>If not already, consider using an automation tool such as Ansible to deploy new service configurations.</li>
+<li>Remove the old package repository for OpenStack.</li>
+<li>Add the new package repository for OpenStack.</li>
+<li>Update all of the packages.</li>
+<li>Restart the services. <code>openstack-service restart</code></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Upgrades.&quot; OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html</li>
 </ol>
 <h1 id="command-line-interface-utilities">Command Line Interface Utilities</h1>
 <p>The OpenStack CLI resources used to be handled by seperate commands. These have all been modified and are managed by the universal &quot;openstack&quot; command. The various options and arguments are explained in Root Pages' OpenStack section <a href="https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx">Linux Commands excel sheet</a>.</p>

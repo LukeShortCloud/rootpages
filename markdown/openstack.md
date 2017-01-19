@@ -24,6 +24,7 @@
         * [Quality of Service](#configurations---neutron---quality-of-service)
     * [Cinder](#configurations---cinder)
         * [Ceph](#configurations---cinder---ceph)
+* [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
 * [Automation](#automation)
     * [Heat](#automation---heat)
@@ -42,16 +43,43 @@ This guide is aimed to help guide System Administrators through OpenStack. It is
 * OpenStack Mitaka
 * CentOS 7 (Linux)
 
-Most things mentioned here should be able to be applied to other similar environments.
+Most topics mentioned in this guide can be applied to similar environments.
 
 
 # Overview
 
-OpenStack has a large range of services. The essential ones required for a basic cloud are:
+OpenStack has a large range of services that manage different different components in a modular way.
+
+Core services:
 
 * Keystone = Authentication
 * Nova = Compute
 * Neutron = Networking
+
+Extra services:
+
+* Horizon = Dashboard
+* Swift = Object Storage
+* Cinder = Block Storage
+* Glance = Image
+* Ceilometer = Telemtry
+* Heat = Orchestration
+* Trove = Database
+* Sahara = Elastic Map Reduce
+* Ironic = Bare-Metal Provisioning
+* Zaqar = Messaging Service
+* Manila = Shared Filesystems
+* Designate = DNS Service
+* Barbican = Key Management
+* Magnum = Containers
+* Murano = Application Catalog
+* Congress = Governance
+
+[1]
+
+Source:
+
+1. "Project Navigator." OpenStack. Accessed January 15, 2017. https://www.openstack.org/software/project-navigator/
 
 
 # Installation
@@ -61,7 +89,7 @@ It is possible to easily install OpenStack all-in-one (AIO) server. This provide
 
 ## Installation - PackStack
 
-Supported operating systems: CentOS 7 or RHEL 7
+Supported operating systems: RHEL 7
 
 PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.
 
@@ -103,9 +131,13 @@ Source:
 
 ## Installation - TripleO
 
-Supported operating systems: CentOS 7 or RHEL 7
+Supported operating systems: RHEL 7, Fedora >= 22
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used.
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. The minimum requirement of RAM for the host node is 16GB to run all of the OpenStack services. [1]
+
+Source:
+
+1. "tripleo-quickstart." TripleO Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
 
 
 ### Installation - TripleO - Quick
@@ -223,6 +255,8 @@ The token provider is used to create and delete tokens for authentication. Diffe
 
 #### Scenario #2 - PKI
 
+PKI tokens are deprecated and will be removed in the Ocata release. [3]
+
 * /etc/keystone/keystone.conf
     * [ token ] provider = pki
 * Create the certificates. A new directory "/etc/keystone/ssl/" will be used to store these files.
@@ -248,6 +282,7 @@ Sources:
 
 1. "Configuring Keystone." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html
 2. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
+3. "Newton Series Release Notes." OpenStack Documentation. Accessed January 15, 2016. http://docs.openstack.org/releasenotes/keystone/newton.html
 
 
 ## Configurations - Nova
@@ -536,6 +571,26 @@ Ceph has become the most popular backend to Cinder due to it's high availability
 Source:
 
 1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+
+
+# Upgrades
+
+Upgrading a produciton OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:
+
+* Backup configuration files and databases.
+* Review the release notes of the OpenStack services that will be upgraded. These will contain details of deprecations and new configuration changes. [https://releases.openstack.org/](https://releases.openstack.org/)
+* Update configuration files. Sample configurations can be found at `http://docs.openstack.org/<RELEASE>/config-reference/`.
+* If not already, consider using an automation tool such as Ansible to deploy new service configurations.
+* Remove the old package repository for OpenStack.
+* Add the new package repository for OpenStack.
+* Update all of the packages.
+* Restart the services. `openstack-service restart`
+
+[1]
+
+Source:
+
+1. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
 
 
 # Command Line Interface Utilities

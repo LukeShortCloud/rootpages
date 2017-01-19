@@ -1,12 +1,13 @@
 # Clustering and High Availability
+
 * [Introduction](#introduction)
 * HAProxy
 * [IP Virtual Server](#ip-virtual-server)
 * Nginx
 * Keepalived
-* Monit
 
-## Introduction
+
+# Introduction
 
 Clustering is the concept of using a load balancer to distribute connections to multiple destinations. Three of the most common load balancing methods used in clustering are:
 
@@ -20,10 +21,13 @@ Source:
 
 1. "Nginx Load Balancing." Nginx. Accessed July 9, 2016. https://www.nginx.com/resources/admin-guide/load-balancer/
 
-## IP Virtual Server
+
+# IP Virtual Server
+
 The IP Virtual Server (IPVS) service utilizes the Linux kernel directly for load balancing. It is designed to be a simple load balancer for internal/private networks. [1]
 
 The only prequiste for IPVS is that it requires the Linux system to be configured as a router (masquerading). This is an example of using the internal network 10.0.0.0/24 on the interface eth1 and forward requests to/from the public interface eth0.
+
 ```
 # iptables -F
 # iptables -t nat -F
@@ -53,10 +57,10 @@ IPVS is easily managed via the "ipvsadm" command.
 ```
 # ipvsadm -A -t 192.168.1.10:80 -s rr
 ```
-  * Types of clustering schedulers for "-s":
-    * rr = Round robin.
-    * lc = Least connections.
-    * sh = Source hash (source IP address).
+    * Types of clustering schedulers for "-s":
+        * rr = Round robin.
+        * lc = Least connections.
+        * sh = Source hash (source IP address).
 
 * Add a back-end server (-a), serving TCP connections (-t), using the specified public balancer IP and port, sending requests to the real back-end server's IP address (-r), and masquerade/NAT the requests (-m).
 ```
@@ -80,7 +84,7 @@ IPVS is easily managed via the "ipvsadm" command.
 # ipvsadm {-C|--clear}
 ```
 
-Source:
+Sources:
 
 1. "LVS-mini-HOWTO." Austintek. March, 2012. Accessed July 9, 2016. http://www.austintek.com/LVS/LVS-HOWTO/mini-HOWTO/LVS-mini-HOWTO.html
 2. "Building a Load Balancer with LVS - Linux Virtual Server." Linux Admins. January, 2013. Accessed July 9, 2016. http://www.linux-admins.net/2013/01/building-load-balancer-with-lvs-linux.html

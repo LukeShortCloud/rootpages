@@ -5,9 +5,8 @@
 <li><a href="#ip-virtual-server">IP Virtual Server</a></li>
 <li>Nginx</li>
 <li>Keepalived</li>
-<li>Monit</li>
 </ul>
-<h2 id="introduction">Introduction</h2>
+<h1 id="introduction">Introduction</h1>
 <p>Clustering is the concept of using a load balancer to distribute connections to multiple destinations. Three of the most common load balancing methods used in clustering are:</p>
 <ul>
 <li>Round robin = Send each request to the next server in the pool.</li>
@@ -19,7 +18,7 @@
 <ol style="list-style-type: decimal">
 <li>&quot;Nginx Load Balancing.&quot; Nginx. Accessed July 9, 2016. https://www.nginx.com/resources/admin-guide/load-balancer/</li>
 </ol>
-<h2 id="ip-virtual-server">IP Virtual Server</h2>
+<h1 id="ip-virtual-server">IP Virtual Server</h1>
 <p>The IP Virtual Server (IPVS) service utilizes the Linux kernel directly for load balancing. It is designed to be a simple load balancer for internal/private networks. [1]</p>
 <p>The only prequiste for IPVS is that it requires the Linux system to be configured as a router (masquerading). This is an example of using the internal network 10.0.0.0/24 on the interface eth1 and forward requests to/from the public interface eth0.</p>
 <pre><code># iptables -F
@@ -37,12 +36,14 @@
 <pre><code># ipvsadm -l -n --stats</code></pre></li>
 <li><p>Define the public IP address of the IPVS server (ex., 192.168.1.10), port (ex., :80 for HTTP), and then the type of load balancing (ex., &quot;rr&quot;).</p>
 <pre><code># ipvsadm -A -t &lt;BALANCERIP&gt;:&lt;PORT&gt; -s &lt;SCHEDULER&gt;</code></pre>
-<pre><code># ipvsadm -A -t 192.168.1.10:80 -s rr</code></pre></li>
+<pre><code># ipvsadm -A -t 192.168.1.10:80 -s rr</code></pre>
+<ul>
 <li>Types of clustering schedulers for &quot;-s&quot;:
 <ul>
 <li>rr = Round robin.</li>
 <li>lc = Least connections.</li>
 <li>sh = Source hash (source IP address).</li>
+</ul></li>
 </ul></li>
 <li><p>Add a back-end server (-a), serving TCP connections (-t), using the specified public balancer IP and port, sending requests to the real back-end server's IP address (-r), and masquerade/NAT the requests (-m).</p>
 <pre><code># ipvsadm -a -t &lt;BALANCERIP&gt;:&lt;PORT&gt; -r &lt;DESTINATIONIP&gt; -m</code></pre>
@@ -54,7 +55,7 @@
 <li><p>The entire configuraiton can be cleared at any time. [1]</p>
 <pre><code># ipvsadm {-C|--clear}</code></pre></li>
 </ul>
-<p>Source:</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;LVS-mini-HOWTO.&quot; Austintek. March, 2012. Accessed July 9, 2016. http://www.austintek.com/LVS/LVS-HOWTO/mini-HOWTO/LVS-mini-HOWTO.html</li>
 <li>&quot;Building a Load Balancer with LVS - Linux Virtual Server.&quot; Linux Admins. January, 2013. Accessed July 9, 2016. http://www.linux-admins.net/2013/01/building-load-balancer-with-lvs-linux.html</li>
