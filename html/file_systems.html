@@ -143,8 +143,21 @@
 <li>&quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</li>
 </ol>
 <h2 id="types---btrfs">Types - BtrFS</h2>
-<p>BtrFS stands for the &quot;B-tree file system.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
-<p>Common mount options: * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it. * compress = File system compression can be used. Valid options are: * zlib = Higher compression * lzo = Faster file system performance * no = Disable compression (default) * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost. * subvol = Mount a subvolume contained inside a BtrFS file system. * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support. * discard = Enables TRIM support. [2]</p>
+<p>BtrFS stands for the &quot;B-tree file system.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
+<p>Common mount options:</p>
+<ul>
+<li>autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.</li>
+<li>compress = File system compression can be used. Valid options are:
+<ul>
+<li>zlib = Higher compression</li>
+<li>lzo = Faster file system performance</li>
+<li>no = Disable compression (default)</li>
+</ul></li>
+<li>notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost.</li>
+<li>subvol = Mount a subvolume contained inside a BtrFS file system.</li>
+<li>ssd = Enables various solid state drive optimizations. This does not turn on TRIM support.</li>
+<li>discard = Enables TRIM support. [2]</li>
+</ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;What’s All This I Hear About Btrfs For Linux.&quot; The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</li>
@@ -233,7 +246,7 @@
 <td>0</td>
 <td>2</td>
 <td>I/O operations are equally spread to each disk.</td>
-<td>No redudnacy.</td>
+<td>No redundancy.</td>
 <td>X</td>
 <td>X</td>
 <td></td>
@@ -268,7 +281,7 @@
 <tr class="odd">
 <td>10</td>
 <td>4</td>
-<td>Speed, space, and redudnacy. This uses both RAID 1 and 0.</td>
+<td>Speed, space, and redundancy. This uses both RAID 1 and 0.</td>
 <td>Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime.</td>
 <td>X</td>
 <td>X</td>
@@ -290,7 +303,7 @@
 <p>Then to automatically create the partition layout file run this:</p>
 <pre><code># echo &#39;DEVICE partitions&#39; &gt; /etc/mdadm.conf
 # mdadm --detail --scan &gt;&gt; /etc/mdadm.conf</code></pre>
-<p>Finally, you can initalize the RAID.</p>
+<p>Finally, you can initialize the RAID.</p>
 <pre><code># mdadm --assemble --scan</code></pre>
 <p>[1]</p>
 <p>Source:</p>
@@ -331,10 +344,34 @@
 <li>&quot;NFS SERVER CONFIGURATION.&quot; Red Hat Documentation. Accessed September 19, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html</li>
 </ol>
 <h2 id="network---smb">Network - SMB</h2>
-<p>The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventualy replaced with newer versions of SMB. On Linux, the &quot;Samba&quot; service is typically used for setting up SMB share. [1]</p>
-<p>SMB Ports: * 137 UDP * 138 UDP * 139 TCP * 445 TCP</p>
-<p>Configuration - Global: * [global] * workgroup = Define a WORKGROUP name. * interfaces = Specify the interfaces to listen on. * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, &quot;127.&quot; would be a wildcard for anything in the 127.0.0.0/8 range.</p>
-<p>Configuration - Share: * [smb] = The share can be named anything. * path = The path to the directory to share (required). * writable = Use &quot;yes&quot; or &quot;no.&quot; This specifies if the folder share is wirtable. * read only = Use &quot;yes&quot; or &quot;no.&quot; This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions. * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a &quot;+&quot; to the front of the name. * comment = Place a comment about the share. [2]</p>
+<p>The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventually replaced with newer versions of SMB. On Linux, the &quot;Samba&quot; service is typically used for setting up SMB share. [1]</p>
+<p>SMB Ports:</p>
+<ul>
+<li>137 UDP</li>
+<li>138 UDP</li>
+<li>139 TCP</li>
+<li>445 TCP</li>
+</ul>
+<p>Configuration - Global:</p>
+<ul>
+<li>[global]
+<ul>
+<li>workgroup = Define a WORKGROUP name.</li>
+<li>interfaces = Specify the interfaces to listen on.</li>
+<li>hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octects. For example, &quot;127.&quot; would be a wildcard for anything in the 127.0.0.0/8 range.</li>
+</ul></li>
+</ul>
+<p>Configuration - Share:</p>
+<ul>
+<li>[smb] = The share can be named anything.
+<ul>
+<li>path = The path to the directory to share (required).</li>
+<li>writable = Use &quot;yes&quot; or &quot;no.&quot; This specifies if the folder share is writable.</li>
+<li>read only = Use &quot;yes&quot; or &quot;no.&quot; This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions.</li>
+<li>write list = Specify users that can write to the share, separated by spaces. Groups can also be specified using by appending a &quot;+&quot; to the front of the name.</li>
+<li>comment = Place a comment about the share. [2]</li>
+</ul></li>
+</ul>
 <p>Verify the Samba configuration.</p>
 <pre><code># testparm
 # smbclient //localhost/&lt;SHARE_NAME&gt; -U &lt;SMB_USER1&gt;%&lt;SMB_USER1_PASS&gt;</code></pre>
@@ -351,7 +388,7 @@
 <li>&quot;RHEL7: Provide SMB network shares to specific clients.&quot; CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/</li>
 </ol>
 <h2 id="network---iscsi">Network - iSCSI</h2>
-<p>The &quot;Inernet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
+<p>The &quot;Internet Small Computer Systems Interface&quot; (also known as &quot;Internet SCSI&quot; or simply &quot;iSCSI&quot;) is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.</p>
 <h3 id="network---iscsi-target">Network - iSCSI Target</h3>
 <p>For setting up a target storage, these are the general steps to follow in order:</p>
 <ul>
@@ -471,7 +508,7 @@ InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
 <li>Ceph Monitors (MONs) = Store and provide a map of data locations.</li>
 <li>Ceph Metadata Server (MDS) = Provides metadata about file system hierarchy for CephFS. This is not required for RBD or RGW.</li>
 <li>Ceph File System (CephFS) = A POSIX-compliant distributed file system with unlimited size.</li>
-<li>Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithim to provide metadata about an object's location.</li>
+<li>Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithm to provide metadata about an object's location.</li>
 <li>Placement Groups (PGs) = Object storage data.</li>
 </ul>
 <p>Ceph monitor nodes have a master copy of a cluster map. This contains 5 separate maps that have information about data location and the cluster's status. If an OSD fails, the monitor daemon will automatically reorganize everything and provided end-user's with an updated cluster map.</p>
@@ -526,7 +563,7 @@ PGs = 1024</code></pre>
 <p>Ceph Requirements:</p>
 <ul>
 <li>Fast CPU for OSD and metadata nodes.</li>
-<li>1GB RAM per 1TB of Ceph OSD storage.</li>
+<li>1GB RAM per 1TB of Ceph OSD storage, per OSD daemon.</li>
 <li>1GB RAM per monitor daemon.</li>
 <li>1GB RAM per metadata daemon.</li>
 <li>An odd number of nodes (starting at least 3 for high availability and quorum). [1]</li>
@@ -536,7 +573,7 @@ PGs = 1024</code></pre>
 <li>&quot;INTRO TO CEPH.&quot; Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/jewel/start/intro/</li>
 </ol>
 <h4 id="network---ceph---installation---quick">Network - Ceph - Installation - Quick</h4>
-<p>This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be seperated from the OSD storage nodes.</p>
+<p>This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be separated from the OSD storage nodes.</p>
 <ul>
 <li><p>Create a new Ceph cluster group, by default called &quot;ceph.&quot;</p>
 <pre><code># ceph-deploy new &lt;SERVER1&gt;</code></pre></li>
@@ -609,7 +646,7 @@ ceph_osd_03</code></pre>
 <li>ceph_stable = Boolean value. Use a stable release of Ceph.</li>
 <li>ceph_stable_release = The release name to use. The LTS &quot;jewel&quot; release is recommended.</li>
 </ul></li>
-<li>distro = Use repostories already present on the system. ceph-ansible will not install Ceph repositories with this method, they must already be installed.</li>
+<li>distro = Use repositories already present on the system. ceph-ansible will not install Ceph repositories with this method, they must already be installed.</li>
 </ul></li>
 <li>ceph_release_num = If &quot;ceph_stable&quot; is not defined, use any specific major release number.
 <ul>
@@ -658,7 +695,7 @@ ceph_osd_03</code></pre>
 <li>&quot;ceph-ansible Wiki.&quot; ceph-ansible GitHub. February 29, 2016. Accessed January 15, 2017. https://github.com/ceph/ceph-ansible/wiki</li>
 </ol>
 <h3 id="network---ceph---repair">Network - Ceph - Repair</h3>
-<p>Ceph automatically runs through a data integrity check called &quot;scrubbing.&quot; This checks the health of each placement group (object). Sometimes these can fail due to incosistencies, commonly a mismatch in time on the OSD servers.</p>
+<p>Ceph automatically runs through a data integrity check called &quot;scrubbing.&quot; This checks the health of each placement group (object). Sometimes these can fail due to inconsistencies, commonly a mismatch in time on the OSD servers.</p>
 <p>In this example, the placement group &quot;1.28&quot; failed to be scrubbed. This object exists on the 8, 11, and 20 OSD drives.</p>
 <ul>
 <li>Check the health information.
@@ -732,7 +769,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 <li>&quot;Ceph: manually repair object.&quot; April 27, 2015. Accessed January 15, 2017. http://ceph.com/planet/ceph-manually-repair-object/</li>
 </ol>
 <h3 id="network---ceph---cephfs">Network - Ceph - CephFS</h3>
-<p>CephFS has been stable since the Ceph Jewel 10.2.0 release. This also now includes repair utilities, including fsck. For clients, it is recommended to use a Linux kernel in the 4 series, or newer, to have the latest features and bug fixes for the file system. [1]</p>
+<p>CephFS has been stable since the Ceph Jewel 10.2.0 release. This now includes repair utilities, including fsck. For clients, it is recommended to use a Linux kernel in the 4 series, or newer, to have the latest features and bug fixes for the file system. [1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;USING CEPHFS.&quot; Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/</li>

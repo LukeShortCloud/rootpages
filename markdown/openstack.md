@@ -96,7 +96,7 @@ PackStack provides a simple all-in-one development. This is not meant for produc
 ```
 # yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
 # yum install packstack
-# packstack --gen-answer-file <FLIE>
+# packstack --gen-answer-file <FILE>
 # packstack --answer-file <FILE>
 ```
 
@@ -299,7 +299,7 @@ Sources:
 
 ### Configurations - Nova - Hypervisors
 
-Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. [1]
+Nova supports a wide range of virtualization technologies. Full hardware virtualization, paravirtualization, or containers can be used. Even Windows' Hyper-V is supported. [1]
 
 
 #### Scenario #1 - KVM
@@ -449,7 +449,7 @@ Source:
 
 The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with "cloud-init" on the instance to configure SSH keys and other post-boot tasks.
 
-Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/recieving requests.
+Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/receiving requests.
 
 * /etc/neutron/metadata_agent.ini
     * [ DEFAULT ] nova_metadata_ip = CONTROLLER_IP
@@ -530,7 +530,7 @@ The Quality of Service (QoS) plugin can be used to rate limit the amount of band
         * Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.
 * /etc/neutron/plugins/ml2/ml2_conf.ini
     * [agent] extensions = qos
-        * Lastly, append the QoS extension to the moduler layer 2 configuration.
+        * Lastly, append the QoS extension to the modular layer 2 configuration.
 
 [1]
 
@@ -575,7 +575,7 @@ Source:
 
 # Upgrades
 
-Upgrading a produciton OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:
+Upgrading a production OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:
 
 * Backup configuration files and databases.
 * Review the release notes of the OpenStack services that will be upgraded. These will contain details of deprecations and new configuration changes. [https://releases.openstack.org/](https://releases.openstack.org/)
@@ -595,9 +595,9 @@ Source:
 
 # Command Line Interface Utilities
 
-The OpenStack CLI resources used to be handled by seperate commands. These have all been modified and are managed by the universal "openstack" command. The various options and arguments are explained in Root Pages' OpenStack section [Linux Commands excel sheet](https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx).
+The OpenStack CLI resources used to be handled by separate commands. These have all been modified and are managed by the universal "openstack" command. The various options and arguments are explained in Root Pages' OpenStack section [Linux Commands excel sheet](https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx).
 
-For the CLI utilies to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.
+For the CLI utilities to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.
 
 * Add the credentials to a text file This is generally ends with the ".sh" extension to signify it's a shell file. A few default variables are filled in below.
   * Keystone v2.0
@@ -789,7 +789,7 @@ Source:
 Parameters allow users to input custom variables for Heat templates.
 
 Options:
-* type = The input type. This can be a string, number, JSON, a comma seperated list or a boolean.
+* type = The input type. This can be a string, number, JSON, a comma separated list or a boolean.
 * label = String. The text presented to the end-user for the fillable entry.
 * description = String. Detailed information about the parameter.
 * default = A default value for the parameter.
@@ -878,7 +878,7 @@ Source:
 
 Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. This software is a rolling release aimed towards verifying the latest OpenStack release in development but it should also work for older versions as well.
 
-The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources:
+The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources:
 * http://docs.openstack.org/developer/tempest/sampleconf.html
 * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample
 
@@ -955,4 +955,4 @@ A few general tips for getting the fastest OpenStack performance.
   * Utilize /etc/hosts.
     * Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
   * Use memcache.
-    * This is generally configured by an option called "memcache_servers" in the configuration files for most services. Consider using "CouchBase" for its ease of clustering and redudancy support.
+    * This is generally configured by an option called "memcache_servers" in the configuration files for most services. Consider using "CouchBase" for its ease of clustering and redundancy support.

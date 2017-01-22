@@ -103,7 +103,7 @@
 <p>PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.</p>
 <pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
 # yum install packstack
-# packstack --gen-answer-file &lt;FLIE&gt;
+# packstack --gen-answer-file &lt;FILE&gt;
 # packstack --answer-file &lt;FILE&gt;</code></pre>
 <p>[1]</p>
 <p>Source:</p>
@@ -255,7 +255,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 </ul></li>
 </ul>
 <h3 id="configurations---nova---hypervisors">Configurations - Nova - Hypervisors</h3>
-<p>Nova supports a wide range of virtualization technologies. Full hardware virtulization, paravirutlization, or containers can be used. Even Windows' Hyper-V is supported. [1]</p>
+<p>Nova supports a wide range of virtualization technologies. Full hardware virtualization, paravirtualization, or containers can be used. Even Windows' Hyper-V is supported. [1]</p>
 <h4 id="scenario-1---kvm">Scenario #1 - KVM</h4>
 <ul>
 <li>/etc/nova/nova.conf
@@ -370,7 +370,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 </ol>
 <h3 id="configurations---neutron---metadata">Configurations - Neutron - Metadata</h3>
 <p>The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with &quot;cloud-init&quot; on the instance to configure SSH keys and other post-boot tasks.</p>
-<p>Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/recieving requests.</p>
+<p>Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/receiving requests.</p>
 <ul>
 <li>/etc/neutron/metadata_agent.ini
 <ul>
@@ -485,7 +485,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <ul>
 <li>[agent] extensions = qos
 <ul>
-<li>Lastly, append the QoS extension to the moduler layer 2 configuration.</li>
+<li>Lastly, append the QoS extension to the modular layer 2 configuration.</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -532,7 +532,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <li>&quot;BLOCK DEVICES AND OPENSTACK.&quot; Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack</li>
 </ol>
 <h1 id="upgrades">Upgrades</h1>
-<p>Upgrading a produciton OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:</p>
+<p>Upgrading a production OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:</p>
 <ul>
 <li>Backup configuration files and databases.</li>
 <li>Review the release notes of the OpenStack services that will be upgraded. These will contain details of deprecations and new configuration changes. <a href="https://releases.openstack.org/" class="uri">https://releases.openstack.org/</a></li>
@@ -549,8 +549,8 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <li>&quot;Upgrades.&quot; OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html</li>
 </ol>
 <h1 id="command-line-interface-utilities">Command Line Interface Utilities</h1>
-<p>The OpenStack CLI resources used to be handled by seperate commands. These have all been modified and are managed by the universal &quot;openstack&quot; command. The various options and arguments are explained in Root Pages' OpenStack section <a href="https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx">Linux Commands excel sheet</a>.</p>
-<p>For the CLI utilies to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.</p>
+<p>The OpenStack CLI resources used to be handled by separate commands. These have all been modified and are managed by the universal &quot;openstack&quot; command. The various options and arguments are explained in Root Pages' OpenStack section <a href="https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx">Linux Commands excel sheet</a>.</p>
+<p>For the CLI utilities to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.</p>
 <ul>
 <li>Add the credentials to a text file This is generally ends with the &quot;.sh&quot; extension to signify it's a shell file. A few default variables are filled in below.</li>
 <li><p>Keystone v2.0</p>
@@ -684,7 +684,7 @@ properties:
 </ol>
 <h2 id="automation---heat---parameters">Automation - Heat - Parameters</h2>
 <p>Parameters allow users to input custom variables for Heat templates.</p>
-<p>Options: * type = The input type. This can be a string, number, JSON, a comma seperated list or a boolean. * label = String. The text presented to the end-user for the fillable entry. * description = String. Detailed information about the parameter. * default = A default value for the parameter. * constraints = A parameter has to match a specified constrant. Any number of constraints can be used from the available ones below. * length = How long a string can be. * range = How big a number can be. * allowed_values = Allow only one of these specific values to be used. * allowed_pattern = Allow only a value matching a regular expression. * custom_constraint = A full list of custom service constraints can be found at <a href="#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint">http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint</a>. * hidden = Boolean. Specify if the text entered should be hidden or not. Default: false. * immutable = Boolean. Specify whether this variable can be changed. Default: false.</p>
+<p>Options: * type = The input type. This can be a string, number, JSON, a comma separated list or a boolean. * label = String. The text presented to the end-user for the fillable entry. * description = String. Detailed information about the parameter. * default = A default value for the parameter. * constraints = A parameter has to match a specified constrant. Any number of constraints can be used from the available ones below. * length = How long a string can be. * range = How big a number can be. * allowed_values = Allow only one of these specific values to be used. * allowed_pattern = Allow only a value matching a regular expression. * custom_constraint = A full list of custom service constraints can be found at <a href="#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint">http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint</a>. * hidden = Boolean. Specify if the text entered should be hidden or not. Default: false. * immutable = Boolean. Specify whether this variable can be changed. Default: false.</p>
 <p>Syntax:</p>
 <pre><code>parameters:
     &lt;CUSTOM_NAME&gt;:
@@ -738,7 +738,7 @@ end</code></pre>
 <h1 id="testing">Testing</h1>
 <h2 id="testing---tempest">Testing - Tempest</h2>
 <p>Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. This software is a rolling release aimed towards verifying the latest OpenStack release in development but it should also work for older versions as well.</p>
-<p>The sample configuration flie &quot;/etc/tempest/tempest.conf.sample&quot; should be copied to &quot;/etc/tempest/tempest.conf&quot; and then modified. If it is not available then the latest configuration file can be downloaded from one of thes sources: * http://docs.openstack.org/developer/tempest/sampleconf.html * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample</p>
+<p>The sample configuration flie &quot;/etc/tempest/tempest.conf.sample&quot; should be copied to &quot;/etc/tempest/tempest.conf&quot; and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources: * http://docs.openstack.org/developer/tempest/sampleconf.html * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample</p>
 <ul>
 <li><p>Provide credentials to a user with the &quot;admin&quot; role.</p>
 <pre><code>[auth]
@@ -799,6 +799,6 @@ ironic = false</code></pre></li>
 </ul></li>
 <li>Use memcache.
 <ul>
-<li>This is generally configured by an option called &quot;memcache_servers&quot; in the configuration files for most services. Consider using &quot;CouchBase&quot; for its ease of clustering and redudancy support.</li>
+<li>This is generally configured by an option called &quot;memcache_servers&quot; in the configuration files for most services. Consider using &quot;CouchBase&quot; for its ease of clustering and redundancy support.</li>
 </ul></li>
 </ul>

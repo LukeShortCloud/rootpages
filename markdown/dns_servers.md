@@ -1,4 +1,5 @@
 # DNS
+
 * [Introduction to DNS](#introduction-to-dns)
 * BIND
 * Dnsmasq
@@ -8,20 +9,27 @@
 * Unbound
 
 ## Introduction to DNS
+
 Domain Name Servers (DNS) provide friendly domain names that are generally associated with an IP address or a string of text. There are two types of DNS servers:
-* Authoritative = Serves it's own DNS records. Generally most authorative servers will rely on a recursive component to provide missing DNS records.
+
+* Authoritative = Serves it's own DNS records. Generally most authoritative servers will rely on a recursive component to provide missing DNS records.
 * Recursive = Queries an external DNS server for records. These are usually then cached for a certain period of time.
 
 It is important to note that every DNS record has to be associated with a state of authority (SOA) record. This provides the primary nameserver/resolver along with time to live (TTL) related information.
 
+
 ## PowerDNS
+
 The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authorative server. [1] A few of the most popular backends are "bind" (BIND) due to it's large usage in the Linux community and "gmysql" (MySQL) due to it's scalability.
 
 This is the SOA format that pdns uses. At the bare minimum, the nameserver and email should be defined. [3]
 ```
 nameserver email serial refresh retry expire ttl
 ```
-* nameserver = The DNS server that should host the zone information. This value should normally mirror one of the NS records used for the zone (if appliacble).
+
+SOA options:
+
+* nameserver = The DNS server that should host the zone information. This value should normally mirror one of the NS records used for the zone (if applicable).
 * email = The administrator's e-mail.
 * serial = 0 for automatic serial creation (default). Not all backends support automatic serials, such as bind. gmysql supports it. If using automatic serial numbers, place the number here. If any records are updated, the serial should also be updated.
 * refresh = When DNS servers should check for DNS updates (in seconds).
@@ -30,9 +38,12 @@ nameserver email serial refresh retry expire ttl
 * ttl = How long (in seconds) a record is allowed to be cached by another DNS server. [5]
 
 ### PowerDNS - PowerAdmin
+
 PowerAdmin is the graphic control panel that can be installed and accessed via a web browser.
 
+
 ### PowerDNS - gmysql
+
 The generic MySQL backend (gmysql) was created to allow any MySQL server store and serve records. [2] This is not to be confused with using the MyDNS backend. [1]
 
 This is the recommend InnoDB table schema to use. [2]
@@ -150,6 +161,7 @@ VALUES (1, 'www.test.tld', '192.168.0.10', 'A', 3600);
 ```
 
 For records tables, the most important colums are:
+
 * name = The domain name that will correspond to a record. This record should never end with a "."
 * type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV, PTR, etc.
 * content = What the name should resolve to when queried.
@@ -161,6 +173,7 @@ PTR records require that the IP address be defined int he nibble format. This sp
 ```
 
 Here is an example of converting addresses to nibble.
+
 * IPv4 address = 192.168.0.10
 * IPv4 nibble address = 10.0.168.192.in-addr.arpa.
 * IPv6 address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)

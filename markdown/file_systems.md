@@ -56,9 +56,10 @@ Sources:
 
 ## Types - BtrFS
 
-BtrFS stands for the "B-tree file system." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficent file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
+BtrFS stands for the "B-tree file system." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
 
 Common mount options:
+
 * autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.
 * compress = File system compression can be used. Valid options are:
     * zlib = Higher compression
@@ -136,11 +137,11 @@ RAID officially stands for "Redundant Array of Independent Disks." The idea of a
 
 | Level | Minimum Drives | Benefits | Fallbacks | Speed | More Storage | Redudancy | Minimum Drive Failure Tolerance
 | ----- | -------------- | ------- | --------- | ----- | ------------ | --------- |
-| 0 | 2 | I/O operations are equally spread to each disk. | No redudnacy. | X | X | | 0 |
+| 0 | 2 | I/O operations are equally spread to each disk. | No redundancy. | X | X | | 0 |
 | 1 | 2 | If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds. | | | X | 1 |
 | 5 | 3 | ====This can recover from a failed drive without any affect on performance. | Drive recovery takes a long time and will not work if more than one drive fails. Rebuilding/restoring a RAID 5 takes a long time. | X | X | X | 1 |
 | 6 | 4 | This is an enhanced RAID 5 that can survive up to 2 drive failures. | Refer to the RAID 5 fallbacks. | X | X | X | 2 |
-| 10 | 4 | Speed, space, and redudnacy. This uses both RAID 1 and 0. | Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime. | X | X | X | 2 |
+| 10 | 4 | Speed, space, and redundancy. This uses both RAID 1 and 0. | Requires more physical drives. Rebuilding/restoring a RAID 10 will require some downtime. | X | X | X | 2 |
 
 [1]
 
@@ -169,7 +170,7 @@ Then to automatically create the partition layout file run this:
 # mdadm --detail --scan >> /etc/mdadm.conf
 ```
 
-Finally, you can initalize the RAID.
+Finally, you can initialize the RAID.
 ```
 # mdadm --assemble --scan
 ```
@@ -232,27 +233,30 @@ Source:
 
 ## Network - SMB
 
-The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventualy replaced with newer versions of SMB. On Linux, the "Samba" service is typically used for setting up SMB share. [1]
+The Server Message Block (SMB) protocol was created to view and edit files remotely over a network. The Common Internet File System (CIFS) was created by Microsoft as an enhanced fork of SMB but was eventually replaced with newer versions of SMB. On Linux, the "Samba" service is typically used for setting up SMB share. [1]
 
 SMB Ports:
+
 * 137 UDP
 * 138 UDP
 * 139 TCP
 * 445 TCP
 
 Configuration - Global:
+
 * [global]
     * workgroup = Define a WORKGROUP name.
     * interfaces = Specify the interfaces to listen on.
-    * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by obmitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
+    * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
 
 
 Configuration - Share:
+
 * [smb] = The share can be named anything.
     * path = The path to the directory to share (required).
-    * writable = Use "yes" or "no." This specifies if the folder share is wirtable.
+    * writable = Use "yes" or "no." This specifies if the folder share is writable.
     * read only = Use "yes" or "no." This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions.
-    * write list = Specify users that can write to the share, seperated by spaces. Groups can also be specified using by appending a "+" to the front of the name.
+    * write list = Specify users that can write to the share, separated by spaces. Groups can also be specified using by appending a "+" to the front of the name.
     * comment = Place a comment about the share. [2]
 
 Verify the Samba configuration.
@@ -283,7 +287,7 @@ Sources:
 
 ## Network - iSCSI
 
-The "Inernet Small Computer Systems Interface" (also known as "Internet SCSI" or simply "iSCSI") is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.
+The "Internet Small Computer Systems Interface" (also known as "Internet SCSI" or simply "iSCSI") is used to allocate block storage to servers over a network. It relies on two components: the target (server) and the initiator (client). The target must first be configured to allow the client to attach the storage device.
 
 
 ### Network - iSCSI Target
@@ -457,7 +461,7 @@ Vocabulary:
 * Ceph Monitors (MONs) = Store and provide a map of data locations.
 * Ceph Metadata Server (MDS) = Provides metadata about file system hierarchy for CephFS. This is not required for RBD or RGW.
 * Ceph File System (CephFS) = A POSIX-compliant distributed file system with unlimited size.
-* Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithim to provide metadata about an object's location.
+* Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithm to provide metadata about an object's location.
 * Placement Groups (PGs) = Object storage data.
 
 Ceph monitor nodes have a master copy of a cluster map. This contains 5 separate maps that have information about data location and the cluster's status. If an OSD fails, the monitor daemon will automatically reorganize everything and provided end-user's with an updated cluster map.
@@ -517,7 +521,7 @@ Sources:
 Ceph Requirements:
 
 * Fast CPU for OSD and metadata nodes.
-* 1GB RAM per 1TB of Ceph OSD storage.
+* 1GB RAM per 1TB of Ceph OSD storage, per OSD daemon.
 * 1GB RAM per monitor daemon.
 * 1GB RAM per metadata daemon.
 * An odd number of nodes (starting at least 3 for high availability and quorum).
@@ -530,7 +534,7 @@ Source:
 
 #### Network - Ceph - Installation - Quick
 
-This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be seperated from the OSD storage nodes.
+This example demonstrates how to deploy a 3 node Ceph cluster with both the monitor and OSD services. In production, monitor servers should be separated from the OSD storage nodes.
 
 * Create a new Ceph cluster group, by default called "ceph."
 ```
@@ -637,7 +641,7 @@ Common variables:
             * ceph_dev_branch = The exact branch or commit of Ceph from GitHub to use.
             * ceph_stable = Boolean value. Use a stable release of Ceph.
             * ceph_stable_release = The release name to use. The LTS "jewel" release is recommended.
-        * distro = Use repostories already present on the system. ceph-ansible will not install Ceph repositories with this method, they must already be installed.
+        * distro = Use repositories already present on the system. ceph-ansible will not install Ceph repositories with this method, they must already be installed.
     * ceph_release_num = If "ceph_stable" is not defined, use any specific major release number.
         * 9 = infernalis
         * 10 = jewel
@@ -676,7 +680,7 @@ Source:
 
 ### Network - Ceph - Repair
 
-Ceph automatically runs through a data integrity check called "scrubbing." This checks the health of each placement group (object). Sometimes these can fail due to incosistencies, commonly a mismatch in time on the OSD servers.
+Ceph automatically runs through a data integrity check called "scrubbing." This checks the health of each placement group (object). Sometimes these can fail due to inconsistencies, commonly a mismatch in time on the OSD servers.
 
 In this example, the placement group "1.28" failed to be scrubbed. This object exists on the 8, 11, and 20 OSD drives.
 
@@ -694,6 +698,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # ceph pg repar <PLACEMENT_GROUP>
 ```
+
     * Example:
 ```
 # ceph pg repair 1.28
@@ -704,6 +709,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # grep ERR /var/log/ceph/ceph-osd.<OSD_NUMBER>.log
 ```
+
     * Example:
 ```
 # grep ERR /var/log/ceph/ceph-osd.11.log
@@ -715,6 +721,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # find /var/lib/ceph/osd/ceph-<OSD_NUMBER>/current/<PLACEMENT_GROUP>_head/ -name '*<OBJECT_ID>*' -ls
 ```
+
     * Example:
 ```
 # find /var/lib/ceph/osd/ceph-11/current/1.28_head/ -name "*a1e002238e1f29.000000000000136d*"
@@ -726,6 +733,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # systemctl stop ceph-osd@<OSD_NUMBER>.service
 ```
+
     * Example:
 ```
 # systemctl stop ceph-osd@11.service
@@ -736,6 +744,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # ceph-osd -i <OSD_NUMBER> --flush-journal
 ```
+
     * Example:
 ```
 # ceph-osd -i 11 --flush-journal
@@ -752,6 +761,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # systemctl restart ceph-osd@<OSD_NUMBER>.service
 ```
+
     * Example:
 ```
 # systemctl restart ceph-osd@11.service
@@ -762,6 +772,7 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ```
 # ceph pg repar <PLACEMENT_GROUP>
 ```
+
     * Example:
 ```
 # ceph pg repair 1.28
@@ -776,7 +787,7 @@ Source:
 
 ### Network - Ceph - CephFS
 
-CephFS has been stable since the Ceph Jewel 10.2.0 release. This also now includes repair utilities, including fsck. For clients, it is recommended to use a Linux kernel in the 4 series, or newer, to have the latest features and bug fixes for the file system. [1]
+CephFS has been stable since the Ceph Jewel 10.2.0 release. This now includes repair utilities, including fsck. For clients, it is recommended to use a Linux kernel in the 4 series, or newer, to have the latest features and bug fixes for the file system. [1]
 
 Source:
 

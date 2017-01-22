@@ -24,7 +24,7 @@
 </ul>
 <h1 id="rpm---rhel">RPM - RHEL</h1>
 <h2 id="rpm---adding-a-repository">RPM - Adding a Repository</h2>
-<p>Repositories (someitmes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
+<p>Repositories (sometimes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
 <p>On Red Hat based systems, the repositories are all defined as text files with the &quot;.repo&quot; extension in this directory.</p>
 <pre><code># ls /etc/yum.repos.d/</code></pre>
 <p>Here are some common options for repository files: * [] = This should be the first part of a repository, with the name being inside the brackets. * name = This should be similar to the name from the brackets. However, this friendly name can be different and is usually ignored. * baseurl = The location of the repository. Valid location types include &quot;http://&quot;, &quot;ftp://&quot;, and &quot;file://&quot; for using the local file system. * mirrorlist = Instead of a baseurl, a link to a list of repository mirrors can be given. * enabled = Enable or disable a repository with a &quot;1&quot; or &quot;0&quot;. The default is value is &quot;1&quot;. [1] * gpgcheck = Force a GPG encryption check against signed packages. Enable or disable with a &quot;1&quot; or &quot;0&quot;. * gpgkey = Specify the path to the GPG key.</p>
@@ -115,7 +115,7 @@ URL: http://example.tld/</code></pre>
 <ul>
 <li>build()
 <ul>
-<li><p>For building the software, PKGBUILD will need to move into the directory that the XZ tarball was extracted to. This is automatically generated as the &quot;srcdir&quot; variable. In most situations this should be the package name and version seperated by a dash.</p>
+<li><p>For building the software, PKGBUILD will need to move into the directory that the XZ tarball was extracted to. This is automatically generated as the &quot;srcdir&quot; variable. In most situations this should be the package name and version separated by a dash.</p>
 <pre><code>$ cd &quot;${srcdir}&quot;</code></pre>
 <p>OR</p>
 <pre><code>$ cd &quot;${pkgname}-${pkgver}&quot;</code></pre></li>

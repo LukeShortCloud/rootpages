@@ -20,7 +20,7 @@
 
 ## RPM - Adding a Repository
 
-Repositories (someitmes called "repos") are a central location where packages can easily be found and installed from.
+Repositories (sometimes called "repos") are a central location where packages can easily be found and installed from.
 
 On Red Hat based systems, the repositories are all defined as text files with the ".repo" extension in this directory.
 ```
@@ -163,7 +163,7 @@ Functions
 Required:
 
 * build()
-    * For building the software, PKGBUILD will need to move into the directory that the XZ tarball was extracted to. This is automatically generated as the "srcdir" variable. In most situations this should be the package name and version seperated by a dash.
+    * For building the software, PKGBUILD will need to move into the directory that the XZ tarball was extracted to. This is automatically generated as the "srcdir" variable. In most situations this should be the package name and version separated by a dash.
 ```
 $ cd "${srcdir}"
 ```

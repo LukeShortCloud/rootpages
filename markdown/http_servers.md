@@ -39,7 +39,7 @@ Options:
 
 * ServerRoot = Specify what directory Apache should use as a relative path.
     * Example: ServerRoot "/etc/httpd"
-* Listen = What port (and optionally aaddress) Apache should listen on.
+* Listen = What port (and optionally address) Apache should listen on.
     * Example #1: Listen 127.0.0.1:80
     * Example #2: Listen 443
 * User = The user that Apache should be run as.
@@ -142,7 +142,7 @@ Options:
     * host = Apply the rule to a specific host.
     * ip = Apply the rule to an IP address
         * granted = Allow the matched rule.
-        * denied = Deny th ematched rule.
+        * denied = Deny the matched rule.
 * Require not [all|host|ip] = Deny access to a host or IP. This should be configured after a Require rule. [1]
 * Options = Specify attributes of the matched area. Enable an option with a "+" or disable it with "-". If no sign is present, Apache assumes it should be enabled. If at least one option requires a sign then all of the other options will need a sign.
     * All = Allow of the options.
@@ -178,7 +178,7 @@ Create an Apache user.
 # htpasswd -c /etc/httpd/conf.d/passwd <USER1>
 ```
 
-Another user can be appended to this file by ommitting the "-c" create option.
+Another user can be appended to this file by omitting the "-c" create option.
 ```
 # htpasswd /etc/httpd/conf.d/passwd <USER2>
 ```

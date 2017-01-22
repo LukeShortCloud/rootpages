@@ -58,7 +58,7 @@
 # grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
 <p>If any changes are made to GRUB's settings and/or it's various scripts, run this command to update the changes. [1]</p>
 <pre><code># update-grub</code></pre>
-<p>Common &quot;grub-install&quot; options: * compress = Compress GRUB-related files. Valid options are: * no (default), xz, gz, lzo * --modules = List kernel modules that are required for boot. Depending on the end-user's setup, &quot;lvm&quot;, &quot;raid&quot; (for mdadm), and/or &quot;encrypt&quot; (for LUKS) may be required. * --force = Install despite any warnings. * --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions. * --boot-directory = The directory that the &quot;grub/&quot; folder should exist in. This is typcially &quot;/boot&quot;. [2]</p>
+<p>Common &quot;grub-install&quot; options: * compress = Compress GRUB-related files. Valid options are: * no (default), xz, gz, lzo * --modules = List kernel modules that are required for boot. Depending on the end-user's setup, &quot;lvm&quot;, &quot;raid&quot; (for mdadm), and/or &quot;encrypt&quot; (for LUKS) may be required. * --force = Install despite any warnings. * --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions. * --boot-directory = The directory that the &quot;grub/&quot; folder should exist in. This is typically &quot;/boot&quot;. [2]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;GRUB.&quot; Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB</li>

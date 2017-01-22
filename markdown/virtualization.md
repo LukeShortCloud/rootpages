@@ -19,11 +19,11 @@
 
 # Hardware Virtualization
 
-Hardware virtualization uses specially supported processors to speed up and isolate virtualized environments. Most newer CPUs support this. There is "Intel VT (Virutalization Techonology)" and "AMD SVM (Secure Virtual Machine)" for x86 processors. [1]
+Hardware virtualization uses specially supported processors to speed up and isolate virtualized environments. Most newer CPUs support this. There is "Intel VT (Virtualization Techonology)" and "AMD SVM (Secure Virtual Machine)" for x86 processors. [1]
 
 Intel has three subtypes of virtualization:
 
-* VT-x = Basic hardware virtualization and host seperation support.
+* VT-x = Basic hardware virtualization and host separation support.
 * VT-d = I/O passthrough support.
 * VT-c = Improved network I/O passthrough support.
 
@@ -31,7 +31,7 @@ Intel has three subtypes of virtualization:
 
 AMD has two subtypes of virtualization:
 
-* AMD-V = Basic hardware virtualization and host seperation support.
+* AMD-V = Basic hardware virtualization and host separation support.
 * AMD-Vi = I/O passthrough support.
 
 
@@ -113,7 +113,7 @@ If possible, PCI passthrough provides the best performance as there is no virtua
 ```
 
 
-Raw disk partitions have the greatest speeds with the "virtoio" driver and cache disabled.
+Raw disk partitions have the greatest speeds with the "virtio" driver and cache disabled.
 ```
 # qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
 ```
@@ -195,7 +195,7 @@ Sources:
 
 GPU passthrough is useful for running a Windows virtual machine guest for gaming inside of Linux. It is recommended to have two video cards, one for Linux and one for the guest virtual machine. [1]
 
-Nvidia cards have a detection in the driver to see if the operating system has a hypervisor running. This can lead to a "Code: 43" error in the driver as it false-postively reports none. This affects Nvidia drivers starting with version 337.88. A work-a-round for this is to set a random "vendor_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards. [2]
+Nvidia cards have a detection in the driver to see if the operating system has a hypervisor running. This can lead to a "Code: 43" error in the driver as it false-positively reports none. This affects Nvidia drivers starting with version 337.88. A work-a-round for this is to set a random "vendor_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards. [2]
 
 ```
 # virsh edit <VIRTUAL_MACHINE>
@@ -283,7 +283,7 @@ ExecStart=/usr/bin/docker-current daemon \
           $BLOCK_REGISTRY \
           $INSECURE_REGISTRY
 # systemctl daemon-reload
-# systemclt restart docker
+# systemctl restart docker
 ```
 2. Forward all packets between the Docker link through the physical link.
 ```

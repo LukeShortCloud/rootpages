@@ -100,7 +100,7 @@ port=3306</code></pre>
 <li>slave = Read only.</li>
 <li>master,slave = Read and write.</li>
 </ul></li>
-<li>servers = A comma seperated list of back-end servers.</li>
+<li>servers = A comma separated list of back-end servers.</li>
 <li>user = Specify a MySQL user to connect as.</li>
 <li>passwd = Specify the password for the MySQL user.</li>
 </ul>
@@ -122,7 +122,7 @@ passwd=123456</code></pre>
 <p>[2]</p>
 <p>For replication, a maxscale MySQL user needs &quot;REPLICATION SET&quot; and &quot;SELECT&quot; grants for all databases.</p>
 <pre><code>GRANT REPLICATION SET, SELCT ON *.* TO &#39;maxscale&#39;@&#39;%&#39; IDENTIFIED BY &#39;securepassword123&#39;;</code></pre>
-<p>In a master-slave configuration, at least two servers are required to be running. This is because MaxScale is unsure if other nodes are present and cannot determine if a server is a master or a slave. This will prevent it from working properly and this error will occur for all connections. [3] It is ideal to follow the qorum theory by having 3 servers to support a failed host properly.</p>
+<p>In a master-slave configuration, at least two servers are required to be running. This is because MaxScale is unsure if other nodes are present and cannot determine if a server is a master or a slave. This will prevent it from working properly and this error will occur for all connections. [3] It is ideal to follow the quorum theory by having 3 servers to support a failed host properly.</p>
 <pre><code>ERROR 1045 (28000): failed to create new session</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">

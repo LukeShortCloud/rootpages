@@ -29,17 +29,17 @@
 </ul></li>
 </ul>
 <h1 id="hardware-virtualization">Hardware Virtualization</h1>
-<p>Hardware virtualization uses specially supported processors to speed up and isolate virtualized environments. Most newer CPUs support this. There is &quot;Intel VT (Virutalization Techonology)&quot; and &quot;AMD SVM (Secure Virtual Machine)&quot; for x86 processors. [1]</p>
+<p>Hardware virtualization uses specially supported processors to speed up and isolate virtualized environments. Most newer CPUs support this. There is &quot;Intel VT (Virtualization Techonology)&quot; and &quot;AMD SVM (Secure Virtual Machine)&quot; for x86 processors. [1]</p>
 <p>Intel has three subtypes of virtualization:</p>
 <ul>
-<li>VT-x = Basic hardware virtualization and host seperation support.</li>
+<li>VT-x = Basic hardware virtualization and host separation support.</li>
 <li>VT-d = I/O passthrough support.</li>
 <li>VT-c = Improved network I/O passthrough support.</li>
 </ul>
 <p>[2]</p>
 <p>AMD has two subtypes of virtualization:</p>
 <ul>
-<li>AMD-V = Basic hardware virtualization and host seperation support.</li>
+<li>AMD-V = Basic hardware virtualization and host separation support.</li>
 <li>AMD-Vi = I/O passthrough support.</li>
 </ul>
 <p>Check for Intel or AMD virtualization support:</p>
@@ -82,7 +82,7 @@
     &lt;/interface&gt;</code></pre>
 <p>If possible, PCI passthrough provides the best performance as there is no virtualization overhead.</p>
 <pre><code># qemu -net none -device vfio-pci,host=&lt;PCI_DEVICE_ADDRESS&gt; ...</code></pre>
-<p>Raw disk partitions have the greatest speeds with the &quot;virtoio&quot; driver and cache disabled.</p>
+<p>Raw disk partitions have the greatest speeds with the &quot;virtio&quot; driver and cache disabled.</p>
 <pre><code># qemu -drive file=&lt;PATH_TO_STORAGE_DEVICE&gt;,cache=none,if=virtio ...</code></pre>
 <pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
 &lt;disk type=&#39;...&#39; device=&#39;disk&#39;&gt;
@@ -133,7 +133,7 @@ GRUB_CMDLINE_LINUX=&quot;console=tty0 kvm-amd.nested=1&quot;</code></pre></li>
 </ol>
 <h3 id="hardware-virtualization---kvm---gpu-passthrough">Hardware Virtualization - KVM - GPU Passthrough</h3>
 <p>GPU passthrough is useful for running a Windows virtual machine guest for gaming inside of Linux. It is recommended to have two video cards, one for Linux and one for the guest virtual machine. [1]</p>
-<p>Nvidia cards have a detection in the driver to see if the operating system has a hypervisor running. This can lead to a &quot;Code: 43&quot; error in the driver as it false-postively reports none. This affects Nvidia drivers starting with version 337.88. A work-a-round for this is to set a random &quot;vendor_id&quot; to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards. [2]</p>
+<p>Nvidia cards have a detection in the driver to see if the operating system has a hypervisor running. This can lead to a &quot;Code: 43&quot; error in the driver as it false-positively reports none. This affects Nvidia drivers starting with version 337.88. A work-a-round for this is to set a random &quot;vendor_id&quot; to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards. [2]</p>
 <pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
 &lt;features&gt;
     &lt;hyperv&gt;
@@ -194,7 +194,7 @@ ExecStart=/usr/bin/docker-current daemon \
       $BLOCK_REGISTRY \
       $INSECURE_REGISTRY
 # systemctl daemon-reload
-# systemclt restart docker</code></pre></li>
+# systemctl restart docker</code></pre></li>
 <li><p>Forward all packets between the Docker link through the physical link.</p>
 <pre><code># iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu</code></pre></li>
 </ol>

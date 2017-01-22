@@ -9,14 +9,19 @@
 <li>Unbound</li>
 </ul>
 <h2 id="introduction-to-dns">Introduction to DNS</h2>
-<p>Domain Name Servers (DNS) provide friendly domain names that are generally associated with an IP address or a string of text. There are two types of DNS servers: * Authoritative = Serves it's own DNS records. Generally most authorative servers will rely on a recursive component to provide missing DNS records. * Recursive = Queries an external DNS server for records. These are usually then cached for a certain period of time.</p>
+<p>Domain Name Servers (DNS) provide friendly domain names that are generally associated with an IP address or a string of text. There are two types of DNS servers:</p>
+<ul>
+<li>Authoritative = Serves it's own DNS records. Generally most authoritative servers will rely on a recursive component to provide missing DNS records.</li>
+<li>Recursive = Queries an external DNS server for records. These are usually then cached for a certain period of time.</li>
+</ul>
 <p>It is important to note that every DNS record has to be associated with a state of authority (SOA) record. This provides the primary nameserver/resolver along with time to live (TTL) related information.</p>
 <h2 id="powerdns">PowerDNS</h2>
 <p>The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authorative server. [1] A few of the most popular backends are &quot;bind&quot; (BIND) due to it's large usage in the Linux community and &quot;gmysql&quot; (MySQL) due to it's scalability.</p>
 <p>This is the SOA format that pdns uses. At the bare minimum, the nameserver and email should be defined. [3]</p>
 <pre><code>nameserver email serial refresh retry expire ttl</code></pre>
+<p>SOA options:</p>
 <ul>
-<li>nameserver = The DNS server that should host the zone information. This value should normally mirror one of the NS records used for the zone (if appliacble).</li>
+<li>nameserver = The DNS server that should host the zone information. This value should normally mirror one of the NS records used for the zone (if applicable).</li>
 <li>email = The administrator's e-mail.</li>
 <li>serial = 0 for automatic serial creation (default). Not all backends support automatic serials, such as bind. gmysql supports it. If using automatic serial numbers, place the number here. If any records are updated, the serial should also be updated.</li>
 <li>refresh = When DNS servers should check for DNS updates (in seconds).</li>
@@ -133,12 +138,23 @@ INSERT INTO records (domain_id, name, content, type, ttl)
 VALUES (1, &#39;test.tld&#39;, &#39;dns2.nameserver.tld&#39;, &#39;NS&#39;, 86400);
 INSERT INTO records (domain_id, name, content, type, ttl)
 VALUES (1, &#39;www.test.tld&#39;, &#39;192.168.0.10&#39;, &#39;A&#39;, 3600);</code></pre>
-<p>For records tables, the most important colums are: * name = The domain name that will correspond to a record. This record should never end with a &quot;.&quot; * type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV, PTR, etc. * content = What the name should resolve to when queried.</p>
+<p>For records tables, the most important colums are:</p>
+<ul>
+<li>name = The domain name that will correspond to a record. This record should never end with a &quot;.&quot;</li>
+<li>type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV, PTR, etc.</li>
+<li>content = What the name should resolve to when queried.</li>
+</ul>
 <p>PTR records require that the IP address be defined int he nibble format. This special format is basically the IP address in reverse with special suffixes added to the end. For helping to quickly get the format for long IPv6 addresses, use the &quot;ipv6calc&quot; command or this site <a href="http://rdns6.com/hostRecord" class="uri">http://rdns6.com/hostRecord</a>.</p>
 <pre><code>&lt;NIBBLE_IP4&gt;.in-addr.arpa.
 &lt;NIBBLE_IP6&gt;.ip6.arpa.</code></pre>
-<p>Here is an example of converting addresses to nibble. * IPv4 address = 192.168.0.10 * IPv4 nibble address = 10.0.168.192.in-addr.arpa. * IPv6 address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA) * IPv6 nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa</p>
-<pre><code>$ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA</code></pre>
+<p>Here is an example of converting addresses to nibble.</p>
+<ul>
+<li>IPv4 address = 192.168.0.10</li>
+<li>IPv4 nibble address = 10.0.168.192.in-addr.arpa.</li>
+<li>IPv6 address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)</li>
+<li><p>IPv6 nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa</p>
+<pre><code>$ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA</code></pre></li>
+</ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;PowerDNS.&quot; PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/</li>

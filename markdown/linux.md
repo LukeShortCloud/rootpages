@@ -9,7 +9,7 @@
 
 # Linux
 
-Linux is a kernel designed to be similar to the original Unix kernel, but modern, free and open source. It is built to work on many mondern proccessor aritecthures including the 32-bit and 64-bit versions of i386. This is also used to generally describe the many operating systems that use the Linux kernel. [1]
+Linux is a kernel designed to be similar to the original Unix kernel, but modern, free and open source. It is built to work on many modern processor architectures including the 32-bit and 64-bit versions of i386. This is also used to generally describe the many operating systems that use the Linux kernel. [1]
 
 Source:
 
@@ -24,7 +24,7 @@ The kernel is composed of a large number of modules. These can be found here:
 /lib/modules/<KERNEL_VERSION>/
 ```
 
-View all of the loaded moudles:
+View all of the loaded modules:
 ```
 # lsmod
 ```
@@ -39,7 +39,7 @@ After copying over the necessary *.ko file(s) for custom modules, load
 # depmod <MODULE>
 ```
 
-If there are a large number of new modules, it is possible to make sure all module depdendencies are installed.
+If there are a large number of new modules, it is possible to make sure all module dependencies are installed.
 ```
 # depmod --all
 ```
@@ -49,7 +49,7 @@ Modules can be temporarily loaded:
 # modprobe <MODULE>
 ```
 
-Or permanetly add the module to a file with the extension ".conf" in the modules load directory.
+Or permanently add the module to a file with the extension ".conf" in the modules load directory.
 ```
 /etc/modules-load.d/*.conf
 ```
@@ -79,10 +79,10 @@ Source:
 
 ## Linux - I/O Schedulers
 
-The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be uesd to adjust performance based on the hardware and/or software requirements.
+The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be used to adjust performance based on the hardware and/or software requirements.
 
 * Deadline = Large I/O requests are done in high-priority sectors until smaller I/O requests are about to time out. Then Deadline takes care of the small tasks before continuing with the original large I/O task. This is ideal for heavy read/write applications on a spinning disk drive.
-* Complete Fariness Queueing (CFQ) = All I/O requests are treated equally and are handled in the order that they are recieved. [1]
+* Complete Fairness Queueing (CFQ) = All I/O requests are treated equally and are handled in the order that they are received. [1]
 * NOOP = Only basic merging of read and/or write requests and no rescheduling. This is ideal for virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling. [2] This is also ideal for physical flash based media where the hardware's firmware takes care of the sorting. [1]
 
 Temporarily change the scheduler to one of the three options:
@@ -107,7 +107,7 @@ Sources:
 
 # Initial RAM Filesystem
 
-The initramfs (inital RAM filesystem) is used to boot up a system before loading the full Linux kernel. It is the successor to the initrd (inital RAM disk). A boot loader, such as GRUB, loads the initramfs first. This usually contains a minimum copy of the kernel and drivers required to boot up the system. Once the boot initalization is complete, the initramfs continues to load all of the available kernel modules. [1][2]
+The initramfs (initial RAM filesystem) is used to boot up a system before loading the full Linux kernel. It is the successor to the initrd (initial RAM disk). A boot loader, such as GRUB, loads the initramfs first. This usually contains a minimum copy of the kernel and drivers required to boot up the system. Once the boot initialization is complete, the initramfs continues to load all of the available kernel modules. [1][2]
 
 Sources:
 
@@ -125,7 +125,7 @@ All modifications of the initramfs in Arch Linux are handled by the "mkinitcpio"
 
 * MODULES = A list of kernel modules to compile in.
 * FILES = A list of files that should be included in the initramfs.
-* BINARIES = A list of binaries that should be included to use in the initramfs environment. This is useful for having more recovery utilies. The "mkinitcpio" program will automatically detect the binary's depdencies and add them to the initramfs image.
+* BINARIES = A list of binaries that should be included to use in the initramfs environment. This is useful for having more recovery utilities. The "mkinitcpio" program will automatically detect the binary's dependencies and add them to the initramfs image.
 * HOOKS = Custom hooks for compiling in certain software packages.
     * Common hooks:
         * btrfs = BtrFS RAID.

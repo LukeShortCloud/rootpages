@@ -54,7 +54,7 @@ Configuration options:
   * GossipingPropertyFileSnitch = Cluster based on the datacenter and rack location. Recommended for a multidatacenter cluster.
   * Ec2Snitch = Cluster based on Amazon EC2 regions and compute availability zones.
   * Ec2MultiRegionSnitch = Allows multiple Amazon EC2 regions to be used via public floating IPs.
-  * RackInferringSnitch = Similar to GossipingPropertyFileSnitch except that the datacenter is automatically determined by the 2nd octect of the IP and the rack is determined by the 3rd.
+  * RackInferringSnitch = Similar to GossipingPropertyFileSnitch except that the datacenter is automatically determined by the 2nd octet of the IP and the rack is determined by the 3rd.
   * GoogleCloudSnitch = Cluster based on the Google Cloud Platform's regions and compute availability zones.
   * CloudstackSnitch = Integrate with the Apache Cloudstack.
 * seed_provider = The IP addresses of Cassandra servers in other datacenters to replicate to. At least one node should be a seed provider in every datacenter. Not all nodes should be seed providers due to that leading to performance issues.
@@ -76,9 +76,9 @@ Configuration options:
 * concurrent_materialized_view_writes
   * (Default: 32)
   * (Recommended: Less than the concurrent reads/writes)
-* incremental_backups = Choose whether or not to use incremental backups. When taking snapshots, hardlinks will be used to refer back to old data for efficent backups.
+* incremental_backups = Choose whether or not to use incremental backups. When taking snapshots, hardlinks will be used to refer back to old data for efficient backups.
   * (Default: false)
-* snapshot_before_comptact = Choose whether or not to automatically take backups before running a compaction.
+* snapshot_before_compact = Choose whether or not to automatically take backups before running a compaction.
   * (Default: false)
 
 [3]

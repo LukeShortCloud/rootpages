@@ -70,7 +70,7 @@ Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python
 
 RHEL:
 ```
-# yum installe epel-release
+# yum install epel-release
 # yum install ansible
 ```
 
@@ -137,7 +137,7 @@ dns-ca
 dns-mx
 ```
 
-Variables are created for a host and/or group using the tag ":vars". Then any custom variable can be defined and associated with a string. A host specificially can also have it's variables defined on the same line as it's Ansible inventory variables. A few examples are listed below. These can also be defined in seperate files as explained in [Configuration - Inventory - Variables](#configuration---inventory---variables).
+Variables are created for a host and/or group using the tag ":vars". Then any custom variable can be defined and associated with a string. A host specifically can also have it's variables defined on the same line as it's Ansible inventory variables. A few examples are listed below. These can also be defined in seperate files as explained in [Configuration - Inventory - Variables](#configuration---inventory---variables).
 ```
 examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True
 ```
@@ -199,7 +199,7 @@ In the Playbook and/or template files, these variables can then be referenced wh
 Hello world from {{ domain_name }}!
 ```
 
-Varialbes from other hosts or groups can also be refereneced.
+Varialbes from other hosts or groups can also be referenced.
 
 * Syntax:
 ```
@@ -282,7 +282,7 @@ Does Not Work
     with_items: "{{ ansible_interfaces }}"
 ```
 
-The order that variables take precendence in is listed below. The bottom locations get overriden by anything above them.
+The order that variables take precedence in is listed below. The bottom locations get overriden by anything above them.
 
 * extra vars
 * task vars
@@ -323,7 +323,7 @@ Vault Usage:
 
 * Create a new encrypted file.
 ```
-$ ansible-vault create <FLIE>.yml
+$ ansible-vault create <FILE>.yml
 ```
 
 * Encrypt an existing plaintext file.
@@ -343,7 +343,7 @@ $ ansible-vault edit <FILE>.yml
 
 * Change the password.
 ```
-$ ansible-vault rekey <FLIE>.yml
+$ ansible-vault rekey <FILE>.yml
 ```
 
 * Decrypt to plaintext.
@@ -380,7 +380,7 @@ Playbooks organize tasks into one or more YAML files. It can be a self-contained
 
 ### Playbooks - Directory Structure
 
-A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into seperate files and directories.
+A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into separate files and directories.
 
 Layout:
 ```
@@ -419,11 +419,11 @@ Layout Explained:
 * roles/ = This directory should contain all of the different roles.
     *  general/ = A role name. This can be anything.
         * defaults/ = Define default variables. If any variables are defined elsewhere, these will be overriden.
-            * main.yml = Each main.yml file is executed as the first file. Additional seperation of operations can be split into different files that can be accessed via "include:" statements.
+            * main.yml = Each main.yml file is executed as the first file. Additional separation of operations can be split into different files that can be accessed via "include:" statements.
         * files/ = Store static files that are not modified.
         * handlers/ = Specify alias commands that can be called using the "notify:" method.
             * main.yml
-        * meta/ = Specify role depdencies and Playbook information such as author, version, etc. These can be other roles and/or Playbooks.
+        * meta/ = Specify role dependencies and Playbook information such as author, version, etc. These can be other roles and/or Playbooks.
             *  main.yml
         * tasks/
             * main.yml = The tasks' main file is executed first for the entire role.
@@ -475,11 +475,11 @@ Sources:
 
 ## Playbooks - Production and Staging
 
-Ansible best pratices suggest having a seperation between a production and staging inventory. Changes should be tested in the staging environment and then eventually ran on the production server(s).
+Ansible best practices suggest having a separation between a production and staging inventory. Changes should be tested in the staging environment and then eventually ran on the production server(s).
 
 ### Scenario #1 - Use the Same Variables
 
-A different invetory file can be created if all of the variables are the exact same in the production and staging environments. This will run the same Playbook roles on a diferent server.
+A different invetory file can be created if all of the variables are the exact same in the production and staging environments. This will run the same Playbook roles on a different server.
 
 Syntax:
 ```
@@ -515,7 +515,7 @@ Example:
 
 ### Scenario #2 - Use Different Variables
 
-In more complex scenarios, the inventory and variables will be different in production and staging. This requires further seperation. Instead of using a "production" or "staging" inventory file, they can be split into directories. These directories contain their own group and host variables.
+In more complex scenarios, the inventory and variables will be different in production and staging. This requires further separation. Instead of using a "production" or "staging" inventory file, they can be split into directories. These directories contain their own group and host variables.
 
 Syntax:
 ```
@@ -805,7 +805,7 @@ Source:
 
 The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.
 
-Install Ansible Container into a Python virtual environment. This helps to seperate Python packages provided by the operating system's package manager. [1]
+Install Ansible Container into a Python virtual environment. This helps to separate Python packages provided by the operating system's package manager. [1]
 ```
 $ virtualenv ansible-container
 $ ansible-container/bin/pip install -U pip setuptools
@@ -816,8 +816,8 @@ Ansible Container Directory Structure:
 
 * ansible/ = The "ansible-container" command should be run in the directory above "ansible."
     * container.yml = An Ansible file that mirrors Docker Compose syntax is used to define how to create the Docker container. Common settings include the image to use, ports to open, commands to run, etc.
-    * requirements.txt = Python depedencies to install.
-    * requirements.yml = Ansible depedencies to install from Ansible Galaxy.
+    * requirements.txt = Python dependencies to install.
+    * requirements.yml = Ansible dependencies to install from Ansible Galaxy.
     * ansible.cfg = Ansible configuration for the container.
 
 
@@ -857,7 +857,7 @@ ports:
 ```
 image: "centos:7"
 ```
-* command = Run a shell command, providing all of the arguements seperated via a list. This is the default command run to start the container.
+* command = Run a shell command, providing all of the arguments separated via a list. This is the default command run to start the container.
 
 [2]
 
@@ -1170,8 +1170,8 @@ The output of commands can be saved to a variable. The attributes that are saved
 
 * changed = If something was ran, this would be set to "true."
 * stdout = The standard output of the command.
-* stdout_lines = The standard output of the command is seperated by the newline characters into a list.
-* stderr = The stanard error of the command.
+* stdout_lines = The standard output of the command is separated by the newline characters into a list.
+* stderr = The standard error of the command.
 
 [1]
 
@@ -1238,7 +1238,7 @@ Sources:
 
 ### Playbooks - Main Modules - Tags
 
-Each task in a tasks file can have a tag associted to it. This should be appended to the end of the task. This is useful for debugging and seperating tasks into specific groups. Here is the syntax:
+Each task in a tasks file can have a tag associated to it. This should be appended to the end of the task. This is useful for debugging and separating tasks into specific groups. Here is the syntax:
 
 Single tag syntax:
 ```
@@ -1392,7 +1392,7 @@ Common options:
 * remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False.
 * owner = Set the user owner.
 * group = Set the group owner.
-* mode = Set the octal or symbloc permissions. If using octal, it has to be four digits. The first digit is generally the flag "0" to indicate no special permissions.
+* mode = Set the octal or symbolic permissions. If using octal, it has to be four digits. The first digit is generally the flag "0" to indicate no special permissions.
 * setype = Set SELinux file permissions.
 * state = Specify the state the file should be created in.
   * file = Copy the file.
@@ -1497,12 +1497,13 @@ git:
 ```
 
 Options:
+
 * repo = The full path of the repository.
 * dest = The path to place/use the repository
 * update = Pull the latest version from the Git server. The default is "yes."
 * version = Switch to a different branch or tag.
 * ssh_opts = If using SSH, specify custom SSH options.
-* force = Overriden local changes. The default is "yes."
+* force = Override local changes. The default is "yes."
 
 Source:
 
@@ -1514,11 +1515,13 @@ Source:
 The service module is used to handle system services.
 
 Syntax:
+
 ```
 service:
 ```
 
 Options:
+
 * name = Specify the service name.
 * enabled = Enable the service to start on boot or not. Valid options are "yes" or "no."
 * sleep = When restarted a service, specify the amount of time (in seconds) to wait before starting a service after stopping it.
@@ -1528,7 +1531,8 @@ Options:
   * restarted = Stop and then start the service.
   * reloaded = If supported by the service, it will reload it's configuration file without restarting it's main thread. [1]
 
-Exmaple:
+Example:
+
 * Restart the Apache service "httpd."
 ```
 service: name=httpd state=restarted sleep=3
@@ -1700,7 +1704,7 @@ Options:
     * no = Do not upgrade any system packages (default).
     * yes  = Update all of the system packages (apt-get upgrade).
     * full = Update all of the system packages and uninstall older, conflicting packages (apt-get full-upgrade).
-    * dist = Upgrade the operating system (apt-get dist-ugprade).
+    * dist = Upgrade the operating system (apt-get dist-upgrade).
 
 Source:
 
@@ -1845,7 +1849,7 @@ Sources:
 * "Ansible Conditionals." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html
 * "Ansible Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html
 * "Ansible - some random useful things." Code Poets. August 4, 2014. Accessed August 27, 2016. https://codepoets.co.uk/2014/ansible-random-things/
-* "Ansible Become (Privlege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
+* "Ansible Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
 * "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html
 * "Ansible Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html
 * "Ansible Set host facts from a task." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/set_fact_module.html

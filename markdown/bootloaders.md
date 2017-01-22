@@ -70,7 +70,7 @@ Common "grub-install" options:
 * --modules = List kernel modules that are required for boot. Depending on the end-user's setup, "lvm", "raid" (for mdadm), and/or "encrypt" (for LUKS) may be required.
 * --force = Install despite any warnings.
 * --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions.
-* --boot-directory = The directory that the "grub/" folder should exist in. This is typcially "/boot". [2]
+* --boot-directory = The directory that the "grub/" folder should exist in. This is typically "/boot". [2]
 
 Source:
 

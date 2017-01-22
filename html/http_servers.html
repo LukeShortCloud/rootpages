@@ -31,7 +31,7 @@
 <ul>
 <li>Example: ServerRoot &quot;/etc/httpd&quot;</li>
 </ul></li>
-<li>Listen = What port (and optionally aaddress) Apache should listen on.
+<li>Listen = What port (and optionally address) Apache should listen on.
 <ul>
 <li>Example #1: Listen 127.0.0.1:80</li>
 <li>Example #2: Listen 443</li>
@@ -122,7 +122,7 @@
 <li>ip = Apply the rule to an IP address
 <ul>
 <li>granted = Allow the matched rule.</li>
-<li>denied = Deny th ematched rule.</li>
+<li>denied = Deny the matched rule.</li>
 </ul></li>
 </ul></li>
 <li>Require not [all|host|ip] = Deny access to a host or IP. This should be configured after a Require rule. [1]</li>
@@ -153,7 +153,7 @@
 <p>Locations can be secured by a username and password. Users can also be assigned to groups.</p>
 <p>Create an Apache user.</p>
 <pre><code># htpasswd -c /etc/httpd/conf.d/passwd &lt;USER1&gt;</code></pre>
-<p>Another user can be appended to this file by ommitting the &quot;-c&quot; create option.</p>
+<p>Another user can be appended to this file by omitting the &quot;-c&quot; create option.</p>
 <pre><code># htpasswd /etc/httpd/conf.d/passwd &lt;USER2&gt;</code></pre>
 <p>A new file can be created to assign multiple users to a group.</p>
 <pre><code># vim /etc/httpd/conf.d/group

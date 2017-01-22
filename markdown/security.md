@@ -77,7 +77,7 @@ Ports:
 
 ### Authentication - Kerberos - Configuration
 
-The Kerbero sever is referred to as the Kerberos Distribution Center (KDC). These packages will need to be installed for the service:
+The Kerberos sever is referred to as the Kerberos Distribution Center (KDC). These packages will need to be installed for the service:
 
 RHEL:
 ```

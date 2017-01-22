@@ -14,7 +14,7 @@
 
 # Generic
 
-The generic section will cover networking utilies that are platform agnostic.
+The generic section will cover networking utilities that are platform agnostic.
 
 
 ## Generic - systemd
@@ -82,7 +82,7 @@ NetDev settings:
         * balance-tlb
         * balance-alb
 * [Tunnel] = Tunnel configurations
-    * Local = The static IP address that should already be configured on another NIC. This is used to connecto to the remote tunnel IP address.
+    * Local = The static IP address that should already be configured on another NIC. This is used to connect to the remote tunnel IP address.
     * Remote = The remote IP address to create a tunnel connection between.
 * [VLAN]
     * Id = The VLAN ID.
@@ -155,7 +155,7 @@ Options:
 * {NAME|DEVICE} = The name of the network interface. The first device is generally "eth0" for ethernet or "wlan0" for wireless devices.
 * ONBOOT = {yes|no}. Enable or disable this interface on startup of the system.
 * HWADDR = The MAC address of the device.
-* BOOTPROTO = The boot protocol to use for obtainng an IP address.
+* BOOTPROTO = The boot protocol to use for obtaining an IP address.
     * {none|static} = Static IP addressing. Do not use any protocol.
     * dhcp = Dynamic IP addressing. Use DHCP to obtain IP addressing information.
     * bootp = Dynamic IP addressing. Use BOOTP to obtain IP addressing information.
@@ -209,7 +209,7 @@ OpenVSwitch bridge syntax (CLI):
 ```
 [1]
 
-OpenVSwitch bridge syntax (configuraiton file):
+OpenVSwitch bridge syntax (configuration file):
 ```
 # vim ifcfg-<NIC>
 DEVICE="<NIC>"
@@ -265,7 +265,7 @@ BONDING_MASTER=yes
 BONDING_OPTS="mode=<BONDING_MODE>"
 ```
 
-Bond master exmaple:
+Bond master example:
 ```
 DEVICE=bond0
 BONDING_MASTER=yes
@@ -295,7 +295,7 @@ Common bonding_opts options:
 * mode = The bonding method to use.
     * {0|balance-rr} = Load balance using round robin. Every other request goes to/from a different interface.
     * {1|active-backup} = Only one interface is used. If it fails, then a slave device will take over.
-    * {2|balancer-xor} = Load balance requests based on the source and destinatinon MAC addresses.
+    * {2|balancer-xor} = Load balance requests based on the source and destination MAC addresses.
     * {3|broadcast} = All traffic is sent out through all of the network interfaces.
     * {4|802.3ad} = All of the network devices use the same speed and duplex configuration to follow the 802.3ad bonding standard. This requires that the network interfaces are also connected to a switch that supports IEEE 802.3ad Dynamic link aggregation. That switch must be configured to use it for it's own switch ports.
     * {5|balance-tlb} = Adaptive transmit load balancing. Load balance outgoing requests based on the slave usage.

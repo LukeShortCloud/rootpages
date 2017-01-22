@@ -18,7 +18,7 @@
 </ul></li>
 </ul>
 <h1 id="generic">Generic</h1>
-<p>The generic section will cover networking utilies that are platform agnostic.</p>
+<p>The generic section will cover networking utilities that are platform agnostic.</p>
 <h2 id="generic---systemd">Generic - systemd</h2>
 <p>The systemd init suite provides both &quot;systemd-networkd&quot; and systemd-resolved&quot; to control networking devices. These services have been included in systemd since version 210. [1]</p>
 <p>All systemd network settings should be configured in the directory &quot;/etc/systemd/network/.&quot; Network files should have the &quot;.network&quot; extension and NetDev files will use &quot;.netdev.&quot; Common options are listed below. [2][3]</p>
@@ -106,7 +106,7 @@
 </ul></li>
 <li>[Tunnel] = Tunnel configurations
 <ul>
-<li>Local = The static IP address that should already be configured on another NIC. This is used to connecto to the remote tunnel IP address.</li>
+<li>Local = The static IP address that should already be configured on another NIC. This is used to connect to the remote tunnel IP address.</li>
 <li>Remote = The remote IP address to create a tunnel connection between.</li>
 </ul></li>
 <li>[VLAN]
@@ -163,7 +163,7 @@ DNS=8.8.4.4</code></pre>
 <li>{NAME|DEVICE} = The name of the network interface. The first device is generally &quot;eth0&quot; for ethernet or &quot;wlan0&quot; for wireless devices.</li>
 <li>ONBOOT = {yes|no}. Enable or disable this interface on startup of the system.</li>
 <li>HWADDR = The MAC address of the device.</li>
-<li>BOOTPROTO = The boot protocol to use for obtainng an IP address.
+<li>BOOTPROTO = The boot protocol to use for obtaining an IP address.
 <ul>
 <li>{none|static} = Static IP addressing. Do not use any protocol.</li>
 <li>dhcp = Dynamic IP addressing. Use DHCP to obtain IP addressing information.</li>
@@ -213,7 +213,7 @@ DNS=8.8.4.4</code></pre>
 <pre><code># ovs-vsctl add-port &lt;OVS_BRIDGE&gt; &lt;NIC&gt;
 # ovs-vsctl add-br &lt;OVS_BRIDGE&gt;</code></pre>
 <p>[1]</p>
-<p>OpenVSwitch bridge syntax (configuraiton file):</p>
+<p>OpenVSwitch bridge syntax (configuration file):</p>
 <pre><code># vim ifcfg-&lt;NIC&gt;
 DEVICE=&quot;&lt;NIC&gt;&quot;
 TYPE=&quot;OVSPort&quot;
@@ -252,7 +252,7 @@ ONBOOT=&quot;yes&quot;</code></pre>
 <pre><code>DEVICE=&lt;BOND_DEVICE&gt;
 BONDING_MASTER=yes
 BONDING_OPTS=&quot;mode=&lt;BONDING_MODE&gt;&quot;</code></pre>
-<p>Bond master exmaple:</p>
+<p>Bond master example:</p>
 <pre><code>DEVICE=bond0
 BONDING_MASTER=yes
 BONDING_OPTS=&quot;mode=balance-alb&quot;</code></pre>
@@ -272,7 +272,7 @@ SLAVE=yes</code></pre>
 <ul>
 <li>{0|balance-rr} = Load balance using round robin. Every other request goes to/from a different interface.</li>
 <li>{1|active-backup} = Only one interface is used. If it fails, then a slave device will take over.</li>
-<li>{2|balancer-xor} = Load balance requests based on the source and destinatinon MAC addresses.</li>
+<li>{2|balancer-xor} = Load balance requests based on the source and destination MAC addresses.</li>
 <li>{3|broadcast} = All traffic is sent out through all of the network interfaces.</li>
 <li>{4|802.3ad} = All of the network devices use the same speed and duplex configuration to follow the 802.3ad bonding standard. This requires that the network interfaces are also connected to a switch that supports IEEE 802.3ad Dynamic link aggregation. That switch must be configured to use it for it's own switch ports.</li>
 <li>{5|balance-tlb} = Adaptive transmit load balancing. Load balance outgoing requests based on the slave usage.</li>
