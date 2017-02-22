@@ -1,15 +1,111 @@
 # Bootloaders
+
+* [GRUB 1](#grub-1)
+    * [Installation](#grub-1---installation)
+    * [Recovery](#grub-1---recovery)
 * [GRUB 2](#grub-2)
-  * [Configuring GRUB 2](#configuring-grub-2)
-  * [Installing GRUB 2](#installing-grub-2)
-  * [GRUB 2 Recovery](#grub-2-recovery)
+    * [Installation](#grub-2---installation)
+    * [Configuration](#grub-2---configuration)
+    * [Recovery](#grub-2---recovery)
+
+
+## GRUB 1
+
+GRUB 1 is a legacy version of GRUB that is no longer supported. The last version made available was 0.97 in 2008. GRUB 2 should be used for newer Linux distributions.
+
+
+### GRUB 1 - Installation
+
+Install GRUB to the primary drive. This will use the MSDOS partition scheme on the first 512 bytes as GPT was not supported until GRUB 2.
+
+```
+# grub-install --root-directory=/ /dev/<DEVICE>
+```
+
+A basic boot menu must be configured to specify the boot partition, the kernel to use, the root partition to mount, and the initrd/initramfs to load.
+
+```
+# vim /boot/grub/menu.lst
+root   (hd0,0)
+kernel /vmlinuz-linux root=/dev/sda2 ro
+initrd /initramfs-linux.img
+```
+
+[1]
+
+Source:
+
+1. "GRUB Legacy." Arch Linux Wiki. January 11, 2017. Accessed February 8, 2017. https://wiki.archlinux.org/index.php/GRUB_Legacy
+
+
+### GRUB 1 - Recovery
+
+When GRUB fails to boot, or if the boot settings need to be modified, the GRUB recovery shell can be used.
+
+Common options:
+
+* help = Show help messages.
+* cat = View the contents of a file.
+* find = View the contents of a file or locate a specific file.
+* dhcp = Obtain an IP address from DHCP.
+* ifconfig = Manually configure IP addressing.
+* tftpserver = Specify a TFTP server to PXE boot from.
+* module = Load a GRUB module.
+* root hd(`X`,`Y`) = Specify the root drive `X` and partition `Y` (the partition starts at "0" in GRUB 1 and "1" in GRUB 2). Use the "Tab" key on the keyboard to auto-complete if the partitions are unknown.
+* boot = Boot the operating system.
+* halt = Turn the computer off.
+* reboot = Reboot the computer
+
+Example of manually booting a server:
+```
+grub> root hd(0,0)
+grub> kernel /vmzlinuz-4.0.img root=/dev/sda2 ro
+grub> initrd /initramfs-4.0.img
+grub> boot
+```
+
+[1]
+
+Source:
+
+1. "GNU GRUB Manual 0.97." GNU. Accessed February 8, 2017. https://www.gnu.org/software/grub/manual/legacy/grub.html
 
 
 ## GRUB 2
+
 GRUB stands for the GRand Unified Bootloader. It was designed to be cross platform compatible with most operating systems including BSD, Linux, and Windows variants.
 
 
-### Configuring GRUB 2
+### GRUB 2 - Installation
+
+GRUB must be installed onto the start of the entire drive, not a partition, to avoid issues in the case of partitions needing to be modified. The first 512 bytes of a drive are used for the Master Boot Record (MBR). If you are using a GPT partition then it uses the first 2048 bytes. GRUB will add it's own data right after that. It is usually a safe and recommended option to create your first partition 1MB after the start of the drive, especially if GPT is in use.
+
+Install GRUB to a drive (replace "X") and then generate a boot menu configuration file. This will create the menu file that loads up to the end-user upon boot.
+```
+# grub-install /dev/sdX
+# grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+If any changes are made to GRUB's settings and/or it's various scripts, run this command to update the changes. [1]
+```
+# update-grub
+```
+
+Common "grub-install" options:
+* compress = Compress GRUB-related files. Valid options are:
+  * no (default), xz, gz, lzo
+* --modules = List kernel modules that are required for boot. Depending on the end-user's setup, "lvm", "raid" (for mdadm), and/or "encrypt" (for LUKS) may be required.
+* --force = Install despite any warnings.
+* --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions.
+* --boot-directory = The directory that the "grub/" folder should exist in. This is typically "/boot". [2]
+
+Sources:
+
+1. "GRUB." Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB
+2. "GRUB2-INSTALL MAN PAGE." Mankier. Feburary 26, 2014. https://www.mankier.com/8/grub2-install
+
+
+### GRUB 2 - Configuration
 
 Important files:
 
@@ -49,39 +145,12 @@ Source:
 1. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015. https://help.ubuntu.com/community/Grub2/Setup
 
 
-### Installing GRUB 2
+### GRUB 2 - Recovery
 
-GRUB must be installed onto the start of the entire drive, not a partition, to avoid issues in the case of partitions needing to be modified. The first 512 bytes of a drive are used for the Master Boot Record (MBR). If you are using a GPT partition then it uses the first 2048 bytes. GRUB will add it's own data right after that. It is usually a safe and recommended option to create your first partition 1MB after the start of the drive, especially if GPT is in use.
-
-Install GRUB to a drive (replace "X") and then generate a boot menu configuration file. This will create the menu file that loads up to the end-user upon boot.
-```
-# grub-install /dev/sdX
-# grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-If any changes are made to GRUB's settings and/or it's various scripts, run this command to update the changes. [1]
-```
-# update-grub
-```
-
-Common "grub-install" options:
-* compress = Compress GRUB-related files. Valid options are:
-  * no (default), xz, gz, lzo
-* --modules = List kernel modules that are required for boot. Depending on the end-user's setup, "lvm", "raid" (for mdadm), and/or "encrypt" (for LUKS) may be required.
-* --force = Install despite any warnings.
-* --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions.
-* --boot-directory = The directory that the "grub/" folder should exist in. This is typically "/boot". [2]
-
-Source:
-
-1. "GRUB." Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB
-2. "GRUB2-INSTALL MAN PAGE." Mankier. Feburary 26, 2014. https://www.mankier.com/8/grub2-install
-
-
-### GRUB 2 Recovery
-In cases where GRUB fails (because it was installed incorrectly), the end-user is automatically switched into GRUB's rescue shell.  Only a few commands are available for use.
+In cases where GRUB fails (because it was installed incorrectly), the end-user is automatically switched into GRUB's rescue shell.
 
 Common options:
+
 * insmod = Load kernel modules.
 * ls = List partitions and file systems within them.
 * cat = View file contents.
@@ -119,6 +188,7 @@ grub rescue> normal
 For recovering from a corrupt GRUB installation, fully change root into the environment from a live CD, USB, or PXE network boot. Then you can modify configuration files and re-install GRUB using the same commands used during the installation.
 
 In this example, /dev/sda2 is the root partition and /dev/sda1 is the boot partition. [1]
+
 ```
 # mount /dev/sda2 /mnt
 # mount /dev/sda1 /mnt/boot
@@ -132,6 +202,7 @@ In this example, /dev/sda2 is the root partition and /dev/sda1 is the boot parti
 
 
 If you need to recover GRUB from a chroot that is based on a LVM on the host node, make sure that LVM tools are installed on the guest. This way it can properly see the logical volume as a block device.
+
 ```
 Debian/Ubuntu
 # apt-get install lvm2
@@ -141,9 +212,7 @@ RHEL/Fedora
 # yum install lvm2
 ```
 
-Source:
+Sources:
 
 1. "Grub2/Installing." Ubuntu Documentation. March 6, 2015. https://help.ubuntu.com/community/Grub2/Installing
 2. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html
-
-

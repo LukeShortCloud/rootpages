@@ -21,7 +21,9 @@
             * [Quick](#network---ceph---installation---quick)
             * Full
             * [Ceph-Ansible](#ceph---installation---ceph-ansible)
+        * [CRUSH Map](#network---ceph---crush-map)
         * [Repair](#network---ceph---repair)
+        * [libvirt](#network---ceph---libvirt)
         * [CephFS](#network---ceph---cephfs)
 
 
@@ -392,7 +394,7 @@ For setting up a target storage, these are the general steps to follow in order:
 > set auth password=pass
 ```
 
-* Any ACL rules that were created can be overriden by turning off authentication entirely. 
+* Any ACL rules that were created can be overriden by turning off authentication entirely.
     * Syntax:
 ```
 > set attribute authentication=0
@@ -474,12 +476,7 @@ Cluster map:
     * `# ceph osd dump`
 * PG map = PG version, PG ID, ratios, and data usage statistics.
     * `# ceph pg dump`
-* CRUSH map = Storage devices, physical locations, rules for storing objects. It is recommended to tweak this for production clusters. A binary of the configuration must be saved and then decompiled. After changes are made, the file must be recompiled and then the configuration can be loaded.
-    * `# ceph osd gestgrushmap -o <NEW_COMPILED_FILE>`
-    * `# crushtool -d <NEW_COMPILED_FILE> <NEW_DECOMPILED_FILE>`
-    * `# vim <NEW_DECOMPILED_FILE>`
-    * `# crushtool -c <NEW_DECOMPILED_FILE> <UPDATED_COMPILED_FILE>`
-    * `# ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>`
+* [CRUSH map](#network---ceph---crush-map) = Storage devices, physical locations, and rules for storing objects. It is recommended to tweak this for production clusters.
 * MDS map
     * `# ceph fs dump`
 
@@ -489,31 +486,56 @@ The current back-end for handling data storage is FileStore. When data is writte
 
 The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writting the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]
 
-The optimal number of PGs is found be using this equal (replacing the number of OSD daemons and how many replicas are desired). This number should be rounded up to the next power of 2.
+The optimal number of PGs is found be using this equation (replacing the number of OSD daemons and how many replicas are set). This number should be rounded up to the next power of 2.
 
 Syntax:
 ```
-Total PGs = (<NUMBER_OF_OSDS> * 100) / <REPLICATION_COUNT>
+Total PGs = (<NUMBER_OF_OSDS> * 100) / <REPLICA_COUNT> / <NUMBER_OF_POOLS>
 ```
 
 Example:
 ```
-1000 = (30 * 100) / 3
-2^10 = 1024
+OSD count = 30, replica count = 3, pool count = 1
+Run the calculations: 1000 = (30 * 100) / 3 / 1
+Find the next highest power of 2: 2^10 = 1024
 1000 =< 1024
-PGs = 1024
+Total PGs = 1024
+```
+
+With Ceph's configuration, the Placement Group for Placement purpose (PGP) should be set to the same PG number. PGs are the number of number of times a file should be split. This change only makes the Ceph cluster rebalance when the PGP count is increased.
+
+* New pools:
+```
+# vim /etc/ceph/ceph.conf
+...
+[global]
+osd pool default pg num = <OPTIMAL_PG_NUMBER>
+osd pool default pgp num = <OPTIMAL_PG_NUMBER>
+```
+* Existing pools:
+```
+# ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
+# ceph osd pool set <POOL> pgp_num <OPTIMAL_PG_NUMBER>
 ```
 
 Cache pools can be configured used to cache files onto faster drives. When a file is continually being read, it will be copied to the faster drive. When a file is first written, it will go to the faster drives. After a period of time of lesser use, those files will be moved to the slow drives. [3]
 
-By modifying the CRUSH map, replication can be configured to go to a different drive, server, row, rack, datacenter, or anywhere. [4]
+For testing, the "cephx" authentication protocols can temporarily be disabled. This will require a restart of all of the Ceph services. [4]
+
+```
+# vim /etc/ceph/ceph.conf
+[global]
+auth cluster required = none
+auth service required = none
+auth client required = none
+```
 
 Sources:
 
 1. Karan Singh *Learning Ceph* (Birmingham, UK: Packet Publishing, 2015)
 2. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
 3. "CACHE POOL." Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/jewel/dev/cache-pool/
-3. "CEPH MAPS." Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/master/rados/operations/crush-map/
+4. "CEPHX CONFIG REFERENCE." Ceph Docmentation. Accessed January 28, 2017. http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 
 
 ### Network - Ceph - Installation
@@ -583,7 +605,7 @@ Source:
 1. "Ceph Deployment." Ceph Jewel Documentation. Accessed January 14, 2017. http://docs.ceph.com/docs/jewel/rados/deployment/
 
 
-### Network - Ceph - Installation - ceph-ansible
+#### Network - Ceph - Installation - ceph-ansible
 
 The ceph-ansible project is used to help deploy and automate updates.
 
@@ -676,6 +698,119 @@ Finally, run the Playbook to deploy the Ceph cluster.
 Source:
 
 1. "ceph-ansible Wiki." ceph-ansible GitHub. February 29, 2016. Accessed January 15, 2017. https://github.com/ceph/ceph-ansible/wiki
+
+
+### Network - Ceph - CRUSH Map
+
+CRUSH maps are used to keep track of OSDs, physical locations of servers, and it defines how to replicate objects.
+
+These maps are divided into four main parts:
+
+* Devices = The list of each OSD daemon in the cluster.
+* Bucket Types = Definitions that can group OSDs into groups with their own location and weights based on servers, rows, racks, datacenters, etc.
+* Bucket Instances = A bucket instance is created by specifying a bucket type and one or more OSDs.
+* Rules = Rules can be defined to configure which bucket instances will be used for reading, writing, and/or replicating data.
+
+A binary of the configuration must be saved and then decompiled before changes can be made. Then the file must be recompiled for the updates to be loaded.
+
+```
+# ceph osd getcrushmap -o <NEW_COMPILED_FILE>
+# crushtool -d <NEW_COMPILED_FILE> -o <NEW_DECOMPILED_FILE>
+# vim <NEW_DECOMPILED_FILE>`
+# crushtool -c <NEW_DECOMPILED_FILE> -o <UPDATED_COMPILED_FILE>
+# ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>
+```
+
+#### Network - Ceph - CRUSH Map - Devices
+
+Devices must follow the format of `device <COUNT> <OSD_NAME>`. These are automatically generated but can be adjusted and new nodes can be manually added here.
+
+```
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+```
+
+
+#### Network - Ceph - CRUSH Map - Bucket Types
+
+Bucket types follow a similar format of `type <COUNT> <TYPE_NAME>`. The name of the type can be anything. The higher numbered type always inherits the lower numbers. The default types include:
+
+```
+# types
+type 0 osd
+type 1 host
+type 2 chassis
+type 3 rack
+type 4 row
+type 5 pdu
+type 6 pod
+type 7 room
+type 8 datacenter
+type 9 region
+type 10 root
+```
+
+
+#### Network - Ceph - CRUSH Map - Bucket Instances
+
+Bucket instances are used to group OSD configurations together. Typically these should define physical locations of the OSDs.
+
+```
+<CUSTOM_BUCKET_TYPE> <UNIQUE_BUCKET_NAME> {
+	id <UNIQUE_NEGATIVE_NUMBER>
+    weight <FLOATING_NUMBER>
+    alg <BUCKET_TYPE>
+    hash 0
+    item <OSD_NAME> weight <FLOATING_NUMBER>
+}
+```
+
+* `<CUSTOM_BUCKET_TYPE>` = Required. This should be one of the user-defined bucket types.
+* `<UNIQUE_BUCKET_NAME>` = Required. A unique name that describes the bucket.
+* id = Required. A unique negative number to identify the bucket.
+* weight = Optional. A floating/decimal number for all of the weight of all of the OSDs in this bucket.
+* alg = Required. Choose which Ceph bucket type/method that is used to read and write objects. This should not be confused with the user-defined bucket types.
+    * Uniform = Assumes that all hardware in the bucket instance is exactly the same so all OSDs recieve the same weight.
+    * List = Lists use the RUSH algorithim to read and write objects in sequencial order from the first OSD to the last. This is best suited for data that does not need to be deleted (to avoid rebalancing).
+    * Tree = The binary search tree uses the RUSH algorithim to efficently handle larger amounts of data.
+    * Straw = A combination of both "list" and "tree." One of the two bucket types will randomly be selected for operations. Replication is fast but rebalancing will be slow.
+* hash = Required. The hashing algorithim used by CRUSH to lookup and store files. As of the Jewel release, only option "0" for "rjenkins1" is supported.
+* item = Optional. The OSD name and weight for individual OSDs. This is useful if a bucket instance has hard drives of different speeds.
+
+
+#### Network - Ceph - CRUSH Map - Rules
+
+By modifying the CRUSH map, replication can be configured to go to a different drive, server, chassis, row, rack, datacenter, etc.
+
+```
+rule <RULE_NAME> {
+	ruleset <RULESET>
+    type <RULE_TYPE>
+    min_size <MINIMUM_SIZE>
+    max_size <MAXIMUM_SIZE>
+    step take <BUCKET_INSTANCE_NAME>
+    step <CHOOSE_OPTION>
+    step emit
+}
+```
+
+* `<RULE_NAME>`
+* ruleset = Required. An integer that can be used to reference this ruleset by a pool.
+* type = Required. Default is "replicated." How to handle data replication.
+    * replicated = Data is replicated to different hard drives.
+    * erasure = This a similar concept to RAID 5. Data is only replicated to one drive. This option helps to save space.
+* min_size
+* max_size
+* step take
+* step emit = Required. This signifies the end of the rule block.
+
+[1]
+
+Source:
+
+1. "CRUSH MAPS." Ceph Documentation. Accessed January 29, 2017. http://docs.ceph.com/docs/master/rados/operations/crush-map/
 
 
 ### Network - Ceph - Repair
@@ -783,6 +918,67 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 Source:
 
 1. "Ceph: manually repair object." April 27, 2015. Accessed January 15, 2017. http://ceph.com/planet/ceph-manually-repair-object/
+
+
+### Network - Ceph - libvirt
+
+Virtual machines that are run via the libvirt front-end can utilize Ceph's RADOS block devices (RBDs) as their main disk.
+
+* Add the network disk to the available devices in the Virsh configuration.
+```
+<devices>
+    <disk type='network' device='disk'>
+        <source protocol='rbd' name='<POOL>/<IMAGE>'>
+            <host name='<MONITOR_IP>' port='6789'/>
+        </source>
+        <target dev='vda' bus='virtio'/>
+    </disk>
+...
+</devices>
+```
+
+* Authentication is required so the Ceph client credentials must be encrypted by libvirt. This encrypted hash is called a "secret."
+
+* Create a Virsh template that has a secret of type "ceph" with a description for the end user.
+```
+# vim ceph-secret.xml
+<secret ephemeral='no' private='no'>
+    <usage type='ceph'>
+        <name>The Ceph client key</name>
+    </usage>
+</secret>
+```
+
+* Define a blank secret from this template.
+```
+# virsh secret-define --file ceph-secret.xml
+```
+* Verify that the secret was created.
+```
+# virsh secret-list
+```
+* Set the secret to the Ceph client's key. [1]
+```
+# virsh secret-set-value --secret <GENERATED_UUID> --base64 $(ceph auth get-key client.<USER>)
+```
+* Finally, the secret needs to be referenced as type "ceph" with either the "usage" (description) or "uuid" or the secret element that has been created. [2]
+```
+<devices>
+    <disk type='network' device='disk'>
+...
+    <auth username='<CLIENT>'>
+      <secret type='ceph' usage='The Ceph client key'/>
+    </auth>
+...
+    <disk>
+...
+</devices>
+```
+
+Sources:
+
+1. "USING LIBVIRT WITH CEPH RBD." Ceph Documentation. Accessed January 27, 2017. http://docs.ceph.com/docs/master/rbd/libvirt/
+2. "Secret XML." libvirt. Accessed January 27, 2017. https://libvirt.org/formatsecret.html
 
 
 ### Network - Ceph - CephFS

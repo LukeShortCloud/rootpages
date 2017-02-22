@@ -15,6 +15,7 @@
 <ul>
 <li><a href="#playbooks---directory-structure">Directory Structure</a></li>
 <li><a href="#playbooks---production-and-staging">Production and Staging</a></li>
+<li><a href="#playbooks---performance-tuning">Performance Tuning</a></li>
 <li><a href="#playbooks---jinja2-templates">Jinja2 Templates</a>
 <ul>
 <li><a href="#playbooks---jinja2-templates---loops">Loops</a></li>
@@ -38,6 +39,7 @@
 <li><a href="#playbooks---main-modules---roles">Roles</a></li>
 <li><a href="#playbooks---main-modules---run-once">Run Once</a></li>
 <li><a href="#playbooks---main-modules---register">Register</a></li>
+<li>Serial</li>
 <li><a href="#playbooks---main-modules---set-fact">Set Fact</a></li>
 <li><a href="#playbooks---main-modules---tags">Tags</a></li>
 <li><a href="#playbooks---main-modules---wait-for">Wait For</a></li>
@@ -451,6 +453,21 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Best Practices.&quot;</li>
 <li>&quot;Organizing Group Vars Files in Ansible.&quot;</li>
+</ol>
+<h2 id="playbooks---performance-tuning">Playbooks - Performance Tuning</h2>
+<p>A few configuration changes can help to speed up the runtime of Ansible modules and Playbooks.</p>
+<ul>
+<li>/etc/ansible/ansible.cfg
+<ul>
+<li>forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.</li>
+<li>pipleining = Enable pipelining to bunble commands together that do not require a file transfer. [1]</li>
+<li>gathering = Set this to &quot;explicit&quot; to only gather the necessary facts if when/if they are required by the Playbook. [2]</li>
+</ul></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot;</li>
+<li>&quot;Configuration file.&quot;</li>
 </ol>
 <h2 id="playbooks---jinja2-templates">Playbooks - Jinja2 Templates</h2>
 <ul>
@@ -1295,4 +1312,6 @@ finally:
 <li>&quot;semaphore Installation.&quot; GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation</li>
 <li>&quot;How to loop through interface facts.&quot; Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts</li>
 <li>&quot;Ansible Galaxy.&quot; Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html</li>
+<li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot; Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning</li>
+<li>&quot;Configuration file.&quot; Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html</li>
 </ul>

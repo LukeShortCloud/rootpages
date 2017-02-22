@@ -4,7 +4,7 @@
 <ul>
 <li><a href="#hardware-virtualization---kvm">KVM</a>
 <ul>
-<li><a href="#hardware-virtualization---kvm---performance-tweaks">Performance Tweaks</a></li>
+<li><a href="#hardware-virtualization---kvm---performance-tuning">Performance Tuning</a></li>
 <li><a href="#hardware-virtualization---kvm---nested-virtualization">Nested Virtualization</a></li>
 <li><a href="#hardware-virtualization---kvm---gpu-passthrough">GPU Passthrough</a></li>
 <li>virt-manager</li>
@@ -59,7 +59,7 @@
 <ol style="list-style-type: decimal">
 <li>&quot;Kernel Virtual Machine.&quot; KVM. Accessed December 18, 2016. http://www.linux-kvm.org/page/Main_Page</li>
 </ol>
-<h3 id="hardware-virtualization---kvm---performance-tweaks">Hardware Virtualization - KVM - Performance Tweaks</h3>
+<h3 id="hardware-virtualization---kvm---performance-tuning">Hardware Virtualization - KVM - Performance Tuning</h3>
 <p>Configuration detials for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]</p>
 <pre><code># qemu -cpu host ...</code></pre>
 <pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;

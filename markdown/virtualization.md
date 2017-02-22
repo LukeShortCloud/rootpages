@@ -2,7 +2,7 @@
 
 * [Hardware Virtualization](#hardware-virtualization)
     * [KVM](#hardware-virtualization---kvm)
-        * [Performance Tweaks](#hardware-virtualization---kvm---performance-tweaks)
+        * [Performance Tuning](#hardware-virtualization---kvm---performance-tuning)
         * [Nested Virtualization](#hardware-virtualization---kvm---nested-virtualization)
         * [GPU Passthrough](#hardware-virtualization---kvm---gpu-passthrough)
         * virt-manager
@@ -66,7 +66,7 @@ Source:
 1. "Kernel Virtual Machine." KVM. Accessed December 18, 2016. http://www.linux-kvm.org/page/Main_Page
 
 
-### Hardware Virtualization - KVM - Performance Tweaks
+### Hardware Virtualization - KVM - Performance Tuning
 
 Configuration detials for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]
 

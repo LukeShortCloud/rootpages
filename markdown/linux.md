@@ -160,6 +160,8 @@ On Red Hat Enterprise Linux (RHEL) based operating systems (such as RHEL itself,
 * install_items+= A list of files to compile in.
 * add_dracutmodules+= A list of Dracut modules to compile.
 
+[1]
+
 Source:
 
 1. "Dracut." The Linux Kernel Archives. October, 2013. Accessed November 19, 2016. https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html

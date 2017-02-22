@@ -10,6 +10,7 @@
 * [Playbooks](#playbooks)
     * [Directory Structure](#playbooks---directory-structure)
     * [Production and Staging](#playbooks---production-and-staging)
+    * [Performance Tuning](#playbooks---performance-tuning)
     * [Jinja2 Templates](#playbooks---jinja2-templates)
         * [Loops](#playbooks---jinja2-templates---loops)
     * [Galaxy](#playbooks---galaxy)
@@ -28,6 +29,7 @@
         * [Roles](#playbooks---main-modules---roles)
         * [Run Once](#playbooks---main-modules---run-once)
         * [Register](#playbooks---main-modules---register)
+        * Serial
         * [Set Fact](#playbooks---main-modules---set-fact)
         * [Tags](#playbooks---main-modules---tags)
         * [Wait For](#playbooks---main-modules---wait-for)
@@ -575,6 +577,21 @@ Sources:
 
 1. "Ansible Best Practices."
 2. "Organizing Group Vars Files in Ansible."
+
+
+## Playbooks - Performance Tuning
+
+A few configuration changes can help to speed up the runtime of Ansible modules and Playbooks.
+
+* /etc/ansible/ansible.cfg
+    * forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.
+    * pipleining = Enable pipelining to bunble commands together that do not require a file transfer. [1]
+    * gathering = Set this to "explicit" to only gather the necessary facts if when/if they are required by the Playbook. [2]
+
+Sources:
+
+1. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)."
+2. "Configuration file."
 
 
 ## Playbooks - Jinja2 Templates
@@ -1875,3 +1892,5 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "semaphore Installation." GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 * "How to loop through interface facts." Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts
 * "Ansible Galaxy." Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html
+* "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
+* "Configuration file." Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html

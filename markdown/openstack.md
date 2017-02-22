@@ -11,6 +11,7 @@
 * [Configurations](#configurations)
     * [Common](#configurations---common)
         * [Database](#configurations---common---database)
+        * [Messaging](#configurations---common---messaging)
     * [Keystone](#configurations---keystone)
         * [Token Provider](#configurations---keystone---token-provider)
         * [API v3](#configurations---keystone---api-v3)
@@ -24,6 +25,7 @@
         * [Quality of Service](#configurations---neutron---quality-of-service)
     * [Cinder](#configurations---cinder)
         * [Ceph](#configurations---cinder---ceph)
+        * [Encryption](#configurations---cinder---encryption)
 * [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
 * [Automation](#automation)
@@ -40,7 +42,7 @@
 
 This guide is aimed to help guide System Administrators through OpenStack. It is assumed that the cloud is using these industry standard software:
 
-* OpenStack Mitaka
+* OpenStack Newton
 * CentOS 7 (Linux)
 
 Most topics mentioned in this guide can be applied to similar environments.
@@ -94,7 +96,7 @@ Supported operating systems: RHEL 7
 PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.
 
 ```
-# yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
+# yum install https://repos.fedorapeople.org/repos/openstack/openstack-newton/rdo-release-newton-4.noarch.rpm
 # yum install packstack
 # packstack --gen-answer-file <FILE>
 # packstack --answer-file <FILE>
@@ -117,7 +119,7 @@ OpenStack Ansible uses Ansible for automating the deployment of Docker container
 # apt-get install git
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
-# git checkout 13.3.7
+# git checkout stable/newton
 # scripts/bootstrap-ansible.sh
 # scripts/bootstrap-aio.sh
 ```
@@ -206,21 +208,72 @@ Different database backends can be used by the API services on the controller no
 
 * MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with Liberty, this is prefered over using "mysql://" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1]
 ```
-[ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>/<DATABASE>
+[ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 ```
 * PostgreSQL. Requires the "psycopg2" Python library. [2]
 ```
-[ database ] connection = postgresql://<USER>:<PASSWORD>@<MYSQL_HOST>/<DATABASE>
+[ database ] connection = postgresql://<USER>:<PASSWORD>@<POSTGRESQL_HOST>:<POSTGRESQL_PORT>/<DATABASE>
 ```
 * SQLite.
 ```
 [ database ] connection = sqlite:///<DATABASE>.sqlite
 ```
+* MongoDB is generally only used for Ceilometer. [3]
+```
+[ database ] mongodb://<USER>:<PASSWORD>@<MONGODB_HOST>:<MONGODB_PORT>/<DATABASE>
+```
+
 
 Sources:
 
 1. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. Jun 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
 2. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
+3. "Add the Telemetry service - Install and configure." OpenStack Documentation. December 24, 2016. Accessed February 18, 2017. https://docs.openstack.org/liberty/install-guide-rdo/ceilometer-install.html
+
+
+### Configurations - Common - Messaging
+
+For high availability and scalability, servers should be configured with a messaging agent. This allows a client's request to correctly be handled by the messaging queue and sent to one node to process that request.
+
+
+#### Scenario #1 - RabbitMQ
+
+On the controller nodes, RabbitMQ needs to be installed. Then a user must be created with full privileges.
+
+```
+# rabbitmqctl add_user <RABBIT_USER> <RABBIT_PASSWORD>
+# rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+```
+
+In the configuraiton file for every service, set the transport_url options for RabbitMQ. A virtual host is not required. By default it will use `/`.
+```
+[ DEFAULT ] transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
+```
+
+[1]
+
+#### Scenario #2 - ZeroMQ
+
+ZeroMQ. This provides the best performance, stability, and scalability. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]
+
+```
+[ DEFAULT ] transport_url = "zmq+redis://<REDIS_HOST>:6379"
+[ oslo_messaging_zmq ] rpc_zmq_bind_address = <IP>
+[ oslo_messaging_zmq ] rpc_zmq_bind_matchmaker = redis
+[ oslo_messaging_zmq ] rpc_zmq_host = <FQDN_OR_IP>
+```
+
+For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used.
+
+```
+[ DEFAULT ] transport_url = "zmq://"
+```
+
+Sources:
+
+1. "Message queue." OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/install-guide-rdo/environment-messaging.html
+2. "RPC messaging configurations." OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/common-configurations/rpc.html
+3. "ZeroMQ Driver Deployment Guide." OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/developer/oslo.messaging/zmq_driver.html
 
 
 ## Configurations - Keystone
@@ -228,7 +281,7 @@ Sources:
 
 ### Configurations - Keystone - API v3
 
-In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the "Q" release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
+In Newton, the Keystone v2.0 API has been completely deprecated. It will be removed entirely from OpenStack in the "Q" release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
 
 * /etc/keystone/keystone-paste.ini
     * [pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
@@ -240,7 +293,7 @@ In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirel
 
 Sources:
 
-1. "Mitaka Series Release Notes." Accessed October 16, 2016. http://docs.openstack.org/releasenotes/keystone/mitaka.html
+1. "Newton Series Release Notes." Accessed February 18, 2017. http://docs.openstack.org/releasenotes/keystone/newton.html
 2. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 
 
@@ -291,7 +344,7 @@ Sources:
     * [ libvirt ] inject_key = false
 	    * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
     * [ DEFAULT ] enabled_apis = osapi_compute,metadata
-	    * Enable support for the Nova API, and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
+	    * Enable support for the Nova API and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
     * [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
     * [ database ] connection = mysql://nova:password@10.1.1.1/nova
 	    * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
@@ -331,7 +384,7 @@ Nova supports a wide range of virtualization technologies. Full hardware virtual
 
 #### Scenario #4 - Docker
 
-Docker is not available by default in OpenStack. First it must be installed before configuring it in Nova.
+Docker is not available by default in OpenStack because it is technically not a virtualization technology. It uses LXC for virtualization. Docker is used to help faciliate resources in an easier way. First it must be installed before configuring it in Nova.
 ```
 # git clone https://github.com/openstack/nova-docker.git
 # cd nova-docker/
@@ -571,6 +624,26 @@ Ceph has become the most popular backend to Cinder due to it's high availability
 Source:
 
 1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+
+
+### Configurations - Cinder - Encryption
+
+Cinder volumes support the Linux LUKS encryption. The only requirement is that the compute nodes have the "cryptsetup" package installed. [1]
+
+```
+$ openstack volume type create LUKS
+$ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor
+```
+
+Encrypted volumes can now be created.
+
+~~~
+$ openstack volume create --size <SIZE_IN_GB> --type LUKS <VOLUME_NAME>
+~~~
+
+Source:
+
+1. "Volume encryption supported by the key manager" Openstack Documentation. February 16 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/block-storage/volume-encryption.html
 
 
 # Upgrades
