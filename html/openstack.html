@@ -35,11 +35,21 @@
 <li><a href="#configurations---neutron---metadata">Metadata</a></li>
 <li><a href="#configurations---neutron---load-balancing-as-a-service">Load-Balancing-as-a-Service</a></li>
 <li><a href="#configurations---neutron---quality-of-service">Quality of Service</a></li>
+<li><a href="#configurations---neutron---distributed-virtual-routing">Distributed Virtual Routing</a></li>
+<li><a href="#configurations---neutron---high-availability">High Availability</a></li>
 </ul></li>
 <li><a href="#configurations---cinder">Cinder</a>
 <ul>
 <li><a href="#configurations---cinder---ceph">Ceph</a></li>
 <li><a href="#configurations---cinder---encryption">Encryption</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#neutron-troubleshooting">Neutron Troubleshooting</a>
+<ul>
+<li><a href="#neutron-troubleshooting---open-vswitch">Open vSwitch</a>
+<ul>
+<li>Network connections</li>
+<li><a href="#neutron-troubleshooting---open-vswitch---floating-ips">Floating IPs</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#upgrades">Upgrades</a></li>
@@ -60,10 +70,10 @@
 <li><a href="#performance">Performance</a></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>This guide is aimed to help guide System Administrators through OpenStack. It is assumed that the cloud is using these industry standard software:</p>
+<p>This guide is aimed to help guide System Administrators through deploying, managing, and upgrading OpenStack. Specficially, almost everything here assumes that the cloud will be running on:</p>
 <ul>
 <li>OpenStack Newton</li>
-<li>CentOS 7 (Linux)</li>
+<li>Red Hat Enterprise Linux (RHEL) or CentOS 7</li>
 </ul>
 <p>Most topics mentioned in this guide can be applied to similar environments.</p>
 <h1 id="overview">Overview</h1>
@@ -99,10 +109,10 @@
 <li>&quot;Project Navigator.&quot; OpenStack. Accessed January 15, 2017. https://www.openstack.org/software/project-navigator/</li>
 </ol>
 <h1 id="installation">Installation</h1>
-<p>It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code. This is ideal for developers and System Administrators looking for a proof of concept.</p>
+<p>It is possible to easily install OpenStack as an all-in-one (AIO) server or onto a full cluster of servers. Various tools exist for deploying and managing OpenStack.</p>
 <h2 id="installation---packstack">Installation - PackStack</h2>
 <p>Supported operating systems: RHEL 7</p>
-<p>PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.</p>
+<p>PackStack (sometimes refered to as RDO) provides a simple all-in-one development. Thisis aimed towards developers needing to test new features with the latest code.</p>
 <pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-newton/rdo-release-newton-4.noarch.rpm
 # yum install packstack
 # packstack --gen-answer-file &lt;FILE&gt;
@@ -113,8 +123,8 @@
 <li>&quot;OpenStack packages.&quot; OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS. http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html</li>
 </ol>
 <h2 id="installation---openstack-ansible">Installation - OpenStack Ansible</h2>
-<p>Supported operating systems: Ubuntu 14.04 or 16.04</p>
-<p>OpenStack Ansible uses Ansible for automating the deployment of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.</p>
+<p>Supported operating systems: RHEL 7, Ubuntu 14.04 or 16.04</p>
+<p>OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.</p>
 <pre><code># apt-get install git
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
@@ -186,6 +196,8 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 </ol>
 <h3 id="configurations---common---messaging">Configurations - Common - Messaging</h3>
 <p>For high availability and scalability, servers should be configured with a messaging agent. This allows a client's request to correctly be handled by the messaging queue and sent to one node to process that request.</p>
+<p>The configuration has been consolidated into the <code>transport_url</code> option. Multiple messaging hosts can be defined by using a comma before naming a virtual host.</p>
+<pre><code>transport_url = &lt;TRANSPORT&gt;://&lt;USER1&gt;:&lt;PASS1&gt;@&lt;HOST1&gt;:&lt;PORT1&gt;,&lt;USER2&gt;:&lt;PASS2&gt;@&lt;HOST2&gt;:&lt;PORT2&gt;/&lt;VIRTUAL_HOST&gt;</code></pre>
 <h4 id="scenario-1---rabbitmq">Scenario #1 - RabbitMQ</h4>
 <p>On the controller nodes, RabbitMQ needs to be installed. Then a user must be created with full privileges.</p>
 <pre><code># rabbitmqctl add_user &lt;RABBIT_USER&gt; &lt;RABBIT_PASSWORD&gt;
@@ -194,11 +206,13 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <pre><code>[ DEFAULT ] transport_url = rabbit://&lt;RABBIT_USER&gt;:&lt;RABBIT_PASSWORD&gt;@&lt;RABBIT_HOST&gt;/&lt;VIRTUAL_HOST&gt;</code></pre>
 <p>[1]</p>
 <h4 id="scenario-2---zeromq">Scenario #2 - ZeroMQ</h4>
-<p>ZeroMQ. This provides the best performance, stability, and scalability. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]</p>
-<pre><code>[ DEFAULT ] transport_url = &quot;zmq+redis://&lt;REDIS_HOST&gt;:6379&quot;
-[ oslo_messaging_zmq ] rpc_zmq_bind_address = &lt;IP&gt;
+<p>This provides the best performance and stability. Scalability becomes a concern only when getting into hundreds of nodes. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]</p>
+<pre><code>[ DEFAULT ] transport_url = &quot;zmq+redis://&lt;REDIS_HOST&gt;:6379&quot;</code></pre>
+<pre><code>[ oslo_messaging_zmq ] rpc_zmq_bind_address = &lt;IP&gt;
 [ oslo_messaging_zmq ] rpc_zmq_bind_matchmaker = redis
 [ oslo_messaging_zmq ] rpc_zmq_host = &lt;FQDN_OR_IP&gt;</code></pre>
+<p>Alternatively, for high availability, use Redis Sentinel servers for the <code>transport_url</code>.</p>
+<pre><code>[ DEFAULT ] transport_url = &quot;zmq+redis://&lt;REDIS_SENTINEL_HOST1&gt;:26379,&lt;REDI_SENTINEL_HOST2&gt;:26379&quot;</code></pre>
 <p>For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used.</p>
 <pre><code>[ DEFAULT ] transport_url = &quot;zmq://&quot;</code></pre>
 <p>Sources:</p>
@@ -245,23 +259,33 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <pre><code># keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
 </ul>
 <h4 id="scenario-3---fernet-fastest-token-creation">Scenario #3 - Fernet (fastest token creation)</h4>
+<p>A public and private key wil need to be created for Fernet and the related Credential authentication.</p>
 <ul>
 <li>/etc/keystone/keystone.conf
 <ul>
 <li>[ token ] provider = fernet</li>
 <li>[ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/</li>
+<li>[ credential ] provider = fernet</li>
+<li>[ credential ] key_repository = /etc/keystone/credential-keys/</li>
+<li>[ token ] provider = fernet</li>
 </ul></li>
-<li><p>Create the Fernet keys:</p>
+<li><p>Create the required keys:</p>
 <pre><code># mkdir /etc/keystone/fernet-keys/
 # chmod 750 /etc/keystone/fernet-keys/
-# keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
+# chown keystone.keystone /etc/keystone/fernet-keys/
+# keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone</code></pre>
+<pre><code># mkdir /etc/keystone/credential-keys/
+# chmod 750 /etc/keystone/credential-keys/
+# chown keystone.keystone /etc/keystone/credential-keys/
+# keystone-manage credential_setup --keystone-user keystone --keystone-group keystone</code></pre></li>
 </ul>
-<p>[2]</p>
+<p>[2][4]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Configuring Keystone.&quot; OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html</li>
 <li>&quot;OpenStack Keystone Fernet tokens.&quot; Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/</li>
 <li>&quot;Newton Series Release Notes.&quot; OpenStack Documentation. Accessed January 15, 2016. http://docs.openstack.org/releasenotes/keystone/newton.html</li>
+<li>&quot;Install and configure [Keystone].&quot; OpenStack Documentation. March 3, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/install-guide-rdo/keystone-install.html</li>
 </ol>
 <h2 id="configurations---nova">Configurations - Nova</h2>
 <ul>
@@ -522,6 +546,50 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <ol style="list-style-type: decimal">
 <li>&quot;Quality of Service (QoS).&quot; OpenStack Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.openstack.org/draft/networking-guide/config-qos.html</li>
 </ol>
+<h3 id="configurations---neutron---distributed-virtual-routing">Configurations - Neutron - Distributed Virtual Routing</h3>
+<p>Distributed virtual routing (DVR) is a concept that involves deploying routers to both the compute and network nodes to spread out resource usage. All layer 2 traffic will be equally spread out among the servers. Public floating IPs will still need to go through the SNAT process via the routers on the network nodes. This is only supported when the Open vSwitch agent is used. [1]</p>
+<ul>
+<li>/etc/neutron/neutron.conf
+<ul>
+<li>[ DEFAULT ] router_distributed = true</li>
+</ul></li>
+<li>/etc/neutron/l3_agent.ini (compute)
+<ul>
+<li>[ DEFAULT ] agent_mode = dvr</li>
+</ul></li>
+<li>/etc/neutron/l3_agent.ini (network or all-in-one)
+<ul>
+<li>[ DEFAULT ] agent_mode = dvr_snat</li>
+</ul></li>
+<li>/etc/neutron/plugins/ml2/ml2_conf.ini
+<ul>
+<li>[ ml2 ] mechanism_drivers = openvswitch, l2population</li>
+</ul></li>
+<li>/etc/neutron/plugins/ml2/openvswitch_agent.ini
+<ul>
+<li>[ agent ] l2_population = true</li>
+<li>[ agent ] enable_distributed_routing = true</li>
+</ul></li>
+</ul>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Neutron/DVR/HowTo&quot; OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo</li>
+</ol>
+<h3 id="configurations---neutron---high-availability">Configurations - Neutron - High Availability</h3>
+<p>High availability (HA) in Neutron allows for routers to failover to another duplicate router if one fails or is no longer present. All new routers will be highly available.</p>
+<ul>
+<li>/etc/neutron/neutron.conf
+<ul>
+<li>[ DEFAULT ] l3_ha = true</li>
+<li>[ DEFAULT ] max_l3_agents_per_router = 2</li>
+<li>[ DEFAULT ] allow_automatic_l3agent_failover = true</li>
+</ul></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Distributed Virtual Routing with VRRP.&quot; OpenStack Documentation. March 6, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/networking-guide/config-dvr-ha-snat.html</li>
+</ol>
 <h2 id="configurations---cinder">Configurations - Cinder</h2>
 <p>The Cinder service provides block devices for instances.</p>
 <h3 id="configurations---cinder---ceph">Configurations - Cinder - Ceph</h3>
@@ -568,6 +636,41 @@ $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 --contro
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Volume encryption supported by the key manager&quot; Openstack Documentation. February 16 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/block-storage/volume-encryption.html</li>
+</ol>
+<h1 id="neutron-troubleshooting">Neutron Troubleshooting</h1>
+<p>Neutron is one of the most complicated services offered by OpenStack. Due to it's wide range of configurations and technologies that it handles, it can be difficult to troubleshoot problems. This section aims to clearly layout common techniques to track down and fix issues with Neutron.</p>
+<h2 id="neutron-troubleshooting---open-vswitch">Neutron Troubleshooting - Open vSwitch</h2>
+<h3 id="neutron-troubleshooting---open-vswitch---floating-ips">Neutron Troubleshooting - Open vSwitch - Floating IPs</h3>
+<p>Floating IPs can be manually added to the namespace. Depending on the environment, these rules either need to be added to the <code>snat-&lt;ROUTER_ID&gt;</code> namespace if it exists or the <code>qrouter-&lt;ROUTER_ID&gt;</code> namespace. All floating IPs need to be added with the /32 CIDR, not the CIDR that represents it's true subnet mask.</p>
+<pre><code># ip netns exec snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-OUTPUT -d &lt;FLOATING_IP&gt;/32 -j DNAT --to-destination &lt;LOCAL_IP&gt;
+# ip netns exec snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-PREROUTING -d &lt;FLOATING_IP&gt;/32 -j DNAT --to-destination &lt;LOCAL_IP&gt;
+# ip netns exec snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-float-snat -s &lt;LOCAL_IP&gt;/32 -j SNAT --to-source &lt;FLOATING_IP&gt;
+# ip netns exec snat-&lt;ROUTER_ID&gt; ip address add &lt;FLOATING_IP&gt;/32 brd &lt;FLOATING_IP&gt; dev qg-b2e3c286-b2</code></pre>
+<p>With no floating IPs allocated, the iptables NAT table in the SNAT namespace should look similar to this.</p>
+<pre><code># ip netns exec snat-&lt;ROUTER_ID&gt; iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-N neutron-l3-agent-OUTPUT
+-N neutron-l3-agent-POSTROUTING
+-N neutron-l3-agent-PREROUTING
+-N neutron-l3-agent-float-snat
+-N neutron-l3-agent-snat
+-N neutron-postrouting-bottom
+-A PREROUTING -j neutron-l3-agent-PREROUTING
+-A OUTPUT -j neutron-l3-agent-OUTPUT
+-A POSTROUTING -j neutron-l3-agent-POSTROUTING
+-A POSTROUTING -j neutron-postrouting-bottom
+-A neutron-l3-agent-POSTROUTING ! -i qg-&lt;NIC_ID&gt; ! -o qg-&lt;NIC_ID&gt; -m conntrack ! --ctstate DNAT -j ACCEPT
+-A neutron-l3-agent-snat -o qg-&lt;NIC_ID&gt; -j SNAT --to-source &lt;PUBLIC_ROUTER_IP&gt;
+-A neutron-l3-agent-snat -m mark ! --mark 0x2/0xffff -m conntrack --ctstate DNAT -j SNAT --to-source &lt;PUBLIC_ROUTER_IP&gt;
+-A neutron-postrouting-bottom -m comment --comment &quot;Perform source NAT on outgoing traffic.&quot; -j neutron-l3-agent-snat</code></pre>
+<p>[1][2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Adding additional NAT rule on neutron-l3-agent.&quot; Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/</li>
+<li>&quot;Networking in too much detail.&quot; RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/</li>
 </ol>
 <h1 id="upgrades">Upgrades</h1>
 <p>Upgrading a production OpenStack environment requires a lot of planning. It is recommended to test an upgrade of the environment virtually before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:</p>

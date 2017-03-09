@@ -23,9 +23,15 @@
         * [Metadata](#configurations---neutron---metadata)
         * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
         * [Quality of Service](#configurations---neutron---quality-of-service)
+        * [Distributed Virtual Routing](#configurations---neutron---distributed-virtual-routing)
+        * [High Availability](#configurations---neutron---high-availability)
     * [Cinder](#configurations---cinder)
         * [Ceph](#configurations---cinder---ceph)
         * [Encryption](#configurations---cinder---encryption)
+* [Neutron Troubleshooting](#neutron-troubleshooting)
+    * [Open vSwitch](#neutron-troubleshooting---open-vswitch)
+        * Network connections
+        * [Floating IPs](#neutron-troubleshooting---open-vswitch---floating-ips)
 * [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
 * [Automation](#automation)
@@ -40,10 +46,10 @@
 
 # Introduction
 
-This guide is aimed to help guide System Administrators through OpenStack. It is assumed that the cloud is using these industry standard software:
+This guide is aimed to help guide System Administrators through deploying, managing, and upgrading OpenStack. Specficially, almost everything here assumes that the cloud will be running on:
 
 * OpenStack Newton
-* CentOS 7 (Linux)
+* Red Hat Enterprise Linux (RHEL) or CentOS 7
 
 Most topics mentioned in this guide can be applied to similar environments.
 
@@ -86,14 +92,14 @@ Source:
 
 # Installation
 
-It is possible to easily install OpenStack all-in-one (AIO) server. This provides a means to quickly and easily test changes and updates to configuration files and code. This is ideal for developers and System Administrators looking for a proof of concept.
+It is possible to easily install OpenStack as an all-in-one (AIO) server or onto a full cluster of servers. Various tools exist for deploying and managing OpenStack.
 
 
 ## Installation - PackStack
 
 Supported operating systems: RHEL 7
 
-PackStack provides a simple all-in-one development. This is not meant for production but works well for developers needing to test new features.
+PackStack (sometimes refered to as RDO) provides a simple all-in-one development. Thisis aimed towards developers needing to test new features with the latest code.
 
 ```
 # yum install https://repos.fedorapeople.org/repos/openstack/openstack-newton/rdo-release-newton-4.noarch.rpm
@@ -111,9 +117,9 @@ Source:
 
 ## Installation - OpenStack Ansible
 
-Supported operating systems: Ubuntu 14.04 or 16.04
+Supported operating systems: RHEL 7, Ubuntu 14.04 or 16.04
 
-OpenStack Ansible uses Ansible for automating the deployment of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
+OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 ```
 # apt-get install git
@@ -235,6 +241,11 @@ Sources:
 
 For high availability and scalability, servers should be configured with a messaging agent. This allows a client's request to correctly be handled by the messaging queue and sent to one node to process that request.
 
+The configuration has been consolidated into the `transport_url` option. Multiple messaging hosts can be defined by using a comma before naming a virtual host.
+
+```
+transport_url = <TRANSPORT>://<USER1>:<PASS1>@<HOST1>:<PORT1>,<USER2>:<PASS2>@<HOST2>:<PORT2>/<VIRTUAL_HOST>
+```
 
 #### Scenario #1 - RabbitMQ
 
@@ -254,13 +265,21 @@ In the configuraiton file for every service, set the transport_url options for R
 
 #### Scenario #2 - ZeroMQ
 
-ZeroMQ. This provides the best performance, stability, and scalability. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]
+This provides the best performance and stability. Scalability becomes a concern only when getting into hundreds of nodes. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]
 
 ```
 [ DEFAULT ] transport_url = "zmq+redis://<REDIS_HOST>:6379"
+```
+```
 [ oslo_messaging_zmq ] rpc_zmq_bind_address = <IP>
 [ oslo_messaging_zmq ] rpc_zmq_bind_matchmaker = redis
 [ oslo_messaging_zmq ] rpc_zmq_host = <FQDN_OR_IP>
+```
+
+Alternatively, for high availability, use Redis Sentinel servers for the `transport_url`.
+
+```
+[ DEFAULT ] transport_url = "zmq+redis://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
 ```
 
 For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used.
@@ -319,23 +338,36 @@ PKI tokens are deprecated and will be removed in the Ocata release. [3]
 
 #### Scenario #3 - Fernet (fastest token creation)
 
+A public and private key wil need to be created for Fernet and the related Credential authentication.
+
 * /etc/keystone/keystone.conf
     * [ token ] provider = fernet
     * [ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/
-* Create the Fernet keys:
+    * [ credential ] provider = fernet
+    * [ credential ] key_repository = /etc/keystone/credential-keys/
+    * [ token ] provider = fernet
+* Create the required keys:
 ```
 # mkdir /etc/keystone/fernet-keys/
 # chmod 750 /etc/keystone/fernet-keys/
+# chown keystone.keystone /etc/keystone/fernet-keys/
 # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 ```
+```
+# mkdir /etc/keystone/credential-keys/
+# chmod 750 /etc/keystone/credential-keys/
+# chown keystone.keystone /etc/keystone/credential-keys/
+# keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+```
 
-[2]
+[2][4]
 
 Sources:
 
 1. "Configuring Keystone." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html
 2. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
 3. "Newton Series Release Notes." OpenStack Documentation. Accessed January 15, 2016. http://docs.openstack.org/releasenotes/keystone/newton.html
+4. "Install and configure [Keystone]." OpenStack Documentation. March 3, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/install-guide-rdo/keystone-install.html
 
 
 ## Configurations - Nova
@@ -592,6 +624,44 @@ Source:
 1. "Quality of Service (QoS)." OpenStack Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.openstack.org/draft/networking-guide/config-qos.html
 
 
+### Configurations - Neutron - Distributed Virtual Routing
+
+Distributed virtual routing (DVR) is a concept that involves deploying routers to both the compute and network nodes to spread out resource usage. All layer 2 traffic will be equally spread out among the servers. Public floating IPs will still need to go through the SNAT process via the routers on the network nodes. This is only supported when the Open vSwitch agent is used. [1]
+
+* /etc/neutron/neutron.conf
+    * [ DEFAULT ] router_distributed = true
+* /etc/neutron/l3_agent.ini (compute)
+    * [ DEFAULT ] agent_mode = dvr
+* /etc/neutron/l3_agent.ini (network or all-in-one)
+    * [ DEFAULT ] agent_mode = dvr_snat
+* /etc/neutron/plugins/ml2/ml2_conf.ini
+    * [ ml2 ] mechanism_drivers = openvswitch, l2population
+* /etc/neutron/plugins/ml2/openvswitch_agent.ini
+    * [ agent ] l2_population = true
+    * [ agent ] enable_distributed_routing = true
+
+Source:
+
+1. "Neutron/DVR/HowTo" OpenStack Wiki. January 5, 2017. Accessed March 7, 2017.  https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
+
+
+### Configurations - Neutron - High Availability
+
+High availability (HA) in Neutron allows for routers to failover to another duplicate router if one fails or is no longer present. All new routers will be highly available.
+
+* /etc/neutron/neutron.conf
+    * [ DEFAULT ] l3_ha = true
+    * [ DEFAULT ] max_l3_agents_per_router = 2
+    * [ DEFAULT ] allow_automatic_l3agent_failover = true
+
+
+[1]
+
+Source:
+
+1. "Distributed Virtual Routing with VRRP." OpenStack Documentation. March 6, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/networking-guide/config-dvr-ha-snat.html
+
+
 ## Configurations - Cinder
 
 The Cinder service provides block devices for instances.
@@ -644,6 +714,57 @@ $ openstack volume create --size <SIZE_IN_GB> --type LUKS <VOLUME_NAME>
 Source:
 
 1. "Volume encryption supported by the key manager" Openstack Documentation. February 16 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/block-storage/volume-encryption.html
+
+
+# Neutron Troubleshooting
+
+Neutron is one of the most complicated services offered by OpenStack. Due to it's wide range of configurations and technologies that it handles, it can be difficult to troubleshoot problems. This section aims to clearly layout common techniques to track down and fix issues with Neutron.
+
+
+## Neutron Troubleshooting - Open vSwitch
+
+
+### Neutron Troubleshooting - Open vSwitch - Floating IPs
+
+Floating IPs can be manually added to the namespace. Depending on the environment, these rules either need to be added to the `snat-<ROUTER_ID>` namespace if it exists or the `qrouter-<ROUTER_ID>` namespace. All floating IPs need to be added with the /32 CIDR, not the CIDR that represents it's true subnet mask.
+
+~~~
+# ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-OUTPUT -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
+# ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-PREROUTING -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
+# ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-float-snat -s <LOCAL_IP>/32 -j SNAT --to-source <FLOATING_IP>
+# ip netns exec snat-<ROUTER_ID> ip address add <FLOATING_IP>/32 brd <FLOATING_IP> dev qg-b2e3c286-b2
+~~~
+
+With no floating IPs allocated, the iptables NAT table in the SNAT namespace should look similar to this.
+
+~~~
+# ip netns exec snat-<ROUTER_ID> iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-N neutron-l3-agent-OUTPUT
+-N neutron-l3-agent-POSTROUTING
+-N neutron-l3-agent-PREROUTING
+-N neutron-l3-agent-float-snat
+-N neutron-l3-agent-snat
+-N neutron-postrouting-bottom
+-A PREROUTING -j neutron-l3-agent-PREROUTING
+-A OUTPUT -j neutron-l3-agent-OUTPUT
+-A POSTROUTING -j neutron-l3-agent-POSTROUTING
+-A POSTROUTING -j neutron-postrouting-bottom
+-A neutron-l3-agent-POSTROUTING ! -i qg-<NIC_ID> ! -o qg-<NIC_ID> -m conntrack ! --ctstate DNAT -j ACCEPT
+-A neutron-l3-agent-snat -o qg-<NIC_ID> -j SNAT --to-source <PUBLIC_ROUTER_IP>
+-A neutron-l3-agent-snat -m mark ! --mark 0x2/0xffff -m conntrack --ctstate DNAT -j SNAT --to-source <PUBLIC_ROUTER_IP>
+-A neutron-postrouting-bottom -m comment --comment "Perform source NAT on outgoing traffic." -j neutron-l3-agent-snat
+~~~
+
+[1][2]
+
+Sources:
+
+1. "Adding additional NAT rule on neutron-l3-agent." Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/
+2. "Networking in too much detail." RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/
 
 
 # Upgrades

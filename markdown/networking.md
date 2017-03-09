@@ -9,6 +9,7 @@
     * Debian
     * [RHEL](#operating-system-specific---rhel)
         * [Bridging](#operating-system-specific---rhel---bridging)
+            * [Open vSwitch](#operating-system-specific---rhel---bridging---open-vswitch)
         * [Bonding](#operating-system-specific---rhel---bonding)
 
 
@@ -200,16 +201,42 @@ Sources:
 
 ### Operating System Specific - RHEL - Bridging
 
-Various bridge configurations can be made. It is common to use a normal bridge for allow virtual machines to have full access to the network or use an OpenVSwitch bridge for OpenStack's software defined networking (SDN).
+A simple bridge using the Linux kernel can be configured using this basic template. The physical network interface should reference a bridge interface. The bridge interface will then contain the IP addressing information.
 
-OpenVSwitch bridge syntax (CLI):
+```
+# vim ifcfg-<NIC>
+DEVICE="<NIC>"
+TYPE=Ethernet
+NM_CONTROLLED=no
+BRIDGE=<BRIDGE>
+```
+```
+# vim ifcfg-<BRIDGE>
+DEVICE="<BRIDGE>"
+TYPE=Bridge
+ONBOOT=yes
+NM_CONTROLLED=no
+```
+
+[1]
+
+Source:
+
+1. "Network Bridge." Red Hat Documentation. May 29, 2016. Accessed February 24, 2017. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s2-networkscripts-interfaces_network-bridge.html
+
+
+### Operating System Specific - RHEL - Bridging - Open vSwitch
+
+Various bridge configurations can be made. It is common to use a normal bridge for allow virtual machines to have full access to the network or use an Open vSwitch bridge for OpenStack's software defined networking (SDN).
+
+Open vSwitch bridge syntax (CLI):
 ```
 # ovs-vsctl add-port <OVS_BRIDGE> <NIC>
 # ovs-vsctl add-br <OVS_BRIDGE>
 ```
 [1]
 
-OpenVSwitch bridge syntax (configuration file):
+Open vSwitch bridge syntax (configuration file):
 ```
 # vim ifcfg-<NIC>
 DEVICE="<NIC>"
@@ -224,7 +251,7 @@ TYPE="OVSBridge"
 DEVICETYPE="ovs"
 ```
 
-OpenVSwitch bridge example (configuration file):
+Open vSwitch bridge example (configuration file):
 ```
 # vim ifcfg-eth1
 DEVICE="eth1"
@@ -307,4 +334,3 @@ Sources:
 
 1. "RHEL: Linux Bond / Team Multiple Network Interfaces (NIC) Into a Single Interface." nixCraft. March 27, 2016. Accessed January 7, 2016. https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html
 2. "Bonding Interfaces." CentOS Tips and Tricks. January 22, 2013. Accessed January 7, 2016. https://wiki.centos.org/TipsAndTricks/BondingInterfaces
-
