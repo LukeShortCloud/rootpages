@@ -5,6 +5,8 @@
 * [Installation](#installation)
     * [PackStack](#installation---packstack)
     * [OpenStack Ansible](#installation---openstack-ansible)
+        * [Quick](#installation---openstack-ansible---quick)
+        * [Full](#installation---openstack-ansible---full)
     * [TripleO](#installation---tripleo)
         * [Quick](#installation---tripleo---quick)
         * [Full](#installation---tripleo---full)
@@ -19,6 +21,13 @@
         * [Hypervisors](#configurations---nova---hypervisors)
         * [CPU Pinning](#configurations---nova---cpu-pinning)
     * [Neutron](#configurations---neutron)
+        * [Network Types](#configurations---neutron---network-types)
+            * Provider Networks
+                * Open vSwitch
+                * Linux Bridge
+            * [Self-Service Networks](#configurations---neutron---network-types---self-service-networks)
+                * [Open vSwitch](#configurations---neutron---network-types---self-service-networks---open-vswitch)
+                * Linux Bridge
         * [DNS](#configurations---neutron---dns)
         * [Metadata](#configurations---neutron---metadata)
         * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
@@ -97,7 +106,7 @@ It is possible to easily install OpenStack as an all-in-one (AIO) server or onto
 
 ## Installation - PackStack
 
-Supported operating systems: RHEL 7
+Supported operating system: RHEL 7
 
 PackStack (sometimes refered to as RDO) provides a simple all-in-one development. Thisis aimed towards developers needing to test new features with the latest code.
 
@@ -117,15 +126,19 @@ Source:
 
 ## Installation - OpenStack Ansible
 
-Supported operating systems: RHEL 7, Ubuntu 14.04 or 16.04
+Supported operating systems: RHEL 7, Ubuntu 14.04, Ubuntu 16.04
 
-OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of Docker containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
+
+### Installation - OpenStack Ansible - Quick
+
+OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 ```
 # apt-get install git
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
 # git checkout stable/newton
+# mv /opt/openstack-ansible/etc/openstack_deploy /etc/
 # scripts/bootstrap-ansible.sh
 # scripts/bootstrap-aio.sh
 ```
@@ -135,6 +148,85 @@ OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of
 Source:
 
 1. "Quick Start." OpenStack Ansible Developer Documentation. January 10, 2016. Accessed January 10, 2016. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+
+
+### Installation - OpenStack Ansible - Full
+
+The recommended network topology is to have 4 different network interfaces and networks for managing different services. Only one interface and network is required for OpenStack Ansible to work but all four of these interfaces are recommended for production deployments.
+
+* br-mgmt = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.
+* br-storage = This is the only optional interface. It is recommended to use this to separate the `storage` nodes traffic. This should exist on the `storage` (when using bare-metal) and `compute` nodes.
+* br-vlan = This should exist on the `network` (when using bare-metal) and `compute` nodes. It is used for self-service networks.
+* br-vxlan = This should exist on the `network` and `compute` nodes. It is used for self-service networks.
+
+Download and install the latest stable OpenStack Ansible suite from GitHub.
+
+```
+# apt-get install git
+# git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+# cd /opt/openstack-ansible/
+# git checkout stable/newton
+# mv /opt/openstack-ansible/etc/openstack_deploy /etc/
+```
+
+Then copy over and modify the main configuration file.
+
+```
+# cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
+```
+
+View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a real production example and reference.
+
+Configure the networks that are used in the environment.
+
+
+* cider_networks
+    * container = The network range that the LXC containers will use an IP address from.
+    * tunnel = The network range for accessing network services between the `compute` and `network` nodes over the VXLAN interface.
+    * storage = The network range for accessing storage.
+* used_ips = Lists of IP addressess that are already in use and should not be used for the container networks.
+* global_overrides
+    * tunnel_bridge = The interface to use for tunneling VXLAN traffic. This is typically `br-vxlan`.
+    * management_bridge = The interface to use for management access. This is typically `br-mgmt`.
+    * provider_networks
+        * network = Different networks can be defined. At least one is required.
+            * type = The type of network that the `container_bridge` device should be used.
+                * flat
+                * vlan
+                * vxlan
+            * container_bridge = The bridge device that will be used to connect the container to the network. The recommended deployment scheme recommends setting up a `br-mgmt`, `br-storage`, `br-vlan`, and `br-vlan`. Any valid bridge device on the host node can be specified here.
+            * container_type = veth
+            * range = The optional VXLAN that the bridge interface should use.
+            * container_interface = The interface that the LXC container should use. This is typically `eth1`.
+
+The syntax for defining which host(s) a service will be installed onto follow this format below. Controller node services are specified with the keyword `-infra` in their name.
+
+```
+<SERVICE_TYPE>_hosts:
+  infra1:
+    ip: <HOST1_IP_ADDRESS>
+  infra2:
+    ip: <HOST2_IP_ADDRESS>
+```
+
+The valid service types are:
+
+* shared-infra = Galera, memcache, RabbitMQ, and utilities
+* repo-infra_hosts = Hosts that will handle storing and retrieving packages.
+* storage-infra = Cinder.
+* image = Glance.
+* compute-infra = Nova API nodes.
+* orchestration = Heat.
+* dashboard = Horizon.
+* network = Neutron network nodes
+* compute = Nova hypervisor nodes.
+* storage = Cinder.
+
+[1]
+
+Source:
+
+1. "[OpenStack-Ansible Project Deploy Guide] Overview" OpenStack Documentation. March 12, 2017. Accessed march 14, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html
 
 
 ## Installation - TripleO
@@ -505,6 +597,89 @@ Sources:
 ## Configurations - Neutron
 
 
+### Configurations - Neutron - Network Types
+
+In OpenStack, there are two common scenarios for networks.
+
+The first is known as `self-service` networks. This is a simplier approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.
+
+The second approach is known as `provider` networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, advanced features such as Firewall-as-a-Service (FWaaS) and Load-Balancing-as-a-Service (LBaaS) can be used.
+
+[1]
+
+Source:
+
+1. "[RDO Installation] Overview." OpenStack Documentation. March 8, 2017. Accessed March 10, 2017. https://docs.openstack.org/newton/install-guide-rdo/overview.html
+
+
+#### Configurations - Neutron - Network Types - Self-Service Networks
+
+
+##### Configurations - Neutron - Network Types - Self-Service Networks - Open vSwitch
+
+One device is required, but it is recommended to separate traffic onto two different network interfaces. There is `br-vlan` (sometimes also referred to as `br-provider`) for internal tagged traffic and `br-ex` for external connectivity.
+
+```
+# ovs-vsctl add-br br-vlan
+# ovs-vsctl add-port br-vlan <VLAN_INTERFACE>
+# ovs-vsctl add-br br-ex
+# ovs-vsctl add-port br-ex <EXTERNAL_INTERFACE>
+```
+
+* /etc/neutron/neutron.conf
+    * [DEFAULT]
+        * core_plugin = ml2
+        * service_plugins = router
+        * allow_overlapping_ips = True
+* /etc/neutron/plugins/ml2/ml2_conf.ini
+    * [ml2]
+        * type_drivers = flat,vlan,vxlan
+        * tenant_network_types = vxlan
+        * mechanism_drivers = linuxbridge,l2population
+        * ml2_type_vxlan = `<START_NUMBER>`,`<END_NUMBER>`
+* /etc/neutron/plugins/ml2/openvswitch_agent.ini
+    * [ovs]
+        * bridge_mappings = `<LABEL>`:br-vlan
+            * The `<LABEL>` can be any unique name. It is used as an alias for the interface name.
+        * local_ip = `<IP_ADDRESS>`
+            * This IP address should be accesible on the `br-vlan` interface.
+    * [agent]
+        * tunnel_types = vxlan
+        * l2_population = True
+    * [securitygroup]
+        * firewall_driver = iptables_hybrid
+* /etc/neutron/l3_agent.ini
+    * [DEFAULT]
+        * interface_driver = openvswitch
+        * external_network_bridge =
+            * This value should be left defined but blank.
+
+[1]
+
+On the controller node, restart the Nova API service and then start the required Neutron services.
+
+```
+# systemctl restart openstack-nova-api
+# systemctl enable neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+# systemctl start neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+```
+
+Finally, on the compute nodes, restart the compute service and then start the Open vSwitch agent.
+
+```
+# systemctl restart openstack-nova-compute
+# systemctl enable neutron-openvswitch-agent
+# systemctl start neutron-openvswitch-agent
+```
+
+[2]
+
+Sources:
+
+1. "Open vSwitch: Self-service networks." OpenStack Documentation. March 8, 2017. Accessed March 10, 2017. https://docs.openstack.org/newton/networking-guide/deploy-ovs-selfservice.html
+2. "[Installing the] Networking service." OpenStack Documentation. March 14, 2017. Accessed March 14, 2017. https://docs.openstack.org/newton/install-guide-rdo/neutron.html
+
+
 ### Configurations - Neutron - DNS
 
 By default, Neutron does not provide any DNS resolvers. This means that DNS will not work. It is possible to either provide a default list of name servers or configure Neutron to refer to the relevant /etc/resolv.conf file on the server.
@@ -687,6 +862,16 @@ Ceph has become the most popular backend to Cinder due to it's high availability
     * [ ceph ] rbd_store_chunk_size = 4
     * [ ceph ] rados_connect_timeout = -1
     * [ ceph ] glance_api_version = 2
+* /etc/nova/nova.conf
+    * [ libvirt ] images_type = rbd
+    * [ libvirt ] images_rbd_pool = volumes
+    * [ libvirt ] images_rbd_ceph_conf = /etc/ceph/ceph.conf
+    * [ libvirt ] rbd_user = cinder
+    * [ libvirt ] rbd_secret_uuid = `<LIBVIRT_SECRET_UUID>`
+        * This is the Libvirt secret UUID that allows for authentication with Cephx. It is configured with the `virsh` secret commands. Refer to the Root Page's `Virtualization` guide for more information.
+        ```
+        # virsh --help | grep secret
+        ```
 
 [1]
 
