@@ -883,9 +883,10 @@ pg 1.28 is active+clean+inconsistent, acting [8,11,20]
 ...
 &lt;/devices&gt;</code></pre></li>
 <li><p>Authentication is required so the Ceph client credentials must be encrypted by libvirt. This encrypted hash is called a &quot;secret.&quot;</p></li>
-<li><p>Create a Virsh template that has a secret of type &quot;ceph&quot; with a description for the end user.</p>
+<li><p>Create a Virsh template that has a secret of type &quot;ceph&quot; with a description for the end user. Optionally specify a UUID for this secret to be associated with or else one will be generated.</p>
 <pre><code># vim ceph-secret.xml
 &lt;secret ephemeral=&#39;no&#39; private=&#39;no&#39;&gt;
+&lt;uuid&gt;51757078-7d63-476f-8524-5d46119cfc8a&lt;/uuid&gt;
 &lt;usage type=&#39;ceph&#39;&gt;
     &lt;name&gt;The Ceph client key&lt;/name&gt;
 &lt;/usage&gt;

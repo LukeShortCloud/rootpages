@@ -939,10 +939,11 @@ Virtual machines that are run via the libvirt front-end can utilize Ceph's RADOS
 
 * Authentication is required so the Ceph client credentials must be encrypted by libvirt. This encrypted hash is called a "secret."
 
-* Create a Virsh template that has a secret of type "ceph" with a description for the end user.
+* Create a Virsh template that has a secret of type "ceph" with a description for the end user. Optionally specify a UUID for this secret to be associated with or else one will be generated.
 ```
 # vim ceph-secret.xml
 <secret ephemeral='no' private='no'>
+    <uuid>51757078-7d63-476f-8524-5d46119cfc8a</uuid>
     <usage type='ceph'>
         <name>The Ceph client key</name>
     </usage>
