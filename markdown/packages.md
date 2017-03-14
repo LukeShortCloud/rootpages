@@ -5,13 +5,15 @@
     * [Adding a Repository](#rpm---adding-a-repository)
     * [Creating a Repository](#rpm---creating-a-repository)
     * [Creating an RPM](#rpm---creating-an-rpm)
+        * [Directories](#rpm---creating-an-rpm---directories)
+        * [Users and Groups](#rpm---creating-an-rpm---users-and-groups)
     * Repositories
-        * Official
-        * Unofficial
+        * Official (EPEL)
+        * Unofficial (Repoforge)
 * [PKGBUILD - Arch](#pkgbuild---arch)
     * Repositories
-        * ABS
-        * AUR
+        * Official (ABS, Delta)
+        * Unofficial (AUR)
 * Flatpak
 
 
@@ -98,7 +100,7 @@ Sources:
 
 Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.
 
-Common options:
+Common variables:
 
 * Name = The name of the program.
 * Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, "2016-01-01").
@@ -109,10 +111,11 @@ Common options:
 * Requires = List the RPM packages that are dependencies needed for your program to work.
 * License = The license of the program.
 * URL = A URL link to the program's or, if that is not available, the developer's website.
+* Source = A tarball of the source code. It should follow the naming standard of `<RPM_NAME>-<RPM_PROGRAM_VERSION>.tar.gz`.
 
 Sample SPEC file:
 ```
-Name: My First RPM
+Name: my-first-rpm
 Version: 1.0.0
 Release: 1%{?dist}
 Summary: This is my first RPM
@@ -128,9 +131,77 @@ In case you also want to build a source RPM (SRPM) run:
 # rpmbuild -ba <SPECFILE>.spec
 ```
 
+Sections:
+
+* %description = Provide a description of the program.
+* %build = This is where the program is built from the source code.
+* %install = Copy files to a directory structure under $RPM_BUILD_ROOT that mirrors where their installed location. The $RPM_BUILD_ROOT is the top-level directory of a typical Linux file system hiercharchy.
+* %file = These are the files that should be copied over during installation. Permissions can also be set.
+    * `%attr(<MODE>, <USER>, <GROUP>)` = Define this in front of a file or folder to give it custom permissinos.
+
 Source:
 
 1. "How to create an RPM package." Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package
+
+
+### RPM - Creating an RPM - Directories
+
+During the creation of an RPM there are a few important directories that can and will be refereneced.
+
+* %{topdir} = The directory that the RPM related files should be located. By default this is set to `%{getenv:HOME}/rpmbuild`.
+* %{builddir} = The `%{_topdir}/BUILD` directory. This is where the compilation of the program should take place.
+* %{_sourcedir} = The `%{_topdir}/SOURCES` directory. This is where patches, service files, and source code can be stored.
+* %{_specdir} = The `%{_topdir}/SPECS` directory. This is where the SPEC file for the RPM should be stored.
+* %{_srcrpmdir} = The `%{_topdir}/SRPMS` directory. This is where the optional source RPM will be compiled and stored to.
+* %{buildroot} = The `%{_topdir}/BUILDROOT` directory. This is the file system hierarchy of where the RPM files will actually be installed to. This is also set to the `$RPM_BUILD_ROOT` shell variable.
+
+[1]
+
+Source:
+
+1. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
+
+
+### RPM - Creating an RPM - Users and Groups
+
+Creating a user or group can be done one of two ways.
+
+* Dynamically = Let the system deciede what user identification number (UID) and group ID (GID) to use.
+* Static = Specify a specific UID or GID number to use. This is useful for keeping permissions identifical on multiple platforms.
+
+The Fedora Project recommends using these standarized blocks of code to accomplish these methods. [1]
+
+Dynamic:
+```
+Requires(pre): shadow-utils
+[...]
+%pre
+getent group <GROUP_NAME> >/dev/null || groupadd -r <GROUP_NAME>
+getent passwd <USER_NAME> >/dev/null || \
+    useradd -r -g <GROUP_NAME> -s /sbin/nologin \
+    -c "<USER_DESCRIPTION>" <USER_NAME>
+exit 0
+```
+
+Static:
+```
+Requires(pre): shadow-utils
+<OMITTED>
+%pre
+getent group <GROUP_NAME> >/dev/null || groupadd -f -g <GID> -r <GROUP_NAME>
+if ! getent passwd <USER_NAME> >/dev/null ; then
+    if ! getent passwd <UID> >/dev/null ; then
+      useradd -r -u <UID> -g <GROUP_NAME> -s /sbin/nologin -c "Useful comment about the purpose of this account" <USER_NAME>
+    else
+      useradd -r -g <GROUP_NAME> -s /sbin/nologin -c "<USER_DESCRIPTION>" <USER_NAME>
+    fi
+fi
+exit 0
+```
+
+Source:
+
+1. "Packaging: Users and Groups" Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups
 
 
 ## PKGBUILD - Arch

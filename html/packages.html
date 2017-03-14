@@ -5,19 +5,23 @@
 <ul>
 <li><a href="#rpm---adding-a-repository">Adding a Repository</a></li>
 <li><a href="#rpm---creating-a-repository">Creating a Repository</a></li>
-<li><a href="#rpm---creating-an-rpm">Creating an RPM</a></li>
+<li><a href="#rpm---creating-an-rpm">Creating an RPM</a>
+<ul>
+<li><a href="#rpm---creating-an-rpm---directories">Directories</a></li>
+<li><a href="#rpm---creating-an-rpm---users-and-groups">Users and Groups</a></li>
+</ul></li>
 <li>Repositories
 <ul>
-<li>Official</li>
-<li>Unofficial</li>
+<li>Official (EPEL)</li>
+<li>Unofficial (Repoforge)</li>
 </ul></li>
 </ul></li>
 <li><a href="#pkgbuild---arch">PKGBUILD - Arch</a>
 <ul>
 <li>Repositories
 <ul>
-<li>ABS</li>
-<li>AUR</li>
+<li>Official (ABS, Delta)</li>
+<li>Unofficial (AUR)</li>
 </ul></li>
 </ul></li>
 <li>Flatpak</li>
@@ -61,7 +65,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
 </ol>
 <h2 id="rpm---creating-an-rpm">RPM - Creating an RPM</h2>
 <p>Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.</p>
-<p>Common options:</p>
+<p>Common variables:</p>
 <ul>
 <li>Name = The name of the program.</li>
 <li>Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;).</li>
@@ -72,9 +76,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
 <li>Requires = List the RPM packages that are dependencies needed for your program to work.</li>
 <li>License = The license of the program.</li>
 <li>URL = A URL link to the program's or, if that is not available, the developer's website.</li>
+<li>Source = A tarball of the source code. It should follow the naming standard of <code>&lt;RPM_NAME&gt;-&lt;RPM_PROGRAM_VERSION&gt;.tar.gz</code>.</li>
 </ul>
 <p>Sample SPEC file:</p>
-<pre><code>Name: My First RPM
+<pre><code>Name: my-first-rpm
 Version: 1.0.0
 Release: 1%{?dist}
 Summary: This is my first RPM
@@ -84,9 +89,67 @@ URL: http://example.tld/</code></pre>
 <pre><code># rpmbuild -bb &lt;SPECFILE&gt;.spec</code></pre>
 <p>In case you also want to build a source RPM (SRPM) run:</p>
 <pre><code># rpmbuild -ba &lt;SPECFILE&gt;.spec</code></pre>
+<p>Sections:</p>
+<ul>
+<li>%description = Provide a description of the program.</li>
+<li>%build = This is where the program is built from the source code.</li>
+<li>%install = Copy files to a directory structure under $RPM_BUILD_ROOT that mirrors where their installed location. The $RPM_BUILD_ROOT is the top-level directory of a typical Linux file system hiercharchy.</li>
+<li>%file = These are the files that should be copied over during installation. Permissions can also be set.
+<ul>
+<li><code>%attr(&lt;MODE&gt;, &lt;USER&gt;, &lt;GROUP&gt;)</code> = Define this in front of a file or folder to give it custom permissinos.</li>
+</ul></li>
+</ul>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;How to create an RPM package.&quot; Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package</li>
+</ol>
+<h3 id="rpm---creating-an-rpm---directories">RPM - Creating an RPM - Directories</h3>
+<p>During the creation of an RPM there are a few important directories that can and will be refereneced.</p>
+<ul>
+<li>%{topdir} = The directory that the RPM related files should be located. By default this is set to <code>%{getenv:HOME}/rpmbuild</code>.</li>
+<li>%{builddir} = The <code>%{_topdir}/BUILD</code> directory. This is where the compilation of the program should take place.</li>
+<li>%{_sourcedir} = The <code>%{_topdir}/SOURCES</code> directory. This is where patches, service files, and source code can be stored.</li>
+<li>%{_specdir} = The <code>%{_topdir}/SPECS</code> directory. This is where the SPEC file for the RPM should be stored.</li>
+<li>%{_srcrpmdir} = The <code>%{_topdir}/SRPMS</code> directory. This is where the optional source RPM will be compiled and stored to.</li>
+<li>%{buildroot} = The <code>%{_topdir}/BUILDROOT</code> directory. This is the file system hierarchy of where the RPM files will actually be installed to. This is also set to the <code>$RPM_BUILD_ROOT</code> shell variable.</li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Packaging:RPMMacros.&quot; Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros</li>
+</ol>
+<h3 id="rpm---creating-an-rpm---users-and-groups">RPM - Creating an RPM - Users and Groups</h3>
+<p>Creating a user or group can be done one of two ways.</p>
+<ul>
+<li>Dynamically = Let the system deciede what user identification number (UID) and group ID (GID) to use.</li>
+<li>Static = Specify a specific UID or GID number to use. This is useful for keeping permissions identifical on multiple platforms.</li>
+</ul>
+<p>The Fedora Project recommends using these standarized blocks of code to accomplish these methods. [1]</p>
+<p>Dynamic:</p>
+<pre><code>Requires(pre): shadow-utils
+[...]
+%pre
+getent group &lt;GROUP_NAME&gt; &gt;/dev/null || groupadd -r &lt;GROUP_NAME&gt;
+getent passwd &lt;USER_NAME&gt; &gt;/dev/null || \
+    useradd -r -g &lt;GROUP_NAME&gt; -s /sbin/nologin \
+    -c &quot;&lt;USER_DESCRIPTION&gt;&quot; &lt;USER_NAME&gt;
+exit 0</code></pre>
+<p>Static:</p>
+<pre><code>Requires(pre): shadow-utils
+&lt;OMITTED&gt;
+%pre
+getent group &lt;GROUP_NAME&gt; &gt;/dev/null || groupadd -f -g &lt;GID&gt; -r &lt;GROUP_NAME&gt;
+if ! getent passwd &lt;USER_NAME&gt; &gt;/dev/null ; then
+    if ! getent passwd &lt;UID&gt; &gt;/dev/null ; then
+      useradd -r -u &lt;UID&gt; -g &lt;GROUP_NAME&gt; -s /sbin/nologin -c &quot;Useful comment about the purpose of this account&quot; &lt;USER_NAME&gt;
+    else
+      useradd -r -g &lt;GROUP_NAME&gt; -s /sbin/nologin -c &quot;&lt;USER_DESCRIPTION&gt;&quot; &lt;USER_NAME&gt;
+    fi
+fi
+exit 0</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Packaging: Users and Groups&quot; Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups</li>
 </ol>
 <h2 id="pkgbuild---arch">PKGBUILD - Arch</h2>
 <p>Arch Linux packages are design to be simple and easy to create. A PKGBUILD file is compressed with a software's contents into a XZ tarball. This can contain either the source code or compiled program.</p>
