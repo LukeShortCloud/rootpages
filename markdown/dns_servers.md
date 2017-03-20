@@ -6,9 +6,10 @@
 * [PowerDNS](#powerdns)
   * [PowerAdmin](#powerdns---poweradmin)
   * [gmysql](#powerdns---gmysql)
+      * [Records](#powerdns---gmysql---records)
 * Unbound
 
-## Introduction to DNS
+# Introduction to DNS
 
 Domain Name Servers (DNS) provide friendly domain names that are generally associated with an IP address or a string of text. There are two types of DNS servers:
 
@@ -18,7 +19,7 @@ Domain Name Servers (DNS) provide friendly domain names that are generally assoc
 It is important to note that every DNS record has to be associated with a state of authority (SOA) record. This provides the primary nameserver/resolver along with time to live (TTL) related information.
 
 
-## PowerDNS
+# PowerDNS
 
 The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authorative server. [1] A few of the most popular backends are "bind" (BIND) due to it's large usage in the Linux community and "gmysql" (MySQL) due to it's scalability.
 
@@ -37,14 +38,15 @@ SOA options:
 * expire = How long (in seconds) before this zone should longer be queired for a failed retry. This value only applies to slave DNS servers.
 * ttl = How long (in seconds) a record is allowed to be cached by another DNS server. [5]
 
-### PowerDNS - PowerAdmin
+
+## PowerDNS - PowerAdmin
 
 PowerAdmin is the graphic control panel that can be installed and accessed via a web browser.
 
 
-### PowerDNS - gmysql
+## PowerDNS - gmysql
 
-The generic MySQL backend (gmysql) was created to allow any MySQL server store and serve records. [2] This is not to be confused with using the MyDNS backend. [1]
+The generic MySQL backend (gmysql) was created to allow any MySQL server to store and serve records. [2] This is not to be confused with using the MyDNS backend. [1]
 
 This is the recommend InnoDB table schema to use. [2]
 ```
@@ -137,36 +139,44 @@ CREATE TABLE pdns.tsigkeys (
 CREATE UNIQUE INDEX namealgoindex ON pdns.tsigkeys (name, algorithm);
 ```
 
-Then make sure that the pdns service is configured via the "pdns.conf" file to connect to the MySQL server.
+Then make sure that the pdns service is configured via the `pdns.conf` file to connect to the MySQL server.
 ```
 launch=gmysql
-gmysql-host=127.0.0.1
-gmysql-user=root
+gmysql-host=<MYSQL_HOST>
+gmysql-user=<MYSQL_USER>
 gmysql-dbname=pdns
-gmysql-password=<PASS>
+gmysql-password=<MYSQL_PASS>
 ```
 
-After pdns is configured to use gmysql, a domain's zone can be added. Here is an example. Notice that the pdns.domains table needs to first have an entry for the domain. That new insert will generate an "id". That ID should be refereneced as the "domain_id" in the pdns.records table or else the record will not resolve. In this case, the "id" was 1 and the domain name for the zone is "test.tld". [3]
+
+### PowerDNS - gmysql - Records
+
+After pdns is configured to use gmysql, a domain zones can be added. This requires that a information about the domain is added to the `pdns.domains` table and then a SOA record needs to be created in `pdns.records` referencing the domain's `id` number. [3]
+
 ```
 mysql> USE pdns;
-INSERT INTO domains (name, type) values ('test.tld', 'NATIVE');
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, 'test.tld', 'localhost admin@test.tld 0', 'SOA', 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1,'test.tld','dns1.nameserver.tld', 'NS', 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, 'test.tld', 'dns2.nameserver.tld', 'NS', 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, 'www.test.tld', '192.168.0.10', 'A', 3600);
+mysql> INSERT INTO domains (name, type) values ('<DOMAIN_NAME>', 'NATIVE');
+mysql> INSERT INTO records (domain_id, name, content, type, ttl) VALUES (1, '<DOMAIN_NAME>', 'localhost <DOMAIN_ADMIN_EMAIL_ADDRESS> 0', 'SOA', 86400);
 ```
 
-For records tables, the most important colums are:
+Once the SOA record is created then normal DNS records can be created and served. For the records tables, the most important columns are:
 
 * name = The domain name that will correspond to a record. This record should never end with a "."
 * type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV, PTR, etc.
 * content = What the name should resolve to when queried.
 
-PTR records require that the IP address be defined int he nibble format. This special format is basically the IP address in reverse with special suffixes added to the end. For helping to quickly get the format for long IPv6 addresses, use the "ipv6calc" command or this site [http://rdns6.com/hostRecord](http://rdns6.com/hostRecord).
+In this example, NS records and an A record is added for the domain `test.tld`.
+
+```
+mysql> INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1,'test.tld','dns1.nameserver.tld', 'NS', 86400);
+mysql> INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1, 'test.tld', 'dns2.nameserver.tld', 'NS', 86400);
+mysql> INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1, 'www.test.tld', '192.168.0.10', 'A', 3600);
+```
+
+PTR records require that the IP address be defined in the nibble format and end with a period. This special format is basically the IP address in reverse with special suffixes added to the end. For helping to quickly get the format for long IPv6 addresses, use the "ipv6calc" command or the site [http://rdns6.com/hostRecord](http://rdns6.com/hostRecord).
 ```
 <NIBBLE_IP4>.in-addr.arpa.
 <NIBBLE_IP6>.ip6.arpa.
@@ -174,10 +184,12 @@ PTR records require that the IP address be defined int he nibble format. This sp
 
 Here is an example of converting addresses to nibble.
 
-* IPv4 address = 192.168.0.10
-* IPv4 nibble address = 10.0.168.192.in-addr.arpa.
-* IPv6 address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)
-* IPv6 nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa
+* IPv4
+    * address = 192.168.0.10
+    * nibble address = 10.0.168.192.in-addr.arpa.
+* IPv6
+    * address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)
+    * nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.
 ```
 $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
 ```
