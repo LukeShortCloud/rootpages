@@ -5,17 +5,20 @@
 <li>Dnsmasq</li>
 <li><a href="#powerdns">PowerDNS</a></li>
 <li><a href="#powerdns---poweradmin">PowerAdmin</a></li>
-<li><a href="#powerdns---gmysql">gmysql</a></li>
+<li><a href="#powerdns---gmysql">gmysql</a>
+<ul>
+<li><a href="#powerdns---gmysql---records">Records</a></li>
+</ul></li>
 <li>Unbound</li>
 </ul>
-<h2 id="introduction-to-dns">Introduction to DNS</h2>
+<h1 id="introduction-to-dns">Introduction to DNS</h1>
 <p>Domain Name Servers (DNS) provide friendly domain names that are generally associated with an IP address or a string of text. There are two types of DNS servers:</p>
 <ul>
 <li>Authoritative = Serves it's own DNS records. Generally most authoritative servers will rely on a recursive component to provide missing DNS records.</li>
 <li>Recursive = Queries an external DNS server for records. These are usually then cached for a certain period of time.</li>
 </ul>
 <p>It is important to note that every DNS record has to be associated with a state of authority (SOA) record. This provides the primary nameserver/resolver along with time to live (TTL) related information.</p>
-<h2 id="powerdns">PowerDNS</h2>
+<h1 id="powerdns">PowerDNS</h1>
 <p>The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authorative server. [1] A few of the most popular backends are &quot;bind&quot; (BIND) due to it's large usage in the Linux community and &quot;gmysql&quot; (MySQL) due to it's scalability.</p>
 <p>This is the SOA format that pdns uses. At the bare minimum, the nameserver and email should be defined. [3]</p>
 <pre><code>nameserver email serial refresh retry expire ttl</code></pre>
@@ -29,10 +32,10 @@
 <li>expire = How long (in seconds) before this zone should longer be queired for a failed retry. This value only applies to slave DNS servers.</li>
 <li>ttl = How long (in seconds) a record is allowed to be cached by another DNS server. [5]</li>
 </ul>
-<h3 id="powerdns---poweradmin">PowerDNS - PowerAdmin</h3>
+<h2 id="powerdns---poweradmin">PowerDNS - PowerAdmin</h2>
 <p>PowerAdmin is the graphic control panel that can be installed and accessed via a web browser.</p>
-<h3 id="powerdns---gmysql">PowerDNS - gmysql</h3>
-<p>The generic MySQL backend (gmysql) was created to allow any MySQL server store and serve records. [2] This is not to be confused with using the MyDNS backend. [1]</p>
+<h2 id="powerdns---gmysql">PowerDNS - gmysql</h2>
+<p>The generic MySQL backend (gmysql) was created to allow any MySQL server to store and serve records. [2] This is not to be confused with using the MyDNS backend. [1]</p>
 <p>This is the recommend InnoDB table schema to use. [2]</p>
 <pre><code>CREATE DATABASE IF NOT EXISTS pdns;
 
@@ -121,39 +124,46 @@ CREATE TABLE pdns.tsigkeys (
 ) Engine=InnoDB;
 
 CREATE UNIQUE INDEX namealgoindex ON pdns.tsigkeys (name, algorithm);</code></pre>
-<p>Then make sure that the pdns service is configured via the &quot;pdns.conf&quot; file to connect to the MySQL server.</p>
+<p>Then make sure that the pdns service is configured via the <code>pdns.conf</code> file to connect to the MySQL server.</p>
 <pre><code>launch=gmysql
-gmysql-host=127.0.0.1
-gmysql-user=root
+gmysql-host=&lt;MYSQL_HOST&gt;
+gmysql-user=&lt;MYSQL_USER&gt;
 gmysql-dbname=pdns
-gmysql-password=&lt;PASS&gt;</code></pre>
-<p>After pdns is configured to use gmysql, a domain's zone can be added. Here is an example. Notice that the pdns.domains table needs to first have an entry for the domain. That new insert will generate an &quot;id&quot;. That ID should be refereneced as the &quot;domain_id&quot; in the pdns.records table or else the record will not resolve. In this case, the &quot;id&quot; was 1 and the domain name for the zone is &quot;test.tld&quot;. [3]</p>
+gmysql-password=&lt;MYSQL_PASS&gt;</code></pre>
+<h3 id="powerdns---gmysql---records">PowerDNS - gmysql - Records</h3>
+<p>After pdns is configured to use gmysql, a domain zones can be added. This requires that a information about the domain is added to the <code>pdns.domains</code> table and then a SOA record needs to be created in <code>pdns.records</code> referencing the domain's <code>id</code> number. [3]</p>
 <pre><code>mysql&gt; USE pdns;
-INSERT INTO domains (name, type) values (&#39;test.tld&#39;, &#39;NATIVE&#39;);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, &#39;test.tld&#39;, &#39;localhost admin@test.tld 0&#39;, &#39;SOA&#39;, 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1,&#39;test.tld&#39;,&#39;dns1.nameserver.tld&#39;, &#39;NS&#39;, 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, &#39;test.tld&#39;, &#39;dns2.nameserver.tld&#39;, &#39;NS&#39;, 86400);
-INSERT INTO records (domain_id, name, content, type, ttl)
-VALUES (1, &#39;www.test.tld&#39;, &#39;192.168.0.10&#39;, &#39;A&#39;, 3600);</code></pre>
-<p>For records tables, the most important colums are:</p>
+mysql&gt; INSERT INTO domains (name, type) values (&#39;&lt;DOMAIN_NAME&gt;&#39;, &#39;NATIVE&#39;);
+mysql&gt; INSERT INTO records (domain_id, name, content, type, ttl) VALUES (1, &#39;&lt;DOMAIN_NAME&gt;&#39;, &#39;localhost &lt;DOMAIN_ADMIN_EMAIL_ADDRESS&gt; 0&#39;, &#39;SOA&#39;, 86400);</code></pre>
+<p>Once the SOA record is created then normal DNS records can be created and served. For the records tables, the most important columns are:</p>
 <ul>
 <li>name = The domain name that will correspond to a record. This record should never end with a &quot;.&quot;</li>
 <li>type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV, PTR, etc.</li>
 <li>content = What the name should resolve to when queried.</li>
 </ul>
-<p>PTR records require that the IP address be defined int he nibble format. This special format is basically the IP address in reverse with special suffixes added to the end. For helping to quickly get the format for long IPv6 addresses, use the &quot;ipv6calc&quot; command or this site <a href="http://rdns6.com/hostRecord" class="uri">http://rdns6.com/hostRecord</a>.</p>
+<p>In this example, NS records and an A record is added for the domain <code>test.tld</code>.</p>
+<pre><code>mysql&gt; INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1,&#39;test.tld&#39;,&#39;dns1.nameserver.tld&#39;, &#39;NS&#39;, 86400);
+mysql&gt; INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1, &#39;test.tld&#39;, &#39;dns2.nameserver.tld&#39;, &#39;NS&#39;, 86400);
+mysql&gt; INSERT INTO records (domain_id, name, content, type, ttl)
+VALUES (1, &#39;www.test.tld&#39;, &#39;192.168.0.10&#39;, &#39;A&#39;, 3600);</code></pre>
+<p>PTR records require that the IP address be defined in the nibble format and end with a period. This special format is basically the IP address in reverse with special suffixes added to the end. For helping to quickly get the format for long IPv6 addresses, use the &quot;ipv6calc&quot; command or the site <a href="http://rdns6.com/hostRecord" class="uri">http://rdns6.com/hostRecord</a>.</p>
 <pre><code>&lt;NIBBLE_IP4&gt;.in-addr.arpa.
 &lt;NIBBLE_IP6&gt;.ip6.arpa.</code></pre>
 <p>Here is an example of converting addresses to nibble.</p>
 <ul>
-<li>IPv4 address = 192.168.0.10</li>
-<li>IPv4 nibble address = 10.0.168.192.in-addr.arpa.</li>
-<li>IPv6 address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)</li>
-<li><p>IPv6 nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa</p>
+<li>IPv4
+<ul>
+<li>address = 192.168.0.10</li>
+<li>nibble address = 10.0.168.192.in-addr.arpa.</li>
+</ul></li>
+<li>IPv6
+<ul>
+<li>address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)</li>
+<li><p>nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.</p>
 <pre><code>$ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA</code></pre></li>
+</ul></li>
 </ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
