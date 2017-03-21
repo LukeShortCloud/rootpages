@@ -1,34 +1,34 @@
 <h1 id="packages">Packages</h1>
 <ul>
-<li>DEB - Debian</li>
-<li><a href="#rpm---rhel">RPM - RHEL</a>
+<li>DEB (Debian)</li>
+<li><a href="#rpm">RPM (RHEL)</a>
 <ul>
-<li><a href="#rpm---adding-a-repository">Adding a Repository</a></li>
-<li><a href="#rpm---creating-a-repository">Creating a Repository</a></li>
-<li><a href="#rpm---creating-an-rpm">Creating an RPM</a>
+<li><a href="#rpm---repositories">Repositories</a>
 <ul>
-<li><a href="#rpm---creating-an-rpm---directories">Directories</a></li>
-<li><a href="#rpm---creating-an-rpm---users-and-groups">Users and Groups</a></li>
+<li><a href="#rpm---repositories---adding-a-repository">Adding a Repository</a></li>
+<li><a href="#rpm---repositories---creating-a-repository">Creating a Repository</a></li>
 </ul></li>
-<li>Repositories
+<li><a href="#rpm---packaging">Packaging</a>
 <ul>
-<li>Official (EPEL)</li>
-<li>Unofficial (Repoforge)</li>
+<li><a href="#rpm---packaging---macros">Macros</a>
+<ul>
+<li><a href="#rpm---packaging---macros---directories">Directories</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#pkgbuild---arch">PKGBUILD - Arch</a>
-<ul>
-<li>Repositories
-<ul>
-<li>Official (ABS, Delta)</li>
-<li>Unofficial (AUR)</li>
+<li><a href="#rpm---packaging---users-and-groups">Users and Groups</a></li>
+<li><a href="#rpm---packaging---patches">Patches</a></li>
 </ul></li>
 </ul></li>
-<li>Flatpak</li>
+<li><a href="#pkgbuild">PKGBUILD (Arch)</a>
+<ul>
+<li><a href="#pkgbuild---packaging">Packaging</a></li>
+</ul></li>
+<li><a href="#flatpak">Flatpak</a></li>
+<li>Snap</li>
 </ul>
-<h1 id="rpm---rhel">RPM - RHEL</h1>
-<h2 id="rpm---adding-a-repository">RPM - Adding a Repository</h2>
+<h1 id="rpm">RPM</h1>
+<h2 id="rpm---repositories">RPM - Repositories</h2>
 <p>Repositories (sometimes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
+<h3 id="rpm---repositories---adding-a-repository">RPM - Repositories - Adding a Repository</h3>
 <p>On Red Hat based systems, the repositories are all defined as text files with the &quot;.repo&quot; extension in this directory.</p>
 <pre><code># ls /etc/yum.repos.d/</code></pre>
 <p>Here are some common options for repository files: * [] = This should be the first part of a repository, with the name being inside the brackets. * name = This should be similar to the name from the brackets. However, this friendly name can be different and is usually ignored. * baseurl = The location of the repository. Valid location types include &quot;http://&quot;, &quot;ftp://&quot;, and &quot;file://&quot; for using the local file system. * mirrorlist = Instead of a baseurl, a link to a list of repository mirrors can be given. * enabled = Enable or disable a repository with a &quot;1&quot; or &quot;0&quot;. The default is value is &quot;1&quot;. [1] * gpgcheck = Force a GPG encryption check against signed packages. Enable or disable with a &quot;1&quot; or &quot;0&quot;. * gpgkey = Specify the path to the GPG key.</p>
@@ -49,7 +49,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
 <li>&quot;Fedora 24 System Administrator's Guide&quot; Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System_Administrators_Guide/sec-Setting_repository_Options.html</li>
 <li>&quot;yum.conf - Configuration file for yum(8).&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf</li>
 </ol>
-<h2 id="rpm---creating-a-repository">RPM - Creating a Repository</h2>
+<h2 id="rpm---repositories---creating-a-repository">RPM - Repositories - Creating a Repository</h2>
 <p>Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is &quot;centos/<span class="math inline"><em>r</em><em>e</em><em>l</em><em>e</em><em>a</em><em>s</em><em>e</em><em>v</em><em>e</em><em>r</em>/</span>basearch/&quot; where $releasever is the release version and $basearch is the CPU architecture. However, any directory can be used.</p>
 <p>In this example, a default Apache web server will have the repository access via the URL &quot;http://localhost/centos/7/x86_64/.&quot; Be sure to place your RPMs in this directory. [1]</p>
 <pre><code># yum install createrepo
@@ -63,16 +63,22 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre>
 <li>&quot;createrepo(8) - Linux man page.&quot; Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo</li>
 <li>&quot;createrepo/rpm metadata.&quot; createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/</li>
 </ol>
-<h2 id="rpm---creating-an-rpm">RPM - Creating an RPM</h2>
-<p>Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.</p>
+<h2 id="rpm---packaging">RPM - Packaging</h2>
+<p>An RPM is built from a &quot;spec&quot; file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.</p>
 <p>Common variables:</p>
 <ul>
-<li>Name = The name of the program.</li>
-<li>Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;).</li>
+<li>Name = The name of the program.
+<ul>
+<li><code>%{name}</code></li>
+</ul></li>
+<li>Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, &quot;2016-01-01&quot;).
+<ul>
+<li><code>%{version}</code></li>
+</ul></li>
 <li>Release = Start with &quot;1%{?dist}&quot; for the first build of the RPM. Increase the number if the package is ever rebuilt. Start from &quot;1%{?dist}&quot; if a new version of the actual program is being built.</li>
 <li>Summary = One sentence describing the package. A period is not allowed at the end.</li>
 <li>BuildRoot = The directory that contains all of the RPM packages. The directory structure under here should mirror the files location in relation to the top-level root &quot;/&quot;. For example, &quot;/bin/bash&quot; would be placed under &quot;$RPM_BUILD_ROOT/bin/bash&quot;.</li>
-<li>BuildArch = The architecture that the program is meant to run on. This is generally either &quot;x86_64&quot; or &quot;i386&quot;. If the code is not dependent on the CPU (for example, Java or bash scripts) then &quot;noarch&quot; can be used.</li>
+<li>BuildArch = The architecture that the program is meant to run on. This is generally either &quot;x86_64&quot; or &quot;i386.&quot; If the code is not dependent on the CPU (for example: Java programs, shell scripts, documentation, etc.) then &quot;noarch&quot; can be used.</li>
 <li>Requires = List the RPM packages that are dependencies needed for your program to work.</li>
 <li>License = The license of the program.</li>
 <li>URL = A URL link to the program's or, if that is not available, the developer's website.</li>
@@ -91,19 +97,32 @@ URL: http://example.tld/</code></pre>
 <pre><code># rpmbuild -ba &lt;SPECFILE&gt;.spec</code></pre>
 <p>Sections:</p>
 <ul>
-<li>%description = Provide a description of the program.</li>
-<li>%build = This is where the program is built from the source code.</li>
-<li>%install = Copy files to a directory structure under $RPM_BUILD_ROOT that mirrors where their installed location. The $RPM_BUILD_ROOT is the top-level directory of a typical Linux file system hiercharchy.</li>
-<li>%file = These are the files that should be copied over during installation. Permissions can also be set.
+<li><code>%description</code> = Provide a description of the program.</li>
+<li><code>%prep</code> = Define how to extract the source code for building.</li>
+<li><code>%setup</code> =</li>
+<li><code>%build</code> = This is where the program is built from the source code.</li>
+<li><code>%install</code> = Copy files to a directory structure under <code>%{buildroot}</code> that mirrors where their installed location. The <code>%{buildroot}</code> is the top-level directory of a typical Linux file system hiercharchy.</li>
+<li><code>%file</code> = These are the files that should be copied over during installation. Permissions can also be set.
 <ul>
-<li><code>%attr(&lt;MODE&gt;, &lt;USER&gt;, &lt;GROUP&gt;)</code> = Define this in front of a file or folder to give it custom permissinos.</li>
+<li><code>%attr(&lt;MODE&gt;, &lt;USER&gt;, &lt;GROUP&gt;)</code> = Define this in front of a file or folder to give it custom permissions.</li>
 </ul></li>
 </ul>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;How to create an RPM package.&quot; Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package</li>
 </ol>
-<h3 id="rpm---creating-an-rpm---directories">RPM - Creating an RPM - Directories</h3>
+<h3 id="rpm---packaging---macros">RPM - Packaging - Macros</h3>
+<p>Macros are variables in the RPM spec file that are expanded upon compilation of the RPM.</p>
+<p>Some useful macros include:</p>
+<ul>
+<li><code>%{patches}</code> = An array of all of the defined patch files.</li>
+<li><code>%{sources}</code> = An array of all of the defined source files.</li>
+</ul>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>https://fedoraproject.org/wiki/How_to_create_an_RPM_package</li>
+</ol>
+<h4 id="rpm---packaging---macros---directories">RPM - Packaging - Macros - Directories</h4>
 <p>During the creation of an RPM there are a few important directories that can and will be refereneced.</p>
 <ul>
 <li>%{topdir} = The directory that the RPM related files should be located. By default this is set to <code>%{getenv:HOME}/rpmbuild</code>.</li>
@@ -118,7 +137,7 @@ URL: http://example.tld/</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Packaging:RPMMacros.&quot; Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros</li>
 </ol>
-<h3 id="rpm---creating-an-rpm---users-and-groups">RPM - Creating an RPM - Users and Groups</h3>
+<h3 id="rpm---packaging---users-and-groups">RPM - Packaging - Users and Groups</h3>
 <p>Creating a user or group can be done one of two ways.</p>
 <ul>
 <li>Dynamically = Let the system deciede what user identification number (UID) and group ID (GID) to use.</li>
@@ -151,7 +170,35 @@ exit 0</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Packaging: Users and Groups&quot; Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups</li>
 </ol>
-<h2 id="pkgbuild---arch">PKGBUILD - Arch</h2>
+<h3 id="rpm---packaging---patches">RPM - Packaging - Patches</h3>
+<p>Some applications may require patches to work properly. Pathces should be stored in the <code>SOURCES</code> directories. At the beginning of the spec file, where the name and version information is defined, patch file names can also be defined.</p>
+<p>Usage:</p>
+<pre><code>Patch&lt;NUMBER&gt;: &lt;PATCH_FILE&gt;</code></pre>
+<p>Example:</p>
+<pre><code>Patch0: php-fpm_listen_port.patch
+Patch1: php_memory_limit.patch</code></pre>
+<p>These patches can then be referenced in the <code>%setup</code> phase (after <code>%prep</code> and before <code>%build%</code>).</p>
+<pre><code>%setup -q</code></pre>
+<p>A patched file can be created using the <code>diff</code> command.</p>
+<pre><code>$ diff -u &lt;ORIGINAL_FILE&gt; &lt;PATCHED_FILE&gt; &gt; &lt;PATCH_NAME&gt;.patch</code></pre>
+<p>If multiple files in a directory have been patched, a more comphrensive patch file can be made.</p>
+<pre><code>$ diff -urN &lt;ORIGINAL_SOURCE_DIRECTORY&gt;/ &lt;PATCHED_SOURCE_DIRECTORY&gt;/ &gt; &lt;PATCH_NAME&gt;.patch</code></pre>
+<p>In the spec file, the <code>%patch</code> macro can be used. The <code>-p1</code> argument strips off the top-level directory of the patch's path.</p>
+<p>Syntax:</p>
+<pre><code>%patch0 -p1
+%patch1 -p1</code></pre>
+<p>Example patch file:</p>
+<pre><code>--- d20-1.0.0_patched/src/dice.h
++++ d20-1.0.0/src/dice.h</code></pre>
+<p>A patch can also be made without the <code>%patch</code> macro by specifiying the location of the patch file.</p>
+<pre><code>patch &lt; %{_sourcedir}/&lt;FILE_NAME&gt;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How to Create and Use Patch Files for RPM Packages.&quot; Bob Cromwell. March 20, 2017. Accessed March 20, 2017. http://cromwell-intl.com/linux/rpm-patch.html</li>
+</ol>
+<h1 id="pkgbuild">PKGBUILD</h1>
+<h2 id="pkgbuild---packaging">PKGBUILD - Packaging</h2>
 <p>Arch Linux packages are design to be simple and easy to create. A PKGBUILD file is compressed with a software's contents into a XZ tarball. This can contain either the source code or compiled program.</p>
 <p>Required Variables:</p>
 <ul>
@@ -197,4 +244,12 @@ exit 0</code></pre>
 <li>&quot;PKGBUILD.&quot; Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD</li>
 <li>&quot;Creating packages.&quot; Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating_packages</li>
 <li>&quot;PKGBUILD(5) Manual Page.&quot; Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html</li>
+</ol>
+<h1 id="flatpak">Flatpak</h1>
+<p>Flatpak is a sandbox solution to providing a universal application packaging. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [1]</p>
+<p>This package manager is available for most modern Linux distributions. [2] RHEL does not have an official package but unofficial RPMs are provided here: <a href="https://copr.fedorainfracloud.org/coprs/amigadave/flatpak-epel7/" class="uri">https://copr.fedorainfracloud.org/coprs/amigadave/flatpak-epel7/</a>.</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;About <a href="#flatpak">Flatpak</a>.&quot; Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/</li>
+<li>&quot;Getting Flatpak.&quot; Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html</li>
 </ol>

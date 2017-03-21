@@ -1,28 +1,29 @@
 # Packages
 
-* DEB - Debian
-* [RPM - RHEL](#rpm---rhel)
-    * [Adding a Repository](#rpm---adding-a-repository)
-    * [Creating a Repository](#rpm---creating-a-repository)
-    * [Creating an RPM](#rpm---creating-an-rpm)
-        * [Directories](#rpm---creating-an-rpm---directories)
-        * [Users and Groups](#rpm---creating-an-rpm---users-and-groups)
-    * Repositories
-        * Official (EPEL)
-        * Unofficial (Repoforge)
-* [PKGBUILD - Arch](#pkgbuild---arch)
-    * Repositories
-        * Official (ABS, Delta)
-        * Unofficial (AUR)
-* Flatpak
+* DEB (Debian)
+* [RPM (RHEL)](#rpm)
+    * [Repositories](#rpm---repositories)
+        * [Adding a Repository](#rpm---repositories---adding-a-repository)
+        * [Creating a Repository](#rpm---repositories---creating-a-repository)
+    * [Packaging](#rpm---packaging)
+        * [Macros](#rpm---packaging---macros)
+            * [Directories](#rpm---packaging---macros---directories)
+        * [Users and Groups](#rpm---packaging---users-and-groups)
+        * [Patches](#rpm---packaging---patches)
+* [PKGBUILD (Arch)](#pkgbuild)
+    * [Packaging](#pkgbuild---packaging)
+* [Flatpak](#flatpak)
+* Snap
+
+# RPM
 
 
-# RPM - RHEL
-
-
-## RPM - Adding a Repository
+## RPM - Repositories
 
 Repositories (sometimes called "repos") are a central location where packages can easily be found and installed from.
+
+
+### RPM - Repositories - Adding a Repository
 
 On Red Hat based systems, the repositories are all defined as text files with the ".repo" extension in this directory.
 ```
@@ -65,7 +66,7 @@ Sources:
 2. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf
 
 
-## RPM - Creating a Repository
+## RPM - Repositories - Creating a Repository
 
 Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is "centos/$releasever/$basearch/" where $releasever is the release version and $basearch is the CPU architecture. However, any directory can be used.
 
@@ -96,18 +97,20 @@ Sources:
 2. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
 
 
-## RPM - Creating an RPM
+## RPM - Packaging
 
-Create a SPEC file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.
+An RPM is built from a "spec" file. This modified shell script contains all of the information about the program and on how to install and uninstall it. It is used to build the RPM.
 
 Common variables:
 
 * Name = The name of the program.
+    * `%{name}`
 * Version = The version of the package. Typically this is in the format of X.Y.Z (major.minor.bugfix) or ISO date format (for example, "2016-01-01").
+    * `%{version}`
 * Release = Start with "1%{?dist}" for the first build of the RPM. Increase the number if the package is ever rebuilt. Start from "1%{?dist}" if a new version of the actual program is being built.
 * Summary = One sentence describing the package. A period is not allowed at the end.
 * BuildRoot = The directory that contains all of the RPM packages. The directory structure under here should mirror the files location in relation to the top-level root "/". For example, "/bin/bash" would be placed under "$RPM_BUILD_ROOT/bin/bash".
-* BuildArch = The architecture that the program is meant to run on. This is generally either "x86_64" or "i386". If the code is not dependent on the CPU (for example, Java or bash scripts) then "noarch" can be used.
+* BuildArch = The architecture that the program is meant to run on. This is generally either "x86_64" or "i386." If the code is not dependent on the CPU (for example: Java programs, shell scripts, documentation, etc.) then "noarch" can be used.
 * Requires = List the RPM packages that are dependencies needed for your program to work.
 * License = The license of the program.
 * URL = A URL link to the program's or, if that is not available, the developer's website.
@@ -133,18 +136,34 @@ In case you also want to build a source RPM (SRPM) run:
 
 Sections:
 
-* %description = Provide a description of the program.
-* %build = This is where the program is built from the source code.
-* %install = Copy files to a directory structure under $RPM_BUILD_ROOT that mirrors where their installed location. The $RPM_BUILD_ROOT is the top-level directory of a typical Linux file system hiercharchy.
-* %file = These are the files that should be copied over during installation. Permissions can also be set.
-    * `%attr(<MODE>, <USER>, <GROUP>)` = Define this in front of a file or folder to give it custom permissinos.
+* `%description` = Provide a description of the program.
+* `%prep` = Define how to extract the source code for building.
+* `%setup` = 
+* `%build` = This is where the program is built from the source code.
+* `%install` = Copy files to a directory structure under `%{buildroot}` that mirrors where their installed location. The `%{buildroot}` is the top-level directory of a typical Linux file system hiercharchy.
+* `%file` = These are the files that should be copied over during installation. Permissions can also be set.
+    * `%attr(<MODE>, <USER>, <GROUP>)` = Define this in front of a file or folder to give it custom permissions.
 
 Source:
 
 1. "How to create an RPM package." Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How_to_create_an_RPM_package
 
 
-### RPM - Creating an RPM - Directories
+### RPM - Packaging - Macros
+
+Macros are variables in the RPM spec file that are expanded upon compilation of the RPM.
+
+Some useful macros include:
+
+* `%{patches}` = An array of all of the defined patch files.
+* `%{sources}` = An array of all of the defined source files.
+
+Source:
+
+1. https://fedoraproject.org/wiki/How_to_create_an_RPM_package
+
+
+#### RPM - Packaging - Macros - Directories
 
 During the creation of an RPM there are a few important directories that can and will be refereneced.
 
@@ -162,7 +181,7 @@ Source:
 1. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
 
 
-### RPM - Creating an RPM - Users and Groups
+### RPM - Packaging - Users and Groups
 
 Creating a user or group can be done one of two ways.
 
@@ -204,7 +223,70 @@ Source:
 1. "Packaging: Users and Groups" Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups
 
 
-## PKGBUILD - Arch
+### RPM - Packaging - Patches
+
+Some applications may require patches to work properly. Pathces should be stored in the `SOURCES` directories. At the beginning of the spec file, where the name and version information is defined, patch file names can also be defined.
+
+Usage:
+```
+Patch<NUMBER>: <PATCH_FILE>
+```
+
+Example:
+```
+Patch0: php-fpm_listen_port.patch
+Patch1: php_memory_limit.patch
+```
+
+These patches can then be referenced in the `%setup` phase (after `%prep` and before `%build%`).
+
+```
+%setup -q
+```
+
+A patched file can be created using the `diff` command.
+
+```
+$ diff -u <ORIGINAL_FILE> <PATCHED_FILE> > <PATCH_NAME>.patch
+```
+
+If multiple files in a directory have been patched, a more comphrensive patch file can be made.
+
+```
+$ diff -urN <ORIGINAL_SOURCE_DIRECTORY>/ <PATCHED_SOURCE_DIRECTORY>/ > <PATCH_NAME>.patch
+```
+
+In the spec file, the `%patch` macro can be used. The `-p1` argument strips off the top-level directory of the patch's path.
+
+Syntax:
+```
+%patch0 -p1
+%patch1 -p1
+```
+
+Example patch file:
+```
+--- d20-1.0.0_patched/src/dice.h
++++ d20-1.0.0/src/dice.h
+```
+
+A patch can also be made without the `%patch` macro by specifiying the location of the patch file.
+
+```
+patch < %{_sourcedir}/<FILE_NAME>
+```
+
+[1]
+
+Source:
+
+1. "How to Create and Use Patch Files for RPM Packages." Bob Cromwell. March 20, 2017. Accessed March 20, 2017. http://cromwell-intl.com/linux/rpm-patch.html
+
+
+# PKGBUILD
+
+
+## PKGBUILD - Packaging
 
 Arch Linux packages are design to be simple and easy to create. A PKGBUILD file is compressed with a software's contents into a XZ tarball. This can contain either the source code or compiled program.
 
@@ -259,3 +341,15 @@ Sources:
 1. "PKGBUILD." Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD
 2. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating_packages
 3. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
+
+
+# Flatpak
+
+Flatpak is a sandbox solution to providing a universal application packaging. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [1]
+
+This package manager is available for most modern Linux distributions. [2] RHEL does not have an official package but unofficial RPMs are provided here: [https://copr.fedorainfracloud.org/coprs/amigadave/flatpak-epel7/](https://copr.fedorainfracloud.org/coprs/amigadave/flatpak-epel7/).
+
+Source:
+
+1. "About [Flatpak]." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/
+2. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html
