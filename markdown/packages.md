@@ -1,6 +1,12 @@
 # Packages
 
-* DEB (Debian)
+* Source Code
+    * Makefile
+* [DEB (Debian)](#deb)
+    * [Repositories](#deb---repositories)
+        * [Adding a Repository](#deb---repositories---adding-a-repository)
+    * [Packaging](#deb---packaging)
+        * [Macros](#deb---packaging---macros)
 * [RPM (RHEL)](#rpm)
     * [Repositories](#rpm---repositories)
         * [Adding a Repository](#rpm---repositories---adding-a-repository)
@@ -14,6 +20,128 @@
     * [Packaging](#pkgbuild---packaging)
 * [Flatpak](#flatpak)
 * Snap
+
+# DEB
+
+
+## DEB - Repositories
+
+
+### DEB - Repositories - Adding a Repository
+
+Debian repositories can be managed by editing the primary file `/etc/apt/sources.list` or by adding new files to the `/etc/apt/sources.list.d/` directory.
+
+The syntax is:
+
+```
+<SOURCE> <URL> <DEBIAN_RELEASE> <COMPONENT1> <COMPONENT2> <COMPONENT3>
+```
+
+Sources:
+
+* deb = Binary packages.
+* deb-src = Source packages.
+
+
+The URL is assumed to have the path `http://<DOMAIN>/<PATH_TO>/dists/<DEBIAN_RELEASE>` available. The only part of the URL required is the location where the top-level `dists` directory resides.
+
+URL:
+
+* `http://ftp.debian.org/debian/`
+
+Debian releases (as of 2017-03):
+
+* `oldstable` or `wheezy`
+* `stable` or `jessie`
+* `testing` or `stretch`
+* `unstable` or `sid`
+
+Components:
+
+* main = The primary packages of Debian.
+* contrib = These packages require dependencies that are not in the `main` section.
+* non-free = These packages are proprietary packages that are unable to be shipped with Debian due to license conflicts.
+
+[1]
+
+Source:
+
+1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
+
+
+## DEB - Packaging
+
+Official guides for building Debian packages:
+
+* https://wiki.debian.org/BuildingTutorial
+* https://www.debian.org/doc/manuals/maint-guide/
+* https://www.debian.org/doc/manuals/debmake-doc/ch04.en.html
+
+A Debian package can be created by moving into the source code and creating these files and/or directories.
+
+* **debian/** = The top-level directory for the package.
+    * **changelog** = Required. A change log listing the updates for the package release itself, not the program.
+    * **control** = Required. This describes the package name, version, maintainer, dependencies, and more.
+    * **copyright ** = Required. The licenses used for the package and source code.
+    * install = Optional. A text file listing extra files (not installed by `make install`) that should be copied into the package.
+    * **rules** = Required. A Makefile that explains how to build and install the program before being packaged. In a default environment setup by the `dh_make` command this essentially runs `./configure; make; make install` in the directory that contains the `debian/` directory. The shebang at the top of the file should normally be `#!/usr/bin/make -f`.
+    * patches/ = Optional. Files for patching the source code.
+    * {preinst|postinst|prerm|postrm} = Optional. These are executable scripts that run before installation, after installation, before removable, or after removable. [1]
+
+Install the required packaging dependencies.
+
+```
+# apt-get update
+# apt-get install devscripts dh-make dpkg-dev
+```
+
+Create a working build directory, download the source code, and then run `dh_make`.
+
+```
+$ mkdir build
+$ cd build
+$ curl -O http://<URL_TO_SOURCE_CODE>
+$ tar -v -x -z -f <PROGRAM_NAME>-<VERSION>.tar.gz
+$ cd <PROGRAM_NAME>-<VERSION>
+$ dh_make -f ../<PROGRAM_NAME>-<VERSION>.tar.gz
+```
+
+This will create a `debian/` directory inside of the source code directory. With a template of all of the files required to build the source code. A copy tarball of the source code is also created as `<PROGRAM_NAME>_<VERSION>.orig.tar.gz` in the `build` directory.
+
+The DEB package can now be built.
+
+```
+$ dpkg-buildpackage
+```
+
+After building the package, a new source tarball will be created containing the `debian` directory: `<PROGRAM_NAME>_<VERSION>-<DEB_PACKAGE_RELEASE>.debian.tar.gz`. The actual package will be named `<PACKAGE_NAME>_<VERSION>-<DEB_PACKAGE_RELEASE>_<ARCHITECTURE>.deb`.
+
+Source:
+
+1. "Chapter 7 - Basics of the Debian package management system." The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html
+
+
+### DEB - Packaging - Macros
+
+Many macros exist for helping to build and install Debian packages.
+
+`rule` macros:
+
+* dh_auto_clean = `make distclean`
+* dh_auto_configure = `./configure` with directory options for the specific Debian release.
+* dh_auto_build = `make`
+* dh_auto_test = `make test`
+* dh_auto_install =
+```
+make install DESTDIR=/<PATH_TO_>/<PACKAGE>-<VERSION>-revision/debian/<PACKAGE>
+```
+
+[1]
+
+Source:
+
+1. "Chapter 4. Required files under the debian directory." Debian New Maintainers' Guide. February 25, 2017. Accessed March 24, 2017. https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+
 
 # RPM
 

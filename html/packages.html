@@ -1,6 +1,20 @@
 <h1 id="packages">Packages</h1>
 <ul>
-<li>DEB (Debian)</li>
+<li>Source Code
+<ul>
+<li>Makefile</li>
+</ul></li>
+<li><a href="#deb">DEB (Debian)</a>
+<ul>
+<li><a href="#deb---repositories">Repositories</a>
+<ul>
+<li><a href="#deb---repositories---adding-a-repository">Adding a Repository</a></li>
+</ul></li>
+<li><a href="#deb---packaging">Packaging</a>
+<ul>
+<li><a href="#deb---packaging---macros">Macros</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#rpm">RPM (RHEL)</a>
 <ul>
 <li><a href="#rpm---repositories">Repositories</a>
@@ -25,6 +39,94 @@
 <li><a href="#flatpak">Flatpak</a></li>
 <li>Snap</li>
 </ul>
+<h1 id="deb">DEB</h1>
+<h2 id="deb---repositories">DEB - Repositories</h2>
+<h3 id="deb---repositories---adding-a-repository">DEB - Repositories - Adding a Repository</h3>
+<p>Debian repositories can be managed by editing the primary file <code>/etc/apt/sources.list</code> or by adding new files to the <code>/etc/apt/sources.list.d/</code> directory.</p>
+<p>The syntax is:</p>
+<pre><code>&lt;SOURCE&gt; &lt;URL&gt; &lt;DEBIAN_RELEASE&gt; &lt;COMPONENT1&gt; &lt;COMPONENT2&gt; &lt;COMPONENT3&gt;</code></pre>
+<p>Sources:</p>
+<ul>
+<li>deb = Binary packages.</li>
+<li>deb-src = Source packages.</li>
+</ul>
+<p>The URL is assumed to have the path <code>http://&lt;DOMAIN&gt;/&lt;PATH_TO&gt;/dists/&lt;DEBIAN_RELEASE&gt;</code> available. The only part of the URL required is the location where the top-level <code>dists</code> directory resides.</p>
+<p>URL:</p>
+<ul>
+<li><code>http://ftp.debian.org/debian/</code></li>
+</ul>
+<p>Debian releases (as of 2017-03):</p>
+<ul>
+<li><code>oldstable</code> or <code>wheezy</code></li>
+<li><code>stable</code> or <code>jessie</code></li>
+<li><code>testing</code> or <code>stretch</code></li>
+<li><code>unstable</code> or <code>sid</code></li>
+</ul>
+<p>Components:</p>
+<ul>
+<li>main = The primary packages of Debian.</li>
+<li>contrib = These packages require dependencies that are not in the <code>main</code> section.</li>
+<li>non-free = These packages are proprietary packages that are unable to be shipped with Debian due to license conflicts.</li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;SourcesList.&quot; Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList</li>
+</ol>
+<h2 id="deb---packaging">DEB - Packaging</h2>
+<p>Official guides for building Debian packages:</p>
+<ul>
+<li>https://wiki.debian.org/BuildingTutorial</li>
+<li>https://www.debian.org/doc/manuals/maint-guide/</li>
+<li>https://www.debian.org/doc/manuals/debmake-doc/ch04.en.html</li>
+</ul>
+<p>A Debian package can be created by moving into the source code and creating these files and/or directories.</p>
+<ul>
+<li><strong>debian/</strong> = The top-level directory for the package.
+<ul>
+<li><strong>changelog</strong> = Required. A change log listing the updates for the package release itself, not the program.</li>
+<li><strong>control</strong> = Required. This describes the package name, version, maintainer, dependencies, and more.</li>
+<li><strong>copyright </strong> = Required. The licenses used for the package and source code.</li>
+<li>install = Optional. A text file listing extra files (not installed by <code>make install</code>) that should be copied into the package.</li>
+<li><strong>rules</strong> = Required. A Makefile that explains how to build and install the program before being packaged. In a default environment setup by the <code>dh_make</code> command this essentially runs <code>./configure; make; make install</code> in the directory that contains the <code>debian/</code> directory. The shebang at the top of the file should normally be <code>#!/usr/bin/make -f</code>.</li>
+<li>patches/ = Optional. Files for patching the source code.</li>
+<li>{preinst|postinst|prerm|postrm} = Optional. These are executable scripts that run before installation, after installation, before removable, or after removable. [1]</li>
+</ul></li>
+</ul>
+<p>Install the required packaging dependencies.</p>
+<pre><code># apt-get update
+# apt-get install devscripts dh-make dpkg-dev</code></pre>
+<p>Create a working build directory, download the source code, and then run <code>dh_make</code>.</p>
+<pre><code>$ mkdir build
+$ cd build
+$ curl -O http://&lt;URL_TO_SOURCE_CODE&gt;
+$ tar -v -x -z -f &lt;PROGRAM_NAME&gt;-&lt;VERSION&gt;.tar.gz
+$ cd &lt;PROGRAM_NAME&gt;-&lt;VERSION&gt;
+$ dh_make -f ../&lt;PROGRAM_NAME&gt;-&lt;VERSION&gt;.tar.gz</code></pre>
+<p>This will create a <code>debian/</code> directory inside of the source code directory. With a template of all of the files required to build the source code. A copy tarball of the source code is also created as <code>&lt;PROGRAM_NAME&gt;_&lt;VERSION&gt;.orig.tar.gz</code> in the <code>build</code> directory.</p>
+<p>The DEB package can now be built.</p>
+<pre><code>$ dpkg-buildpackage</code></pre>
+<p>After building the package, a new source tarball will be created containing the <code>debian</code> directory: <code>&lt;PROGRAM_NAME&gt;_&lt;VERSION&gt;-&lt;DEB_PACKAGE_RELEASE&gt;.debian.tar.gz</code>. The actual package will be named <code>&lt;PACKAGE_NAME&gt;_&lt;VERSION&gt;-&lt;DEB_PACKAGE_RELEASE&gt;_&lt;ARCHITECTURE&gt;.deb</code>.</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Chapter 7 - Basics of the Debian package management system.&quot; The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html</li>
+</ol>
+<h3 id="deb---packaging---macros">DEB - Packaging - Macros</h3>
+<p>Many macros exist for helping to build and install Debian packages.</p>
+<p><code>rule</code> macros:</p>
+<ul>
+<li>dh_auto_clean = <code>make distclean</code></li>
+<li>dh_auto_configure = <code>./configure</code> with directory options for the specific Debian release.</li>
+<li>dh_auto_build = <code>make</code></li>
+<li>dh_auto_test = <code>make test</code></li>
+<li><p>dh_auto_install =</p>
+<pre><code>make install DESTDIR=/&lt;PATH_TO_&gt;/&lt;PACKAGE&gt;-&lt;VERSION&gt;-revision/debian/&lt;PACKAGE&gt;</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Chapter 4. Required files under the debian directory.&quot; Debian New Maintainers' Guide. February 25, 2017. Accessed March 24, 2017. https://www.debian.org/doc/manuals/maint-guide/dreq.en.html</li>
+</ol>
 <h1 id="rpm">RPM</h1>
 <h2 id="rpm---repositories">RPM - Repositories</h2>
 <p>Repositories (sometimes called &quot;repos&quot;) are a central location where packages can easily be found and installed from.</p>
