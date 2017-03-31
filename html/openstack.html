@@ -8,7 +8,11 @@
 <li><a href="#installation---openstack-ansible">OpenStack Ansible</a>
 <ul>
 <li><a href="#installation---openstack-ansible---quick">Quick</a></li>
-<li><a href="#installation---openstack-ansible---full">Full</a></li>
+<li><a href="#installation---openstack-ansible---full">Full</a>
+<ul>
+<li><a href="#installation---openstack-ansible---full---configuration">Configuration</a></li>
+<li><a href="#installation---openstack-ansible---full---operations">Operations</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#installation---tripleo">TripleO</a>
 <ul>
@@ -141,22 +145,94 @@
 </ol>
 <h2 id="installation---openstack-ansible">Installation - OpenStack Ansible</h2>
 <p>Supported operating systems: RHEL 7, Ubuntu 14.04, Ubuntu 16.04</p>
-<h3 id="installation---openstack-ansible---quick">Installation - OpenStack Ansible - Quick</h3>
 <p>OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.</p>
-<pre><code># apt-get install git
-# git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-# cd /opt/openstack-ansible/
-# git checkout stable/newton
-# mv /opt/openstack-ansible/etc/openstack_deploy /etc/
-# scripts/bootstrap-ansible.sh
-# scripts/bootstrap-aio.sh</code></pre>
+<p>It offers key features that include:</p>
+<ul>
+<li>Full LXC containerization of services.</li>
+<li>HAProxy load balancing for clustering containers.</li>
+<li>Scaling for MariaDB Galera, RabbitMQ, compute nodes, and more.</li>
+<li>Central logging with rsyslog.</li>
+<li>OpenStack package repository caching.</li>
+<li>Automated upgrades.</li>
+</ul>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. January 10, 2016. Accessed January 10, 2016. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
+<li>&quot;OpenStack-Ansible.&quot; GitHub. March 30, 2017. Accessed March 30, 2017. https://github.com/openstack/openstack-ansible</li>
+</ol>
+<h3 id="installation---openstack-ansible---quick">Installation - OpenStack Ansible - Quick</h3>
+<p>This quick installation guide covers how to install an all-in-one environment. It is recommended to deploy this inside of a virtual machine (with nested virtualization enabled) as many system configurations are changed.</p>
+<p>Setup the OpenStack-Ansible project.</p>
+<pre><code># git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+# cd /opt/openstack-ansible/
+# git checkout stable/newton</code></pre>
+<p>There are two all-in-one scenarios that will run different Ansible Playbooks. The default is &quot;aio&quot; but this can be changed to the second scenario by setting the <code>SCENARIO</code> shell variable to &quot;ceph.&quot; Alternatively, the roles to run can be manaully modified in <code>/opt/openstack-ansible/tests/bootstrap-aio.yml</code> Playbook.</p>
+<p><code># export SCENARIO=&quot;ceph&quot;</code></p>
+<ul>
+<li>aio
+<ul>
+<li>cinder.yml.aio</li>
+<li>designate.yml.aio</li>
+<li>glance.yml.aio</li>
+<li>heat.yml.aio</li>
+<li>horizon.yml.aio</li>
+<li>keystone.yml.aio</li>
+<li>neutron.yml.aio</li>
+<li>nova.yml.aio</li>
+<li>swift.yml.aio</li>
+</ul></li>
+<li>ceph:
+<ul>
+<li>ceph.yml.aio</li>
+<li>cinder.yml.aio</li>
+<li>glance.yml.aio</li>
+<li>heat.yml.aio</li>
+<li>horizon.yml.aio</li>
+<li>keystone.yml.aio</li>
+<li>neutron.yml.aio</li>
+</ul></li>
+</ul>
+<p>Extra Playbooks can be added by copying them from <code>/opt/openstack-ansible/etc/openstack_deploy/conf.d/</code> to <code>/etc/openstack_deploy/conf.d/</code>. The file extensions should be changed from <code>.yml.aio</code> to <code>.yml</code> to be correctly parsed.</p>
+<p>Then OpenStack-Ansible project can now setup and deploy the LXC containers to run OpenStack.</p>
+<pre><code># scripts/bootstrap-ansible.sh
+# scripts/bootstrap-aio.sh
+# scripts/run-playbooks.sh</code></pre>
+<p>If the installation fails, it is recommended to reinstall the operating system to truly clear out all of the custom configurations that OpenStack-Ansible creates. Running the <code>scripts/run-playbooks.sh</code> script will not work again until the existing LXC containers and configurations have been removed. However, this official Bash script can be used to clean up most of the OpenStack-Ansible installation. Use at your own risk.</p>
+<pre><code># # Move to the playbooks directory.
+cd /opt/openstack-ansible/playbooks
+
+# # Destroy all of the running containers.
+openstack-ansible lxc-containers-destroy.yml
+
+# # On the host stop all of the services that run locally and not
+# #  within a container.
+for i in \
+       $(ls /etc/init \
+         | grep -e &quot;nova\|swift\|neutron\|cinder&quot; \
+         | awk -F&#39;.&#39; &#39;{print $1}&#39;); do \
+    service $i stop; \
+  done
+
+# # Uninstall the core services that were installed.
+for i in $(pip freeze | grep -e &quot;nova\|neutron\|keystone\|swift\|cinder&quot;); do \
+    pip uninstall -y $i; done
+
+# # Remove crusty directories.
+rm -rf /openstack /etc/{neutron,nova,swift,cinder} \
+         /var/log/{neutron,nova,swift,cinder}
+
+# # Remove the pip configuration files on the host
+rm -rf /root/.pip
+
+# # Remove the apt package manager proxy
+rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
 </ol>
 <h3 id="installation---openstack-ansible---full">Installation - OpenStack Ansible - Full</h3>
-<p>The recommended network topology is to have 4 different network interfaces and networks for managing different services. Only one interface and network is required for OpenStack Ansible to work but all four of these interfaces are recommended for production deployments.</p>
+<p>The recommended network topology is that the physical servers should have 4 different network interfaces and networks for managing different services. Only one network is required for OpenStack Ansible to work but having segregated VLANs is recommended for production environments.</p>
 <ul>
 <li>br-mgmt = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.</li>
 <li>br-storage = This is the only optional interface. It is recommended to use this to separate the <code>storage</code> nodes traffic. This should exist on the <code>storage</code> (when using bare-metal) and <code>compute</code> nodes.</li>
@@ -168,16 +244,22 @@
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
 # git checkout stable/newton
-# mv /opt/openstack-ansible/etc/openstack_deploy /etc/</code></pre>
+# cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/</code></pre>
 <p>Then copy over and modify the main configuration file.</p>
 <pre><code># cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. March 28, 2017. Accessed March 30, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html</li>
+</ol>
+<h4 id="installation---openstack-ansible---full---configuration">Installation - OpenStack Ansible - Full - Configuration</h4>
 <p>View the <code>/etc/openstack_deploy/openstack_user_config.yml.prod.example</code> for a real production example and reference.</p>
 <p>Configure the networks that are used in the environment.</p>
 <ul>
 <li>cider_networks
 <ul>
 <li>container = The network range that the LXC containers will use an IP address from.</li>
-<li>tunnel = The network range for accessing network services between the <code>compute</code> and <code>network</code> nodes over the VXLAN interface.</li>
+<li>tunnel = The network range for accessing network services between the <code>compute</code> and <code>network</code> nodes over the VXLAN or GRE tunnel interface.</li>
 <li>storage = The network range for accessing storage.</li>
 </ul></li>
 <li>used_ips = Lists of IP addressess that are already in use and should not be used for the container networks.</li>
@@ -211,7 +293,7 @@
     ip: &lt;HOST2_IP_ADDRESS&gt;</code></pre>
 <p>The valid service types are:</p>
 <ul>
-<li>shared-infra = Galera, memcache, RabbitMQ, and utilities</li>
+<li>shared-infra = Galera, memcache, RabbitMQ, and other utilities.</li>
 <li>repo-infra_hosts = Hosts that will handle storing and retrieving packages.</li>
 <li>storage-infra = Cinder.</li>
 <li>image = Glance.</li>
@@ -225,7 +307,59 @@
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview&quot; OpenStack Documentation. March 12, 2017. Accessed march 14, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html</li>
+<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. March 28, 2017. Accessed March 30, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html</li>
+</ol>
+<h4 id="installation---openstack-ansible---full---operations">Installation - OpenStack Ansible - Full - Operations</h4>
+<p>Once OpenStack-Ansible is installed, it can be used immediately. The primary container to use is the <code>utility</code> container.</p>
+<pre><code># lxc-ls -1 | grep utility
+# lxc-attach -n &lt;UTILITY_CONTAINER_NAME&gt;</code></pre>
+<p>The file <code>/root/openrc</code> should exist on the container with the administrator credentials. Source this file to use them.</p>
+<pre><code># source /root/openrc</code></pre>
+<p>Verify that all of the correct services and endpoints exist.</p>
+<pre><code># openstack service list
+# openstack endpoint list</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[OpenStack-Ansible] Operations guide.&quot; OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html</li>
+</ol>
+<h5 id="installation---openstack-ansible---full---operations---add-a-infrastructure-container">Installation - OpenStack Ansible - Full - Operations - Add a Infrastructure Container</h5>
+<p>Add the new host to the <code>infra_hosts</code> section in <code>/etc/openstack_deploy/openstack_user_config.yml</code>. Then the inventory can be updated which will generate a new unique node name that the OpenStack-Ansible Playbooks can run against. The <code>--limit</code> options are important because they will ensure that it will only run on the new infrastructure node.</p>
+<pre><code># cd /opt/openstack-ansible/playbooks
+# /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py &gt; /dev/null
+# /opt/openstack-ansible/scripts/inventory-manage.py -l |awk &#39;/&lt;NEW_INFRA_HOST&gt;/ {print $2}&#39; | sort -u | tee /root/add_host.limit
+# openstack-ansible setup-everything.yml --limit @/root/add_host.limit
+# openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[OpenStack-Ansible] Operations guide.&quot; OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html</li>
+</ol>
+<h5 id="installation---openstack-ansible---full---operations---add-a-compute-container">Installation - OpenStack Ansible - Full - Operations - Add a Compute Container</h5>
+<p>Add the new host to the <code>compute_hosts</code> section in <code>/etc/openstack_deploy/openstack_user_config.yml</code>. Then the OpenStack-Ansible deployment Playbooks can be run again.</p>
+<pre><code># cd /opt/openstack-ansible/playbooks
+# openstack-ansible setup-hosts.yml --limit &lt;NEW_COMPUTE_HOST_NAME&gt;
+# openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit &lt;NEW_COMPUTE_HOST_NAME&gt;
+# openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[OpenStack-Ansible] Operations guide.&quot; OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html</li>
+</ol>
+<h5 id="installation---openstack-ansible---full---operations---remove-a-compute-container">Installation - OpenStack Ansible - Full - Operations - Remove a Compute Container</h5>
+<p>Stop the services on the compute container and then use the <code>openstack-ansible-ops</code> project's Playbook <code>remote_compute_node.yml</code> to fully it. Be sure to also remove the host from the <code>/etc/openstack_deploy/openstack_user_config.yml</code> configuration when done.</p>
+<pre><code># lxc-ls -1 | grep compute
+# lxc-attach -n &lt;COMPUTE_CONTAINER_TO_REMOVE&gt;
+# stop nova-compute
+# stop neutron-linuxbridge-agent
+# exit
+# git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
+# cd /opt/openstack-ansible-ops/ansible_tools/playbooks
+# openstack-ansible remove_compute_node.yml -e node_to_be_removed=&quot;&lt;COMPUTE_CONTAINER_TO_REMOVE&gt;&quot;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[OpenStack-Ansible] Operations guide.&quot; OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html</li>
 </ol>
 <h2 id="installation---tripleo">Installation - TripleO</h2>
 <p>Supported operating systems: RHEL 7, Fedora &gt;= 22</p>
