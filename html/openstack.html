@@ -7,7 +7,10 @@
 <li><a href="#installation---packstack">PackStack</a></li>
 <li><a href="#installation---openstack-ansible">OpenStack Ansible</a>
 <ul>
-<li><a href="#installation---openstack-ansible---quick">Quick</a></li>
+<li><a href="#installation---openstack-ansible---quick">Quick</a>
+<ul>
+<li><a href="#installation---openstack-ansible---quick---operations">Operations</a></li>
+</ul></li>
 <li><a href="#installation---openstack-ansible---full">Full</a>
 <ul>
 <li><a href="#installation---openstack-ansible---full---configuration">Configuration</a></li>
@@ -91,12 +94,48 @@
 <li><a href="#performance">Performance</a></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>This guide is aimed to help guide System Administrators through deploying, managing, and upgrading OpenStack. Specficially, almost everything here assumes that the cloud will be running on:</p>
+<p>This guide is aimed to help guide Cloud Administrators through deploying, managing, and upgrading OpenStack. Most topics mentioned in this guide can be applied to similar environments and/or versions.</p>
+<p>Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The number represents the major version of each software in that release. For example, Ocata software is versioned as <code>15.X.X</code>. A new release comes out about every 6 months and is supported for 1 year.</p>
+<p>Releases:</p>
+<ol style="list-style-type: decimal">
+<li>Austin</li>
+<li>Bexar</li>
+<li>Cactus</li>
+<li>Diablo</li>
+<li>Essex</li>
+<li>Folsom</li>
+<li>Grizzly</li>
+<li>Havana</li>
+<li>Icehouse</li>
+<li>Juno</li>
+<li>Kilo</li>
+<li>Liberty</li>
+<li>Mitaka
 <ul>
-<li>OpenStack Newton</li>
-<li>Red Hat Enterprise Linux (RHEL) or CentOS 7</li>
-</ul>
-<p>Most topics mentioned in this guide can be applied to similar environments.</p>
+<li>EOL: 2017-04-10</li>
+</ul></li>
+<li>Newton
+<ul>
+<li>EOL: 2017-10-11</li>
+</ul></li>
+<li>Ocata
+<ul>
+<li>EOL: 2018-02-26</li>
+</ul></li>
+<li>Pike
+<ul>
+<li>Currently in development. The expected release date is in September of 2017.</li>
+</ul></li>
+<li>Queens
+<ul>
+<li>On the roadmap.</li>
+</ul></li>
+</ol>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;OpenStack Releases.&quot; OpenStack Releases. April 3, 2017. Accessed April 3, 2017. https://releases.openstack.org/</li>
+</ol>
 <h1 id="overview">Overview</h1>
 <p>OpenStack has a large range of services that manage different different components in a modular way.</p>
 <p>Core services:</p>
@@ -230,6 +269,23 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
+</ol>
+<h4 id="installation---openstack-ansible---quick---operations">Installation - OpenStack Ansible - Quick - Operations</h4>
+<p>A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.</p>
+<pre><code># cd /opt/openstack-ansible/
+# cp etc/openstack_deploy/conf.d/&lt;PLAYBOOK_INSTANCE_CONFIGURATION&gt;.yml.aio /etc/openstack_deploy/conf.d/&lt;PLAYBOOK_INSTANCE_CONFIGURATION&gt;.yml</code></pre>
+<p>Add the new container to the list of inventory servers.</p>
+<pre><code># /opt/openstack-ansible/scripts/inventory-manage.py &gt; /dev/null</code></pre>
+<p>Update the repository server to include the new packages required.</p>
+<pre><code># cd playbooks/
+# openstack-ansible repo-install.yml</code></pre>
+<p>Deploy the new contianer and then run the Playbook.</p>
+<pre><code># openstack-ansible setup-everything.yml --limit &lt;NEW_CONTAINER_NAME&gt;
+# openstack-ansible &lt;PLAYBOOK&gt; --limit &lt;NEW_CONTAINER_NAME&gt;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
 </ol>
 <h3 id="installation---openstack-ansible---full">Installation - OpenStack Ansible - Full</h3>
 <p>The recommended network topology is that the physical servers should have 4 different network interfaces and networks for managing different services. Only one network is required for OpenStack Ansible to work but having segregated VLANs is recommended for production environments.</p>
@@ -404,7 +460,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <h3 id="configurations---common---database">Configurations - Common - Database</h3>
 <p>Different database backends can be used by the API services on the controller nodes.</p>
 <ul>
-<li><p>MariaDB/MySQL. Requires the &quot;PyMySQL&quot; Python library. Starting with Liberty, this is prefered over using &quot;mysql://&quot; as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with &quot;MySQL-python&quot;). [1]</p>
+<li><p>MariaDB/MySQL. Requires the &quot;PyMySQL&quot; Python library. Starting with Liberty, this is prefered on Ubuntu over using &quot;<code>mysql://</code>&quot; as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with &quot;MySQL-python&quot;). [1] RHEL still requires the use of the legacy &quot;<code>mysql://</code>&quot; connector. [4]</p>
 <pre><code>[ database ] connection = mysql+pymysql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MYSQL_HOST&gt;:&lt;MYSQL_PORT&gt;/&lt;DATABASE&gt;</code></pre></li>
 <li><p>PostgreSQL. Requires the &quot;psycopg2&quot; Python library. [2]</p>
 <pre><code>[ database ] connection = postgresql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;POSTGRESQL_HOST&gt;:&lt;POSTGRESQL_PORT&gt;/&lt;DATABASE&gt;</code></pre></li>
@@ -418,6 +474,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <li>&quot;DevStack switching from MySQL-python to PyMySQL.&quot; OpenStack nimeyo. Jun 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql</li>
 <li>&quot;Using PostgreSQL with OpenStack.&quot; FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/</li>
 <li>&quot;Add the Telemetry service - Install and configure.&quot; OpenStack Documentation. December 24, 2016. Accessed February 18, 2017. https://docs.openstack.org/liberty/install-guide-rdo/ceilometer-install.html</li>
+<li>&quot;Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found.&quot; OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991</li>
 </ol>
 <h3 id="configurations---common---messaging">Configurations - Common - Messaging</h3>
 <p>For high availability and scalability, servers should be configured with a messaging agent. This allows a client's request to correctly be handled by the messaging queue and sent to one node to process that request.</p>
@@ -622,8 +679,8 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <h2 id="configurations---neutron">Configurations - Neutron</h2>
 <h3 id="configurations---neutron---network-types">Configurations - Neutron - Network Types</h3>
 <p>In OpenStack, there are two common scenarios for networks.</p>
-<p>The first is known as <code>self-service</code> networks. This is a simplier approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.</p>
-<p>The second approach is known as <code>provider</code> networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, advanced features such as Firewall-as-a-Service (FWaaS) and Load-Balancing-as-a-Service (LBaaS) can be used.</p>
+<p>The first is known as <code>self-service</code> networks. This is a simpler approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.</p>
+<p>The second approach is known as <code>provider</code> networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, private networks can be created with VLAN, VXLAN, and/or GRE tagging to create isolated networks.</p>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -792,7 +849,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <ul>
 <li>[ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 <ul>
-<li>This is for Neutron with the OpenVSwitch backend only.</li>
+<li>This is for Neutron with the Open vSwitch backend only.</li>
 </ul></li>
 <li>[ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
 <ul>
@@ -811,7 +868,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <li>[ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver</li>
 <li>[ haproxy ] user_group = haproxy
 <ul>
-<li>Specify the group that HAProxy runs as. In RHEL, it's &quot;haproxy.&quot;</li>
+<li>Specify the group that HAProxy runs as. In RHEL, it's <code>haproxy</code>.</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -825,7 +882,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>http://docs.openstack.org/draft/networking-guide/config-lbaas.html</li>
+<li>&quot;Load Balancer as a Service (LBaaS).&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. http://docs.openstack.org/draft/networking-guide/config-lbaas.html</li>
 </ol>
 <h3 id="configurations---neutron---quality-of-service">Configurations - Neutron - Quality of Service</h3>
 <p>The Quality of Service (QoS) plugin can be used to rate limit the amount of bandwidth that is allowed through a network port.</p>

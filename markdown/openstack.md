@@ -6,6 +6,7 @@
     * [PackStack](#installation---packstack)
     * [OpenStack Ansible](#installation---openstack-ansible)
         * [Quick](#installation---openstack-ansible---quick)
+            * [Operations](#installation---openstack-ansible---quick---operations)
         * [Full](#installation---openstack-ansible---full)
             * [Configuration](#installation---openstack-ansible---full---configuration)
             * [Operations](#installation---openstack-ansible---full---operations)
@@ -57,12 +58,40 @@
 
 # Introduction
 
-This guide is aimed to help guide System Administrators through deploying, managing, and upgrading OpenStack. Specficially, almost everything here assumes that the cloud will be running on:
+This guide is aimed to help guide Cloud Administrators through deploying, managing, and upgrading OpenStack. Most topics mentioned in this guide can be applied to similar environments and/or versions.
 
-* OpenStack Newton
-* Red Hat Enterprise Linux (RHEL) or CentOS 7
+Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The number represents the major version of each software in that release. For example, Ocata software is versioned as `15.X.X`. A new release comes out about every 6 months and is supported for 1 year.
 
-Most topics mentioned in this guide can be applied to similar environments.
+Releases:
+
+1. Austin
+2. Bexar
+3. Cactus
+4. Diablo
+5. Essex
+6. Folsom
+7. Grizzly
+8. Havana
+9. Icehouse
+10. Juno
+11. Kilo
+12. Liberty
+13. Mitaka
+    * EOL: 2017-04-10
+14. Newton
+    * EOL: 2017-10-11
+15. Ocata
+    * EOL: 2018-02-26
+16. Pike
+    * Currently in development. The expected release date is in September of 2017.
+17. Queens
+    * On the roadmap.
+
+[1]
+
+Source:
+
+1. "OpenStack Releases." OpenStack Releases. April 3, 2017. Accessed April 3, 2017. https://releases.openstack.org/
 
 
 # Overview
@@ -231,6 +260,42 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy
 Source:
 
 1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+
+
+#### Installation - OpenStack Ansible - Quick - Operations
+
+A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.
+
+```
+# cd /opt/openstack-ansible/
+# cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
+```
+
+Add the new container to the list of inventory servers.
+
+```
+# /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
+```
+
+Update the repository server to include the new packages required.
+
+```
+# cd playbooks/
+# openstack-ansible repo-install.yml
+```
+
+Deploy the new contianer and then run the Playbook.
+
+```
+# openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
+# openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
+```
+
+[1]
+
+Source:
+
+1. "Quick Start." OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
 ### Installation - OpenStack Ansible - Full
@@ -487,7 +552,7 @@ These are general configuration options that apply to most OpenStack configurati
 
 Different database backends can be used by the API services on the controller nodes.
 
-* MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with Liberty, this is prefered over using "mysql://" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1]
+* MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with Liberty, this is prefered on Ubuntu over using "`mysql://`" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1] RHEL still requires the use of the legacy "`mysql://`" connector. [4]
 ```
 [ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 ```
@@ -510,6 +575,7 @@ Sources:
 1. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. Jun 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
 2. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
 3. "Add the Telemetry service - Install and configure." OpenStack Documentation. December 24, 2016. Accessed February 18, 2017. https://docs.openstack.org/liberty/install-guide-rdo/ceilometer-install.html
+4. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 
 
 ### Configurations - Common - Messaging
@@ -784,9 +850,9 @@ Sources:
 
 In OpenStack, there are two common scenarios for networks.
 
-The first is known as `self-service` networks. This is a simplier approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.
+The first is known as `self-service` networks. This is a simpler approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.
 
-The second approach is known as `provider` networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, advanced features such as Firewall-as-a-Service (FWaaS) and Load-Balancing-as-a-Service (LBaaS) can be used.
+The second approach is known as `provider` networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, private networks can be created with VLAN, VXLAN, and/or GRE tagging to create isolated networks.
 
 [1]
 
@@ -936,7 +1002,7 @@ Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. I
         * Append the LBaaSv2 service plugin.
 *   /etc/neutron/lbaas_agent.ini
     * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-        * This is for Neutron with the OpenVSwitch backend only.
+        * This is for Neutron with the Open vSwitch backend only.
     * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
         * This is for Neutron with the Linux Bridge backend only.
 
@@ -947,7 +1013,7 @@ Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. I
 * /etc/neutron/lbaas_agent.ini
     * [ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
     * [ haproxy ] user_group = haproxy
-        * Specify the group that HAProxy runs as. In RHEL, it's "haproxy."
+        * Specify the group that HAProxy runs as. In RHEL, it's `haproxy`.
 
 #### Scenario #2 - Octavia
 
@@ -958,7 +1024,7 @@ Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. I
 
 Source:
 
-1. http://docs.openstack.org/draft/networking-guide/config-lbaas.html
+1. "Load Balancer as a Service (LBaaS)." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. http://docs.openstack.org/draft/networking-guide/config-lbaas.html
 
 
 ### Configurations - Neutron - Quality of Service
