@@ -1,4 +1,4 @@
-<h1 id="openstack">OpenStack</h1>
+<h1 id="openstack-ocata">OpenStack Ocata</h1>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#overview">Overview</a></li>
@@ -173,14 +173,19 @@
 <h2 id="installation---packstack">Installation - PackStack</h2>
 <p>Supported operating system: RHEL 7</p>
 <p>PackStack (sometimes refered to as RDO) provides a simple all-in-one development. Thisis aimed towards developers needing to test new features with the latest code.</p>
-<pre><code># yum install https://repos.fedorapeople.org/repos/openstack/openstack-newton/rdo-release-newton-4.noarch.rpm
-# yum install packstack
+<p>First, install the OpenStack repository.</p>
+<p>RHEL:</p>
+<pre><code># yum install https://www.rdoproject.org/repos/rdo-release.rpm</code></pre>
+<p>CentOS:</p>
+<pre><code># yum install centos-release-openstack-ocata</code></pre>
+<p>Then install PackStack and generate a configuration file refered to as the &quot;answer&quot; file. This can optionally be customized. Then install OpenStack using the answer file.</p>
+<pre><code># yum install openstack-packstack
 # packstack --gen-answer-file &lt;FILE&gt;
 # packstack --answer-file &lt;FILE&gt;</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;OpenStack packages.&quot; OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS. http://docs.openstack.org/mitaka/install-guide-rdo/environment-packages.html</li>
+<li>&quot;All-in-one quickstart: Proof of concept for single node.&quot; RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/</li>
 </ol>
 <h2 id="installation---openstack-ansible">Installation - OpenStack Ansible</h2>
 <p>Supported operating systems: RHEL 7, Ubuntu 14.04, Ubuntu 16.04</p>
@@ -204,7 +209,7 @@
 <p>Setup the OpenStack-Ansible project.</p>
 <pre><code># git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
-# git checkout stable/newton</code></pre>
+# git checkout stable/ocata</code></pre>
 <p>There are two all-in-one scenarios that will run different Ansible Playbooks. The default is &quot;aio&quot; but this can be changed to the second scenario by setting the <code>SCENARIO</code> shell variable to &quot;ceph.&quot; Alternatively, the roles to run can be manaully modified in <code>/opt/openstack-ansible/tests/bootstrap-aio.yml</code> Playbook.</p>
 <p><code># export SCENARIO=&quot;ceph&quot;</code></p>
 <ul>
@@ -299,14 +304,14 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <pre><code># apt-get install git
 # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
 # cd /opt/openstack-ansible/
-# git checkout stable/newton
+# git checkout stable/ocata
 # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/</code></pre>
 <p>Then copy over and modify the main configuration file.</p>
 <pre><code># cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. March 28, 2017. Accessed March 30, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html</li>
+<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html</li>
 </ol>
 <h4 id="installation---openstack-ansible---full---configuration">Installation - OpenStack Ansible - Full - Configuration</h4>
 <p>View the <code>/etc/openstack_deploy/openstack_user_config.yml.prod.example</code> for a real production example and reference.</p>
@@ -363,7 +368,7 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. March 28, 2017. Accessed March 30, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/newton/overview.html</li>
+<li>&quot;[OpenStack-Ansible Project Deploy Guide] Overview.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html</li>
 </ol>
 <h4 id="installation---openstack-ansible---full---operations">Installation - OpenStack Ansible - Full - Operations</h4>
 <p>Once OpenStack-Ansible is installed, it can be used immediately. The primary container to use is the <code>utility</code> container.</p>
@@ -427,7 +432,7 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <h3 id="installation---tripleo---quick">Installation - TripleO - Quick</h3>
 <p>The &quot;TripleO-Quickstart&quot; project was created to use Ansible to automate deploying TripleO as fast as possible.</p>
 <pre><code>$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
-$ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
+$ bash quickstart.sh --release ocata &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -466,14 +471,14 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <pre><code>[ database ] connection = postgresql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;POSTGRESQL_HOST&gt;:&lt;POSTGRESQL_PORT&gt;/&lt;DATABASE&gt;</code></pre></li>
 <li><p>SQLite.</p>
 <pre><code>[ database ] connection = sqlite:///&lt;DATABASE&gt;.sqlite</code></pre></li>
-<li><p>MongoDB is generally only used for Ceilometer. [3]</p>
+<li><p>MongoDB is generally only used for Ceilometer when it is not using the Gnocchi back-end. [3]</p>
 <pre><code>[ database ] mongodb://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MONGODB_HOST&gt;:&lt;MONGODB_PORT&gt;/&lt;DATABASE&gt;</code></pre></li>
 </ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;DevStack switching from MySQL-python to PyMySQL.&quot; OpenStack nimeyo. Jun 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql</li>
 <li>&quot;Using PostgreSQL with OpenStack.&quot; FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/</li>
-<li>&quot;Add the Telemetry service - Install and configure.&quot; OpenStack Documentation. December 24, 2016. Accessed February 18, 2017. https://docs.openstack.org/liberty/install-guide-rdo/ceilometer-install.html</li>
+<li>&quot;Install and configure [Ceilometer] for Red Hat Enterprise Linux and CentOS.&quot; OpenStack Documentation. March 24, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-install-guide/telemetry/ocata/install-base-rdo.html</li>
 <li>&quot;Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found.&quot; OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991</li>
 </ol>
 <h3 id="configurations---common---messaging">Configurations - Common - Messaging</h3>
@@ -499,13 +504,13 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <pre><code>[ DEFAULT ] transport_url = &quot;zmq://&quot;</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Message queue.&quot; OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/install-guide-rdo/environment-messaging.html</li>
-<li>&quot;RPC messaging configurations.&quot; OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/common-configurations/rpc.html</li>
+<li>&quot;Message queue.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/environment-messaging.html</li>
+<li>&quot;RPC messaging configurations.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/common-configurations/rpc.html</li>
 <li>&quot;ZeroMQ Driver Deployment Guide.&quot; OpenStack Documentation. February 16, 2017. Accessed February 18, 2017. https://docs.openstack.org/developer/oslo.messaging/zmq_driver.html</li>
 </ol>
 <h2 id="configurations---keystone">Configurations - Keystone</h2>
 <h3 id="configurations---keystone---api-v3">Configurations - Keystone - API v3</h3>
-<p>In Newton, the Keystone v2.0 API has been completely deprecated. It will be removed entirely from OpenStack in the &quot;Q&quot; release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
+<p>In Newton, the Keystone v2.0 API has been completely deprecated. It will be removed entirely from OpenStack in the <code>Queens</code> release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
 <ul>
 <li>/etc/keystone/keystone-paste.ini
 <ul>
@@ -531,7 +536,7 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 </ul></li>
 </ul>
 <h4 id="scenario-2---pki">Scenario #2 - PKI</h4>
-<p>PKI tokens are deprecated and will be removed in the Ocata release. [3]</p>
+<p>PKI tokens have been removed since the Ocata release. [3]</p>
 <ul>
 <li>/etc/keystone/keystone.conf
 <ul>
@@ -566,8 +571,8 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Configuring Keystone.&quot; OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/keystone/configuration.html</li>
 <li>&quot;OpenStack Keystone Fernet tokens.&quot; Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/</li>
-<li>&quot;Newton Series Release Notes.&quot; OpenStack Documentation. Accessed January 15, 2016. http://docs.openstack.org/releasenotes/keystone/newton.html</li>
-<li>&quot;Install and configure [Keystone].&quot; OpenStack Documentation. March 3, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/install-guide-rdo/keystone-install.html</li>
+<li>&quot;Ocata Series [Keystone] Release Notes.&quot; OpenStack Documentation. Accessed April 3, 2017. https://docs.openstack.org/releasenotes/keystone/ocata.html</li>
+<li>&quot;Install and configure [Keystone].&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/keystone-install.html</li>
 </ol>
 <h2 id="configurations---nova">Configurations - Nova</h2>
 <ul>
@@ -617,23 +622,12 @@ $ bash quickstart.sh --release mitaka &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
 </ul></li>
 </ul>
 <p>[4]</p>
-<h4 id="scenario-4---docker">Scenario #4 - Docker</h4>
-<p>Docker is not available by default in OpenStack because it is technically not a virtualization technology. It uses LXC for virtualization. Docker is used to help faciliate resources in an easier way. First it must be installed before configuring it in Nova.</p>
-<pre><code># git clone https://github.com/openstack/nova-docker.git
-# cd nova-docker/
-# pip install -r requirements.txt
-# python setup.py install</code></pre>
-<ul>
-<li>[DEFAULT] compute_driver = novadocker.virt.docker.DockerDriver</li>
-</ul>
-<p>[5]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Hypervisors.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html</li>
-<li>&quot;KVM.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/kvm.html</li>
-<li>&quot;Xen.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/xen_libvirt.html</li>
-<li>&quot;LXC.&quot; OpenStack Configuration Reference - Liberty. Accessed August 28th, 2016. http://docs.openstack.org/liberty/config-reference/content/lxc.html</li>
-<li>&quot;nova-docker.&quot; GitHub.com. December, 2015. Accessed August 28th, 2016. https://github.com/openstack/nova-docker</li>
+<li>&quot;Hypervisors.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html</li>
+<li>&quot;KVM.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-kvm.html</li>
+<li>&quot;Xen.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-xen-libvirt.html</li>
+<li>&quot;LXC (Linux containers).&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-lxc.html</li>
 </ol>
 <h3 id="configurations---nova---cpu-pinning">Configurations - Nova - CPU Pinning</h3>
 <p>Verify that the processor(s) has hardware support for non-uniform memory access (NUMA). If it does, NUMA may still need to be turned on in the BIOS. NUMA nodes are the physical processors. These processors are then mapped to specific sectors of RAM. [1]</p>
@@ -684,7 +678,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;[RDO Installation] Overview.&quot; OpenStack Documentation. March 8, 2017. Accessed March 10, 2017. https://docs.openstack.org/newton/install-guide-rdo/overview.html</li>
+<li>&quot;[RDO Installation] Overview.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/overview.html</li>
 </ol>
 <h4 id="configurations---neutron---network-types---self-service-networks">Configurations - Neutron - Network Types - Self-Service Networks</h4>
 <h5 id="configurations---neutron---network-types---self-service-networks---open-vswitch">Configurations - Neutron - Network Types - Self-Service Networks - Open vSwitch</h5>
@@ -760,8 +754,8 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>[2]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Open vSwitch: Self-service networks.&quot; OpenStack Documentation. March 8, 2017. Accessed March 10, 2017. https://docs.openstack.org/newton/networking-guide/deploy-ovs-selfservice.html</li>
-<li>&quot;[Installing the] Networking service.&quot; OpenStack Documentation. March 14, 2017. Accessed March 14, 2017. https://docs.openstack.org/newton/install-guide-rdo/neutron.html</li>
+<li>&quot;Open vSwitch: Self-service networks.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/deploy-ovs-selfservice.html</li>
+<li>&quot;[Installing the] Networking service.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/neutron.html</li>
 </ol>
 <h3 id="configurations---neutron---dns">Configurations - Neutron - DNS</h3>
 <p>By default, Neutron does not provide any DNS resolvers. This means that DNS will not work. It is possible to either provide a default list of name servers or configure Neutron to refer to the relevant /etc/resolv.conf file on the server.</p>
@@ -786,7 +780,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Name resolution for instances.&quot; OpenStack Documentation. August 09, 2016. Accessed August 13th, 2016. http://docs.openstack.org/mitaka/networking-guide/config-dns-resolution.html</li>
+<li>&quot;Name resolution for instances.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/config-dns-res.html</li>
 </ol>
 <h3 id="configurations---neutron---metadata">Configurations - Neutron - Metadata</h3>
 <p>The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with &quot;cloud-init&quot; on the instance to configure SSH keys and other post-boot tasks.</p>
@@ -956,7 +950,7 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Distributed Virtual Routing with VRRP.&quot; OpenStack Documentation. March 6, 2017. Accessed March 7, 2017. https://docs.openstack.org/newton/networking-guide/config-dvr-ha-snat.html</li>
+<li>&quot;Distributed Virtual Routing with VRRP.&quot; OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/config-dvr-ha-snat.html</li>
 </ol>
 <h2 id="configurations---cinder">Configurations - Cinder</h2>
 <p>The Cinder service provides block devices for instances.</p>
@@ -1015,7 +1009,7 @@ $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 --contro
 <pre><code>$ openstack volume create --size &lt;SIZE_IN_GB&gt; --type LUKS &lt;VOLUME_NAME&gt;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Volume encryption supported by the key manager&quot; Openstack Documentation. February 16 2017. Accessed February 18, 2017. https://docs.openstack.org/newton/config-reference/block-storage/volume-encryption.html</li>
+<li>&quot;Volume encryption supported by the key manager&quot; Openstack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/block-storage/volume-encryption.html</li>
 </ol>
 <h1 id="neutron-troubleshooting">Neutron Troubleshooting</h1>
 <p>Neutron is one of the most complicated services offered by OpenStack. Due to it's wide range of configurations and technologies that it handles, it can be difficult to troubleshoot problems. This section aims to clearly layout common techniques to track down and fix issues with Neutron.</p>
@@ -1229,7 +1223,7 @@ properties:
 <li>&quot;Heat Orchestration Template (HOT) specification.&quot; OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template_guide/hot_spec.html</li>
 </ol>
 <h2 id="automation---vagrant">Automation - Vagrant</h2>
-<p>Vagrant is a tool to automate the deployment of virtual machines. A &quot;Vagrantfile&quot; file is used to initalize the instance. An example is provided below. Note that Vagrant currently does not support Keystone's v3 API.</p>
+<p>Vagrant is a tool to automate the deployment of virtual machines. A &quot;Vagrantfile&quot; file is used to initalize the instance. An example is provided below.</p>
 <pre><code>require &#39;vagrant-openstack-provider&#39;
 
 Vagrant.configure(&#39;2&#39;) do |config|
@@ -1238,10 +1232,12 @@ Vagrant.configure(&#39;2&#39;) do |config|
   config.ssh.username = &#39;cloud-user&#39;
 
   config.vm.provider :openstack do |os|
-    os.openstack_auth_url = &#39;http://controller1/v2.0/tokens&#39;
+    identity_api_version  = &#39;3&#39;
+    os.openstack_auth_url = &#39;http://controller1/v3/auth/tokens&#39;
+    os.domain             = &#39;default&#39;
     os.username           = &#39;openstackUser&#39;
     os.password           = &#39;openstackPassword&#39;
-    os.tenant_name        = &#39;myTenant&#39;
+    os.project_name       = &#39;myProject&#39;
     os.flavor             = &#39;m1.small&#39;
     os.image              = &#39;centos&#39;
     os.networks           = &quot;vagrant-net&quot;
@@ -1254,7 +1250,7 @@ end</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Vagrant OpenStack Cloud Provider.&quot; GitHub - ggiamarchi. Accessed September 24, 2016. April 30, 2016. https://github.com/ggiamarchi/vagrant-openstack-provider</li>
+<li>&quot;Vagrant OpenStack Cloud Provider.&quot; GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider</li>
 </ol>
 <h1 id="testing">Testing</h1>
 <h2 id="testing---tempest">Testing - Tempest</h2>
