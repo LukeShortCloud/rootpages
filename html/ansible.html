@@ -63,6 +63,10 @@
 <li><a href="#playbooks---modules---package-managers---apt">Apt</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#playbooks---galaxy-roles">Galaxy Roles</a>
+<ul>
+<li><a href="#playbooks---galaxy-roles---network-interface">Network Interface</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#dashboards">Dashboards</a>
 <ul>
@@ -73,14 +77,14 @@
 <li><a href="#python-api">Python API</a></li>
 <li><a href="#bibliography">Bibliography</a></li>
 </ul>
-<h2 id="introduction">Introduction</h2>
+<h1 id="introduction">Introduction</h1>
 <p>Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create <a href="#playbooks">Playbooks</a> to automate deployment of configurations and/or services.</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>Hochstein, <em>Ansible Up &amp; Running</em>, 2.</li>
 <li>&quot;An Ansible Tutorial.&quot;</li>
 </ol>
-<h2 id="installation">Installation</h2>
+<h1 id="installation">Installation</h1>
 <p>Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
 <p>RHEL:</p>
 <pre><code># yum install epel-release
@@ -106,8 +110,8 @@
 <li>&quot;Ansible Installation.&quot;</li>
 <li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot;</li>
 </ol>
-<h2 id="configuration">Configuration</h2>
-<h3 id="configuration---inventory">Configuration - Inventory</h3>
+<h1 id="configuration">Configuration</h1>
+<h2 id="configuration---inventory">Configuration - Inventory</h2>
 <p>Default file: /etc/ansible/hosts</p>
 <p>The hosts file is referred to as the &quot;inventory&quot; for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts.</p>
 <p>The general syntax is:</p>
@@ -286,9 +290,9 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre></li>
 </ol>
 <h2 id="command-usage">Command Usage</h2>
 <p>Refer to Root Page's &quot;Linux Commands&quot; guide in the &quot;Deployment&quot; section.</p>
-<h2 id="playbooks">Playbooks</h2>
+<h1 id="playbooks">Playbooks</h1>
 <p>Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at <a href="https://github.com/ansible/ansible-examples" class="uri">https://github.com/ansible/ansible-examples</a>.</p>
-<h3 id="playbooks---directory-structure">Playbooks - Directory Structure</h3>
+<h2 id="playbooks---directory-structure">Playbooks - Directory Structure</h2>
 <p>A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into separate files and directories.</p>
 <p>Layout:</p>
 <pre><code>├── production/
@@ -577,13 +581,29 @@ priority={{ count }}
 <li>&quot;Jinja Template Designer Documentation.&quot;</li>
 </ol>
 <h2 id="playbooks---galaxy">Playbooks - Galaxy</h2>
-<p>Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from <a href="https://galaxy.ansible.com/" class="uri">https://galaxy.ansible.com/</a>.</p>
+<p>Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from <a href="https://galaxy.ansible.com/" class="uri">https://galaxy.ansible.com/</a>. [1]</p>
 <pre><code>$ ansible-galaxy install &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></pre>
 <pre><code>$ ansible-galaxy install &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;,&lt;VERSION&gt;</code></pre>
 <pre><code>$ ansible-galaxy install --roles-path &lt;PATH&gt; &lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></pre>
-<p>Source:</p>
+<p>For a Playbook to work with Ansible Galaxy it is required to have the <code>meta/main.yml</code> file. This will define supported Ansible versions and systems, role dependencies, the license, and other useful information. [2]</p>
+<pre><code>galaxy_info:
+  author:
+  description:
+  company:
+  license:
+  min_ansible_version:
+  platforms:
+   - name: &lt;OS_NAME&gt;
+  versions:
+   - &lt;OS_VERSION&gt;
+  categories:
+  dependencies:
+    - { role: &lt;ROLE_NAME&gt; }
+    - { role: &lt;ROLE_NAME&gt;, &lt;VARIABLE&gt;: &lt;VALUE&gt; }</code></pre>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>Ansible Galaxy</li>
+<li>&quot;Ansible Galaxy.&quot;</li>
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
 </ol>
 <h3 id="playbooks---galaxy---dependencies">Playbooks - Galaxy - Dependencies</h3>
 <p>Roles can define dependencies to other roles hosted remotely. By default, the Ansible Galaxy repository is used to pull roles from. Ansible Galaxy in itself uses GitHub.com as it's backend. Dependencies can be defined in <code>requirements.yml</code> or inside the role at <code>meta/main.yml</code>.</p>
@@ -611,14 +631,20 @@ priority={{ count }}
     scm: &lt;SCM&gt;
   - src: &lt;USER_NAME2&gt;.&lt;ROLE_NAME2&gt;</code></pre>
 <p>Dependency example:</p>
-<pre><code>dependencies:
-  - src: https://github.com/hux/starskiller
-    version: 3101u9e243r90adf0a98avn4bmz
-    name: planetkiller</code></pre>
+<pre><code>- src: https://github.com/hux/starkiller
+  version: 3101u9e243r90adf0a98avn4bmz
+  name: new_deathstar
+- src: https://example.tld/project
+  scm: hg
+  name: project</code></pre>
+<p>Git with SSH example (useful for GitLab):</p>
+<pre><code>- src: git+ssh://git@&lt;DOMAIN&gt;/&lt;USER&gt;/&lt;PROJECT&gt;.git
+  version: 1.2.0
+  scm: git</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>Ansible Galaxy</li>
+<li>&quot;Ansible Galaxy.&quot;</li>
 </ol>
 <h2 id="playbooks---containers">Playbooks - Containers</h2>
 <p>The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
@@ -860,7 +886,12 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>stderr = The standard error of the command.</li>
 </ul>
 <p>[1]</p>
-<p>The result of an action is saved as one of these three values. They can then be referenced later. * succeeded * failed * skipped</p>
+<p>The result of an action is saved as one of these three values. They can then be referenced later.</p>
+<ul>
+<li>succeeded</li>
+<li>failed</li>
+<li>skipped</li>
+</ul>
 <p>[3]</p>
 <p>Syntax:</p>
 <pre><code>register: cmd_output</code></pre>
@@ -1167,6 +1198,68 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;apt - Manages apt-packages.&quot;</li>
 </ol>
+<h2 id="playbooks---galaxy-roles">Playbooks - Galaxy Roles</h2>
+<p>Unofficial community roles can be used within Playbooks. Most of these can be found on <a href="https://galaxy.ansible.com/">Ansible Galaxy</a> or <a href="https://github.com/">GitHub</a>.</p>
+<h3 id="playbooks---galaxy-roles---network-interface">Playbooks - Galaxy Roles - Network Interface</h3>
+<p>URL: https://github.com/MartinVerges/ansible.network_interface</p>
+<p>The <code>network_interface</code> role was created to help automate the management of network interfaces on Debian and RHEL based systems. The most up-to-date and currently maintained fork of the original project is owned by the <a href="https://github.com/MartinVerges">GitHub user MartinVerges</a>.</p>
+<p>The role can be passed any of these dictionaries to configure the network devices.</p>
+<ul>
+<li>network_ether_interfaces = Configure ethernet devices.</li>
+<li>network_bridge_interfaces = Configure bridge devices.</li>
+<li>network_bond_interfaces = Configure bond devices.</li>
+<li>network_vlan_interfaces = Configure VLAN devices.</li>
+</ul>
+<p>Valid dictionary values:</p>
+<ul>
+<li>device = Required. This should define the device name to modify or create.</li>
+<li>bootproto = Required. <code>static</code> or <code>dhcp</code>.</li>
+<li>address = Required for <code>static</code>. IP address.</li>
+<li>netmask = Required for <code>static</code>. Subnet mask.</li>
+<li>cidr = For <code>static</code>. Optionally use CIDR notation to specify the IP address and subnet mask.</li>
+<li>gateway = The default gateway for the IP address.</li>
+<li>hwaddress = Use a custom MAC address.</li>
+<li>mtu = Specify the MTU packet size.</li>
+<li>vlan = Set to <code>True</code> for creating the VLAN devices.</li>
+<li>bond_ports = Required for bond interfaces. Specify the ethernet devices to use for the unified bond.</li>
+<li>bond_mode = For bond interfaces. Define the type of Linux bonding method.</li>
+<li>bridge_ports = Required for bridge interfaces. Specify the ethernet device(s) to use for the bridge.</li>
+<li>dns-nameserver = A Python list of DNS nameservers to use.</li>
+</ul>
+<p>Here is an example.</p>
+<ul>
+<li><code>eth0</code> is configured to use DHCP and has it's MTU set to 9000.</li>
+<li><code>eth1</code> is added to the new bridge <code>br0</code> with the IP address <code>10.0.0.1</code> and the subnet mask of <code>255.255.255.0</code>.</li>
+<li><code>eth2</code> and <code>eth3</code> are configured to be in a bond, operating in mode &quot;6&quot; (adapative load balancing).</li>
+<li><code>bond0.10</code> and <code>bond0.20</code> are created as VLAN tagged devices off of the newly created bond.</li>
+</ul>
+<pre><code>- hosts: gluster01
+  roles:
+   - ansible.network_interfaces
+     network_ether_interfaces:
+      - device: eth0
+        bootproto: dhcp
+        mtu: 9000
+     network_bridge_interfaces:
+      - device: br0
+        cidr: 10.0.0.1/24
+        bridge_ports: [ &quot;eth1&quot; ]
+     network_bond_interfaces:
+      - device: bond0
+        bootproto: static
+        bond_mode: 6
+        bond_ports: [ &quot;eth2&quot;, &quot;eth3&quot; ]
+     network_vlan_interfaces:
+      - device: bond0.10
+        vlan: True
+        bootproto: static
+      - device: bond0.20
+        vlan: True
+        bootproto: static</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;network_interface.&quot;</li>
+</ol>
 <h1 id="dashboards">Dashboards</h1>
 <p>Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.</p>
 <h2 id="dashboards---open-tower">Dashboards - Open Tower</h2>
@@ -1291,7 +1384,7 @@ finally:
 <li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html</li>
 <li>&quot;Ansible Asynchronous Actions and Polling.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html</li>
 <li>&quot;Ansible Set host facts from a task.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/set_fact_module.html</li>
-<li>&quot;Ansible Playbook Roles and Include Statements.&quot; Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_roles.html</li>
+<li>&quot;Ansible Playbook Roles and Include Statements.&quot; Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/playbooks_roles.html</li>
 <li>&quot;Ansible: Include Role in a Role?&quot; StackOverflow. October 24, 2014. http://stackoverflow.com/questions/26551422/ansible-include-role-in-a-role</li>
 <li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot; Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html</li>
 <li>&quot;Ansible mysql_db - Add or remove MySQL databases from a remote host.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html</li>
@@ -1311,7 +1404,8 @@ finally:
 <li>&quot;The Open Tower Project.&quot; Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower</li>
 <li>&quot;semaphore Installation.&quot; GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation</li>
 <li>&quot;How to loop through interface facts.&quot; Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts</li>
-<li>&quot;Ansible Galaxy.&quot; Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html</li>
+<li>&quot;Ansible Galaxy.&quot; Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html</li>
 <li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot; Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning</li>
 <li>&quot;Configuration file.&quot; Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html</li>
+<li>&quot;network_interface.&quot; MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network_interface</li>
 </ul>

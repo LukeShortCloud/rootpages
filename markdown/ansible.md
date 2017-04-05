@@ -48,6 +48,8 @@
         * [Package Managers](#playbooks---modules---package-managers)
             * [Yum](#playbooks---modules---package-managers---yum)
             * [Apt](#playbooks---modules---package-managers---apt)
+    * [Galaxy Roles](#playbooks---galaxy-roles)
+        * [Network Interface](#playbooks---galaxy-roles---network-interface)
 * [Dashboards](#dashboards)
     * Ansible Tower
     * [Open Tower](#dashboards---open-tower)
@@ -56,7 +58,7 @@
 * [Bibliography](#bibliography)
 
 
-## Introduction
+# Introduction
 
 Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create [Playbooks](#playbooks) to automate deployment of configurations and/or services.
 
@@ -66,7 +68,7 @@ Sources:
 2. "An Ansible Tutorial."
 
 
-## Installation
+# Installation
 
 Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]
 
@@ -108,10 +110,11 @@ Sources:
 2. "Ansible 2.2.0 RC1 is ready for testing."
 
 
-## Configuration
+# Configuration
 
 
-### Configuration - Inventory
+## Configuration - Inventory
+
 Default file: /etc/ansible/hosts
 
 The hosts file is referred to as the "inventory" for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts.
@@ -375,12 +378,12 @@ Source:
 Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
 
 
-## Playbooks
+# Playbooks
 
 Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at [https://github.com/ansible/ansible-examples](https://github.com/ansible/ansible-examples).
 
 
-### Playbooks - Directory Structure
+## Playbooks - Directory Structure
 
 A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into separate files and directories.
 
@@ -755,7 +758,7 @@ Source:
 
 ## Playbooks - Galaxy
 
-Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from [https://galaxy.ansible.com/](https://galaxy.ansible.com/).
+Ansible Galaxy provides a way to easily manage local roles and remote Ansible Galaxy roles from [https://galaxy.ansible.com/](https://galaxy.ansible.com/). [1]
 
 ```
 $ ansible-galaxy install <USER_NAME>.<ROLE_NAME>
@@ -767,9 +770,29 @@ $ ansible-galaxy install <USER_NAME>.<ROLE_NAME>,<VERSION>
 $ ansible-galaxy install --roles-path <PATH> <USER_NAME>.<ROLE_NAME>
 ```
 
-Source:
+For a Playbook to work with Ansible Galaxy it is required to have the `meta/main.yml` file. This will define supported Ansible versions and systems, role dependencies, the license, and other useful information. [2]
 
-1. Ansible Galaxy
+```
+galaxy_info:
+  author:
+  description:
+  company:
+  license:
+  min_ansible_version:
+  platforms:
+   - name: <OS_NAME>
+  versions:
+   - <OS_VERSION>
+  categories:
+  dependencies:
+    - { role: <ROLE_NAME> }
+    - { role: <ROLE_NAME>, <VARIABLE>: <VALUE> }
+```
+
+Sources:
+
+1. "Ansible Galaxy."
+2. "Ansible Playbook Roles and Include Statements."
 
 
 ### Playbooks - Galaxy - Dependencies
@@ -792,6 +815,7 @@ $ ansible-galaxy install -r requirements.yml
     * scm = The supply chain management (SCM) tool to use. Currently only Git (git) and Mercurial (hg) are supported. This is useful for using projects that are not hosted on GitHub.com. Default: git.
 
 Dependency syntax:
+
 ```
 dependencies:
   - src: <USER_NAME>.<ROLE_NAME>
@@ -803,11 +827,22 @@ dependencies:
 
 
 Dependency example:
+
 ```
-dependencies:
-  - src: https://github.com/hux/starskiller
-    version: 3101u9e243r90adf0a98avn4bmz
-    name: planetkiller
+- src: https://github.com/hux/starkiller
+  version: 3101u9e243r90adf0a98avn4bmz
+  name: new_deathstar
+- src: https://example.tld/project
+  scm: hg
+  name: project
+```
+
+Git with SSH example (useful for GitLab):
+
+```
+- src: git+ssh://git@<DOMAIN>/<USER>/<PROJECT>.git
+  version: 1.2.0
+  scm: git
 ```
 
 [1]
@@ -815,7 +850,7 @@ dependencies:
 
 Source:
 
-1. Ansible Galaxy
+1. "Ansible Galaxy."
 
 
 ## Playbooks - Containers
@@ -1193,6 +1228,7 @@ The output of commands can be saved to a variable. The attributes that are saved
 [1]
 
 The result of an action is saved as one of these three values. They can then be referenced later.
+
 * succeeded
 * failed
 * skipped
@@ -1728,6 +1764,78 @@ Source:
 1. "apt - Manages apt-packages."
 
 
+## Playbooks - Galaxy Roles
+
+Unofficial community roles can be used within Playbooks. Most of these can be found on [Ansible Galaxy](https://galaxy.ansible.com/) or [GitHub](https://github.com/).
+
+
+### Playbooks - Galaxy Roles - Network Interface
+
+URL: https://github.com/MartinVerges/ansible.network_interface
+
+The `network_interface` role was created to help automate the management of network interfaces on Debian and RHEL based systems. The most up-to-date and currently maintained fork of the original project is owned by the [GitHub user MartinVerges](https://github.com/MartinVerges).
+
+The role can be passed any of these dictionaries to configure the network devices.
+
+* network_ether_interfaces = Configure ethernet devices.
+* network_bridge_interfaces = Configure bridge devices.
+* network_bond_interfaces = Configure bond devices.
+* network_vlan_interfaces = Configure VLAN devices.
+
+Valid dictionary values:
+
+* device = Required. This should define the device name to modify or create.
+* bootproto = Required. `static` or `dhcp`.
+* address = Required for `static`. IP address.
+* netmask = Required for `static`. Subnet mask.
+* cidr = For `static`. Optionally use CIDR notation to specify the IP address and subnet mask.
+* gateway = The default gateway for the IP address.
+* hwaddress = Use a custom MAC address.
+* mtu = Specify the MTU packet size.
+* vlan = Set to `True` for creating the VLAN devices.
+* bond_ports = Required for bond interfaces. Specify the ethernet devices to use for the unified bond.
+* bond_mode = For bond interfaces. Define the type of Linux bonding method.
+* bridge_ports = Required for bridge interfaces. Specify the ethernet device(s) to use for the bridge.
+* dns-nameserver = A Python list of DNS nameservers to use.
+
+Here is an example.
+
+* `eth0` is configured to use DHCP and has it's MTU set to 9000.
+* `eth1` is added to the new bridge `br0` with the IP address `10.0.0.1` and the subnet mask of `255.255.255.0`.
+* `eth2` and `eth3` are configured to be in a bond, operating in mode "6" (adapative load balancing).
+* `bond0.10` and `bond0.20` are created as VLAN tagged devices off of the newly created bond.
+
+```
+- hosts: gluster01
+  roles:
+   - ansible.network_interfaces
+     network_ether_interfaces:
+      - device: eth0
+        bootproto: dhcp
+        mtu: 9000
+     network_bridge_interfaces:
+      - device: br0
+        cidr: 10.0.0.1/24
+        bridge_ports: [ "eth1" ]
+     network_bond_interfaces:
+      - device: bond0
+        bootproto: static
+        bond_mode: 6
+        bond_ports: [ "eth2", "eth3" ]
+     network_vlan_interfaces:
+      - device: bond0.10
+        vlan: True
+        bootproto: static
+      - device: bond0.20
+        vlan: True
+        bootproto: static
+```
+
+Source:
+
+1. "network_interface."
+
+
 # Dashboards
 
 Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.
@@ -1870,7 +1978,7 @@ Sources:
 * "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html
 * "Ansible Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html
 * "Ansible Set host facts from a task." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/set_fact_module.html
-* "Ansible Playbook Roles and Include Statements." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_roles.html
+* "Ansible Playbook Roles and Include Statements." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/playbooks_roles.html
 * "Ansible: Include Role in a Role?" StackOverflow. October 24, 2014. http://stackoverflow.com/questions/26551422/ansible-include-role-in-a-role
 * "Ansible cron - Manage cron.d and crontab entries." Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html
 * "Ansible mysql_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html
@@ -1891,6 +1999,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "The Open Tower Project." Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower
 * "semaphore Installation." GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 * "How to loop through interface facts." Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts
-* "Ansible Galaxy." Ansible Documentation. December 21, 2016. Accessed December 31, 2016. http://docs.ansible.com/ansible/galaxy.html
+* "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
 * "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
 * "Configuration file." Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html
+* "network_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network_interface
