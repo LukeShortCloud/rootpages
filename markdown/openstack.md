@@ -23,6 +23,7 @@
     * [Nova](#configurations---nova)
         * [Hypervisors](#configurations---nova---hypervisors)
         * [CPU Pinning](#configurations---nova---cpu-pinning)
+        * [Ceph](#configurations---nova---ceph)
     * [Neutron](#configurations---neutron)
         * [Network Types](#configurations---neutron---network-types)
             * Provider Networks
@@ -37,9 +38,12 @@
         * [Quality of Service](#configurations---neutron---quality-of-service)
         * [Distributed Virtual Routing](#configurations---neutron---distributed-virtual-routing)
         * [High Availability](#configurations---neutron---high-availability)
+    * [Ceph](#configurations---ceph)
     * [Cinder](#configurations---cinder)
         * [Ceph](#configurations---cinder---ceph)
         * [Encryption](#configurations---cinder---encryption)
+    * [Glance](#configurations---glance)
+        * [Ceph](#configurations---glance---ceph)
 * [Neutron Troubleshooting](#neutron-troubleshooting)
     * [Open vSwitch](#neutron-troubleshooting---open-vswitch)
         * Network connections
@@ -839,6 +843,25 @@ Sources:
 3. http://www.stratoscale.com/blog/openstack/cpu-pinning-and-numa-awareness/
 
 
+### Configurations - Nova - Ceph
+
+Nova can be configured to use Ceph as the storage provider for the instance. This works with any QEMU based hypervisor.
+
+* /etc/nova/nova.conf
+    * [libvirt]
+        * images_type = rbd
+        * images_rbd_pool = `<CEPH_VOLUME_POOL>`
+        * images_rbd_ceph_conf = /etc/ceph/ceph.conf
+        * rbd_user = `<CEPHX_USER>`
+        * rbd_secret_uuid = `<LIBVIRT_SECRET_UUID>`
+
+[1]
+
+Source:
+
+1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+
+
 ## Configurations - Neutron
 
 
@@ -1082,6 +1105,83 @@ Source:
 1. "Distributed Virtual Routing with VRRP." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/config-dvr-ha-snat.html
 
 
+## Configurations - Ceph
+
+For Cinder and/or Glance to work with Ceph, the Ceph configuration needs to exist on each controller and compute node. This can be copied over from the Ceph nodes. An example is provided below.
+
+```
+[global]
+fsid = <UNIQUE_ID>
+mon_initial_members = <CEPH_MONITOR1_HOSTNAME>
+mon_host = <CEPH_MONITOR1_IP_ADDRESS>
+auth_cluster_required = cephx
+auth_service_required = cephx
+auth_client_required = cephx
+osd_pool_default_size = 2
+public_network = <CEPH_NETWORK_CIDR>
+
+[mon]
+mon_host = <CEPH_MONITOR1_HOSTNAME>, <CEPH_MONITOR2_HOSTNAME>, <CEPH_MONITOR3_HOSTNAME>
+mon_addr = <CEPH_MONITOR1_IP_ADDRESS>:6789, <CEPH_MONITOR2_IP_ADDRESS>:6789, <CEPH_MONITOR3_IP_ADDRESS>:6789
+
+[mon.a]
+host = <CEPH_MONITOR1_HOSTNAME>
+mon_addr = <CEPH_MONITOR1_IP_ADDRESS>:6789
+
+[mon.b]
+host = <CEPH_MONITOR2_HOSTNAME>
+mon_addr = <CEPH_MONITOR2_IP_ADDRESS>:6789
+
+[mon.c]
+host = <CEPH_MONITOR3_HOSTNAME>
+mon_addr = <CEPH_MONITOR3_IP_ADDRESS>:6789
+```
+
+It is recommended to create a separate pool and related user for both the Glance and Cinder service.
+
+```
+# ceph osd pool create glance <PG_NUM> <PGP_NUM>
+# ceph osd pool create cinder <PG_NUM> <PGP_NUM>
+# ceph auth get-or-create client.cinder mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=volumes'
+# ceph auth get-or-create client.glance mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=images'
+```
+
+If Cephx is turned on to utilize authentication, then a client keyring file should be created on the controller and compute nodes. This will allow the services to communicate to Ceph as a specific user. The usernames should match the client users that were just created. [1]
+
+```
+# vim /etc/ceph/ceph.client.<USERNAME>.keyring
+[client.<USERNAME>]
+        key = <KEY>
+```
+
+On the controller and compute nodes the Nova, Cinder, and Glance services require permission to read the `/etc/ceph/ceph.conf` and client configurations at `/etc/ceph/ceph.client.<USERNAME>.keyring`. The service users should be added to a common group to help securely share these settings.
+
+```
+# for openstack_service in "cinder glance nova"; do usermod -a -G ceph ${openstack_service}; done
+# chmod -R 640 /etc/ceph/
+# chown -R ceph.ceph /etc/ceph/
+```
+
+For the services to work, the relevant Python libraries for accessing Ceph need to be installed. These can be installed by the operating system's package manager. [2]
+
+RHEL:
+```
+python-ceph-compat
+python-rbd
+```
+
+Debian:
+```
+python-ceph
+```
+
+
+Sources:
+
+1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
+2. "[Glance] Basic Configuration." OpenStack Documentation. April 5, 2017. Accessed April 5, 2017. https://docs.openstack.org/developer/glance/configuring.html
+
+
 ## Configurations - Cinder
 
 The Cinder service provides block devices for instances.
@@ -1122,7 +1222,7 @@ Ceph has become the most popular backend to Cinder due to it's high availability
 
 Source:
 
-1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack
 
 
 ### Configurations - Cinder - Encryption
@@ -1143,6 +1243,35 @@ $ openstack volume create --size <SIZE_IN_GB> --type LUKS <VOLUME_NAME>
 Source:
 
 1. "Volume encryption supported by the key manager" Openstack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/block-storage/volume-encryption.html
+
+
+## Configurations - Glance
+
+Glance is used to store and manage images for instance deployment.
+
+
+### Configurations - Glance - Ceph
+
+Ceph can be used to store images.
+
+* /etc/glance/glance-api.conf
+    * [DEFAULT]
+        * show_image_direct_url = True
+            * This will allow copy-on-write (CoW) operations for efficent usage of storage for instances. Instead of cloning the entire image, CoW will be used to store changes between the instance and the original image. This assumes that Cinder is also configured to use Ceph.
+            * The back-end Ceph addressing will be viewable by the public Glance API. It is important to make sure that Ceph is not publicly accessible.
+    * [glance_store]
+        * stores = rbd
+        * default_store = rbd
+        * rbd_store_pool = `<RBD_POOL>`
+        * rbd_store_user = `<RBD_USER>`
+        * rbd_store_ceph_conf = /etc/ceph/ceph.conf
+        * rbd_store_chunk_size = 8
+
+[1]
+
+Source:
+
+1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 
 
 # Neutron Troubleshooting
