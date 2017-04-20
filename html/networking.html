@@ -5,6 +5,10 @@
 <li>iproute2</li>
 <li>Network Manager</li>
 <li><a href="#generic---systemd">systemd</a></li>
+<li><a href="#generic---open-vswitch">Open vSwitch</a>
+<ul>
+<li><a href="#generic---open-vswitch---bridging">Bridging</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#operating-system-specific">Operating System Specific</a>
 <ul>
@@ -12,6 +16,7 @@
 <li>Debian</li>
 <li><a href="#operating-system-specific---rhel">RHEL</a>
 <ul>
+<li><a href="#operating-system-specific---rhel---routes">Routes</a></li>
 <li><a href="#operating-system-specific---rhel---bridging">Bridging</a>
 <ul>
 <li><a href="#operating-system-specific---rhel---bridging---open-vswitch">Open vSwitch</a></li>
@@ -156,6 +161,42 @@ DNS=8.8.4.4</code></pre>
 <li>&quot;systemd.netdev — Virtual Network Device configuration.&quot; freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.netdev.html</li>
 <li>&quot;Managing WPA wireless with systemd-networkd ?&quot; Arch Linux Wiki - Networking, Server, and Protection. March 13, 2014. Accessed November 27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625</li>
 </ol>
+<h2 id="generic---open-vswitch">Generic - Open vSwitch</h2>
+<h3 id="generic---open-vswitch---bridging">Generic - Open vSwitch - Bridging</h3>
+<p>Any physical network interface can be turned into a bridge. This allows multiple devices to be able to utilize the bridge for straight connectivity to the physical network. In this example, <code>eth0</code> is converted into the <code>br0</code> bridge.</p>
+<p>Example:</p>
+<pre><code># ovs-vsctl add-br br0
+# ovs-vsctl add-port br0 eth0</code></pre>
+<p>Syntax:</p>
+<pre><code># ovs-vsctl add-br &lt;NEW_BRIDGE&gt;
+# ovs-vsctl add-port &lt;NEW_BRIDGE&gt; &lt;PHYSICAL_INTERFACE&gt;</code></pre>
+<p>It is possible to create multiple bridges from one physical interface. This official example from the Open vSwitch documentation shows how to use the physical interface <code>eth0</code> to create the virtual bridges <code>br0</code> and <code>br1</code>. Patch ports are used to connect the tap interfaces.</p>
+<p>Example:</p>
+<pre><code># ovs-vsctl add-br br0
+# ovs-vsctl add-port br0 eth0
+# ovs-vsctl add-port br0 tap0
+# ovs-vsctl add-br br1
+# ovs-vsctl add-port br1 tap1
+# ovs-vsctl \
+       -- add-port br0 patch0 \
+       -- set interface patch0 type=patch options:peer=patch1 \
+       -- add-port br1 patch1 \
+       -- set interface patch1 type=patch options:peer=patch0</code></pre>
+<p>Open vSwitch uses virtual <code>tap</code> interfaces to connect virtual machines to a bridge instead of providing striaght access to a bridge device. This makes it easier to manage interfaces for many virtual machines and it helps to isolate and track down traffic. Tools such as <code>tcpdump</code> can be used to analyze specific <code>tap</code> traffic. [1]</p>
+<p>Example:</p>
+<pre><code># ovs-vsctl add-br br0
+# ovs-vsctl add-port br0 eth0
+# ovs-vsctl add-port br0 tap0
+# ovs-vsctl add-port br0 tap1
+# ovs-vsctl add-port br0 tap2</code></pre>
+<p>Syntax:</p>
+<pre><code># ovs-vsctl add-br &lt;NEW_BRIDGE&gt;
+# ovs-vsctl add-port &lt;NEW_BRIDGE&gt; &lt;PHYSICAL_INTERFACE&gt;
+# ovs-vsctl add-port &lt;NEW_BRIDGE&gt; &lt;NEW_TAP_INTERFACE&gt;</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Frequently Asked Questions Open vSwitch.&quot; Open vSwitch Suppport. March 30, 2017. April 9, 2017. http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html</li>
+</ol>
 <h1 id="operating-system-specific">Operating System Specific</h1>
 <h2 id="operating-system-specific---rhel">Operating System Specific - RHEL</h2>
 <p>Red Hat Enterprise Linux uses their own &quot;network&quot; service. Although Network Manager has started taking it's place, the network service is less intrusive and better supported by most programs that rely on managing network settings.</p>
@@ -209,6 +250,20 @@ DNS=8.8.4.4</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Disable consistent network device naming in RHEL7.&quot; Red Hat Community Discussions. June 11, 2014. Accessed January 7, 2016. https://access.redhat.com/discussions/916973</li>
 <li>&quot;Interface Configuration Files.&quot; Accessed January 7, 2016. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html</li>
+</ol>
+<h3 id="operating-system-specific---rhel---routes">Operating System Specific - RHEL - Routes</h3>
+<p>In RHEL 7, static routes now use the <code>iproute2</code> syntax. A new <code>route-&lt;INTERFACE&gt;</code> file defines the route. Only one default <code>GATEWAY</code> can be set in the original <code>ifcfg-</code> configuration files.</p>
+<p>Syntax:</p>
+<pre><code># vim /etc/sysconfig/network-scripts/route-&lt;INTERFACE&gt;
+&lt;DESTINATION_NETWORK_CIDR&gt; via &lt;SOURCE_IP&gt; dev &lt;INTERFACE&gt;</code></pre>
+<p>Example:</p>
+<pre><code># vim /etc/sysconfig/network-scripts/route-eth0
+192.168.100.0/24 via 10.0.0.1 dev eth0</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;How to add a new static route on RHEL7 Linux.&quot; Linux Config. March 17, 2015. Accessed April 9, 2017. https://linuxconfig.org/how-to-add-new-static-route-on-rhel7-linux</li>
+<li>&quot;Static Routes and the Default Gateway.&quot; Red Hat Documentation. March 15, 2017. Accessed April 9, 2017. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-static-routes.html</li>
 </ol>
 <h3 id="operating-system-specific---rhel---bridging">Operating System Specific - RHEL - Bridging</h3>
 <p>A simple bridge using the Linux kernel can be configured using this basic template. The physical network interface should reference a bridge interface. The bridge interface will then contain the IP addressing information.</p>
