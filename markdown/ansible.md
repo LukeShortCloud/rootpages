@@ -12,39 +12,49 @@
     * [Production and Staging](#playbooks---production-and-staging)
     * [Performance Tuning](#playbooks---performance-tuning)
     * [Jinja2 Templates](#playbooks---jinja2-templates)
+        * [Variables](#playbooks---jinja2-templates---variables)
+        * [Comments](#playbooks---jinja2-templates---comments)
+        * [Blocks](#playbooks---jinja2-templates---blocks)
         * [Loops](#playbooks---jinja2-templates---loops)
     * [Galaxy](#playbooks---galaxy)
         * [Dependencies](#playbooks---galaxy---dependencies)
     * [Containers](#playbooks---containers)
     * [Main Modules](#playbooks---main-modules)
         * [Async](#playbooks---main-modules---async)
-        * Check Mode
-        * [Ignore Errors](#playbooks---main-modules---ignore-errors)
-        * [Include](#playbooks---main-modules---include)
-        * [Include Role](#playbooks---main-modules---include-role)
-        * [Include Variables](#playbooks---main-modules---include-variables)
+        * [Check Mode](#playbooks---main-modules---check-mode)
         * [Gather Facts](#playbooks---main-modules---gather-facts)
-        * [Loops](#playbooks---main-modules---loops)
-        * [Prompts](#playbooks---main-modules---prompts)
         * [Roles](#playbooks---main-modules---roles)
         * [Run Once](#playbooks---main-modules---run-once)
-        * [Register](#playbooks---main-modules---register)
-        * Serial
-        * [Set Fact](#playbooks---main-modules---set-fact)
+        * [Serial](#playbooks---main-modules---serial)
         * [Tags](#playbooks---main-modules---tags)
+        * [Tasks](#playbooks---main-modules---tasks)
         * [Wait For](#playbooks---main-modules---wait-for)
-        * With First Found
         * [When](#playbooks---main-modules---when)
+        * [Errors](#playbooks---main-modules---errors)
+            * [Any Errors Fatal](#playbooks---main-modules---errors---any-errors-fatal)
+            * [Failed When](#playbooks---main-modules---errors---failed-when)
+            * [Ignore Errors](#playbooks---main-modules---errors---ignore-errors)
+        * [Includes](#playbooks---main-modules---includes)
+            * [Include](#playbooks---main-modules---includes---include)
+            * [Include Role](#playbooks---main-modules---includes---include-role)
+            * [Include Variables](#playbooks---main-modules---includes---include-variables)
+        * [Loops](#playbooks---main-modules---loops)
+            * [With First Found](#playbooks---main-modules---loops---with-first-found)
+            * [With Flattened](#playbooks---main-modules---loops---with-flattened)
+            * [With Items](#playbooks---main-modules---loops---with-items)
+        * [Variables](#playbooks---main-modules---variables)
+            * [Prompts](#playbooks---main-modules---variables---prompts)
+            * [Register](#playbooks---main-modules---variables---register)
+            * [Set Fact](#playbooks---main-modules---variables---set-fact)
     * [Modules](#playbooks---modules)
         * [Command and Shell](#playbooks---modules---command-and-shell)
-        * [Copy, Files, and Templates](#playbooks---modules---copy,-files,-and-templates)
+        * [Copy, Files, Synchronize, and Templates](#playbooks---modules---copy,-files,-synchronize,-and-templates)
         * [Cron](#playbooks---modules---cron)
         * [Debug](#playbooks---modules---debug)
         * [Git](#playbooks---modules---git)
         * [MySQL Database and User](#playbooks---modules---mysql-database-and-user)
         * [Service](#playbooks---modules---service)
-        * Stat
-        * Synchronize
+        * [Stat](#playbooks---modules---stat)
         * [Package Managers](#playbooks---modules---package-managers)
             * [Yum](#playbooks---modules---package-managers---yum)
             * [Apt](#playbooks---modules---package-managers---apt)
@@ -91,7 +101,7 @@ Source code:
 # git clone git://github.com/ansible/ansible.git
 # cd ansible/
 # git branch -a | grep stable
-# git checkout remotes/origin/stable-2.2
+# git checkout remotes/origin/stable-2.3
 # git submodule update --init --recursive
 # source ./hacking/env-setup
 ```
@@ -117,24 +127,35 @@ Sources:
 
 Default file: /etc/ansible/hosts
 
-The hosts file is referred to as the "inventory" for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts.
+The hosts file is referred to as the "inventory" for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts. Groups are created by using brackets "[" and "]" to specify the name.
 
-The general syntax is:
+* Syntax:
 ```
-[GROUPNAME]
-SERVER1NAME
-SERVER2NAME
+  <SERVER1NAME> ansible_host=<SERVER1_HOSTNAME>
+  
+  [<GROUPNAME>]
+  <SERVER1NAME>
 ```
 
-Groups are created by using brackets "[" and "]" to specify the name. In this example, the group name is "dns-us" and contains three servers.
+* Example:
 ```
 [dns-us]
-dns-us1
-dns-us2
-dns-us3
+dns-us01
+dns-us02
+dns-us03
+```
+
+A sequence of letters "[a:z]" or numbers "[0:9]" can be used to dynamically define a large number of hosts.
+
+* Example:
+```
+[dns-us]
+dns-us[01:03]
 ```
 
 A group can also be created from other groups by using the ":children" tag.
+
+* Example:
 ```
 [dns-global:children]
 dns-us
@@ -185,21 +206,26 @@ dns2 ansible_host=192.168.1.54
 
 ### Configuration - Inventory - Variables
 
-Variables that Playbooks will use can be defined for specific hosts and/or groups.
+Variables that Playbooks will use can be defined for specific hosts and/or groups. The file that stores the variables should reflect the name of the host and/or group.
 
-* /etc/ansible/host_vars/ = Create a file named after the host.
-* /etc/ansible/group_vars/ = Create a file named after the group of hosts.
-* all = This file can exist under the above directories to define global variables for all hosts and/or groups.
+* Global inventory files:
+    * /etc/ansible/host_vars/
+    * /etc/ansible/group_vars/
+    * /etc/ansible/group_vars/all = This file contains variables for all hosts and groups.
 
-The files in these directories can have any name and do not require an extension. It is assumed that they are YAML files. Here is an example for a host variable file.
+It is assumed that the inventory variable files are in YAML format. Here is an example for a host variable file.
+
+* Example:
 ```
----
+ ---
 domain_name: examplehost.tld
 domain_ip: 192.168.10.1
 hello_string: Hello World!
 ```
 
 In the Playbook and/or template files, these variables can then be referenced when enclosed by double braces "{{" and "}}". [2]
+
+* Example:
 ```
 Hello world from {{ domain_name }}!
 ```
@@ -271,7 +297,7 @@ members:
 
 Using a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]
 
-Works
+* Works
 ```
   - name: find interface facts
     debug:
@@ -279,7 +305,7 @@ Works
     with_items: "{{ ansible_interfaces }}"
 ```
 
-Does Not Work
+* Does Not Work
 ```
   - name: find interface facts
     debug:
@@ -599,29 +625,55 @@ Sources:
 
 ## Playbooks - Jinja2 Templates
 
-* Variables defined in Ansible can be single variables, lists, and dictionaries. This can be referenced from the template.
-  * Variable Syntax:
+
+### Playbooks - Jinja2 Templates - Variables
+
+Variables defined in Ansible can be single variables, lists, and dictionaries. This can be referenced from the template.
+
+* Syntax:
 ```
 {{ dict.value }}
 {{ dict['value'] }}
 ```
+* Example:
+```
+{{ certification.name }}
+```
 
-* Comments are template comments that will be removed when once a template has been generated.
-  * Comment Syntax:
+Default variables can be defined if a referenced variable does not exist.
+
+* Syntax:
+```
+{{ <VARIABLE_NAME>|default('<DEFAULT_VALUE>') }}
+```
+
+* Example:
+```
+{{ jinjga2_variable|default('Hello World!') }}
+```
+
+
+### Playbooks - Jinja2 Templates - Comments
+
+Comments are template comments that will be removed when once a template has been generated.
+
+* Syntax:
 ```
 {# #}
 ```
-  * Comment Example:
+
+* Example:
 ```
-  {# this is a...
-  	{% if ip is '127.0.0.1' %}
-      	<html>Welcome to localhost</html>
-      {% endif %}
-  ...example comment #}
+{# this is a...
+	{% if ip is '127.0.0.1' %}
+    	<html>Welcome to localhost</html>
+    {% endif %}
+...example comment #}
 ```
 
-* Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinja will not render anything that is escaped.
-  * Escaping Syntax:
+Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinja will not render anything that is escaped.
+
+* Syntax:
 ```
 ''
 ```
@@ -629,7 +681,8 @@ Sources:
 {% raw %}
 {% endraw %}
 ```
-  * Escaping Examples:
+
+* Examples:
 ```
   {{ 'hello world' }}
 ```
@@ -639,28 +692,32 @@ Sources:
   {% endraw %}
 ```
 
-Templates can extend other templates by replacing "block" elements. At least two files are required. This first file defines where the blocks will be. The second file specifies that it should extend the first file and then defines the same blocks full of content that will be replaced in the first file.
 
-Syntax (file 1):
+### Playbooks - Jinja2 Templates - Blocks
+
+Templates can extend other templates by replacing "block" elements. At least two files are required. The first file creats a place holder block. The second file contains the content that will fill in that place holder.
+
+* Syntax (file 1):
 ```
 {% block <DESCRIPTIVE_NAME> %}{% endblock %}
 ```
 
-Syntax (file 2):
+* Syntax (file 2):
 ```
 {% extends "<FILE1>" %}
 {% block <DESCRIPTIVE_NAME> %}
 {% endblock %}
 ```
 
-Parent (file 1) example:
+* Example (file 1):
 ```
 <html>
 <h1>{% block header %}{% endblock %}</h1>
 <body>{% block body %}{% endblock %}</body>
 </html>
 ```
-Child (file 2) example:
+
+* Example (file 2):
 ```
 {% extends "index.html" %}
 {% block header %}
@@ -670,6 +727,7 @@ Hello World
 Welcome to the Hello World page!
 {% endblock %}
 ```
+
 
 ### Playbooks - Jinja2 Templates - Loops
 
@@ -692,7 +750,7 @@ Logic Operators:
 
 "For" loops can be used to loop through a list or dictionary.
 
-Syntax:
+* Syntax:
 ```
 {% for <VALUE> in {{ <LIST_VARIABLE> }} %}
 {% endfor %}
@@ -702,7 +760,7 @@ Syntax:
 {% endfor %}
 ```
 
-Examples:
+* Examples:
 ```
 # /etc/hosts
 {% for host in groups['ceph'] %}
@@ -728,7 +786,7 @@ priority={{ count }}
 
 "If" statements can be run if a certain condition is met.
 
-Syntax:
+* Syntax:
 ```
 {% if <VALUE> %}
 {% endif %}
@@ -740,7 +798,7 @@ Syntax:
 {% endif %}
 ```
 
-Example:
+* Example:
 ```
 {% if {{ taco_day }} == "Tuesday" %}
 	Taco day is on Tuesday.
@@ -864,7 +922,7 @@ $ ansible-container/bin/pip install -U pip setuptools
 $ ansible-container/bin/pip install ansible-container
 ```
 
-Ansible Container Directory Structure:
+Ansible Container directorysStructure:
 
 * ansible/ = The "ansible-container" command should be run in the directory above "ansible."
     * container.yml = An Ansible file that mirrors Docker Compose syntax is used to define how to create the Docker container. Common settings include the image to use, ports to open, commands to run, etc.
@@ -891,7 +949,7 @@ All of the Docker Compose options as specified at [https://docs.docker.com/compo
 
 Common options:
 
-* version = The version of Docker Compose to use. Valid options are "1", "2", and "2.1."
+* version = The version of Docker Compose to use. Valid options are `1` or `2` since Ansible Container 0.3.0.
 * services = This is where various Docker containers can be defined. A unique name should be provided to each different container. These names are used as the hosts in the Playbook file.
 ```
 services:
@@ -926,54 +984,98 @@ Root Pages refers to generic Playbook-related modules as the "main modules." Thi
 
 ### Playbooks - Main Modules - Async
 
-The "async" function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set.
+The "async" function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set. [1]
 
-Syntax:
+* Syntax:
 ```
 async: <SECONDS_TO_RUN>
 ```
 
-Example #1:
+* Example:
 ```
-- command: bash /usr/local/bin/example.sh
-  async: 15
-  poll: 5
+ - command: bash /usr/local/bin/example.sh
+    async: 15
+    poll: 5
 ```
-
-[1]
 
 Source:
 
 1. "Ansible Asynchronous Actions and Polling."
 
 
+### Playbooks - Main Modules - Check Mode
+
+A Playbook can run in a test mode with `--check`. No changes will be made. Optionally, the `--diff` argument can also be added to show exactly what would be changed.
+
+* Syntax:
+```
+$ ansible-playbook --check site.yml
+```
+```
+$ ansible-playbook --check --diff site.yml
+```
+
+In Ansible 2.1, the `ansible_check_mode` variable was added to verify if check mode is on or off. This can be used to forcefully run tasks even if check mode is on.
+
+* Examples:
+```
+command: echo "Hello world"
+when: not ansible_check_mode
+```
+```
+ - name: Continue if this fails when check_mode is enabled
+    stat: path=/etc/neutron/neutron.conf
+    register: neutron_conf
+    ignore_errors: "{{ ansible_check_mode }}"
+```
+
+In Ansible 2.2, the `check_mode` module can be forced to run during a check mode. [1]
+
+* Syntax:
+```
+check_mode: no
+```
+
+* Example:
+```
+ - name: Install the EPEL repository
+    yum: name=epel-release state=latest
+    check_mode: no
+```
+
+
+Source:
+
+1. "Ansible Check Mode ("Dry Run")."
+
+
 ### Playbooks - Main Modules - Gather Facts
 
 By default, Ansible will connect to all hosts related to a Playbook and cache information about them. This includes hostnames, IP addresses, the operating system version, etc.
 
-Syntax:
+* Syntax:
 ```
 gather_facts: <BOOLEAN>
 ```
 
 If these variables are not required then gather_facts and be set to "False" to speed up a Playbook's run time. [1]
 
-Example:
+* Example:
 ```
 gather_facts: False
 ```
 
 In other situations, information about other hosts may be required that are not being used in the Playbook. Facts can be gather about them before the roles in a Playbook are executed.
 
-Example:
+* Example:
 ```
-- hosts: squidproxy1,squidproxy2,squidproxy3
-  gather_facts: True
-
-- hosts: monitor1,monitor2
-  roles:
-   - common
-   - haproxy
+ - hosts: squidproxy1,squidproxy2,squidproxy3
+    gather_facts: True
+ 
+ - hosts: monitor1,monitor2
+    roles:
+     - common
+     - haproxy
 ```
 
 Source:
@@ -981,204 +1083,18 @@ Source:
 1. "Ansible Glossary."
 
 
-### Playbooks - Main Modules - Loops
-
-Loops are a great way to reuse modules with multiple items. Essentially these are "for" loops. These loops can even utilize flattened lists to run an action on multiple items at once.
-
-Variable syntax:
-```
-{{ item }}
-```
-
-Loop syntax:
-```
-with_items:
-  - <ITEM1>
-  - <ITEM2>
-  - <ITEM3>
-```
-
-Example:
-```
-package: name={{ item }} state=latest
-with_items:
- - nginx
- - php-fpm
- - mysql
-```
-
-Flattened example:
-```
----
-# variables
-web_services: [ 'nginx', 'httpd', 'mysql' ]
-```
-```
-service: name={{ item }} state=restarted
-with_flattened:
- - "{{ web_services }}"
-```
-
-[1]
-
-Source:
-
-1. "Ansible Loops."
-
-
-### Playbooks - Main Modules - Include
-
-Other task files and Playbooks can be included. The functions in them will immediately run. Variables can be defined for the inclusion as well. [1]
-
-Syntax:
-```
-include:
-```
-```
-include: <TASK>.yml <VAR1>=<VAULE1> <VAR2>=<VALUE2>
-```
-
-Example:
-```
-include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget
-```
-
-Source:
-
-1. "Ansible Playbook Roles and Include Statements."
-
-
-### Playbooks - Main Modules - Include Role
-
-Starting in Ansible 2.2, other roles can be included in tasks.
-
-Options:
-
-* name = Name of the role to include.
-* {defaults|tasks|vars}_from = Include a specific file from the role's defaults, tasks, or vars directory.
-* private = Boolean. Specify if the variables from this role should be available to the rest of the Playbook (False) or not (True).
-
-Syntax:
-```
-inlcude_role:
-```
-
-Example:
-```
-include_role: name=ldap task_from=rhel.yml
-```
-
-Source:
-
-1. "Ansible include_role - Load and execute a role."
-
-
-### Playbooks - Main Modules - Include Variables
-
-Additional variables can be defined within a Playbook file. These can be openly added to the `include_vars` module via YAML syntax.
-
-Options:
-
-* file = Specify a filename to source variables from.
-* name = Store variables from a file into a specified variable.
-
-Syntax:
-```
-include_vars: <VARIABLE>
-```
-
-Examples:
-```
-- hosts: all
-  include_vars:
-   - gateway: "192.168.0.1"
-   - netmask: "255.255.255.0"
-  roles:
-    - addressing
-```
-```
-- hosts: all
-  include_vars: file=monitor_vars.yml
-  roles:
-    - nagios
-```
-
-Source:
-
-1. "Ansible include_vars - Load variables from files, dynamically within a task."
-
-
-### Playbooks - Main Modules - Ignore Errors
-
-Playbooks, by default, will stop running if it fails to run a command. If it's okay to continue then the "ignore_errors" option can be appeneded below the command. This will allow the Playbook to continue onto the next step.
-
-Syntax:
-```
-ignore_errors: <BOOLEAN>
-```
-
-Example:
-```
-ignore_errors: yes
-```
-
-Source:
-
-1. "Ansible Error Handling In Playbooks."
-
-
-### Playbooks - Main Modules - Prompts
-
-Prompts can be used to assign a user's input as a variable.
-
-Syntax:
-```
-vars_prompt:
-  - name: "<VARIABLE>"
-    prompt: "<PROMPT TEXT>"
-```
-
-Options:
-
-* confirm = Prompt the user twice and then verify that the input is the same.
-* encrypt = Encrypt the text.
-    * md5_crypt
-    * sha256_crypt
-    * sha512_crypt
-* salt = Specify a string to use as a salt for encrypting.
-* salt_size = Specify the length to use for a randomly generated salt. The default is 8.
-
-Examples:
-```
-vars_prompt:
-  - name: "zipcode"
-    prompt: "Enter your zipcode."
-```
-```
-vars_prompt:
-  - name: "pw"
-    prompt: "Password:"
-    encrypt: "sha512_crypt"
-    salt_size: 12
-```
-
-[1]
-
-Source:
-
-1. "Ansible Prompts."
-
-
 ### Playbooks - Main Modules - Run Once
 
-In some situations a command should only need to be run on one node. A good example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.
+In some situations a command should only need to be run on one node. An example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.
 
-Syntax:
+* Syntax:
 ```
 run_once: true
 ```
 
-This can also be assigned to a specific node.
+This can also be assigned to a specific host.
+
+* Syntax:
 ```
 run_once:
 delegate_to: <HOST>
@@ -1195,14 +1111,14 @@ Source:
 
 A Playbook consists of roles. Each role that needs to be run needs to be specified. [1] It's important to note that individual roles cannot call other roles. Instead, an "include" statement could be used to find the relative path. [2]
 
-Syntax:
+* Syntax:
 ```
 roles:
   - <ROLE1>
   - <ROLE2>
 ```
 
-Example:
+* Example:
 ```
 roles:
   - common
@@ -1216,77 +1132,27 @@ Sources:
 2. "Ansible: Include Role in a Role?"
 
 
-### Playbooks - Main Modules - Register
+### Playbooks - Main Modules - Serial
 
-The output of commands can be saved to a variable. The attributes that are saved are:
+By default, Ansible will only run tasks on 5 hosts at once. This limit can be modified to run on a different number of hosts or a percentage of the amount of hosts. This is useful for running Playbooks on a large amount of servers. [1]
 
-* changed = If something was ran, this would be set to "true."
-* stdout = The standard output of the command.
-* stdout_lines = The standard output of the command is separated by the newline characters into a list.
-* stderr = The standard error of the command.
-
-[1]
-
-The result of an action is saved as one of these three values. They can then be referenced later.
-
-* succeeded
-* failed
-* skipped
-
-[3]
-
-Syntax:
+* Syntax:
 ```
-register: cmd_output
+serial: <NUMBER_OR_PERCENTAGE>
 ```
 
-Example #1:
+* Example:
 ```
-- command: echo Hello World
-  register: hello
-- debug: msg="We heard you"
-  when: "'Hello World' in hello.stdout"
-```
-[2]
-
-Example #2:
-```
-- copy: src=example.conf dest=/etc/example.conf
-  register: copy_example
-- debug: msg="Copying example.conf failed."
-  when: copy_example|failed
+ - hosts: web
+    tasks:
+     - name: Installing Nginx
+       package: name=nginx state=present
+       serial: 50%
 ```
 
-[3]
+Source:
 
-Sources:
-
-1. "Ansible - some random useful things."
-2. "Ansible Error Handling In Playbooks."
-3. "Ansible Conditionals."
-
-
-### Playbooks - Main Modules - Set Fact
-
-New variables can be defined set the "set_fact" module. These are added to the available variables/facts tied to a inventory host.
-
-Syntax:
-```
-set_fact:
-  <VARIABLE_NAME1>: <VARIABLE_VALUE1>
-  <VARIABLE_NAME2>: <VARIABLE_VALUE2>
-```
-
-Example:
-```
-- set_fact:
-    is_installed: True
-    sql_server: mariadb
-```
-
-Sources:
-
-1. "Ansible Set host facts from a task."
+1. "Delegation, Rolling Updates, and Local Actions."
 
 
 ### Playbooks - Main Modules - Tags
@@ -1330,35 +1196,61 @@ Source:
 1. "Ansible Tags."
 
 
+### Playbooks - Main Modules - Tasks
+
+Playbooks can include specific task files or define and run tasks in the Playbook file itself. In Ansible 2.0, loops, variables, and other dynamic elements now work correctly.
+
+* Syntax:
+```
+ - hosts: <HOSTS>
+    tasks:
+      - <MODULE>:
+```
+
+* Exmaple:
+```
+ - hosts: jenkins
+    tasks:
+      - debug:
+          msg: "Warning: This will modify ALL Jenkins servers."
+    roles:
+      - common
+      - docker
+```
+
+Source:
+
+1. "Ansible include - include a play or task list."
+
+
 ### Playbooks - Main Modules - Wait For
 
 A condition can be searched for before continuing on to the next task.
 
-Syntax:
+* Syntax:
 ```
 wait_for:
 ```
 
-Example:
+* Example:
 ```
 wait_for: timeout=60
 ```
 
-Common options:
-
-* delay = How long to wait (in seconds) before running the wait_for check.
-* path = A file to check.
-* host = A host to check a connection to.
-* port = A port to check on the specified host.
-* connect_timeout = How long to wait (in seconds) before retrying the connection.
-* search_regex = A regular expression string to match from either a port or file.
-* state
-    * started = Check for a open port.
-    * stopped = Check for a closed port.
-    * drained = Check for active connections to the port.
-    * present = Check for a file.
-    * absent = Verify a file does not exist.
-* timeout = How long to wait (in seconds) before continuing on.
+* Common options:
+    * delay = How long to wait (in seconds) before running the wait_for check.
+    * path = A file to check.
+    * host = A host to check a connection to.
+    * port = A port to check on the specified host.
+    * connect_timeout = How long to wait (in seconds) before retrying the connection.
+    * search_regex = A regular expression string to match from either a port or file.
+    * state
+        * started = Check for a open port.
+        * stopped = Check for a closed port.
+        * drained = Check for active connections to the port.
+        * present = Check for a file.
+        * absent = Verify a file does not exist.
+    * timeout = How long to wait (in seconds) before continuing on.
 
 Source:
 
@@ -1367,28 +1259,405 @@ Source:
 
 ### Playbooks - Main Modules - When
 
-The "when" function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an "if" statement in programming langauges. It is usually the last line to a sub-task.
+The "when" function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an "if" statement in programming langauges. It is usually the last line to a sub-task. [1]
 
-"When" Example:
+* "When" Example:
 ```
-- package: name=httpd state=latest
-  when: ansible_os_family == "CentOS"
+ - package: name=httpd state=latest
+    when: ansible_os_family == "CentOS"
 ```
-"Or" example:
+
+* "Or" example:
 ```
 when: ansible_os_family == "CentOS" or when: ansible_os_family == "Debian"
 ```
-"And" example, using a cleaner style:
+
+* "And" example, using a cleaner style:
 ```
 when: (ansible_os_family == "Fedora") and
       (ansible_distribution_major_version == "25")
+```
+
+Source:
+
+1. "Ansible Conditionals."
+
+
+### Playbooks - Main Modules - Errors
+
+These modules handle Playbook errors.
+
+
+#### Playbooks - Main Modules - Errors - Any Errors Fatal
+
+By default, a Playbook will continue to run on all of the hosts that do not have any failures reported by modules. It is possible to stop the Playbook from running on all hosts once an error has occurred. [1]
+
+* Syntax:
+```
+any_errors_fatal: true
+```
+
+* Example:
+```
+ - hosts: nfs_servers
+    any_errors_fatal: true
+    roles:
+     - nfs
+```
+
+Source:
+
+1. "Ansible Error Handling In Playbooks."
+
+
+#### Playbooks - Main Modules - Errors - Failed When
+
+In some situations, a error from a command or module may not be reported properly. This module can be used to force a failure based on a certain condition. [1]
+
+* Syntax:
+```
+failed_when: <CONDITION>
+```
+
+* Example:
+```
+ - command: echo "Testing a failure. 123."
+    register: cmd
+    failed_when: "'123' in cmd.stdout"
+```
+
+Source:
+
+1. "Ansible Error Handling In Playbooks."
+
+
+#### Playbooks - Main Modules - Errors - Ignore Errors
+
+Playbooks, by default, will stop running on a host if it fails to run a module. Sometimes a module will report a false-positive or an error will be expected. This will allow the Playbook to continue onto the next step. [1]
+
+* Syntax:
+```
+ignore_errors: <BOOLEAN>
+```
+
+* Example:
+```
+ignore_errors: yes
+```
+
+Source:
+
+1. "Ansible Error Handling In Playbooks."
+
+
+### Playbooks - Main Modules - Includes
+
+Include modules allow other elements of a Playbook to be called and executed.
+
+
+#### Playbooks - Main Modules - Includes - Include
+
+Other task files and Playbooks can be included. The functions in them will immediately run. Variables can be defined for the inclusion as well. [1]
+
+* Syntax:
+```
+include:
+```
+```
+include: <TASK>.yml <VAR1>=<VAULE1> <VAR2>=<VALUE2>
+```
+
+* Example:
+```
+include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget
+```
+
+Source:
+
+1. "Ansible Playbook Roles and Include Statements."
+
+
+#### Playbooks - Main Modules - Includes - Include Role
+
+Starting in Ansible 2.2, other roles can be included in tasks.
+
+* Options:
+    * name = Name of the role to include.
+    * {defaults|tasks|vars}_from = Include a specific file from the role's defaults, tasks, or vars directory.
+    * private = Boolean. Specify if the variables from this role should be available to the rest of the Playbook (False) or not (True).
+
+* Syntax:
+```
+inlcude_role:
+```
+
+* Example:
+```
+include_role: name=ldap task_from=rhel.yml
+```
+
+Source:
+
+1. "Ansible include_role - Load and execute a role."
+
+
+#### Playbooks - Main Modules - Includes - Include Variables
+
+Additional variables can be defined within a Playbook file. These can be openly added to the `include_vars` module via YAML syntax.
+
+* Options:
+    * file = Specify a filename to source variables from.
+    * name = Store variables from a file into a specified variable.
+
+* Syntax:
+```
+include_vars: <VARIABLE>
+```
+
+* Examples:
+```
+ - hosts: all
+    include_vars:
+     - gateway: "192.168.0.1"
+     - netmask: "255.255.255.0"
+    roles:
+     - addressing
+```
+```
+ - hosts: all
+    include_vars: file=monitor_vars.yml
+    roles:
+     - nagios
+```
+
+Source:
+
+1. "Ansible include_vars - Load variables from files, dynamically within a task."
+
+
+### Playbooks - Main Modules - Loops
+
+Loops can be used to iterate through lists and/or dictionaries.
+
+
+### Playbooks - Main Modules - Loops - With First Found
+
+Multiple file locations can be checked to see what file exists. The first file found in a given list will be returned to the task. [1]
+
+
+* Syntax:
+```
+with_first_round:
+  - <FLIE1>
+  - <FILE2>
+  - <FILE3>
+```
+
+* Example:
+```
+ - name: Copy over the first Nova configuration that is found
+    copy: src={{ item }} dest=/etc/nova/ remote_src=true
+    with_first_found:
+      - "/root/nova.conf"
+      - "/etc/nova_backup/nova.conf"
+```
+
+
+Source:
+
+1. "Ansible Loops."
+
+
+### Playbooks - Main Modules - Loops - With Flattened
+
+Lists and dictionaries can be converted into one long string. This allows a task to run once with all of the arguments. This is especially useful for installing multiple packages at once. [1]
+
+* Loop syntax:
+```
+with_flattened:
+   - <LIST_OR_DICT>
+   - <LIST_OR_DICT>
+```
+
+* Variable syntax:
+```
+{{ item }}
+```
+
+* Example:
+```
+ - set_fact: openstack_client_packages="[ 'python2-cinderclient', 'python2-glanceclient', python2-keystoneclient', 'python2-novaclient', 'python2-neutronclient' ]"
+
+ - service: name={{ item }} state=restarted
+    with_flattened:
+     - "{{ openstack_client_packages }}"
+     - python2-heatclient
+     - [ 'python2-manilaclient', 'python2-troveclient' ]
+```
+
+Source:
+
+1. "Ansible Loops."
+
+
+### Playbooks - Main Modules - Loops - With Items
+
+A task can be re-used with items in a list and/or dictionary. [1]
+
+* Loop syntax:
+```
+with_items:
+  - <ITEM1>
+  - <ITEM2>
+  - <ITEM3>
+```
+
+* List variable syntax:
+```
+{{ item }}
+```
+
+* Dictionary variable syntax:
+```
+{{ item.<INDEX_STARTING_AT_0> }}
+```
+```
+{{ item.<KEY> }}
+```
+
+* List example:
+```
+ - service: name={{ item }} state=started enabled=true
+    with_items:
+     - nginx
+     - php-fpm
+     - mysql
+```
+
+* Dictionary example:
+```
+ - user: name={{ item.name }} group={{ item.group }} password={{ item.2 }} state=present
+    with_items:
+     - { name: "bob", group: "colab", passwd: "123456" }
+     - { name: "sam", group: "colab", passwd: "654321" }
+```
+
+Source:
+
+1. "Ansible Loops."
+
+
+### Playbooks - Main Modules - Variables
+
+These are modules relating to defining new variables.
+
+
+#### Playbooks - Main Modules - Variables - Prompts
+
+Prompts can be used to assign a user's input as a variable.
+
+* Options:
+    * confirm = Prompt the user twice and then verify that the input is the same.
+    * encrypt = Encrypt the text.
+        * md5_crypt
+        * sha256_crypt
+        * sha512_crypt
+    * salt = Specify a string to use as a salt for encrypting.
+    * salt_size = Specify the length to use for a randomly generated salt. The default is 8.
+
+* Syntax:
+```
+vars_prompt:
+  - name: "<VARIABLE>"
+    prompt: "<PROMPT TEXT>"
+```
+
+* Examples:
+```
+vars_prompt:
+  - name: "zipcode"
+    prompt: "Enter your zipcode."
+```
+```
+vars_prompt:
+   - name: "pw"
+     prompt: "Password:"
+     encrypt: "sha512_crypt"
+     salt_size: 12
 ```
 
 [1]
 
 Source:
 
-1. "Ansible Conditionals."
+1. "Ansible Prompts."
+
+
+#### Playbooks - Main Modules - Variables - Register
+
+The output of modules and commands can be saved to a variable.
+
+* Variable return values [1]:
+    * backup_file = String. If a module creates a backup file, this is that file's name.
+    * changed = Boolean. If something was changed after the module runs, this would be set to "true."
+    * failed = Boolean. Shows if the module failed.
+    * invocation = Dictionary. This describes the module used to run the operation as well as all of the arguments.
+    * msg = String. A message that is optionally given to the end-user.
+    * rc = Integer. The return code of a command, shell, or similar module.
+    * stderr = String. The standard error of the command.
+    * stderr_lines = List. The standard output of the command is separated by the newline characters into a list.
+    * stdout = String. The standard output of the command.
+    * stdout_lines = List.
+    * results = List of dictionaries. If a loop was used, the results for each loop are stored as a new list item.
+    * skipped = Boolean. If this module was skipped or not.
+
+* Syntax:
+```
+register: <NEW_VARIABLE>
+```
+
+* Examples [2]:
+```
+ - command: echo Hello World
+    register: hello
+ - debug: msg="We heard you"
+    when: "'Hello World' in hello.stdout"
+```
+```
+ - copy: src=example.conf dest=/etc/example.conf
+    register: copy_example
+ - debug: msg="Copying example.conf failed."
+    when: copy_example|failed
+```
+
+
+Sources:
+
+1. "Ansible Return Values."
+2. "Ansible Error Handling In Playbooks."
+
+
+#### Playbooks - Main Modules - Variables - Set Fact
+
+New variables can be defined set the "set_fact" module. These are added to the available variables/facts tied to a inventory host.
+
+* Syntax:
+```
+set_fact:
+  <VARIABLE_NAME1>: <VARIABLE_VALUE1>
+  <VARIABLE_NAME2>: <VARIABLE_VALUE2>
+```
+
+* Example:
+```
+ - set_fact:
+      is_installed: True
+      sql_server: mariadb
+```
+
+Source:
+
+1. "Ansible Set host facts from a task."
 
 
 ## Playbooks - Modules
@@ -1396,9 +1665,9 @@ Source:
 
 ### Playbooks - Modules - Command and Shell
 
-Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell enviornment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficent. [1]
+Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell enviornment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficent. [1][2]
 
-Syntax:
+* Syntax:
 ```
 command:
 ```
@@ -1406,54 +1675,74 @@ command:
 shell:
 ```
 
-Common options:
-* executable = Set the executable shell binary.
-* chdir = Change directories before running the command.
+* Common options:
+    * executable = Set the executable shell binary.
+    * chdir = Change directories before running the command.
 
-Example:
+* Example:
 ```
-- shell: echo "Hello world" >> /tmp/hello_world.txt
-  args:
-    executable: /bin/bash
+ - shell: echo "Hello world" >> /tmp/hello_world.txt
+    args:
+     executable: /bin/bash
 ```
 
-Source:
+Sources:
 
 1. "Ansible Command Module."
 2. "Ansible Shell Module."
 
 
-### Playbooks - Modules - Copy, Files, and Templates
+### Playbooks - Modules - Copy, Files, Synchronize, and Templates
 
-The copy, file and template modules provide ways to managing and configuring various files. The file module is used to handle file creation/modification [1], templates are to be used when Ansible needs to fill in the variables [2] and copy is used for copying files and folders. Most of the attributes are the same between the three modules.
+The copy, file and template modules provide ways to managing and configuring various files. The `files` module is used to handle file creation/modification on the remote host. [1] `Templates` are to be used when Ansible needs to find and replace variables [2]. `Copy` is used for copying files and folders either from the role or on the remote host. `Synchronize` is used as a wrapper around rsync to provide a more robust copy functionality. Most of the options and usage are the same between these four modules.
 
-Syntax:
+* Syntax:
 ```
 copy:
 ```
 ```
-files:
+file:
 ```
 ```
-templates:
+synchronize:
+```
+```
+template:
 ```
 
-Common options:
+* Common options:
 
-* src = Define the source file or template. If a full path is not given, Ansible will check in the roles/`<ROLENAME>`/files/ directory for a file or roles/`<ROLENAME>`/templates/ for a template. If the src path ends with a "/" then only the files within that directory will be copied (not the directory itself).
-* dest (or path) = This is the full path to where the file should be copied to on the destination server.
-* remote_src = If set to True, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is False.
-* owner = Set the user owner.
-* group = Set the group owner.
-* mode = Set the octal or symbolic permissions. If using octal, it has to be four digits. The first digit is generally the flag "0" to indicate no special permissions.
-* setype = Set SELinux file permissions.
-* state = Specify the state the file should be created in.
-  * file = Copy the file.
-  * link = Create a soft link shortcut.
-  * hard = Create a hard link reference.
-  * touch = Create an empty file.
-  * directory = Create all subdirectories in the destination folder.
-  * absent = Delete destination folders. [1]
+    * src = Define the source file or template. If a full path is not given, Ansible will check in the roles/`<ROLENAME>`/files/ directory for a file or roles/`<ROLENAME>`/templates/ for a template. If the src path ends with a "/" then only the files within that directory will be copied (not the directory itself).
+    * dest (or path) = This is the full path to where the file should be copied to on the destination server.
+    * owner = Set the user owner.
+    * group = Set the group owner.
+    * setype = Set SELinux file permissions.
+
+
+* Copy, file, and template options:
+    * mode = Set the octal or symbolic permissions. If using octal, it has to be four digits. The first digit is generally the flag "0" to indicate no special permissions.
+
+* Copy options:
+
+    * remote_src = If set to `true`, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is `false`.
+
+* File options:
+    * state = Specify the state the file should be created in.
+        * file = Copy the file.
+        * link = Create a soft link shortcut.
+        * hard = Create a hard link reference.
+        * touch = Create an empty file.
+        * directory = Create all subdirectories in the destination folder.
+        * absent = Delete destination folders.
+
+* Synchronize options:
+    * archive = Preserve all of the original file permissions. The default is `yes`.
+    * delete = Remove files in the destination directory that do not exist in the source directory.
+    * mode
+        * push = Default. Copy files from the source to the destination directory.
+        * pull = Copy files from the destination to the source directory.
+    * recursive = Recursively copy contents of all sub-directories. The default is `no`.
+    * rsync_opts = Provide additional `rsync` command line arguments.
 
 * Example:
   * Copy a template from roles/`<ROLE>`/templates/ and set the permissions for the file.
@@ -1465,6 +1754,8 @@ Sources:
 
 1. "Ansible File Module."
 2. "Ansible Template Module."
+3. "Ansible copy - Copies files to remote locations."
+4. "Ansible synchronize - A wrapper around rsync to make common tasks in your playbooks quick and easy."
 
 
 ### Playbooks - Modules - Debug
@@ -1681,16 +1972,17 @@ Sources:
 2. "Ansible Generic OS package manager."
 
 
-### Playbooks - Modules - Package Managers - Yum
+#### Playbooks - Modules - Package Managers - Yum
 
 There are two commands to primarily handel Red Hat's Yum package manager: "yum" and "yum_repository."
 
-Yum Syntax:
+Syntax:
 ```
 yum:
 ```
 
 Options:
+
 * name = Specify the package name.
 * state = Specify the package state.
   * {present|installed|latest} = Any of these will install the package.
@@ -1736,7 +2028,7 @@ Sources:
 2. "Ansible Yum Repository Module."
 
 
-### Playbooks - Modules - Package Managers - Apt
+#### Playbooks - Modules - Package Managers - Apt
 
 Apt is used to install and manage packages on Debian based operating systems.
 
@@ -1762,6 +2054,74 @@ Options:
 Source:
 
 1. "apt - Manages apt-packages."
+
+
+### Playbooks - Modules - Stat
+
+This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand `stat`. All the information from this module can be saved to a variable and accessed as a from new `<VARIABLE>.stat` dictionary.
+
+* Syntax:
+```
+stat: path=<FLIE>
+register: <STAT_VARIABLE>
+```
+
+* Example:
+```
+ - stat: path=/root/.ssh/id_rsa
+    register: id_rsa
+
+ - file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root
+    when: id_rsa.stat.mode is not "0600"
+```
+
+* Options:
+    * checksum_algorithm = The algorithm to use for finding the checksum.
+        * sha1 (Default)
+        * sha224
+        * sha256
+        * sha384
+        * sha512
+    * follow = Follow symbolic links.
+    * get_checksum = If the SHA checksum should be generated.
+    * get_md5 = Boolean. If the MD5 checksum should be generated.
+    * path = Required. String. The full pth to the file.
+
+* `stat` dictionary values:
+    * {a|c|m}time = Float. The last time the file was either accessed, the metadata was created, or modified.
+    * attributes = List. All of the file attributes.
+    * charset = String. The text file encoding format.
+    * checksum = String. The has of the path.
+    * dev = Integer. The device the inode exists on.
+    * {executable|readable|writeable} = Boolean. If the file is executable, readable, or writeable by the remote user that Ansible is running as.
+    * exists = Boolean. If the file exists or not.
+    * {gr|pw}_name = String. The name of the group or user owner.
+    * isblk = Boolean. If the file is a block device.
+    * ischr = Boolean. If the file is a character device for standard input or output.
+    * isdir = Boolean. If the file is a directory.
+    * isfifo = Boolean. If the file is a named pipe.
+    * islink = Boolean. If the file is a symbolic link.
+    * inode = Integer. The Unix inode number of the file.
+    * isreg = Boolean. If the file is a regular file.
+    * issock. Boolean. If the file is a Unix socket.
+    * is{uid|gid} = Boolean. If the file is owned by the user or group that the remote Ansible user is running as.
+    * lnk_source = String. The original path of the symbolic link.
+    * md5 = String. The MD5 hash of the file.
+    * mime_type = The "magic data" that specifies the file type.
+    * mode = Octal Unix file permissions.
+    * nlink. Integer. The number of links that are uesd to redirect to the original inode.
+    * path = String. The full path to the file.
+    * {r|w|x}usr = Boolean. If the user owner has readable, writeable, or executable permissions.
+    * {r|w|x}grp = Boolean. If the group owner has readable, writeable, or executable permissions.
+    * {r|w|x}oth = Boolean. If other users have readable, writeable, or executable permissions.
+    * size = Integer. The size, in bytes, of the file.
+    * {uid|gid} = Integer. The ID of user or group owner of hte file.
+
+[1]
+
+Source:
+
+1. "Ansible stat - retrieve file or file system status."
 
 
 ## Playbooks - Galaxy Roles
@@ -1970,12 +2330,12 @@ Sources:
 * "Ansible Tags." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_tags.html
 * "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html
 * "Ansible Using Lookups." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html
-* "Ansible Loops." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_loops.html
-* "Ansible Conditionals." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_conditionals.html
+* "Ansible Loops." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_loops.html
+* "Ansible Conditionals." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_conditionals.html
 * "Ansible Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks_error_handling.html
 * "Ansible - some random useful things." Code Poets. August 4, 2014. Accessed August 27, 2016. https://codepoets.co.uk/2014/ansible-random-things/
 * "Ansible Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
-* "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_delegation.html
+* "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_delegation.html
 * "Ansible Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html
 * "Ansible Set host facts from a task." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/set_fact_module.html
 * "Ansible Playbook Roles and Include Statements." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/playbooks_roles.html
@@ -1991,7 +2351,7 @@ Sources:
 sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
 * "Ansible Glossary." Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro_installation.html
 * "Ansible Container README." Ansible GitHub. October, 2016. Accessed November 19, 2016. https://github.com/ansible/ansible-container
-* "Ansible Container." Ansible Documentation. September 26, 2016. Accessed November 19, 2016 .http://docs.ansible.com/ansible-container/
+* "Ansible Container." Ansible Documentation. February 19, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible-container/
 * "Ansible apt - Manages apt-packages." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/apt_module.html
 * "Ansible include_vars - Load variables from files, dynamically within a task." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html
 * "Ansible include_role - Load and execute a role." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html
@@ -2003,3 +2363,9 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
 * "Configuration file." Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html
 * "network_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network_interface
+* "Ansible synchronize - A wrapper around rsync to make common tasks in your playbooks quick and easy." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/synchronize_module.html
+* "Ansible Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_checkmode.html
+* "Ansible copy - Copies files to remote locations." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/copy_module.html
+* "Ansible Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common_return_values.html
+* "Ansible include - include a play or task list." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. https://docs.ansible.com/ansible/include_module.html
+* "Ansible stat - retrieve file or file system status." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html
