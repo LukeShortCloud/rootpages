@@ -8,7 +8,9 @@
         * [Quick](#installation---openstack-ansible---quick)
             * [Operations](#installation---openstack-ansible---quick---operations)
         * [Full](#installation---openstack-ansible---full)
-            * [Configuration](#installation---openstack-ansible---full---configuration)
+            * [Configurations](#installation---openstack-ansible---full---configurations)
+                * [Nova](#installation---openstack-ansible---full---configurations---nova)
+                * [Ceph](#installation---openstack-ansible---full---configurations---ceph)
             * [Operations](#installation---openstack-ansible---full---operations)
     * [TripleO](#installation---tripleo)
         * [Quick](#installation---tripleo---quick)
@@ -81,21 +83,28 @@ Releases:
 11. Kilo
 12. Liberty
 13. Mitaka
-    * EOL: 2017-04-10
+    * End-of-life (EOL): 2017-04-10
 14. Newton
     * EOL: 2017-10-11
 15. Ocata
-    * EOL: 2018-02-26
+    * EOL: 2018-02-26 [1]
+    * Goals:
+        1. Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
+        2. Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packagse. [3]
 16. Pike
-    * Currently in development. The expected release date is in September of 2017.
+    * Currently in development. The expected release date is in September of 2017. [1]
+    * Goals:
+        1.  Convert all of the OpenStack code from Python 2 into Python 3. This is because Python 2 will become EOL in 2020.
+        2.  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
 17. Queens
-    * On the roadmap.
+    * On the roadmap. [1]
 
-[1]
-
-Source:
+Sources:
 
 1. "OpenStack Releases." OpenStack Releases. April 3, 2017. Accessed April 3, 2017. https://releases.openstack.org/
+2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
+3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
+4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 
 
 # Overview
@@ -347,12 +356,11 @@ Source:
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 
-#### Installation - OpenStack Ansible - Full - Configuration
+#### Installation - OpenStack Ansible - Full - Configurations
 
 View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a real production example and reference.
 
 Configure the networks that are used in the environment.
-
 
 * cider_networks
     * container = The network range that the LXC containers will use an IP address from.
@@ -401,6 +409,85 @@ The valid service types are:
 Source:
 
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
+
+
+##### Installation - OpenStack Ansible - Full - Configurations - Nova
+
+The default variables for Nova are listed at https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/. These can be overriden.
+
+Common variables:
+
+* nova_virt_type = The virtualization technology to use for deploying instances with OpenStack. By default, OpenStack-Ansible will guess what should be used based on what is installed on the hypervisor. Valid options are: `qemu`, `kvm`, `lxd`, `ironic`, and `powervm`.
+
+[1]
+
+Source:
+
+1. "Nova role for OpenStack-Ansible." OpenStack Documentation. April 7, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/
+
+
+##### Installation - OpenStack Ansible - Full - Configurations - Ceph
+
+Ceph can be customized to be deployed differently from the default configuration or to use an existing Ceph cluster.
+
+These settings can be adjusted to use different Ceph users, pools, and/or monitor nodes.
+
+```
+# File: /etc/openstack_deploy/user_variables.yml
+glance_default_store: rbd
+glance_ceph_client: <GLANCE_CEPH_USER>
+glance_rbd_store_pool: <GLANCE_CEPH_POOL>
+glance_rbd_store_chunk_size: 8
+cinder_ceph_client: <CINDER_CEPH_USER>
+nova_ceph_client: {{ cinder_ceph_client }}
+nova_libvirt_images_rbd_pool: <CINDER_CEPH_POOL>
+cephx: true
+ceph_mons:
+  - <MONITOR1_IP>
+  - <MONITOR2_IP>
+  - <MONITOR3_IP>
+```
+
+A new custom deployment of Ceph can be configured. It is recommended to use at least 3 hosts for high availability and quorum.
+
+```
+# File: /etc/openstack_deploy/openstack_user_config.yml
+storage_hosts:
+  <CINDER_HOST1>:
+    ip: <CINDER_HOST1_IP>
+    container_vars:
+      cinder_backends:
+        limit_container_types: cinder_volume
+        rbd:
+          volume_group: <LVM_BLOCK_STORAGE>
+          volume_driver: cinder.volume.drivers.rbd.RBDDriver
+          volume_backend_name: rbd
+          rbd_pool: <CINDER_CEPH_POOL>
+          rbd_ceph_conf: /etc/ceph/ceph.conf
+          rbd_user: <CINDER_CEPH_USER>
+```
+
+[1]
+
+Alternatively, configure credentials to a pre-existing Ceph cluster.
+
+```
+ceph_extra_confs:
+-  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
+   dest: "/etc/ceph/ceph.conf"
+   mon_host: <MONITOR_IP>
+   client_name: <CEPH_CLIENT>
+   keyring_src: <PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE>
+   keyring_dest: /etc/ceph/ceph.client.<CEPH_CLIENT>.keyring
+   secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
+```
+
+[2]
+
+Sources:
+
+1. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
+2. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
 
 
 #### Installation - OpenStack Ansible - Full - Operations
@@ -780,8 +867,7 @@ Sources:
 
 ### Configurations - Nova - CPU Pinning
 
-Verify that the processor(s) has hardware support for non-uniform memory access (NUMA). If it does, NUMA may still need to be turned on in the BIOS. NUMA nodes are the physical processors. These processors are then mapped to specific sectors of RAM. [1]
-
+* Verify that the processor(s) has hardware support for non-uniform memory access (NUMA). If it does, NUMA may still need to be turned on in the BIOS. NUMA nodes are the physical processors. These processors are then mapped to specific sectors of RAM.
 ```
 # lscpu | grep NUMA
 NUMA node(s):          2
@@ -807,12 +893,7 @@ node   0   1
 NUMA cell(s):        2
 ```
 
-[1][3]
-
-
-#### Configuration
-
-* Append the two NUMA filters.
+* Append the two NUMA filters `NUMATopologyFilter` and `AggregateInstanceExtraSpecsFilter` to the Nova `scheduler_default_filters`. [1]
 ```
 # vim /etc/nova/nova.conf
 [ DEFAULT ] scheduler_default_filters = RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImageProp
@@ -826,21 +907,30 @@ ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopolog
 
 * Set the aggregate/availability zone to allow pinning.
 ```
-# nova aggregate-set-metadata <AGGREGATE_ZONE> pinned=true
+# openstack aggregate create <AGGREGATE_ZONE>
+# openstack aggregate set --property pinned=true <AGGREGATE_ZONE>
+```
+
+* Add the compute hosts to the new aggregate zone.
+```
+# openstack host list | grep compute
+# openstack aggregate host add <AGGREGATE_ZONE> <COMPUTE_HOST>
 ```
 
 * Modify a flavor to provide dedicated CPU pinning.
 ```
-# nova flavor-key <FLAVOR_ID> set hw:cpu_policy=dedicated
+# openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=prefer
 ```
 
-[1][2][3]
+* Optionally, force images to only work with CPU pinned flavors. [2]
+```
+# openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=isolate
+```
 
 Sources:
 
-1. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
-2. http://docs.openstack.org/admin-guide/compute-flavors.html
-3. http://www.stratoscale.com/blog/openstack/cpu-pinning-and-numa-awareness/
+1. "Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute." Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
+2. "OpenStack Administrator Guide SUSE OpenStack Cloud 7." SUSE Documentation. February 22, 2017. Accessed April 13, 2017. https://www.suse.com/documentation/suse-openstack-cloud-7/pdfdoc/book_cloud_admin/book_cloud_admin.pdf
 
 
 ### Configurations - Nova - Ceph
