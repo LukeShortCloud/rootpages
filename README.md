@@ -1,6 +1,6 @@
 # Root Pages
 
-Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide a more general purpose alternative to the "info" documents for System Adminstrators and Engineers.
+Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide a more general purpose alternative to the "info" documents for System Adminstrators and Engineers. Each page is a full guide to each topic making it easy to navigate and search for content.
 
 
 ## Usage
@@ -18,6 +18,11 @@ $ source ~/.bashrc
 Uninstall:
 ```
 $ bash uninstall.sh
+```
+
+Update/reinstall:
+```
+$ bash reinstall.sh
 ```
 
 Root Pages is handled by the "rp" utility. It will automatically detect an available CLI web browser. Supply the name of the guide and it will load up in the web browser.
