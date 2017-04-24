@@ -3,6 +3,7 @@
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Configuration](#configuration)
+    * [Main](#configuration---main)
     * [Inventory](#configuration---inventory)
         * [Variables](#configuration---inventory---variables)
     * [Vault Encryption](#configuration---vault-encryption)
@@ -61,7 +62,7 @@
     * [Galaxy Roles](#playbooks---galaxy-roles)
         * [Network Interface](#playbooks---galaxy-roles---network-interface)
 * [Dashboards](#dashboards)
-    * Ansible Tower
+    * [Ansible Tower](#dashboards---ansible-tower)
     * [Open Tower](#dashboards---open-tower)
     * [Semaphore](#dashboards---semaphore)
 * [Python API](#python-api)
@@ -121,6 +122,61 @@ Sources:
 
 
 # Configuration
+
+
+## Configuration - Main
+
+All of the possible configuration files are listed below in the order that they are read. The last file overrides any previous settings.
+
+* Configuration files:
+    * `$ANSIBLE_CONFIG` = A command line variable containing the Ansible configuration settings.
+    * `ansible.cfg` = If it is in the current directory, it will be used.
+    * `~/.ansible.cfg` = The configuration file in a user's home directory.
+    * `/etc/ansible/ansible.cfg` = The global configuration file.
+
+* Common settings:
+    * [default]
+        * ansible_managed = String. The phrase that will be assigned to the `{{ ansible_managed }}` variable.
+        * ask_pass = Boolean. Default: False. Prompt the user for the SSH password.
+        * ask_sudo_pass = Boolean. Default: False. Prompt the user for the sudo password.
+        * ask_vault_pass = Boolean. Default: False. Prompt the user for the Ansible vault password.
+        * command_warnings = Boolean. Default: True. Inform the user an Ansible module can be used instead of running certain commands.
+        * deprecation_warnings = Boolean. Default: True. Show deprecated messages about features that will be removed in a future release of Ansible.
+        * display_skipped_hosts = Boolean. Default: True. Show tasks that a skipped host would have run.
+        * executable = String. Default: /bin/bash. The shell executable to use.
+        * forks = Integer. Default: 5. The number of parallel processes used to run tasks on remote hosts. This is not how many hosts a Playbook or module can run on, that is handled by the "serial" module. This helps to increase the performance of many operations across a large number of remote hosts.
+        * host_key_checking = Boolean. Default: True. Do not automatically accept warnings about leaving SSH fingerprints on a connection to a new host.
+        * internal_poll_interval = Float. Default: 0.001. The number of seconds to wait before checking on the status of a module that is being executed.
+        * inventory = String. Default: /etc/ansible/hosts. The default inventory file to find hosts from.
+        * log_path = String. Default: none. The file to log Ansible's operations.
+        * nocolor. Boolean. Default: 0. Do not format Ansible output with color.
+        * nocows = Boolean. Default: 0. If the `cowsay` binary is present, a Playbook will output information using a cow.
+        * hosts = String. Default: \*. The hosts to run a Playbook on if no host is specified. The default is to run on all hosts.
+        * private_key_file = String. The private SSH key file to use.
+        * remote_port = Integer. Default: 22. The SSH port used for remote connections.
+        * remote_tmp = String. Default: ~/.ansible/tmp. The temporary directory on the remote server to save information to.
+        * remote_user = String. Default: root. The default `ansible_user` to use for SSH access.
+        * roles_path = String. The path to the location of installed roles.
+        * sudo_exe = String. Default: sudo. The binary to run to execute commands as a non-privileged user.
+        * sudo_user = String. Default: root. The user that sudo should run as.
+        * timeout = Integer. Default: 10. The amount of time, in seconds, to wait for a SSH connection to a remote host.
+        * vault_password_file = String. The default file to use for the Vault password.
+    * [privilege_escalation]
+        * become = Boolean. Default: False. This specifies if root level commands should be run by a privileged user.
+        * become_method = String. Default: sudo. The method to run root tasks.
+        * become_user = String. Default: root. The user to change to to run root tasks.
+        * become_ask_pass = Boolean. Default: False. Ask the end-user for a password for the become method.
+    * [ssh_connection]
+        * ssh_args = String. Additional SSH arguments.
+        * retries = Integer. Default: 0 (keep retrying). How many times should an SSH connection attempt to reconnect after a failure.
+        * pipelining = Boolean. Default: False. Ansible modules can be combined and sent to the remote host via SSH to help save time and improve performance. This is disabled by default because `sudo` accounts usually have the "requiretty" option enabaled that is not compatible with pipelining.
+        * ansible_ssh_executable = String. Default: ssh (found in the $PATH environment variable). The path to the `ssh` binary.
+
+[1]
+
+Source:
+
+1. "Ansible Configuration file."
 
 
 ## Configuration - Inventory
@@ -188,7 +244,7 @@ Common Inventory Options:
 * ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).
 * ansible_ssh_common_args = Append additional SSH command-line arguments for sftp, scp, and ssh.
 * ansible_{sftp|scp|ssh}_extra_args = Append arguments for the specified utility.
-* ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available, such as Arch Linux, a custom install of Python 2 can be used instead. [1]
+* ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available a custom install of Python 2 can be used instead. [1]
 * ansible_vault_password_file = Specify the file to read the Vault password from. [6]
 * ansible_become = Set to "true" or "yes" to become a different user than the ansible_user once logged in.
     * ansible_become_method = Pick a method for switching users. Valid options are: sudo, su, pbrun, pfexec, doas, or dzdo.
@@ -614,13 +670,13 @@ A few configuration changes can help to speed up the runtime of Ansible modules 
 
 * /etc/ansible/ansible.cfg
     * forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.
-    * pipleining = Enable pipelining to bunble commands together that do not require a file transfer. [1]
+    * pipleining = Enable pipelining to bundle commands together that do not require a file transfer. This is disabled by default because most sudo users are enforced to use the `requiretty` sudo option that pipelining is incompatible with. [1]
     * gathering = Set this to "explicit" to only gather the necessary facts if when/if they are required by the Playbook. [2]
 
 Sources:
 
 1. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)."
-2. "Configuration file."
+2. "Ansible Configuration file."
 
 
 ## Playbooks - Jinja2 Templates
@@ -1159,34 +1215,37 @@ Source:
 
 Each task in a tasks file can have a tag associated to it. This should be appended to the end of the task. This is useful for debugging and separating tasks into specific groups. Here is the syntax:
 
-Single tag syntax:
-```
-tags: <TAG>
-```
-
-Multiple tags syntax:
+* Syntax:
 ```
 tags:
  - <TAG1>
  - <TAG2>
  - <TAG3>
 ```
-Run only tasks with the defined tasks:
+
+Run only tasks that include specific tags.
 ```
-# ansible-playbook --tags <TAG1,TAG2,TAG3,etc.>
+$ ansible-playbook --tags "<TAG1>,<TAG2>,<TAG3>"
 ```
-Example:
+
+Alternatively, skip specific tags.
+
 ```
-# head webserver.yml
----
-- package: name=nginx state=latest
-  tags:
-   - yum
-   - rpm
-   - nginx
+$ ansible-playbook --skip-tags "<TAG1>,<TAG2>,<TAG3>"
+```
+
+* Example:
+```
+ $ head webserver.yml
+ ---
+   - package: name=nginx state=latest
+     tags:
+      - yum
+      - rpm
+      - nginx
 ```
 ```
-# ansible-playbook --tags yum webserver.yml webnode1
+$ ansible-playbook --tags "yum" site.yml webnode1
 ```
 
 [1]
@@ -1337,12 +1396,14 @@ Playbooks, by default, will stop running on a host if it fails to run a module. 
 
 * Syntax:
 ```
-ignore_errors: <BOOLEAN>
+ignore_errors: yes
 ```
 
 * Example:
 ```
-ignore_errors: yes
+ - name: Even though this will fail, the Playbook will keep running.
+    package: name=does-not-exist state=present
+    ignore_errors: yes
 ```
 
 Source:
@@ -1639,7 +1700,7 @@ Sources:
 
 #### Playbooks - Main Modules - Variables - Set Fact
 
-New variables can be defined set the "set_fact" module. These are added to the available variables/facts tied to a inventory host.
+New variables can be defined set the "set_fact" module. These are added to the available variables/facts tied to a inventory host. [1]
 
 * Syntax:
 ```
@@ -2201,6 +2262,50 @@ Source:
 Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.
 
 
+## Dashboards - Ansible Tower
+
+Ansible Tower is the official dashboard maintained by Red Hat. A free trial of it can be used to manage up to 10 servers for testing purposes only. A license can be bought to use Tower for managing more servers and to provide support.
+
+Tower can be downloaded from here: https://www.ansible.com/tower-trial. At least a free trial license will be required which can be obtained here: https://www.ansible.com/license.
+
+Once downloaded, it can be installed. This will at least setup a Nginx server and a virtual host for serving Ansible Tower via HTTP.
+
+```
+$ tar -x -z -v -f ansible-tower-setup-latest.tar.gz
+$ cd ./ansible-tower-setup-<VERSION>/
+```
+
+Configure the passwords to use for the various services in the `inventory` file.
+
+* admin_password
+* pg_password
+* rabbitmq_password
+
+If using an existing PostreSQL and/or RabbitMQ installation, be sure to fill in the connection details to the same `inventory` file. Otherwise, Ansible Tower will install and configure those services on the local machine.
+
+The "ansible" package needs to be available in a package repository. On RHEL systems, the Extra Packages for Enterprise Linux (EPEL) repository should be installed.
+
+```
+# yum -y install epel-release
+```
+
+Then install Ansible Tower using the setup shell script. This will run an Ansible Playbook to install Tower.
+
+```
+$ ./setup.sh
+```
+
+When the installation is complete, Ansible Tower can be acccessed by a web browser. The default username is "admin" and the password is the one set in the `inventory` file.
+
+```
+https://<SERVER_IP_OR_HOSTNAME>/
+```
+
+Source:
+
+1. "Installing Ansible Tower."
+
+
 ## Dashboards - Open Tower
 
 Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]
@@ -2327,7 +2432,7 @@ Sources:
 * "Ansible Shell Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Debug Module." Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html
 * "Ansible Git Module." Ansible Documentation. June 22, 2016. Accessed July 30, 2016. http://docs.ansible.com/ansible/git_module.html
-* "Ansible Tags." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_tags.html
+* "Ansible Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks_tags.html
 * "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_prompts.html
 * "Ansible Using Lookups." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks_lookups.html
 * "Ansible Loops." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_loops.html
@@ -2361,7 +2466,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "How to loop through interface facts." Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts
 * "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
 * "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
-* "Configuration file." Ansible Documentation. January 25, 2017. Accessed January 25, 2017. http://docs.ansible.com/ansible/intro_configuration.html
+* "Ansible Configuration file." Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro_configuration.html
 * "network_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network_interface
 * "Ansible synchronize - A wrapper around rsync to make common tasks in your playbooks quick and easy." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/synchronize_module.html
 * "Ansible Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_checkmode.html
@@ -2369,3 +2474,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common_return_values.html
 * "Ansible include - include a play or task list." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. https://docs.ansible.com/ansible/include_module.html
 * "Ansible stat - retrieve file or file system status." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html
+* "Installing Ansible Tower." Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html
