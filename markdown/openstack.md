@@ -2,19 +2,20 @@
 
 * [Introduction](#introduction)
 * [Overview](#overview)
-* [Installation](#installation)
-    * [PackStack](#installation---packstack)
-    * [OpenStack Ansible](#installation---openstack-ansible)
-        * [Quick](#installation---openstack-ansible---quick)
-            * [Operations](#installation---openstack-ansible---quick---operations)
-        * [Full](#installation---openstack-ansible---full)
-            * [Configurations](#installation---openstack-ansible---full---configurations)
-                * [Nova](#installation---openstack-ansible---full---configurations---nova)
-                * [Ceph](#installation---openstack-ansible---full---configurations---ceph)
-            * [Operations](#installation---openstack-ansible---full---operations)
-    * [TripleO](#installation---tripleo)
-        * [Quick](#installation---tripleo---quick)
-        * [Full](#installation---tripleo---full)
+* [Automation](#automation)
+    * [PackStack](#automation---packstack)
+    * [OpenStack Ansible](#automation---openstack-ansible)
+        * [Quick](#automation---openstack-ansible---quick)
+            * [Operations](#automation---openstack-ansible---quick---operations)
+        * [Full](#automation---openstack-ansible---full)
+            * [Configurations](#automation---openstack-ansible---full---configurations)
+                * [Nova](#automation---openstack-ansible---full---configurations---nova)
+                * [Ceph](#automation---openstack-ansible---full---configurations---ceph)
+            * [Operations](#automation---openstack-ansible---full---operations)
+            * [Upgrades](#automation---openstack-ansible---full---upgrades)
+    * [TripleO](#automation---tripleo)
+        * [Quick](#automation---tripleo---quick)
+        * [Full](#automation---tripleo---full)
 * [Configurations](#configurations)
     * [Common](#configurations---common)
         * [Database](#configurations---common---database)
@@ -143,12 +144,12 @@ Source:
 1. "Project Navigator." OpenStack. Accessed January 15, 2017. https://www.openstack.org/software/project-navigator/
 
 
-# Installation
+# Automation
 
-It is possible to easily install OpenStack as an all-in-one (AIO) server or onto a full cluster of servers. Various tools exist for deploying and managing OpenStack.
+It is possible to easily install OpenStack as an all-in-one (AIO) server or onto a cluster of servers. Various tools exist for automating the deployment and management of OpenStack.
 
 
-## Installation - PackStack
+## Automation - PackStack
 
 Supported operating system: RHEL 7
 
@@ -181,7 +182,7 @@ Source:
 1. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
 
 
-## Installation - OpenStack Ansible
+## Automation - OpenStack Ansible
 
 Supported operating systems: RHEL 7, Ubuntu 14.04, Ubuntu 16.04
 
@@ -203,7 +204,7 @@ Source:
 1. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed March 30, 2017. https://github.com/openstack/openstack-ansible
 
 
-### Installation - OpenStack Ansible - Quick
+### Automation - OpenStack Ansible - Quick
 
 This quick installation guide covers how to install an all-in-one environment. It is recommended to deploy this inside of a virtual machine (with nested virtualization enabled) as many system configurations are changed.
 
@@ -288,7 +289,7 @@ Source:
 1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
-#### Installation - OpenStack Ansible - Quick - Operations
+#### Automation - OpenStack Ansible - Quick - Operations
 
 A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.
 
@@ -324,7 +325,7 @@ Source:
 1. "Quick Start." OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
-### Installation - OpenStack Ansible - Full
+### Automation - OpenStack Ansible - Full
 
 The recommended network topology is that the physical servers should have 4 different network interfaces and networks for managing different services. Only one network is required for OpenStack Ansible to work but having segregated VLANs is recommended for production environments.
 
@@ -356,7 +357,7 @@ Source:
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 
-#### Installation - OpenStack Ansible - Full - Configurations
+#### Automation - OpenStack Ansible - Full - Configurations
 
 View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a real production example and reference.
 
@@ -411,7 +412,7 @@ Source:
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 
-##### Installation - OpenStack Ansible - Full - Configurations - Nova
+##### Automation - OpenStack Ansible - Full - Configurations - Nova
 
 The default variables for Nova are listed at https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/. These can be overriden.
 
@@ -426,7 +427,7 @@ Source:
 1. "Nova role for OpenStack-Ansible." OpenStack Documentation. April 7, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/
 
 
-##### Installation - OpenStack Ansible - Full - Configurations - Ceph
+##### Automation - OpenStack Ansible - Full - Configurations - Ceph
 
 Ceph can be customized to be deployed differently from the default configuration or to use an existing Ceph cluster.
 
@@ -490,7 +491,14 @@ Sources:
 2. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
 
 
-#### Installation - OpenStack Ansible - Full - Operations
+#### Automation - OpenStack Ansible - Full - Operations
+
+* [OpenStack Utilities](#automation---openstack-ansible---full---operations---openstack-utilities)
+* [Add a Infrastructure Container](#automation---openstack-ansible---full---operations---add-a-infrastructure-container)
+* [Add a Compute Container](#automation---openstack-ansible---full---operations---add-a-compute-container)
+
+
+#### Automation - OpenStack Ansible - Full - Operations - OpenStack Utilities
 
 Once OpenStack-Ansible is installed, it can be used immediately. The primary container to use is the `utility` container.
 
@@ -520,7 +528,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Installation - OpenStack Ansible - Full - Operations - Add a Infrastructure Container
+##### Automation - OpenStack Ansible - Full - Operations - Add a Infrastructure Container
 
 Add the new host to the `infra_hosts` section in `/etc/openstack_deploy/openstack_user_config.yml`. Then the inventory can be updated which will generate a new unique node name that the OpenStack-Ansible Playbooks can run against. The `--limit` options are important because they will ensure that it will only run on the new infrastructure node.
 
@@ -540,7 +548,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Installation - OpenStack Ansible - Full - Operations - Add a Compute Container
+##### Automation - OpenStack Ansible - Full - Operations - Add a Compute Container
 
 Add the new host to the `compute_hosts` section in `/etc/openstack_deploy/openstack_user_config.yml`. Then the OpenStack-Ansible deployment Playbooks can be run again.
 
@@ -558,7 +566,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Installation - OpenStack Ansible - Full - Operations - Remove a Compute Container
+##### Automation - OpenStack Ansible - Full - Operations - Remove a Compute Container
 
 Stop the services on the compute container and then use the `openstack-ansible-ops` project's Playbook `remote_compute_node.yml` to fully it. Be sure to also remove the host from the `/etc/openstack_deploy/openstack_user_config.yml` configuration when done.
 
@@ -581,7 +589,83 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-## Installation - TripleO
+#### Automation - OpenStack Ansible - Full - Upgrades
+
+* [Minor OpenStack Release](#automation---openstack-ansible---full---upgrades---minor-openstack-release)
+* [Major OpenStack Release](#automation---openstack-ansible---full---upgrades---major-openstack-release)
+
+
+##### Automation - OpenStack Ansible - Full - Upgrades - Minor OpenStack Release
+
+This is for upgrading OpenStack from one minor version to another. An example would be going from 15.0.0 to 15.1.1.
+
+* Change the OpenStack-Ansible version to a new minor tag release. If a branch for a OpenStack release name is being used already, keep using that branch.
+```
+# cd /opt/openstack-ansible/
+# git pull origin
+# git checkout <TAG>
+```
+
+* Update the OpenStack repository container to include the latest packages from the minor release.
+```
+# cd /opt/openstack-ansible/playbooks/
+# openstack-ansible repo-install.yml
+```
+
+* A single component can be upgraded now.
+```
+# openstack-ansible <COMPONENT>-install.yml
+```
+
+* Some services, such as MariaDB and RabbitMQ, require special variables to be set to force an upgrade.
+```
+# openstack-ansible galera-install.yml -e 'galera_upgrade=true'
+```
+```
+# openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
+```
+
+* Alternatively, the entire OpenStack-Ansible deployment can be upgraded.
+```
+# openstack-ansible setup-openstack.yml
+```
+
+[1]
+
+Source:
+
+1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. April 21, 2017. Accessed April 23, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
+
+
+##### Automation - OpenStack Ansible - Full - Upgrades - Major OpenStack Release
+
+It is recommended to do a manual upgrade by following the official guide: https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html. Below outlines how to automatically do this. [1]
+
+* Move into the OpenStack-Ansible project.
+```
+# cd /opt/openstack-ansible
+```
+
+* View the available OpenStack releases and choose which one to use.
+```
+# git branch -a
+# git tag
+```
+```
+# git checkout <BRANCH_OR_TAG>
+```
+
+* Run the upgrade script.
+```
+# ./scripts/run-upgrade.sh
+```
+
+Source:
+
+1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. April 21, 2017. Accessed April 23, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
+
+
+## Automation - TripleO
 
 Supported operating systems: RHEL 7, Fedora >= 22
 
@@ -592,7 +676,7 @@ Source:
 1. "tripleo-quickstart." TripleO Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
 
 
-### Installation - TripleO - Quick
+### Automation - TripleO - Quick
 
 The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast as possible.
 
@@ -608,7 +692,7 @@ Source:
 1. "TripleO quickstart." RDO Project. Accessed January 8, 2016. https://www.rdoproject.org/tripleo/
 
 
-### Installation - TripleO - Full
+### Automation - TripleO - Full
 
 * Install the EPEL for extra packages that will be required.
 ```
