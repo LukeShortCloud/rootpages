@@ -20,6 +20,7 @@
 <li><a href="#playbooks---jinja2-templates">Jinja2 Templates</a>
 <ul>
 <li><a href="#playbooks---jinja2-templates---variables">Variables</a></li>
+<li><a href="#playbooks---jinja2-templates---filters">Filters</a></li>
 <li><a href="#playbooks---jinja2-templates---comments">Comments</a></li>
 <li><a href="#playbooks---jinja2-templates---blocks">Blocks</a></li>
 <li><a href="#playbooks---jinja2-templates---loops">Loops</a></li>
@@ -144,7 +145,7 @@
 <ul>
 <li>[default]
 <ul>
-<li>ansible_managed = String. The phrase that will be assigned to the <code>{{ ansible_managed }}</code> variable.</li>
+<li>ansible_managed = String. The phrase that will be assigned to the <code>{{ ansible_managed }}</code> variable. This should generally reside at the top of a template file to indicate that the file is managed by Ansible.</li>
 <li>ask_pass = Boolean. Default: False. Prompt the user for the SSH password.</li>
 <li>ask_sudo_pass = Boolean. Default: False. Prompt the user for the sudo password.</li>
 <li>ask_vault_pass = Boolean. Default: False. Prompt the user for the Ansible vault password.</li>
@@ -279,36 +280,6 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <td>Example: <code>ommand: echo ${hostvars.db3.hostname}</code></td>
 </tr>
 <tr class="odd">
-<td>ariables can be defined as a list or nested lists.</td>
-</tr>
-<tr class="even">
-<td>Syntax: <code>VARIABLE&gt;: [ '&lt;ITEM1&gt;', '&lt;ITEM2&gt;', '&lt;ITEM3&gt;' ]</code> <code>VARIABLE&gt;: - [ [ '&lt;ITEMA&gt;', '&lt;ITEMB&gt;' ] ] - [ [ '&lt;ITEM1&gt;', '&lt;ITEM2&gt;' ] ]</code></td>
-</tr>
-<tr class="odd">
-<td>Examples: <code>olors: [ 'blue', 'red', 'green' ]</code> <code>ars: - [ 'sports', 'sedan' ] - [ 'suv', 'pickup' ]</code></td>
-</tr>
-<tr class="even">
-<td>ists can be called by their array position, starting at &quot;0.&quot; Alternatively they can be called by the subvariable name.</td>
-</tr>
-<tr class="odd">
-<td>Syntax: <code>{ item.0 }}</code> <code>{ item.0.&lt;SUBVARIABLE&gt; }}</code></td>
-</tr>
-<tr class="even">
-<td>Example: <code>embers: - name: Frank contact: - address: &quot;111 Puppet Drive&quot; - phone: &quot;1111111111&quot;</code> <code>- debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot; with_items: - {{ members }}</code></td>
-</tr>
-<tr class="odd">
-<td>4]</td>
-</tr>
-<tr class="even">
-<td>sing a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]</td>
-</tr>
-<tr class="odd">
-<td>Works <code>- name: find interface facts debug: msg: &quot;{{ hostvars[inventory_hostname]['ansible_%s' | format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot;</code></td>
-</tr>
-<tr class="even">
-<td>Does Not Work <code>- name: find interface facts debug: msg: &quot;{{ ansible_%s| format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot;</code></td>
-</tr>
-<tr class="odd">
 <td>he order that variables take precedence in is listed below. The bottom locations get overriden by anything above them.</td>
 </tr>
 <tr class="even">
@@ -321,7 +292,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <td>ources:</td>
 </tr>
 <tr class="odd">
-<td>. &quot;Ansible Inventory&quot; . &quot;Ansible Variables.&quot; . &quot;Ansible Best Practices.&quot; . &quot;Ansible Loops.&quot; . &quot;Ansible Become (Privlege Escalation)&quot; . &quot;Ansible Vault.&quot; . &quot;How to loop through interface facts.&quot;</td>
+<td>. &quot;Ansible Inventory&quot; . &quot;Ansible Variables.&quot; . &quot;Ansible Best Practices.&quot; . &quot;Ansible Loops.&quot; . &quot;Ansible Become (Privlege Escalation)&quot; . &quot;Ansible Vault.&quot; . &quot;Ansible Frequently Asked Questions.&quot;</td>
 </tr>
 <tr class="even">
 <td># Configuration - Vault Encryption</td>
@@ -532,18 +503,87 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <p>Variables defined in Ansible can be single variables, lists, and dictionaries. This can be referenced from the template.</p>
 <ul>
 <li><p>Syntax:</p>
-<pre><code>{{ dict.value }}
-{{ dict[&#39;value&#39;] }}</code></pre></li>
+<pre><code>{{ &lt;VARIABLE&gt; }}</code></pre>
+<pre><code>{{ &lt;DICTIONARY&gt;.&lt;KEY&gt; }}
+{{ &lt;DICTIONARY&gt;[&#39;&lt;KEY&gt;&#39;] }}</code></pre></li>
 <li><p>Example:</p>
 <pre><code>{{ certification.name }}</code></pre></li>
 </ul>
-<p>Default variables can be defined if a referenced variable does not exist.</p>
+<p>Variables can be defined as a list or nested lists.</p>
 <ul>
 <li><p>Syntax:</p>
-<pre><code>{{ &lt;VARIABLE_NAME&gt;|default(&#39;&lt;DEFAULT_VALUE&gt;&#39;) }}</code></pre></li>
-<li><p>Example:</p>
-<pre><code>{{ jinjga2_variable|default(&#39;Hello World!&#39;) }}</code></pre></li>
+<pre><code>&lt;VARIABLE&gt;: [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39;, &#39;&lt;ITEM3&gt;&#39; ]</code></pre>
+``` <VARIABLE>:</li>
+<li>[ [ '<ITEMA>', '<ITEMB>' ] ]</li>
+<li><p>[ [ '<ITEM1>', '<ITEM2>' ] ] ```</p></li>
+<li><p>Examples:</p>
+<pre><code>colors: [ &#39;blue&#39;, &#39;red&#39;, &#39;green&#39; ]</code></pre>
+``` cars:</li>
+<li>[ 'sports', 'sedan' ]</li>
+<li><p>[ 'suv', 'pickup' ] ```</p></li>
 </ul>
+<p>Lists can be called by their array position, starting at &quot;0.&quot; Alternatively they can be called by the subvariable name.</p>
+<ul>
+<li><p>Syntax:</p>
+<pre><code>{{ item.0 }}</code></pre>
+<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre></li>
+<li>Example: ``` members:</li>
+<li>name: Frank contact:
+<ul>
+<li>address: &quot;111 Puppet Drive&quot;</li>
+<li><p>phone: &quot;1111111111&quot;</p>
+<pre><code></code></pre></li>
+</ul></li>
+<li>debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot; with_items:
+<ul>
+<li>{{ members }} ```</li>
+</ul></li>
+</ul>
+<p>[4]</p>
+<p>Using a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]</p>
+<ul>
+<li>Works ```</li>
+<li><p>name: find interface facts debug: msg: &quot;{{ hostvars[inventory_hostname]['ansible_%s' | format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot; ```</p></li>
+<li>Does Not Work ```</li>
+<li><p>name: find interface facts debug: msg: &quot;{{ ansible_%s| format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot; ```</p></li>
+</ul>
+<h3 id="playbooks---jinja2-templates---filters">Playbooks - Jinja2 Templates - Filters</h3>
+<p>In certain situations it is desired to apply filters to alert a variable or expression. The syntax for running Jinja filters is <code>&lt;VARIABLE&gt;|&lt;FUNCTION&gt;(&lt;OPTIONAL_PARAMETERS&gt;)</code>. Below are some of the more common functions.</p>
+<ul>
+<li><p>Convert to a different variable type.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|string }}</code></pre>
+<pre><code>{{ &lt;VARIABLE&gt;|list }}</code></pre>
+<pre><code>{{ &lt;VARIABLE&gt;|int }}</code></pre>
+<pre><code>{{ &lt;VARIABLE&gt;|float }}</code></pre>
+<pre><code>{{ &lt;VARIABLE&gt;|bool }}</code></pre></li>
+<li><p>Convert a list into a string and optionally separate each item by a specified character.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|join(&quot;&lt;CHARACTER&gt;&quot;) }}</code></pre></li>
+<li><p>Create a default variable if the variable is undefined.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|default(&quot;&lt;DEFAULT_VALUE&gt;&quot;)</code></pre></li>
+<li><p>Convert all characters in a string to lower or upper case.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|lower }}</code></pre>
+<pre><code>{{ &lt;VARIABLE&gt;|upper }}</code></pre></li>
+<li><p>Round numbers.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|round }}</code></pre></li>
+<li><p>Escape HTML characters.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|escape }}</code></pre>
+<pre><code>{% autoescape true %}
+&lt;html&gt;These HTML tags will be 
+escaped and visable via a HTML browser.&lt;/html&gt;
+{% endautoescape %}</code></pre></li>
+<li><p>String substitution.</p>
+<pre><code>{{ &quot;%s %d&quot;|format(&quot;I am this old:&quot;, 99) }}</code></pre></li>
+<li><p>Find the first or last value in a list.</p>
+<pre><code>{{ &lt;LIST&gt;|first }}</code></pre>
+<pre><code>{{ &lt;LIST&gt;|last }}</code></pre></li>
+<li><p>Find the number of items in a variable.</p>
+<pre><code>{{ &lt;VARIABLE&gt;|length }}</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Jinja Template Designer Documentation.&quot;</li>
+</ol>
 <h3 id="playbooks---jinja2-templates---comments">Playbooks - Jinja2 Templates - Comments</h3>
 <p>Comments are template comments that will be removed when once a template has been generated.</p>
 <ul>
@@ -1713,7 +1753,7 @@ finally:
 <li>Lorin Hochstein <em>Ansible Up &amp; Running</em> (Sebastopol: O'Reilly Media, Inc., 2015).</li>
 <li>&quot;An Ansible Tutorial.&quot; Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial</li>
 <li>&quot;Intro to Playbooks.&quot; Ansible Documentation. June 22, 2016. Accessed June 24, 2016. http://docs.ansible.com/ansible/playbooks_intro.html</li>
-<li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/faq.html</li>
+<li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html</li>
 <li>&quot;Ansible Inventory.&quot; Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html</li>
 <li>&quot;Ansible Variables.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_variables.html</li>
 <li>&quot;Ansible Best Practices.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_best_practices.html</li>
@@ -1746,7 +1786,7 @@ finally:
 <li>&quot;Ansible mysql_user - Adds or removes a user from a MySQL database.&quot; Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html</li>
 <li>&quot;Ansible Installation.&quot; Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
 <li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot; Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ</li>
-<li>&quot;Jinja Template Designer Documentation.&quot; Jinja2 Documentation. Accessed October 23, 2016. http://jinja.pocoo.org/docs/dev/templates/</li>
+<li>&quot;Jinja Template Designer Documentation.&quot; Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/</li>
 <li>&quot;Ansible Vault.&quot; Ansible Documentation. October 31, 2016. Accessed November 6, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
 <li>&quot;Organizing Group Vars Files in Ansible.&quot; toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/</li>
 <li>&quot;Ansible Glossary.&quot; Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro_installation.html</li>
@@ -1758,7 +1798,6 @@ finally:
 <li>&quot;Ansible wait_for - Waits for a condition before continuing.&quot; Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html</li>
 <li>&quot;The Open Tower Project.&quot; Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower</li>
 <li>&quot;semaphore Installation.&quot; GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation</li>
-<li>&quot;How to loop through interface facts.&quot; Server Fault. March 7, 2016. Accessed December 8, 2016. http://serverfault.com/questions/762079/how-to-loop-through-interface-facts</li>
 <li>&quot;Ansible Galaxy.&quot; Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html</li>
 <li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot; Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning</li>
 <li>&quot;Ansible Configuration file.&quot; Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro_configuration.html</li>
