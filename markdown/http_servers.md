@@ -7,7 +7,8 @@
     * [Authentication](#apache---authentication)
     * [CGI](#apache---cgi)
     * [SELinux](#apache---selinux)
-* Nginx
+* [NGINX](#nginx)
+    * [Configuration](#nginx---configuration)
 * Lighttpd
 * [OpenSSL](#openssl)
 
@@ -227,7 +228,7 @@ Source:
 
 ## Apache - CGI
 
-The common gateway interface (CGI) is a method of the web server executing a script and then sending the results to a web browser.
+The common gateway interface (CGI) is a method of the web server executing a script and then sending the results to a web browser. The default way to handle dynamic CGI programs is to use the "mod_cgi" module.
 
 In the main configuration, the new CGI bin folder has to be aliased to /cgi-bin/. This way Apache knows that this should be a CGI folder.
 ```
@@ -292,13 +293,87 @@ drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 ..
 
 Permanetely fix SELinux permissions on a custom directory using the semanage tool and then apply the permissions by running restorecon:
 ```
-# semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?" 
+# semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
 # restorecon -Rv /path/to/custom/dir
 ```
 
+[1]
+
 Source:
 
-1. https://wiki.centos.org/HowTos/SELinux
+1. "HowTos SELinux." CentOS Wiki. February 26, 2017. Accessed May 7, 2017. https://wiki.centos.org/HowTos/SELinux
+
+
+# NGINX
+
+NGINX was originally desgined to be a proxy server but has eventually added the functionality of being a HTTP web server. For HTTP, it is focused on high-performance static content handling. Dynamic scripts must be processed by a different web server.
+
+
+# NGINX - Configuration
+
+The NGINX configuration file `/etc/nginx/nginx.conf` contains different blocks defined by using brackets `{}`. Each line in the file (besides that brackets) must end in a semicolon `;`. Comments can be created with a pound `#` symbol. [1] Below are some of the more common configuration settings.
+
+* main = This is not a block. It is outside of the "events" and "http" directives. These settings affect how the main NGINX process is spawned and handled.
+    * error_log = The global error log file.
+    * load_module = Load an external NGINX module.
+    * pid = The file to store the  main process ID (PID) of NGINX.
+    * user = The user to run as.
+    * worker_processes = The number of threads to spawn.
+        * auto = Automatically use the number of threads that the server has.
+* events = Settings that affect how the NGINX process handles each request.
+    * worker_connections = The number of connections that can be handled by each worker process.
+* http = Global settings for the HTTP web server.
+    * disable_symlinks
+        * off = Default. Follow symlinks.
+        * on = Do not follow symlinks.
+        * if_not_owner = Only follow a symlink if the destination file is owned by the same user.
+        * from = Only disable symlinks originating from a specific location.
+    * error_log
+    * error_page `<CODE>` `<FILE>` = The error page that should be used for a particular HTTP error code.
+    * root = The root directory to load up.
+* server = A virtual host definition. This defines what ports to listen on, what IP address or hostname to be associated with, on and locations to serve content from.
+    * error_log
+    * error_page
+    * etag = Turn MD5 checksum (etag) generation on or off.
+    * listen `{<PORT>|<ADDRESS>:<PORT>}` = The port and/or address to listen on for the virtual host.
+    * root
+    * server_name = A list (separated by spaces) of domain names that the virtual host should respond to.
+    * try_files $uri $uri/`<FILE>` = Specify the default file to load for any given request. Typically this is `index.html`.
+* location = The URL path after a domain name that NGINX should load and how to handle it. For example, the location "/admin" would define what to do when a web browser accesses `http://127.0.0.1/admin`.
+    * alias = A different path that the location should load.
+    * disable_symlinks
+    * error_log
+    * error_page
+    * root
+    * try_files
+
+[2][3]
+
+```
+# Main.
+events {
+	# Connection process settings.
+}
+
+http {
+	# Global HTTP settings.
+	server {
+    	# Virtual host content.
+        location <PATH> {
+        	# How to handle a path to a URL.
+        }
+    }
+}
+```
+
+[1]
+
+Sources:
+
+1. "NGINX Beginner’s Guide." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/beginners_guide.html
+2. "[NGINX] Core functionality." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/ngx_core_module.html
+3. "[NGINX] Module ngx_http_core_module." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/http/ngx_http_core_module.html
+
 
 # OpenSSL
 

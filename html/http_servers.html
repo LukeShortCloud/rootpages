@@ -9,7 +9,10 @@
 <li><a href="#apache---cgi">CGI</a></li>
 <li><a href="#apache---selinux">SELinux</a></li>
 </ul></li>
-<li>Nginx</li>
+<li><a href="#nginx">NGINX</a>
+<ul>
+<li><a href="#nginx---configuration">Configuration</a></li>
+</ul></li>
 <li>Lighttpd</li>
 <li><a href="#openssl">OpenSSL</a></li>
 </ul>
@@ -184,7 +187,7 @@ Require [user|group] &lt;USER|GROUP&gt;</code></pre>
 <li>&quot;Authentication and Authorization.&quot; Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/auth.html</li>
 </ol>
 <h2 id="apache---cgi">Apache - CGI</h2>
-<p>The common gateway interface (CGI) is a method of the web server executing a script and then sending the results to a web browser.</p>
+<p>The common gateway interface (CGI) is a method of the web server executing a script and then sending the results to a web browser. The default way to handle dynamic CGI programs is to use the &quot;mod_cgi&quot; module.</p>
 <p>In the main configuration, the new CGI bin folder has to be aliased to /cgi-bin/. This way Apache knows that this should be a CGI folder.</p>
 <pre><code>ScriptAlias &quot;/cgi-bin/&quot; &quot;/path/to/custom/cgi-bin/&quot;</code></pre>
 <p>Then the directory can be configured. It needs to allow the execution of CGI, set everything in the folder to be executable via the cgi-script handler, and allow access to it.</p>
@@ -218,11 +221,87 @@ http_port_t                    tcp      80, 81, 443, 488, 8008, 8009, 8443, 9000
 drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 .
 drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 ..</code></pre>
 <p>Permanetely fix SELinux permissions on a custom directory using the semanage tool and then apply the permissions by running restorecon:</p>
-<pre><code># semanage fcontext -a -t httpd_sys_content_t &quot;/path/to/custom/dir(/.*)?&quot; 
+<pre><code># semanage fcontext -a -t httpd_sys_content_t &quot;/path/to/custom/dir(/.*)?&quot;
 # restorecon -Rv /path/to/custom/dir</code></pre>
+<p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>https://wiki.centos.org/HowTos/SELinux</li>
+<li>&quot;HowTos SELinux.&quot; CentOS Wiki. February 26, 2017. Accessed May 7, 2017. https://wiki.centos.org/HowTos/SELinux</li>
+</ol>
+<h1 id="nginx">NGINX</h1>
+<p>NGINX was originally desgined to be a proxy server but has eventually added the functionality of being a HTTP web server. For HTTP, it is focused on high-performance static content handling. Dynamic scripts must be processed by a different web server.</p>
+<h1 id="nginx---configuration">NGINX - Configuration</h1>
+<p>The NGINX configuration file <code>/etc/nginx/nginx.conf</code> contains different blocks defined by using brackets <code>{}</code>. Each line in the file (besides that brackets) must end in a semicolon <code>;</code>. Comments can be created with a pound <code>#</code> symbol. [1] Below are some of the more common configuration settings.</p>
+<ul>
+<li>main = This is not a block. It is outside of the &quot;events&quot; and &quot;http&quot; directives. These settings affect how the main NGINX process is spawned and handled.
+<ul>
+<li>error_log = The global error log file.</li>
+<li>load_module = Load an external NGINX module.</li>
+<li>pid = The file to store the main process ID (PID) of NGINX.</li>
+<li>user = The user to run as.</li>
+<li>worker_processes = The number of threads to spawn.
+<ul>
+<li>auto = Automatically use the number of threads that the server has.</li>
+</ul></li>
+</ul></li>
+<li>events = Settings that affect how the NGINX process handles each request.
+<ul>
+<li>worker_connections = The number of connections that can be handled by each worker process.</li>
+</ul></li>
+<li>http = Global settings for the HTTP web server.
+<ul>
+<li>disable_symlinks
+<ul>
+<li>off = Default. Follow symlinks.</li>
+<li>on = Do not follow symlinks.</li>
+<li>if_not_owner = Only follow a symlink if the destination file is owned by the same user.</li>
+<li>from = Only disable symlinks originating from a specific location.</li>
+</ul></li>
+<li>error_log</li>
+<li>error_page <code>&lt;CODE&gt;</code> <code>&lt;FILE&gt;</code> = The error page that should be used for a particular HTTP error code.</li>
+<li>root = The root directory to load up.</li>
+</ul></li>
+<li>server = A virtual host definition. This defines what ports to listen on, what IP address or hostname to be associated with, on and locations to serve content from.
+<ul>
+<li>error_log</li>
+<li>error_page</li>
+<li>etag = Turn MD5 checksum (etag) generation on or off.</li>
+<li>listen <code>{&lt;PORT&gt;|&lt;ADDRESS&gt;:&lt;PORT&gt;}</code> = The port and/or address to listen on for the virtual host.</li>
+<li>root</li>
+<li>server_name = A list (separated by spaces) of domain names that the virtual host should respond to.</li>
+<li>try_files $uri $uri/<code>&lt;FILE&gt;</code> = Specify the default file to load for any given request. Typically this is <code>index.html</code>.</li>
+</ul></li>
+<li>location = The URL path after a domain name that NGINX should load and how to handle it. For example, the location &quot;/admin&quot; would define what to do when a web browser accesses <code>http://127.0.0.1/admin</code>.
+<ul>
+<li>alias = A different path that the location should load.</li>
+<li>disable_symlinks</li>
+<li>error_log</li>
+<li>error_page</li>
+<li>root</li>
+<li>try_files</li>
+</ul></li>
+</ul>
+<p>[2][3]</p>
+<pre><code># Main.
+events {
+    # Connection process settings.
+}
+
+http {
+    # Global HTTP settings.
+    server {
+        # Virtual host content.
+        location &lt;PATH&gt; {
+            # How to handle a path to a URL.
+        }
+    }
+}</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;NGINX Beginner’s Guide.&quot; NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/beginners_guide.html</li>
+<li>&quot;<a href="#nginx">NGINX</a> Core functionality.&quot; NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/ngx_core_module.html</li>
+<li>&quot;<a href="#nginx">NGINX</a> Module ngx_http_core_module.&quot; NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/http/ngx_http_core_module.html</li>
 </ol>
 <h1 id="openssl">OpenSSL</h1>
 <p>OpenSSL is a free and open source library for managing secure socket layer (SSL) and Transport Layer Security (TLS) encryption. [1]</p>
