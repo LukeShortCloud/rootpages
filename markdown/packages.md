@@ -11,6 +11,7 @@
     * [Repositories](#rpm---repositories)
         * [Adding a Repository](#rpm---repositories---adding-a-repository)
         * [Creating a Repository](#rpm---repositories---creating-a-repository)
+        * [Common Repositories](#rpm---repositories---common-repositories)
     * [Packaging](#rpm---packaging)
         * [Macros](#rpm---packaging---macros)
             * [Directories](#rpm---packaging---macros---directories)
@@ -223,6 +224,23 @@ Sources:
 
 1. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
 2. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
+
+
+## RPM - Repositories - Common Repositories
+
+| Repository Name | Supported Operating Systems | Official | Description | Repository RPM |
+| --- | --- | --- | --- | --- |
+| Extra Package for Enterprise Linux (EPEL) | RHEL | Yes | Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. [1] | <li> [RHEL 6](https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm) <li>[RHEL 7](https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm)
+| Inline with Upstream (IUS) | RHEL | No | The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [2] | <li>[RHEL 6](https://rhel6.iuscommunity.org/ius-release.rpm) <li>[RHEL 7](https://rhel7.iuscommunity.org/ius-release.rpm) <li>[CentOS 6](https://centos6.iuscommunity.org/ius-release.rpm) <li>[CentOS 7](https://centos7.iuscommunity.org/ius-release.rpm) |
+| Enterprise Linux Repository (ELRepo) | RHEL | No | The latest hardware drivers and Linux kernels. [3] | <li>[RHEL 6](http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm) <li>[RHEL 7](http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm) |
+| RPM Fusion | Fedora, RHEL | No | Packages that Fedora does not ship by default due to license conflicts. [4] | <li>[Fedora 25](https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm) <li>[Fedora 26](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm) <li>[Fedora 27](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm) <li>[RHEL 6](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm) <li>[RHEL 7](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm) |
+
+Sources:
+
+1. "EPEL." Fedora Project. March 1, 2017. Accessed May 14, 2017. https://fedoraproject.org/wiki/EPEL
+2. "IUS Community Project." IUS. May 5, 2017. Accessed May 14, 2017. https://ius.io/
+3. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May 14, 2017. http://elrepo.org/tiki/tiki-index.php
+4. "RPM Fusion." RPM Fusion. March 31, 2017. Accessed May 14, 2017. https://rpmfusion.org/RPM%20Fusion
 
 
 ## RPM - Packaging
