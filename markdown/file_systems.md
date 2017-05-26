@@ -1,9 +1,9 @@
 # File Systems
 
 * [Types](#types)
-    * [BtrFS](#types---btrfs)
-        * [BtrFS RAIDs](#types---btrfs---btrfs-raids)
-        * [BtrFS Limitations](#types---btrfs---btrfs-limitations)
+    * [Btrfs](#types---btrfs)
+        * [Btrfs RAIDs](#types---btrfs---btrfs-raids)
+        * [Btrfs Limitations](#types---btrfs---btrfs-limitations)
     * [ext4](#types---ext4)
     * XFS
     * ZFS
@@ -29,11 +29,8 @@
 
 # Types
 
-Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation:
+Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation: `2^<BIT_SIZE> - 1`.
 
-```
-2^<BIT_SIZE> - 1
-```
 
 | Name (mount type) | OS | Notes |  File Size Limit | Partition Size Limit | Bits |
 | --- | --- | --- | --- | --- | --- |
@@ -42,7 +39,7 @@ Many types of file systems exist for various operating systems. These are used t
 | NTFS (ntfs-3g)  | Windows | journaling, encryption, compression | 2TiB | 256TiB | 32 |
 | ext4 [2] | Linux | journaling, less fragmentation, better performance | 16TiB | 1EiB | 32 |
 | XFS | Linux | journaling, online resizing (but cannot shrink), online defragmentation, 64-bit file system | 8 EiB (theoretically up to 16EiB) | 8 EiB (theoretically up to 16EiB) | 64
-| BtrFS [3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 8EiB (theoretically up to 16EiB) | 64 |
+| Btrfs [3] | Linux | journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system  | 8EiB (theoretically up to 16EiB) | 8EiB (theoretically up to 16EiB) | 64 |
 | tmpfs | Linux | RAM and swap | | | |
 | ramfs | Linux | RAM (no swap) | | | | |
 | swap | Linux | A temporary storage file system to use when RAM is unavailable. | | | |
@@ -53,12 +50,12 @@ Sources:
 
 1. "Linux File systems Explained." Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained
 2. "How many files can I put in a directory?" Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory
-3. "BtrFS Main Page." BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page
+3. "Btrfs Main Page." Btrfs Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page
 
 
-## Types - BtrFS
+## Types - Btrfs
 
-BtrFS stands for the "B-tree file system." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]
+Btrfs stands for the "B-tree file system." The file system is commonly referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. Btrfs supports subvolumes, CoW snapshots, online defragmentation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to Btrfs. [1]
 
 Common mount options:
 
@@ -68,30 +65,30 @@ Common mount options:
     * lzo = Faster file system performance
     * no = Disable compression (default)
 * notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost.
-* subvol = Mount a subvolume contained inside a BtrFS file system.
+* subvol = Mount a subvolume contained inside a Btrfs file system.
 * ssd = Enables various solid state drive optimizations. This does not turn on TRIM support.
 * discard = Enables TRIM support. [2]
 
 Sources:
 
 1. "What’s All This I Hear About Btrfs For Linux." The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/
-2. "Mount Options" BtrFS Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options
+2. "Mount Options" Btrfs Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options
 
 
-### Types - BtrFS - BtrFS RAIDs
+### Types - Btrfs - Btrfs RAIDs
 
 In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are supported. [1]
 
 Source:
 
-1. "Using Btrfs with Multiple Devices" BtrFS Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices
+1. "Using Btrfs with Multiple Devices" Btrfs Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices
 
 
-### Types - BtrFS - BtrFS Limitations
+### Types - Btrfs - Btrfs Limitations
 
 Known limitations:
 
-* The "df" (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, `btrfs filesystem df` should be used to view disk space usage on mount points and "btrfs filesystem show" for partitions.
+* The "df" (disk free) command does not report an accurate disk usage due to Btrfs's fragmentation. Instead, `btrfs filesystem df` should be used to view disk space usage on mount points and "btrfs filesystem show" for partitions.
     * For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output.
         * `# btrfs balance start /`
         * `# btrfs defragment -r /`
@@ -137,7 +134,7 @@ Sources:
 
 RAID officially stands for "Redundant Array of Independent Disks." The idea of a RAID is to get either increased performance and/or an automatic backup from using multiple disks together. It utilizes these drives to create 1 logical drive.
 
-| Level | Minimum Drives | Benefits | Fallbacks | Speed | More Storage | Redudancy | Minimum Drive Failure Tolerance
+| Level | Minimum Drives | Benefits | Fallbacks | Speed | More Storage | Redundancy | Minimum Drive Failure Tolerance
 | ----- | -------------- | ------- | --------- | ----- | ------------ | --------- |
 | 0 | 2 | I/O operations are equally spread to each disk. | No redundancy. | X | X | | 0 |
 | 1 | 2 | If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds. | | | X | 1 |
@@ -213,7 +210,7 @@ NFS export options:
 * ro (default) = The directory will be read-only.
 * no_root_squash = Allow remote root users to access the directory and create files owned by root.
 * root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically "nobody").
-* all_squash = All files are created as the anonymouse user.
+* all_squash = All files are created as the anonymous user.
 * sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish.
 * async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory.
 * sec = Specify a type of Kerberos authentication to use.
@@ -249,7 +246,7 @@ Configuration - Global:
 * [global]
     * workgroup = Define a WORKGROUP name.
     * interfaces = Specify the interfaces to listen on.
-    * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octects. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
+    * hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octets. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range.
 
 
 Configuration - Share:
@@ -484,7 +481,7 @@ When the end-user asks for a file, that name is combined with it's PG ID and the
 
 The current back-end for handling data storage is FileStore. When data is written to a Ceph OSD, it is first fully written to the OSD journal. This is a separate partition that can be on the same drive or a different drive. It is faster to have the journal on an SSD if the OSD drive is a regular spinning-disk drive.
 
-The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writting the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]
+The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writing the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]
 
 The optimal number of PGs is found be using this equation (replacing the number of OSD daemons and how many replicas are set). This number should be rounded up to the next power of 2.
 
@@ -512,6 +509,7 @@ With Ceph's configuration, the Placement Group for Placement purpose (PGP) shoul
 osd pool default pg num = <OPTIMAL_PG_NUMBER>
 osd pool default pgp num = <OPTIMAL_PG_NUMBER>
 ```
+
 * Existing pools:
 ```
 # ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
@@ -520,7 +518,7 @@ osd pool default pgp num = <OPTIMAL_PG_NUMBER>
 
 Cache pools can be configured used to cache files onto faster drives. When a file is continually being read, it will be copied to the faster drive. When a file is first written, it will go to the faster drives. After a period of time of lesser use, those files will be moved to the slow drives. [3]
 
-For testing, the "cephx" authentication protocols can temporarily be disabled. This will require a restart of all of the Ceph services. [4]
+For testing, the "cephx" authentication protocols can temporarily be disabled. This will require a restart of all of the Ceph services. Re-enable `cephx` by setting these values from "none" to "cephx." [4]
 
 ```
 # vim /etc/ceph/ceph.conf
@@ -546,7 +544,7 @@ Ceph Requirements:
 * 1GB RAM per 1TB of Ceph OSD storage, per OSD daemon.
 * 1GB RAM per monitor daemon.
 * 1GB RAM per metadata daemon.
-* An odd number of nodes (starting at least 3 for high availability and quorum).
+* An odd number of montior nodes (starting at least 3 for high availability and quorum).
 [1]
 
 Source:
@@ -568,7 +566,7 @@ This example demonstrates how to deploy a 3 node Ceph cluster with both the moni
 # ceph-deploy install --release jewel <SERVER1> <SERVER2> <SERVER3>
 ```
 
-* Initalize the first monitor.
+* Initialize the first monitor.
 ```
 # ceph-deploy mon create-inital <SERVER1>
 ```
@@ -588,7 +586,7 @@ This example demonstrates how to deploy a 3 node Ceph cluster with both the moni
 # ceph-deploy disk zap <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 ```
 
-* Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but BTRS is much feature-rich with technologies such as copy-on-write (CoW) support.
+* Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but Btrfs is much feature-rich with technologies such as copy-on-write (CoW) support.
 ```
 # ceph-deploy osd create --fs-type btrfs <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 ```
@@ -774,7 +772,7 @@ Bucket instances are used to group OSD configurations together. Typically these 
 * alg = Required. Choose which Ceph bucket type/method that is used to read and write objects. This should not be confused with the user-defined bucket types.
     * Uniform = Assumes that all hardware in the bucket instance is exactly the same so all OSDs recieve the same weight.
     * List = Lists use the RUSH algorithim to read and write objects in sequencial order from the first OSD to the last. This is best suited for data that does not need to be deleted (to avoid rebalancing).
-    * Tree = The binary search tree uses the RUSH algorithim to efficently handle larger amounts of data.
+    * Tree = The binary search tree uses the RUSH algorithim to efficiently handle larger amounts of data.
     * Straw = A combination of both "list" and "tree." One of the two bucket types will randomly be selected for operations. Replication is fast but rebalancing will be slow.
 * hash = Required. The hashing algorithim used by CRUSH to lookup and store files. As of the Jewel release, only option "0" for "rjenkins1" is supported.
 * item = Optional. The OSD name and weight for individual OSDs. This is useful if a bucket instance has hard drives of different speeds.
