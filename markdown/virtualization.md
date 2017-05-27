@@ -15,6 +15,13 @@
     * [Containers](#software-virtualization---containers)
         * [Docker](#software-virtualization---containers---docker)
             * [Networking](#software-virtualization---containers---docker---networking)
+* [Orchestration](#orchestration)
+    * [Vagrant](#orchestration---vagrant)
+        * [Vagrantfile](#orchestration---vagrant---vagrantfile)
+            * [Networks](#orchestration---vagrant---vagrantfile---networks)
+            * [Provisioning](#orchestration---vagrant---vagrantfile---provisioning)
+            * [Multiple Machines](#orchestration---vagrant---vagrantfile---multiple-machines)
+    * Terraform
 
 
 # Hardware Virtualization
@@ -111,7 +118,6 @@ If possible, PCI passthrough provides the best performance as there is no virtua
 ```
 # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 ```
-
 
 Raw disk partitions have the greatest speeds with the "virtio" driver and cache disabled.
 ```
@@ -240,6 +246,7 @@ Source:
 
 1. "Nested Virtualization in Xen." Xen Project Wiki. December 13, 2016. Accessed December 18, 2016. https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen
 
+
 # Software Virtualization
 
 
@@ -311,3 +318,225 @@ Sources:
 
 1. "containers in docker 1.11 does not get same MTU as host #22297." Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297
 2. "iptables failed - No chain/target/match by that name #16816." Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816
+
+
+# Orchestration
+
+Virtual machine provisioning can be automated through the use of different tools.
+
+
+## Orchestration - Vagrant
+
+Vagrant is programmed in Ruby to help automate virtual machine (VM) deployment. It uses a single file called "Vagrantfile" to describe the virtual machines to create. By default, Vagrant will use VirtualBox as the hypervisor but other technologies can be used.
+
+* Officially supported hypervisors [1]:
+    * docker
+    * hyperv
+    * virtualbox
+    * vmware_desktop
+    * vmware_fusion
+
+* Unofficial hypervisors [2]:
+    * aws
+    * azure
+    * google
+    * libvirt (KVM or Xen)
+    * lxc
+    * managed-servers (physical bare metal servers)
+    * parallels
+    * vsphere
+
+Most unoffocial hypervisor providers can be automatically installed as a plugin from the command line.
+
+```
+$ vagrant plugin install vagrant-<HYPERVISOR>
+```
+
+Deploy VMs using a Vagrant file:
+```
+$ vagrant up
+```
+OR
+```
+$ vagrant up --provider <HYPERVISOR>
+```
+
+Destroy VMs using a Vagrant file:
+```
+$ vagrant destroy
+```
+
+The default username and password should be `vagrant`.
+
+This guide can be followed for creating custom Vagrant boxes: https://www.vagrantup.com/docs/boxes/base.html.
+
+Sources:
+
+1. "Introduction to Vagrant." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/intro/getting-started/index.html
+2. "Available Vagrant Plugins." mitchell/vagrant GitHub. November 9, 2016. Accessed May 8, 2017. https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
+
+
+### Orchestration - Vagrant - Vagrantfile
+
+A default Vagrantfile can be created to start customizing with.
+
+```
+$ vagrant init
+```
+
+All of the settings should be defined within the `Vagrant.configure()` block.
+
+```
+Vagrant.configure("2") do |config|
+	# Define VM settings here.
+end
+```
+
+Define the virtual machine template to use. This will be downloaded, by default (if the `box_url` is not changed) from the HashiCorp website.
+
+* box = Required. The name of the virtual machine to download. A list of official virtual machines can be found at `https://atlas.hashicorp.com/boxes/search`.
+* box_version = The version of the virtual machine to use.
+* box_url = The URL to the virtual machine details.
+
+Example:
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_version = "v20170508.0.0"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
+end
+```
+
+[1]
+
+Source:
+
+1. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/boxes.html
+
+
+#### Orchestration - Vagrant - Vagrantfile - Networks
+
+Networks are either `private` or `public`. `private` networks use host-only networking and use network address translation (NAT) to communicate out to the Internet. Virtual machines (VMs) can communicate with each other but they cannot be reached from the outside world. Port forwarding can also be configured to allow access to specific ports from the hypervisor node. `public` networks allow a virtual machine to attach to a bridge device for full connectivity with the external network.
+
+With a `private` network, the IP address can either be a random address assigned by DHCP or a static IP that is defined.
+```
+Vagrant.configure("2") do |config|
+  config.vm.network "private_network", type: "dhcp"
+end
+```
+```
+Vagrant.configure("2") do |config|
+  config.vm.network "private_network", ip: <IP4_OR_IP6_ADDRESS>, netmask: <SUBNET_MASK>
+end
+```
+
+The same rules apply to `public` networks except it uses the external DHCP server on the network (if it exists).
+```
+Vagrant.configure("2") do |config|
+  config.vm.network "public_network", use_dhcp_assigned_default_route: true
+end
+```
+
+When a `public` network is defined and no interface is given, the end-user is prompted to pick a physical network interface device to bridge onto for public network access. This bridge device can also be specified manually.
+```
+Vagrant.configure("2") do |config|
+  config.vm.network "public_network", bridge: "eth0: First NIC"
+end
+```
+
+In this example, port 2222 on the localhost (127.0.0.1) of the hypervisor will forward to port 22 of the VM.
+```
+...
+    config.vm.network "forwarded_port", id: "ssh", guest: 22, host: 2222
+...
+```
+
+Source:
+
+1. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
+
+
+#### Orchestration - Vagrant - Vagrantfile - Provisioning
+
+After a virtual machine (VM) has been created, additional commands can be run to configure the guest VMs. This is referred to as "provisioning."
+
+* Provisioners [1]:
+    * [ansible](https://www.vagrantup.com/docs/provisioning/ansible_intro.html) = Run a Ansible Playbook from the hypervisor node.
+    * ansible_local = Run a Ansible Playbook from within the VM.
+    * cfengine = Use CFEngine to configure the VM.
+    * chef_solo = Run a Chef Cookbook from inside the VM using `chef-solo`.
+    * chef_zero = Run a Chef Cookbook, but uset `chef-zero` to emulate a Chef server inside of the VM.
+    * chef_client = Use a remote Chef server to run a Cookbook inside the VM.
+    * chef_apply = Run a Chef recipe with `chef-apply`.
+    * docker = Install and configure Docker inside of the VM.
+    * file = Copy files from the hypervisor to the VM. Note that the directory that the `Vagrantfile` is in will be mounted as the directory `/vagrant/` inside of the VM.
+    * puppet = Run single Puppet manifests with `puppet apply`.
+    * puppet_server = Run a Puppet manifest inside of the VM using an external Puppet server.
+    * salt = Run Salt states inside of the VM.
+    * shell = Run CLI shell commands.
+
+Source:
+
+1. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
+
+
+#### Orchestration - Vagrant - Vagrantfile - Multiple Machines
+
+A `Vagrantfile` can specify more than one virtual machine.
+
+The recommended way to provision multiple VMs is to statically define each individual VM to create as shown here. [1]
+```
+Vagrant.configure("2") do |config|
+
+  config.vm.define "web" do |web|
+    web.vm.box = "nginx"
+  end
+
+  config.vm.define "db" do |db|
+    db.vm.box = "phpfpm"
+  end
+
+  config.vm.define "db" do |db|
+    db.vm.box = "mariadb"
+  end
+
+end
+```
+
+However, it is possible to use Ruby to dynamically define and create VMs. This will work for creating the VMs but using the `vagrant` command to manage the VMs will not work properly [2]:
+```
+servers=[
+  {
+    :hostname => "web",
+    :ip => "10.0.0.10",
+    :box => "xenial",
+    :ram => 1024,
+    :cpu => 2
+  },
+  {
+    :hostname => "db",
+    :ip => "10.10.10.11",
+    :box => "saucy",
+    :ram => xenial,
+    :cpu => 4
+  }
+]
+
+Vagrant.configure(2) do |config|
+    servers.each do |machine|
+        config.vm.define machine[:hostname] do |node|
+            node.vm.box = machine[:box]
+            node.vm.hostname = machine[:hostname]
+            node.vm.network "private_network", ip: machine[:ip]
+            node.vm.provider "virtualbox" do |vb|
+                vb.customize ["modifyvm", :id, "--memory", machine[:ram]]
+            end
+        end
+    end
+end
+```
+
+Sources:
+
+1. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
+2. "Vagrantfile." Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html

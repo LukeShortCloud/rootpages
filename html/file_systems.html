@@ -2,10 +2,10 @@
 <ul>
 <li><a href="#types">Types</a>
 <ul>
-<li><a href="#types---btrfs">BtrFS</a>
+<li><a href="#types---btrfs">Btrfs</a>
 <ul>
-<li><a href="#types---btrfs---btrfs-raids">BtrFS RAIDs</a></li>
-<li><a href="#types---btrfs---btrfs-limitations">BtrFS Limitations</a></li>
+<li><a href="#types---btrfs---btrfs-raids">Btrfs RAIDs</a></li>
+<li><a href="#types---btrfs---btrfs-limitations">Btrfs Limitations</a></li>
 </ul></li>
 <li><a href="#types---ext4">ext4</a></li>
 <li>XFS</li>
@@ -41,8 +41,7 @@
 </ul></li>
 </ul>
 <h1 id="types">Types</h1>
-<p>Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation:</p>
-<pre><code>2^&lt;BIT_SIZE&gt; - 1</code></pre>
+<p>Many types of file systems exist for various operating systems. These are used to handle the underlying file and data structure when it is being read and written to. Every file system has a limit to the number of inodes (files and directories) it can handle. The inode limit can be calculated by using the equation: <code>2^&lt;BIT_SIZE&gt; - 1</code>.</p>
 <table style="width:33%;">
 <colgroup>
 <col width="5%" />
@@ -104,7 +103,7 @@
 <td>64</td>
 </tr>
 <tr class="even">
-<td>BtrFS [3]</td>
+<td>Btrfs [3]</td>
 <td>Linux</td>
 <td>journaling, copy-on-write (CoW), compression, snapshots, RAID, 64-bit file system</td>
 <td>8EiB (theoretically up to 16EiB)</td>
@@ -142,10 +141,10 @@
 <ol style="list-style-type: decimal">
 <li>&quot;Linux File systems Explained.&quot; Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained</li>
 <li>&quot;How many files can I put in a directory?&quot; Stack Overflow. July 14, 2015. http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory</li>
-<li>&quot;BtrFS Main Page.&quot; BtrFS Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</li>
+<li>&quot;Btrfs Main Page.&quot; Btrfs Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main_Page</li>
 </ol>
-<h2 id="types---btrfs">Types - BtrFS</h2>
-<p>BtrFS stands for the &quot;B-tree file system.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. BtrFS supports subvolumes, CoW snapshots, online defragementation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to BtrFS. [1]</p>
+<h2 id="types---btrfs">Types - Btrfs</h2>
+<p>Btrfs stands for the &quot;B-tree file system.&quot; The file system is commonly referred to as &quot;BtreeFS&quot;, &quot;ButterFS&quot;, and &quot;BetterFS&quot;. In this model, data is organized efficiently for fast I/O operations. This helps to provide copy-on-write (CoW) for efficient file copies as well as other useful features. Btrfs supports subvolumes, CoW snapshots, online defragmentation, built-in RAID, compression, and the ability to upgrade an existing ext file systems to Btrfs. [1]</p>
 <p>Common mount options:</p>
 <ul>
 <li>autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.</li>
@@ -156,25 +155,25 @@
 <li>no = Disable compression (default)</li>
 </ul></li>
 <li>notreelog = Disable journaling. This may improve performance but can result in a loss of the file system if power is lost.</li>
-<li>subvol = Mount a subvolume contained inside a BtrFS file system.</li>
+<li>subvol = Mount a subvolume contained inside a Btrfs file system.</li>
 <li>ssd = Enables various solid state drive optimizations. This does not turn on TRIM support.</li>
 <li>discard = Enables TRIM support. [2]</li>
 </ul>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;What’s All This I Hear About Btrfs For Linux.&quot; The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</li>
-<li>&quot;Mount Options&quot; BtrFS Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options</li>
+<li>&quot;Mount Options&quot; Btrfs Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount_options</li>
 </ol>
-<h3 id="types---btrfs---btrfs-raids">Types - BtrFS - BtrFS RAIDs</h3>
+<h3 id="types---btrfs---btrfs-raids">Types - Btrfs - Btrfs RAIDs</h3>
 <p>In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are supported. [1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Using Btrfs with Multiple Devices&quot; BtrFS Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</li>
+<li>&quot;Using Btrfs with Multiple Devices&quot; Btrfs Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</li>
 </ol>
-<h3 id="types---btrfs---btrfs-limitations">Types - BtrFS - BtrFS Limitations</h3>
+<h3 id="types---btrfs---btrfs-limitations">Types - Btrfs - Btrfs Limitations</h3>
 <p>Known limitations:</p>
 <ul>
-<li>The &quot;df&quot; (disk free) command does not report an accurate disk usage due to BtrFS's fragmentation. Instead, <code>btrfs filesystem df</code> should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions.
+<li>The &quot;df&quot; (disk free) command does not report an accurate disk usage due to Btrfs's fragmentation. Instead, <code>btrfs filesystem df</code> should be used to view disk space usage on mount points and &quot;btrfs filesystem show&quot; for partitions.
 <ul>
 <li>For freeing up space, run a block-level and then a file-level defragmentation. Then the disk space usage should be accurate to df's output.
 <ul>
@@ -240,7 +239,7 @@
 <th>Fallbacks</th>
 <th>Speed</th>
 <th>More Storage</th>
-<th>Redudancy</th>
+<th>Redundancy</th>
 </tr>
 </thead>
 <tbody>
@@ -329,7 +328,7 @@
 <li>ro (default) = The directory will be read-only.</li>
 <li>no_root_squash = Allow remote root users to access the directory and create files owned by root.</li>
 <li>root_squash (default) = Do not allow remote root users to create files as root. Instead, they will be created as an anonymous user (typically &quot;nobody&quot;).</li>
-<li>all_squash = All files are created as the anonymouse user.</li>
+<li>all_squash = All files are created as the anonymous user.</li>
 <li>sync = Writes are instantly written to the disk. When one process is writing, the other processes wait for it to finish.</li>
 <li>async (default) = Multiple writes are optimized to run in parallel. These writes may be cached in memory.</li>
 <li>sec = Specify a type of Kerberos authentication to use.
@@ -360,7 +359,7 @@
 <ul>
 <li>workgroup = Define a WORKGROUP name.</li>
 <li>interfaces = Specify the interfaces to listen on.</li>
-<li>hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octects. For example, &quot;127.&quot; would be a wildcard for anything in the 127.0.0.0/8 range.</li>
+<li>hosts allow = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octets. For example, &quot;127.&quot; would be a wildcard for anything in the 127.0.0.0/8 range.</li>
 </ul></li>
 </ul>
 <p>Configuration - Share:</p>
@@ -536,7 +535,7 @@ InitiatorName=iqn.2016-01.com.example.server:client</code></pre></li>
 </ul>
 <p>When the end-user asks for a file, that name is combined with it's PG ID and then CRUSH hashes it to find the exact location of it on all of the OSDs. The master OSD for that file serves the content. [1]</p>
 <p>The current back-end for handling data storage is FileStore. When data is written to a Ceph OSD, it is first fully written to the OSD journal. This is a separate partition that can be on the same drive or a different drive. It is faster to have the journal on an SSD if the OSD drive is a regular spinning-disk drive.</p>
-<p>The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writting the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]</p>
+<p>The new BlueStore was released as a technology preview in the Ceph Jewel release. In the next LTS release this will become the default data storage handler. This helps to overcome the double write penalty of FileStore by writing the the data to the block device first and then updating the metadata of the data's location. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore can write data directly to the block device of the hard drive. [2]</p>
 <p>The optimal number of PGs is found be using this equation (replacing the number of OSD daemons and how many replicas are set). This number should be rounded up to the next power of 2.</p>
 <p>Syntax:</p>
 <pre><code>Total PGs = (&lt;NUMBER_OF_OSDS&gt; * 100) / &lt;REPLICA_COUNT&gt; / &lt;NUMBER_OF_POOLS&gt;</code></pre>
@@ -559,7 +558,7 @@ osd pool default pgp num = &lt;OPTIMAL_PG_NUMBER&gt;</code></pre></li>
 # ceph osd pool set &lt;POOL&gt; pgp_num &lt;OPTIMAL_PG_NUMBER&gt;</code></pre></li>
 </ul>
 <p>Cache pools can be configured used to cache files onto faster drives. When a file is continually being read, it will be copied to the faster drive. When a file is first written, it will go to the faster drives. After a period of time of lesser use, those files will be moved to the slow drives. [3]</p>
-<p>For testing, the &quot;cephx&quot; authentication protocols can temporarily be disabled. This will require a restart of all of the Ceph services. [4]</p>
+<p>For testing, the &quot;cephx&quot; authentication protocols can temporarily be disabled. This will require a restart of all of the Ceph services. Re-enable <code>cephx</code> by setting these values from &quot;none&quot; to &quot;cephx.&quot; [4]</p>
 <pre><code># vim /etc/ceph/ceph.conf
 [global]
 auth cluster required = none
@@ -579,7 +578,7 @@ auth client required = none</code></pre>
 <li>1GB RAM per 1TB of Ceph OSD storage, per OSD daemon.</li>
 <li>1GB RAM per monitor daemon.</li>
 <li>1GB RAM per metadata daemon.</li>
-<li>An odd number of nodes (starting at least 3 for high availability and quorum). [1]</li>
+<li>An odd number of montior nodes (starting at least 3 for high availability and quorum). [1]</li>
 </ul>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -592,7 +591,7 @@ auth client required = none</code></pre>
 <pre><code># ceph-deploy new &lt;SERVER1&gt;</code></pre></li>
 <li><p>Install the latest LTS release for production environments on the specified servers. SSH access is required.</p>
 <pre><code># ceph-deploy install --release jewel &lt;SERVER1&gt; &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
-<li><p>Initalize the first monitor.</p>
+<li><p>Initialize the first monitor.</p>
 <pre><code># ceph-deploy mon create-inital &lt;SERVER1&gt;</code></pre></li>
 <li><p>Install the monitor service on the other nodes.</p>
 <pre><code># ceph-deploy mon create &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
@@ -600,7 +599,7 @@ auth client required = none</code></pre>
 <pre><code># ceph-deploy disk list &lt;SERVER1&gt; &lt;SERVER2&gt; &lt;SERVER3&gt;</code></pre></li>
 <li><p>Carefully select the drives to use. Then use the &quot;disk zap&quot; arguments to zero out the drive before use.</p>
 <pre><code># ceph-deploy disk zap &lt;SERVER1&gt;:&lt;DRIVE&gt; &lt;SERVER2&gt;:&lt;DRIVE&gt; &lt;SERVER3&gt;:&lt;DRIVE&gt;</code></pre></li>
-<li><p>Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but BTRS is much feature-rich with technologies such as copy-on-write (CoW) support.</p>
+<li><p>Prepare and deploy the OSD service for the specified drives. The default file system is XFS, but Btrfs is much feature-rich with technologies such as copy-on-write (CoW) support.</p>
 <pre><code># ceph-deploy osd create --fs-type btrfs &lt;SERVER1&gt;:&lt;DRIVE&gt; &lt;SERVER2&gt;:&lt;DRIVE&gt; &lt;SERVER3&gt;:&lt;DRIVE&gt;</code></pre></li>
 <li><p>Verify it's working.</p>
 <pre><code># ceph status</code></pre></li>
@@ -760,7 +759,7 @@ type 10 root</code></pre>
 <ul>
 <li>Uniform = Assumes that all hardware in the bucket instance is exactly the same so all OSDs recieve the same weight.</li>
 <li>List = Lists use the RUSH algorithim to read and write objects in sequencial order from the first OSD to the last. This is best suited for data that does not need to be deleted (to avoid rebalancing).</li>
-<li>Tree = The binary search tree uses the RUSH algorithim to efficently handle larger amounts of data.</li>
+<li>Tree = The binary search tree uses the RUSH algorithim to efficiently handle larger amounts of data.</li>
 <li>Straw = A combination of both &quot;list&quot; and &quot;tree.&quot; One of the two bucket types will randomly be selected for operations. Replication is fast but rebalancing will be slow.</li>
 </ul></li>
 <li>hash = Required. The hashing algorithim used by CRUSH to lookup and store files. As of the Jewel release, only option &quot;0&quot; for &quot;rjenkins1&quot; is supported.</li>
