@@ -86,7 +86,7 @@
 <ul>
 <li><strong>changelog</strong> = Required. A change log listing the updates for the package release itself, not the program.</li>
 <li><strong>control</strong> = Required. This describes the package name, version, maintainer, dependencies, and more.</li>
-<li><strong>copyright </strong> = Required. The licenses used for the package and source code.</li>
+<li><strong>copyright</strong> = Required. The licenses used for the package and source code.</li>
 <li>install = Optional. A text file listing extra files (not installed by <code>make install</code>) that should be copied into the package.</li>
 <li><strong>rules</strong> = Required. A Makefile that explains how to build and install the program before being packaged. In a default environment setup by the <code>dh_make</code> command this essentially runs <code>./configure; make; make install</code> in the directory that contains the <code>debian/</code> directory. The shebang at the top of the file should normally be <code>#!/usr/bin/make -f</code>.</li>
 <li>patches/ = Optional. Files for patching the source code.</li>
@@ -107,9 +107,46 @@ $ dh_make -f ../&lt;PROGRAM_NAME&gt;-&lt;VERSION&gt;.tar.gz</code></pre>
 <p>The DEB package can now be built.</p>
 <pre><code>$ dpkg-buildpackage</code></pre>
 <p>After building the package, a new source tarball will be created containing the <code>debian</code> directory: <code>&lt;PROGRAM_NAME&gt;_&lt;VERSION&gt;-&lt;DEB_PACKAGE_RELEASE&gt;.debian.tar.gz</code>. The actual package will be named <code>&lt;PACKAGE_NAME&gt;_&lt;VERSION&gt;-&lt;DEB_PACKAGE_RELEASE&gt;_&lt;ARCHITECTURE&gt;.deb</code>.</p>
-<p>Source:</p>
+<p><code>changelog</code> File Syntax:</p>
+<pre><code>&lt;PACKAGE_NAME&gt; (&lt;PROGRAM_VERSION&gt;-&lt;PACKAGE_REVISION&gt;) ; urgency=&lt;URGENCY_LEVEL&gt;
+
+  * &lt;PACKAGE_REVISION_NOTES&gt;
+
+ -- &lt;AUTHOR_FIRST_NAME&gt; &lt;AUTHOR_LAST_NAME&gt; &lt;&lt;EMAIL&gt;&gt;  &lt;DAY&gt;, &lt;DAY_NUMBER&gt; &lt;MONTH&gt; &lt;YEAR&gt; &lt;HH&gt;:&lt;MM&gt;:&lt;SS&gt; &lt;UTC_HOUR_OFFSET&gt;</code></pre>
+<p><code>changelog</code> File Example:</p>
+<pre><code>apache (2.4.0-2) stable; urgency=low
+
+  * Second release
+
+ -- Bob Smith &lt;bob@smith.tld&gt;  Mon, 22 Mar 2017 00:01:00 +0200
+
+apache (2.4.0-1) stable; urgency=low
+
+  * Initial release
+
+ -- Bob Smith &lt;bob@smith.tld&gt;  Mon, 22 Mar 2017 23:12:12 +0100</code></pre>
+<p><code>control</code> File Example [2]:</p>
+<pre><code>Source: hello-debian
+Section: utils
+Priority: extra
+Maintainer: Full Name &lt;yourname@example.com&gt;
+Build-Depends: debhelper (&gt;= 8.0.0)
+Standards-Version: 3.9.3
+Vcs-Git: git@github.com:streadway/hello-debian.git
+Vcs-Browser: http://github.com/streadway/hello-debian
+
+Package: hello-debian
+Section: utils
+Priority: extra
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Example package maintenance (under 60 chars)
+ The build output from a repository listing the steps to setup a debian
+ package in a long-format under 80 characters per line.</code></pre>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Chapter 7 - Basics of the Debian package management system.&quot; The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html</li>
+<li>&quot;hello-debian README.md.&quot; streadway/hello-debian GitHub. March 24, 2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian</li>
 </ol>
 <h3 id="deb---packaging---macros">DEB - Packaging - Macros</h3>
 <p>Many macros exist for helping to build and install Debian packages.</p>
