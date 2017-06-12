@@ -263,12 +263,16 @@ dns2 ansible_host=192.168.1.54
 
 ### Configuration - Inventory - Variables
 
-Variables that Playbooks will use can be defined for specific hosts and/or groups. The file that stores the variables should reflect the name of the host and/or group.
+Variables that Playbooks will use can be defined for specific hosts and/or groups. The file that stores the variables should reflect the name of the host and/or group. Global variables can be found in the `/etc/ansible/` directory.
 
-* Global inventory files:
-    * /etc/ansible/host_vars/
-    * /etc/ansible/group_vars/
-    * /etc/ansible/group_vars/all = This file contains variables for all hosts and groups.
+* Inventory variable directories and files:
+    * host_vars/
+        * `<HOST>` = Variables for a host defined in the inventory file.
+    * group_vars/
+        * `<GROUP>`/
+            * vars = Variables for this group.
+            * vault = Encrypted Ansible vault variables. [3]
+        * all = This file contains variables for all hosts.
 
 It is assumed that the inventory variable files are in YAML format. Here is an example for a host variable file.
 
@@ -794,8 +798,8 @@ Comments are template comments that will be removed when once a template has bee
 * Example:
 ```
 {# this is a...
-	{% if ip is '127.0.0.1' %}
-    	<html>Welcome to localhost</html>
+    {% if ip is '127.0.0.1' %}
+        <html>Welcome to localhost</html>
     {% endif %}
 ...example comment #}
 ```
@@ -930,7 +934,7 @@ priority={{ count }}
 * Example:
 ```
 {% if {{ taco_day }} == "Tuesday" %}
-	Taco day is on Tuesday.
+    Taco day is on Tuesday.
 {% else %}
     Taco day is not on a Tuesday.
 {% endif %}
@@ -1044,28 +1048,27 @@ Source:
 
 The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.
 
-Install Ansible Container into a Python virtual environment. This helps to separate Python packages provided by the operating system's package manager. [1]
+Install Ansible Container into a Python virtual environment. This helps to separate Python packages provided by the operating system's package manager. Source the "activate" file to use the new Python environment. [1]
 ```
 $ virtualenv ansible-container
-$ ansible-container/bin/pip install -U pip setuptools
-$ ansible-container/bin/pip install ansible-container
+$ source ansible-container/bin/activate
+$ pip install -U pip setuptools
+$ pip install ansible-container[docker,openshift]
 ```
 
-Ansible Container directorysStructure:
-
-* ansible/ = The "ansible-container" command should be run in the directory above "ansible."
+* Ansible Container directory structure:
     * container.yml = An Ansible file that mirrors Docker Compose syntax is used to define how to create the Docker container. Common settings include the image to use, ports to open, commands to run, etc.
-    * requirements.txt = Python dependencies to install.
+    * ansible-requirements.txt = Python dependencies to install for Ansible.
     * requirements.yml = Ansible dependencies to install from Ansible Galaxy.
     * ansible.cfg = Ansible configuration for the container.
 
 
-container.yml
+Example `container.yml`:
 ```
 version: "2"
 services:
   web:
-    image: "ubuntu:trusty"
+    from: "centos:7"
     ports:
       - "80:80"
     command: ["/usr/bin/dumb-init", "/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
@@ -1076,27 +1079,68 @@ services:
 
 All of the Docker Compose options as specified at [https://docs.docker.com/compose/compose-file/](https://docs.docker.com/compose/compose-file/).
 
-Common options:
+Common `container.yml` options:
 
 * version = The version of Docker Compose to use. Valid options are `1` or `2` since Ansible Container 0.3.0.
-* services = This is where various Docker containers can be defined. A unique name should be provided to each different container. These names are used as the hosts in the Playbook file.
+```
+version: '2'
+```
+* settings = Project configuration settings.
+    * conductor_base = The container to run Ansible from. This should mirror the development environment used for Ansible-Container.
+```
+  settings:
+        conductor_base: centos:7
+```
+    * deployment_output_path = The directory mounted for placing the generated Ansible Playbook(s). Default: `./ansible-deployment`.
+    * project_name = The name of the Ansible project. By default, this will use the name of the directory that the `container.yml` file is in.
+* services = This is where one or more Docker containers are defined. A unique name should be provided to each different container. These names are used as the hosts in the Playbook file.
 ```
 services:
-    https:
+    <GROUP_OR_HOST>:
 ```
 ```
- - hosts: https
+service:
+    mysql:
 ```
-* ports = Specify the host node port to map to the container port.
+    * image = The Docker image to use for a service.
+```
+from: "<IMAGE>:<VERSION>"
+```
+```
+from: "ubuntu:xenial"
+```
+    * roles = A list of Ansible roles to run on the contianer.
+```
+     roles:
+       - <ROLE1>
+       - <ROLE2>
+```
+    * ports = The hypervisor port to bind to and the container port to forward traffic to/from.
 ```
 ports:
- - "443:443"
+ - "4444:443"
 ```
-* image = The Docker image to use.
+    * expose = Similar to `ports` but the port forwarding is only done on the hypervisor's localhost address.
+    * links = Directly connect container networks for container-to-container traffic.
+    * command = Specify a shell command, providing all of the arguments separated via a list. This is the default command run to start the container. If this command stops then the container will be stopped.
 ```
-image: "centos:7"
+command: ['<FULL_PATH_TO_CMD>', '<ARG1>', '<ARG2>', '<ARG3>']
 ```
-* command = Run a shell command, providing all of the arguments separated via a list. This is the default command run to start the container.
+    * entrypoint = Specify a shell command to run before starting the main `command`. This allows for checks to ensure dependencies are running.
+    * depends_on = The services/containers that this container requires before starting. This helps to start services in a specific sequence.
+    * volumes = Define all of the bind mounts from the hypervisor to the Docker container.
+```
+    volumes:
+        - <HYPERVISOR_PATH_1>:<CONTAINER_PATH_1>
+        - <HYPERVISOR_PATH_2>:<CONTAINER_PATH_2>
+```
+    * volumes_from = Mount some or all all the same mounts that another container is using.
+
+The Docker container(s) can be created after the `container.yml` file is completed to describe the container deployment.
+
+```
+$ ansible-container build
+```
 
 [2]
 
@@ -2493,7 +2537,7 @@ Sources:
 * "Ansible Frequently Asked Questions." Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html
 * "Ansible Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html
 * "Ansible Variables." Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_variables.html
-* "Ansible Best Practices." Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_best_practices.html
+* "Ansible Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks_best_practices.html
 * "Ansible File Module." Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/file_module.html
 * "Ansible Template Module." Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/template_module.html
 * "Ansible Service Module." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/service_module.html
@@ -2529,7 +2573,7 @@ Sources:
 sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
 * "Ansible Glossary." Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro_installation.html
 * "Ansible Container README." Ansible GitHub. October, 2016. Accessed November 19, 2016. https://github.com/ansible/ansible-container
-* "Ansible Container." Ansible Documentation. February 19, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible-container/
+* "Ansible Container." Ansible Documentation. June 3, 2017. Accessed June 3, 2017. http://docs.ansible.com/ansible-container/
 * "Ansible apt - Manages apt-packages." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/apt_module.html
 * "Ansible include_vars - Load variables from files, dynamically within a task." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html
 * "Ansible include_role - Load and execute a role." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html
