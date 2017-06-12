@@ -1,10 +1,12 @@
 # OpenStack Ocata
 
 * [Introduction](#introduction)
+    * [Versions](#introduction---versions)
+    * [Services](#introduction---services)
 * [Overview](#overview)
 * [Automation](#automation)
     * [PackStack](#automation---packstack)
-    * [OpenStack Ansible](#automation---openstack-ansible)
+    * [OpenStack-Ansible](#automation---openstack-ansible)
         * [Quick](#automation---openstack-ansible---quick)
             * [Operations](#automation---openstack-ansible---quick---operations)
         * [Full](#automation---openstack-ansible---full)
@@ -12,7 +14,13 @@
                 * [Nova](#automation---openstack-ansible---full---configurations---nova)
                 * [Ceph](#automation---openstack-ansible---full---configurations---ceph)
             * [Operations](#automation---openstack-ansible---full---operations)
+                * [OpenStack Utilities](#automation---openstack-ansible---full---operations---openstack-utilities)
+                * [Ansible Inventory](#automation---openstack-ansible---full---operations---ansible-inventory)
+                * [Add a Infrastructure Container](#automation---openstack-ansible---full---operations---add-a-infrastructure-container)
+                * [Add a Compute Container](#automation---openstack-ansible---full---operations---add-a-compute-container)
             * [Upgrades](#automation---openstack-ansible---full---upgrades)
+                * [Minor](#automation---openstack-ansible---full---upgrades---minor)
+                * [Major](#automation---openstack-ansible---full---upgrades---major)
     * [TripleO](#automation---tripleo)
         * [Quick](#automation---tripleo---quick)
         * [Full](#automation---tripleo---full)
@@ -53,11 +61,11 @@
         * [Floating IPs](#neutron-troubleshooting---open-vswitch---floating-ips)
 * [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
-* [Automation](#automation)
-    * [Heat](#automation---heat)
-        * [Resources](#automation---heat---resources)
-        * [Parameters](#automation---heat---parameters)
-    * [Vagrant](#automation---vagrant)
+* [Orchestration](#orchestration)
+    * [Heat](#orchestration---heat)
+        * [Resources](#orchestration---heat---resources)
+        * [Parameters](#orchestration---heat---parameters)
+    * [Vagrant](#orchestration---vagrant)
 * [Testing](#testing)
     * [Tempest](#testing---tempest)
 * [Performance](#performance)
@@ -67,7 +75,10 @@
 
 This guide is aimed to help guide Cloud Administrators through deploying, managing, and upgrading OpenStack. Most topics mentioned in this guide can be applied to similar environments and/or versions.
 
-Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The number represents the major version of each software in that release. For example, Ocata software is versioned as `15.X.X`. A new release comes out about every 6 months and is supported for 1 year.
+
+# Introduction - Versions
+
+Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as `15.X.X`. A new release comes out about every 6 months and is supported for 1 year.
 
 Releases:
 
@@ -108,40 +119,50 @@ Sources:
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 
 
-# Overview
+## Introduction - Services
 
 OpenStack has a large range of services that manage different different components in a modular way.
 
-Core services:
+Most popular services (50% or more of OpenStack cloud operators have adopted):
 
-* Keystone = Authentication
-* Nova = Compute
-* Neutron = Networking
-
-Extra services:
-
-* Horizon = Dashboard
-* Swift = Object Storage
+* Ceilometer = Telemetry
 * Cinder = Block Storage
 * Glance = Image
-* Ceilometer = Telemtry
 * Heat = Orchestration
-* Trove = Database
-* Sahara = Elastic Map Reduce
-* Ironic = Bare-Metal Provisioning
-* Zaqar = Messaging Service
-* Manila = Shared Filesystems
-* Designate = DNS Service
+* Horizon = Dashboard
+* Keystone = Authentication
+* Neutron = Networking
+* Nova = Compute
+* Swift = Object Storage
+
+
+Other services:
+
+* Aodh = Telemetry alarming
 * Barbican = Key Management
-* Magnum = Containers
-* Murano = Application Catalog
+* CloudKitty = Billing
 * Congress = Governance
+* Designate = DNS
+* Freezer = Backup and recovery
+* Ironic = Bare-Metal Provisioning
+* Karbor = Data protection
+* Magnum = Containers
+* Manila = Shared Filesystems
+* Mistral = OpenStack Workflow
+* Monasca = Monitoring
+* Murano = Application Catalog
+* Octavia = Load Balancing
+* Sahara = Elastic Map Reduce
+* Searchlight = Indexing
+* Trove = Database
+* Zaqar = Messaging
+* Zun = Containers
 
 [1]
 
 Source:
 
-1. "Project Navigator." OpenStack. Accessed January 15, 2017. https://www.openstack.org/software/project-navigator/
+1. "Project Navigator." OpenStack. Accessed May 14, 2017. https://www.openstack.org/software/project-navigator/
 
 
 # Automation
@@ -184,7 +205,7 @@ Source:
 
 ## Automation - OpenStack Ansible
 
-Supported operating systems: RHEL 7, Ubuntu 14.04, Ubuntu 16.04
+Supported operating systems: RHEL 7, Ubuntu 16.04
 
 OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
@@ -364,13 +385,14 @@ View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a re
 Configure the networks that are used in the environment.
 
 * cider_networks
-    * container = The network range that the LXC containers will use an IP address from.
-    * tunnel = The network range for accessing network services between the `compute` and `network` nodes over the VXLAN or GRE tunnel interface.
+    * container = The network range that the LXC containers will use an IP address from. This is the management network that is on `br-mgmt`.
+    * tunnel = The network range for accessing network services between the `compute` and `network` nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on `br-vxlan`.
     * storage = The network range for accessing storage.
 * used_ips = Lists of IP addressess that are already in use and should not be used for the container networks.
 * global_overrides
     * tunnel_bridge = The interface to use for tunneling VXLAN traffic. This is typically `br-vxlan`.
     * management_bridge = The interface to use for management access. This is typically `br-mgmt`.
+    * external_lb_vip_address = The public IP address to load balance for API endpoints.
     * provider_networks
         * network = Different networks can be defined. At least one is required.
             * type = The type of network that the `container_bridge` device should be used.
@@ -382,28 +404,46 @@ Configure the networks that are used in the environment.
             * range = The optional VXLAN that the bridge interface should use.
             * container_interface = The interface that the LXC container should use. This is typically `eth1`.
 
-The syntax for defining which host(s) a service will be installed onto follow this format below. Controller node services are specified with the keyword `-infra` in their name.
+The syntax for defining which host(s) a service will be installed onto follow this format below. Controller node services are specified with the keyword `-infra` in their name. Each `infra#` entry contains the IP address of the physical server to provision the containers to.
 
-```
-<SERVICE_TYPE>_hosts:
-  infra1:
-    ip: <HOST1_IP_ADDRESS>
-  infra2:
-    ip: <HOST2_IP_ADDRESS>
-```
+* `<SERVICE_TYPE>`_hosts:
+    * infra1:
+        * ip: `<HOST1_IP_ADDRESS>`
+    * infra2:
+        * ip: `<HOST2_IP_ADDRESS>`
+
 
 The valid service types are:
 
 * shared-infra = Galera, memcache, RabbitMQ, and other utilities.
 * repo-infra_hosts = Hosts that will handle storing and retrieving packages.
+* metrics = Gnocchi.
+* metering-alartm_hosts = Aodh.
 * storage-infra = Cinder.
 * image = Glance.
+* identity = Keystone.
+* haproxy = Load balancers.
+* log = Central rsyslog servers
+    * `log<#>` = Instead of `infra<#>`, log_hosts uses this variable for defining the host IP address.
+* metering-infra = Ceilometer.
+* metering-alarm = Aodh.
+* metering-compute = Ceilometer for the compute nodes.
 * compute-infra = Nova API nodes.
 * orchestration = Heat.
 * dashboard = Horizon.
 * network = Neutron network nodes
 * compute = Nova hypervisor nodes.
 * storage = Cinder.
+* storage-infra
+* swift = Swift stores.
+* swift-proxy = Swift proxies.
+* trove-infra = Trove.
+* ceph-mon = Ceph monitors.
+* ceph-osd = Ceph OSDs.
+* dnsaas = Designate.
+* unbound = Caching DNS server nodes.
+* magnum-infra = Magnum.
+* sahra-infra = Sahara.
 
 [1]
 
@@ -418,7 +458,7 @@ The default variables for Nova are listed at https://docs.openstack.org/develope
 
 Common variables:
 
-* nova_virt_type = The virtualization technology to use for deploying instances with OpenStack. By default, OpenStack-Ansible will guess what should be used based on what is installed on the hypervisor. Valid options are: `qemu`, `kvm`, `lxd`, `ironic`, and `powervm`.
+* nova_virt_type = The virtualization technology to use for deploying instances with OpenStack. By default, OpenStack-Ansible will guess what should be used based on what is installed on the hypervisor. Valid options are: `qemu`, `kvm`, `lxd`, `ironic`, or `powervm`.
 
 [1]
 
@@ -449,12 +489,37 @@ ceph_mons:
   - <MONITOR3_IP>
 ```
 
-A new custom deployment of Ceph can be configured. It is recommended to use at least 3 hosts for high availability and quorum.
+By default, OpenStack-Ansible will generate the ceph.conf configuration file by connecting to the Ceph monitor hosts and obtaining the information from there. Extra configuration options can be specified or overriden using the "ceph_extra"confs" dictionary.
+
+```
+ceph_extra_confs:
+-  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
+   dest: "/etc/ceph/ceph.conf"
+   mon_host: <MONITOR_IP>
+   client_name: <CEPH_CLIENT>
+   keyring_src: <PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE>
+   keyring_dest: /etc/ceph/ceph.client.<CEPH_CLIENT>.keyring
+   secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
+```
+
+Alternatively, the entire configuration file can be defined as a variable using proper YAML syntax. [2]
+
+```
+ceph_conf_file: |
+  [global]
+  fsid = 00000000-1111-2222-3333-444444444444
+  mon_initial_members = mon1.example.local,mon2.example.local,mon3.example.local
+  mon_host = {{ ceph_mons|join(',') }}
+  auth_cluster_required = cephx
+  auth_service_required = cephx
+```
+
+A new custom deployment of Ceph can be configured. It is recommended to use at least 3 hosts for high availability and quorum. [1]
 
 ```
 # File: /etc/openstack_deploy/openstack_user_config.yml
 storage_hosts:
-  <CINDER_HOST1>:
+  infra<#>:
     ip: <CINDER_HOST1_IP>
     container_vars:
       cinder_backends:
@@ -470,20 +535,6 @@ storage_hosts:
 
 [1]
 
-Alternatively, configure credentials to a pre-existing Ceph cluster.
-
-```
-ceph_extra_confs:
--  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
-   dest: "/etc/ceph/ceph.conf"
-   mon_host: <MONITOR_IP>
-   client_name: <CEPH_CLIENT>
-   keyring_src: <PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE>
-   keyring_dest: /etc/ceph/ceph.client.<CEPH_CLIENT>.keyring
-   secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
-```
-
-[2]
 
 Sources:
 
@@ -493,12 +544,8 @@ Sources:
 
 #### Automation - OpenStack Ansible - Full - Operations
 
-* [OpenStack Utilities](#automation---openstack-ansible---full---operations---openstack-utilities)
-* [Add a Infrastructure Container](#automation---openstack-ansible---full---operations---add-a-infrastructure-container)
-* [Add a Compute Container](#automation---openstack-ansible---full---operations---add-a-compute-container)
 
-
-#### Automation - OpenStack Ansible - Full - Operations - OpenStack Utilities
+##### Automation - OpenStack Ansible - Full - Operations - OpenStack Utilities
 
 Once OpenStack-Ansible is installed, it can be used immediately. The primary container to use is the `utility` container.
 
@@ -526,6 +573,42 @@ Source:
 
 1. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017.
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
+
+
+##### Automation - OpenStack Ansible - Full - Operations - Ansible Inventory
+
+Ansible's inventory contains all of the connection and variable details about the hosts (in this case, LXC containers) and which group they are a part of. This section covers finding and using these inventory values for management and troubleshooting.
+
+* Change into the OpenStack-Ansible directory.
+```
+# cd /opt/openstack-ansible/
+```
+
+* Show all of the groups and the hosts that are a part of it.
+```
+# ./scripts/inventory-manage.py -G
+```
+
+* Show all of the hosts and the groups they are a part of.
+```
+# ./scripts/inventory-manage.py -g
+```
+
+* List hosts that a Playbook will run against.
+```
+# openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
+```
+
+* List all the Ansible tasks that will be executed on a group or host.
+```
+# openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
+```
+
+[1]
+
+Source:
+
+1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 
 ##### Automation - OpenStack Ansible - Full - Operations - Add a Infrastructure Container
@@ -591,33 +674,40 @@ https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/in
 
 #### Automation - OpenStack Ansible - Full - Upgrades
 
-* [Minor OpenStack Release](#automation---openstack-ansible---full---upgrades---minor-openstack-release)
-* [Major OpenStack Release](#automation---openstack-ansible---full---upgrades---major-openstack-release)
 
+##### Automation - OpenStack Ansible - Full - Upgrades - Minor
 
-##### Automation - OpenStack Ansible - Full - Upgrades - Minor OpenStack Release
+This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 15.0.0 to 15.1.1.
 
-This is for upgrading OpenStack from one minor version to another. An example would be going from 15.0.0 to 15.1.1.
-
-* Change the OpenStack-Ansible version to a new minor tag release. If a branch for a OpenStack release name is being used already, keep using that branch.
+* Change the OpenStack-Ansible version to a new minor tag release. If a branch for a OpenStack release name is being used already, pull the latest branch commits down from GitHub.
 ```
 # cd /opt/openstack-ansible/
-# git pull origin
+# git fetch --all
 # git checkout <TAG>
 ```
 
-* Update the OpenStack repository container to include the latest packages from the minor release.
+* Update:
+
+    * **All services.**
 ```
-# cd /opt/openstack-ansible/playbooks/
+# ./scripts/bootstrap-ansible.sh
+# cd ./playbooks/
+# openstack-ansible setup-hosts.yml
+# openstack-ansible -e rabbitmq_upgrade=true setup-infrastructure.yml
+# openstack-ansible setup-openstack.yml
+```
+    * **Specific services.**
+        * Update the cached package repository.
+```
+# cd ./playbooks/
 # openstack-ansible repo-install.yml
 ```
-
-* A single component can be upgraded now.
+        * A single service can be upgraded now.
 ```
-# openstack-ansible <COMPONENT>-install.yml
+# openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
 ```
 
-* Some services, such as MariaDB and RabbitMQ, require special variables to be set to force an upgrade.
+        * Some services, such as MariaDB and RabbitMQ, require special variables to be set to force an upgrade.
 ```
 # openstack-ansible galera-install.yml -e 'galera_upgrade=true'
 ```
@@ -625,21 +715,17 @@ This is for upgrading OpenStack from one minor version to another. An example wo
 # openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
 ```
 
-* Alternatively, the entire OpenStack-Ansible deployment can be upgraded.
-```
-# openstack-ansible setup-openstack.yml
-```
 
 [1]
 
 Source:
 
-1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. April 21, 2017. Accessed April 23, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
+1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Upgrades - Major OpenStack Release
+##### Automation - OpenStack Ansible - Full - Upgrades - Major
 
-It is recommended to do a manual upgrade by following the official guide: https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html. Below outlines how to automatically do this. [1]
+OpenStack-Ansible has scripts capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the official guide: https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html. Below outlines how to do this automatically. [1]
 
 * Move into the OpenStack-Ansible project.
 ```
@@ -831,10 +917,14 @@ Sources:
 In Newton, the Keystone v2.0 API has been completely deprecated. It will be removed entirely from OpenStack in the `Queens` release. [1] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
 
 * /etc/keystone/keystone-paste.ini
-    * [pipeline:public_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
-    * [pipeline:admin_api] pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
-    * [composite:main] /v2.0 = public_api
-    * [composite:admin] /v2.0 = admin_api
+    * [pipeline:public_api]
+        * pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
+    * [pipeline:admin_api]
+        * pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
+    * [composite:main]
+        * /v2.0 = public_api
+    * [composite:admin]
+        * /v2.0 = admin_api
 
 [2]
 
@@ -851,14 +941,16 @@ The token provider is used to create and delete tokens for authentication. Diffe
 #### Scenario #1 - UUID (default)
 
 * /etc/keystone/keystone.conf
-    * [ token ] provider = uuid
+    * [token]
+        * provider = uuid
 
 #### Scenario #2 - PKI
 
 PKI tokens have been removed since the Ocata release. [3]
 
 * /etc/keystone/keystone.conf
-    * [ token ] provider = pki
+    * [token]
+        * provider = pki
 * Create the certificates. A new directory "/etc/keystone/ssl/" will be used to store these files.
 ```
 # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
@@ -869,11 +961,15 @@ PKI tokens have been removed since the Ocata release. [3]
 A public and private key wil need to be created for Fernet and the related Credential authentication.
 
 * /etc/keystone/keystone.conf
-    * [ token ] provider = fernet
-    * [ fernet_tokens ] key_repository = /etc/keystone/fernet-keys/
-    * [ credential ] provider = fernet
-    * [ credential ] key_repository = /etc/keystone/credential-keys/
-    * [ token ] provider = fernet
+    * [token]
+        * provider = fernet
+    * [fernet_tokens]
+        * key_repository = /etc/keystone/fernet-keys/
+    * [credential]
+        * provider = fernet
+        * key_repository = /etc/keystone/credential-keys/
+    * [token]
+        * provider = fernet
 * Create the required keys:
 ```
 # mkdir /etc/keystone/fernet-keys/
@@ -901,13 +997,17 @@ Sources:
 ## Configurations - Nova
 
 * /etc/nova/nova.conf
-    * [ libvirt ] inject_key = false
-	    * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
-    * [ DEFAULT ] enabled_apis = osapi_compute,metadata
-	    * Enable support for the Nova API and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
-    * [ api_database ] connection = connection=mysql://nova:password@10.1.1.1/nova_api
-    * [ database ] connection = mysql://nova:password@10.1.1.1/nova
-	    * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
+    * [libvirt]
+        * inject_key = false
+	        * Do not inject SSH keys via Nova. This should be handled by the Nova's metadata service. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on your setup.
+    * [DEFAULT]
+        * enabled_apis = osapi_compute,metadata
+	        * Enable support for the Nova API and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" handles the metadata and not "openstack-nova-metadata-api."
+    * [api_database]
+        * connection = connection=mysql://nova:password@10.1.1.1/nova_api
+    * [database]
+        * connection = mysql://nova:password@10.1.1.1/nova
+	        * For the controller nodes, specify the connection SQL connection string. In this example it uses MySQL, the MySQL user "nova" with a password called "password", it connects to the IP address "10.1.1.1" and it is using the database "nova."
 
 
 ### Configurations - Nova - Hypervisors
@@ -918,8 +1018,10 @@ Nova supports a wide range of virtualization technologies. Full hardware virtual
 #### Scenario #1 - KVM
 
 * /etc/nova/nova.conf
-    * [DEFAULT] compute_driver = libvirt.LibvirtDriver
-    * [libvirt] virt_type = kvm
+    * [DEFAULT]
+        * compute_driver = libvirt.LibvirtDriver
+    * [libvirt]
+        * virt_type = kvm
 
 [2]
 
@@ -927,8 +1029,10 @@ Nova supports a wide range of virtualization technologies. Full hardware virtual
 #### Scenario #2 - Xen
 
 * /etc/nova/nova.conf
-    * [DEFAULT] compute_driver = libvirt.LibvirtDriver
-    * [libvirt] virt_type = xen
+    * [DEFAULT]
+        * compute_driver = libvirt.LibvirtDriver
+    * [libvirt]
+        * virt_type = xen
 
 [3]
 
@@ -936,8 +1040,10 @@ Nova supports a wide range of virtualization technologies. Full hardware virtual
 #### Scenario #3 - LXC
 
 * /etc/nova/nova.conf
-    * [DEFAULT] compute_driver = libvirt.LibvirtDriver
-    * [libvirt] virt_type = lxc
+    * [DEFAULT]
+        * compute_driver = libvirt.LibvirtDriver
+    * [libvirt]
+        * virt_type = lxc
 
 [4]
 
@@ -1129,16 +1235,18 @@ By default, Neutron does not provide any DNS resolvers. This means that DNS will
 #### Scenario #1 - Define default resolvers (recommended)
 
 * /etc/neutron/dhcp_agent.ini
-    * [ DEFAULT ] dnsmasq_dns_servers = 8.8.8.8,8.8.4.4
+    * [DEFAULT]
+        * dnsmasq_dns_servers = 8.8.8.8,8.8.4.4
 
 #### Scenario #2 - Leave resolvers to be configured by the subnet details
 
-* Nothing needs to be configured.
+* Nothing needs to be configured. This is the default setting.
 
 #### Scenario #3 - Do not provide resolvers
 
 * /etc/neutron/dhcp_agent.ini
-    * [ DEFAULT ] dnsmasq_local_resolv = True
+    * [DEFAULT]
+        * dnsmasq_local_resolv = True
 
 [1]
 
@@ -1154,30 +1262,37 @@ The metadata service provides useful information about the instance from the IP 
 Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/receiving requests.
 
 * /etc/neutron/metadata_agent.ini
-    * [ DEFAULT ] nova_metadata_ip = CONTROLLER_IP
-    * [ DEFAULT ] metadata_proxy_shared_secret = SECRET_KEY
+    * [DEFAULT]
+        * nova_metadata_ip = CONTROLLER_IP
+        * metadata_proxy_shared_secret = `<SECRET_KEY>`
 * /etc/nova/nova.conf
-    * [ DEFAULT ] enabled_apis = osapi_compute,metadata
-    * [ neutron ] service_metadata_proxy = True
-    * [ neutron ] metadata_proxy_shared_secret = SECRET_KEY
+    * [DEFAULT]
+        * enabled_apis = osapi_compute,metadata
+    * [neutron]
+        * service_metadata_proxy = True
+        * metadata_proxy_shared_secret = `<SECRET_KEY>`
 
 #### Scenario #1 - DHCP Namespace (recommended for DVR)
 
 * /etc/neutron/dhcp_agent.ini
-    * [ DEFAULT ] force_metadata = True
-    * [ DEFAULT ] enable_isolated_metadata = True
-    * [ DEFAULT ] enable_metadata_network = True
-* /etc/neutron
-    * [ DEFAULT ] enable_metadata_proxy = False
+    * [DEFAULT]
+        * force_metadata = True
+        * enable_isolated_metadata = True
+        * enable_metadata_network = True
+* /etc/neutron/l3_agent.ini
+    * [DEFAULT]
+        * enable_metadata_proxy = False
 
 #### Scenario #2 - Router Namespace
 
 * /etc/neutron/dhcp_agent.ini
-    * [ DEFAULT ] force_metadata = False
-    * [ DEFAULT ] enable_isolated_metadata = True
-    * [ DEFAULT ] enable_metadata_network = False
+    * [DEFAULT]
+        * force_metadata = False
+        * enable_isolated_metadata = True
+        * enable_metadata_network = False
 * /etc/neutron/l3_agent.ini
-    * [ DEFAULT ] enable_metadata_proxy = True
+    * [DEFAULT]
+        * enable_metadata_proxy = True
 
 [1]
 
@@ -1191,27 +1306,33 @@ Source:
 Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end.
 
 * /etc/neutron/neutron.conf
-    * [ DEFAULT ] service_plugins = `<PLUGINS>`, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
-        * Append the LBaaSv2 service plugin.
+    * [DEFAULT]
+        * service_plugins = `<EXISTING_PLUGINS>`, neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+            * Append the LBaaSv2 service plugin.
 *   /etc/neutron/lbaas_agent.ini
-    * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-        * This is for Neutron with the Open vSwitch backend only.
-    * [ DEFAULT ] interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-        * This is for Neutron with the Linux Bridge backend only.
+    * [DEFAULT]
+        * interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+            * This is for Neutron with the Open vSwitch backend only.
+        * interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+            * This is for Neutron with the Linux Bridge backend only.
 
 #### Scenario #1 - HAProxy (recommended for it's maturity)
 
 * /etc/neutron/neutron_lbaas.conf
-    * [ service_providers ] service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
+    * [service_providers]
+        * service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 * /etc/neutron/lbaas_agent.ini
-    * [ DEFAULT ] device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
-    * [ haproxy ] user_group = haproxy
-        * Specify the group that HAProxy runs as. In RHEL, it's `haproxy`.
+    * [DEFAULT]
+        * device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
+    * [haproxy]
+        * user_group = haproxy
+            * Specify the group that HAProxy runs as. In RHEL, it's `haproxy`.
 
 #### Scenario #2 - Octavia
 
 * /etc/neutron/neutron_lbaas.conf
-    * [ service_providers ] service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
+    * [service_providers]
+        * service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
 
 [1]
 
@@ -1225,14 +1346,17 @@ Source:
 The Quality of Service (QoS) plugin can be used to rate limit the amount of bandwidth that is allowed through a network port.
 
 * /etc/neutron/neutron.conf
-    * [ DEFAULT ] service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
-        * Append the QoS plugin to the list of service_plugins.
+    * [DEFAULT]
+        * service_plugins = neutron.services.qos.qos_plugin.QoSPlugin
+            * Append the QoS plugin to the list of service_plugins.
 * /etc/neutron/plugins/ml2/openvswitch_agent.ini
-    * [ml2] extension_drivers = qos
-        * Append the QoS driver with the modular layer 2 plugin provider. Alternatively to OpenVSwitch, LinuxBridge and SR-IOV are also supported for quality of service.
+    * [ml2]
+        * extension_drivers = qos
+            * Append the QoS driver with the modular layer 2 plugin provider. In this example it is added to Open vSwitch. LinuxBridge and SR-IOV also support the quality of service extension.
 * /etc/neutron/plugins/ml2/ml2_conf.ini
-    * [agent] extensions = qos
-        * Lastly, append the QoS extension to the modular layer 2 configuration.
+    * [agent]
+        * extensions = qos
+            * Append the QoS extension to the modular layer 2 configuration.
 
 [1]
 
@@ -1246,16 +1370,22 @@ Source:
 Distributed virtual routing (DVR) is a concept that involves deploying routers to both the compute and network nodes to spread out resource usage. All layer 2 traffic will be equally spread out among the servers. Public floating IPs will still need to go through the SNAT process via the routers on the network nodes. This is only supported when the Open vSwitch agent is used. [1]
 
 * /etc/neutron/neutron.conf
-    * [ DEFAULT ] router_distributed = true
+    * [DEFAULT]
+        * router_distributed = true
 * /etc/neutron/l3_agent.ini (compute)
-    * [ DEFAULT ] agent_mode = dvr
+    * [DEFAULT]
+        * agent_mode = dvr
 * /etc/neutron/l3_agent.ini (network or all-in-one)
-    * [ DEFAULT ] agent_mode = dvr_snat
+    * [DEFAULT]
+        * agent_mode = dvr_snat
 * /etc/neutron/plugins/ml2/ml2_conf.ini
-    * [ ml2 ] mechanism_drivers = openvswitch, l2population
+    * [ml2]
+        * mechanism_drivers = openvswitch, l2population
 * /etc/neutron/plugins/ml2/openvswitch_agent.ini
-    * [ agent ] l2_population = true
-    * [ agent ] enable_distributed_routing = true
+    * [agent]
+        * l2_population = true
+    * [agent]
+        * enable_distributed_routing = true
 
 Source:
 
@@ -1267,9 +1397,10 @@ Source:
 High availability (HA) in Neutron allows for routers to failover to another duplicate router if one fails or is no longer present. All new routers will be highly available.
 
 * /etc/neutron/neutron.conf
-    * [ DEFAULT ] l3_ha = true
-    * [ DEFAULT ] max_l3_agents_per_router = 2
-    * [ DEFAULT ] allow_automatic_l3agent_failover = true
+    * [DEFAULT]
+        * l3_ha = true
+        * max_l3_agents_per_router = 2
+        * allow_automatic_l3agent_failover = true
 
 
 [1]
@@ -1366,31 +1497,34 @@ The Cinder service provides block devices for instances.
 Ceph has become the most popular backend to Cinder due to it's high availability and scalability.
 
 * /etc/cinder/cinder.conf
-    * [ DEFAULT ] enabled_backends = ceph
-        * Use the "[ ceph ]" section for the backend configuration. The new "[ ceph ]" section can be named anything but the same name must be used here.
-    * [ DEFAULT ] volume_backend_name = volumes
-    * [ DEFAULT ] rados_connect_timeout = -1
-    * [ ceph ] volume_driver = cinder.volume.drivers.rbd.RBDDriver
-        * Use Cinder's RBD Python library.
-    * [ ceph ] rbd_pool = volumes
-        * This is the RBD pool to use for volumes.
-    * [ ceph ] rbd_ceph_conf = /etc/ceph/ceph.conf
-    * [ ceph ] rbd_flatten_volume_from_snapshot = false
-        * Ceph supports efficent thin provisioned snapshots.
-    * [ ceph ] rbd_max_clone_depth = 5
-    * [ ceph ] rbd_store_chunk_size = 4
-    * [ ceph ] rados_connect_timeout = -1
-    * [ ceph ] glance_api_version = 2
+    * [DEFAULT]
+        * enabled_backends = ceph
+            * Use the `[ceph]` section for the backend configuration. This new section can actually be named anything but the same name must be used here.
+        * volume_backend_name = volumes
+        * rados_connect_timeout = -1
+    * [ceph]
+        * volume_driver = cinder.volume.drivers.rbd.RBDDriver
+            * Use Cinder's RBD Python library.
+        * rbd_pool = volumes
+            * This is the RBD pool to use for volumes.
+        * rbd_ceph_conf = /etc/ceph/ceph.conf
+        * rbd_flatten_volume_from_snapshot = false
+            * Ceph supports efficent thin provisioned snapshots.
+        * rbd_max_clone_depth = 5
+        * rbd_store_chunk_size = 4
+        * rados_connect_timeout = -1
+        * glance_api_version = 2
 * /etc/nova/nova.conf
-    * [ libvirt ] images_type = rbd
-    * [ libvirt ] images_rbd_pool = volumes
-    * [ libvirt ] images_rbd_ceph_conf = /etc/ceph/ceph.conf
-    * [ libvirt ] rbd_user = cinder
-    * [ libvirt ] rbd_secret_uuid = `<LIBVIRT_SECRET_UUID>`
-        * This is the Libvirt secret UUID that allows for authentication with Cephx. It is configured with the `virsh` secret commands. Refer to the Root Page's `Virtualization` guide for more information.
-        ```
-        # virsh --help | grep secret
-        ```
+    * [libvirt]
+        * images_type = rbd
+        * images_rbd_pool = volumes
+        * images_rbd_ceph_conf = /etc/ceph/ceph.conf
+        * rbd_user = cinder
+        * rbd_secret_uuid = `<LIBVIRT_SECRET_UUID>`
+            * This is the Libvirt secret UUID that allows for authentication with Cephx. It is configured with the `virsh` secret commands. Refer to the Root Page's `Virtualization` guide for more information.
+```
+# virsh --help | grep secret
+```
 
 [1]
 
@@ -1594,17 +1728,17 @@ Source:
 1. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
 
 
-# Automation
+# Orchestration
 
 Automating deployments can be accomplished in a few ways. The built-in OpenStack way is via Orhcestration as a Service (OaaS), typically handled by Heat. It is also possible to use Ansible or Vagrant to automate OpenStack deploys.
 
 
-## Automation - Heat
+## Orchestration - Heat
 
 Heat is used to orchestrate the deployment of multiple OpenStack components at once. It can also install and configure software on newly built instances.
 
 
-## Automation - Heat - Resources
+### Orchestration - Heat - Resources
 
 Heat templates are made of multiple resources. All of the different resource types are listed here [http://docs.openstack.org/developer/heat/template_guide/openstack.html](http://docs.openstack.org/developer/heat/template_guide/openstack.html). Resources use properties to create a component. If no name is specified (for example, a network name), a random string will be used. Most properties also accept either an exact ID of a resource or a reference to a dynamically generated resource (which will provide it's ID once it has been created).
 
@@ -1710,7 +1844,7 @@ Source:
 1. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
 
 
-## Automation - Heat - Parameters
+### Orchestration - Heat - Parameters
 
 Parameters allow users to input custom variables for Heat templates.
 
@@ -1758,7 +1892,7 @@ Source:
 1. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template_guide/hot_spec.html
 
 
-## Automation - Vagrant
+## Orchestration - Vagrant
 
 Vagrant is a tool to automate the deployment of virtual machines. A "Vagrantfile" file is used to initalize the instance. An example is provided below.
 
