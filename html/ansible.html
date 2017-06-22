@@ -79,8 +79,8 @@
 <li><a href="#playbooks---modules---stat">Stat</a></li>
 <li><a href="#playbooks---modules---package-managers">Package Managers</a>
 <ul>
-<li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
 <li><a href="#playbooks---modules---package-managers---apt">Apt</a></li>
+<li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#playbooks---galaxy-roles">Galaxy Roles</a>
@@ -490,17 +490,61 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <h2 id="playbooks---performance-tuning">Playbooks - Performance Tuning</h2>
 <p>A few configuration changes can help to speed up the runtime of Ansible modules and Playbooks.</p>
 <ul>
-<li>/etc/ansible/ansible.cfg
+<li>ansible.cfg
+<ul>
+<li>[defaults]
 <ul>
 <li>forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.</li>
 <li>pipleining = Enable pipelining to bundle commands together that do not require a file transfer. This is disabled by default because most sudo users are enforced to use the <code>requiretty</code> sudo option that pipelining is incompatible with. [1]</li>
 <li>gathering = Set this to &quot;explicit&quot; to only gather the necessary facts if when/if they are required by the Playbook. [2]</li>
 </ul></li>
+</ul></li>
 </ul>
+<p>Fact caching will help to cache host information. By only gathering the setup facts information once, this helps to speed up execution time if Ansible will need to run Playbooks on hosts multiple times. The supported types of fact caching are currently memory (none), file (json), and Redis.</p>
+<p>All:</p>
+<ul>
+<li>ansible.cfg
+<ul>
+<li>[defaults]
+<ul>
+<li>gathering = smart</li>
+<li>fact_caching = 86400
+<ul>
+<li>This will set the cache time to 1 day.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>File (JSON):</p>
+<ul>
+<li>ansible.cfg
+<ul>
+<li>[defaults]
+<ul>
+<li>fact_caching = jsonfile</li>
+<li>fact_caching_connection = <code>&lt;TEMPORARY_DIRECTORY_TO_AUTOMATICALLY_CREATE&gt;</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Redis:</p>
+<ul>
+<li>ansible.cfg
+<ul>
+<li>[defaults]
+<ul>
+<li>fact_caching = redis
+<ul>
+<li>As of Ansible 2.3, there is still no way of defining a custom IP and/or port of a Redis server. It is assumed to be running on localhost with the default port.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>[3]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot;</li>
 <li>&quot;Ansible Configuration file.&quot;</li>
+<li>&quot;Ansible Variables.&quot;</li>
 </ol>
 <h2 id="playbooks---jinja2-templates">Playbooks - Jinja2 Templates</h2>
 <h3 id="playbooks---jinja2-templates---variables">Playbooks - Jinja2 Templates - Variables</h3>
@@ -734,9 +778,10 @@ Taco day is not on a Tuesday.
 <ul>
 <li>src = The role to use. Valid formats are:
 <ul>
-<li><code>&lt;USER_NAME&gt;.&lt;ROLE_NAME&gt;</code></li>
-<li><code>https://github.com/&lt;USER&gt;/&lt;ROLE_NAME&gt;</code></li>
-<li><code>git+https://github.com/&lt;USER&gt;/&lt;ROLE_PROJECT_NAME&gt;.git</code></li>
+<li><code>&lt;USER_NAME&gt;.&lt;ROLE_PROJECT_NAME&gt;</code> = The user and project name to use from GitHub.</li>
+<li><code>https://github.com/&lt;USER&gt;/&lt;ROLE_PROJECT_NAME&gt;</code></li>
+<li><code>git+https://github.com/&lt;USER&gt;/&lt;ROLE_PROJECT_NAME&gt;.git</code> = Explicitly use HTTPS for accessing GitHub.</li>
+<li><code>git+ssh://git@&lt;DOMAIN&gt;/&lt;USER&gt;/&lt;ROLE_PROJECT_NAME&gt;.git</code> = Use SSH for accessing GitHub.</li>
 </ul></li>
 <li>version = The branch, tag, or commit to use. Default: master.</li>
 <li>name = Provide the role a new custom name.</li>
@@ -1465,7 +1510,7 @@ vars_prompt:</li>
 <p>Ansible has the ability to add, remove, or update software packages. Almost every popular package manager is supported. [1] This can generically be handled by the &quot;package&quot; module or the specific module for the operating system's package manager.</p>
 <p>Syntax:</p>
 <pre><code>package:</code></pre>
-<p>Options:</p>
+<p>Common options:</p>
 <ul>
 <li>name = Specify the package name.</li>
 <li>state = Specify how to change the package state.</li>
@@ -1484,36 +1529,9 @@ vars_prompt:</li>
 <li>&quot;Ansible Packaging Modules.&quot;</li>
 <li>&quot;Ansible Generic OS package manager.&quot;</li>
 </ol>
-<h4 id="playbooks---modules---package-managers---yum">Playbooks - Modules - Package Managers - Yum</h4>
-<p>There are two commands to primarily handel Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
-<p>Syntax:</p>
-<pre><code>yum:</code></pre>
-<p>Options:</p>
-<ul>
-<li>name = Specify the package name.</li>
-<li>state = Specify the package state.</li>
-<li>{present|installed|latest} = Any of these will install the package.</li>
-<li>{absent|removed} = Any of these will uninstall the package.</li>
-<li>enablerepo = Temporarily enable a repository.</li>
-<li>disablerepo = Temporarily disable a repository.</li>
-<li>disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;.</li>
-<li>conf_file = Specify a Yum configuration file to use. [1]</li>
-</ul>
-<p>Example: * Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
-<pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre>
-<p>Yum Repository Syntax:</p>
-<pre><code>yum_repository:</code></pre>
-<p>Options: * name = Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent). * baseurl = Provide the URL of the repository. * mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl. * description = Required. Provide a description of the repository. * enabled = Enable the repository permanently to be active. The default is &quot;yes.&quot; * exclude = List packages that should be excluded from being accessed from this repository. * gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot; * gpgkey = Specify a URL to the GPG key. * state = Specify a state for the repository file. * present = Install the Yum repository file. This is the default. * absent = Delete the repository file. [2]</p>
-<p>Example: * Install the RepoForge Yum repository.</p>
-<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre>
-<p>Sources:</p>
-<ol style="list-style-type: decimal">
-<li>&quot;Ansible Yum Module.&quot;</li>
-<li>&quot;Ansible Yum Repository Module.&quot;</li>
-</ol>
 <h4 id="playbooks---modules---package-managers---apt">Playbooks - Modules - Package Managers - Apt</h4>
 <p>Apt is used to install and manage packages on Debian based operating systems.</p>
-<p>Options:</p>
+<p>Common options:</p>
 <ul>
 <li>name = The package name.</li>
 <li>state
@@ -1539,6 +1557,51 @@ vars_prompt:</li>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;apt - Manages apt-packages.&quot;</li>
+</ol>
+<h4 id="playbooks---modules---package-managers---yum">Playbooks - Modules - Package Managers - Yum</h4>
+<p>There are two commands to primarily handel Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
+<p>Syntax:</p>
+<pre><code>yum:</code></pre>
+<p>Common options:</p>
+<ul>
+<li>name = Specify the package name.</li>
+<li>state = Specify the package state.</li>
+<li>{present|installed|latest} = Any of these will install the package.</li>
+<li>{absent|removed} = Any of these will uninstall the package.</li>
+<li>enablerepo = Temporarily enable a repository.</li>
+<li>disablerepo = Temporarily disable a repository.</li>
+<li>disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;.</li>
+<li>conf_file = Specify a Yum configuration file to use. [1]</li>
+</ul>
+<p>Example: * Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
+<pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre>
+<p>Yum Repository Syntax:</p>
+<pre><code>yum_repository:</code></pre>
+<p>Common options:</p>
+<ul>
+<li>baseurl = Provide the URL of the repository.</li>
+<li><strong>description</strong> = Required if <code>state=present</code>. Provide a description of the repository.</li>
+<li>enabled = Enable the repository permanently to be active. The default is &quot;yes.&quot;</li>
+<li>exclude = List packages that should be excluded from being accessed from this repository.</li>
+<li>gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot;</li>
+<li>gpgkey = Specify a URL to the GPG key.</li>
+<li>includepkgs = A space seperated list of packages that can be used from this repository. This is an explicit allow list.</li>
+<li>mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl.</li>
+<li><strong>name</strong> = Required. Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent).</li>
+<li>reposdir = The directory to store the Yum configuration files. Default: <code>/etc/yum.repos.d/</code>.</li>
+<li>state = Specify a state for the repository file.</li>
+<li>present = Install the Yum repository file. This is the default.</li>
+<li>absent = Delete the repository file. [2]</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><p>Install the RepoForge Yum repository.</p>
+<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre></li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Yum Module.&quot;</li>
+<li>&quot;Ansible Yum Repository Module.&quot;</li>
 </ol>
 <h3 id="playbooks---modules---stat">Playbooks - Modules - Stat</h3>
 <p>This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand <code>stat</code>. All the information from this module can be saved to a variable and accessed as a from new <code>&lt;VARIABLE&gt;.stat</code> dictionary.</p>
@@ -1786,7 +1849,7 @@ finally:
 <li>&quot;Intro to Playbooks.&quot; Ansible Documentation. June 22, 2016. Accessed June 24, 2016. http://docs.ansible.com/ansible/playbooks_intro.html</li>
 <li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html</li>
 <li>&quot;Ansible Inventory.&quot; Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html</li>
-<li>&quot;Ansible Variables.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/playbooks_variables.html</li>
+<li>&quot;Ansible Variables.&quot; Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks_variables.html</li>
 <li>&quot;Ansible Best Practices.&quot; Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks_best_practices.html</li>
 <li>&quot;Ansible File Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/file_module.html</li>
 <li>&quot;Ansible Template Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/template_module.html</li>
@@ -1794,7 +1857,7 @@ finally:
 <li>&quot;Ansible Packaging Modules.&quot; Ansible Documentation. June 22, 2016. Access July 10, 2016. http://docs.ansible.com/ansible/list_of_packaging_modules.html</li>
 <li>&quot;Ansible Generic OS package manager&quot; Ansible Documentation. June 22, 2016. Access July 10, 2016. http://docs.ansible.com/ansible/package_module.html</li>
 <li>&quot;Ansible Yum Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_module.html</li>
-<li>&quot;Ansible Yum Repository Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
+<li>&quot;Ansible Yum Repository Module.&quot; Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/yum_repository_module.html</li>
 <li>&quot;Ansible Command Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
 <li>&quot;Ansible Shell Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html</li>
 <li>&quot;Ansible Debug Module.&quot; Ansible Documentation. June 22, 2016. Accessed July 17, 2016. http://docs.ansible.com/ansible/debug_module.html</li>
