@@ -62,7 +62,7 @@ Example:
 $ export rp_browser="firefox"
 ```
 
-The only file that is not HTML or viewable via the "rp" command is currently the "linux_commands.xlsx" Excel spreadsheet. This will eventually be converted into a more CLI friendly format. A lot of good command line references can be found here.
+The "linux_commands" section is currently not supported by the "rp" command. These are HTML files generated from a Google Sheets document that can be manually viewed via a web browser. These are planned to be converted from Google Sheets into Markdown so they can be maintained enitrely through the Root Pages project.
 
 
 ## Development
