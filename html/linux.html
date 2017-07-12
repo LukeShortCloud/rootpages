@@ -1,8 +1,13 @@
 <ul>
 <li><a href="#linux">Linux</a>
 <ul>
+<li><a href="#linux---system-calls">System Calls</a></li>
 <li><a href="#linux---modules">Modules</a></li>
-<li><a href="#linux---i/o-schedulers">I/O Schedulers</a></li>
+<li><a href="#linux---schedulers">Schedulers</a>
+<ul>
+<li><a href="#linux---schedulers---processor">Processor</a></li>
+<li><a href="#linux---schedulers---i/o">I/O</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#initial-ram-filesystem">Initial RAM Filesystem</a>
 <ul>
@@ -12,10 +17,214 @@
 </ul></li>
 </ul>
 <h1 id="linux">Linux</h1>
-<p>Linux is a kernel designed to be similar to the original Unix kernel, but modern, free and open source. It is built to work on many modern processor architectures including the 32-bit and 64-bit versions of i386. This is also used to generally describe the many operating systems that use the Linux kernel. [1]</p>
+<p>Linux is a kernel designed to be similar to the original UNIX kernel. It is a modern, free, and open source alternative that was originally created by Linus Torvalds. It is built to work on many processor architectures. &quot;Linux&quot; is sometimes used to generally describe the many operating systems that use the Linux kernel. [1] In the context of this Root Pages guide, the focus is on the actual kernel.</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;About Linux Kernel.&quot; The Linux Kernel Archives. Accessed November 19, 2016. https://www.kernel.org/linux.html</li>
+<li>&quot;About Linux Kernel.&quot; The Linux Kernel Archives. April 23, 2017. Accessed July 9, 2016. https://www.kernel.org/linux.html</li>
+</ol>
+<h2 id="linux---system-calls">Linux - System Calls</h2>
+<p>Programs use system calls to interact with the kernel to do tasks.</p>
+<p>Common system calls:</p>
+<table style="width:17%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Call</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>accept</td>
+<td>Network</td>
+<td>Accept an incoming network connection.</td>
+</tr>
+<tr class="even">
+<td>bind</td>
+<td>Network</td>
+<td>Associate a network socket to a specific IP address.</td>
+</tr>
+<tr class="odd">
+<td>chdir</td>
+<td>Process</td>
+<td>Change to a different working directory.</td>
+</tr>
+<tr class="even">
+<td>chmod</td>
+<td>File</td>
+<td>Change the mode permissions.</td>
+</tr>
+<tr class="odd">
+<td>chown</td>
+<td>File</td>
+<td>Change the owner permissions.</td>
+</tr>
+<tr class="even">
+<td>chroot</td>
+<td>Process</td>
+<td>Change the working root directory.</td>
+</tr>
+<tr class="odd">
+<td>close</td>
+<td>File</td>
+<td>Close a file.</td>
+</tr>
+<tr class="even">
+<td>connect</td>
+<td>Network</td>
+<td>Make an external network connection.</td>
+</tr>
+<tr class="odd">
+<td>exec</td>
+<td>Process</td>
+<td>Execute/start a program.</td>
+</tr>
+<tr class="even">
+<td>exit</td>
+<td>Process</td>
+<td>End a process.</td>
+</tr>
+<tr class="odd">
+<td>fork</td>
+<td>Process</td>
+<td>Spawn a new process.</td>
+</tr>
+<tr class="even">
+<td>getgid</td>
+<td>Process</td>
+<td>Find the group ID.</td>
+</tr>
+<tr class="odd">
+<td>getuid</td>
+<td>Process</td>
+<td>Find the user ID.</td>
+</tr>
+<tr class="even">
+<td>kill</td>
+<td>Process</td>
+<td>Send a signal to a process.</td>
+</tr>
+<tr class="odd">
+<td>link</td>
+<td>File</td>
+<td>Create a shortcut that mirrors an existing inode (a hard link).</td>
+</tr>
+<tr class="even">
+<td>mkdir</td>
+<td>File</td>
+<td>Create a directory.</td>
+</tr>
+<tr class="odd">
+<td>mknod</td>
+<td>File</td>
+<td>Create a file.</td>
+</tr>
+<tr class="even">
+<td>mount</td>
+<td>File</td>
+<td>Mount a file system onto a directory.</td>
+</tr>
+<tr class="odd">
+<td>nice</td>
+<td>Process</td>
+<td>Modify the priority of a process.</td>
+</tr>
+<tr class="even">
+<td>open</td>
+<td>File</td>
+<td>Open a file.</td>
+</tr>
+<tr class="odd">
+<td>pause</td>
+<td>Process</td>
+<td>Temporarily stop a process from running until a signal is given to proceed.</td>
+</tr>
+<tr class="even">
+<td>pipe</td>
+<td>Process</td>
+<td>Stream output data from one process to another.</td>
+</tr>
+<tr class="odd">
+<td>read</td>
+<td>File</td>
+<td>Read data.</td>
+</tr>
+<tr class="even">
+<td>setgid</td>
+<td>Process</td>
+<td>Change a process's group ID.</td>
+</tr>
+<tr class="odd">
+<td>setpriority</td>
+<td>Processo</td>
+<td>Change a process's kernel scheduling priority.</td>
+</tr>
+<tr class="even">
+<td>setuid</td>
+<td>Process</td>
+<td>Change a process's user ID.</td>
+</tr>
+<tr class="odd">
+<td>socket</td>
+<td>File/Network/Process</td>
+<td>Create a socket that can listen for requests. This can be a UNIX file socket, network port, or a special process.</td>
+</tr>
+<tr class="even">
+<td>symlink</td>
+<td>File.</td>
+<td>Create a shortcut that redirects to another file (a symbolic link).</td>
+</tr>
+<tr class="odd">
+<td>sync</td>
+<td>File</td>
+<td>Flush data from memory to the disk.</td>
+</tr>
+<tr class="even">
+<td>stat</td>
+<td>File</td>
+<td>View a file's metadata.</td>
+</tr>
+<tr class="odd">
+<td>time</td>
+<td>Process</td>
+<td>A count of seconds since 1970-01-01.</td>
+</tr>
+<tr class="even">
+<td>ulimit</td>
+<td>Process</td>
+<td>View and modify user process limits.</td>
+</tr>
+<tr class="odd">
+<td>unlink</td>
+<td>File</td>
+<td>Delete a directory.</td>
+</tr>
+<tr class="even">
+<td>umask</td>
+<td>File</td>
+<td>View and modify the default permissions of files and directories.</td>
+</tr>
+<tr class="odd">
+<td>wait</td>
+<td>Process</td>
+<td>Wait for a child process to end.</td>
+</tr>
+<tr class="even">
+<td>write</td>
+<td>File</td>
+<td>Write data.</td>
+</tr>
+</tbody>
+</table>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;UNIX System Calls.&quot; University of Miami's Department of Computer Science. August 22, 2016. Accesesd July 1, 2017. http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml</li>
 </ol>
 <h2 id="linux---modules">Linux - Modules</h2>
 <p>The kernel is composed of a large number of modules. These can be found here:</p>
@@ -43,12 +252,45 @@
 <ol style="list-style-type: decimal">
 <li>&quot;Kernel modules.&quot; The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/Kernel_modules</li>
 </ol>
-<h2 id="linux---io-schedulers">Linux - I/O Schedulers</h2>
+<h2 id="linux---schedulers">Linux - Schedulers</h2>
+<h3 id="linux---schedulers---processor">Linux - Schedulers - Processor</h3>
+<p>The Linux kernel can handling incoming requests differently depending on the scheduler method. By default, all processes use the Completely Fair Scheduler (CFS) that tries to handle all incoming tasks equally. It is only technically possible to change the default scheduler by modifying the Linux kernel's source code and then recompiling the kernel. [2] There are 5 different kernel scheduling policies that can be set to processes manually. These are set by using the <code>chrt</code> command.</p>
+<ul>
+<li>SCHED_BATCH = Batch handles CPU-intesnive tasks with real time priority.</li>
+<li>SCHED_FIFO (first-in first-out) = Handles each task that is requested, in order.</li>
+<li>SCHED_IDLE = Tasks will only be processed when the processor is mostly idle.</li>
+<li>SCHED_OTHER (CFS) = All tasks are treated equally and are handled with the same amount of priority.</li>
+<li>SCHED_RR (round robin) = This is similar to SCHED_BATCH except that tasks are handled for a short amount of time before moving onto a different task to handle.</li>
+</ul>
+<p>The relevant <code>sysctl</code> parameters can be adjusted for system-wide scheduling settings are:</p>
+<pre><code># sysctl -a | grep &quot;sched_&quot;
+kernel.sched_autogroup_enabled = 0
+kernel.sched_cfs_bandwidth_slice_us = 5000
+kernel.sched_child_runs_first = 0
+kernel.sched_latency_ns = 6000000
+kernel.sched_migration_cost_ns = 500000
+kernel.sched_min_granularity_ns = 10000000
+kernel.sched_nr_migrate = 32
+kernel.sched_rr_timeslice_ms = 100
+kernel.sched_rt_period_us = 1000000
+kernel.sched_rt_runtime_us = 950000
+kernel.sched_schedstats = 0
+kernel.sched_shares_window_ns = 10000000
+kernel.sched_time_avg_ms = 1000
+kernel.sched_tunable_scaling = 1
+kernel.sched_wakeup_granularity_ns = 15000000</code></pre>
+<p>[1]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Tuning the Task Scheduler.&quot; openSUSE Documentation. December 15, 2016. Accessed July 9, 2017. https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html</li>
+<li>&quot;Change Linux CPU default scheduler.&quot; A else B. January 6, 2016. Accessed July 9, 2017. https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/</li>
+</ol>
+<p>### Linux - Schedulers - I/O</p>
 <p>The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be used to adjust performance based on the hardware and/or software requirements.</p>
 <ul>
 <li>Deadline = Large I/O requests are done in high-priority sectors until smaller I/O requests are about to time out. Then Deadline takes care of the small tasks before continuing with the original large I/O task. This is ideal for heavy read/write applications on a spinning disk drive.</li>
-<li>Complete Fairness Queueing (CFQ) = All I/O requests are treated equally and are handled in the order that they are received. [1]</li>
-<li>NOOP = Only basic merging of read and/or write requests and no rescheduling. This is ideal for virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling. [2] This is also ideal for physical flash based media where the hardware's firmware takes care of the sorting. [1]</li>
+<li>CFQ (Completely Fair Queueing) = All I/O requests are treated equally and are handled in the order that they are received. [1]</li>
+<li>NOOP (No Operation) = Only basic merging of read and/or write requests and no rescheduling. This is ideal for virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling [2] and physical flash based media or RAID cards with write-back cache where the hardware's firmware takes care of the sorting. [1]</li>
 </ul>
 <p>Temporarily change the scheduler to one of the three options:</p>
 <pre><code># echo {deadline|cfg|noop} &gt; /sys/block/&lt;DEVICE&gt;/queue/scheduler</code></pre>
