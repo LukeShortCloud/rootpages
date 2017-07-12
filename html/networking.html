@@ -13,7 +13,7 @@
 <li><a href="#operating-system-specific">Operating System Specific</a>
 <ul>
 <li>Arch</li>
-<li>Debian</li>
+<li><a href="#operating-system-specific---debian">Debian</a></li>
 <li><a href="#operating-system-specific---rhel">RHEL</a>
 <ul>
 <li><a href="#operating-system-specific---rhel---routes">Routes</a></li>
@@ -198,6 +198,41 @@ DNS=8.8.4.4</code></pre>
 <li>&quot;Frequently Asked Questions Open vSwitch.&quot; Open vSwitch Suppport. March 30, 2017. April 9, 2017. http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html</li>
 </ol>
 <h1 id="operating-system-specific">Operating System Specific</h1>
+<h2 id="operating-system-specific---debian">Operating System Specific - Debian</h2>
+<p>The Debian network configuration file is located at <code>/etc/networks/interfaces</code>. Run <code>ifup</code> or <code>ifdown</code> to add or remove the IP address configurations for a particular interface</p>
+<p>Static example:</p>
+<pre><code># vim /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+    address 192.168.1.11
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameservers 192.168.3.45 192.168.8.10
+iface eth0 inet static
+    address 10.0.0.200
+    netmask 255.255.0.0</code></pre>
+<pre><code># ifup eth0</code></pre>
+<p>DHCP example:</p>
+<pre><code># vim /etc/network/interfaces
+auto eth0
+iface eth0 inet dhcp</code></pre>
+<pre><code># ifup eth0</code></pre>
+<p>Common:</p>
+<ul>
+<li>auto <code>&lt;INTERFACE&gt;</code> = Start the interface on boot.</li>
+<li>iface <code>&lt;INTERFACE&gt;</code> inet <code>{static|dhcp}</code> = Specify if the IP address should be static or dynamic. Define this again for every IP address that will be used.
+<ul>
+<li>address = The IP address to add.</li>
+<li>netmask = The subnet mask for the IP address.</li>
+<li>gateway = The default gateway.</li>
+<li>dns-nameservers = A list of DNS resolvers to use, separated by a space.</li>
+</ul></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[Ubuntu 16.04] Network Configuration.&quot; Ubuntu Documentation. June 23, 2017. Accessed July 2, 2017. https://help.ubuntu.com/lts/serverguide/network-configuration.html</li>
+</ol>
 <h2 id="operating-system-specific---rhel">Operating System Specific - RHEL</h2>
 <p>Red Hat Enterprise Linux uses their own &quot;network&quot; service. Although Network Manager has started taking it's place, the network service is less intrusive and better supported by most programs that rely on managing network settings.</p>
 <p>There are two udev modules that manage new device naming schemes: &quot;net.ifnames&quot; and &quot;biosdevname.&quot; Only &quot;net.ifnames&quot; is installed by default on RHEL. Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will benamed based on their physical location and connection to the motherboard. [1]</p>

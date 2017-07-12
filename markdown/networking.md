@@ -8,7 +8,7 @@
         * [Bridging](#generic---open-vswitch---bridging)
 * [Operating System Specific](#operating-system-specific)
     * Arch
-    * Debian
+    * [Debian](#operating-system-specific---debian)
     * [RHEL](#operating-system-specific---rhel)
         * [Routes](#operating-system-specific---rhel---routes)
         * [Bridging](#operating-system-specific---rhel---bridging)
@@ -209,6 +209,55 @@ Source:
 
 
 # Operating System Specific
+
+
+## Operating System Specific - Debian
+
+The Debian network configuration file is located at `/etc/networks/interfaces`. Run `ifup` or `ifdown` to add or remove the IP address configurations for a particular interface
+
+Static example:
+
+```
+# vim /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+    address 192.168.1.11
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+    dns-nameservers 192.168.3.45 192.168.8.10
+iface eth0 inet static
+    address 10.0.0.200
+    netmask 255.255.0.0
+```
+```
+# ifup eth0
+```
+
+DHCP example:
+
+```
+# vim /etc/network/interfaces
+auto eth0
+iface eth0 inet dhcp
+```
+```
+# ifup eth0
+```
+
+Common:
+
+* auto `<INTERFACE>` = Start the interface on boot.
+* iface `<INTERFACE>` inet `{static|dhcp}` = Specify if the IP address should be static or dynamic. Define this again for every IP address that will be used.
+    * address = The IP address to add.
+    * netmask = The subnet mask for the IP address.
+    * gateway = The default gateway.
+    * dns-nameservers = A list of DNS resolvers to use, separated by a space.
+
+[1]
+
+Source:
+
+1. "[Ubuntu 16.04] Network Configuration." Ubuntu Documentation. June 23, 2017. Accessed July 2, 2017. https://help.ubuntu.com/lts/serverguide/network-configuration.html
 
 
 ## Operating System Specific - RHEL
