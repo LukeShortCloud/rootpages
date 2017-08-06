@@ -32,6 +32,7 @@
 <li><a href="#playbooks---containers">Containers</a></li>
 <li><a href="#playbooks---main-modules">Main Modules</a>
 <ul>
+<li><a href="#playbooks---main-modules---assert">Assert</a></li>
 <li><a href="#playbooks---main-modules---async">Async</a></li>
 <li><a href="#playbooks---main-modules---check-mode">Check Mode</a></li>
 <li><a href="#playbooks---main-modules---gather-facts">Gather Facts</a></li>
@@ -888,6 +889,28 @@ volumes: - <HYPERVISOR_PATH_1>:<CONTAINER_PATH_1> - <HYPERVISOR_PATH_2>:<CONTAIN
 </ol>
 <h2 id="playbooks---main-modules">Playbooks - Main Modules</h2>
 <p>Root Pages refers to generic Playbook-related modules as the &quot;main modules.&quot; This is not to be confused with official naming of &quot;core modules&quot; which is a mixture of both the main and regular modules mentioned in this guide.</p>
+<h3 id="playbooks---main-modules---assert">Playbooks - Main Modules - Assert</h3>
+<p>Assert is used to check if one or more statements is True. The module will fail if any statement returns False. Optionally, a message can be displayed if any operator comparisons return False.</p>
+<p>Syntax:</p>
+<pre><code>- assert:
+    that:
+      - &quot;&lt;VALUE1&gt; &lt;COMPARISON_OPERATOR&gt; &lt;VALUE2&gt;&quot;
+    msg: &quot;&lt;MESSAGE&gt;&quot;</code></pre>
+<p>Example:</p>
+<pre><code>- cmd: /usr/bin/date
+  register: date_command
+  ignore_errors: True
+
+- assert:
+    that:
+      - &quot;date_command.rc == 0&quot;
+      - &quot;&#39;2017&#39; in date_command.stdout&quot;
+    msg: &quot;Date either failed or did not return the correct year.&quot;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible assert - Asserts given expressions are true.&quot;</li>
+</ol>
 <h3 id="playbooks---main-modules---async">Playbooks - Main Modules - Async</h3>
 <p>The &quot;async&quot; function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set. [1]</p>
 <ul>
@@ -1903,4 +1926,5 @@ finally:
 <li>&quot;Ansible include - include a play or task list.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. https://docs.ansible.com/ansible/include_module.html</li>
 <li>&quot;Ansible stat - retrieve file or file system status.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html</li>
 <li>&quot;Installing Ansible Tower.&quot; Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html</li>
+<li>&quot;Ansible assert - Asserts given expressions are true.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html</li>
 </ul>

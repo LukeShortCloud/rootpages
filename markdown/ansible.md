@@ -22,6 +22,7 @@
         * [Dependencies](#playbooks---galaxy---dependencies)
     * [Containers](#playbooks---containers)
     * [Main Modules](#playbooks---main-modules)
+        * [Assert](#playbooks---main-modules---assert)
         * [Async](#playbooks---main-modules---async)
         * [Check Mode](#playbooks---main-modules---check-mode)
         * [Gather Facts](#playbooks---main-modules---gather-facts)
@@ -1182,6 +1183,40 @@ Sources:
 ## Playbooks - Main Modules
 
 Root Pages refers to generic Playbook-related modules as the "main modules." This is not to be confused with official naming of "core modules" which is a mixture of both the main and regular modules mentioned in this guide.
+
+
+### Playbooks - Main Modules - Assert
+
+Assert is used to check if one or more statements is True. The module will fail if any statement returns False. Optionally, a message can be displayed if any operator comparisons return False.
+
+Syntax:
+
+```
+- assert:
+    that:
+      - "<VALUE1> <COMPARISON_OPERATOR> <VALUE2>"
+    msg: "<MESSAGE>"
+```
+
+Example:
+
+```
+- cmd: /usr/bin/date
+  register: date_command
+  ignore_errors: True
+
+- assert:
+    that:
+      - "date_command.rc == 0"
+      - "'2017' in date_command.stdout"
+    msg: "Date either failed or did not return the correct year."
+```
+
+[1]
+
+Source:
+
+1. "Ansible assert - Asserts given expressions are true."
 
 
 ### Playbooks - Main Modules - Async
@@ -2625,3 +2660,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible include - include a play or task list." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. https://docs.ansible.com/ansible/include_module.html
 * "Ansible stat - retrieve file or file system status." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html
 * "Installing Ansible Tower." Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html
+* "Ansible assert - Asserts given expressions are true." Ansible Documentatoin. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html
