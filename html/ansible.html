@@ -36,6 +36,7 @@
 <li><a href="#playbooks---main-modules---async">Async</a></li>
 <li><a href="#playbooks---main-modules---check-mode">Check Mode</a></li>
 <li><a href="#playbooks---main-modules---gather-facts">Gather Facts</a></li>
+<li><a href="#playbooks---main-modules---handlers-and-notify">Handlers and Notify</a></li>
 <li><a href="#playbooks---main-modules---roles">Roles</a></li>
 <li><a href="#playbooks---main-modules---run-once">Run Once</a></li>
 <li><a href="#playbooks---main-modules---serial">Serial</a></li>
@@ -974,6 +975,35 @@ when: not ansible_check_mode</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Glossary.&quot;</li>
 </ol>
+<h3 id="playbooks---main-modules---handlers-and-notify">Playbooks - Main Modules - Handlers and Notify</h3>
+<p>The <code>notify</code> function will run a handler defined in a list of <code>handlers</code> if the state of the module it's tied to changes. Optionally, a &quot;listen&quot; directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.</p>
+<p>Syntax:</p>
+<pre><code>handlers:
+  - name: &lt;HANDLER_NAME&gt;
+    &lt;MODULE&gt;: &lt;ARGS&gt;
+    listen: &lt;LISTEN_HANDLER_NAME&gt;
+
+- &lt;MODULE&gt;: &lt;ARGS&gt;
+  notify:
+    - &lt;HANDLER_NAME&gt;</code></pre>
+<p>Example:</p>
+<pre><code>handlers:
+  - name: restart nginx
+    service: name=nginx state=restarted
+    listen: &quot;restart stack&quot;
+  - name: restart php-fpm
+    service: name=php-fpm state=restarted
+    listen: &quot;restart stack&quot;
+  - name: restart mariadb
+    service: name=mariadb state=restarted
+    listen: &quot;restart stack&quot;
+
+- template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: restart stack</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Intro to Playbooks.&quot;</li>
+</ol>
 <h3 id="playbooks---main-modules---run-once">Playbooks - Main Modules - Run Once</h3>
 <p>In some situations a command should only need to be run on one node. An example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.</p>
 <ul>
@@ -1869,7 +1899,7 @@ finally:
 <ul>
 <li>Lorin Hochstein <em>Ansible Up &amp; Running</em> (Sebastopol: O'Reilly Media, Inc., 2015).</li>
 <li>&quot;An Ansible Tutorial.&quot; Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial</li>
-<li>&quot;Intro to Playbooks.&quot; Ansible Documentation. June 22, 2016. Accessed June 24, 2016. http://docs.ansible.com/ansible/playbooks_intro.html</li>
+<li>&quot;Intro to Playbooks.&quot; Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks_intro.html</li>
 <li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html</li>
 <li>&quot;Ansible Inventory.&quot; Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html</li>
 <li>&quot;Ansible Variables.&quot; Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks_variables.html</li>

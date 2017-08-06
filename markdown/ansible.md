@@ -26,6 +26,7 @@
         * [Async](#playbooks---main-modules---async)
         * [Check Mode](#playbooks---main-modules---check-mode)
         * [Gather Facts](#playbooks---main-modules---gather-facts)
+        * [Handlers and Notify](#playbooks---main-modules---handlers-and-notify)
         * [Roles](#playbooks---main-modules---roles)
         * [Run Once](#playbooks---main-modules---run-once)
         * [Serial](#playbooks---main-modules---serial)
@@ -1320,6 +1321,46 @@ Source:
 1. "Ansible Glossary."
 
 
+### Playbooks - Main Modules - Handlers and Notify
+
+The `notify` function will run a handler defined in a list of `handlers` if the state of the module it's tied to changes. Optionally, a "listen" directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.
+
+Syntax:
+
+```
+handlers:
+  - name: <HANDLER_NAME>
+    <MODULE>: <ARGS>
+    listen: <LISTEN_HANDLER_NAME>
+
+- <MODULE>: <ARGS>
+  notify:
+    - <HANDLER_NAME>
+```
+
+Example:
+
+```
+handlers:
+  - name: restart nginx
+    service: name=nginx state=restarted
+    listen: "restart stack"
+  - name: restart php-fpm
+    service: name=php-fpm state=restarted
+    listen: "restart stack"
+  - name: restart mariadb
+    service: name=mariadb state=restarted
+    listen: "restart stack"
+
+- template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: restart stack
+```
+
+Source:
+
+1. "Ansible Intro to Playbooks."
+
+
 ### Playbooks - Main Modules - Run Once
 
 In some situations a command should only need to be run on one node. An example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.
@@ -2602,7 +2643,7 @@ Sources:
 
 * Lorin Hochstein *Ansible Up & Running* (Sebastopol: O'Reilly Media, Inc., 2015).
 * "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
-* "Intro to Playbooks." Ansible Documentation. June 22, 2016. Accessed June 24, 2016.  http://docs.ansible.com/ansible/playbooks_intro.html
+* "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017.  http://docs.ansible.com/ansible/playbooks_intro.html
 * "Ansible Frequently Asked Questions." Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html
 * "Ansible Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html
 * "Ansible Variables." Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks_variables.html
