@@ -100,14 +100,15 @@
 <li><a href="#bibliography">Bibliography</a></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create <a href="#playbooks">Playbooks</a> to automate deployment of configurations and/or services.</p>
+<p>Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]</p>
+<p>There is also support for Windows modules via PowerShell, however, these are not currently documented in this guide. [2]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>Hochstein, <em>Ansible Up &amp; Running</em>, 2.</li>
 <li>&quot;An Ansible Tutorial.&quot;</li>
+<li>&quot;Windows Support.&quot;</li>
 </ol>
 <h1 id="installation">Installation</h1>
-<p>Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
+<p>Ansible 2.4 requires Python 2.6, 2.7, or &gt;= 3.5 on both the control and managed nodes. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
 <p>RHEL:</p>
 <pre><code># yum install epel-release
 # yum install ansible</code></pre>
@@ -1889,15 +1890,14 @@ try:
 finally:
     if tqm is not None:
         tqm.cleanup()</code></pre>
-<p>Sources:</p>
+<p>An unofficial example can also be found at <a href="https://serversforhackers.com/running-ansible-2-programmatically" class="uri">https://serversforhackers.com/running-ansible-2-programmatically</a>.</p>
+<p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
-<li>https://serversforhackers.com/running-ansible-2-programmatically</li>
+<li>Ansible Python API.</li>
 </ol>
 <hr />
 <h2 id="bibliography">Bibliography</h2>
 <ul>
-<li>Lorin Hochstein <em>Ansible Up &amp; Running</em> (Sebastopol: O'Reilly Media, Inc., 2015).</li>
 <li>&quot;An Ansible Tutorial.&quot; Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial</li>
 <li>&quot;Intro to Playbooks.&quot; Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks_intro.html</li>
 <li>&quot;Ansible Frequently Asked Questions.&quot; Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html</li>
@@ -1957,4 +1957,6 @@ finally:
 <li>&quot;Ansible stat - retrieve file or file system status.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html</li>
 <li>&quot;Installing Ansible Tower.&quot; Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html</li>
 <li>&quot;Ansible assert - Asserts given expressions are true.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html</li>
+<li>&quot;Ansible Windows Support.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html</li>
+<li>&quot;Ansible Python API.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
 </ul>

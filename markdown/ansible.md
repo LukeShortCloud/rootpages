@@ -74,17 +74,19 @@
 
 # Introduction
 
-Ansible is a utility for managing server deployments and updates. The project is well known for the ease of deploying updated configuration files, it's backwards compatible nature, as well as helping to automate infrastructures. [1] Ansible uses SSH to connect to server's remotely. If an Ansible task is ever re-run on a server, it will verify if the task is truly necessary (ex., if a package already exists). [2] Ansible can be used to create [Playbooks](#playbooks) to automate deployment of configurations and/or services.
+Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
+
+There is also support for Windows modules via PowerShell, however, these are not currently documented in this guide. [2]
 
 Sources:
 
-1. Hochstein, *Ansible Up & Running*, 2.
-2. "An Ansible Tutorial."
+1. "An Ansible Tutorial."
+2. "Windows Support."
 
 
 # Installation
 
-Ansible 2.2 only requires Python 2.4, 2.6, 2.7, or 3.5 on the local host. Python 3 support is still in development but should be stable within the next few releases. [1][2]
+Ansible 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. Python 3 support is still in development but should be stable within the next few releases. [1][2]
 
 RHEL:
 ```
@@ -2633,15 +2635,16 @@ finally:
         tqm.cleanup()
 ```
 
-Sources:
+An unofficial example can also be found at [https://serversforhackers.com/running-ansible-2-programmatically](https://serversforhackers.com/running-ansible-2-programmatically).
 
-1. http://docs.ansible.com/ansible/dev_guide/developing_api.html
-2. https://serversforhackers.com/running-ansible-2-programmatically
+Source:
+
+1. Ansible Python API.
+
 
 ---
 ## Bibliography
 
-* Lorin Hochstein *Ansible Up & Running* (Sebastopol: O'Reilly Media, Inc., 2015).
 * "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
 * "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017.  http://docs.ansible.com/ansible/playbooks_intro.html
 * "Ansible Frequently Asked Questions." Ansible Documentation. April 21, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible/faq.html
@@ -2702,3 +2705,5 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible stat - retrieve file or file system status." Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html
 * "Installing Ansible Tower." Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html
 * "Ansible assert - Asserts given expressions are true." Ansible Documentatoin. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html
+* "Ansible Windows Support." Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html
+* "Ansible Python API." Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html
