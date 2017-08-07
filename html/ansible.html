@@ -109,8 +109,11 @@
 </ol>
 <h1 id="installation">Installation</h1>
 <p>Ansible 2.4 requires Python 2.6, 2.7, or &gt;= 3.5 on both the control and managed nodes. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
-<p>RHEL:</p>
+<p>CentOS:</p>
 <pre><code># yum install epel-release
+# yum install ansible</code></pre>
+<p>RHEL 7:</p>
+<pre><code># subscription-manager repos --enable rhel-7-server-extras-rpms
 # yum install ansible</code></pre>
 <p>Debian:</p>
 <pre><code># apt-get install software-properties-common
@@ -124,7 +127,7 @@
 # git checkout remotes/origin/stable-2.3
 # git submodule update --init --recursive
 # source ./hacking/env-setup</code></pre>
-<p>Source code updates:</p>
+<p>Updating source code installations:</p>
 <pre><code># git pull --rebase
 # git submodule update --init --recursive</code></pre>
 <p>[1]</p>
@@ -136,15 +139,14 @@
 <h1 id="configuration">Configuration</h1>
 <h2 id="configuration---main">Configuration - Main</h2>
 <p>All of the possible configuration files are listed below in the order that they are read. The last file overrides any previous settings.</p>
-<ul>
-<li>Configuration files:
+<p>Configuration files:</p>
 <ul>
 <li><code>$ANSIBLE_CONFIG</code> = A command line variable containing the Ansible configuration settings.</li>
 <li><code>ansible.cfg</code> = If it is in the current directory, it will be used.</li>
 <li><code>~/.ansible.cfg</code> = The configuration file in a user's home directory.</li>
 <li><code>/etc/ansible/ansible.cfg</code> = The global configuration file.</li>
-</ul></li>
-<li>Common settings:
+</ul>
+<p>Common settings:</p>
 <ul>
 <li>[default]
 <ul>
@@ -185,9 +187,8 @@
 <ul>
 <li>ssh_args = String. Additional SSH arguments.</li>
 <li>retries = Integer. Default: 0 (keep retrying). How many times should an SSH connection attempt to reconnect after a failure.</li>
-<li>pipelining = Boolean. Default: False. Ansible modules can be combined and sent to the remote host via SSH to help save time and improve performance. This is disabled by default because <code>sudo</code> accounts usually have the &quot;requiretty&quot; option enabaled that is not compatible with pipelining.</li>
+<li>pipelining = Boolean. Default: False. Ansible modules can be combined and sent to the remote host via SSH to help save time and improve performance. This is disabled by default because <code>sudo</code> accounts usually have the &quot;requiretty&quot; option enabled that is not compatible with pipelining.</li>
 <li>ansible_ssh_executable = String. Default: ssh (found in the $PATH environment variable). The path to the <code>ssh</code> binary.</li>
-</ul></li>
 </ul></li>
 </ul>
 <p>[1]</p>
@@ -197,211 +198,228 @@
 </ol>
 <h2 id="configuration---inventory">Configuration - Inventory</h2>
 <p>Default file: /etc/ansible/hosts</p>
-<p>The hosts file is referred to as the &quot;inventory&quot; for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts. Groups are created by using brackets &quot;[&quot; and &quot;]&quot; to specify the name.</p>
+<p>The hosts file is referred to as the &quot;inventory&quot; for Ansible. Here servers and groups of servers are defined. Ansible can then be used to execute commands and/or Playbooks on these hosts. There are two groups that are automatically created by Ansible. The &quot;all&quot; group is every defined host and &quot;ungrouped&quot; is a group of hosts that do not belong to any groups. User defined groups are created by using brackets &quot;[&quot; and &quot;]&quot; to specify the name.</p>
+<p>Syntax:</p>
+<pre><code>&lt;SERVER1NAME&gt; ansible_host=&lt;SERVER1_HOSTNAME&gt;
+
+[&lt;GROUPNAME&gt;]
+&lt;SERVER1NAME&gt;</code></pre>
+<p>Example:</p>
+<pre><code>[dns-us]
+dns-us01
+dns-us02
+dns-us03</code></pre>
+<p>A sequence of letters &quot;[a:z]&quot; or numbers &quot;[0:9]&quot; can be used to dynamically define a large number of hosts.</p>
+<p>Example:</p>
+<pre><code>[dns-us]
+dns-us[01:03]</code></pre>
+<p>A group can also be created from other groups by using the &quot;:children&quot; tag.</p>
+<p>Example:</p>
+<pre><code>[dns-global:children]
+dns-us
+dns-ca
+dns-mx</code></pre>
+<p>Variables are created for a host and/or group using the tag &quot;:vars&quot;. Then any custom variable can be defined and associated with a string. A host specifically can also have it's variables defined on the same line as it's Ansible inventory variables. [1] A few examples are listed below. These can also be defined in separate files as explained in <a href="#configuration---inventory---variables">Configuration - Inventory - Variables</a>.</p>
+<p>Example:</p>
+<pre><code>examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True</code></pre>
+<pre><code>[examplegroup:vars]
+domain_name=examplehost.tld
+domain_ip=192.168.7.7</code></pre>
+<p>There are a large number of customizations that can be used to suit most server's access requirements.</p>
+<p>Common inventory options:</p>
 <ul>
-<li>Syntax: ``` <SERVER1NAME> ansible_host=<SERVER1_HOSTNAME></li>
+<li>ansible_host = The IP address or hostname of the server.</li>
+<li>ansible_port = A custom SSH port (i.e., if not using the standard port 22).</li>
+<li>ansible_connection = These options specify how to log in to execute tasks.
+<ul>
+<li>ssh = Run commands over a remote SSH connection (default).</li>
+<li>local = Run on the local system.</li>
+<li>chroot = Run commands in a directory using chroot.</li>
+</ul></li>
+<li>ansible_user = The SSH user.</li>
+<li>ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the &quot;--ask-pass&quot; option to ansible when running tasks.</li>
+<li>ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).</li>
+<li>ansible_ssh_common_args = Append additional SSH command-line arguments for sftp, scp, and ssh.</li>
+<li>ansible_{sftp|scp|ssh}_extra_args = Append arguments for the specified utility.</li>
+<li>ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server's where only Python 3 is available a custom install of Python 2 can be used instead. [1]</li>
+<li>ansible_vault_password_file = Specify the file to read the Vault password from. [5]</li>
+<li>ansible_become = Set to &quot;true&quot; or &quot;yes&quot; to become a different user than the ansible_user once logged in.
+<ul>
+<li>ansible_become_method = Pick a method for switching users. Valid options are: sudo, su, pbrun, pfexec, doas, or dzdo.</li>
+<li>ansible_become_user = Specify the user to become.</li>
+<li>ansible_become_pass = Optionally use a password to change users. [4]</li>
+</ul></li>
 </ul>
-<p>[<GROUPNAME>] <SERVER1NAME></p>
-<pre><code>
-* Example:</code></pre>
-<p>[dns-us] dns-us01 dns-us02 dns-us03</p>
-<pre><code>
-A sequence of letters &quot;[a:z]&quot; or numbers &quot;[0:9]&quot; can be used to dynamically define a large number of hosts.
-
-* Example:</code></pre>
-<p>[dns-us] dns-us[01:03]</p>
-<pre><code>
-A group can also be created from other groups by using the &quot;:children&quot; tag.
-
-* Example:</code></pre>
-<p>[dns-global:children] dns-us dns-ca dns-mx</p>
-<pre><code>
-Variables are created for a host and/or group using the tag &quot;:vars&quot;. Then any custom variable can be defined and associated with a string. A host specifically can also have it&#39;s variables defined on the same line as it&#39;s Ansible inventory variables. A few examples are listed below. These can also be defined in seperate files as explained in [Configuration - Inventory - Variables](#configuration---inventory---variables).</code></pre>
-<p>examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True</p>
-<pre><code></code></pre>
-<p>[examplegroup:vars] domain_name=examplehost.tld domain_ip=192.168.7.7</p>
-<pre><code>
-There are a large number of customizations that can be used to suit most server&#39;s access requirements.
-
-Common Inventory Options:
-
-* ansible_host = The IP address or hostname of the server.
-* ansible_port = A custom SSH port (i.e., if not using the standard port 22).
-* ansible_connection = These options specify how to log in to execute tasks.
-    * ssh = Run commands over a remote SSH connection (default).
-    * local = Run on the local system.
-    * chroot = Run commands in a directory using chroot.
-* ansible_user = The SSH user.
-* ansible_pass = The SSH user&#39;s password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the &quot;--ask-pass&quot; option to ansible when running tasks.
-* ansible_ssh_private_key_file = Specify the private SSH key to use for accessing the server(s).
-* ansible_ssh_common_args = Append additional SSH command-line arguments for sftp, scp, and ssh.
-* ansible_{sftp|scp|ssh}_extra_args = Append arguments for the specified utility.
-* ansible_python_interpreter = This will force Ansible to run on remote systems using a different Python binary. Ansible only supports Python 2 so on server&#39;s where only Python 3 is available a custom install of Python 2 can be used instead. [1]
-* ansible_vault_password_file = Specify the file to read the Vault password from. [6]
-* ansible_become = Set to &quot;true&quot; or &quot;yes&quot; to become a different user than the ansible_user once logged in.
-    * ansible_become_method = Pick a method for switching users. Valid options are: sudo, su, pbrun, pfexec, doas, or dzdo.
-    * ansible_become_user = Specify the user to become.
-    * ansible_become_pass = Optionally ues a password to change users. [5]
-
-Examples:</code></pre>
-<p>localhost ansible_connection=local dns1 ansible_host=192.168.1.53 ansilbe_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo dns2 ansible_host=192.168.1.54 /home/user/ubuntu1604 ansible_connection=chroot</p>
-<pre><code>
-
-### Configuration - Inventory - Variables
-
-Variables that Playbooks will use can be defined for specific hosts and/or groups. The file that stores the variables should reflect the name of the host and/or group. Global variables can be found in the `/etc/ansible/` directory.
-
-* Inventory variable directories and files:
-    * host_vars/
-        * `&lt;HOST&gt;` = Variables for a host defined in the inventory file.
-    * group_vars/
-        * `&lt;GROUP&gt;`/
-            * vars = Variables for this group.
-            * vault = Encrypted Ansible vault variables. [3]
-        * all = This file contains variables for all hosts.
-
-It is assumed that the inventory variable files are in YAML format. Here is an example for a host variable file.
-
-* Example:</code></pre>
-<table style="width:4%;">
-<colgroup>
-<col width="4%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>omain_name: examplehost.tld omain_ip: 192.168.10.1 ello_string: Hello World! ``</td>
-</tr>
-<tr class="even">
-<td>n the Playbook and/or template files, these variables can then be referenced when enclosed by double braces &quot;{{&quot; and &quot;}}&quot;. [2]</td>
-</tr>
-<tr class="odd">
-<td>Example: <code>ello world from {{ domain_name }}!</code></td>
-</tr>
-<tr class="even">
-<td>arialbes from other hosts or groups can also be referenced.</td>
-</tr>
-<tr class="odd">
-<td>Syntax: <code>{ groupvars['&lt;GROUPNAME&gt;']['&lt;VARIABLE&gt;'] }} { hostvars['&lt;HOSTNAME&gt;']['&lt;VARIABLE&gt;'] }}</code> <code>{groupvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;} {hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></td>
-</tr>
-<tr class="even">
-<td>Example: <code>ommand: echo ${hostvars.db3.hostname}</code></td>
-</tr>
-<tr class="odd">
-<td>he order that variables take precedence in is listed below. The bottom locations get overriden by anything above them.</td>
-</tr>
-<tr class="even">
-<td>extra vars task vars block vars role and include vars set_facts registered vars play vars_files play vars_prompt play vars host facts playbook host_vars playbook group_vars inventory host_vars inventory group_vars inventory vars role defaults</td>
-</tr>
-<tr class="odd">
-<td>2]</td>
-</tr>
-<tr class="even">
-<td>ources:</td>
-</tr>
-<tr class="odd">
-<td>. &quot;Ansible Inventory&quot; . &quot;Ansible Variables.&quot; . &quot;Ansible Best Practices.&quot; . &quot;Ansible Loops.&quot; . &quot;Ansible Become (Privlege Escalation)&quot; . &quot;Ansible Vault.&quot; . &quot;Ansible Frequently Asked Questions.&quot;</td>
-</tr>
-<tr class="even">
-<td># Configuration - Vault Encryption</td>
-</tr>
-<tr class="odd">
-<td>ny file in a Playbook can be encrypted. This is useful for storing sensitive username and passwords securely. A password is used to open these files after encryption. All encrypted files in a Playbook should use the same password.</td>
-</tr>
-<tr class="even">
-<td>ault Usage:</td>
-</tr>
-<tr class="odd">
-<td>Create a new encrypted file. <code>ansible-vault create &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="even">
-<td>Encrypt an existing plaintext file. <code>ansible-vault encrypt &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="odd">
-<td>Viewing the contents of the file. <code>ansible-vault view &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="even">
-<td>Edit the encrypted file. <code>ansible-vault edit &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="odd">
-<td>Change the password. <code>ansible-vault rekey &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="even">
-<td>Decrypt to plaintext. <code>ansible-vault decrypt &lt;FILE&gt;.yml</code></td>
-</tr>
-<tr class="odd">
-<td>laybook Usage:</td>
-</tr>
-<tr class="even">
-<td>Run a Playbook, prompting the user for the Vault password. <code>ansible-playbook --ask-vault-pass &lt;PLAYBOOK&gt;.yml</code> Run the Playbook, reading the file for the vault password. <code>ansible-playbook --vault-password-file &lt;PATH_TO_VAULT_PASSWORD_FILE&gt; &lt;PLAYBOOK&gt;.yml</code></td>
-</tr>
-<tr class="odd">
-<td>1]</td>
-</tr>
-<tr class="even">
-<td>ource:</td>
-</tr>
-<tr class="odd">
-<td>. &quot;Ansible Vault.&quot;</td>
-</tr>
-<tr class="even">
-<td># Command Usage efer to Root Page's &quot;Linux Commands&quot; guide in the &quot;Deployment&quot; section.</td>
-</tr>
-<tr class="odd">
-<td>Playbooks</td>
-</tr>
-<tr class="even">
-<td>laybooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at <a href="https://github.com/ansible/ansible-examples" class="uri">https://github.com/ansible/ansible-examples</a>.</td>
-</tr>
-<tr class="odd">
-<td># Playbooks - Directory Structure</td>
-</tr>
-<tr class="even">
-<td>Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into separate files and directories.</td>
-</tr>
-<tr class="odd">
-<td>ayout: <code>── production/ ├── group_vars/ ├── host_vars/ └── inventory ── staging/ ├── group_vars/ ├── host_vars/ └── inventory ── roles/    └── general/        ├── defaults/        │   └── main.yml        ├── files/        ├── handlers/        │   └── main.yml        ├── meta/        │   └── main.yml        ├── tasks/        │   └── main.yml        ├── templates/        └── vars/            └── main.yml ── site.yml</code></td>
-</tr>
-<tr class="even">
-<td>ayout Explained:</td>
-</tr>
-<tr class="odd">
-<td>production/ = A directory that contains information about the Ansible-controlled hosts and inventory variables. This should be used for deploying to live production environments. Alternatively, simple Playbooks can use a &quot;production&quot; file to list all of the inventory servers there. * group_vars/ = Group specific variables. A file named &quot;all&quot; can be used to define global variables for all hosts. * host_vars/ = Host specific variables. * inventory = The main &quot;production&quot; inventory file. staging/ = The same as the &quot;production/&quot; directory except this is designed for running Playbooks in testing environments. roles/ = This directory should contain all of the different roles. * general/ = A role name. This can be anything. * defaults/ = Define default variables. If any variables are defined elsewhere, these will be overriden. * main.yml = Each main.yml file is executed as the first file. Additional separation of operations can be split into different files that can be accessed via &quot;include:&quot; statements. * files/ = Store static files that are not modified. * handlers/ = Specify alias commands that can be called using the &quot;notify:&quot; method. * main.yml * meta/ = Specify role dependencies and Playbook information such as author, version, etc. These can be other roles and/or Playbooks. * main.yml * tasks/ * main.yml = The tasks' main file is executed first for the entire role. * templates/ = Store dynamic files that will be generated based on variables. * vars/ = Define role-specific variables. * main.yml site.yml = This is typically the default Playbook file to execute. Any name and any number of Playbook files can be used here to include different roles.</td>
-</tr>
-<tr class="even">
-<td>xamples:</td>
-</tr>
-<tr class="odd">
-<td>site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used. [2] `` # FILE: site.yml</td>
-</tr>
-</tbody>
-</table>
-<p>include: nginx.yml include: php-fpm.yml</p>
-<pre><code></code></pre>
-<table>
-<thead>
-<tr class="header">
-<th># FILE: nginx.yml</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>- hosts: webnodes</td>
-</tr>
-<tr class="even">
-<td>roles:</td>
-</tr>
-<tr class="odd">
-<td>- common</td>
-</tr>
-<tr class="even">
-<td>- nginx</td>
-</tr>
-<tr class="odd">
-<td>``</td>
-</tr>
-</tbody>
-</table>
+<p>Examples:</p>
+<pre><code>localhost ansible_connection=local
+dns1 ansible_host=192.168.1.53 ansible_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo
+dns2 ansible_host=192.168.1.54
+/home/user/ubuntu1604 ansible_connection=chroot</code></pre>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Inventory&quot;</li>
+<li>&quot;Ansible Variables.&quot;</li>
+<li>&quot;Ansible Best Practices.&quot;</li>
+<li>&quot;Ansible Become (Privilege Escalation)&quot;</li>
+<li>&quot;Ansible Vault.&quot;</li>
+</ol>
+<h3 id="configuration---inventory---variables">Configuration - Inventory - Variables</h3>
+<p>Variables that Playbooks will use can be defined for specific hosts and/or groups. The file that stores the variables should reflect the name of the host and/or group. Global variables can be found in the <code>/etc/ansible/</code> directory. [1]</p>
+<p>Inventory variable directories and files: * host_vars/ * <code>&lt;HOST&gt;</code> = Variables for a host defined in the inventory file. * group_vars/ * <code>&lt;GROUP&gt;</code>/ * vars = Variables for this group. * vault = Encrypted Ansible vault variables. [3] * all = This file contains variables for all hosts. * ungrouped = This file contains variables for all hosts that are not defined in any groups.</p>
+<p>It is assumed that the inventory variable files are in YAML format. Here is an example for a host variable file.</p>
+<p>Example:</p>
+<pre><code>---
+domain_name: examplehost.tld
+domain_ip: 192.168.10.1
+hello_string: Hello World!</code></pre>
+<p>In the Playbook and/or template files, these variables can then be referenced when enclosed by double braces &quot;{{&quot; and &quot;}}&quot;. [2]</p>
+<p>Example:</p>
+<pre><code>Hello world from {{ domain_name }}!</code></pre>
+<p>Variables from other hosts or groups can also be referenced.</p>
+<p>Syntax:</p>
+<pre><code>{{ groupvars[&#39;&lt;GROUPNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}
+{{ hostvars[&#39;&lt;HOSTNAME&gt;&#39;][&#39;&lt;VARIABLE&gt;&#39;] }}</code></pre>
+<pre><code>${groupvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}
+${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre>
+<p>Example:</p>
+<pre><code>command: echo ${hostvars.db3.hostname}</code></pre>
+<p>The order that variables take precedence in is listed below. The bottom locations get overridden by anything above them.</p>
 <ul>
+<li>extra vars</li>
+<li>task vars</li>
+<li>block vars</li>
+<li>role and include vars</li>
+<li>set_facts</li>
+<li>registered vars</li>
+<li>play vars_files</li>
+<li>play vars_prompt</li>
+<li>play vars</li>
+<li>host facts</li>
+<li>playbook host_vars</li>
+<li>playbook group_vars</li>
+<li>inventory host_vars</li>
+<li>inventory group_vars</li>
+<li>inventory vars</li>
+<li>role defaults</li>
+</ul>
+<p>[2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Inventory&quot;</li>
+<li>&quot;Ansible Variables.&quot;</li>
+<li>&quot;Ansible Best Practices.&quot;</li>
+</ol>
+<h2 id="configuration---vault-encryption">Configuration - Vault Encryption</h2>
+<p>Any file in a Playbook can be encrypted. This is useful for storing sensitive username and passwords securely. A password is used to open these files after encryption. All encrypted files in a Playbook should use the same password.</p>
+<p>Vault Usage:</p>
+<ul>
+<li><p>Create a new encrypted file.</p>
+<pre><code>$ ansible-vault create &lt;FILE&gt;.yml</code></pre></li>
+<li><p>Encrypt an existing plaintext file.</p>
+<pre><code>$ ansible-vault encrypt &lt;FILE&gt;.yml</code></pre></li>
+<li><p>Viewing the contents of the file.</p>
+<pre><code>$ ansible-vault view &lt;FILE&gt;.yml</code></pre></li>
+<li><p>Edit the encrypted file.</p>
+<pre><code>$ ansible-vault edit &lt;FILE&gt;.yml</code></pre></li>
+<li><p>Change the password.</p>
+<pre><code>$ ansible-vault rekey &lt;FILE&gt;.yml</code></pre></li>
+<li><p>Decrypt to plaintext.</p>
+<pre><code>$ ansible-vault decrypt &lt;FILE&gt;.yml</code></pre></li>
+</ul>
+<p>Playbook Usage:</p>
+<ul>
+<li><p>Run a Playbook, prompting the user for the Vault password.</p>
+<pre><code>$ ansible-playbook --ask-vault-pass &lt;PLAYBOOK&gt;.yml</code></pre></li>
+<li><p>Run the Playbook, reading the file for the vault password.</p>
+<pre><code>$ ansible-playbook --vault-password-file &lt;PATH_TO_VAULT_PASSWORD_FILE&gt; &lt;PLAYBOOK&gt;.yml</code></pre></li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Vault.&quot;</li>
+</ol>
+<h2 id="command-usage">Command Usage</h2>
+<p>Refer to Root Page's &quot;Linux Commands&quot; guide in the &quot;Deployment&quot; section.</p>
+<h1 id="playbooks">Playbooks</h1>
+<p>Playbooks organize tasks into one or more YAML files. It can be a self-contained file or a large project organized in a directory. Official examples can he found here at <a href="https://github.com/ansible/ansible-examples" class="uri">https://github.com/ansible/ansible-examples</a>.</p>
+<h2 id="playbooks---directory-structure">Playbooks - Directory Structure</h2>
+<p>A Playbook can be self-contained entirely into one file. However, especially for large projects, each segment of the Playbook should be split into separate files and directories.</p>
+<p>Layout:</p>
+<pre><code>├── production/
+│   ├── group_vars/
+│   ├── host_vars/
+│   └── inventory
+├── staging/
+│   ├── group_vars/
+│   ├── host_vars/
+│   └── inventory
+├── roles/
+│   └── general/
+│       ├── defaults/
+│       │   └── main.yml
+│       ├── files/
+│       ├── handlers/
+│       │   └── main.yml
+│       ├── meta/
+│       │   └── main.yml
+│       ├── tasks/
+│       │   └── main.yml
+│       ├── templates/
+│       └── vars/
+│           └── main.yml
+└── site.yml</code></pre>
+<p>Layout Explained:</p>
+<ul>
+<li>production/ = A directory that contains information about the Ansible-controlled hosts and inventory variables. This should be used for deploying to live production environments. Alternatively, simple Playbooks can use a &quot;production&quot; file to list all of the inventory servers there.
+<ul>
+<li>group_vars/ = Group specific variables. A file named &quot;all&quot; can be used to define global variables for all hosts.</li>
+<li>host_vars/ = Host specific variables.</li>
+<li>inventory = The main &quot;production&quot; inventory file.</li>
+</ul></li>
+<li>staging/ = The same as the &quot;production/&quot; directory except this is designed for running Playbooks in testing environments.</li>
+<li>roles/ = This directory should contain all of the different roles.
+<ul>
+<li>general/ = A role name. This can be anything.
+<ul>
+<li>defaults/ = Define default variables. If any variables are defined elsewhere, these will be overridden.
+<ul>
+<li>main.yml = Each main.yml file is executed as the first file. Additional separation of operations can be split into different files that can be accessed via &quot;include:&quot; statements.</li>
+</ul></li>
+<li>files/ = Store static files that are not modified.</li>
+<li>handlers/ = Specify alias commands that can be called using the &quot;notify:&quot; method.
+<ul>
+<li>main.yml</li>
+</ul></li>
+<li>meta/ = Specify role dependencies and Playbook information such as author, version, etc. These can be other roles and/or Playbooks.
+<ul>
+<li>main.yml</li>
+</ul></li>
+<li>tasks/
+<ul>
+<li>main.yml = The tasks' main file is executed first for the entire role.</li>
+</ul></li>
+<li>templates/ = Store dynamic files that will be generated based on variables.</li>
+<li>vars/ = Define role-specific variables.
+<ul>
+<li>main.yml</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>site.yml = This is typically the default Playbook file to execute. Any name and any number of Playbook files can be used here to include different roles.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><p>site.yml = This is generally the main Playbook file. It should include all other Playbook files required if more than one is used. [2]</p>
+<pre><code> # FILE: site.yml
+ ---
+ include: nginx.yml
+ include: php-fpm.yml</code></pre>
+``` # FILE: nginx.yml ---</li>
+<li>hosts: webnodes roles:
+<ul>
+<li>common</li>
+<li>nginx ```</li>
+</ul></li>
 <li><p>roles/<code>&lt;ROLENAME&gt;</code>/vars/main.yml = Global variables for a role.</p>
 <pre><code> ---
  memcache_hosts=192.168.1.11,192.168.1.12,192.168.1.13
@@ -420,7 +438,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <h2 id="playbooks---production-and-staging">Playbooks - Production and Staging</h2>
 <p>Ansible best practices suggest having a separation between a production and staging inventory. Changes should be tested in the staging environment and then eventually ran on the production server(s).</p>
 <h3 id="scenario-1---use-the-same-variables">Scenario #1 - Use the Same Variables</h3>
-<p>A different invetory file can be created if all of the variables are the exact same in the production and staging environments. This will run the same Playbook roles on a different server.</p>
+<p>A different inventory file can be created if all of the variables are the exact same in the production and staging environments. This will run the same Playbook roles on a different server.</p>
 <p>Syntax:</p>
 <pre><code>├── production
 ├── staging
@@ -428,7 +446,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 │   ├── &lt;GROUP&gt;
 ├── host_vars
 │   ├── &lt;HOST&gt;</code></pre>
-<pre><code>$ ansible-playbook -i proudction &lt;PLAYBOOK&gt;.yml</code></pre>
+<pre><code>$ ansible-playbook -i production &lt;PLAYBOOK&gt;.yml</code></pre>
 <pre><code>$ ansible-playbook -i staging &lt;PLAYBOOK&gt;.yml</code></pre>
 <p>Example:</p>
 <pre><code>├── production
@@ -458,7 +476,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 │   ├── host_vars
 │   │   ├── &lt;HOST&gt;
 │   └── inventory</code></pre>
-<pre><code>$ ansible-playbook -i proudction &lt;PLAYBOOK&gt;.yml</code></pre>
+<pre><code>$ ansible-playbook -i production &lt;PLAYBOOK&gt;.yml</code></pre>
 <pre><code>$ ansible-playbook -i staging &lt;PLAYBOOK&gt;.yml</code></pre>
 <p>Example:</p>
 <pre><code>├── production
@@ -498,7 +516,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <li>[defaults]
 <ul>
 <li>forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.</li>
-<li>pipleining = Enable pipelining to bundle commands together that do not require a file transfer. This is disabled by default because most sudo users are enforced to use the <code>requiretty</code> sudo option that pipelining is incompatible with. [1]</li>
+<li>pipelining = Enable pipelining to bundle commands together that do not require a file transfer. This is disabled by default because most sudo users are enforced to use the <code>requiretty</code> sudo option that pipelining is incompatible with. [1]</li>
 <li>gathering = Set this to &quot;explicit&quot; to only gather the necessary facts if when/if they are required by the Playbook. [2]</li>
 </ul></li>
 </ul></li>
@@ -561,43 +579,41 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <pre><code>{{ certification.name }}</code></pre></li>
 </ul>
 <p>Variables can be defined as a list or nested lists.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>&lt;VARIABLE&gt;: [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39;, &#39;&lt;ITEM3&gt;&#39; ]</code></pre>
-``` <VARIABLE>:</li>
-<li>[ [ '<ITEMA>', '<ITEMB>' ] ]</li>
-<li><p>[ [ '<ITEM1>', '<ITEM2>' ] ] ```</p></li>
-<li><p>Examples:</p>
+<pre><code>&lt;VARIABLE&gt;:
+ - [ [ &#39;&lt;ITEMA&gt;&#39;, &#39;&lt;ITEMB&gt;&#39; ] ]
+ - [ [ &#39;&lt;ITEM1&gt;&#39;, &#39;&lt;ITEM2&gt;&#39; ] ]</code></pre>
+<p>Examples:</p>
 <pre><code>colors: [ &#39;blue&#39;, &#39;red&#39;, &#39;green&#39; ]</code></pre>
-``` cars:</li>
-<li>[ 'sports', 'sedan' ]</li>
-<li><p>[ 'suv', 'pickup' ] ```</p></li>
-</ul>
+<pre><code>cars:
+ - [ &#39;sports&#39;, &#39;sedan&#39; ]
+ - [ &#39;suv&#39;, &#39;pickup&#39; ]</code></pre>
 <p>Lists can be called by their array position, starting at &quot;0.&quot; Alternatively they can be called by the subvariable name.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>{{ item.0 }}</code></pre>
-<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre></li>
-<li>Example: ``` members:</li>
-<li>name: Frank contact:
-<ul>
-<li>address: &quot;111 Puppet Drive&quot;</li>
-<li><p>phone: &quot;1111111111&quot;</p>
-<pre><code></code></pre></li>
-</ul></li>
-<li>debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot; with_items:
-<ul>
-<li>{{ members }} ```</li>
-</ul></li>
-</ul>
+<pre><code>{{ item.0.&lt;SUBVARIABLE&gt; }}</code></pre>
+<p>Example:</p>
+<pre><code>members:
+ - name: Frank
+   contact:
+    - address: &quot;111 Puppet Drive&quot;
+    - phone: &quot;1111111111&quot;</code></pre>
+<pre><code> - debug: msg=&quot;Contact {{ item.name }} at {{ item.contact.phone }}&quot;
+   with_items:
+    - {{ members }}</code></pre>
 <p>[4]</p>
 <p>Using a variable for a variable name is not possible with Jinja templates. Only substitution for dictionary keys can be done with format substitution. [7]</p>
-<ul>
-<li>Works ```</li>
-<li><p>name: find interface facts debug: msg: &quot;{{ hostvars[inventory_hostname]['ansible_%s' | format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot; ```</p></li>
-<li>Does Not Work ```</li>
-<li><p>name: find interface facts debug: msg: &quot;{{ ansible_%s| format(item)] }}&quot; with_items: &quot;{{ ansible_interfaces }}&quot; ```</p></li>
-</ul>
+<p>Works:</p>
+<pre><code>  - name: find interface facts
+    debug:
+      msg: &quot;{{ hostvars[inventory_hostname][&#39;ansible_%s&#39; | format(item)] }}&quot;
+    with_items: &quot;{{ ansible_interfaces }}&quot;</code></pre>
+<p>Does not work:</p>
+<pre><code>  - name: find interface facts
+    debug:
+      msg: &quot;{{ ansible_%s| format(item)] }}&quot;
+    with_items: &quot;{{ ansible_interfaces }}&quot;</code></pre>
 <h3 id="playbooks---jinja2-templates---filters">Playbooks - Jinja2 Templates - Filters</h3>
 <p>In certain situations it is desired to apply filters to alert a variable or expression. The syntax for running Jinja filters is <code>&lt;VARIABLE&gt;|&lt;FUNCTION&gt;(&lt;OPTIONAL_PARAMETERS&gt;)</code>. Below are some of the more common functions.</p>
 <ul>
@@ -620,7 +636,7 @@ It is assumed that the inventory variable files are in YAML format. Here is an e
 <pre><code>{{ &lt;VARIABLE&gt;|escape }}</code></pre>
 <pre><code>{% autoescape true %}
 &lt;html&gt;These HTML tags will be 
-escaped and visable via a HTML browser.&lt;/html&gt;
+escaped and visible via a HTML browser.&lt;/html&gt;
 {% endautoescape %}</code></pre></li>
 <li><p>String substitution.</p>
 <pre><code>{{ &quot;%s %d&quot;|format(&quot;I am this old:&quot;, 99) }}</code></pre></li>
@@ -637,51 +653,45 @@ escaped and visable via a HTML browser.&lt;/html&gt;
 </ol>
 <h3 id="playbooks---jinja2-templates---comments">Playbooks - Jinja2 Templates - Comments</h3>
 <p>Comments are template comments that will be removed when once a template has been generated.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>{# #}</code></pre></li>
-<li><p>Example:</p>
+<p>Syntax:</p>
+<pre><code>{# #}</code></pre>
+<p>Example:</p>
 <pre><code>{# this is a...
-{% if ip is &#39;127.0.0.1&#39; %}
-    &lt;html&gt;Welcome to localhost&lt;/html&gt;
-{% endif %}
-...example comment #}</code></pre></li>
-</ul>
+    {% if ip is &#39;127.0.0.1&#39; %}
+        &lt;html&gt;Welcome to localhost&lt;/html&gt;
+    {% endif %}
+...example comment #}</code></pre>
 <p>Sometimes it is necessary to escape blocks of code, especially when dealing with JSON or other similar formats. Jinja will not render anything that is escaped.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>&#39;&#39;</code></pre>
 <pre><code>{% raw %}
-{% endraw %}</code></pre></li>
-<li><p>Examples:</p>
+{% endraw %}</code></pre>
+<p>Examples:</p>
 <pre><code>  {{ &#39;hello world&#39; }}</code></pre>
 <pre><code>  {% raw %}
-  {{ jinja.wont.replace.this }}
-  {% endraw %}</code></pre></li>
-</ul>
+      {{ jinja.wont.replace.this }}
+  {% endraw %}</code></pre>
 <h3 id="playbooks---jinja2-templates---blocks">Playbooks - Jinja2 Templates - Blocks</h3>
-<p>Templates can extend other templates by replacing &quot;block&quot; elements. At least two files are required. The first file creats a place holder block. The second file contains the content that will fill in that place holder.</p>
-<ul>
-<li><p>Syntax (file 1):</p>
-<pre><code>{% block &lt;DESCRIPTIVE_NAME&gt; %}{% endblock %}</code></pre></li>
-<li><p>Syntax (file 2):</p>
+<p>Templates can extend other templates by replacing &quot;block&quot; elements. At least two files are required. The first file creates a place holder block. The second file contains the content that will fill in that place holder.</p>
+<p>Syntax (file 1):</p>
+<pre><code>{% block &lt;DESCRIPTIVE_NAME&gt; %}{% endblock %}</code></pre>
+<p>Syntax (file 2):</p>
 <pre><code>{% extends &quot;&lt;FILE1&gt;&quot; %}
 {% block &lt;DESCRIPTIVE_NAME&gt; %}
-{% endblock %}</code></pre></li>
-<li><p>Example (file 1):</p>
+{% endblock %}</code></pre>
+<p>Example (file 1):</p>
 <pre><code>&lt;html&gt;
 &lt;h1&gt;{% block header %}{% endblock %}&lt;/h1&gt;
 &lt;body&gt;{% block body %}{% endblock %}&lt;/body&gt;
-&lt;/html&gt;</code></pre></li>
-<li><p>Example (file 2):</p>
+&lt;/html&gt;</code></pre>
+<p>Example (file 2):</p>
 <pre><code>{% extends &quot;index.html&quot; %}
 {% block header %}
 Hello World
 {% endblock %}
 {% block body %}
 Welcome to the Hello World page!
-{% endblock %}</code></pre></li>
-</ul>
+{% endblock %}</code></pre>
 <h3 id="playbooks---jinja2-templates---loops">Playbooks - Jinja2 Templates - Loops</h3>
 <p>Loops can use standard comparison and/or logic operators.</p>
 <p>Comparison Operators:</p>
@@ -700,13 +710,12 @@ Welcome to the Hello World page!
 <li><code>not</code></li>
 </ul>
 <p>&quot;For&quot; loops can be used to loop through a list or dictionary.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>{% for &lt;VALUE&gt; in {{ &lt;LIST_VARIABLE&gt; }} %}
 {% endfor %}</code></pre>
-<pre><code>{% for &lt;KEY&gt;, &lt;VAULE&gt; in {{ &lt;DICTIONARY_VARIABLES&gt; }} %}
-{% endfor %}</code></pre></li>
-<li><p>Examples:</p>
+<pre><code>{% for &lt;KEY&gt;, &lt;VALUE&gt; in {{ &lt;DICTIONARY_VARIABLES&gt; }} %}
+{% endfor %}</code></pre>
+<p>Examples:</p>
 <pre><code># /etc/hosts
 {% for host in groups[&#39;ceph&#39;] %}
 hostvars[host][&#39;private_ip&#39;] hostvars[host][&#39;ansible_hostname&#39;]
@@ -715,8 +724,7 @@ hostvars[host][&#39;private_ip&#39;] hostvars[host][&#39;ansible_hostname&#39;]
 [{{ groups[&#39;db&#39;][{{ count }}] }}]
 type=server
 priority={{ count }}
-{% endfor %}</code></pre></li>
-</ul>
+{% endfor %}</code></pre>
 <p>&quot;For&quot; loops have special variables that can be referenced relating to the index that the loop is on.</p>
 <ul>
 <li>loop.index = The current index of the loop, starting at 1.</li>
@@ -727,21 +735,19 @@ priority={{ count }}
 <li>loop.last = This will be True if is it the last index.</li>
 </ul>
 <p>&quot;If&quot; statements can be run if a certain condition is met.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>{% if &lt;VALUE&gt; %}
 {% endif %}</code></pre>
 <pre><code>{% if &lt;VALUE_1&gt; %}
 {% elif &lt;VALUE_2&gt; %}
 {% else %}
-{% endif %}</code></pre></li>
-<li><p>Example:</p>
+{% endif %}</code></pre>
+<p>Example:</p>
 <pre><code>{% if {{ taco_day }} == &quot;Tuesday&quot; %}
-Taco day is on Tuesday.
+    Taco day is on Tuesday.
 {% else %}
-Taco day is not on a Tuesday.
-{% endif %}</code></pre></li>
-</ul>
+    Taco day is not on a Tuesday.
+{% endif %}</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -815,7 +821,7 @@ Taco day is not on a Tuesday.
 <li>&quot;Ansible Galaxy.&quot;</li>
 </ol>
 <h2 id="playbooks---containers">Playbooks - Containers</h2>
-<p>The offical Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
+<p>The official Ansible Container project aims to allow Playbooks to be deployed directly to Docker containers. This allows Ansible to orchestrate both infrastructure and applications.</p>
 <p>Install Ansible Container into a Python virtual environment. This helps to separate Python packages provided by the operating system's package manager. Source the &quot;activate&quot; file to use the new Python environment. [1]</p>
 <pre><code>$ virtualenv ansible-container
 $ source ansible-container/bin/activate
@@ -863,7 +869,7 @@ mysql:</code></pre>
 <li><p>image = The Docker image to use for a service.</p>
 <pre><code>from: &quot;&lt;IMAGE&gt;:&lt;VERSION&gt;&quot;</code></pre>
 <pre><code>from: &quot;ubuntu:xenial&quot;</code></pre></li>
-<li>roles = A list of Ansible roles to run on the contianer. ``` roles:</li>
+<li>roles = A list of Ansible roles to run on the container. ``` roles:</li>
 <li><ROLE1></li>
 <li><ROLE2> ```</li>
 <li>ports = The hypervisor port to bind to and the container port to forward traffic to/from. ``` ports:</li>
@@ -915,63 +921,56 @@ volumes: - <HYPERVISOR_PATH_1>:<CONTAINER_PATH_1> - <HYPERVISOR_PATH_2>:<CONTAIN
 </ol>
 <h3 id="playbooks---main-modules---async">Playbooks - Main Modules - Async</h3>
 <p>The &quot;async&quot; function can be used to start a detached task on a remote system. Ansible will then poll the server periodically to see if the task is complete (by default, it checks every 10 seconds). Optionally a custom poll time can be set. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>async: &lt;SECONDS_TO_RUN&gt;</code></pre></li>
-<li>Example: ```</li>
-<li><p>command: bash /usr/local/bin/example.sh async: 15 poll: 5 ```</p></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>async: &lt;SECONDS_TO_RUN&gt;</code></pre>
+<p>Example:</p>
+<pre><code> - command: bash /usr/local/bin/example.sh
+    async: 15
+    poll: 5</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Asynchronous Actions and Polling.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---check-mode">Playbooks - Main Modules - Check Mode</h3>
 <p>A Playbook can run in a test mode with <code>--check</code>. No changes will be made. Optionally, the <code>--diff</code> argument can also be added to show exactly what would be changed.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>$ ansible-playbook --check site.yml</code></pre>
-<pre><code>$ ansible-playbook --check --diff site.yml</code></pre></li>
-</ul>
+<pre><code>$ ansible-playbook --check --diff site.yml</code></pre>
 <p>In Ansible 2.1, the <code>ansible_check_mode</code> variable was added to verify if check mode is on or off. This can be used to forcefully run tasks even if check mode is on.</p>
-<ul>
-<li><p>Examples:</p>
+<p>Examples:</p>
 <pre><code>command: echo &quot;Hello world&quot;
 when: not ansible_check_mode</code></pre>
-```</li>
-<li><p>name: Continue if this fails when check_mode is enabled stat: path=/etc/neutron/neutron.conf register: neutron_conf ignore_errors: &quot;{{ ansible_check_mode }}&quot; ```</p></li>
-</ul>
+<pre><code> - name: Continue if this fails when check_mode is enabled
+    stat: path=/etc/neutron/neutron.conf
+    register: neutron_conf
+    ignore_errors: &quot;{{ ansible_check_mode }}&quot;</code></pre>
 <p>In Ansible 2.2, the <code>check_mode</code> module can be forced to run during a check mode. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>check_mode: no</code></pre></li>
-<li>Example: ```</li>
-<li><p>name: Install the EPEL repository yum: name=epel-release state=latest check_mode: no ```</p></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>check_mode: no</code></pre>
+<p>Example:</p>
+<pre><code>- name: Install the EPEL repository
+  yum: name=epel-release state=latest
+  check_mode: no</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Check Mode (&quot;Dry Run&quot;).&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---gather-facts">Playbooks - Main Modules - Gather Facts</h3>
 <p>By default, Ansible will connect to all hosts related to a Playbook and cache information about them. This includes hostnames, IP addresses, the operating system version, etc.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>gather_facts: &lt;BOOLEAN&gt;</code></pre></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>gather_facts: &lt;BOOLEAN&gt;</code></pre>
 <p>If these variables are not required then gather_facts and be set to &quot;False&quot; to speed up a Playbook's run time. [1]</p>
-<ul>
-<li><p>Example:</p>
-<pre><code>gather_facts: False</code></pre></li>
-</ul>
+<p>Example:</p>
+<pre><code>gather_facts: False</code></pre>
 <p>In other situations, information about other hosts may be required that are not being used in the Playbook. Facts can be gather about them before the roles in a Playbook are executed.</p>
-<ul>
-<li>Example: ```</li>
-<li><p>hosts: squidproxy1,squidproxy2,squidproxy3 gather_facts: True</p></li>
-<li>hosts: monitor1,monitor2 roles:
-<ul>
-<li>common</li>
-<li>haproxy ```</li>
-</ul></li>
-</ul>
+<p>Example:</p>
+<pre><code>- hosts: squidproxy1,squidproxy2,squidproxy3
+  gather_facts: True
+
+- hosts: monitor1,monitor2
+  roles:
+   - common
+   - haproxy</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Glossary.&quot;</li>
@@ -1005,77 +1004,69 @@ when: not ansible_check_mode</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Intro to Playbooks.&quot;</li>
 </ol>
-<h3 id="playbooks---main-modules---run-once">Playbooks - Main Modules - Run Once</h3>
-<p>In some situations a command should only need to be run on one node. An example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>run_once: true</code></pre></li>
-</ul>
-<p>This can also be assigned to a specific host.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>run_once:
-delegate_to: &lt;HOST&gt;</code></pre></li>
-</ul>
-<p>[1]</p>
-<p>Source:</p>
-<ol style="list-style-type: decimal">
-<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot;</li>
-</ol>
 <h3 id="playbooks---main-modules---roles">Playbooks - Main Modules - Roles</h3>
 <p>A Playbook consists of roles. Each role that needs to be run needs to be specified. [1] It's important to note that individual roles cannot call other roles. Instead, an &quot;include&quot; statement could be used to find the relative path. [2]</p>
-<ul>
-<li>Syntax: ``` roles:</li>
-<li><ROLE1></li>
-<li><p><ROLE2> ```</p></li>
-<li>Example: ``` roles:</li>
-<li>common</li>
-<li>httpd</li>
-<li><p>sql ```</p></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>roles:
+  - &lt;ROLE1&gt;
+  - &lt;ROLE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>roles:
+  - common
+  - httpd
+  - sql</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
 <li>&quot;Ansible: Include Role in a Role?&quot;</li>
 </ol>
+<h3 id="playbooks---main-modules---run-once">Playbooks - Main Modules - Run Once</h3>
+<p>In some situations a command should only need to be run on one node. An example is when using a MariaDB Galera cluster where database changes will get synced to all nodes.</p>
+<p>Syntax:</p>
+<pre><code>run_once: true</code></pre>
+<p>This can also be assigned to a specific host.</p>
+<p>Syntax:</p>
+<pre><code>run_once:
+delegate_to: &lt;HOST&gt;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Delegation, Rolling Updates, and Local Actions.&quot;</li>
+</ol>
 <h3 id="playbooks---main-modules---serial">Playbooks - Main Modules - Serial</h3>
 <p>By default, Ansible will only run tasks on 5 hosts at once. This limit can be modified to run on a different number of hosts or a percentage of the amount of hosts. This is useful for running Playbooks on a large amount of servers. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>serial: &lt;NUMBER_OR_PERCENTAGE&gt;</code></pre></li>
-<li>Example: ```</li>
-<li>hosts: web tasks:
-<ul>
-<li>name: Installing Nginx package: name=nginx state=present serial: 50% ```</li>
-</ul></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>serial: &lt;NUMBER_OR_PERCENTAGE&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- hosts: web
+  tasks:
+    - name: Installing Nginx
+      package: name=nginx state=present
+      serial: 50%</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Delegation, Rolling Updates, and Local Actions.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---tags">Playbooks - Main Modules - Tags</h3>
 <p>Each task in a tasks file can have a tag associated to it. This should be appended to the end of the task. This is useful for debugging and separating tasks into specific groups. Here is the syntax:</p>
-<ul>
-<li>Syntax: ``` tags:</li>
-<li><TAG1></li>
-<li><TAG2></li>
-<li><TAG3> ```</li>
-</ul>
+<p>Syntax:</p>
+<pre><code>tags:
+ - &lt;TAG1&gt;
+ - &lt;TAG2&gt;
+ - &lt;TAG3&gt;</code></pre>
 <p>Run only tasks that include specific tags.</p>
 <pre><code>$ ansible-playbook --tags &quot;&lt;TAG1&gt;,&lt;TAG2&gt;,&lt;TAG3&gt;&quot;</code></pre>
 <p>Alternatively, skip specific tags.</p>
 <pre><code>$ ansible-playbook --skip-tags &quot;&lt;TAG1&gt;,&lt;TAG2&gt;,&lt;TAG3&gt;&quot;</code></pre>
-<ul>
-<li>Example: ``` $ head webserver.yml ---</li>
-<li>package: name=nginx state=latest tags:
-<ul>
-<li>yum</li>
-<li>rpm</li>
-<li><p>nginx</p>
-<pre><code></code></pre>
-<p>$ ansible-playbook --tags &quot;yum&quot; site.yml webnode1 ```</p></li>
-</ul></li>
-</ul>
+<p>Example:</p>
+<pre><code>$ head webserver.yml
+---
+ - package: name=nginx state=latest
+   tags:
+    - yum
+    - rpm
+    - nginx</code></pre>
+<pre><code>$ ansible-playbook --tags &quot;yum&quot; site.yml webnode1</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -1083,32 +1074,29 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 </ol>
 <h3 id="playbooks---main-modules---tasks">Playbooks - Main Modules - Tasks</h3>
 <p>Playbooks can include specific task files or define and run tasks in the Playbook file itself. In Ansible 2.0, loops, variables, and other dynamic elements now work correctly.</p>
-<ul>
-<li>Syntax: ```</li>
-<li>hosts: <HOSTS> tasks:
-<ul>
-<li><MODULE>: ```</li>
-</ul></li>
-<li>Exmaple: ```</li>
-<li>hosts: jenkins tasks:
-<ul>
-<li>debug: msg: &quot;Warning: This will modify ALL Jenkins servers.&quot; roles:</li>
-<li>common</li>
-<li>docker ```</li>
-</ul></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>- hosts: &lt;HOSTS&gt;
+  tasks:
+   - &lt;MODULE&gt;:</code></pre>
+<p>Example:</p>
+<pre><code> - hosts: jenkins
+   tasks:
+    - debug:
+        msg: &quot;Warning: This will modify ALL Jenkins servers.&quot;
+   roles:
+    - common
+    - docker</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible include - include a play or task list.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---wait-for">Playbooks - Main Modules - Wait For</h3>
 <p>A condition can be searched for before continuing on to the next task.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>wait_for:</code></pre></li>
-<li><p>Example:</p>
-<pre><code>wait_for: timeout=60</code></pre></li>
-<li>Common options:
+<p>Syntax:</p>
+<pre><code>wait_for:</code></pre>
+<p>Example:</p>
+<pre><code>wait_for: timeout=60</code></pre>
+<p>Common options:</p>
 <ul>
 <li>delay = How long to wait (in seconds) before running the wait_for check.</li>
 <li>path = A file to check.</li>
@@ -1125,23 +1113,21 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 <li>absent = Verify a file does not exist.</li>
 </ul></li>
 <li>timeout = How long to wait (in seconds) before continuing on.</li>
-</ul></li>
 </ul>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible wait_for - Waits for a condition before continuing.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---when">Playbooks - Main Modules - When</h3>
-<p>The &quot;when&quot; function can be uesd to specify that a sub-task should only run if the condition returns turn. This is similar to an &quot;if&quot; statement in programming langauges. It is usually the last line to a sub-task. [1]</p>
-<ul>
-<li>&quot;When&quot; Example: ```</li>
-<li><p>package: name=httpd state=latest when: ansible_os_family == &quot;CentOS&quot; ```</p></li>
-<li><p>&quot;Or&quot; example:</p>
-<pre><code>when: ansible_os_family == &quot;CentOS&quot; or when: ansible_os_family == &quot;Debian&quot;</code></pre></li>
-<li><p>&quot;And&quot; example, using a cleaner style:</p>
+<p>The &quot;when&quot; function can be used to specify that a sub-task should only run if the condition returns turn. This is similar to an &quot;if&quot; statement in programming languages. It is usually the last line to a sub-task. [1]</p>
+<p>&quot;When&quot; Example:</p>
+<pre><code> - package: name=httpd state=latest
+    when: ansible_os_family == &quot;CentOS&quot;</code></pre>
+<p>&quot;Or&quot; example:</p>
+<pre><code>when: ansible_os_family == &quot;CentOS&quot; or when: ansible_os_family == &quot;Debian&quot;</code></pre>
+<p>&quot;And&quot; example:</p>
 <pre><code>when: (ansible_os_family == &quot;Fedora&quot;) and
-  (ansible_distribution_major_version == &quot;25&quot;)</code></pre></li>
-</ul>
+      (ansible_distribution_major_version == &quot;26&quot;)</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Conditionals.&quot;</li>
@@ -1150,39 +1136,37 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 <p>These modules handle Playbook errors.</p>
 <h4 id="playbooks---main-modules---errors---any-errors-fatal">Playbooks - Main Modules - Errors - Any Errors Fatal</h4>
 <p>By default, a Playbook will continue to run on all of the hosts that do not have any failures reported by modules. It is possible to stop the Playbook from running on all hosts once an error has occurred. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>any_errors_fatal: true</code></pre></li>
-<li>Example: ```</li>
-<li>hosts: nfs_servers any_errors_fatal: true roles:
-<ul>
-<li>nfs ```</li>
-</ul></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>any_errors_fatal: true</code></pre>
+<p>Example:</p>
+<pre><code>- hosts: nfs_servers
+  any_errors_fatal: true
+  roles:
+   - nfs</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
 </ol>
 <h4 id="playbooks---main-modules---errors---failed-when">Playbooks - Main Modules - Errors - Failed When</h4>
 <p>In some situations, a error from a command or module may not be reported properly. This module can be used to force a failure based on a certain condition. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>failed_when: &lt;CONDITION&gt;</code></pre></li>
-<li>Example: ```</li>
-<li><p>command: echo &quot;Testing a failure. 123.&quot; register: cmd failed_when: &quot;'123' in cmd.stdout&quot; ```</p></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>failed_when: &lt;CONDITION&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- command: echo &quot;Testing a failure. 123.&quot;
+  register: cmd
+  failed_when: &quot;&#39;123&#39; in cmd.stdout&quot;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
 </ol>
 <h4 id="playbooks---main-modules---errors---ignore-errors">Playbooks - Main Modules - Errors - Ignore Errors</h4>
 <p>Playbooks, by default, will stop running on a host if it fails to run a module. Sometimes a module will report a false-positive or an error will be expected. This will allow the Playbook to continue onto the next step. [1]</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>ignore_errors: yes</code></pre></li>
-<li>Example: ```</li>
-<li><p>name: Even though this will fail, the Playbook will keep running. package: name=does-not-exist state=present ignore_errors: yes ```</p></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>ignore_errors: yes</code></pre>
+<p>Example:</p>
+<pre><code>- name: Even though this will fail, the Playbook will keep running.
+  package: name=does-not-exist state=present
+  ignore_errors: yes</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Error Handling In Playbooks.&quot;</li>
@@ -1191,58 +1175,52 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 <p>Include modules allow other elements of a Playbook to be called and executed.</p>
 <h4 id="playbooks---main-modules---includes---include">Playbooks - Main Modules - Includes - Include</h4>
 <p>Other task files and Playbooks can be included. The functions in them will immediately run. Variables can be defined for the inclusion as well. [1]</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>include:</code></pre>
-<pre><code>include: &lt;TASK&gt;.yml &lt;VAR1&gt;=&lt;VAULE1&gt; &lt;VAR2&gt;=&lt;VALUE2&gt;</code></pre></li>
-<li><p>Example:</p>
-<pre><code>include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget</code></pre></li>
-</ul>
+<pre><code>include: &lt;TASK&gt;.yml &lt;VAR1&gt;=&lt;VAULE1&gt; &lt;VAR2&gt;=&lt;VALUE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Playbook Roles and Include Statements.&quot;</li>
 </ol>
 <h4 id="playbooks---main-modules---includes---include-role">Playbooks - Main Modules - Includes - Include Role</h4>
 <p>Starting in Ansible 2.2, other roles can be included in tasks.</p>
-<ul>
-<li>Options:
+<p>Common options:</p>
 <ul>
 <li>name = Name of the role to include.</li>
 <li>{defaults|tasks|vars}_from = Include a specific file from the role's defaults, tasks, or vars directory.</li>
 <li>private = Boolean. Specify if the variables from this role should be available to the rest of the Playbook (False) or not (True).</li>
-</ul></li>
-<li><p>Syntax:</p>
-<pre><code>inlcude_role:</code></pre></li>
-<li><p>Example:</p>
-<pre><code>include_role: name=ldap task_from=rhel.yml</code></pre></li>
 </ul>
+<p>Syntax:</p>
+<pre><code>include_role:</code></pre>
+<p>Example:</p>
+<pre><code>include_role: name=ldap task_from=rhel.yml</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible include_role - Load and execute a role.&quot;</li>
 </ol>
 <h4 id="playbooks---main-modules---includes---include-variables">Playbooks - Main Modules - Includes - Include Variables</h4>
 <p>Additional variables can be defined within a Playbook file. These can be openly added to the <code>include_vars</code> module via YAML syntax.</p>
-<ul>
-<li>Options:
+<p>Common options:</p>
 <ul>
 <li>file = Specify a filename to source variables from.</li>
 <li>name = Store variables from a file into a specified variable.</li>
-</ul></li>
-<li><p>Syntax:</p>
-<pre><code>include_vars: &lt;VARIABLE&gt;</code></pre></li>
-<li>Examples: ```</li>
-<li>hosts: all include_vars:
-<ul>
-<li>gateway: &quot;192.168.0.1&quot;</li>
-<li>netmask: &quot;255.255.255.0&quot; roles:</li>
-<li><p>addressing</p>
-<pre><code></code></pre></li>
-</ul></li>
-<li>hosts: all include_vars: file=monitor_vars.yml roles:
-<ul>
-<li>nagios ```</li>
-</ul></li>
 </ul>
+<p>Syntax:</p>
+<pre><code>include_vars: &lt;VARIABLE&gt;</code></pre>
+<p>Examples:</p>
+<pre><code>- hosts: all
+  include_vars:
+   - gateway: &quot;192.168.0.1&quot;
+   - netmask: &quot;255.255.255.0&quot;
+  roles:
+   - addressing</code></pre>
+<pre><code>- hosts: all
+  include_vars: file=monitor_vars.yml
+  roles:
+   - nagios</code></pre>
+<p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible include_vars - Load variables from files, dynamically within a task.&quot;</li>
@@ -1251,69 +1229,64 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 <p>Loops can be used to iterate through lists and/or dictionaries.</p>
 <h3 id="playbooks---main-modules---loops---with-first-found">Playbooks - Main Modules - Loops - With First Found</h3>
 <p>Multiple file locations can be checked to see what file exists. The first file found in a given list will be returned to the task. [1]</p>
-<ul>
-<li>Syntax: ``` with_first_round:</li>
-<li><FLIE1></li>
-<li><FILE2></li>
-<li><p><FILE3> ```</p></li>
-<li>Example: ```</li>
-<li>name: Copy over the first Nova configuration that is found copy: src={{ item }} dest=/etc/nova/ remote_src=true with_first_found:
-<ul>
-<li>&quot;/root/nova.conf&quot;</li>
-<li>&quot;/etc/nova_backup/nova.conf&quot; ```</li>
-</ul></li>
-</ul>
+<p>Syntax:</p>
+<pre><code>with_first_round:
+  - &lt;FILE1&gt;
+  - &lt;FILE2&gt;
+  - &lt;FILE3&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- name: Copy over the first Nova configuration that is found
+  copy: src={{ item }} dest=/etc/nova/ remote_src=true
+  with_first_found:
+   - &quot;/root/nova.conf&quot;
+   - &quot;/etc/nova_backup/nova.conf&quot;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Loops.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---loops---with-flattened">Playbooks - Main Modules - Loops - With Flattened</h3>
 <p>Lists and dictionaries can be converted into one long string. This allows a task to run once with all of the arguments. This is especially useful for installing multiple packages at once. [1]</p>
-<ul>
-<li>Loop syntax: ``` with_flattened:</li>
-<li><LIST_OR_DICT></li>
-<li><p><LIST_OR_DICT> ```</p></li>
-<li><p>Variable syntax:</p>
-<pre><code>{{ item }}</code></pre></li>
-<li>Example: ```</li>
-<li><p>set_fact: openstack_client_packages=&quot;[ 'python2-cinderclient', 'python2-glanceclient', python2-keystoneclient', 'python2-novaclient', 'python2-neutronclient' ]&quot;</p></li>
-<li>service: name={{ item }} state=restarted with_flattened:
-<ul>
-<li>&quot;{{ openstack_client_packages }}&quot;</li>
-<li>python2-heatclient</li>
-<li>[ 'python2-manilaclient', 'python2-troveclient' ] ```</li>
-</ul></li>
-</ul>
+<p>Loop syntax:</p>
+<pre><code>with_flattened:
+   - &lt;LIST_OR_DICT&gt;
+   - &lt;LIST_OR_DICT&gt;</code></pre>
+<p>Variable syntax:</p>
+<pre><code>{{ item }}</code></pre>
+<p>Example:</p>
+<pre><code>- set_fact: openstack_client_packages=&quot;[ &#39;python2-cinderclient&#39;, &#39;python2-glanceclient&#39;, python2-keystoneclient&#39;, &#39;python2-novaclient&#39;, &#39;python2-neutronclient&#39; ]&quot;
+
+- service: name={{ item }} state=restarted
+  with_flattened:
+   - &quot;{{ openstack_client_packages }}&quot;
+   - python2-heatclient
+   - [ &#39;python2-manilaclient&#39;, &#39;python2-troveclient&#39; ]</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Loops.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---loops---with-items">Playbooks - Main Modules - Loops - With Items</h3>
 <p>A task can be re-used with items in a list and/or dictionary. [1]</p>
-<ul>
-<li>Loop syntax: ``` with_items:</li>
-<li><ITEM1></li>
-<li><ITEM2></li>
-<li><p><ITEM3> ```</p></li>
-<li><p>List variable syntax:</p>
-<pre><code>{{ item }}</code></pre></li>
-<li><p>Dictionary variable syntax:</p>
+<p>Loop syntax:</p>
+<pre><code>with_items:
+  - &lt;ITEM1&gt;
+  - &lt;ITEM2&gt;
+  - &lt;ITEM3&gt;</code></pre>
+<p>List variable syntax:</p>
+<pre><code>{{ item }}</code></pre>
+<p>Dictionary variable syntax:</p>
 <pre><code>{{ item.&lt;INDEX_STARTING_AT_0&gt; }}</code></pre>
-<pre><code>{{ item.&lt;KEY&gt; }}</code></pre></li>
-<li>List example: ```</li>
-<li>service: name={{ item }} state=started enabled=true with_items:
-<ul>
-<li>nginx</li>
-<li>php-fpm</li>
-<li>mysql ```</li>
-</ul></li>
-<li>Dictionary example: ```</li>
-<li>user: name={{ item.name }} group={{ item.group }} password={{ item.2 }} state=present with_items:
-<ul>
-<li>{ name: &quot;bob&quot;, group: &quot;colab&quot;, passwd: &quot;123456&quot; }</li>
-<li>{ name: &quot;sam&quot;, group: &quot;colab&quot;, passwd: &quot;654321&quot; } ```</li>
-</ul></li>
-</ul>
+<pre><code>{{ item.&lt;KEY&gt; }}</code></pre>
+<p>List example:</p>
+<pre><code>- service: name={{ item }} state=started enabled=true
+  with_items:
+   - nginx
+   - php-fpm
+   - mysql</code></pre>
+<p>Dictionary example:</p>
+<pre><code>- user: name={{ item.name }} group={{ item.group }} password={{ item.2 }} state=present
+  with_items:
+   - { name: &quot;bob&quot;, group: &quot;colab&quot;, passwd: &quot;123456&quot; }
+   - { name: &quot;sam&quot;, group: &quot;colab&quot;, passwd: &quot;654321&quot; }</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Loops.&quot;</li>
@@ -1322,8 +1295,7 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 <p>These are modules relating to defining new variables.</p>
 <h4 id="playbooks---main-modules---variables---prompts">Playbooks - Main Modules - Variables - Prompts</h4>
 <p>Prompts can be used to assign a user's input as a variable.</p>
-<ul>
-<li>Options:
+<p>Common options:</p>
 <ul>
 <li>confirm = Prompt the user twice and then verify that the input is the same.</li>
 <li>encrypt = Encrypt the text.
@@ -1334,15 +1306,20 @@ delegate_to: &lt;HOST&gt;</code></pre></li>
 </ul></li>
 <li>salt = Specify a string to use as a salt for encrypting.</li>
 <li>salt_size = Specify the length to use for a randomly generated salt. The default is 8.</li>
-</ul></li>
-<li>Syntax: ``` vars_prompt:</li>
-<li><p>name: &quot;<VARIABLE>&quot; prompt: &quot;<PROMPT TEXT>&quot; ```</p></li>
-<li>Examples: ``` vars_prompt:</li>
-<li><p>name: &quot;zipcode&quot; prompt: &quot;Enter your zipcode.&quot;</p>
-<pre><code></code></pre>
-vars_prompt:</li>
-<li><p>name: &quot;pw&quot; prompt: &quot;Password:&quot; encrypt: &quot;sha512_crypt&quot; salt_size: 12 ```</p></li>
 </ul>
+<p>Syntax:</p>
+<pre><code>vars_prompt:
+  - name: &quot;&lt;VARIABLE&gt;&quot;
+    prompt: &quot;&lt;PROMPT TEXT&gt;&quot;</code></pre>
+<p>Examples:</p>
+<pre><code>vars_prompt:
+  - name: &quot;zipcode&quot;
+    prompt: &quot;Enter your zipcode.&quot;</code></pre>
+<pre><code>vars_prompt:
+   - name: &quot;pw&quot;
+     prompt: &quot;Password:&quot;
+     encrypt: &quot;sha512_crypt&quot;
+     salt_size: 12</code></pre>
 <p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -1350,8 +1327,7 @@ vars_prompt:</li>
 </ol>
 <h4 id="playbooks---main-modules---variables---register">Playbooks - Main Modules - Variables - Register</h4>
 <p>The output of modules and commands can be saved to a variable.</p>
-<ul>
-<li>Variable return values [1]:
+<p>Variable return values [1]:</p>
 <ul>
 <li>backup_file = String. If a module creates a backup file, this is that file's name.</li>
 <li>changed = Boolean. If something was changed after the module runs, this would be set to &quot;true.&quot;</li>
@@ -1365,16 +1341,18 @@ vars_prompt:</li>
 <li>stdout_lines = List.</li>
 <li>results = List of dictionaries. If a loop was used, the results for each loop are stored as a new list item.</li>
 <li>skipped = Boolean. If this module was skipped or not.</li>
-</ul></li>
-<li><p>Syntax:</p>
-<pre><code>register: &lt;NEW_VARIABLE&gt;</code></pre></li>
-<li>Examples [2]: ```</li>
-<li>command: echo Hello World register: hello</li>
-<li><p>debug: msg=&quot;We heard you&quot; when: &quot;'Hello World' in hello.stdout&quot;</p>
-<pre><code></code></pre></li>
-<li>copy: src=example.conf dest=/etc/example.conf register: copy_example</li>
-<li><p>debug: msg=&quot;Copying example.conf failed.&quot; when: copy_example|failed ```</p></li>
 </ul>
+<p>Syntax:</p>
+<pre><code>register: &lt;NEW_VARIABLE&gt;</code></pre>
+<p>Examples [2]:</p>
+<pre><code> - command: echo Hello World
+    register: hello
+ - debug: msg=&quot;We heard you&quot;
+    when: &quot;&#39;Hello World&#39; in hello.stdout&quot;</code></pre>
+<pre><code>- copy: src=example.conf dest=/etc/example.conf
+  register: copy_example
+- debug: msg=&quot;Copying example.conf failed.&quot;
+  when: copy_example|failed</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Return Values.&quot;</li>
@@ -1382,33 +1360,33 @@ vars_prompt:</li>
 </ol>
 <h4 id="playbooks---main-modules---variables---set-fact">Playbooks - Main Modules - Variables - Set Fact</h4>
 <p>New variables can be defined set the &quot;set_fact&quot; module. These are added to the available variables/facts tied to a inventory host. [1]</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>set_fact:
   &lt;VARIABLE_NAME1&gt;: &lt;VARIABLE_VALUE1&gt;
-  &lt;VARIABLE_NAME2&gt;: &lt;VARIABLE_VALUE2&gt;</code></pre></li>
-<li>Example: ```</li>
-<li><p>set_fact: is_installed: True sql_server: mariadb ```</p></li>
-</ul>
+  &lt;VARIABLE_NAME2&gt;: &lt;VARIABLE_VALUE2&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- set_fact:
+    is_installed: True
+    sql_server: mariadb</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Set host facts from a task.&quot;</li>
 </ol>
 <h2 id="playbooks---modules">Playbooks - Modules</h2>
 <h3 id="playbooks---modules---command-and-shell">Playbooks - Modules - Command and Shell</h3>
-<p>Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell enviornment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficent. [1][2]</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Both the command and shell modules provide the ability to run command line programs. The big difference is that shell provides a full shell environment where operand redirection and pipping works, along with loading up all of the shell variables. Conversely, command will not load a full shell environment so it will lack in features and functionality but it makes up for that by being faster and more efficient. [1][2]</p>
+<p>Syntax:</p>
 <pre><code>command:</code></pre>
-<pre><code>shell:</code></pre></li>
-<li>Common options:
+<pre><code>shell:</code></pre>
+<p>Common options:</p>
 <ul>
 <li>executable = Set the executable shell binary.</li>
 <li>chdir = Change directories before running the command.</li>
-</ul></li>
-<li>Example: ```</li>
-<li><p>shell: echo &quot;Hello world&quot; &gt;&gt; /tmp/hello_world.txt args: executable: /bin/bash ```</p></li>
 </ul>
+<p>Example:</p>
+<pre><code>- shell: echo &quot;Hello world&quot; &gt;&gt; /tmp/hello_world.txt
+  args:
+    executable: /bin/bash</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Command Module.&quot;</li>
@@ -1416,29 +1394,26 @@ vars_prompt:</li>
 </ol>
 <h3 id="playbooks---modules---copy-files-synchronize-and-templates">Playbooks - Modules - Copy, Files, Synchronize, and Templates</h3>
 <p>The copy, file and template modules provide ways to managing and configuring various files. The <code>files</code> module is used to handle file creation/modification on the remote host. [1] <code>Templates</code> are to be used when Ansible needs to find and replace variables [2]. <code>Copy</code> is used for copying files and folders either from the role or on the remote host. <code>Synchronize</code> is used as a wrapper around rsync to provide a more robust copy functionality. Most of the options and usage are the same between these four modules.</p>
-<ul>
-<li><p>Syntax:</p>
+<p>Syntax:</p>
 <pre><code>copy:</code></pre>
 <pre><code>file:</code></pre>
 <pre><code>synchronize:</code></pre>
-<pre><code>template:</code></pre></li>
-<li><p>Common options:</p>
+<pre><code>template:</code></pre>
+<p>Common options:</p>
 <ul>
 <li>src = Define the source file or template. If a full path is not given, Ansible will check in the roles/<code>&lt;ROLENAME&gt;</code>/files/ directory for a file or roles/<code>&lt;ROLENAME&gt;</code>/templates/ for a template. If the src path ends with a &quot;/&quot; then only the files within that directory will be copied (not the directory itself).</li>
 <li>dest (or path) = This is the full path to where the file should be copied to on the destination server.</li>
 <li>owner = Set the user owner.</li>
 <li>group = Set the group owner.</li>
 <li>setype = Set SELinux file permissions.</li>
-</ul></li>
-<li>Copy, file, and template options:
+</ul>
+<p>Copy, file, and template options:</p>
 <ul>
 <li>mode = Set the octal or symbolic permissions. If using octal, it has to be four digits. The first digit is generally the flag &quot;0&quot; to indicate no special permissions.</li>
-</ul></li>
-<li><p>Copy options:</p>
-<ul>
-<li>remote_src = If set to <code>true</code>, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is <code>false</code>.</li>
-</ul></li>
-<li>File options:
+</ul>
+<p>Copy options:</p>
+<p>remote_src = If set to <code>true</code>, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is <code>false</code>.</p>
+<p>File options:</p>
 <ul>
 <li>state = Specify the state the file should be created in.
 <ul>
@@ -1449,8 +1424,8 @@ vars_prompt:</li>
 <li>directory = Create all subdirectories in the destination folder.</li>
 <li>absent = Delete destination folders.</li>
 </ul></li>
-</ul></li>
-<li>Synchronize options:
+</ul>
+<p>Synchronize options:</p>
 <ul>
 <li>archive = Preserve all of the original file permissions. The default is <code>yes</code>.</li>
 <li>delete = Remove files in the destination directory that do not exist in the source directory.</li>
@@ -1461,11 +1436,12 @@ vars_prompt:</li>
 </ul></li>
 <li>recursive = Recursively copy contents of all sub-directories. The default is <code>no</code>.</li>
 <li>rsync_opts = Provide additional <code>rsync</code> command line arguments.</li>
-</ul></li>
-<li>Example:</li>
-<li><p>Copy a template from roles/<code>&lt;ROLE&gt;</code>/templates/ and set the permissions for the file.</p>
-<pre><code>template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody</code></pre></li>
 </ul>
+<p>Example:</p>
+<ul>
+<li>Copy a template from roles/<code>&lt;ROLE&gt;</code>/templates/ and set the permissions for the file.</li>
+</ul>
+<pre><code>template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible File Module.&quot;</li>
@@ -1477,12 +1453,17 @@ vars_prompt:</li>
 <p>The debug module is used for helping facilitate troubleshooting. It prints out specified information to standard output.</p>
 <p>Syntax:</p>
 <pre><code>debug:</code></pre>
-<p>Options: * msg = Display a message. * var = Display a variable. * verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]</p>
+<p>Common options:</p>
 <ul>
-<li>Example:</li>
-<li><p>Print Ansible's hostname of the current server that the script is being run on.</p>
-<pre><code>debug: msg=The inventory host name is {{ inventory_hostname }}</code></pre></li>
+<li>msg = Display a message.</li>
+<li>var = Display a variable.</li>
+<li>verbosity = Show more verbose information. The higher the number, the more verbose the information will be. [1]</li>
 </ul>
+<p>Example:</p>
+<ul>
+<li>Print Ansible's hostname of the current server that the script is being run on.</li>
+</ul>
+<pre><code>debug: msg=The inventory host name is {{ inventory_hostname }}</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Debug Module.&quot;</li>
@@ -1491,7 +1472,35 @@ vars_prompt:</li>
 <p>The cron module is used to manage crontab entries. Crons are scheduled/automated tasks that run on Unix-like systems.</p>
 <p>Syntax:</p>
 <pre><code>cron:</code></pre>
-<p>Options: * user = Modify the specified user's crontab. * job = Provide a command to run when the cron reaches the correct * minute * hour * weeekday = Specify the weekday as a number 0 through 6 where 0 is Sunday and 6 is Saturday. * month * day = Specify the day number in the 30 day month. * backup = Backup the existing crontab. The &quot;backup_file&quot; variable provides the backed up file name. * yes * no * state * present = add the crontab * absent = remove an existing entry * special_time * reboot * yearly or annually * monthly * weekly * daily * hourly</p>
+<p>Common options:</p>
+<ul>
+<li>user = Modify the specified user's crontab.</li>
+<li>job = Provide a command to run when the cron reaches the correct</li>
+<li>minute</li>
+<li>hour</li>
+<li>weeekday = Specify the weekday as a number 0 through 6 where 0 is Sunday and 6 is Saturday.</li>
+<li>month</li>
+<li>day = Specify the day number in the 30 day month.</li>
+<li>backup = Backup the existing crontab. The &quot;backup_file&quot; variable provides the backed up file name.
+<ul>
+<li>yes</li>
+<li>no</li>
+</ul></li>
+<li>state
+<ul>
+<li>present = add the crontab</li>
+<li>absent = remove an existing entry</li>
+</ul></li>
+<li>special_time
+<ul>
+<li>reboot</li>
+<li>yearly or annually</li>
+<li>monthly</li>
+<li>weekly</li>
+<li>daily</li>
+<li>hourly</li>
+</ul></li>
+</ul>
 <p>Example #1:</p>
 <pre><code>cron: job=&quot;/usr/bin/wall This actually works&quot; minute=&quot;*/1&quot; user=ubuntu</code></pre>
 <p>Example #2:</p>
@@ -1502,10 +1511,10 @@ vars_prompt:</li>
 <li>&quot;Ansible cron - Manage cron.d and crontab entries.&quot;</li>
 </ol>
 <h3 id="playbooks---modules---git">Playbooks - Modules - Git</h3>
-<p>Git is a utlity used for provisioning and versioning software. Ansible has built-in support for handling most Git-related tasks.</p>
+<p>Git is a utility used for provisioning and versioning software. Ansible has built-in support for handling most Git-related tasks.</p>
 <p>Syntax:</p>
 <pre><code>git:</code></pre>
-<p>Options:</p>
+<p>Common options:</p>
 <ul>
 <li>repo = The full path of the repository.</li>
 <li>dest = The path to place/use the repository</li>
@@ -1522,7 +1531,7 @@ vars_prompt:</li>
 <p>The service module is used to handle system services.</p>
 <p>Syntax:</p>
 <pre><code>service:</code></pre>
-<p>Options:</p>
+<p>Common options:</p>
 <ul>
 <li>name = Specify the service name.</li>
 <li>enabled = Enable the service to start on boot or not. Valid options are &quot;yes&quot; or &quot;no.&quot;</li>
@@ -1544,11 +1553,28 @@ vars_prompt:</li>
 </ol>
 <h3 id="playbooks---modules---mysql-database-and-user">Playbooks - Modules - MySQL Database and User</h3>
 <p>MySQL databases and users can be managed via Ansible. It requires the &quot;MySQLdb&quot; Python library and the &quot;mysql&quot; and &quot;mysqldump&quot; binaries.</p>
-<p>MySQL Database Syntax:</p>
+<p>MySQL database syntax:</p>
 <pre><code>mysql_db:</code></pre>
-<p>MySQL User Syntax:</p>
+<p>MySQL user syntax:</p>
 <pre><code>mysql_user:</code></pre>
-<p>Options: * name = Specify the database name. The word &quot;all&quot; can be used to control all databases. * state * present = Create the database. * absent = Delete the database. * dump = Backup the database. * import = Import a database. * target = Specify a dump or import location. * config_file = Speicfy the user configuration file. Default: &quot;~/.my.cnf.&quot; Alternatively, login credentials can be manually specified. * login_host = The MySQL server's IP or hostname. Default: &quot;localhost.&quot; * login_user = The MySQL username to login as. * login_password = The MySQL user's password. * login_port = The MySQL port to connect to. Default: &quot;3306.&quot; * login_unix_socket = On Unix, a socket file can be used to connect to MySQL instead of a host and port. * connection_timeout = How long to wait (in seconds) before closing the MySQL connection. The default is &quot;30.&quot; [1] * priv (mysql_user) = The privileges for the MySQL user. [2]</p>
+<p>Options:</p>
+<ul>
+<li>name = Specify the database name. The word &quot;all&quot; can be used to control all databases.</li>
+<li>state</li>
+<li>present = Create the database.</li>
+<li>absent = Delete the database.</li>
+<li>dump = Backup the database.</li>
+<li>import = Import a database.</li>
+<li>target = Specify a dump or import location.</li>
+<li>config_file = Specify the user configuration file. Default: &quot;~/.my.cnf.&quot; Alternatively, login credentials can be manually specified.</li>
+<li>login_host = The MySQL server's IP or hostname. Default: &quot;localhost.&quot;</li>
+<li>login_user = The MySQL username to login as.</li>
+<li>login_password = The MySQL user's password.</li>
+<li>login_port = The MySQL port to connect to. Default: &quot;3306.&quot;</li>
+<li>login_unix_socket = On Unix, a socket file can be used to connect to MySQL instead of a host and port.</li>
+<li>connection_timeout = How long to wait (in seconds) before closing the MySQL connection. The default is &quot;30.&quot; [1]</li>
+<li>priv (mysql_user) = The privileges for the MySQL user. [2]</li>
+</ul>
 <p>Example #1:</p>
 <pre><code>mysql_db: name=toorsdb state=present config_file=/secrets/.my.cnf</code></pre>
 <p>Example #2:</p>
@@ -1557,7 +1583,7 @@ vars_prompt:</li>
 <pre><code>mysql_user: name=maxscale host=&quot;10.0.0.%&quot; priv=&quot;*.*:REPLICATION CLIENT,SELECT&quot; password=supersecure123 state=present</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Ansiblem mysql_db - Add or remove MySQL databases from a remote host.&quot;</li>
+<li>&quot;Ansible mysql_db - Add or remove MySQL databases from a remote host.&quot;</li>
 <li>&quot;Ansible mysql_user - Adds or removes a user from a MySQL database.&quot;</li>
 </ol>
 <h3 id="playbooks---modules---package-managers">Playbooks - Modules - Package Managers</h3>
@@ -1576,7 +1602,10 @@ vars_prompt:</li>
 <li>apt = Use Debian's Apt package manager.</li>
 <li>yum = Use Red Hat's yum package manager. [2]</li>
 </ul>
-<p>Example: * Update the MariaDB package.</p>
+<p>Example:</p>
+<ul>
+<li>Update the MariaDB package.</li>
+</ul>
 <pre><code>package: name=mariadb state=latest</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
@@ -1593,7 +1622,7 @@ vars_prompt:</li>
 <li>present = Install the package.</li>
 <li>latest = Update the package.</li>
 <li>absent = Uninstall the package.</li>
-<li>build-dep = Install the build depedencies for the source code.</li>
+<li>build-dep = Install the build dependencies for the source code.</li>
 </ul></li>
 <li>update_cache = Update the Apt cache (apt-get update). Default: no.</li>
 <li>deb = Install a specified *.deb file.</li>
@@ -1613,7 +1642,7 @@ vars_prompt:</li>
 <li>&quot;apt - Manages apt-packages.&quot;</li>
 </ol>
 <h4 id="playbooks---modules---package-managers---yum">Playbooks - Modules - Package Managers - Yum</h4>
-<p>There are two commands to primarily handel Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
+<p>There are two commands to primarily handle Red Hat's Yum package manager: &quot;yum&quot; and &quot;yum_repository.&quot;</p>
 <p>Syntax:</p>
 <pre><code>yum:</code></pre>
 <p>Common options:</p>
@@ -1627,9 +1656,12 @@ vars_prompt:</li>
 <li>disable_gpg_check = Disable the GPG check. The default is &quot;no&quot;.</li>
 <li>conf_file = Specify a Yum configuration file to use. [1]</li>
 </ul>
-<p>Example: * Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</p>
+<p>Example:</p>
+<ul>
+<li>Install the &quot;wget&quot; package with the EPEL repository enabled and disable GPG validation checks.</li>
+</ul>
 <pre><code>yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes</code></pre>
-<p>Yum Repository Syntax:</p>
+<p>Yum repository syntax:</p>
 <pre><code>yum_repository:</code></pre>
 <p>Common options:</p>
 <ul>
@@ -1639,7 +1671,7 @@ vars_prompt:</li>
 <li>exclude = List packages that should be excluded from being accessed from this repository.</li>
 <li>gpgcheck = Validate the RPMs with a GPG check. The default is &quot;no.&quot;</li>
 <li>gpgkey = Specify a URL to the GPG key.</li>
-<li>includepkgs = A space seperated list of packages that can be used from this repository. This is an explicit allow list.</li>
+<li>includepkgs = A space separated list of packages that can be used from this repository. This is an explicit allow list.</li>
 <li>mirrorlist = Provide a URL to a mirrorlist repository instead of the baseurl.</li>
 <li><strong>name</strong> = Required. Specify a name for the repository. This is only required if the file is being created (state=present) or deleted (state=absent).</li>
 <li>reposdir = The directory to store the Yum configuration files. Default: <code>/etc/yum.repos.d/</code>.</li>
@@ -1649,9 +1681,9 @@ vars_prompt:</li>
 </ul>
 <p>Example:</p>
 <ul>
-<li><p>Install the RepoForge Yum repository.</p>
-<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre></li>
+<li>Install the RepoForge Yum repository.</li>
 </ul>
+<pre><code>yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description=&quot;Third-party RepoForge packages&quot;</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Yum Module.&quot;</li>
@@ -1659,14 +1691,16 @@ vars_prompt:</li>
 </ol>
 <h3 id="playbooks---modules---stat">Playbooks - Modules - Stat</h3>
 <p>This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand <code>stat</code>. All the information from this module can be saved to a variable and accessed as a from new <code>&lt;VARIABLE&gt;.stat</code> dictionary.</p>
-<ul>
-<li><p>Syntax:</p>
-<pre><code>stat: path=&lt;FLIE&gt;
-register: &lt;STAT_VARIABLE&gt;</code></pre></li>
-<li>Example: ```</li>
-<li><p>stat: path=/root/.ssh/id_rsa register: id_rsa</p></li>
-<li><p>file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root when: id_rsa.stat.mode is not &quot;0600&quot; ```</p></li>
-<li>Options:
+<p>Syntax:</p>
+<pre><code>stat: path=&lt;FILE&gt;
+register: &lt;STAT_VARIABLE&gt;</code></pre>
+<p>Example:</p>
+<pre><code>- stat: path=/root/.ssh/id_rsa
+  register: id_rsa
+
+- file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root
+  when: id_rsa.stat.mode is not &quot;0600&quot;</code></pre>
+<p>Common options:</p>
 <ul>
 <li>checksum_algorithm = The algorithm to use for finding the checksum.
 <ul>
@@ -1679,9 +1713,9 @@ register: &lt;STAT_VARIABLE&gt;</code></pre></li>
 <li>follow = Follow symbolic links.</li>
 <li>get_checksum = If the SHA checksum should be generated.</li>
 <li>get_md5 = Boolean. If the MD5 checksum should be generated.</li>
-<li>path = Required. String. The full pth to the file.</li>
-</ul></li>
-<li><code>stat</code> dictionary values:
+<li>path = Required. String. The full path to the file.</li>
+</ul>
+<p><code>stat</code> dictionary values:</p>
 <ul>
 <li>{a|c|m}time = Float. The last time the file was either accessed, the metadata was created, or modified.</li>
 <li>attributes = List. All of the file attributes.</li>
@@ -1704,14 +1738,13 @@ register: &lt;STAT_VARIABLE&gt;</code></pre></li>
 <li>md5 = String. The MD5 hash of the file.</li>
 <li>mime_type = The &quot;magic data&quot; that specifies the file type.</li>
 <li>mode = Octal Unix file permissions.</li>
-<li>nlink. Integer. The number of links that are uesd to redirect to the original inode.</li>
+<li>nlink. Integer. The number of links that are used to redirect to the original inode.</li>
 <li>path = String. The full path to the file.</li>
 <li>{r|w|x}usr = Boolean. If the user owner has readable, writeable, or executable permissions.</li>
 <li>{r|w|x}grp = Boolean. If the group owner has readable, writeable, or executable permissions.</li>
 <li>{r|w|x}oth = Boolean. If other users have readable, writeable, or executable permissions.</li>
 <li>size = Integer. The size, in bytes, of the file.</li>
-<li>{uid|gid} = Integer. The ID of user or group owner of hte file.</li>
-</ul></li>
+<li>{uid|gid} = Integer. The ID of user or group owner of the file.</li>
 </ul>
 <p>[1]</p>
 <p>Source:</p>
@@ -1746,11 +1779,11 @@ register: &lt;STAT_VARIABLE&gt;</code></pre></li>
 <li>bridge_ports = Required for bridge interfaces. Specify the ethernet device(s) to use for the bridge.</li>
 <li>dns-nameserver = A Python list of DNS nameservers to use.</li>
 </ul>
-<p>Here is an example.</p>
+<p>Example:</p>
 <ul>
 <li><code>eth0</code> is configured to use DHCP and has it's MTU set to 9000.</li>
 <li><code>eth1</code> is added to the new bridge <code>br0</code> with the IP address <code>10.0.0.1</code> and the subnet mask of <code>255.255.255.0</code>.</li>
-<li><code>eth2</code> and <code>eth3</code> are configured to be in a bond, operating in mode &quot;6&quot; (adapative load balancing).</li>
+<li><code>eth2</code> and <code>eth3</code> are configured to be in a bond, operating in mode &quot;6&quot; (adaptive load balancing).</li>
 <li><code>bond0.10</code> and <code>bond0.20</code> are created as VLAN tagged devices off of the newly created bond.</li>
 </ul>
 <pre><code>- hosts: gluster01
@@ -1799,7 +1832,7 @@ $ cd ./ansible-tower-setup-&lt;VERSION&gt;/</code></pre>
 <pre><code># yum -y install epel-release</code></pre>
 <p>Then install Ansible Tower using the setup shell script. This will run an Ansible Playbook to install Tower.</p>
 <pre><code>$ ./setup.sh</code></pre>
-<p>When the installation is complete, Ansible Tower can be acccessed by a web browser. The default username is &quot;admin&quot; and the password is the one set in the <code>inventory</code> file.</p>
+<p>When the installation is complete, Ansible Tower can be accessed by a web browser. The default username is &quot;admin&quot; and the password is the one set in the <code>inventory</code> file.</p>
 <pre><code>https://&lt;SERVER_IP_OR_HOSTNAME&gt;/</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
@@ -1812,7 +1845,7 @@ $ cd ./ansible-tower-setup-&lt;VERSION&gt;/</code></pre>
 <li>&quot;The Open Tower Project.&quot;</li>
 </ol>
 <h2 id="dashboards---semaphore">Dashboards - semaphore</h2>
-<p>semaphore was designed to be an unofficial open source altnerative to Ansible Tower. The latest release can be found at <a href="https://github.com/ansible-semaphore/semaphore/releases" class="uri">https://github.com/ansible-semaphore/semaphore/releases</a>.</p>
+<p>semaphore was designed to be an unofficial open source alternative to Ansible Tower. The latest release can be found at <a href="https://github.com/ansible-semaphore/semaphore/releases" class="uri">https://github.com/ansible-semaphore/semaphore/releases</a>.</p>
 <p>Installation</p>
 <pre><code># curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.0.4/semaphore_linux_amd64 &gt; /usr/bin/semaphore
 # /usr/bin/semaphore -setup</code></pre>
@@ -1822,7 +1855,7 @@ $ cd ./ansible-tower-setup-&lt;VERSION&gt;/</code></pre>
 <li>&quot;semaphore Installation.&quot;</li>
 </ol>
 <h1 id="python-api">Python API</h1>
-<p>Ansible is written in Python so it can be used programactically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilies. It is recommended to use a RESTful API from a dashboard for other languages or more advanced tasks. Below is an example from the official documentation of using the Python library for Ansible 2 [1]:</p>
+<p>Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard for other languages or more advanced tasks. Below is an example from the official documentation of using the Python library for Ansible 2 [1]:</p>
 <pre><code>#!/usr/bin/env python
 
 import json
@@ -1893,7 +1926,7 @@ finally:
 <p>An unofficial example can also be found at <a href="https://serversforhackers.com/running-ansible-2-programmatically" class="uri">https://serversforhackers.com/running-ansible-2-programmatically</a>.</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>Ansible Python API.</li>
+<li>&quot;Ansible Python API.&quot;</li>
 </ol>
 <hr />
 <h2 id="bibliography">Bibliography</h2>
@@ -1956,7 +1989,7 @@ finally:
 <li>&quot;Ansible include - include a play or task list.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. https://docs.ansible.com/ansible/include_module.html</li>
 <li>&quot;Ansible stat - retrieve file or file system status.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html</li>
 <li>&quot;Installing Ansible Tower.&quot; Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html</li>
-<li>&quot;Ansible assert - Asserts given expressions are true.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html</li>
-<li>&quot;Ansible Windows Support.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html</li>
-<li>&quot;Ansible Python API.&quot; Ansible Documentatoin. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
+<li>&quot;Ansible assert - Asserts given expressions are true.&quot; Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html</li>
+<li>&quot;Ansible Windows Support.&quot; Ansible Documentation. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html</li>
+<li>&quot;Ansible Python API.&quot; Ansible Documentation. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
 </ul>
