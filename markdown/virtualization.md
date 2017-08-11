@@ -15,6 +15,7 @@
     * [Containers](#software-virtualization---containers)
         * [Docker](#software-virtualization---containers---docker)
             * [Networking](#software-virtualization---containers---docker---networking)
+        * [LXC](#software-virtualization---containers---lxc)
 * [Orchestration](#orchestration)
     * [Vagrant](#orchestration---vagrant)
         * [Vagrantfile](#orchestration---vagrant---vagrantfile)
@@ -318,6 +319,46 @@ Sources:
 
 1. "containers in docker 1.11 does not get same MTU as host #22297." Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297
 2. "iptables failed - No chain/target/match by that name #16816." Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816
+
+
+### Software Virtualization - Containers - LXC
+
+Linux Containers (LXC) utilizes the Linux kernel to natively run containers.
+
+Debian install [1]:
+
+```
+# apt-get install lxc
+```
+
+RHEL install [2] requires the Extra Packages for Enterprise Linux (EPEL) repository:
+
+* RHEL:
+```
+# yum install epel-release
+# yum install lxc lxc-templates libvirt
+```
+
+On RHEL family systems the `lxcbr0` interface is not created or used. Alternatively, the Libvirt interface `virbr0` should be uesd.
+
+```
+# vim /etc/lxc/default.conf
+lxc.network.link = virbr0
+```
+
+The required services need to be started before LXC containers will be able to run.
+
+```
+# systemctl start libvirtd
+# systemctl start lxc
+```
+
+Templates that can be referenced for LXC container creation can be found in the  `/usr/share/lxc/templates/` directory.
+
+Sources:
+
+1. "LXC." Ubuntu Documentation. Accessed August 8, 2017. https://help.ubuntu.com/lts/serverguide/lxc.html
+2. "How to install and setup LXC (Linux Container) on Fedora Linux 26." nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
 
 
 # Orchestration

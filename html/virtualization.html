@@ -25,6 +25,7 @@
 <ul>
 <li><a href="#software-virtualization---containers---docker---networking">Networking</a></li>
 </ul></li>
+<li><a href="#software-virtualization---containers---lxc">LXC</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#orchestration">Orchestration</a>
@@ -222,6 +223,28 @@ ExecStart=/usr/bin/docker-current daemon \
 <ol style="list-style-type: decimal">
 <li>&quot;containers in docker 1.11 does not get same MTU as host #22297.&quot; Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297</li>
 <li>&quot;iptables failed - No chain/target/match by that name #16816.&quot; Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816</li>
+</ol>
+<h3 id="software-virtualization---containers---lxc">Software Virtualization - Containers - LXC</h3>
+<p>Linux Containers (LXC) utilizes the Linux kernel to natively run containers.</p>
+<p>Debian install [1]:</p>
+<pre><code># apt-get install lxc</code></pre>
+<p>RHEL install [2] requires the Extra Packages for Enterprise Linux (EPEL) repository:</p>
+<ul>
+<li><p>RHEL:</p>
+<pre><code># yum install epel-release
+# yum install lxc lxc-templates libvirt</code></pre></li>
+</ul>
+<p>On RHEL family systems the <code>lxcbr0</code> interface is not created or used. Alternatively, the Libvirt interface <code>virbr0</code> should be uesd.</p>
+<pre><code># vim /etc/lxc/default.conf
+lxc.network.link = virbr0</code></pre>
+<p>The required services need to be started before LXC containers will be able to run.</p>
+<pre><code># systemctl start libvirtd
+# systemctl start lxc</code></pre>
+<p>Templates that can be referenced for LXC container creation can be found in the <code>/usr/share/lxc/templates/</code> directory.</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;LXC.&quot; Ubuntu Documentation. Accessed August 8, 2017. https://help.ubuntu.com/lts/serverguide/lxc.html</li>
+<li>&quot;How to install and setup LXC (Linux Container) on Fedora Linux 26.&quot; nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/</li>
 </ol>
 <h1 id="orchestration">Orchestration</h1>
 <p>Virtual machine provisioning can be automated through the use of different tools.</p>
