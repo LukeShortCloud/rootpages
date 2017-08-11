@@ -20,6 +20,7 @@
     * [Vagrant](#orchestration---vagrant)
         * [Vagrantfile](#orchestration---vagrant---vagrantfile)
             * [Networks](#orchestration---vagrant---vagrantfile---networks)
+                * [libvirt](#orchestration---vagrant---vagrantfile---networks---libvirt)
             * [Provisioning](#orchestration---vagrant---vagrantfile---provisioning)
             * [Multiple Machines](#orchestration---vagrant---vagrantfile---multiple-machines)
     * Terraform
@@ -457,7 +458,7 @@ Source:
 
 #### Orchestration - Vagrant - Vagrantfile - Networks
 
-Networks are either `private` or `public`. `private` networks use host-only networking and use network address translation (NAT) to communicate out to the Internet. Virtual machines (VMs) can communicate with each other but they cannot be reached from the outside world. Port forwarding can also be configured to allow access to specific ports from the hypervisor node. `public` networks allow a virtual machine to attach to a bridge device for full connectivity with the external network.
+Networks are either `private` or `public`. `private` networks use host-only networking and use network address translation (NAT) to communicate out to the Internet. Virtual machines (VMs) can communicate with each other but they cannot be reached from the outside world. Port forwarding can also be configured to allow access to specific ports from the hypervisor node. `public` networks allow a virtual machine to attach to a bridge device for full connectivity with the external network. This section covers VirtualBox networks since it is the default virtualization provider.
 
 With a `private` network, the IP address can either be a random address assigned by DHCP or a static IP that is defined.
 ```
@@ -496,6 +497,31 @@ Source:
 
 1. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
 
+##### Orchestration - Vagrant - Vagrantfile - Networks - Libvirt
+
+The options and syntax for public networks with the "libvirt" provider are slightly different.
+
+Options:
+
+* dev = The bridge device name.
+* mode = The libvirt mode to use. Default: `bridge`.
+* type = The libvirt interface type. This is normally set to `bridge`.
+* network_name = The name of a network to use.
+* portgroup = The libvirt portgroup to use.
+* ovs = Instead of using a Linux bridge, use Open vSwitch instead. Default: `false`.
+* trust_guest_rx_filters = Enable the `trustGuestRxFilters` setting. Default: `false`.
+
+Example:
+
+```
+config.vm.define "controller" do |controller|
+    controller.vm.network "public_network", ip: "10.0.0.205", dev: "br0", mode: "bridge", type: "bridge"
+end
+```
+
+Source:
+
+1. "Vagrant Libvirt Provider [README]." vagrant-libvirt GitHub. May 8, 2017. Accessed June 17, 2017. https://github.com/vagrant-libvirt/vagrant-libvirt
 
 #### Orchestration - Vagrant - Vagrantfile - Provisioning
 
@@ -533,8 +559,8 @@ Vagrant.configure("2") do |config|
     web.vm.box = "nginx"
   end
 
-  config.vm.define "db" do |db|
-    db.vm.box = "phpfpm"
+  config.vm.define "php" do |php|
+    php.vm.box = "phpfpm"
   end
 
   config.vm.define "db" do |db|

@@ -34,7 +34,10 @@
 <ul>
 <li><a href="#orchestration---vagrant---vagrantfile">Vagrantfile</a>
 <ul>
-<li><a href="#orchestration---vagrant---vagrantfile---networks">Networks</a></li>
+<li><a href="#orchestration---vagrant---vagrantfile---networks">Networks</a>
+<ul>
+<li><a href="#orchestration---vagrant---vagrantfile---networks---libvirt">libvirt</a></li>
+</ul></li>
 <li><a href="#orchestration---vagrant---vagrantfile---provisioning">Provisioning</a></li>
 <li><a href="#orchestration---vagrant---vagrantfile---multiple-machines">Multiple Machines</a></li>
 </ul></li>
@@ -311,7 +314,7 @@ end</code></pre>
 <li>&quot;[Vagrant] Boxes.&quot; Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/boxes.html</li>
 </ol>
 <h4 id="orchestration---vagrant---vagrantfile---networks">Orchestration - Vagrant - Vagrantfile - Networks</h4>
-<p>Networks are either <code>private</code> or <code>public</code>. <code>private</code> networks use host-only networking and use network address translation (NAT) to communicate out to the Internet. Virtual machines (VMs) can communicate with each other but they cannot be reached from the outside world. Port forwarding can also be configured to allow access to specific ports from the hypervisor node. <code>public</code> networks allow a virtual machine to attach to a bridge device for full connectivity with the external network.</p>
+<p>Networks are either <code>private</code> or <code>public</code>. <code>private</code> networks use host-only networking and use network address translation (NAT) to communicate out to the Internet. Virtual machines (VMs) can communicate with each other but they cannot be reached from the outside world. Port forwarding can also be configured to allow access to specific ports from the hypervisor node. <code>public</code> networks allow a virtual machine to attach to a bridge device for full connectivity with the external network. This section covers VirtualBox networks since it is the default virtualization provider.</p>
 <p>With a <code>private</code> network, the IP address can either be a random address assigned by DHCP or a static IP that is defined.</p>
 <pre><code>Vagrant.configure(&quot;2&quot;) do |config|
   config.vm.network &quot;private_network&quot;, type: &quot;dhcp&quot;
@@ -334,6 +337,26 @@ end</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;[Vagrant] Networking.&quot; Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/</li>
+</ol>
+<h5 id="orchestration---vagrant---vagrantfile---networks---libvirt">Orchestration - Vagrant - Vagrantfile - Networks - Libvirt</h5>
+<p>The options and syntax for public networks with the &quot;libvirt&quot; provider are slightly different.</p>
+<p>Options:</p>
+<ul>
+<li>dev = The bridge device name.</li>
+<li>mode = The libvirt mode to use. Default: <code>bridge</code>.</li>
+<li>type = The libvirt interface type. This is normally set to <code>bridge</code>.</li>
+<li>network_name = The name of a network to use.</li>
+<li>portgroup = The libvirt portgroup to use.</li>
+<li>ovs = Instead of using a Linux bridge, use Open vSwitch instead. Default: <code>false</code>.</li>
+<li>trust_guest_rx_filters = Enable the <code>trustGuestRxFilters</code> setting. Default: <code>false</code>.</li>
+</ul>
+<p>Example:</p>
+<pre><code>config.vm.define &quot;controller&quot; do |controller|
+    controller.vm.network &quot;public_network&quot;, ip: &quot;10.0.0.205&quot;, dev: &quot;br0&quot;, mode: &quot;bridge&quot;, type: &quot;bridge&quot;
+end</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Vagrant Libvirt Provider [README].&quot; vagrant-libvirt GitHub. May 8, 2017. Accessed June 17, 2017. https://github.com/vagrant-libvirt/vagrant-libvirt</li>
 </ol>
 <h4 id="orchestration---vagrant---vagrantfile---provisioning">Orchestration - Vagrant - Vagrantfile - Provisioning</h4>
 <p>After a virtual machine (VM) has been created, additional commands can be run to configure the guest VMs. This is referred to as &quot;provisioning.&quot;</p>
@@ -368,8 +391,8 @@ end</code></pre>
     web.vm.box = &quot;nginx&quot;
   end
 
-  config.vm.define &quot;db&quot; do |db|
-    db.vm.box = &quot;phpfpm&quot;
+  config.vm.define &quot;php&quot; do |php|
+    php.vm.box = &quot;phpfpm&quot;
   end
 
   config.vm.define &quot;db&quot; do |db|
