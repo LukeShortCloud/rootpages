@@ -252,6 +252,12 @@
 <li>&quot;OpenStack-Ansible.&quot; GitHub. March 30, 2017. Accessed March 30, 2017. https://github.com/openstack/openstack-ansible</li>
 </ol>
 <h3 id="automation---openstack-ansible---quick">Automation - OpenStack Ansible - Quick</h3>
+<p>Minimum requirements:</p>
+<ul>
+<li>8 CPU cores</li>
+<li>50GB storage</li>
+<li>8GB RAM (16GB recommended)</li>
+</ul>
 <p>This quick installation guide covers how to install an all-in-one environment. It is recommended to deploy this inside of a virtual machine (with nested virtualization enabled) as many system configurations are changed.</p>
 <p>Setup the OpenStack-Ansible project.</p>
 <pre><code># git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
@@ -281,6 +287,7 @@
 <li>horizon.yml.aio</li>
 <li>keystone.yml.aio</li>
 <li>neutron.yml.aio</li>
+<li>nova.yml.aio</li>
 </ul></li>
 </ul>
 <p>Extra Playbooks can be added by copying them from <code>/opt/openstack-ansible/etc/openstack_deploy/conf.d/</code> to <code>/etc/openstack_deploy/conf.d/</code>. The file extensions should be changed from <code>.yml.aio</code> to <code>.yml</code> to be correctly parsed.</p>
@@ -340,12 +347,18 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <li>&quot;Quick Start.&quot; OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html</li>
 </ol>
 <h3 id="automation---openstack-ansible---full">Automation - OpenStack Ansible - Full</h3>
-<p>The recommended network topology is that the physical servers should have 4 different network interfaces and networks for managing different services. Only one network is required for OpenStack Ansible to work but having segregated VLANs is recommended for production environments.</p>
+<p>Minimum requirements:</p>
 <ul>
-<li>br-mgmt = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.</li>
-<li>br-storage = This is the only optional interface. It is recommended to use this to separate the <code>storage</code> nodes traffic. This should exist on the <code>storage</code> (when using bare-metal) and <code>compute</code> nodes.</li>
-<li>br-vlan = This should exist on the <code>network</code> (when using bare-metal) and <code>compute</code> nodes. It is used for self-service networks.</li>
-<li>br-vxlan = This should exist on the <code>network</code> and <code>compute</code> nodes. It is used for self-service networks.</li>
+<li>3 infrastructure nodes</li>
+<li>2 compute nodes</li>
+<li>1 log node</li>
+</ul>
+<p>It is also required to have 4 different network bridges.</p>
+<ul>
+<li><code>br-mgmt</code> = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.</li>
+<li><code>br-storage</code> = This is the only optional interface. It is recommended to use this to separate the &quot;storage&quot; nodes traffic. This should exist on the &quot;storage&quot; (when using bare-metal) and &quot;compute&quot; nodes.</li>
+<li><code>br-vlan</code> = This should exist on the &quot;network&quot; (when using bare-metal) and &quot;compute&quot; nodes. It is used for self-service networks.</li>
+<li><code>br-vxlan</code> = This should exist on the &quot;network&quot; and &quot;compute&quot; nodes. It is used for self-service networks.</li>
 </ul>
 <p>Download and install the latest stable OpenStack Ansible suite from GitHub.</p>
 <pre><code># apt-get install git
@@ -364,32 +377,33 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <p>View the <code>/etc/openstack_deploy/openstack_user_config.yml.prod.example</code> for a real production example and reference.</p>
 <p>Configure the networks that are used in the environment.</p>
 <ul>
-<li>cider_networks
+<li><code>cider_networks</code>
 <ul>
-<li>container = The network range that the LXC containers will use an IP address from. This is the management network that is on <code>br-mgmt</code>.</li>
-<li>tunnel = The network range for accessing network services between the <code>compute</code> and <code>network</code> nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on <code>br-vxlan</code>.</li>
-<li>storage = The network range for accessing storage.</li>
+<li><code>container</code> = The network range that the LXC containers will use an IP address from. This is the management network that is on &quot;br-mgmt.&quot;</li>
+<li><code>tunnel</code> = The network range for accessing network services between the &quot;compute&quot; and &quot;network&quot; nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on &quot;br-vxlan.&quot;</li>
+<li><code>storage</code> = The network range for accessing storage. This is the network that is on &quot;br-storage.&quot;</li>
 </ul></li>
-<li>used_ips = Lists of IP addressess that are already in use and should not be used for the container networks.</li>
-<li>global_overrides
+<li><code>used_ips</code> = Lists of IP addressess that are already in use and should not be used for the container networks.</li>
+<li><code>global_overrides</code>
 <ul>
-<li>tunnel_bridge = The interface to use for tunneling VXLAN traffic. This is typically <code>br-vxlan</code>.</li>
-<li>management_bridge = The interface to use for management access. This is typically <code>br-mgmt</code>.</li>
+<li><code>tunnel_bridge</code> = The interface to use for tunneling VXLAN traffic. This is typically &quot;br-vxlan.&quot;</li>
+<li><code>management_bridge</code> = The interface to use for management access. This is typically <code>br-mgmt</code>.</li>
 <li>external_lb_vip_address = The public IP address to load balance for API endpoints.</li>
-<li>provider_networks
+<li><code>provider_networks</code>
 <ul>
-<li>network = Different networks can be defined. At least one is required.
+<li><code>network</code> = Different networks can be defined. At least one is required.
 <ul>
-<li>type = The type of network that the <code>container_bridge</code> device should be used.
+<li><code>type</code> = The type of network that the &quot;container_bridge&quot; device should be used.
 <ul>
 <li>flat</li>
 <li>vlan</li>
 <li>vxlan</li>
 </ul></li>
-<li>container_bridge = The bridge device that will be used to connect the container to the network. The recommended deployment scheme recommends setting up a <code>br-mgmt</code>, <code>br-storage</code>, <code>br-vlan</code>, and <code>br-vlan</code>. Any valid bridge device on the host node can be specified here.</li>
-<li>container_type = veth</li>
+<li><code>container_bridge</code> = The bridge device that will be used to connect the container to the network. The recommended deployment scheme recommends setting up a &quot;br-mgmt&quot;, &quot;br-storage&quot;, &quot;br-vlan&quot;, and &quot;br-vlan.&quot; Any valid bridge device on the host node can be specified here.</li>
+<li><code>container_type</code> = veth</li>
+<li><code>ip_from_q</code> = Specify the &quot;cider_networks&quot; that will be used to allocate IP addresses from.</li>
 <li>range = The optional VXLAN that the bridge interface should use.</li>
-<li>container_interface = The interface that the LXC container should use. This is typically <code>eth1</code>.</li>
+<li><code>container_interface</code> = The interface that the LXC container should use. This is typically &quot;eth1.&quot;</li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -405,6 +419,10 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy</code></pre>
 <li>infra2:
 <ul>
 <li>ip: <code>&lt;HOST2_IP_ADDRESS&gt;</code></li>
+</ul></li>
+<li>infra3:
+<ul>
+<li>ip: <code>&lt;HOST3_IP_ADDRESS&gt;</code></li>
 </ul></li>
 </ul></li>
 </ul>

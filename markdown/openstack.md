@@ -227,6 +227,12 @@ Source:
 
 ### Automation - OpenStack Ansible - Quick
 
+Minimum requirements:
+
+* 8 CPU cores
+* 50GB storage
+* 8GB RAM (16GB recommended)
+
 This quick installation guide covers how to install an all-in-one environment. It is recommended to deploy this inside of a virtual machine (with nested virtualization enabled) as many system configurations are changed.
 
 Setup the OpenStack-Ansible project.
@@ -259,6 +265,7 @@ There are two all-in-one scenarios that will run different Ansible Playbooks. Th
     * horizon.yml.aio
     * keystone.yml.aio
     * neutron.yml.aio
+    * nova.yml.aio
 
 Extra Playbooks can be added by copying them from `/opt/openstack-ansible/etc/openstack_deploy/conf.d/` to `/etc/openstack_deploy/conf.d/`. The file extensions should be changed from `.yml.aio` to `.yml` to be correctly parsed.
 
@@ -348,12 +355,18 @@ Source:
 
 ### Automation - OpenStack Ansible - Full
 
-The recommended network topology is that the physical servers should have 4 different network interfaces and networks for managing different services. Only one network is required for OpenStack Ansible to work but having segregated VLANs is recommended for production environments.
+Minimum requirements:
 
-* br-mgmt = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.
-* br-storage = This is the only optional interface. It is recommended to use this to separate the `storage` nodes traffic. This should exist on the `storage` (when using bare-metal) and `compute` nodes.
-* br-vlan = This should exist on the `network` (when using bare-metal) and `compute` nodes. It is used for self-service networks.
-* br-vxlan = This should exist on the `network` and `compute` nodes. It is used for self-service networks.
+* 3 infrastructure nodes
+* 2 compute nodes
+* 1 log node
+
+It is also required to have 4 different network bridges.
+
+* `br-mgmt` = All the nodes should have this network. This is the management network where all nodes can be accessed and managed by.
+* `br-storage` = This is the only optional interface. It is recommended to use this to separate the "storage" nodes traffic. This should exist on the "storage" (when using bare-metal) and "compute" nodes.
+* `br-vlan` = This should exist on the "network" (when using bare-metal) and "compute" nodes. It is used for self-service networks.
+* `br-vxlan` = This should exist on the "network" and "compute" nodes. It is used for self-service networks.
 
 Download and install the latest stable OpenStack Ansible suite from GitHub.
 
@@ -384,25 +397,26 @@ View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a re
 
 Configure the networks that are used in the environment.
 
-* cider_networks
-    * container = The network range that the LXC containers will use an IP address from. This is the management network that is on `br-mgmt`.
-    * tunnel = The network range for accessing network services between the `compute` and `network` nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on `br-vxlan`.
-    * storage = The network range for accessing storage.
-* used_ips = Lists of IP addressess that are already in use and should not be used for the container networks.
-* global_overrides
-    * tunnel_bridge = The interface to use for tunneling VXLAN traffic. This is typically `br-vxlan`.
-    * management_bridge = The interface to use for management access. This is typically `br-mgmt`.
+* `cider_networks`
+    * `container` = The network range that the LXC containers will use an IP address from. This is the management network that is on "br-mgmt."
+    * `tunnel` = The network range for accessing network services between the "compute" and "network" nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on "br-vxlan."
+    * `storage` = The network range for accessing storage. This is the network that is on "br-storage."
+* `used_ips` = Lists of IP addressess that are already in use and should not be used for the container networks.
+* `global_overrides`
+    * `tunnel_bridge` = The interface to use for tunneling VXLAN traffic. This is typically "br-vxlan."
+    * `management_bridge` = The interface to use for management access. This is typically `br-mgmt`.
     * external_lb_vip_address = The public IP address to load balance for API endpoints.
-    * provider_networks
-        * network = Different networks can be defined. At least one is required.
-            * type = The type of network that the `container_bridge` device should be used.
+    * `provider_networks`
+        * `network` = Different networks can be defined. At least one is required.
+            * `type` = The type of network that the "container_bridge" device should be used.
                 * flat
                 * vlan
                 * vxlan
-            * container_bridge = The bridge device that will be used to connect the container to the network. The recommended deployment scheme recommends setting up a `br-mgmt`, `br-storage`, `br-vlan`, and `br-vlan`. Any valid bridge device on the host node can be specified here.
-            * container_type = veth
+            * `container_bridge` = The bridge device that will be used to connect the container to the network. The recommended deployment scheme recommends setting up a "br-mgmt", "br-storage", "br-vlan", and "br-vlan." Any valid bridge device on the host node can be specified here.
+            * `container_type` = veth
+            * `ip_from_q` = Specify the "cider_networks" that will be used to allocate IP addresses from.
             * range = The optional VXLAN that the bridge interface should use.
-            * container_interface = The interface that the LXC container should use. This is typically `eth1`.
+            * `container_interface` = The interface that the LXC container should use. This is typically "eth1."
 
 The syntax for defining which host(s) a service will be installed onto follow this format below. Controller node services are specified with the keyword `-infra` in their name. Each `infra#` entry contains the IP address of the physical server to provision the containers to.
 
@@ -411,6 +425,8 @@ The syntax for defining which host(s) a service will be installed onto follow th
         * ip: `<HOST1_IP_ADDRESS>`
     * infra2:
         * ip: `<HOST2_IP_ADDRESS>`
+    * infra3:
+        * ip: `<HOST3_IP_ADDRESS>`
 
 
 The valid service types are:
