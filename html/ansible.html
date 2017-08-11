@@ -72,7 +72,7 @@
 <li><a href="#playbooks---modules">Modules</a>
 <ul>
 <li><a href="#playbooks---modules---command-and-shell">Command and Shell</a></li>
-<li><a href="#playbooks---modules---copy,-files,-synchronize,-and-templates">Copy, Files, Synchronize, and Templates</a></li>
+<li><a href="#playbooks---modules---copy,-file,-synchronize,-and-template">Copy, File, Synchronize, and Template</a></li>
 <li><a href="#playbooks---modules---cron">Cron</a></li>
 <li><a href="#playbooks---modules---debug">Debug</a></li>
 <li><a href="#playbooks---modules---git">Git</a></li>
@@ -85,6 +85,29 @@
 <li><a href="#playbooks---modules---package-managers---yum">Yum</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#playbooks---windows-modules">Windows Modules</a>
+<ul>
+<li><a href="#playbooks---windows-modules---chocolatey">Chocolatey</a></li>
+<li><a href="#playbooks---windows-modules---command-and-shell">Command and Shell</a></li>
+<li><a href="#playbooks---windows-modules---file-management">File Management</a>
+<ul>
+<li>Copy</li>
+<li>File</li>
+<li>Robocopy</li>
+<li>Shortcut</li>
+<li><a href="#playbooks---windows-modules---file-management---template">Template</a></li>
+</ul></li>
+<li>Feature</li>
+<li>Firewall and Firewall Rule</li>
+<li>MSI</li>
+<li>Package</li>
+<li>Reg_Stat and RegEdit</li>
+<li>Service</li>
+<li><a href="#playbooks---windows-modules---updates">Updates</a></li>
+<li><a href="#playbooks---windows-modules---user">User</a></li>
+<li>Scheduled Task</li>
+<li>Stat</li>
+</ul></li>
 <li><a href="#playbooks---galaxy-roles">Galaxy Roles</a>
 <ul>
 <li><a href="#playbooks---galaxy-roles---network-interface">Network Interface</a></li>
@@ -92,7 +115,7 @@
 </ul></li>
 <li><a href="#dashboards">Dashboards</a>
 <ul>
-<li><a href="#dashboards---ansible-tower">Ansible Tower</a></li>
+<li><a href="#dashboards---ansible-tower-3">Ansible Tower 3</a></li>
 <li><a href="#dashboards---open-tower">Open Tower</a></li>
 <li><a href="#dashboards---semaphore">Semaphore</a></li>
 </ul></li>
@@ -101,7 +124,7 @@
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]</p>
-<p>There is also support for Windows modules via PowerShell, however, these are not currently documented in this guide. [2]</p>
+<p>There is also support for Windows modules. Ansible is executed on a control node that can Linux or Windows, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed using PowerShell commands. [2]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;An Ansible Tutorial.&quot;</li>
@@ -109,11 +132,8 @@
 </ol>
 <h1 id="installation">Installation</h1>
 <p>Ansible 2.4 requires Python 2.6, 2.7, or &gt;= 3.5 on both the control and managed nodes. Python 3 support is still in development but should be stable within the next few releases. [1][2]</p>
-<p>CentOS:</p>
+<p>RHEL:</p>
 <pre><code># yum install epel-release
-# yum install ansible</code></pre>
-<p>RHEL 7:</p>
-<pre><code># subscription-manager repos --enable rhel-7-server-extras-rpms
 # yum install ansible</code></pre>
 <p>Debian:</p>
 <pre><code># apt-get install software-properties-common
@@ -131,10 +151,12 @@
 <pre><code># git pull --rebase
 # git submodule update --init --recursive</code></pre>
 <p>[1]</p>
+<p>For managing Windows servers, the &quot;winrm&quot; Python library is required on the Ansible control node. The remote Windows servers need PowerShell &gt;= 3.0 installed and WinRM enabled. [3]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Installation.&quot;</li>
 <li>&quot;Ansible 2.2.0 RC1 is ready for testing.&quot;</li>
+<li>&quot;Windows Support.&quot;</li>
 </ol>
 <h1 id="configuration">Configuration</h1>
 <h2 id="configuration---main">Configuration - Main</h2>
@@ -232,9 +254,14 @@ domain_ip=192.168.7.7</code></pre>
 <li>ansible_port = A custom SSH port (i.e., if not using the standard port 22).</li>
 <li>ansible_connection = These options specify how to log in to execute tasks.
 <ul>
-<li>ssh = Run commands over a remote SSH connection (default).</li>
-<li>local = Run on the local system.</li>
 <li>chroot = Run commands in a directory using chroot.</li>
+<li>local = Run on the local system.</li>
+<li>ssh = Run commands over a remote SSH connection (default).</li>
+<li>winrm = Use the Windows Remote Management (WinRM) protocols to connect to Windows servers.</li>
+</ul></li>
+<li>ansible_winrm_server_cert_validation
+<ul>
+<li>ignore = Ignore self-signed certificates for SSL/HTTPS connections via WinRM.</li>
 </ul></li>
 <li>ansible_user = The SSH user.</li>
 <li>ansible_pass = The SSH user's password. This is very insecure to keep passwords in plain text files so it is recommended to use SSH keys or pass the &quot;--ask-pass&quot; option to ansible when running tasks.</li>
@@ -515,7 +542,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre>
 <ul>
 <li>[defaults]
 <ul>
-<li>forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to be able to run tasks on many hosts at the same time.</li>
+<li>forks = The number of parallel processes that are spun up for remote connections. The default is 5. This should be increased to a larger number to handle . The recommended number is <code>forks = (processor_cores * 5)</code>. [4]</li>
 <li>pipelining = Enable pipelining to bundle commands together that do not require a file transfer. This is disabled by default because most sudo users are enforced to use the <code>requiretty</code> sudo option that pipelining is incompatible with. [1]</li>
 <li>gathering = Set this to &quot;explicit&quot; to only gather the necessary facts if when/if they are required by the Playbook. [2]</li>
 </ul></li>
@@ -566,6 +593,7 @@ ${hostvars.&lt;HOSTNAME&gt;.&lt;VARIABLE&gt;}</code></pre>
 <li>&quot;ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT).&quot;</li>
 <li>&quot;Ansible Configuration file.&quot;</li>
 <li>&quot;Ansible Variables.&quot;</li>
+<li>&quot;Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017.&quot;</li>
 </ol>
 <h2 id="playbooks---jinja2-templates">Playbooks - Jinja2 Templates</h2>
 <h3 id="playbooks---jinja2-templates---variables">Playbooks - Jinja2 Templates - Variables</h3>
@@ -1392,8 +1420,8 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <li>&quot;Ansible Command Module.&quot;</li>
 <li>&quot;Ansible Shell Module.&quot;</li>
 </ol>
-<h3 id="playbooks---modules---copy-files-synchronize-and-templates">Playbooks - Modules - Copy, Files, Synchronize, and Templates</h3>
-<p>The copy, file and template modules provide ways to managing and configuring various files. The <code>files</code> module is used to handle file creation/modification on the remote host. [1] <code>Templates</code> are to be used when Ansible needs to find and replace variables [2]. <code>Copy</code> is used for copying files and folders either from the role or on the remote host. <code>Synchronize</code> is used as a wrapper around rsync to provide a more robust copy functionality. Most of the options and usage are the same between these four modules.</p>
+<h3 id="playbooks---modules---copy-file-synchronize-and-template">Playbooks - Modules - Copy, File, Synchronize, and Template</h3>
+<p>The <code>copy</code>, <code>file</code>, <code>synchronize</code>, and <code>template</code> modules provide ways for creating and modifying various files. The <code>file</code> module is used to handle file creation/modification on the remote host. [1] <code>template</code>s are to be used when a file contains variables that will be rendered out by Jinja2 [2]. <code>copy</code> is used for copying files and folders either from the role or on the remote host. <code>synchronize</code> is used as a wrapper around rsync to provide a more robust copy functionality. Most of the options and usage are the same between these four modules.</p>
 <p>Syntax:</p>
 <pre><code>copy:</code></pre>
 <pre><code>file:</code></pre>
@@ -1751,6 +1779,143 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible stat - retrieve file or file system status.&quot;</li>
 </ol>
+<h2 id="playbooks---windows-modules">Playbooks - Windows Modules</h2>
+<p>These modules are specific to managing Windows servers and are not related to the normal modules designed for UNIX-like operating systems. These module names start with the &quot;win_&quot; prefix.</p>
+<h3 id="playbooks---windows-modules---chocolatey">Playbooks - Windows Modules - Chocolatey</h3>
+<p>Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolately repository.</p>
+<p>Common options:</p>
+<ul>
+<li>force = Reinstall an existing package.</li>
+<li>install_args = Arguments to pass to Chocolately during installation.</li>
+<li>ignore_dependencies = Ignore dependencies of a package. Default: no.</li>
+<li><strong>name</strong> = The name of a package to manage.</li>
+<li>source = The Chocolatey repository to use.</li>
+<li>state = Default: present.
+<ul>
+<li>absent = Uninstall the package.</li>
+<li>present = Install the package.</li>
+<li>latest = Update the package.</li>
+</ul></li>
+<li>timeout = The number of seconds to wait for Chocolatey to complete it's action. Default: 2700.</li>
+<li>version = The exact version of a package that should be installed.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_chocolatey:</code></pre>
+<p>Example:</p>
+<pre><code>win_chocolatey: name=&quot;libreoffice&quot; state=&quot;upgrade&quot; version=&quot;5.4.0&quot;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_chocolatey - Installs packages using chocolatey.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---command-and-shell">Playbooks - Windows Modules - Command and Shell</h3>
+<p>Windows commands can be executed via a console. The <code>command</code> module uses the DOS &quot;cmd&quot; binary and shell, by default, uses PowerShell.</p>
+<p>All similar <code>command</code> and <code>shell</code> options:</p>
+<ul>
+<li>chdir = Change the current working directory on the remote server before executing a command.</li>
+<li>creates = A path (optionally with a regular expression pattern) to a file. If this file already exists, this module will be marked as &quot;skipped.&quot;</li>
+<li>removes = If a path does not exist then this module will be marked as &quot;skipped.&quot;</li>
+</ul>
+<p><code>shell</code> options:</p>
+<ul>
+<li>executable = The binary to use for executing commands. By default this is PowerShell. Use &quot;cmd&quot; for running DOS commands.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_command:</code></pre>
+<pre><code>win_shell</code></pre>
+<p>Example:</p>
+<pre><code>win_shell: &quot;echo Hello World &gt; c:\hello.txt&quot; chdir=&quot;c:\&quot; creates=&quot;c:\hello.txt&quot;</code></pre>
+<p>[1][2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible http://docs.ansible.com/ansible/latest/win_command_module.html&quot;</li>
+<li>&quot;Ansible win_shell - Execute shell commands on target hosts.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---file-management">Playbooks - Windows Modules - File Management</h3>
+<h4 id="playbooks---windows-modules---file-management---template">Playbooks - Windows Modules - File Management - Template</h4>
+<p>The Windows Jinja2 template module uses the same options as the normal <code>template</code> module.</p>
+<p>Syntax:</p>
+<pre><code>win_template:</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_template - Templates a file out to a remote server..&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---updates">Playbooks - Windows Modules - Updates</h3>
+<p>Windows Updates can be managed by Ansible.</p>
+<p>All options:</p>
+<ul>
+<li>category_names = A list of categories to manage updates for. Valid categories are:
+<ul>
+<li>Application</li>
+<li>Connectors</li>
+<li>CriticalUpdates (default)</li>
+<li>DefinitionUpdates</li>
+<li>DeveloperKits</li>
+<li>FeaturePacks</li>
+<li>Guidance</li>
+<li>SecurityUpdates (default)</li>
+<li>ServicePacks</li>
+<li>Tools</li>
+<li>UpdateRollups (default)</li>
+<li>Updates</li>
+</ul></li>
+<li>log_path = The path to a custom log file.</li>
+<li>state
+<ul>
+<li>installed = Search for and install updates.</li>
+<li>searched = Only search for updates.</li>
+</ul></li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_updates:</code></pre>
+<p>Example:</p>
+<pre><code>win_updates: category_names=[&#39;CriticalUpdates&#39;] state=searched log_path=&quot;c:\tmp\win_updates_log.txt&quot;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_updates - Download and install Windows updates.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---user">Playbooks - Windows Modules - User</h3>
+<p>Create, read, update, or delete (CRUD) a Windows user account.</p>
+<p>All options:</p>
+<ul>
+<li>account_disalbed = Disable the account. The user can no longer be used.</li>
+<li>account_locked = Lock the account. The user will no longer have access to log into their account.</li>
+<li>description = A description of the user's purpose.</li>
+<li>fullname = The full name of the user.</li>
+<li>groups = A list of groups that the user should be added to or removed from.</li>
+<li>groups_actions
+<ul>
+<li>replace = Add the user to each of the <code>groups</code> and remove them from all others.</li>
+<li>add = Add the user to each of the <code>groups</code>.</li>
+<li>remove = Remove the user from all of the <code>groups</code>.</li>
+</ul></li>
+<li><strong>name</strong> = The name of the user to modify.</li>
+<li>password = The the user's password.</li>
+<li>password_expired = Force the user's password to be expired/changed.</li>
+<li>password_never_expires = Determine if the user's password should ever expire.</li>
+<li>state
+<ul>
+<li>absent = Delete the user.</li>
+<li>present = Create the user. This is the default option.</li>
+<li>query = Look up information about the user account.</li>
+</ul></li>
+<li>update_password
+<ul>
+<li>always = Change the password for a user.</li>
+<li>on_create = Only change a password for a user that was just created.</li>
+</ul></li>
+<li>user_cannot_change_password = Allow or disallow a user from modifying their password.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_user:</code></pre>
+<p>Example:</p>
+<pre><code>win_user: name=&quot;default&quot; password=&quot;abc123xyz890&quot; user_cannot_change_password=&quot;yes&quot; groups=[&#39;privileged&#39;, &#39;shares&#39;] state=&quot;present&quot;</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_user - Manages local Windows user accounts.&quot;</li>
+</ol>
 <h2 id="playbooks---galaxy-roles">Playbooks - Galaxy Roles</h2>
 <p>Unofficial community roles can be used within Playbooks. Most of these can be found on <a href="https://galaxy.ansible.com/">Ansible Galaxy</a> or <a href="https://github.com/">GitHub</a>.</p>
 <h3 id="playbooks---galaxy-roles---network-interface">Playbooks - Galaxy Roles - Network Interface</h3>
@@ -1815,28 +1980,95 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 </ol>
 <h1 id="dashboards">Dashboards</h1>
 <p>Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.</p>
-<h2 id="dashboards---ansible-tower">Dashboards - Ansible Tower</h2>
-<p>Ansible Tower is the official dashboard maintained by Red Hat. A free trial of it can be used to manage up to 10 servers for testing purposes only. A license can be bought to use Tower for managing more servers and to provide support.</p>
-<p>Tower can be downloaded from here: https://www.ansible.com/tower-trial. At least a free trial license will be required which can be obtained here: https://www.ansible.com/license.</p>
+<h2 id="dashboards---ansible-tower-3">Dashboards - Ansible Tower 3</h2>
+<p>Ansible Tower is the official dashboard maintained by Red Hat. The program requires PostgreSQL, Python, and RabbitMQ. A free trial of it can be used to manage up to 10 servers for testing purposes only. A license can be bought to use Tower for managing more servers and to provide support. [1]</p>
+<p>Tower can be downloaded from <a href="http://releases.ansible.com/ansible-tower/" class="uri">http://releases.ansible.com/ansible-tower/</a>. The &quot;setup&quot; package only contains Ansible Tower. The &quot;setup-bundle&quot; has all of the dependencies for offline installation. At least a free trial license will be required to use the software which can be obtained from the <a href="https://www.ansible.com/license">Ansible Tower license page</a>.</p>
 <p>Once downloaded, it can be installed. This will at least setup a Nginx server and a virtual host for serving Ansible Tower via HTTP.</p>
-<pre><code>$ tar -x -z -v -f ansible-tower-setup-latest.tar.gz
-$ cd ./ansible-tower-setup-&lt;VERSION&gt;/</code></pre>
-<p>Configure the passwords to use for the various services in the <code>inventory</code> file.</p>
+<pre><code>$ curl -O http://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
+$ tar -x -z -v -f ansible-tower-setup-latest.tar.gz
+$ cd ./ansible-tower-setup-3.*/</code></pre>
+<p>At a bare minimum for 1 node Ansible Tower installation, the passwords to use for the various services need to be defined in the <code>inventory</code> file.</p>
 <ul>
 <li>admin_password</li>
 <li>pg_password</li>
 <li>rabbitmq_password</li>
 </ul>
-<p>If using an existing PostreSQL and/or RabbitMQ installation, be sure to fill in the connection details to the same <code>inventory</code> file. Otherwise, Ansible Tower will install and configure those services on the local machine.</p>
+<p>Ansible Tower supports clustering. This requires that the PostgreSQL service is configured on a dedicated server that is not running Ansible Tower. The Playbook that installs Tower can install PostgreSQL or use credentials to an existing server. The PostgreSQL user for Ansible Tower also requires <code>CREATEDB</code> access during the inital installation to setup the necessary database and tables.</p>
+<ul>
+<li>Installing PostgreSQL:</li>
+</ul>
+<pre><code>[tower]
+&lt;TOWER1&gt;
+&lt;TOWER2&gt;
+&lt;TOWER3&gt;
+
+[database]
+&lt;POSTGRESQL1&gt;
+
+[all:vars]
+# PostgreSQL
+pg_database=&quot;awx&quot;
+pg_username=&quot;awx&quot;
+pg_password=&quot;&lt;PASSWORD&gt;&quot;
+# RabbitMQ
+rabbitmq_port=5672
+rabbitmq_vhost=&quot;tower&quot;
+rabbitmq_username=&quot;tower&quot;
+rabbitmq_password=&quot;&lt;PASSWORD&gt;&quot;
+rabbitmq_cookie=&quot;&lt;RANDOM_STRING&gt;&quot;
+## Set to &quot;True&quot; if fully qualified domain names (FQDNs)
+## are used in the inventory file. Otherwise this should
+## be &quot;False&quot;
+rabbitmq_use_long_name=&quot;True&quot;</code></pre>
+<ul>
+<li>Using an existing PostgreSQL server:</li>
+</ul>
+<pre><code>[tower]
+&lt;TOWER1&gt;
+&lt;TOWER2&gt;
+&lt;TOWER3&gt;
+
+[all:vars]
+# PostgreSQL
+pg_host=&quot;&lt;HOST_OR_IP&gt;&quot;
+pg_port=5432
+pg_database=&quot;awx&quot;
+pg_username=&quot;awx&quot;
+pg_password=&quot;&lt;PASSWORD&gt;&quot;
+# RabbitMQ
+rabbitmq_port=5672
+rabbitmq_vhost=&quot;tower&quot;
+rabbitmq_username=&quot;tower&quot;
+rabbitmq_password=&quot;&lt;PASSWORD&gt;&quot;
+rabbitmq_cookie=&quot;&lt;RANDOM_STRING&gt;&quot;
+## Set to &quot;True&quot; if fully qualified domain names (FQDNs)
+## are used in the inventory file. Otherwise this should
+## be &quot;False&quot;
+rabbitmq_use_long_name=&quot;True&quot;</code></pre>
 <p>The &quot;ansible&quot; package needs to be available in a package repository. On RHEL systems, the Extra Packages for Enterprise Linux (EPEL) repository should be installed.</p>
 <pre><code># yum -y install epel-release</code></pre>
 <p>Then install Ansible Tower using the setup shell script. This will run an Ansible Playbook to install Tower.</p>
 <pre><code>$ ./setup.sh</code></pre>
-<p>When the installation is complete, Ansible Tower can be accessed by a web browser. The default username is &quot;admin&quot; and the password is the one set in the <code>inventory</code> file.</p>
+<p>When the installation is complete, Ansible Tower can be accessed by a web browser. If no SSL certificate was defined, then a self-signed SSL certificate will be used to encrypt the connection. The default username is &quot;admin&quot; and the password is defined in the <code>inventory</code> file.</p>
 <pre><code>https://&lt;SERVER_IP_OR_HOSTNAME&gt;/</code></pre>
+<p>Ports:</p>
+<ul>
+<li>80/tcp = Unecyrpted Ansible Tower dashboard web traffic.</li>
+<li>443/tcp = SSL encrypted Ansible Tower dashboard web traffic.</li>
+<li>5432/tcp = PostgreSQL</li>
+</ul>
+<p>Cluster ports:</p>
+<ul>
+<li>4369/tcp = Discovering other Ansible Tower nodes.</li>
+<li>5672/tcp = Local RabbitMQ port.</li>
+<li>25672/tcp = External RabbitMQ port.</li>
+<li>15672/tcp = RabbitMQ dashboard.</li>
+</ul>
+<p>[2]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Installing Ansible Tower.&quot;</li>
+<li>&quot;Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017.&quot;</li>
 </ol>
 <h2 id="dashboards---open-tower">Dashboards - Open Tower</h2>
 <p>Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]</p>
@@ -1990,6 +2222,11 @@ finally:
 <li>&quot;Ansible stat - retrieve file or file system status.&quot; Ansible Documentation. April 17, 2017. Accessed April 19, 2017. http://docs.ansible.com/ansible/stat_module.html</li>
 <li>&quot;Installing Ansible Tower.&quot; Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html</li>
 <li>&quot;Ansible assert - Asserts given expressions are true.&quot; Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html</li>
-<li>&quot;Ansible Windows Support.&quot; Ansible Documentation. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html</li>
+<li>&quot;Ansible Windows Support.&quot; Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html</li>
 <li>&quot;Ansible Python API.&quot; Ansible Documentation. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html</li>
+<li>&quot;Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017.&quot; YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig</li>
+<li>&quot;Ansible win_chocolatey - Installs packages using chocolatey.&quot; Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/win_chocolatey_module.html</li>
+<li>&quot;Ansible win_updates - Download and install Windows updates.&quot; Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/win_updates_module.html</li>
+<li>Ansible win_template - Templates a file out to a remote server.&quot; Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_template_module.html</li>
+<li>&quot;Ansible win_user - Manages local Windows user accounts.&quot; Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_user_module.html</li>
 </ul>
