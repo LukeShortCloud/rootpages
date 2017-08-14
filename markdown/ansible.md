@@ -85,6 +85,8 @@
         * [Network Interface](#playbooks---galaxy-roles---network-interface)
 * [Dashboards](#dashboards)
     * [Ansible Tower 3](#dashboards---ansible-tower-3)
+        * [GUI](#dashboards---ansible-tower-3---gui)
+        * [API](#dashboards---ansible-tower-3---api)
     * [Open Tower](#dashboards---open-tower)
     * [Semaphore](#dashboards---semaphore)
 * [Python API](#python-api)
@@ -2930,6 +2932,10 @@ When the installation is complete, Ansible Tower can be accessed by a web browse
 https://<SERVER_IP_OR_HOSTNAME>/
 ```
 
+For updating Ansible Tower, download the latest tarball release and re-run the `setup.sh` script with the original inventory and variables. Adding new nodes to the cluster should also have that script run again so that all of the existing and new nodes will be configured to know about each other. Automatically scaling and/or replicating PostgreSQL is currently not supported by the Tower setup Playbook. Only 1 database node can be configured by this Playbook.
+
+Logs are stored in `/var/log/tower/`. The main log file is `/var/log/tower/tower.log`.
+
 Ports:
 
 * 80/tcp = Unecyrpted Ansible Tower dashboard web traffic.
@@ -2951,6 +2957,80 @@ Source:
 2. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017."
 
 
+### Dashboards - Ansible Tower 3 - GUI
+
+There is a navigation bar that contains links to the most important parts of Ansible Tower.
+
+* Projects = Playbooks and, if applicable, credentials to access them from different types of source code management (SCM) systems.
+    * Manual = Use the a Playbook from the local file system on the Ansible Tower server.
+    * Git = A SCM.
+    * Mercurial (hg) = A SCM.
+    * Subversion (svn) = A SCM.
+    * Red Hat Insights = Use a Playbook from the Red Hat Insights program to do valdiation checks.
+* Inventories = Static and dynamic inventories can be defined here.
+* Templates = Used for defining a Playbook to run, the hosts to run on, any additional variables to use, and optionally a time interval to automatically run the template.
+* Jobs = Templates that have been run (or are running) and their logs and statistics.
+* (The gear/cog image) = Settings for configuring new users, teams, dynamic inventory scripts, notifications, the license, and other settings relating to the Ansible Tower installation.
+    * In Tower >= 3.1, "workflows" can be created to determine what templates/Playbooks to use after a success, failure, or have them run in a particular order.
+* (The book image) = A shortcut to Ansible Tower's official documentation.
+
+
+### Dashboards - Ansible Tower 3 - API
+
+Ansible Tower has a strong focus on automating Ansible even more by providing an API interface. Programs can interact with this by making HTTP GET and PUT requests. All of the avaiable endpoints can be viewed by going to:
+
+`https://<ANSIBLE_TOWER_HOST>/api/v1/`
+
+Version 1 of the API provides these endpoints:
+
+```
+{
+    "authtoken": "/api/v1/authtoken/",
+    "ping": "/api/v1/ping/",
+    "config": "/api/v1/config/",
+    "settings": "/api/v1/settings/",
+    "me": "/api/v1/me/",
+    "dashboard": "/api/v1/dashboard/",
+    "organizations": "/api/v1/organizations/",
+    "users": "/api/v1/users/",
+    "projects": "/api/v1/projects/",
+    "project_updates": "/api/v1/project_updates/",
+    "teams": "/api/v1/teams/",
+    "credentials": "/api/v1/credentials/",
+    "inventory": "/api/v1/inventories/",
+    "inventory_scripts": "/api/v1/inventory_scripts/",
+    "inventory_sources": "/api/v1/inventory_sources/",
+    "inventory_updates": "/api/v1/inventory_updates/",
+    "groups": "/api/v1/groups/",
+    "hosts": "/api/v1/hosts/",
+    "job_templates": "/api/v1/job_templates/",
+    "jobs": "/api/v1/jobs/",
+    "job_events": "/api/v1/job_events/",
+    "ad_hoc_commands": "/api/v1/ad_hoc_commands/",
+    "system_job_templates": "/api/v1/system_job_templates/",
+    "system_jobs": "/api/v1/system_jobs/",
+    "schedules": "/api/v1/schedules/",
+    "roles": "/api/v1/roles/",
+    "notification_templates": "/api/v1/notification_templates/",
+    "notifications": "/api/v1/notifications/",
+    "labels": "/api/v1/labels/",
+    "unified_job_templates": "/api/v1/unified_job_templates/",
+    "unified_jobs": "/api/v1/unified_jobs/",
+    "activity_stream": "/api/v1/activity_stream/",
+    "workflow_job_templates": "/api/v1/workflow_job_templates/",
+    "workflow_jobs": "/api/v1/workflow_jobs/",
+    "workflow_job_template_nodes": "/api/v1/workflow_job_template_nodes/",
+    "workflow_job_nodes": "/api/v1/workflow_job_nodes/"
+}
+```
+
+[1]
+
+Source:
+
+1. "Ansible Tower API Guide."
+
+
 ## Dashboards - Open Tower
 
 Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]
@@ -2960,21 +3040,30 @@ Source:
 1. "The Open Tower Project."
 
 
-## Dashboards - semaphore
+## Dashboards - Semaphore
 
-semaphore was designed to be an unofficial open source alternative to Ansible Tower. The latest release can be found at [https://github.com/ansible-semaphore/semaphore/releases](https://github.com/ansible-semaphore/semaphore/releases).
+Semaphore was designed to be an unofficial open source alternative to Ansible Tower. The latest release can be found at [https://github.com/ansible-semaphore/semaphore/releases](https://github.com/ansible-semaphore/semaphore/releases).
 
-Installation
+Requirements:
+
+* Ansible
+* Git >= 2.0
+* MariaDB >= 5.3
+
+Installation:
+
 ```
-# curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.0.4/semaphore_linux_amd64 > /usr/bin/semaphore
+# curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 > /usr/bin/semaphore
 # /usr/bin/semaphore -setup
 ```
+
+Semaphore will now be available at `http://<SEMAPHORE_HOST>:3000`.
+
 [1]
 
 Source:
 
 1. "semaphore Installation."
-
 
 
 # Python API
@@ -3108,7 +3197,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible include_role - Load and execute a role." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html
 * "Ansible wait_for - Waits for a condition before continuing." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html
 * "The Open Tower Project." Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower
-* "semaphore Installation." GitHub - ansible-semaphore/semaphore. July 25, 2016. Accessed December 3, 2016. https://github.com/ansible-semaphore/semaphore/wiki/Installation
+* "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 * "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
 * "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
 * "Ansible Configuration file." Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro_configuration.html
@@ -3128,3 +3217,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 *  "Ansible win_updates - Download and install Windows updates." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/win_updates_module.html
 * Ansible win_template - Templates a file out to a remote server." Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_template_module.html
 * "Ansible win_user - Manages local Windows user accounts." Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_user_module.html
+* "Ansible Tower API Guide." Ansible Documentation. Accessed August 14, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
