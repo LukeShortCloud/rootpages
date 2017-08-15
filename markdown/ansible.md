@@ -87,6 +87,10 @@
     * [Ansible Tower 3](#dashboards---ansible-tower-3)
         * [GUI](#dashboards---ansible-tower-3---gui)
         * [API](#dashboards---ansible-tower-3---api)
+        * [Security](#dashboards---ansible-tower-3---security)
+            * [ACLs](#dashboards---ansible-tower-3---security---acls)
+            * [Authentication](#dashboards---ansible-tower-3---security---authentication)
+            * [SSL](#dashboards---ansible-tower-3---security---ssl)
     * [Open Tower](#dashboards---open-tower)
     * [Semaphore](#dashboards---semaphore)
 * [Python API](#python-api)
@@ -2580,7 +2584,7 @@ These modules are specific to managing Windows servers and are not related to th
 
 ### Playbooks - Windows Modules - Chocolatey
 
-Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolately repository.
+Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolatey repository.
 
 Common options:
 
@@ -2975,6 +2979,63 @@ There is a navigation bar that contains links to the most important parts of Ans
 * (The book image) = A shortcut to Ansible Tower's official documentation.
 
 
+### Dashboards - Ansible Tower 3 - Security
+
+
+#### Dashboards - Ansible Tower 3 - Security - Authentication
+
+User authentication, by default, will store encrypted user information into the PostgreSQL database. Instead of using this, Tower can be configured to use an external authentication serverice by going into `Settings > CONFIGURE TOWER`. The available options are:
+
+* Azure AD
+* GitHub
+* GitHub Org
+* GitHub Team
+* Google OAuth2
+* LDAP
+* RADIUS
+* SAML
+
+[1]
+
+Source:
+
+1. "Tower Configuration."
+
+
+#### Dashboards - Ansible Tower 3 - Security - ACLs
+
+Every user in Tower is associated with at least one organization. The level of access the user has to that organizations resources is defined by one of the different access control lists (ACLs).
+
+Hierarchy [1]:
+
+* Organizations = A combination of Users, Teams, Projects, and Inventories.
+    * Teams = Teams are a collection of users. Teams are not required. Multiple users' access can be modified easily and quickly via a Team instead of individually modifying each user's access.
+        * Users = Users are optionally associated with a team and are always associated with an Organization. An ACL is set for what resources the user is allowed to use.
+
+User types / ACLs [2]:
+
+* System Administrator = Has full access to all organizations and the Tower installation.
+* System Auditor = Has read-only access to an organization.
+* Normal User = Has read and write access to an organization.
+
+Sources:
+
+1. "[Ansible Tower] Organizations."
+2. "[Ansible Tower] Users."
+
+
+#### Dashboards - Ansible Tower 3 - Security - SSL
+
+By default, Tower creates a self-signed SSL certificate to secure web traffic. [1] Most web browsers will mark this as an untrusted connection. For using a different SSL that is trusted, the contents of these two files need to be replaced on each Tower node:
+
+* `/etc/tower/tower.cert`
+* `/etc/tower/tower.key`
+
+Source:
+
+1. "[Ansible Tower] Installation Notes."
+
+
 ### Dashboards - Ansible Tower 3 - API
 
 Ansible Tower has a strong focus on automating Ansible even more by providing an API interface. Programs can interact with this by making HTTP GET and PUT requests. All of the avaiable endpoints can be viewed by going to:
@@ -3048,7 +3109,7 @@ Requirements:
 
 * Ansible
 * Git >= 2.0
-* MariaDB >= 5.3
+* MariaDB >= 5.3 or MySQL >= 5.6.4
 
 Installation:
 
@@ -3218,3 +3279,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * Ansible win_template - Templates a file out to a remote server." Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_template_module.html
 * "Ansible win_user - Manages local Windows user accounts." Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_user_module.html
 * "Ansible Tower API Guide." Ansible Documentation. Accessed August 14, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
+* "[Ansible Tower] Organizations." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/organizations.html
+* "[Ansible Tower] Users." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html
+* "[Ansible Tower] Installation Notes." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html
+* "Tower Configuration." Ansible Documentation. Accessed August 15, 2017. https://docs.ansible.com/ansible-tower/latest/html/administration/configure_tower_in_tower.html

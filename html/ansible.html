@@ -119,6 +119,12 @@
 <ul>
 <li><a href="#dashboards---ansible-tower-3---gui">GUI</a></li>
 <li><a href="#dashboards---ansible-tower-3---api">API</a></li>
+<li><a href="#dashboards---ansible-tower-3---security">Security</a>
+<ul>
+<li><a href="#dashboards---ansible-tower-3---security---acls">ACLs</a></li>
+<li><a href="#dashboards---ansible-tower-3---security---authentication">Authentication</a></li>
+<li><a href="#dashboards---ansible-tower-3---security---ssl">SSL</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#dashboards---open-tower">Open Tower</a></li>
 <li><a href="#dashboards---semaphore">Semaphore</a></li>
@@ -1786,7 +1792,7 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 <h2 id="playbooks---windows-modules">Playbooks - Windows Modules</h2>
 <p>These modules are specific to managing Windows servers and are not related to the normal modules designed for UNIX-like operating systems. These module names start with the &quot;win_&quot; prefix.</p>
 <h3 id="playbooks---windows-modules---chocolatey">Playbooks - Windows Modules - Chocolatey</h3>
-<p>Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolately repository.</p>
+<p>Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolatey repository.</p>
 <p>Common options:</p>
 <ul>
 <li>force = Reinstall an existing package.</li>
@@ -2096,6 +2102,57 @@ rabbitmq_use_long_name=&quot;True&quot;</code></pre>
 </ul></li>
 <li>(The book image) = A shortcut to Ansible Tower's official documentation.</li>
 </ul>
+<h3 id="dashboards---ansible-tower-3---security">Dashboards - Ansible Tower 3 - Security</h3>
+<h4 id="dashboards---ansible-tower-3---security---authentication">Dashboards - Ansible Tower 3 - Security - Authentication</h4>
+<p>User authentication, by default, will store encrypted user information into the PostgreSQL database. Instead of using this, Tower can be configured to use an external authentication serverice by going into <code>Settings &gt; CONFIGURE TOWER</code>. The available options are:</p>
+<ul>
+<li>Azure AD</li>
+<li>GitHub</li>
+<li>GitHub Org</li>
+<li>GitHub Team</li>
+<li>Google OAuth2</li>
+<li>LDAP</li>
+<li>RADIUS</li>
+<li>SAML</li>
+</ul>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Tower Configuration.&quot;</li>
+</ol>
+<h4 id="dashboards---ansible-tower-3---security---acls">Dashboards - Ansible Tower 3 - Security - ACLs</h4>
+<p>Every user in Tower is associated with at least one organization. The level of access the user has to that organizations resources is defined by one of the different access control lists (ACLs).</p>
+<p>Hierarchy [1]:</p>
+<ul>
+<li>Organizations = A combination of Users, Teams, Projects, and Inventories.
+<ul>
+<li>Teams = Teams are a collection of users. Teams are not required. Multiple users' access can be modified easily and quickly via a Team instead of individually modifying each user's access.
+<ul>
+<li>Users = Users are optionally associated with a team and are always associated with an Organization. An ACL is set for what resources the user is allowed to use.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>User types / ACLs [2]:</p>
+<ul>
+<li>System Administrator = Has full access to all organizations and the Tower installation.</li>
+<li>System Auditor = Has read-only access to an organization.</li>
+<li>Normal User = Has read and write access to an organization.</li>
+</ul>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[Ansible Tower] Organizations.&quot;</li>
+<li>&quot;[Ansible Tower] Users.&quot;</li>
+</ol>
+<h4 id="dashboards---ansible-tower-3---security---ssl">Dashboards - Ansible Tower 3 - Security - SSL</h4>
+<p>By default, Tower creates a self-signed SSL certificate to secure web traffic. [1] Most web browsers will mark this as an untrusted connection. For using a different SSL that is trusted, the contents of these two files need to be replaced on each Tower node:</p>
+<ul>
+<li><code>/etc/tower/tower.cert</code></li>
+<li><code>/etc/tower/tower.key</code></li>
+</ul>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;[Ansible Tower] Installation Notes.&quot;</li>
+</ol>
 <h3 id="dashboards---ansible-tower-3---api">Dashboards - Ansible Tower 3 - API</h3>
 <p>Ansible Tower has a strong focus on automating Ansible even more by providing an API interface. Programs can interact with this by making HTTP GET and PUT requests. All of the avaiable endpoints can be viewed by going to:</p>
 <p><code>https://&lt;ANSIBLE_TOWER_HOST&gt;/api/v1/</code></p>
@@ -2155,7 +2212,7 @@ rabbitmq_use_long_name=&quot;True&quot;</code></pre>
 <ul>
 <li>Ansible</li>
 <li>Git &gt;= 2.0</li>
-<li>MariaDB &gt;= 5.3</li>
+<li>MariaDB &gt;= 5.3 or MySQL &gt;= 5.6.4</li>
 </ul>
 <p>Installation:</p>
 <pre><code># curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 &gt; /usr/bin/semaphore
@@ -2310,4 +2367,8 @@ finally:
 <li>Ansible win_template - Templates a file out to a remote server.&quot; Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_template_module.html</li>
 <li>&quot;Ansible win_user - Manages local Windows user accounts.&quot; Ansible Documentation. August 4, 2017. Accessed August 11, 2017. http://docs.ansible.com/ansible/latest/win_user_module.html</li>
 <li>&quot;Ansible Tower API Guide.&quot; Ansible Documentation. Accessed August 14, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html</li>
+<li>&quot;[Ansible Tower] Organizations.&quot; Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/organizations.html</li>
+<li>&quot;[Ansible Tower] Users.&quot; Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html</li>
+<li>&quot;[Ansible Tower] Installation Notes.&quot; Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html</li>
+<li>&quot;Tower Configuration.&quot; Ansible Documentation. Accessed August 15, 2017. https://docs.ansible.com/ansible-tower/latest/html/administration/configure_tower_in_tower.html</li>
 </ul>
