@@ -189,9 +189,15 @@ Finally, edit the virtual machine's XML configuration to change the CPU mode to 
 
 ```
 # virsh edit <VIRTUAL_MACHINE>
-<cpu mode='host-passthrough'>
+<cpu mode='host-passthrough'/>
 ```
 [2]
+
+Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabiltiies and processor information.
+
+```
+# virsh capabilities
+```
 
 Sources:
 

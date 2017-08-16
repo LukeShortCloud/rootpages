@@ -141,8 +141,10 @@ GRUB_CMDLINE_LINUX=&quot;console=tty0 kvm-amd.nested=1&quot;</code></pre></li>
 <p>[1]</p>
 <p>Finally, edit the virtual machine's XML configuration to change the CPU mode to be &quot;host-passthrough.&quot;</p>
 <pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
-&lt;cpu mode=&#39;host-passthrough&#39;&gt;</code></pre>
+&lt;cpu mode=&#39;host-passthrough&#39;/&gt;</code></pre>
 <p>[2]</p>
+<p>Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabiltiies and processor information.</p>
+<pre><code># virsh capabilities</code></pre>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;How to Enable Nested KVM.&quot; Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275</li>
