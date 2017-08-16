@@ -63,21 +63,22 @@
             * [Apt](#playbooks---modules---package-managers---apt)
             * [Yum](#playbooks---modules---package-managers---yum)
     * [Windows Modules](#playbooks---windows-modules)
-        * [Chocolatey](#playbooks---windows-modules---chocolatey)
         * [Command and Shell](#playbooks---windows-modules---command-and-shell)
         * [File Management](#playbooks---windows-modules---file-management)
-            * Copy
-            * File
+            * [Copy](#playbooks---windows-modules---file-management---copy)
+            * [File](#playbooks---windows-modules---file-management---file)
             * Robocopy
             * Shortcut
             * [Template](#playbooks---windows-modules---file-management---template)
-        * Feature
         * Firewall and Firewall Rule
-        * MSI
-        * Package
+        * [Installations](#playbooks---windows-modules---installations)
+            * [Chocolatey](#playbooks---windows-modules---installations---chocolatey)
+            * [Feature](#playbooks---windows-modules---installations---feature)
+            * [MSI](#playbooks---windows-modules---installations---msi)
+            * [Package](#playbooks---windows-modules---installations---package)
+            * [Updates](#playbooks---windows-modules---installations---updates)
         * Reg_Stat and RegEdit
         * Service
-        * [Updates](#playbooks---windows-modules---updates)
         * [User](#playbooks---windows-modules---user)
         * Scheduled Task
         * Stat
@@ -2582,43 +2583,6 @@ Source:
 These modules are specific to managing Windows servers and are not related to the normal modules designed for UNIX-like operating systems. These module names start with the "win_" prefix.
 
 
-### Playbooks - Windows Modules - Chocolatey
-
-Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolatey repository.
-
-Common options:
-
-* force = Reinstall an existing package.
-* install_args = Arguments to pass to Chocolately during installation.
-* ignore_dependencies = Ignore dependencies of a package. Default: no.
-* **name** = The name of a package to manage.
-* source = The Chocolatey repository to use.
-* state = Default: present.
-    * absent = Uninstall the package.
-    * present = Install the package.
-    * latest = Update the package.
-* timeout = The number of seconds to wait for Chocolatey to complete it's action. Default: 2700.
-* version = The exact version of a package that should be installed.
-
-Syntax:
-
-```
-win_chocolatey:
-```
-
-Example:
-
-```
-win_chocolatey: name="libreoffice" state="upgrade" version="5.4.0"
-```
-
-[1]
-
-Source:
-
-1. "Ansible win_chocolatey - Installs packages using chocolatey."
-
-
 ### Playbooks - Windows Modules - Command and Shell
 
 Windows commands can be executed via a console. The `command` module uses the DOS "cmd" binary and shell, by default, uses PowerShell.
@@ -2659,6 +2623,74 @@ Sources:
 ### Playbooks - Windows Modules - File Management
 
 
+#### Playbooks - Windows Modules - File Management - Copy
+
+Copy files from the Playbook to the remote server.
+
+All options:
+
+* content = Instead of using `src`, specify the text that should exist in the destination file.
+* **dest** = The destination to copy the file to.
+* force = Replace files in the destination path if there is a conflict. Default: True.
+* remote_src = Copy a file from one location on the remote server to another on the same server.
+* **src** = The source file to copy.
+
+Syntax:
+
+```
+win_copy:
+```
+
+Example:
+
+```
+- name: Copying a configuration file
+  win_copy:
+    src: C:\Windows\example.conf
+    dest: C:\temp\
+    remote_src: True
+```
+
+
+[1]
+
+Source:
+
+1. "Ansible win_copy - Copies files to remote locations on windows hosts."
+
+
+#### Playbooks - Windows Modules - File Management - File
+
+All options:
+
+* **path** = The full path to the file on the remote server that should be created, removed, and/or checked.
+* state
+    * absent = Delete the file.
+    * directory = Create a directory.
+    * file = Check to see if a file exists. Do not create a file if it does not exist.
+    * touch = Create a file if it does not exist.
+
+Synatx:
+
+```
+win_file:
+```
+
+Example:
+
+```
+- win_file:
+    path: C:\Users\admin\runtime_files
+    state: directory
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_file - Creates, touches or removes files or directories."
+
+
 #### Playbooks - Windows Modules - File Management - Template
 
 The Windows Jinja2 template module uses the same options as the normal `template` module.
@@ -2674,7 +2706,135 @@ Source:
 1. "Ansible win_template - Templates a file out to a remote server.."
 
 
-### Playbooks - Windows Modules - Updates
+### Playbooks - Windows Modules - Installations
+
+
+#### Playbooks - Windows Modules - Installations - Chocolatey
+
+Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolatey repository.
+
+Common options:
+
+* force = Reinstall an existing package.
+* install_args = Arguments to pass to Chocolately during installation.
+* ignore_dependencies = Ignore dependencies of a package. Default: no.
+* **name** = The name of a package to manage.
+* source = The Chocolatey repository to use.
+* state = Default: present.
+    * absent = Uninstall the package.
+    * present = Install the package.
+    * latest = Update the package.
+* timeout = The number of seconds to wait for Chocolatey to complete it's action. Default: 2700.
+* version = The exact version of a package that should be installed.
+
+Syntax:
+
+```
+win_chocolatey:
+```
+
+Example:
+
+```
+win_chocolatey: name="libreoffice" state="upgrade" version="5.4.0"
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_chocolatey - Installs packages using chocolatey."
+
+
+#### Playbooks - Windows Modules - Installations - Feature
+
+Manage official features and roles in Windows.
+
+All options:
+
+* include_managemnet_tools = Install related management tools. This only works in Windows Server >= 2012.
+* include_sub_features = Install all subfeatures related to the main feature.
+* **name** = The name of the feature or role.
+* restart = Restart the server after installation.
+* source = The path to the local package of the feature. This only works in Windows Server >= 2012.
+* state
+    * absent = Uninstall the feature.
+    * present = Install the feature.
+
+Syntax:
+
+```
+win_feature:
+```
+
+Example:
+
+```
+- name: Install the IIS HTTP web server
+  win_feature:
+    name: Web-Server
+    state: present
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_feature - Installs and uninstalls Windows Features on Windows Server."
+
+
+#### Playbooks - Windows Modules - Installations - MSI
+
+The MSI module has been depreacated in Ansible 2.3 and will be removed in a future release. Use the `win_package` module instead. [1]
+
+Source:
+
+1. "Ansible win_msi - Installs and uninstalls Windows MSI files."
+
+
+#### Playbooks - Windows Modules - Installations - Package
+
+Manage offiical Microsoft packages for Windows. Examples of these include the .NET Framework, Remote Desktop Connection Manager, Visual C++ Redistributable, and more.
+
+All options:
+
+* arguments = Arguments will be passed to the package during installation.
+* expected_return_code = The return code number that is expected after the installation is complete. Default: 0.
+* name = Optionally provide a friendly name for the package for Ansible logging purposes.
+* **path** = The file path or HTTP URL to a package.
+* **product_id** = For verifying installation, the product ID is required to lookup in the registry if it is installed already.
+    * Note: This can be found at:
+        * 64-bit: `HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall`
+        * 32-bit: `HKLM:Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall`
+* state
+    * absent = Uninstall the package.
+    * present = Install the package.
+* user_{name|password} = Specify the username and password to access a SMB/CIFS share that contains the package.
+
+Syntax:
+
+```
+win_package:
+```
+
+Example [1]:
+
+```
+- name: 'Microsoft .NET Framework 4.5.1'
+  win_package:
+    path: https://download.microsoft.com/download/1/6/7/167F0D79-9317-48AE-AEDB-17120579F8E2/NDP451-KB2858728-x86-x64-AllOS-ENU.exe
+    productid: '{7DEBE4EB-6B40-3766-BB35-5CBBC385DA37}'
+    arguments: '/q /norestart'
+    ensure: present
+    expected_return_code: 3010
+```
+
+Source:
+
+1. "Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url."
+
+
+#### Playbooks - Windows Modules - Installations - Updates
 
 Windows Updates can be managed by Ansible.
 
@@ -3283,3 +3443,8 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "[Ansible Tower] Users." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html
 * "[Ansible Tower] Installation Notes." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html
 * "Tower Configuration." Ansible Documentation. Accessed August 15, 2017. https://docs.ansible.com/ansible-tower/latest/html/administration/configure_tower_in_tower.html
+* "Ansible win_msi - Installs and uninstalls Windows MSI files." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_msi_module.html
+* "Ansible win_feature - Installs and uninstalls Windows Features on Windows Server." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_feature_module.html
+* "Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_package_module.html
+* "Ansible win_copy - Copies files to remote locations on windows hosts." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_copy_module.html
+* "Ansible win_file - Creates, touches or removes files or directories." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_file_module.html

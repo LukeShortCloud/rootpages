@@ -87,23 +87,26 @@
 </ul></li>
 <li><a href="#playbooks---windows-modules">Windows Modules</a>
 <ul>
-<li><a href="#playbooks---windows-modules---chocolatey">Chocolatey</a></li>
 <li><a href="#playbooks---windows-modules---command-and-shell">Command and Shell</a></li>
 <li><a href="#playbooks---windows-modules---file-management">File Management</a>
 <ul>
-<li>Copy</li>
-<li>File</li>
+<li><a href="#playbooks---windows-modules---file-management---copy">Copy</a></li>
+<li><a href="#playbooks---windows-modules---file-management---file">File</a></li>
 <li>Robocopy</li>
 <li>Shortcut</li>
 <li><a href="#playbooks---windows-modules---file-management---template">Template</a></li>
 </ul></li>
-<li>Feature</li>
 <li>Firewall and Firewall Rule</li>
-<li>MSI</li>
-<li>Package</li>
+<li><a href="#playbooks---windows-modules---installations">Installations</a>
+<ul>
+<li><a href="#playbooks---windows-modules---installations---chocolatey">Chocolatey</a></li>
+<li><a href="#playbooks---windows-modules---installations---feature">Feature</a></li>
+<li><a href="#playbooks---windows-modules---installations---msi">MSI</a></li>
+<li><a href="#playbooks---windows-modules---installations---package">Package</a></li>
+<li><a href="#playbooks---windows-modules---installations---updates">Updates</a></li>
+</ul></li>
 <li>Reg_Stat and RegEdit</li>
 <li>Service</li>
-<li><a href="#playbooks---windows-modules---updates">Updates</a></li>
 <li><a href="#playbooks---windows-modules---user">User</a></li>
 <li>Scheduled Task</li>
 <li>Stat</li>
@@ -1791,7 +1794,86 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 </ol>
 <h2 id="playbooks---windows-modules">Playbooks - Windows Modules</h2>
 <p>These modules are specific to managing Windows servers and are not related to the normal modules designed for UNIX-like operating systems. These module names start with the &quot;win_&quot; prefix.</p>
-<h3 id="playbooks---windows-modules---chocolatey">Playbooks - Windows Modules - Chocolatey</h3>
+<h3 id="playbooks---windows-modules---command-and-shell">Playbooks - Windows Modules - Command and Shell</h3>
+<p>Windows commands can be executed via a console. The <code>command</code> module uses the DOS &quot;cmd&quot; binary and shell, by default, uses PowerShell.</p>
+<p>All similar <code>command</code> and <code>shell</code> options:</p>
+<ul>
+<li>chdir = Change the current working directory on the remote server before executing a command.</li>
+<li>creates = A path (optionally with a regular expression pattern) to a file. If this file already exists, this module will be marked as &quot;skipped.&quot;</li>
+<li>removes = If a path does not exist then this module will be marked as &quot;skipped.&quot;</li>
+</ul>
+<p><code>shell</code> options:</p>
+<ul>
+<li>executable = The binary to use for executing commands. By default this is PowerShell. Use &quot;cmd&quot; for running DOS commands.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_command:</code></pre>
+<pre><code>win_shell</code></pre>
+<p>Example:</p>
+<pre><code>win_shell: &quot;echo Hello World &gt; c:\hello.txt&quot; chdir=&quot;c:\&quot; creates=&quot;c:\hello.txt&quot;</code></pre>
+<p>[1][2]</p>
+<p>Sources:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible http://docs.ansible.com/ansible/latest/win_command_module.html&quot;</li>
+<li>&quot;Ansible win_shell - Execute shell commands on target hosts.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---file-management">Playbooks - Windows Modules - File Management</h3>
+<h4 id="playbooks---windows-modules---file-management---copy">Playbooks - Windows Modules - File Management - Copy</h4>
+<p>Copy files from the Playbook to the remote server.</p>
+<p>All options:</p>
+<ul>
+<li>content = Instead of using <code>src</code>, specify the text that should exist in the destination file.</li>
+<li><strong>dest</strong> = The destination to copy the file to.</li>
+<li>force = Replace files in the destination path if there is a conflict. Default: True.</li>
+<li>remote_src = Copy a file from one location on the remote server to another on the same server.</li>
+<li><strong>src</strong> = The source file to copy.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_copy:</code></pre>
+<p>Example:</p>
+<pre><code>- name: Copying a configuration file
+  win_copy:
+    src: C:\Windows\example.conf
+    dest: C:\temp\
+    remote_src: True</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_copy - Copies files to remote locations on windows hosts.&quot;</li>
+</ol>
+<h4 id="playbooks---windows-modules---file-management---file">Playbooks - Windows Modules - File Management - File</h4>
+<p>All options:</p>
+<ul>
+<li><strong>path</strong> = The full path to the file on the remote server that should be created, removed, and/or checked.</li>
+<li>state
+<ul>
+<li>absent = Delete the file.</li>
+<li>directory = Create a directory.</li>
+<li>file = Check to see if a file exists. Do not create a file if it does not exist.</li>
+<li>touch = Create a file if it does not exist.</li>
+</ul></li>
+</ul>
+<p>Synatx:</p>
+<pre><code>win_file:</code></pre>
+<p>Example:</p>
+<pre><code>- win_file:
+    path: C:\Users\admin\runtime_files
+    state: directory</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_file - Creates, touches or removes files or directories.&quot;</li>
+</ol>
+<h4 id="playbooks---windows-modules---file-management---template">Playbooks - Windows Modules - File Management - Template</h4>
+<p>The Windows Jinja2 template module uses the same options as the normal <code>template</code> module.</p>
+<p>Syntax:</p>
+<pre><code>win_template:</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_template - Templates a file out to a remote server..&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---installations">Playbooks - Windows Modules - Installations</h3>
+<h4 id="playbooks---windows-modules---installations---chocolatey">Playbooks - Windows Modules - Installations - Chocolatey</h4>
 <p>Chocolatey is an unofficial package manager for Windows. Packages can be installed from a public or private Chocolatey repository.</p>
 <p>Common options:</p>
 <ul>
@@ -1818,39 +1900,77 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible win_chocolatey - Installs packages using chocolatey.&quot;</li>
 </ol>
-<h3 id="playbooks---windows-modules---command-and-shell">Playbooks - Windows Modules - Command and Shell</h3>
-<p>Windows commands can be executed via a console. The <code>command</code> module uses the DOS &quot;cmd&quot; binary and shell, by default, uses PowerShell.</p>
-<p>All similar <code>command</code> and <code>shell</code> options:</p>
+<h4 id="playbooks---windows-modules---installations---feature">Playbooks - Windows Modules - Installations - Feature</h4>
+<p>Manage official features and roles in Windows.</p>
+<p>All options:</p>
 <ul>
-<li>chdir = Change the current working directory on the remote server before executing a command.</li>
-<li>creates = A path (optionally with a regular expression pattern) to a file. If this file already exists, this module will be marked as &quot;skipped.&quot;</li>
-<li>removes = If a path does not exist then this module will be marked as &quot;skipped.&quot;</li>
-</ul>
-<p><code>shell</code> options:</p>
+<li>include_managemnet_tools = Install related management tools. This only works in Windows Server &gt;= 2012.</li>
+<li>include_sub_features = Install all subfeatures related to the main feature.</li>
+<li><strong>name</strong> = The name of the feature or role.</li>
+<li>restart = Restart the server after installation.</li>
+<li>source = The path to the local package of the feature. This only works in Windows Server &gt;= 2012.</li>
+<li>state
 <ul>
-<li>executable = The binary to use for executing commands. By default this is PowerShell. Use &quot;cmd&quot; for running DOS commands.</li>
+<li>absent = Uninstall the feature.</li>
+<li>present = Install the feature.</li>
+</ul></li>
 </ul>
 <p>Syntax:</p>
-<pre><code>win_command:</code></pre>
-<pre><code>win_shell</code></pre>
+<pre><code>win_feature:</code></pre>
 <p>Example:</p>
-<pre><code>win_shell: &quot;echo Hello World &gt; c:\hello.txt&quot; chdir=&quot;c:\&quot; creates=&quot;c:\hello.txt&quot;</code></pre>
-<p>[1][2]</p>
-<p>Sources:</p>
-<ol style="list-style-type: decimal">
-<li>&quot;Ansible http://docs.ansible.com/ansible/latest/win_command_module.html&quot;</li>
-<li>&quot;Ansible win_shell - Execute shell commands on target hosts.&quot;</li>
-</ol>
-<h3 id="playbooks---windows-modules---file-management">Playbooks - Windows Modules - File Management</h3>
-<h4 id="playbooks---windows-modules---file-management---template">Playbooks - Windows Modules - File Management - Template</h4>
-<p>The Windows Jinja2 template module uses the same options as the normal <code>template</code> module.</p>
-<p>Syntax:</p>
-<pre><code>win_template:</code></pre>
+<pre><code>- name: Install the IIS HTTP web server
+  win_feature:
+    name: Web-Server
+    state: present</code></pre>
+<p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;Ansible win_template - Templates a file out to a remote server..&quot;</li>
+<li>&quot;Ansible win_feature - Installs and uninstalls Windows Features on Windows Server.&quot;</li>
 </ol>
-<h3 id="playbooks---windows-modules---updates">Playbooks - Windows Modules - Updates</h3>
+<h4 id="playbooks---windows-modules---installations---msi">Playbooks - Windows Modules - Installations - MSI</h4>
+<p>The MSI module has been depreacated in Ansible 2.3 and will be removed in a future release. Use the <code>win_package</code> module instead. [1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_msi - Installs and uninstalls Windows MSI files.&quot;</li>
+</ol>
+<h4 id="playbooks---windows-modules---installations---package">Playbooks - Windows Modules - Installations - Package</h4>
+<p>Manage offiical Microsoft packages for Windows. Examples of these include the .NET Framework, Remote Desktop Connection Manager, Visual C++ Redistributable, and more.</p>
+<p>All options:</p>
+<ul>
+<li>arguments = Arguments will be passed to the package during installation.</li>
+<li>expected_return_code = The return code number that is expected after the installation is complete. Default: 0.</li>
+<li>name = Optionally provide a friendly name for the package for Ansible logging purposes.</li>
+<li><strong>path</strong> = The file path or HTTP URL to a package.</li>
+<li><strong>product_id</strong> = For verifying installation, the product ID is required to lookup in the registry if it is installed already.
+<ul>
+<li>Note: This can be found at:
+<ul>
+<li>64-bit: <code>HKLM:Software\Microsoft\Windows\CurrentVersion\Uninstall</code></li>
+<li>32-bit: <code>HKLM:Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall</code></li>
+</ul></li>
+</ul></li>
+<li>state
+<ul>
+<li>absent = Uninstall the package.</li>
+<li>present = Install the package.</li>
+</ul></li>
+<li>user_{name|password} = Specify the username and password to access a SMB/CIFS share that contains the package.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_package:</code></pre>
+<p>Example [1]:</p>
+<pre><code>- name: &#39;Microsoft .NET Framework 4.5.1&#39;
+  win_package:
+    path: https://download.microsoft.com/download/1/6/7/167F0D79-9317-48AE-AEDB-17120579F8E2/NDP451-KB2858728-x86-x64-AllOS-ENU.exe
+    productid: &#39;{7DEBE4EB-6B40-3766-BB35-5CBBC385DA37}&#39;
+    arguments: &#39;/q /norestart&#39;
+    ensure: present
+    expected_return_code: 3010</code></pre>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url.&quot;</li>
+</ol>
+<h4 id="playbooks---windows-modules---installations---updates">Playbooks - Windows Modules - Installations - Updates</h4>
 <p>Windows Updates can be managed by Ansible.</p>
 <p>All options:</p>
 <ul>
@@ -2371,4 +2491,9 @@ finally:
 <li>&quot;[Ansible Tower] Users.&quot; Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html</li>
 <li>&quot;[Ansible Tower] Installation Notes.&quot; Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html</li>
 <li>&quot;Tower Configuration.&quot; Ansible Documentation. Accessed August 15, 2017. https://docs.ansible.com/ansible-tower/latest/html/administration/configure_tower_in_tower.html</li>
+<li>&quot;Ansible win_msi - Installs and uninstalls Windows MSI files.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_msi_module.html</li>
+<li>&quot;Ansible win_feature - Installs and uninstalls Windows Features on Windows Server.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_feature_module.html</li>
+<li>&quot;Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_package_module.html</li>
+<li>&quot;Ansible win_copy - Copies files to remote locations on windows hosts.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_copy_module.html</li>
+<li>&quot;Ansible win_file - Creates, touches or removes files or directories.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_file_module.html</li>
 </ul>
