@@ -654,19 +654,27 @@ storage_hosts:
 </ol>
 <h2 id="automation---tripleo">Automation - TripleO</h2>
 <p>Supported operating systems: RHEL 7, Fedora &gt;= 22</p>
-<p>TripleO means &quot;OpenStack on OpenStack.&quot; The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. The minimum requirement of RAM for the host node is 16GB to run all of the OpenStack services. [1]</p>
+<p>TripleO means &quot;OpenStack on OpenStack.&quot; The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. [1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;tripleo-quickstart.&quot; TripleO Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart</li>
 </ol>
 <h3 id="automation---tripleo---quick">Automation - TripleO - Quick</h3>
-<p>The &quot;TripleO-Quickstart&quot; project was created to use Ansible to automate deploying TripleO as fast as possible.</p>
-<pre><code>$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
-$ bash quickstart.sh --release ocata &lt;VIRTUAL_MACHINE_IP&gt;</code></pre>
+<p>The &quot;TripleO-Quickstart&quot; project was created to use Ansible to automate deploying TripleO as fast as possible. [1]</p>
+<p>The minimum requirement for an all-in-one deployment is a hypervisor with 8 processor cores and 16GB of RAM (preferably 32GB). 3 virtual machines are required: (1) an Undercloud to deploy a (2) controller and (3) computer node. [2] For truly isolated environments, a KVM virtual machine with nested virtualization can be used.</p>
+<ul>
+<li><p>Download tripleo-quickstart.</p>
+<pre><code>$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh</code></pre></li>
+<li><p>Installl dependencies for the quickstart script.</p>
+<pre><code>$ bash quickstart.sh --install-deps</code></pre></li>
+<li><p>Run the quickstart script to install TripleO. Use &quot;127.0.0.2&quot; as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on.</p>
+<pre><code>$ bash quickstart.sh --release ocata &lt;HYPERVISOR_IP&gt;</code></pre></li>
+</ul>
 <p>[1]</p>
-<p>Source:</p>
+<p>Sources:</p>
 <ol style="list-style-type: decimal">
-<li>&quot;TripleO quickstart.&quot; RDO Project. Accessed January 8, 2016. https://www.rdoproject.org/tripleo/</li>
+<li>&quot;TripleO quickstart.&quot; RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/</li>
+<li>&quot;[TripleO] Minimum System Requirements.&quot; TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html</li>
 </ol>
 <h3 id="automation---tripleo---full">Automation - TripleO - Full</h3>
 <ul>

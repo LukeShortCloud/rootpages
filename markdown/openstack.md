@@ -771,7 +771,7 @@ Source:
 
 Supported operating systems: RHEL 7, Fedora >= 22
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. The minimum requirement of RAM for the host node is 16GB to run all of the OpenStack services. [1]
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster. Virtual machines or physical servers can be used. [1]
 
 Source:
 
@@ -780,18 +780,31 @@ Source:
 
 ### Automation - TripleO - Quick
 
-The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast as possible.
+The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast as possible. [1]
 
+The minimum requirement for an all-in-one deployment is a hypervisor with 8 processor cores and 16GB of RAM (preferably 32GB). 3 virtual machines are required: (1) an Undercloud to deploy a (2) controller and (3) computer node. [2] For truly isolated environments, a KVM virtual machine with nested virtualization can be used.
+
+* Download tripleo-quickstart.
 ```
 $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
-$ bash quickstart.sh --release ocata <VIRTUAL_MACHINE_IP>
+```
+
+* Installl dependencies for the quickstart script.
+```
+$ bash quickstart.sh --install-deps
+```
+
+* Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on.
+```
+$ bash quickstart.sh --release ocata <HYPERVISOR_IP>
 ```
 
 [1]
 
-Source:
+Sources:
 
-1. "TripleO quickstart." RDO Project. Accessed January 8, 2016. https://www.rdoproject.org/tripleo/
+1. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
+2. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
 
 
 ### Automation - TripleO - Full
