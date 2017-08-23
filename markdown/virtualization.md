@@ -185,12 +185,13 @@ GRUB_CMDLINE_LINUX="console=tty0 kvm-amd.nested=1"
 
 [1]
 
-Finally, edit the virtual machine's XML configuration to change the CPU mode to be "host-passthrough."
+Edit the virtual machine's XML configuration to change the CPU mode to be "host-passthrough."
 
 ```
 # virsh edit <VIRTUAL_MACHINE>
 <cpu mode='host-passthrough'/>
 ```
+
 [2]
 
 Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabiltiies and processor information.
@@ -199,11 +200,20 @@ Reboot the virtual machine and verify that the hypervisor and the virtual machin
 # virsh capabilities
 ```
 
+Finally verify that, in the virtual machine, it has full hardware virtualization support.
+
+```
+# virt-host-validate
+```
+
+[3]
+
+
 Sources:
 
 1. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275
 2. "Configure DevStack with KVM-based Nested Virtualization." December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html
-
+3. "How to enable nested virtualization in KVM." Fedora Project Wiki. June 19, 2015. Accessed August 18, 2017. https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM
 
 ### Hardware Virtualization - KVM - GPU Passthrough
 

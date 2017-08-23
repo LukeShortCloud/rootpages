@@ -139,16 +139,20 @@ GRUB_CMDLINE_LINUX=&quot;console=tty0 kvm-amd.nested=1&quot;</code></pre></li>
 <pre><code># grub-mkconfig -o /boot/grub/grub.cfg</code></pre></li>
 </ul>
 <p>[1]</p>
-<p>Finally, edit the virtual machine's XML configuration to change the CPU mode to be &quot;host-passthrough.&quot;</p>
+<p>Edit the virtual machine's XML configuration to change the CPU mode to be &quot;host-passthrough.&quot;</p>
 <pre><code># virsh edit &lt;VIRTUAL_MACHINE&gt;
 &lt;cpu mode=&#39;host-passthrough&#39;/&gt;</code></pre>
 <p>[2]</p>
 <p>Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabiltiies and processor information.</p>
 <pre><code># virsh capabilities</code></pre>
+<p>Finally verify that, in the virtual machine, it has full hardware virtualization support.</p>
+<pre><code># virt-host-validate</code></pre>
+<p>[3]</p>
 <p>Sources:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;How to Enable Nested KVM.&quot; Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275</li>
 <li>&quot;Configure DevStack with KVM-based Nested Virtualization.&quot; December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html</li>
+<li>&quot;How to enable nested virtualization in KVM.&quot; Fedora Project Wiki. June 19, 2015. Accessed August 18, 2017. https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM</li>
 </ol>
 <h3 id="hardware-virtualization---kvm---gpu-passthrough">Hardware Virtualization - KVM - GPU Passthrough</h3>
 <p>GPU passthrough is useful for running a Windows virtual machine guest for gaming inside of Linux. It is recommended to have two video cards, one for Linux and one for the guest virtual machine. [1]</p>
