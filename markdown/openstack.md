@@ -782,11 +782,15 @@ Source:
 
 The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast as possible. [1]
 
-The minimum requirement for an all-in-one deployment is a hypervisor with 8 processor cores and 16GB of RAM (preferably 32GB). 3 virtual machines are required: (1) an Undercloud to deploy a (2) controller and (3) computer node. [2] For truly isolated environments, a KVM virtual machine with nested virtualization can be used.
+The minimum requirement for an all-in-one deployment is a hypervisor with 8 processor cores and 16GB of RAM (preferably 32GB). 3 virtual machines will be created to meet the minimum cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) computer node. [2] For truly isolated environments, a KVM virtual machine with nested virtualization can be used.
 
-* Download tripleo-quickstart.
+* Download tripleo-quickstart script or clone the entire repository from GitHub.
 ```
 $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+```
+```
+$ git clone https://github.com/openstack/tripleo-quickstart.git
+$ cd tripleo-quickstart
 ```
 
 * Installl dependencies for the quickstart script.
@@ -794,10 +798,12 @@ $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/
 $ bash quickstart.sh --install-deps
 ```
 
-* Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on.
+* Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on. `--clean` will recreate the Python dependencies and `--teardown all` will remove any lingering files from a previous tripleo-quickstart deployment.
 ```
-$ bash quickstart.sh --release ocata <HYPERVISOR_IP>
+$ bash quickstart.sh -v --clean --teardown all --release trunk/ocata <HYPERVISOR_IP>
 ```
+
+* Note that all of the available releases can be found in the GitHub project in the `config/release/` directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
 
 [1]
 
