@@ -37,6 +37,7 @@
 <li><a href="#playbooks---main-modules---check-mode">Check Mode</a></li>
 <li><a href="#playbooks---main-modules---gather-facts">Gather Facts</a></li>
 <li><a href="#playbooks---main-modules---handlers-and-notify">Handlers and Notify</a></li>
+<li><a href="#playbooks---main-modules---meta">Meta</a></li>
 <li><a href="#playbooks---main-modules---roles">Roles</a></li>
 <li><a href="#playbooks---main-modules---run-once">Run Once</a></li>
 <li><a href="#playbooks---main-modules---serial">Serial</a></li>
@@ -92,8 +93,8 @@
 <ul>
 <li><a href="#playbooks---windows-modules---file-management---copy">Copy</a></li>
 <li><a href="#playbooks---windows-modules---file-management---file">File</a></li>
-<li>Robocopy</li>
-<li>Shortcut</li>
+<li><a href="#playbooks---windows-modules---file-management---robocopy">Robocopy</a></li>
+<li><a href="#playbooks---windows-modules---file-management---shortcut">Shortcut</a></li>
 <li><a href="#playbooks---windows-modules---file-management---template">Template</a></li>
 </ul></li>
 <li>Firewall and Firewall Rule</li>
@@ -105,11 +106,15 @@
 <li><a href="#playbooks---windows-modules---installations---package">Package</a></li>
 <li><a href="#playbooks---windows-modules---installations---updates">Updates</a></li>
 </ul></li>
-<li>Reg_Stat and RegEdit</li>
-<li>Service</li>
-<li><a href="#playbooks---windows-modules---user">User</a></li>
-<li>Scheduled Task</li>
+<li>Registry
+<ul>
+<li>Edit</li>
 <li>Stat</li>
+</ul></li>
+<li><a href="#playbooks---windows-modules---scheduled-task">Scheduled Task</a></li>
+<li><a href="#playbooks---windows-modules---service">Service</a></li>
+<li>Stat</li>
+<li><a href="#playbooks---windows-modules---user">User</a></li>
 </ul></li>
 <li><a href="#playbooks---galaxy-roles">Galaxy Roles</a>
 <ul>
@@ -1017,17 +1022,18 @@ when: not ansible_check_mode</code></pre>
 <li>&quot;Ansible Glossary.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---handlers-and-notify">Playbooks - Main Modules - Handlers and Notify</h3>
-<p>The <code>notify</code> function will run a handler defined in a list of <code>handlers</code> if the state of the module it's tied to changes. Optionally, a &quot;listen&quot; directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.</p>
-<p>Syntax:</p>
+<p>The <code>notify</code> function will run a handler defined in the <code>handlers/main.yml</code> file within a role if the state of the module it's tied to changes. Optionally, a &quot;listen&quot; directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.</p>
+<p>Handlers only execute when a Playbook sucessfully completes. For executing handlers sooner, refer to the &quot;meta&quot; main module's documentation.</p>
+<p>Syntax (handlers/main.yml):</p>
 <pre><code>handlers:
   - name: &lt;HANDLER_NAME&gt;
     &lt;MODULE&gt;: &lt;ARGS&gt;
-    listen: &lt;LISTEN_HANDLER_NAME&gt;
-
-- &lt;MODULE&gt;: &lt;ARGS&gt;
+    listen: &lt;LISTEN_HANDLER_NAME&gt;</code></pre>
+<p>Syntax (tasks/main.yml):</p>
+<pre><code>- &lt;MODULE&gt;: &lt;ARGS&gt;
   notify:
     - &lt;HANDLER_NAME&gt;</code></pre>
-<p>Example:</p>
+<p>Example (handlers/main.yml):</p>
 <pre><code>handlers:
   - name: restart nginx
     service: name=nginx state=restarted
@@ -1037,13 +1043,35 @@ when: not ansible_check_mode</code></pre>
     listen: &quot;restart stack&quot;
   - name: restart mariadb
     service: name=mariadb state=restarted
-    listen: &quot;restart stack&quot;
-
-- template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    listen: &quot;restart stack&quot;</code></pre>
+<p>Example (tasks/main.yml):</p>
+<pre><code>- template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: restart stack</code></pre>
+<p>[1]</p>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible Intro to Playbooks.&quot;</li>
+</ol>
+<h3 id="playbooks---main-modules---meta">Playbooks - Main Modules - Meta</h3>
+<p>The meta module handles some aspects of the Ansible Playbooks execution.</p>
+<p>All options (free form):</p>
+<ul>
+<li>clear_facts = Removes all of the gathered facts about the Playbook hosts.</li>
+<li>clear_host_errors = Removes hosts from being in a failed state to continue running the Playbook.</li>
+<li>end_play = End the Playbook instantly and mark it as successfully unless there were any failures.</li>
+<li>flush_handlers = Any handlers that have been notified will be run.</li>
+<li>noop = Do no operations. This is mainly for Ansible developers and debugging purposes.</li>
+<li>refresh_inventory = Reload the inventory files. This is useful when using dynamic inventory scripts.</li>
+<li>reset_connection = Closes the current connections to the hosts and start a new connection.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>meta:</code></pre>
+<p>Example:</p>
+<pre><code>meta: flush_handlers</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible meta - Execute Ansible ‘actions’.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---roles">Playbooks - Main Modules - Roles</h3>
 <p>A Playbook consists of roles. Each role that needs to be run needs to be specified. [1] It's important to note that individual roles cannot call other roles. Instead, an &quot;include&quot; statement could be used to find the relative path. [2]</p>
@@ -1864,6 +1892,62 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible win_file - Creates, touches or removes files or directories.&quot;</li>
 </ol>
+<h4 id="playbooks---windows-modules---file-management---robocopy">Playbooks - Windows Modules - File Management - Robocopy</h4>
+<p>Robocopy is a CLI utility, available on the latest versions of Windows, for synchronizing directories.</p>
+<p>All options:</p>
+<ul>
+<li><strong>dest</strong> = The destination directory.</li>
+<li>flags = Provide additional arguments to the robocopy command.</li>
+<li>purge = Delete files in the destination that do not exist in the source directory.</li>
+<li>recurse = Recursively copy subdirectories.</li>
+<li><strong>src</strong> = The source directory to copy from.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_robocopy:</code></pre>
+<p>Example:</p>
+<pre><code>win_robocopy:
+  src: C:\tmp\
+  dest: C:\tmp_old\
+  recurse: True</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy.&quot;</li>
+</ol>
+<h4 id="playbooks---windows-modules---file-management---shortcut">Playbooks - Windows Modules - File Management - Shortcut</h4>
+<p>Manage Windows shortcuts.</p>
+<p>All options:</p>
+<ul>
+<li>args = Arguments to provide to the source executable.</li>
+<li>description = A description about the shortcut.</li>
+<li><strong>dest</strong> = The path and file name of the shortcut. For executables use the extension <code>.lnk</code> and for URLs use <code>.url</code>.</li>
+<li>directory = The work directory for the executable.</li>
+<li>hotkey = The combination of keys to virtually press when the shortcut is executed.</li>
+<li>icon = A <code>.ico</code> icon file to use as the shortcut image.</li>
+<li>src = The executable or URL that the shortcut should open.</li>
+<li>state
+<ul>
+<li>absent = Delete the shortcut.</li>
+<li>present = Create the shortcut.</li>
+</ul></li>
+<li>windowstyle = How the program's window is sized during launch.
+<ul>
+<li>default</li>
+<li>maximized</li>
+<li>minimized</li>
+</ul></li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_shortcut:</code></pre>
+<p>Example:</p>
+<pre><code>win_shortcut:
+  src: C:\Program Files (x86)\game\game.exe
+  dest: C:\Users\Ben\Desktop\game.lnk</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_shortcut - Manage shortcuts on Windows.&quot;</li>
+</ol>
 <h4 id="playbooks---windows-modules---file-management---template">Playbooks - Windows Modules - File Management - Template</h4>
 <p>The Windows Jinja2 template module uses the same options as the normal <code>template</code> module.</p>
 <p>Syntax:</p>
@@ -2004,6 +2088,93 @@ register: &lt;STAT_VARIABLE&gt;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Ansible win_updates - Download and install Windows updates.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---scheduled-task">Playbooks - Windows Modules - Scheduled Task</h3>
+<p>Manage scheduled tasks in Windows.</p>
+<p>All options:</p>
+<ul>
+<li>arguments = Arguments that should be supplied to the executable.</li>
+<li>days_of_week = A list of weekdays to run the task.</li>
+<li>description = A uesful description for the purpose of the task.</li>
+<li>enabled = Set the task to be enabled or not.</li>
+<li>executable = The command the task should run.</li>
+<li>frequency = The frequency to run the command.
+<ul>
+<li>once</li>
+<li>daily</li>
+<li>weekly</li>
+</ul></li>
+<li><strong>name</strong> = The name of the task.</li>
+<li>path = The folder to store the task in.</li>
+<li><strong>state</strong>
+<ul>
+<li>absent = Delete the task.</li>
+<li>present = Create the task.</li>
+</ul></li>
+<li>time = The time to run the task.</li>
+<li>user = The user to run the task as.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_scheduled_task:</code></pre>
+<p>Example:</p>
+<pre><code>win_scheduled_task:
+  name: RestartIIS
+  executable: iisreset
+  arguments: /restart
+  days_of_week: saturday
+  time: 2am</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_scheduled_task - Manage scheduled tasks.&quot;</li>
+</ol>
+<h3 id="playbooks---windows-modules---service">Playbooks - Windows Modules - Service</h3>
+<p>Manage services on Windows.</p>
+<p>All options:</p>
+<ul>
+<li>dependencies = A list of other services that are dependencies for this service.</li>
+<li>dependency_action
+<ul>
+<li>add = Append these dependencies to the existing dependencies.</li>
+<li>set = Set this list of dependencies as the only dependencies.</li>
+<li>remove = Remove these dependencies from the service.</li>
+</ul></li>
+<li>description = A useful description of the service.</li>
+<li>desktop_interact = Allow the LocalSystem user to interact with the Windows desktop.</li>
+<li>display_name = A user-friendly name for the service.</li>
+<li>force_dependent_services = Changing the state of this service will change the state of all of the dependencies.</li>
+<li><strong>name</strong> = The actual name of the service.</li>
+<li>password = The password to authenticate with. For the LocalService, LocalSystem, and NetworkService uesrs the password has to be an empty string and not undefined.</li>
+<li>path = The path to the executable for the service.</li>
+<li>start_mode
+<ul>
+<li>auto = Automatically start on boot.</li>
+<li>delayed = Automatically start on boot after all of the &quot;auto&quot; services have started.</li>
+<li>disabled = Do not allow this service to be run.</li>
+<li>manual = The administrator has to manually start this task.</li>
+</ul></li>
+<li>state
+<ul>
+<li>absent = Delete the service.</li>
+<li>restarted = Restart the service.</li>
+<li>started = Start the service.</li>
+<li>stopped = Stop the service.</li>
+</ul></li>
+<li>username = The user to run the service as.</li>
+</ul>
+<p>Syntax:</p>
+<pre><code>win_service:</code></pre>
+<p>Example:</p>
+<pre><code>win_service:
+  name: CustomService
+  path: C:\Program Files (x86)\myapp\myapp.exe
+  start_mode: auto
+  username: .\Administrator
+  password: {{ admin_pass }}</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible win_service - Manages Windows services.&quot;</li>
 </ol>
 <h3 id="playbooks---windows-modules---user">Playbooks - Windows Modules - User</h3>
 <p>Create, read, update, or delete (CRUD) a Windows user account.</p>
@@ -2496,4 +2667,9 @@ finally:
 <li>&quot;Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_package_module.html</li>
 <li>&quot;Ansible win_copy - Copies files to remote locations on windows hosts.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_copy_module.html</li>
 <li>&quot;Ansible win_file - Creates, touches or removes files or directories.&quot; Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_file_module.html</li>
+<li>&quot;Ansible win_scheduled_task - Manage scheduled tasks.&quot; Ansible Documentation. August 16, 2017. Accessed August 22, 2017. http://docs.ansible.com/ansible/latest/win_scheduled_task_module.html</li>
+<li>&quot;Ansible win_service - Manages Windows services.&quot; Ansible Documentation. August 16, 2017. Accessed August 22, 2017. http://docs.ansible.com/ansible/latest/win_service_module.html</li>
+<li>&quot;Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy..&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_robocopy_module.html</li>
+<li>&quot;Ansible win_shortcut - Manage shortcuts on Windows.&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_shortcut_module.html</li>
+<li>&quot;Ansible meta - Execute Ansible ‘actions'.&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/meta_module.html</li>
 </ul>

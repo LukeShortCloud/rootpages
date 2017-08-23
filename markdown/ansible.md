@@ -27,6 +27,7 @@
         * [Check Mode](#playbooks---main-modules---check-mode)
         * [Gather Facts](#playbooks---main-modules---gather-facts)
         * [Handlers and Notify](#playbooks---main-modules---handlers-and-notify)
+        * [Meta](#playbooks---main-modules---meta)
         * [Roles](#playbooks---main-modules---roles)
         * [Run Once](#playbooks---main-modules---run-once)
         * [Serial](#playbooks---main-modules---serial)
@@ -67,8 +68,8 @@
         * [File Management](#playbooks---windows-modules---file-management)
             * [Copy](#playbooks---windows-modules---file-management---copy)
             * [File](#playbooks---windows-modules---file-management---file)
-            * Robocopy
-            * Shortcut
+            * [Robocopy](#playbooks---windows-modules---file-management---robocopy)
+            * [Shortcut](#playbooks---windows-modules---file-management---shortcut)
             * [Template](#playbooks---windows-modules---file-management---template)
         * Firewall and Firewall Rule
         * [Installations](#playbooks---windows-modules---installations)
@@ -77,11 +78,13 @@
             * [MSI](#playbooks---windows-modules---installations---msi)
             * [Package](#playbooks---windows-modules---installations---package)
             * [Updates](#playbooks---windows-modules---installations---updates)
-        * Reg_Stat and RegEdit
-        * Service
-        * [User](#playbooks---windows-modules---user)
-        * Scheduled Task
+        * Registry
+            * Edit
+            * Stat
+        * [Scheduled Task](#playbooks---windows-modules---scheduled-task)
+        * [Service](#playbooks---windows-modules---service)
         * Stat
+        * [User](#playbooks---windows-modules---user)
     * [Galaxy Roles](#playbooks---galaxy-roles)
         * [Network Interface](#playbooks---galaxy-roles---network-interface)
 * [Dashboards](#dashboards)
@@ -1406,22 +1409,28 @@ Source:
 
 ### Playbooks - Main Modules - Handlers and Notify
 
-The `notify` function will run a handler defined in a list of `handlers` if the state of the module it's tied to changes. Optionally, a "listen" directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.
+The `notify` function will run a handler defined in the `handlers/main.yml` file within a role if the state of the module it's tied to changes. Optionally, a "listen" directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.
 
-Syntax:
+Handlers only execute when a Playbook sucessfully completes. For executing handlers sooner, refer to the "meta" main module's documentation.
+
+Syntax (handlers/main.yml):
 
 ```
 handlers:
   - name: <HANDLER_NAME>
     <MODULE>: <ARGS>
     listen: <LISTEN_HANDLER_NAME>
+```
 
+Syntax (tasks/main.yml):
+
+```
 - <MODULE>: <ARGS>
   notify:
     - <HANDLER_NAME>
 ```
 
-Example:
+Example (handlers/main.yml):
 
 ```
 handlers:
@@ -1434,14 +1443,53 @@ handlers:
   - name: restart mariadb
     service: name=mariadb state=restarted
     listen: "restart stack"
+```
 
+Example (tasks/main.yml):
+
+```
 - template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: restart stack
 ```
 
+[1]
+
 Source:
 
 1. "Ansible Intro to Playbooks."
+
+
+### Playbooks - Main Modules - Meta
+
+The meta module handles some aspects of the Ansible Playbooks execution.
+
+All options (free form):
+
+* clear_facts = Removes all of the gathered facts about the Playbook hosts.
+* clear_host_errors = Removes hosts from being in a failed state to continue running the Playbook.
+* end_play = End the Playbook instantly and mark it as successfully unless there were any failures.
+* flush_handlers = Any handlers that have been notified will be run.
+* noop = Do no operations. This is mainly for Ansible developers and debugging purposes.
+* refresh_inventory = Reload the inventory files. This is useful when using dynamic inventory scripts.
+* reset_connection = Closes the current connections to the hosts and start a new connection.
+
+Syntax:
+
+```
+meta:
+```
+
+Example:
+
+```
+meta: flush_handlers
+```
+
+[1]
+
+Source:
+
+1. "Ansible meta - Execute Ansible ‘actions’."
 
 
 ### Playbooks - Main Modules - Roles
@@ -2651,7 +2699,6 @@ Example:
     remote_src: True
 ```
 
-
 [1]
 
 Source:
@@ -2689,6 +2736,81 @@ Example:
 Source:
 
 1. "Ansible win_file - Creates, touches or removes files or directories."
+
+#### Playbooks - Windows Modules - File Management - Robocopy
+
+Robocopy is a CLI utility, available on the latest versions of Windows, for synchronizing directories.
+
+All options:
+
+* **dest** = The destination directory.
+* flags = Provide additional arguments to the robocopy command.
+* purge = Delete files in the destination that do not exist in the source directory.
+* recurse = Recursively copy subdirectories.
+* **src** = The source directory to copy from.
+
+Syntax:
+
+```
+win_robocopy:
+```
+
+Example:
+
+```
+win_robocopy:
+  src: C:\tmp\
+  dest: C:\tmp_old\
+  recurse: True
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy."
+
+
+#### Playbooks - Windows Modules - File Management - Shortcut
+
+Manage Windows shortcuts.
+
+All options:
+
+* args = Arguments to provide to the source executable.
+* description = A description about the shortcut.
+* **dest** = The path and file name of the shortcut. For executables use the extension `.lnk` and for URLs use `.url`.
+* directory = The work directory for the executable.
+* hotkey = The combination of keys to virtually press when the shortcut is executed.
+* icon = A `.ico` icon file to use as the shortcut image.
+* src = The executable or URL that the shortcut should open.
+* state
+    * absent = Delete the shortcut.
+    * present = Create the shortcut.
+* windowstyle = How the program's window is sized during launch.
+    * default
+    * maximized
+    * minimized
+
+Syntax:
+
+```
+win_shortcut:
+```
+
+Example:
+
+```
+win_shortcut:
+  src: C:\Program Files (x86)\game\game.exe
+  dest: C:\Users\Ben\Desktop\game.lnk
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_shortcut - Manage shortcuts on Windows."
 
 
 #### Playbooks - Windows Modules - File Management - Template
@@ -2875,6 +2997,107 @@ win_updates: category_names=['CriticalUpdates'] state=searched log_path="c:\tmp\
 Source:
 
 1. "Ansible win_updates - Download and install Windows updates."
+
+
+### Playbooks - Windows Modules - Scheduled Task
+
+Manage scheduled tasks in Windows.
+
+All options:
+
+* arguments = Arguments that should be supplied to the executable.
+* days_of_week = A list of weekdays to run the task.
+* description = A uesful description for the purpose of the task.
+* enabled = Set the task to be enabled or not.
+* executable = The command the task should run.
+* frequency = The frequency to run the command.
+    * once
+    * daily
+    * weekly
+* **name** = The name of the task.
+* path = The folder to store the task in.
+* **state**
+    * absent = Delete the task.
+    * present = Create the task.
+* time = The time to run the task.
+* user = The user to run the task as.
+
+Syntax:
+
+```
+win_scheduled_task:
+```
+
+Example:
+
+```
+win_scheduled_task:
+  name: RestartIIS
+  executable: iisreset
+  arguments: /restart
+  days_of_week: saturday
+  time: 2am
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_scheduled_task - Manage scheduled tasks."
+
+
+### Playbooks - Windows Modules - Service
+
+Manage services on Windows.
+
+All options:
+
+* dependencies = A list of other services that are dependencies for this service.
+* dependency_action
+    * add = Append these dependencies to the existing dependencies.
+    * set = Set this list of dependencies as the only dependencies.
+    * remove = Remove these dependencies from the service.
+* description = A useful description of the service.
+* desktop_interact = Allow the LocalSystem user to interact with the Windows desktop.
+* display_name = A user-friendly name for the service.
+* force_dependent_services = Changing the state of this service will change the state of all of the dependencies.
+* **name** = The actual name of the service.
+* password = The password to authenticate with. For the LocalService, LocalSystem, and NetworkService uesrs the password has to be an empty string and not undefined.
+* path = The path to the executable for the service.
+* start_mode
+    * auto = Automatically start on boot.
+    * delayed = Automatically start on boot after all of the "auto" services have started.
+    * disabled = Do not allow this service to be run.
+    * manual = The administrator has to manually start this task.
+* state
+    * absent = Delete the service.
+    * restarted = Restart the service.
+    * started = Start the service.
+    * stopped = Stop the service.
+* username = The user to run the service as.
+
+Syntax:
+
+```
+win_service:
+```
+
+Example:
+
+```
+win_service:
+  name: CustomService
+  path: C:\Program Files (x86)\myapp\myapp.exe
+  start_mode: auto
+  username: .\Administrator
+  password: {{ admin_pass }}
+```
+
+[1]
+
+Source:
+
+1. "Ansible win_service - Manages Windows services."
 
 
 ### Playbooks - Windows Modules - User
@@ -3448,3 +3671,8 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible win_package - Installs/Uninstalls an installable package, either from local file system or url." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_package_module.html
 * "Ansible win_copy - Copies files to remote locations on windows hosts." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_copy_module.html
 * "Ansible win_file - Creates, touches or removes files or directories." Ansible Documentation. August 16, 2017. Accessed August 16, 2017. http://docs.ansible.com/ansible/latest/win_file_module.html
+* "Ansible win_scheduled_task - Manage scheduled tasks." Ansible Documentation. August 16, 2017. Accessed August 22, 2017. http://docs.ansible.com/ansible/latest/win_scheduled_task_module.html
+* "Ansible win_service - Manages Windows services." Ansible Documentation. August 16, 2017. Accessed August 22, 2017. http://docs.ansible.com/ansible/latest/win_service_module.html
+* "Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy.." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_robocopy_module.html
+* "Ansible win_shortcut - Manage shortcuts on Windows." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_shortcut_module.html
+* "Ansible meta - Execute Ansible ‘actions'." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/meta_module.html
