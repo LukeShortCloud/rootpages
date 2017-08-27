@@ -205,7 +205,7 @@ Source:
 
 ## Automation - OpenStack Ansible
 
-Supported operating systems: RHEL 7, Ubuntu 16.04
+Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42, SUSE Linux Enterprise 12
 
 OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
@@ -222,7 +222,7 @@ It offers key features that include:
 
 Source:
 
-1. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed March 30, 2017. https://github.com/openstack/openstack-ansible
+1. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed August 25, 2017. https://github.com/openstack/openstack-ansible
 
 
 ### Automation - OpenStack Ansible - Quick
