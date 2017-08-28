@@ -31,6 +31,7 @@
         * [Roles](#playbooks---main-modules---roles)
         * [Run Once](#playbooks---main-modules---run-once)
         * [Serial](#playbooks---main-modules---serial)
+        * [Strategy](#playbooks---main-modules---strategy)
         * [Tags](#playbooks---main-modules---tags)
         * [Tasks](#playbooks---main-modules---tasks)
         * [Wait For](#playbooks---main-modules---wait-for)
@@ -1568,6 +1569,31 @@ Example:
 Source:
 
 1. "Delegation, Rolling Updates, and Local Actions."
+
+
+### Playbooks - Main Modules - Strategy
+
+By default, a Playbook strategy is set to "linear" meaning that it will only move onto the next task once it completes on all hosts. This can be changed to "free" so that once a task completes on a host, that host will instantly move onto the next available task.
+
+Syntax:
+```
+strategy: free
+```
+
+Example (site.yml):
+
+```
+- hosts: all
+  strategy: free
+  roles:
+    - gitlab
+```
+
+[1]
+
+Source:
+
+1. "Ansible Strategies."
 
 
 ### Playbooks - Main Modules - Tags
@@ -3676,3 +3702,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy.." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_robocopy_module.html
 * "Ansible win_shortcut - Manage shortcuts on Windows." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_shortcut_module.html
 * "Ansible meta - Execute Ansible ‘actions'." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/meta_module.html
+* "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks_strategies.html

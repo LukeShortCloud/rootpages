@@ -41,6 +41,7 @@
 <li><a href="#playbooks---main-modules---roles">Roles</a></li>
 <li><a href="#playbooks---main-modules---run-once">Run Once</a></li>
 <li><a href="#playbooks---main-modules---serial">Serial</a></li>
+<li><a href="#playbooks---main-modules---strategy">Strategy</a></li>
 <li><a href="#playbooks---main-modules---tags">Tags</a></li>
 <li><a href="#playbooks---main-modules---tasks">Tasks</a></li>
 <li><a href="#playbooks---main-modules---wait-for">Wait For</a></li>
@@ -1115,6 +1116,20 @@ delegate_to: &lt;HOST&gt;</code></pre>
 <p>Source:</p>
 <ol style="list-style-type: decimal">
 <li>&quot;Delegation, Rolling Updates, and Local Actions.&quot;</li>
+</ol>
+<h3 id="playbooks---main-modules---strategy">Playbooks - Main Modules - Strategy</h3>
+<p>By default, a Playbook strategy is set to &quot;linear&quot; meaning that it will only move onto the next task once it completes on all hosts. This can be changed to &quot;free&quot; so that once a task completes on a host, that host will instantly move onto the next available task.</p>
+<p>Syntax:</p>
+<pre><code>strategy: free</code></pre>
+<p>Example (site.yml):</p>
+<pre><code>- hosts: all
+  strategy: free
+  roles:
+    - gitlab</code></pre>
+<p>[1]</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>&quot;Ansible Strategies.&quot;</li>
 </ol>
 <h3 id="playbooks---main-modules---tags">Playbooks - Main Modules - Tags</h3>
 <p>Each task in a tasks file can have a tag associated to it. This should be appended to the end of the task. This is useful for debugging and separating tasks into specific groups. Here is the syntax:</p>
@@ -2672,4 +2687,5 @@ finally:
 <li>&quot;Ansible win_robocopy - Synchronizes the contents of two directories using Robocopy..&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_robocopy_module.html</li>
 <li>&quot;Ansible win_shortcut - Manage shortcuts on Windows.&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_shortcut_module.html</li>
 <li>&quot;Ansible meta - Execute Ansible ‘actions'.&quot; Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/meta_module.html</li>
+<li>&quot;Ansible Strategies.&quot; Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks_strategies.html</li>
 </ul>
