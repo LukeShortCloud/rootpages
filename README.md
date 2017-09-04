@@ -96,4 +96,4 @@ Root Pages and all of its content is provided under the GPLv3. Why? We believe t
 
 ### Plagerism
 
-Root Pages strives to provide proper citation to the original authors to give credit where due. If there are any reports of plagerism, please send an e-mail to ```ekultails``` ```at``` ```gmail.com``` to ensure it gets addressed accordingly.
+Root Pages strives to provide proper citation to the original authors to give credit where due. If there are any reports of plagerism, please [open a new GitHub issue](https://github.com/ekultails/rootpages/issues) for it to get addressed.
