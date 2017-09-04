@@ -11,6 +11,7 @@ Install:
 ```
 $ git clone https://github.com/ekultails/rootpages.git
 $ cd rootpages/
+$ bash build.sh
 $ bash install.sh
 $ source ~/.bashrc
 ```
@@ -38,11 +39,12 @@ $ rp --list
 ansible
 bootloaders
 clustering
+c++
 dns_servers
 file_systems
-gui
 http_servers
 linux
+linux_commands
 mail_servers
 monitoring
 networking
@@ -78,12 +80,10 @@ A few quick notes about technical documentation:
 * Chicago style citation to sources is REQUIRED.
     * If assistance is requried with the syntax of new citations, check out [Citation Machine](http://www.citationmachine.net/chicago).
 
-All updates should be made in the Markdown files with the ".md" extension. The "pandoc" markdown converter (installable by most common Linux package managers) is used to compile the latest documents into HTML. The "build.sh" Bash script was created to help faciliate that. It will place all of the newly updated HTML files into the "html/" directory. After any changes were made to the Markdown files, this should be run:
+All updates should be made in the Markdown files with the ".md" extension. The "pandoc" markdown converter (installable by most common Linux package managers) is used to compile the latest documents into HTML. The "build.sh" Bash script was created to help faciliate that. It will place all of the newly updated HTML files into the "html/" directory.
 ```
 $ bash build.sh
 ```
-
-Once the HTML files have finished generating, commit the changes and submit a pull request.
 
 
 ## Legal

@@ -6,6 +6,7 @@
 source_dir="./markdown"
 destination_dir="./html"
 
+mkdir ${destination_dir}
 # remove the existing compiled HTML pages
 rm -rf ${destination_dir}/*
 
