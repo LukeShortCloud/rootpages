@@ -7,6 +7,7 @@
     * [Inventory](#configuration---inventory)
         * [Variables](#configuration---inventory---variables)
     * [Vault Encryption](#configuration---vault-encryption)
+    * Python 3
 * [Command Usage](#command-usage)
 * [Playbooks](#playbooks)
     * [Directory Structure](#playbooks---directory-structure)
@@ -26,6 +27,7 @@
         * [Async](#playbooks---main-modules---async)
         * [Check Mode](#playbooks---main-modules---check-mode)
         * [Gather Facts](#playbooks---main-modules---gather-facts)
+        * Get URL
         * [Handlers and Notify](#playbooks---main-modules---handlers-and-notify)
         * [Meta](#playbooks---main-modules---meta)
         * [Roles](#playbooks---main-modules---roles)
@@ -41,8 +43,10 @@
             * [Failed When](#playbooks---main-modules---errors---failed-when)
             * [Ignore Errors](#playbooks---main-modules---errors---ignore-errors)
         * [Includes](#playbooks---main-modules---includes)
-            * [Include](#playbooks---main-modules---includes---include)
+            * Import Tasks
+            * [Include (deprecated in 2.4)](#playbooks---main-modules---includes---include)
             * [Include Role](#playbooks---main-modules---includes---include-role)
+            * Include Tasks
             * [Include Variables](#playbooks---main-modules---includes---include-variables)
         * [Loops](#playbooks---main-modules---loops)
             * [With First Found](#playbooks---main-modules---loops---with-first-found)
@@ -69,6 +73,7 @@
         * [File Management](#playbooks---windows-modules---file-management)
             * [Copy](#playbooks---windows-modules---file-management---copy)
             * [File](#playbooks---windows-modules---file-management---file)
+            * Get URL
             * [Robocopy](#playbooks---windows-modules---file-management---robocopy)
             * [Shortcut](#playbooks---windows-modules---file-management---shortcut)
             * [Template](#playbooks---windows-modules---file-management---template)
@@ -85,7 +90,9 @@
         * [Scheduled Task](#playbooks---windows-modules---scheduled-task)
         * [Service](#playbooks---windows-modules---service)
         * Stat
+        * URI
         * [User](#playbooks---windows-modules---user)
+        * Wait For
     * [Galaxy Roles](#playbooks---galaxy-roles)
         * [Network Interface](#playbooks---galaxy-roles---network-interface)
 * [Dashboards](#dashboards)
@@ -96,7 +103,7 @@
             * [ACLs](#dashboards---ansible-tower-3---security---acls)
             * [Authentication](#dashboards---ansible-tower-3---security---authentication)
             * [SSL](#dashboards---ansible-tower-3---security---ssl)
-    * [Open Tower](#dashboards---open-tower)
+    * [AWX](#dashboards---awx)
     * [Semaphore](#dashboards---semaphore)
 * [Python API](#python-api)
 * [Bibliography](#bibliography)
@@ -116,7 +123,7 @@ Sources:
 
 # Installation
 
-Ansible 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. Python 3 support is still in development but should be stable within the next few releases. [1][2]
+Ansible 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. [1] Python 3 support is still in development but should be stable within the next few releases. [2]
 
 RHEL:
 
@@ -140,7 +147,7 @@ Source code:
 # git clone git://github.com/ansible/ansible.git
 # cd ansible/
 # git branch -a | grep stable
-# git checkout remotes/origin/stable-2.3
+# git checkout remotes/origin/stable-2.4
 # git submodule update --init --recursive
 # source ./hacking/env-setup
 ```
@@ -1527,7 +1534,7 @@ In some situations a command should only need to be run on one node. An example 
 Syntax:
 
 ```
-run_once: true
+run_once: True
 ```
 
 This can also be assigned to a specific host.
@@ -1535,7 +1542,7 @@ This can also be assigned to a specific host.
 Syntax:
 
 ```
-run_once:
+run_once: True
 delegate_to: <HOST>
 ```
 
@@ -1685,7 +1692,9 @@ wait_for:
 Example:
 
 ```
-wait_for: timeout=60
+wait_for:
+  timeout: 60
+delegate_to: localhost
 ```
 
 Common options:
@@ -2036,7 +2045,7 @@ These are modules relating to defining new variables.
 
 #### Playbooks - Main Modules - Variables - Prompts
 
-Prompts can be used to assign a user's input as a variable.
+Prompts can be used to assign a user's input as a variable. [1] Note that this module is not compatible with Ansible Tower and that a Survey should be used instead. [2]
 
 Common options:
 
@@ -2073,9 +2082,10 @@ vars_prompt:
 
 [1]
 
-Source:
+Sources:
 
 1. "Ansible Prompts."
+2. "Ansible Tower Job Templates."
 
 
 #### Playbooks - Main Modules - Variables - Register
@@ -2926,9 +2936,24 @@ Example:
 
 [1]
 
-Source:
+On Windows, all of the available features can be found via PowerShell.
+
+```
+> Get-WindowsFeature
+```
+
+If part of the name is known, a PowerShell wildcard can be used to narrow it down.
+
+```
+> Get-WindowsFeature -Name <PART_OF_A_NAME>*
+```
+
+[2]
+
+Sources:
 
 1. "Ansible win_feature - Installs and uninstalls Windows Features on Windows Server."
+2. "Get-WindowsFeature."
 
 
 #### Playbooks - Windows Modules - Installations - MSI
@@ -3395,14 +3420,17 @@ There is a navigation bar that contains links to the most important parts of Ans
 
 User authentication, by default, will store encrypted user information into the PostgreSQL database. Instead of using this, Tower can be configured to use an external authentication serverice by going into `Settings > CONFIGURE TOWER`. The available options are:
 
-* Azure AD
-* GitHub
-* GitHub Org
-* GitHub Team
-* Google OAuth2
-* LDAP
-* RADIUS
-* SAML
+* Social
+    * GitHub
+        * GitHub [Users]
+        * GitHub Org[anization]
+        * GitHub Team
+    * Google OAuth2
+* Enterprise
+    * Azure AD
+    * LDAP
+    * RADIUS
+    * SAML
 
 [1]
 
@@ -3419,7 +3447,7 @@ Hierarchy [1]:
 
 * Organizations = A combination of Users, Teams, Projects, and Inventories.
     * Teams = Teams are a collection of users. Teams are not required. Multiple users' access can be modified easily and quickly via a Team instead of individually modifying each user's access.
-        * Users = Users are optionally associated with a team and are always associated with an Organization. An ACL is set for what resources the user is allowed to use.
+        * Users = Users are optionally associated with a Team and are always associated with an Organization. An ACL is set for what resources the user is allowed to use.
 
 User types / ACLs [2]:
 
@@ -3501,13 +3529,13 @@ Source:
 1. "Ansible Tower API Guide."
 
 
-## Dashboards - Open Tower
+## Dashboards - AWX
 
-Red Hat is currently in the process of creating Open Tower, a free and open source version of Ansible Tower. As of December 2016, this has not been released yet. [1]
+AWX is the upstream and open source version of Ansible Tower released by Red Hat to the public on September 7, 2017. [1] The source code for the project can be found in the [ansible/awx](https://github.com/ansible/awx) repository on GitHub.
 
 Source:
 
-1. "The Open Tower Project."
+1. "Ansible announces AWX open source project."
 
 
 ## Dashboards - Semaphore
@@ -3666,7 +3694,6 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible include_vars - Load variables from files, dynamically within a task." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_vars_module.html
 * "Ansible include_role - Load and execute a role." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/include_role_module.html
 * "Ansible wait_for - Waits for a condition before continuing." Ansible Documentation. October 31, 2016. Accessed November 19, 2016. http://docs.ansible.com/ansible/wait_for_module.html
-* "The Open Tower Project." Ansible. Accessed December 4, 2016. https://www.ansible.com/open-tower
 * "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 * "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
 * "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
@@ -3703,3 +3730,6 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible win_shortcut - Manage shortcuts on Windows." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/win_shortcut_module.html
 * "Ansible meta - Execute Ansible ‘actions'." Ansible Documentation. August 16, 2017. Accessed August 23, 2017. http://docs.ansible.com/ansible/latest/meta_module.html
 * "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks_strategies.html
+* "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
+* "Ansible Tower Job Templates." Ansible Tower Documentaiton. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html
+* "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
