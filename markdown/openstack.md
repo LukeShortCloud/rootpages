@@ -2,6 +2,7 @@
 
 * [Introduction](#introduction)
     * [Versions](#introduction---versions)
+        * [Red Hat OpenStack Platform](#introduction---versions---red-hat-openstack-platform)
     * [Services](#introduction---services)
 * [Overview](#overview)
 * [Automation](#automation)
@@ -117,6 +118,36 @@ Sources:
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
+
+
+### Introduction - Versions - Red Hat OpenStack Platform
+
+Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life releases were introduced with RHOSP 10 where it will recieve up to 5 years of support. Every 3rd release of RHOSP will have LTS support. Rolling major upgrades are supported from one version to the next sequential version.
+
+Releases:
+
+* RHOSP 3 (Grizzly)
+* RHOSP 4 (Havana)
+* RHOSP 5 (Icehouse)
+    * EOL: 2017-06-30
+* RHOSP 6 (Juno)
+    * EOL: 2018-02-17
+* RHOSP 7 (Kilo)
+    * EOL: 2018-08-05
+* RHOSP 8 (Liberty)
+    * EOL: 2019-04-20
+* RHOSP 9 (Mitaka)
+    * EOL: 2017-08-24
+* RHOSP 10 LTS (Newton)
+    * EOL: 2021-12-16
+* RHOSP 11 (Ocata)
+    * EOL: 2018-05-18
+
+[1]
+
+Source:
+
+1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 12, 2017. https://access.redhat.com/support/policy/updates/openstack/platform
 
 
 ## Introduction - Services
