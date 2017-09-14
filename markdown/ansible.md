@@ -1,6 +1,7 @@
-# Ansible 2
+# Ansible
 
 * [Introduction](#introduction)
+    * [Editions](#introduction---editions)
 * [Installation](#installation)
 * [Configuration](#configuration)
     * [Main](#configuration---main)
@@ -36,6 +37,7 @@
         * [Strategy](#playbooks---main-modules---strategy)
         * [Tags](#playbooks---main-modules---tags)
         * [Tasks](#playbooks---main-modules---tasks)
+        * URI
         * [Wait For](#playbooks---main-modules---wait-for)
         * [When](#playbooks---main-modules---when)
         * [Errors](#playbooks---main-modules---errors)
@@ -113,7 +115,7 @@
 
 Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
 
-There is also support for Windows modules. Ansible is executed on a control node that can Linux or Windows, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed using PowerShell commands. [2]
+There is also support for Windows modules. Ansible is executed on a control node that runs on Linux, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed remotely using PowerShell commands. [2]
 
 Sources:
 
@@ -121,9 +123,18 @@ Sources:
 2. "Windows Support."
 
 
+## Introduction - Editions
+
+There are two editions of Ansible available. There is the upstream Ansible community project that gets frequent updates and there is also Red Hat Ansible Engine, which is an enterprise solution. Ansible Engine is designed to provide a downstream version that is more stable, secure, and reliable. Support is provided that includes covers Core modules, priority bug and feature updates, documentation, and more. [1]
+
+Source:
+
+1. "Red Hat Ansible Engine."
+
+
 # Installation
 
-Ansible 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. [1] Python 3 support is still in development but should be stable within the next few releases. [2]
+The Ansible community edition 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. [1] Python 3 support is still in development but should be stable within the next few releases. [2]
 
 RHEL:
 
@@ -3733,3 +3744,4 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 * "Ansible Tower Job Templates." Ansible Tower Documentaiton. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html
 * "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
+* "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
