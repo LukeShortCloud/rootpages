@@ -3,7 +3,8 @@
 * [Kerberos](#kerberos)
     * [Server](#kerberos---server)
     * [Client](#kerberos---client)
-* LDAP
+* [OpenLDAP](#openldap)
+    * [Server](#openldap---server)
 
 
 # Kerberos
@@ -147,3 +148,44 @@ Example:
 Source:
 
 1. "Infrastructure/Kerberos." Fedora Project Wiki. June 23, 2017. Accessed September 11, 2017. https://fedoraproject.org/wiki/Infrastructure/Kerberos
+
+
+# OpenLDAP
+
+The Lightweight Directory Access Protocol (LDAP) is a network protocol for accessing user information. OpenLDAP is an open source implmentation of this protocol.
+
+OpenLDAP supports storing user information in many relational database management systems (RDMSs) including IBM db2, MariaDB/MySQL, MS SQL Server, Oracle Database, PostgreSQL and more. [2]
+
+Source:
+
+1.
+2. https://linux.die.net/man/5/slapd-sql
+
+
+## OpenLDAP - Server
+
+
+RHEL:
+
+```
+# yum install compat-openldap openldap openldap-clients openldap-servers
+```
+
+For using a RDMS, install the required dependency:
+
+```
+# yum install openldap-servers-sql
+```
+
+Enable and start the service.
+
+```
+# systemctl enable slapd
+# systemctl start slapd
+```
+
+[1]
+
+Source:
+
+1. "Step By Step OpenLDAP Server Configuration On CentOS 7 / RHEL 7." ItzGeek. September 14, 2017. Accessed September 20, 2017. http://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html
