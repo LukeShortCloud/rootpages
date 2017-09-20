@@ -8,7 +8,7 @@
     * [Inventory](#configuration---inventory)
         * [Variables](#configuration---inventory---variables)
     * [Vault Encryption](#configuration---vault-encryption)
-    * Python 3
+    * [Python 3](#configuration---python-3)
 * [Command Usage](#command-usage)
 * [Playbooks](#playbooks)
     * [Directory Structure](#playbooks---directory-structure)
@@ -45,6 +45,8 @@
             * [Failed When](#playbooks---main-modules---errors---failed-when)
             * [Ignore Errors](#playbooks---main-modules---errors---ignore-errors)
         * [Includes](#playbooks---main-modules---includes)
+            * Import Playbook
+            * Import Role
             * Import Tasks
             * [Include (deprecated in 2.4)](#playbooks---main-modules---includes---include)
             * [Include Role](#playbooks---main-modules---includes---include-role)
@@ -55,6 +57,7 @@
             * [With Flattened](#playbooks---main-modules---loops---with-flattened)
             * [With Items](#playbooks---main-modules---loops---with-items)
         * [Variables](#playbooks---main-modules---variables)
+            * Expect
             * [Prompts](#playbooks---main-modules---variables---prompts)
             * [Register](#playbooks---main-modules---variables---register)
             * [Set Fact](#playbooks---main-modules---variables---set-fact)
@@ -97,6 +100,7 @@
         * Wait For
     * [Galaxy Roles](#playbooks---galaxy-roles)
         * [Network Interface](#playbooks---galaxy-roles---network-interface)
+* [Module Development](#module-development)
 * [Dashboards](#dashboards)
     * [Ansible Tower 3](#dashboards---ansible-tower-3)
         * [GUI](#dashboards---ansible-tower-3---gui)
@@ -116,6 +120,11 @@
 Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
 
 There is also support for Windows modules. Ansible is executed on a control node that runs on Linux, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed remotely using PowerShell commands. [2]
+
+The official documentation can be found here:
+
+* Latest stable: http://docs.ansible.com/ansible/latest/index.html
+* Development: http://docs.ansible.com/ansible/devel/index.html
 
 Sources:
 
@@ -476,7 +485,28 @@ Source:
 1. "Ansible Vault."
 
 
-## Command Usage
+## Configuration - Python 3
+
+Python 3 is supported on the control node and managed nodes. For using Python 3 on the managed nodes, the `ansible_python_interpreter` variable needs to be set to reference the path to the managed nodes' Python 3.
+
+
+Example:
+
+```
+$ /usr/bin/python3 /usr/bin/ansible -e "ansible_python_interpreter=/usr/bin/python3" -m setup localhost
+```
+
+Documentation on how to create Ansible modules for Python 3 with backwards compatibility with Python 2 can be found here: http://docs.ansible.com/ansible/latest/dev_guide/developing_python3.html
+
+[1]
+
+Source:
+
+1. "Ansible Python 3 Support."
+
+
+# Command Usage
+
 Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
 
 
@@ -3281,6 +3311,91 @@ Source:
 1. "network_interface."
 
 
+# Module Development
+
+Official Ansible module development documentation:
+
+* http://docs.ansible.com/ansible/latest/dev_guide/index.html
+
+All of the helper libraries for Ansible can be found in [lib/ansible/modules_utils/](https://github.com/ansible/ansible/tree/devel/lib/ansible/module_utils). At the bare minimum, the [AnsibleModule class](https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/basic.py) should be used to create a new module object.
+
+```
+from ansible.module_utils.basic import AnsibleModule
+```
+
+That basic syntax and layout of creating a module object looks like this.
+
+```
+module = AnsibleModule(
+    argument_spec=dict(
+        <ARGUMENT_NAME>=dict(<OPTIONS>)
+    ),
+    <OTHER_MODULE_OPTIONS>
+    )
+```
+
+These are all of the various settings that can be defined and used AnsibleModule object.
+
+**`AnsibleModule` initalization:**
+
+* argument_spec = A dictionary of arguments that can be provided by a user using this module. Each argument can have it's own settings.
+    * `<ARGUMENT_NAME>` = A unique argument name should be given. This will contain a dictionary of additional settings for this argument.
+        * aliases = A list of other names that can be used to reference this same argument.
+        * choices = A list of explicit valid choices for this arguement. This is primarily used for documentation.
+        * required = True or False. If this argument is required for the module to work.
+        * default = A default value to provide if the user does not specify one.
+        * type = The type of value that should be provided. This can be any valid Python variable type. Common types include:
+            * bool = Boolean.
+            * float = Float, a decimal number.
+            * int = Integer, a whole number.
+            * list
+            * path = A path to a file or directory.
+            * string
+* required_one_of = A list of arguments where at least one is required for the module to work.
+* mutually_exclusive = A list of arguments that cannot be used together.
+* supports_check_mode = Specify if this module supports Ansible's "check mode" where it can check to see if this module will change anything without modifying the system. This sets the `module.check_mode` boolean.
+
+
+**`module` common object methods:**
+
+* _deprecation = A dictionary of information for a deprecation message.
+    * msg = The deprecation string.
+    * version = The version this was / will be deprecated in.
+* _warnings = A list of warnings to provide the end user.
+* append_to_file = Append text to a file.
+* atomic_move = Copy a source file to a destination. The new destination file will use the same file attributes as the original destination file.
+* debug = Debug a variable's value.
+* digest_from_file = Return a checksum of a file.
+* exit_json = A dictionary of return data when the module finishes successfully.
+    * *kwargs* = Any variables can be passed to this method and will be returned in the error message. Common variable names and values to pass include:
+        * changed = A boolean stating if anything has changed.
+        * changes = A dictionary of items that were changed.
+        * results = A dictionary of results that should be returned to the end user.
+* fail_json = A dictionary for when the module fails.
+    * msg = A string of a failure message.
+    * *kwargs* = Any other variables can be passed to this method and will be returned in the error message.
+* from_json = Convert JSON data into a dictionary.
+* get_bin_path = Find the path of a binary on the managed system.
+* jsonify = Convert a variable into JSON format.
+* run_command = Run a command on the managed system. This method will return the return code, the standard output, and the standard error from the process. Example:
+
+```
+cmd = "echo Hello world"
+rc, out, err = module.run_command(cmd)
+```
+
+**`module` common object variables:**
+
+* check_mode = Boolean. Determines if check_mode is supported based on what `module.supports_check_mode` value is set to.
+* params = Dictionary. All of the module argument variables.
+
+[1]
+
+Source:
+
+1. "Ansible [README.md]."
+
+
 # Dashboards
 
 Various dashboards are available that provide a graphical user interface (GUI) and usually an API to help automate Ansible deployments. These can be used for user access control lists (ACLs), scheduling automated tasks, and having a visual representation of Ansible's deployment statistics.
@@ -3289,6 +3404,13 @@ Various dashboards are available that provide a graphical user interface (GUI) a
 ## Dashboards - Ansible Tower 3
 
 Ansible Tower is the official dashboard maintained by Red Hat. The program requires PostgreSQL, Python, and RabbitMQ. A free trial of it can be used to manage up to 10 servers for testing purposes only. A license can be bought to use Tower for managing more servers and to provide support. [1]
+
+Ansible Tower 3.1 Requirements [2]:
+
+* Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
+    * Support for RHEL 6 was dropped in 3.1.0
+* Ansible >= 2.1
+* PostgreSQL 9.4
 
 Tower can be downloaded from [http://releases.ansible.com/ansible-tower/](http://releases.ansible.com/ansible-tower/). The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for offline installation. At least a free trial license will be required to use the software which can be obtained from the [Ansible Tower license page](https://www.ansible.com/license).
 
@@ -3389,7 +3511,7 @@ Ports:
 
 * 80/tcp = Unecyrpted Ansible Tower dashboard web traffic.
 * 443/tcp = SSL encrypted Ansible Tower dashboard web traffic.
-* 5432/tcp = PostgreSQL
+* 5432/tcp = PostgreSQL relational database server.
 
 Cluster ports:
 
@@ -3398,12 +3520,13 @@ Cluster ports:
 * 25672/tcp = External RabbitMQ port.
 * 15672/tcp = RabbitMQ dashboard.
 
-[2]
+[3]
 
 Source:
 
 1. "Installing Ansible Tower."
-2. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017."
+2. "Ansible Tower Installation and Reference Guide."
+3. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017."
 
 
 ### Dashboards - Ansible Tower 3 - GUI
@@ -3585,8 +3708,8 @@ Ansible is written in Python so it can be used programmatically to run Playbooks
 import json
 from collections import namedtuple
 from ansible.parsing.dataloader import DataLoader
-from ansible.vars import VariableManager
-from ansible.inventory import Inventory
+from ansible.vars.manager import VariableManager
+from ansible.inventory.manager import InventoryManager
 from ansible.playbook.play import Play
 from ansible.executor.task_queue_manager import TaskQueueManager
 from ansible.plugins.callback import CallbackBase
@@ -3604,21 +3727,21 @@ class ResultCallback(CallbackBase):
         This method could store the result in an instance attribute for retrieval later
         """
         host = result._host
-        print json.dumps({host.name: result._result}, indent=4)
+        print(json.dumps({host.name: result._result}, indent=4))
 
-Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check'])
+Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check', 'diff'])
 # initialize needed objects
-variable_manager = VariableManager()
 loader = DataLoader()
-options = Options(connection='local', module_path='/path/to/mymodules', forks=100, become=None, become_method=None, become_user=None, check=False)
+options = Options(connection='local', module_path='/path/to/mymodules', forks=100, become=None, become_method=None, become_user=None, check=False,
+                  diff=False)
 passwords = dict(vault_pass='secret')
 
 # Instantiate our ResultCallback for handling results as they come in
 results_callback = ResultCallback()
 
 # create inventory and pass to var manager
-inventory = Inventory(loader=loader, variable_manager=variable_manager, host_list='localhost')
-variable_manager.set_inventory(inventory)
+inventory = InventoryManager(loader=loader, sources=['localhost'])
+variable_manager = VariableManager(loader=loader, inventory=inventory)
 
 # create play with tasks
 play_source =  dict(
@@ -3719,7 +3842,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Installing Ansible Tower." Ansible Tower Documentation. April 18, 2017. Accessed April 23, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower_install_wizard.html
 * "Ansible assert - Asserts given expressions are true." Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/latest/assert_module.html
 * "Ansible Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html
-* "Ansible Python API." Ansible Documentation. August 4, 2017. Accessed August 7, 2017. http://docs.ansible.com/ansible/dev_guide/developing_api.html
+* "Ansible Python API." Ansible Documentation. September 19, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible/devel/dev_guide/developing_api.html
 * "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 *  "Ansible win_chocolatey - Installs packages using chocolatey." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/win_chocolatey_module.html
 *  "Ansible win_updates - Download and install Windows updates." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/win_updates_module.html
@@ -3745,3 +3868,6 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible Tower Job Templates." Ansible Tower Documentaiton. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html
 * "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
 * "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
+* "Ansible Python 3 Support." Ansible Documentation. September 12, 2017. Accessed September 14, 2017. http://docs.ansible.com/ansible/latest/python_3_support.html
+* "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
+* "Ansible Tower Installation and Reference Guide." Ansible Documentation. September 18, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible-tower/3.1.5/pdf/AnsibleTowerInstallationandReferenceGuide.pdf
