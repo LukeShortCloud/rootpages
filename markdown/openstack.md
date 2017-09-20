@@ -25,6 +25,8 @@
     * [TripleO](#automation---tripleo)
         * [Quick](#automation---tripleo---quick)
         * [Full](#automation---tripleo---full)
+            * [Undercloud](#automation---tripleo---full---undercloud)
+            * Overcloud
 * [Configurations](#configurations)
     * [Common](#configurations---common)
         * [Database](#configurations---common---database)
@@ -846,36 +848,60 @@ Sources:
 
 ### Automation - TripleO - Full
 
-* Install the EPEL for extra packages that will be required.
+
+## Automation - TripleO - Full - Undercloud
+
+* **Hypervisor**
+    * Install the EPEL for extra packages that will be required.
 ```
 # yum install epel-release
 ```
-* Install the Undercloud environment deployment tools.
+    * Install the Undercloud environment deployment tools.
 ```
 # yum install instack-undercloud
 ```
-* Deploy the Undercloud virtual machine.
+    * Deploy a new virtual machine to be used for the Undercloud.
 ```
 # instack–virt–setup
 ```
-* Log into the virtual machine with the provided credentials from the previous command.
+    * Log into the virtual machine with the provided credentials from the previous command.
 ```
 # ssh root@<VIRTUAL_MACHINE_IP>
 ```
-* Install TripleO from the RDO Delorean repository.
+
+* **Undercloud virtual machine**
+    * Install the stable RDO Delorean repositories.
+```
+# curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
+# curl -L -o /etc/yum.repos.d/delorean-deps-newton.repo https://trunk.rdoproject.org/centos7-newton/delorean-deps.repo
+```
+    * Install TripleO.
 ```
 # yum install python-tripleoclient
 ```
-* Deploy an all-in-one Undercloud on the virtual machine.
+    * It is recommended to create a user named "stack" with sudo privileges to manage the Undercloud.
+    * Copy the sample configuration to use as a base template.
 ```
-# openstack undercloud install
+$ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 ```
+    * At the very least the "local_ip" and "local_interface" variables need to be defined in the "DEFAULT" section.
+    * Deploy an all-in-one Undercloud on the virtual machine.
+```
+$ openstack undercloud install
+```
+    * The installation will be logged to `$HOME/.instack/install-undercloud.log`.
+    * After the installation, OpenStack user credentials will be saved to `$HOME/stackrc`. Source this file before running OpenStack commands to verify that the Undercloud is operational.
+```
+$ source ~/stackrc
+$ openstack catalog list
+```
+    * All OpenStack service passwords will be saved to `$HOME/undercloud-passwords.conf`.
 
 [1]
 
 Source:
 
-1. "How To Install OpenStack Using TripleO." Platform9 Blog. June 27, 2016. Accessed January 8, 2017. https://platform9.com/blog/install-openstack-using-tripleo/
+1. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
 
 
 # Configurations
