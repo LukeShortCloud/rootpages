@@ -22,6 +22,7 @@
 * [Flatpak](#flatpak)
 * Snap
 
+
 # DEB
 
 
@@ -283,6 +284,7 @@ Sources:
 | RPM Fusion | Fedora, RHEL | No | Packages that Fedora does not ship by default due to license conflicts. [4] | <li>[Fedora 25](https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm) <li>[Fedora 26](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm) <li>[Fedora 27](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm) <li>[RHEL 6](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm) <li>[RHEL 7](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm) |
 | RPM Sphere | Fedora | No | OpenSUSE packages that are not available in Fedora. [5] | <li>[Fedora 25](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_25/home:zhonghuaren.repo)<li>[Fedora 26](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo) |
 | Kernel Vanilla | Fedora | Yes | Kernel packages for the latest stable and mainline Linux kernels. [6] | <li>[Fedora](https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo) |
+| Wine | Fedora | Yes | The latest stable, development, and staging packages for Wine. | <li>Fedora 24<li>Fedora 25<li>[Fedora 26](https://dl.winehq.org/wine-builds/fedora/26/winehq.repo) |
 
 Sources:
 
