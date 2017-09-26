@@ -18,42 +18,37 @@
     * [Main Modules](#modules---main-modules)
         * [Assert](#modules---main-modules---assert)
         * [Async](#modules---main-modules---async)
-        * Block
+        * [Block](#modules---main-modules---block)
         * [Check Mode](#modules---main-modules---check-mode)
         * [Debug](#modules---main-modules---debug)
         * [Gather Facts](#modules---main-modules---gather-facts)
-        * Get URL
         * [Handlers and Notify](#modules---main-modules---handlers-and-notify)
         * [Meta](#modules---main-modules---meta)
-        * Pause
+        * [Pause](#modules---main-modules---pause)
         * [Roles](#modules---main-modules---roles)
         * [Run Once](#modules---main-modules---run-once)
         * [Serial](#modules---main-modules---serial)
         * [Strategy](#modules---main-modules---strategy)
         * [Tags](#modules---main-modules---tags)
         * [Tasks](#modules---main-modules---tasks)
-        * URI
         * [Wait For](#modules---main-modules---wait-for)
         * [When](#modules---main-modules---when)
         * [Errors](#modules---main-modules---errors)
             * [Any Errors Fatal](#modules---main-modules---errors---any-errors-fatal)
-            * Fail
+            * [Fail](#modules---main-modules---errors---fail)
             * [Failed When](#modules---main-modules---errors---failed-when)
             * [Ignore Errors](#modules---main-modules---errors---ignore-errors)
         * [Includes](#modules---main-modules---includes)
-            * Import Playbook
-            * Import Role
-            * Import Tasks
+            * [Import Playbook](#modules---main-modules---includes---import-playbook)
+            * [Import and Include Role](#modules---main-modules---includes---import-and-include-role)
+            * [Import and Include Tasks](#modules---main-modules---includes---import-and-include-tasks)
             * [Include (deprecated in 2.4)](#modules---main-modules---includes---include)
-            * [Include Role](#modules---main-modules---includes---include-role)
-            * Include Tasks
             * [Include Variables](#modules---main-modules---includes---include-variables)
         * [Loops](#modules---main-modules---loops)
             * [With First Found](#modules---main-modules---loops---with-first-found)
             * [With Flattened](#modules---main-modules---loops---with-flattened)
             * [With Items](#modules---main-modules---loops---with-items)
         * [Variables](#modules---main-modules---variables)
-            * Expect
             * [Prompts](#modules---main-modules---variables---prompts)
             * [Register](#modules---main-modules---variables---register)
             * [Set Fact](#modules---main-modules---variables---set-fact)
@@ -61,10 +56,13 @@
         * [Command and Shell](#modules---unix-modules---command-and-shell)
         * [Copy, File, Synchronize, and Template](#modules---unix-modules---copy,-file,-synchronize,-and-template)
         * [Cron](#modules---unix-modules---cron)
+        * [Expect](#modules---unix-modules---expect)
+        * [Get URL](#modules---unix-modules---get-url)
         * [Git](#modules---unix-modules---git)
         * [MySQL Database and User](#modules---unix-modules---mysql-database-and-user)
         * [Service](#modules---unix-modules---service)
         * [Stat](#modules---unix-modules---stat)
+        * [URI](#modules---unix-modules---uri)
         * [Package Managers](#modules---unix-modules---package-managers)
             * [Apt](#modules---unix-modules---package-managers---apt)
             * [Yum](#modules---unix-modules---package-managers---yum)
@@ -77,7 +75,8 @@
             * [Robocopy](#modules---windows-modules---file-management---robocopy)
             * [Shortcut](#modules---windows-modules---file-management---shortcut)
             * [Template](#modules---windows-modules---file-management---template)
-        * Firewall and Firewall Rule
+        * Firewall
+        * Firewall Rule
         * [Installations](#modules---windows-modules---installations)
             * [Chocolatey](#modules---windows-modules---installations---chocolatey)
             * [Feature](#modules---windows-modules---installations---feature)
@@ -116,9 +115,9 @@
             * [Authentication](#dashboards---ansible-tower-3---security---authentication)
             * [SSL](#dashboards---ansible-tower-3---security---ssl)
     * [AWX](#dashboards---awx)
-    * Rundeck
+    * [Rundeck](#dashboards---rundeck)
     * [Semaphore](#dashboards---semaphore)
-    * Tensor
+    * [Tensor](#dashboards---tensor)
 * [Bibliography](#bibliography)
 
 
@@ -830,6 +829,54 @@ Source:
 1. "Ansible Asynchronous Actions and Polling."
 
 
+### Modules - Main Modules - Block
+
+A `block` is used to handle logic for executing tasks. A set of tasks can be run, for example, if a condition is met. This also handles errors in a `try/excepect` fashion. If the code from the `block` fails then it proceeds to run the tasks in the `rescue` section. There is also a final `always` section that will execute whether the block failed or not.
+
+
+Syntax (minimal):
+
+```
+block:
+```
+
+Syntax (full):
+
+```
+block:
+  <ACTIONS>
+rescue:
+  <ACTIONS>
+always:
+  <ACTIONS>
+```
+
+Example:
+
+```
+- name: Installing Docker
+  block:
+    - package:
+        name: docker
+        state: latest
+  rescue:
+    - debug:
+        msg: "Unable to properly install Docker. Cleaning up now."
+    - file:
+        dest: /path/to/custom/docker/files
+        state: absent
+  always:
+    - debug:
+        msg: "Continuing onto the next set of tasks..."
+```
+
+[1]
+
+Source:
+
+1. "[Ansible] Blocks."
+
+
 ### Modules - Main Modules - Check Mode
 
 A Playbook can run in a test mode with `--check`. No changes will be made. Optionally, the `--diff` argument can also be added to show exactly what would be changed.
@@ -1029,6 +1076,36 @@ meta: flush_handlers
 ```
 
 [1]
+
+Source:
+
+1. "Utilities Modules."
+
+
+### Modules - Main Modules - Pause
+
+The `pause` module is used to temporarily pause an entire Playbook. If no time argument is specified, the end-user will need to hit `CTRL+c` then `c` to continue or hit `CTRL+c` and then `a` to abort the Playbook.
+
+All options:
+
+* minutes
+* prompt = An optional text to display to the end-user.
+* seconds
+
+Syntax:
+
+```
+pause:
+```
+
+Example:
+
+```
+- pause:
+    minutes: 3
+    prompt: "The new program needs to finish initializing."
+```
+
 
 Source:
 
@@ -1310,6 +1387,33 @@ Source:
 1. "Ansible Error Handling In Playbooks."
 
 
+#### Modules - Main Modules - Errors - Fail
+
+The simple `fail` module will make a Playbook fail. This is useful when checking if a certain condition has to exist to continue on.
+
+All options:
+
+* msg = An optional message to provide the end-user.
+
+Syntax:
+
+```
+fail:
+```
+
+Example:
+
+```
+- fail:
+    msg: "Unexpected return code."
+  when: (command_variable.rc != 0) or (command_variable.rc != 900)
+```
+
+Source:
+
+1. "Utilities Modules."
+
+
 #### Modules - Main Modules - Errors - Failed When
 
 In some situations, a error from a command or module may not be reported properly. This module can be used to force a failure based on a certain condition. [1]
@@ -1358,7 +1462,102 @@ Source:
 
 ### Modules - Main Modules - Includes
 
-Include modules allow other elements of a Playbook to be called and executed.
+Include and import modules allow other elements of a Playbook to be called and executed.
+
+
+#### Modules - Main Modules - Includes - Import Playbook
+
+The proper way to use other Playbooks in a Playbook is to use the `import_playbook`. Before Ansible 2.4 this was handled via the `include` module. There is also no `include_playbook` module, only `import_playbook`.
+
+Syntax:
+
+```
+---
+- import_playbook: <PLAYBOOK>
+```
+
+Example:
+
+```
+---
+- import_playbook: nginx.yml
+- import_playbook: phpfpm.yml
+- import_playbook: mariadb.yml
+```
+
+[1]
+
+Source:
+
+1. "Creating Reusable Playbooks."
+
+
+#### Modules - Main Modules - Includes - Import and Include Role
+
+The `import_role` is a static inclusion of a role that cannot be used in loops. This is loaded on runtime of the Playbook
+
+The `include_role` is a dynamic inclusion of a role that can be used in loops. Tags will not automatically be shown with the `--list-tags` Ansible Playbook argument. This can be loaded dynamically based on conditions. [1]
+
+All options:
+
+* allow_uplicates = Allow a role ot be used more than once. Default: True.
+* defaults_from = A default variable file to load from the role's "default" directory.
+* **name** = The name of the role to import.
+* private = All of the "default" an "vars" variables in the role are private and not accessible via the rest of the Playbook.
+* tasks_from = A task file to load from the role's "tasks" directory.
+* vars_from = A vaiables file to load from the role's "vars" directory.
+
+Syntax:
+
+```
+- import_role: <ROLE_NAME>
+```
+```
+- include_role: <ROLE_NAME>
+```
+
+Examples:
+
+```
+- name: Run only the install.yml task from the openshift role
+  import_role:
+    name: openshift
+    tasks_from: install
+```
+```
+- name: Run the Nagios role
+  include_role:
+    name: nagios
+  vars:
+    listen_port: 8080
+```
+
+[2]
+
+Source:
+
+1. "Creating Reusable Playbooks."
+2. "Utilities Modules."
+
+
+#### Modules - Main Modules - Includes - Import and Include Tasks
+
+Use the `import_tasks` to statically include tasks at a Playbook's runtime or `include_tasks` to dynamically run tasks once the Playbook gets to it.
+
+Syntax:
+
+```
+- import_tasks: <TASK_FILE>.yml
+```
+```
+- include_tasks: <TASK_FILE>.yml
+```
+
+[1]
+
+Source:
+
+1. "Creating Reusable Playbooks."
 
 
 #### Modules - Main Modules - Includes - Include
@@ -1389,33 +1588,6 @@ Sources:
 
 1. "Creating Reusable Playbooks."
 2. "Utilities Modules."
-
-
-#### Modules - Main Modules - Includes - Include Role
-
-Starting in Ansible 2.2, other roles can be included in tasks.
-
-Common options:
-
-* name = Name of the role to include.
-* {defaults|tasks|vars}_from = Include a specific file from the role's defaults, tasks, or vars directory.
-* private = Boolean. Specify if the variables from this role should be available to the rest of the Playbook (False) or not (True).
-
-Syntax:
-
-```
-include_role:
-```
-
-Example:
-
-```
-include_role: name=ldap task_from=rhel.yml
-```
-
-Source:
-
-1. "Utilities Modules."
 
 
 #### Modules - Main Modules - Includes - Include Variables
@@ -1854,7 +2026,88 @@ cron: job="/usr/bin/yum -y update" weekday=0 hour=6 backup=yes
 
 Source:
 
-1. "Ansible cron - Manage cron.d and crontab entries."
+1. "System Modules."
+
+
+### Modules - UNIX Modules - Expect
+
+The `expect` module executes a command, searches for a regular expression pattern and, if found, it will provide standard input back to the command.
+
+All options:
+
+* chdir = Change into a different directory before running the command.
+* **command** = The command to execute.
+* creates = A path to a file which should be created after the command executes properly.
+* echo = Show the response strings that were used.
+* removes = A path to a file which should not exist after the command executes properly.
+* **responses** = A dictionary of patterns to search for and responses that they should provide back.
+* timeout = The time, in seconds, to wait for finding the pattern.
+
+Syntax:
+
+```
+expect:
+  command: <COMMAND>
+  responses:
+    <PATTERN>: <RESPONSE_TO_USE>
+```
+
+Example:
+
+```
+- name: Find all of the available fruit
+  expect:
+    command: mysql -u dave -p -e 'SELECT fruit_name FROM food.fruits;'
+    responses:
+      password: "{{ mysql_pass_dave }}"
+```
+
+[1]
+
+Source:
+
+1. "Command Modules."
+
+
+### Modules - UNIX Modules - Get URL
+
+The `get_url` module is used to download files from online.
+
+Common options:
+
+* backup = Backup the destinatino file if it already exists. Default: no.
+* checksum = Speicfy a checksum method to use and the hash that is expected.
+* **dest** = Where the downloaded file should be saved to
+* timeout = The time, in seconds, to wait for a connection to the URL before failing. Default: 10.
+* {group|mode|owner} = Specify the permissions for the downloaded file.
+* **url** = The URL to download.
+* * use_proxy = Use the proxy settings from the environment variables. Default: yes.
+* validate_certs = Validate SSL certificates. Default: yes.
+
+Syntax:
+
+```
+get_url:
+```
+
+Example:
+
+```
+- name: Downloading a configuration file
+  get_url:
+    url: https://internal.domain.tld/configs/nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: nginx
+    group: nginx
+    mode: 0644
+    validate_certs: no
+```
+
+[1]
+
+Source:
+
+1. "Net Tools Modules."
 
 
 ### Modules - UNIX Modules - Git
@@ -1911,7 +2164,7 @@ service: name=httpd state=restarted sleep=3
 
 Source:
 
-1. "Ansible Service Module."
+1. "System Modules."
 
 
 ### Modules - UNIX Modules - MySQL Database and User
@@ -1970,6 +2223,163 @@ Sources:
 
 1. "Ansible mysql_db - Add or remove MySQL databases from a remote host."
 2. "Ansible mysql_user - Adds or removes a user from a MySQL database."
+
+
+### Modules - UNIX Modules - Stat
+
+This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand `stat`. All the information from this module can be saved to a variable and accessed as a from new `<VARIABLE>.stat` dictionary.
+
+Syntax:
+
+```
+stat: path=<FILE>
+register: <STAT_VARIABLE>
+```
+
+Example:
+
+```
+- stat: path=/root/.ssh/id_rsa
+  register: id_rsa
+
+- file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root
+  when: id_rsa.stat.mode is not "0600"
+```
+
+Common options:
+
+* checksum_algorithm = The algorithm to use for finding the checksum.
+    * sha1 (Default)
+    * sha224
+    * sha256
+    * sha384
+    * sha512
+* follow = Follow symbolic links.
+* get_checksum = If the SHA checksum should be generated.
+* get_md5 = Boolean. If the MD5 checksum should be generated.
+* path = Required. String. The full path to the file.
+
+`stat` dictionary values:
+
+* {a|c|m}time = Float. The last time the file was either accessed, the metadata was created, or modified.
+* attributes = List. All of the file attributes.
+* charset = String. The text file encoding format.
+* checksum = String. The has of the path.
+* dev = Integer. The device the inode exists on.
+* {executable|readable|writeable} = Boolean. If the file is executable, readable, or writeable by the remote user that Ansible is running as.
+* exists = Boolean. If the file exists or not.
+* {gr|pw}_name = String. The name of the group or user owner.
+* isblk = Boolean. If the file is a block device.
+* ischr = Boolean. If the file is a character device for standard input or output.
+* isdir = Boolean. If the file is a directory.
+* isfifo = Boolean. If the file is a named pipe.
+* islink = Boolean. If the file is a symbolic link.
+* inode = Integer. The Unix inode number of the file.
+* isreg = Boolean. If the file is a regular file.
+* issock. Boolean. If the file is a Unix socket.
+* is{uid|gid} = Boolean. If the file is owned by the user or group that the remote Ansible user is running as.
+* lnk_source = String. The original path of the symbolic link.
+* md5 = String. The MD5 hash of the file.
+* mime_type = The "magic data" that specifies the file type.
+* mode = Octal Unix file permissions.
+* nlink. Integer. The number of links that are used to redirect to the original inode.
+* path = String. The full path to the file.
+* {r|w|x}usr = Boolean. If the user owner has readable, writeable, or executable permissions.
+* {r|w|x}grp = Boolean. If the group owner has readable, writeable, or executable permissions.
+* {r|w|x}oth = Boolean. If other users have readable, writeable, or executable permissions.
+* size = Integer. The size, in bytes, of the file.
+* {uid|gid} = Integer. The ID of user or group owner of the file.
+
+[1]
+
+Source:
+
+1. "Ansible stat - retrieve file or file system status."
+
+
+### Modules - UNIX Modules - URI
+
+The `uri` module is used for handling HTTP requests.
+
+Common options:
+
+* HEADER_* = Modify different types of header content.
+* body = The body of the request to send.
+* body_format = The format to ues for the body. Default: raw.
+    * json
+    * raw
+* dest = A path to where a file should be downloaded to.
+* follow_redirects = Default: safe.
+    * all = Follo wall redirects.
+    * none = Do not follow any redirects.
+    * safe = Follow the first redirect only.
+* method = The HTTP method type to use. Default: GET.
+    * CONNECT
+    * DELETE
+    * GET
+    * HEAD
+    * OPTIONS
+    * PATCH
+    * POST
+    * PUT
+    * REFRESH
+    * TRACE
+* password = The password to use for basic HTTP authentication.
+* status_code = The expected status code from the request. Default: 200.
+* timeout = When a connection to a URL should time out if it's unreachable.
+* **url** = The HTTP URL to connect to.
+* user = The username to use for basic HTTP authentication.
+
+Syntax:
+
+```
+uri:
+```
+
+Example:
+
+```
+- name: Authencate with OpenStack's Keystone v3 service
+  uri:
+    HEADER_Content-Type="application/json"
+    body_format: json
+    body: >
+{
+    "auth": {
+        "identity": {
+            "methods": [
+                "password"
+            ],
+            "password": {
+                "user": {
+                    "domain": {
+                        "name": "Default"
+                    },
+                    "name": "admin",
+                    "password": "{{ admin_pass }}"
+                }
+            }
+        },
+        "scope": {
+            "project": {
+                "domain": {
+                    "name": "Default"
+                },
+                "name": "demo"
+            }
+        }
+    }
+}
+    method: POST
+    url: https://openstack.tld:5000/v3/auth/tokens
+  register: os_token_request
+```
+
+[1]
+
+Source:
+
+1. "Net Tools Modules."
 
 
 ### Modules - UNIX Modules - Package Managers
@@ -2099,78 +2509,6 @@ yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpm
 Source:
 
 1. "Packaging Modules."
-
-
-### Modules - UNIX Modules - Stat
-
-This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand `stat`. All the information from this module can be saved to a variable and accessed as a from new `<VARIABLE>.stat` dictionary.
-
-Syntax:
-
-```
-stat: path=<FILE>
-register: <STAT_VARIABLE>
-```
-
-Example:
-
-```
-- stat: path=/root/.ssh/id_rsa
-  register: id_rsa
-
-- file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root
-  when: id_rsa.stat.mode is not "0600"
-```
-
-Common options:
-
-* checksum_algorithm = The algorithm to use for finding the checksum.
-    * sha1 (Default)
-    * sha224
-    * sha256
-    * sha384
-    * sha512
-* follow = Follow symbolic links.
-* get_checksum = If the SHA checksum should be generated.
-* get_md5 = Boolean. If the MD5 checksum should be generated.
-* path = Required. String. The full path to the file.
-
-`stat` dictionary values:
-
-* {a|c|m}time = Float. The last time the file was either accessed, the metadata was created, or modified.
-* attributes = List. All of the file attributes.
-* charset = String. The text file encoding format.
-* checksum = String. The has of the path.
-* dev = Integer. The device the inode exists on.
-* {executable|readable|writeable} = Boolean. If the file is executable, readable, or writeable by the remote user that Ansible is running as.
-* exists = Boolean. If the file exists or not.
-* {gr|pw}_name = String. The name of the group or user owner.
-* isblk = Boolean. If the file is a block device.
-* ischr = Boolean. If the file is a character device for standard input or output.
-* isdir = Boolean. If the file is a directory.
-* isfifo = Boolean. If the file is a named pipe.
-* islink = Boolean. If the file is a symbolic link.
-* inode = Integer. The Unix inode number of the file.
-* isreg = Boolean. If the file is a regular file.
-* issock. Boolean. If the file is a Unix socket.
-* is{uid|gid} = Boolean. If the file is owned by the user or group that the remote Ansible user is running as.
-* lnk_source = String. The original path of the symbolic link.
-* md5 = String. The MD5 hash of the file.
-* mime_type = The "magic data" that specifies the file type.
-* mode = Octal Unix file permissions.
-* nlink. Integer. The number of links that are used to redirect to the original inode.
-* path = String. The full path to the file.
-* {r|w|x}usr = Boolean. If the user owner has readable, writeable, or executable permissions.
-* {r|w|x}grp = Boolean. If the group owner has readable, writeable, or executable permissions.
-* {r|w|x}oth = Boolean. If other users have readable, writeable, or executable permissions.
-* size = Integer. The size, in bytes, of the file.
-* {uid|gid} = Integer. The ID of user or group owner of the file.
-
-[1]
-
-Source:
-
-1. "Ansible stat - retrieve file or file system status."
 
 
 ## Modules - Windows Modules
@@ -2469,7 +2807,10 @@ Sources:
 
 #### Modules - Windows Modules - Installations - MSI
 
-The MSI module has been deprecated in Ansible 2.3 and will be removed in a future release. Use the `win_package` module instead. [1]
+**Depreacted in: 2.3
+Replaced by: `win_package`**
+
+The MSI module is used to install executable packages. [1]
 
 Source:
 
@@ -2510,6 +2851,7 @@ Example [1]:
     productid: '{7DEBE4EB-6B40-3766-BB35-5CBBC385DA37}'
     arguments: '/q /norestart'
     ensure: present
+    # Return code "3010" means that Windows requires a reboot
     expected_return_code: 3010
 ```
 
@@ -3649,11 +3991,35 @@ There is a navigation bar that contains links to the most important parts of Ans
     * Subversion (svn) = A SCM.
     * Red Hat Insights = Use a Playbook from the Red Hat Insights program to do validation checks.
 * Inventories = Static and dynamic inventories can be defined here.
+    * Supported sources:
+        * Custom Script = Provide a custom script that outputs a valid JSON or YAML inventory.
+        * Sourced from a Project = Import inventory from an existing Project (Playbook).
+        * Amazon EC2
+        * Google Compute Engine
+        * Microsoft Azure Resource Manager
+        * VMWare vCenter
+        * Red Hat Satellite 6
+        * OpenStack
 * Templates = Used for defining a Playbook to run, the hosts to run on, any additional variables to use, and optionally a time interval to automatically run the template.
+    * Workflow Template = Defines a workflow for determining when to run a Playbook and what runs after depending on if the Playbook failed or succeeded.
 * Jobs = Templates that have been run (or are running) and their logs and statistics.
 * (The gear/cog image) = Settings for configuring new users, teams, dynamic inventory scripts, notifications, the license, and other settings relating to the Ansible Tower installation.
-    * In Tower >= 3.1, "workflows" can be created to determine what templates/Playbooks to use after a success, failure, or have them run in a particular order.
 * (The book image) = A shortcut to Ansible Tower's official documentation.
+
+[1][2]
+
+The default timeout for an authorization token is 30 minutes. After this time, the token will expire and the end-user will need to re-login into their account. This setting can be modified in the `settings.py` file. [3]
+
+```
+# vim /etc/tower/conf.d/settings.py
+AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
+```
+
+Sources:
+
+1. "Ansible Tower Quick Setup Guide."
+2. "Ansible Tower User Guide."
+3. "Ansible Tower Administration Guide"
 
 
 ### Dashboards - Ansible Tower 3 - Security
@@ -3679,7 +4045,7 @@ User authentication, by default, will store encrypted user information into the 
 
 Source:
 
-1. "Tower Configuration."
+1. "Ansible Tower Administration Guide."
 
 
 #### Dashboards - Ansible Tower 3 - Security - ACLs
@@ -3781,14 +4147,33 @@ Source:
 1. "Ansible announces AWX open source project."
 
 
+## Dashboards - Rundeck
+
+Rundeck is an open source dashboard and API framework, programmed with Java, for automating the execution of commands and scripts via SSH. There is a community supported Ansible plugin for Rundeck that is currently only *alpha* quality. It supports using Ansible inventory as well as running modules and Playbooks. This can be tested out using a pre-built Docker image:
+
+```
+# docker pull batix/rundeck-ansible
+# docker run -d --name rundeck-test -p 127.0.0.1:4440:4440 -e RDECK_ADMIN_PASS=password -v `pwd`:/data batix/rundeck-ansible
+```
+
+Log into the dashboard at `http://127.0.0.1:4440` and use the username "admin" and the password that was set by the `RDECK_ADMIN_PASS` variable.
+
+[1]
+
+Source:
+
+1. "Rundeck Ansible Plugin [README.md]."
+
+
 ## Dashboards - Semaphore
 
-Semaphore was designed to be an unofficial open source alternative to Ansible Tower. The latest release can be found at [https://github.com/ansible-semaphore/semaphore/releases](https://github.com/ansible-semaphore/semaphore/releases).
+Semaphore was designed to be an unofficial open source alternative to Ansible Tower, written in Go. The latest release can be found at [https://github.com/ansible-semaphore/semaphore/releases](https://github.com/ansible-semaphore/semaphore/releases).
 
 Requirements:
 
 * Ansible
 * Git >= 2.0
+* Go
 * MariaDB >= 5.3 or MySQL >= 5.6.4
 
 Installation:
@@ -3807,6 +4192,36 @@ Source:
 1. "semaphore Installation."
 
 
+## Dashboards - Tensor
+
+Tensor is a open source dashboard and API for both Ansible and Terraform, written in Go by Pearson. Most of the public facing documentation is either incomplete or missing.
+
+Requirements:
+
+* Ansible 2
+* Git
+* Go
+* MongoDB 3.3
+
+The `Makefile` supports building packges for Debian and RHEL based distributions as well creating Docker containers.
+
+```
+$ make deb
+```
+```
+$ make rpm
+```
+```
+$ make docker
+```
+
+[1]
+
+Source:
+
+1. "Tensor [README.md]."
+
+
 ---
 
 # Bibliography
@@ -3817,7 +4232,6 @@ Source:
 * "Ansible Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro_inventory.html
 * "Ansible Variables." Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks_variables.html
 * "Ansible Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks_best_practices.html
-* "Ansible Service Module." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/service_module.html
 * "Ansible Generic OS package manager" Ansible Documentation. June 22, 2016. Access July 10, 2016. http://docs.ansible.com/ansible/package_module.html
 * "Ansible Command Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
 * "Ansible Shell Module." Ansible Documentation. June 22, 2016. Accessed July 10, 2016. http://docs.ansible.com/ansible/yum_repository_module.html
@@ -3832,7 +4246,6 @@ Source:
 * "Ansible Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
 * "Ansible Delegation, Rolling Updates, and Local Actions." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks_delegation.html
 * "Ansible Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks_async.html
-* "Ansible cron - Manage cron.d and crontab entries." Ansible Documentation. September 13, 2016. Accessed September 15, 2016. http://docs.ansible.com/ansible/cron_module.html
 * "Ansible mysql_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_db_module.html
 * "Ansible mysql_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql_user_module.html
 * "Ansible Installation." Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro_installation.html
@@ -3859,7 +4272,6 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "[Ansible Tower] Organizations." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/organizations.html
 * "[Ansible Tower] Users." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html
 * "[Ansible Tower] Installation Notes." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html
-* "Tower Configuration." Ansible Documentation. Accessed August 15, 2017. https://docs.ansible.com/ansible-tower/latest/html/administration/configure_tower_in_tower.html
 * "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks_strategies.html
 * "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 * "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job_templates.html
@@ -3868,8 +4280,17 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible Python 3 Support." Ansible Documentation. September 12, 2017. Accessed September 14, 2017. http://docs.ansible.com/ansible/latest/python_3_support.html
 * "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
 * "Ansible Tower Installation and Reference Guide." Ansible Documentation. September 18, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible-tower/3.1.5/pdf/AnsibleTowerInstallationandReferenceGuide.pdf
-* "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list_of_utilities_modules.html
+* "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list_of_utilities_modules.html
 * "Files Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list_of_files_modules.html
 * "Packaging Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list_of_packaging_modules.html
 * "Windows Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list_of_windows_modules.html
 * "Creating Reusable Playbooks." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/playbooks_reuse.html
+* "Ansible Tower Quick Setup Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/quickstart/index.html
+* "Changing the Default Timeout for Authentication." Ansible Documentation. Accessed September 25, 2017, http://docs.ansible.com/ansible-tower/latest/html/administration/authentication_timeout.html
+* "Ansible Tower User Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/index.html
+* "Ansible Tower Administration Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
+* "[Ansible] Blocks." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/playbooks_blocks.html
+* "Net Tools Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list_of_net_tools_modules.html
+* "System Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list_of_system_modules.html
+* "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017. Accessed September 26, 2017. https://github.com/Batix/rundeck-ansible-plugin
+* "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 26, 2017. https://github.com/pearsonappeng/tensor
