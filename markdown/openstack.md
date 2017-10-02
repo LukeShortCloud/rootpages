@@ -7,6 +7,7 @@
 * [Overview](#overview)
 * [Automation](#automation)
     * [PackStack](#automation---packstack)
+        * [Answer File](#automation---packstack---answer-file)
     * [OpenStack-Ansible](#automation---openstack-ansible)
         * [Quick](#automation---openstack-ansible---quick)
             * [Operations](#automation---openstack-ansible---quick---operations)
@@ -124,7 +125,7 @@ Sources:
 
 ### Introduction - Versions - Red Hat OpenStack Platform
 
-Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life releases were introduced with RHOSP 10 where it will recieve up to 5 years of support. Every 3rd release of RHOSP will have LTS support. Rolling major upgrades are supported from one version to the next sequential version.
+Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life (LL) releases were introduced with RHOSP 10 where it will recieve up to 5 years of support. Every 3rd release of RHOSP will have LL support. Rolling major upgrades are supported from one version to the next sequential version, starting with RHOSP 8.
 
 Releases:
 
@@ -140,7 +141,7 @@ Releases:
     * EOL: 2019-04-20
 * RHOSP 9 (Mitaka)
     * EOL: 2017-08-24
-* RHOSP 10 LTS (Newton)
+* RHOSP 10 LL (Newton)
     * EOL: 2021-12-16
 * RHOSP 11 (Ocata)
     * EOL: 2018-05-18
@@ -205,9 +206,9 @@ It is possible to easily install OpenStack as an all-in-one (AIO) server or onto
 
 ## Automation - PackStack
 
-Supported operating system: RHEL 7
+Supported operating system: RHEL 7, Fedora
 
-PackStack (sometimes refered to as RDO) provides a simple all-in-one development. Thisis aimed towards developers needing to test new features with the latest code.
+PackStack is part of the Red Hat Development of OpenStack (RDO). It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
 
 First, install the OpenStack repository.
 
@@ -221,7 +222,7 @@ CentOS:
 # yum install centos-release-openstack-ocata
 ```
 
-Then install PackStack and generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file.
+Then install PackStack and generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
 
 ```
 # yum install openstack-packstack
@@ -229,11 +230,68 @@ Then install PackStack and generate a configuration file refered to as the "answ
 # packstack --answer-file <FILE>
 ```
 
-[1]
+PackStack logs are stored in /var/tmp/packstack/. The administrator and demo user credentials will be saved to the user's home directory.
+
+```
+# source ~/keystonerc_admin
+# source ~/keystonerc_demo
+```
+
+It is also possible to deploy OpenStack where Neutron has access to the public network. This is useful for expanding access to instances in a lab environment.
+
+```
+# packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
+```
+
+After the installation is finished, create the necessary network in Neutron as the admin user.
+
+```
+# . keystonerc_admin
+# neutron net-create external_network --provider:network_type flat --provider:physical_network extnet  --router:external
+# neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
+```
+
+This can now be associated with a router in any user account.
+
+[2]
+
+Sources:
+
+1. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
+2. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
+
+
+## Automation - PackStack - Answer File
+
+The "answer" configuration file defines the environment.
+
+Common options:
+
+* CONFIG_DEFAULT_PASSWORD = Any blank passwords in the answer file will be set to this value.
+* CONFIG_KEYSTONE_ADMIN_TOKEN = The administrator authentication token.
+* CONFIG_KEYSTONE_ADMIN_PW = The administrator password.
+* CONFIG_MARIADB_PW = The MariaDB root user's password.
+* CONFIG_HORIZON_SSL = Configure an SSL for the Horizon dashboard. This requires that SSLs be generated manually and then defined in the configuration file [1]:
+```
+# for cert in selfcert ssl_dashboard ssl_vnc; do openssl req -x509 -sha256 -newkey rsa:2048 -keyout /etc/pki/tls/private/${cert}.key -out /etc/pki/tls/certs/${cert}.crt -days 365 -nodes; done
+```
+    * CONFIG_SSL_CACERT_FILE=/etc/pki/tls/certs/selfcert.crt
+    * CONFIG_SSL_CACERT_KEY_FILE=/etc/pki/tls/private/selfkey.key
+    * CONFIG_VNC_SSL_CERT=/etc/pki/tls/certs/ssl_vnc.crt
+    * CONFIG_VNC_SSL_KEY=/etc/pki/tls/private/ssl_vnc.key
+    * CONFIG_HORIZON_SSL_CERT=/etc/pki/tls/certs/ssl_dashboard.crt
+    * CONFIG_HORIZON_SSL_KEY=/etc/pki/tls/private/ssl_dashboard.key
+    * CONFIG_HORIZON_SSL_CACERT=/etc/pki/tls/certs/selfcert.crt
+* `CONFIG_<SERVICE>_INSTALL` = Install a specific OpenStack service.
+* `CONFIG_<NODE>_HOST` = The host to setup the relevant services on.
+* `CONFIG_<NODE>_HOSTS` = A list of hosts to setup the relevant services on. This currently only exists for "COMPUTE" and "NETWORK." New hosts can be added and PackStack re-run to have them added to the OpenStack cluster.
+* CONFIG_PROVISION_DEMO = Setup a demo project and user account with an image and network configured.
+
+
 
 Source:
 
-1. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
+1. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 
 
 ## Automation - OpenStack Ansible
@@ -813,9 +871,9 @@ Source:
 
 ### Automation - TripleO - Quick
 
-The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast as possible. [1]
+The "TripleO Quickstart" project was created to use Ansible to automate deploying TripleO as fast and easily as possible. [1]
 
-The minimum requirement for an all-in-one deployment is a hypervisor with 8 processor cores and 16GB of RAM (preferably 32GB). 3 virtual machines will be created to meet the minimum cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) computer node. [2] For truly isolated environments, a KVM virtual machine with nested virtualization can be used.
+TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space. [3] 3 virtual machines will be created to meet the minimum cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) compute node. [2] A Quickstart deployment has to use a baremetal hypervisor. Deploying TripleO within a nested virtual machine is not supported. [4]
 
 * Download tripleo-quickstart script or clone the entire repository from GitHub.
 ```
@@ -844,7 +902,8 @@ Sources:
 
 1. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 2. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
-
+3. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
+4. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
 
 ### Automation - TripleO - Full
 
