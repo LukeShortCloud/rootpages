@@ -14,6 +14,7 @@
     * [Production and Staging](#inventory---production-and-staging)
     * [Variables](#inventory---variables)
     * [Vault Encryption](#inventory---vault-encryption)
+    * [Dynamic](#inventory---dynamic)
 * [Modules](#modules)
     * [Main Modules](#modules---main-modules)
         * [Assert](#modules---main-modules---assert)
@@ -45,9 +46,23 @@
             * [Include (deprecated in 2.4)](#modules---main-modules---includes---include)
             * [Include Variables](#modules---main-modules---includes---include-variables)
         * [Loops](#modules---main-modules---loops)
+            * Until
+            * With Dict[ionary]
             * [With First Found](#modules---main-modules---loops---with-first-found)
             * [With Flattened](#modules---main-modules---loops---with-flattened)
+            * With File
+            * With Fileglob
+            * With Filetree
+            * With Indexed Items
+            * With INI
+            * With Inventory Hostnames
             * [With Items](#modules---main-modules---loops---with-items)
+            * With Lines
+            * With Nested
+            * With Random Choice
+            * With Sequence
+            * With Subelements
+            * With Together
         * [Variables](#modules---main-modules---variables)
             * [Prompts](#modules---main-modules---variables---prompts)
             * [Register](#modules---main-modules---variables---register)
@@ -764,6 +779,11 @@ Source:
 1. "Ansible Vault."
 
 
+## Inventory - Dynamic
+
+Dynamic inventory can be used to automatically obtain information about hosts from various infrastructure platforms and tools. Community provided scripts be be found here: https://github.com/ansible/ansible/tree/devel/contrib/inventory.
+
+
 # Modules
 
 
@@ -831,7 +851,7 @@ Source:
 
 ### Modules - Main Modules - Block
 
-A `block` is used to handle logic for executing tasks. A set of tasks can be run, for example, if a condition is met. This also handles errors in a `try/excepect` fashion. If the code from the `block` fails then it proceeds to run the tasks in the `rescue` section. There is also a final `always` section that will execute whether the block failed or not.
+A `block` is used to handle logic for executing tasks. A set of tasks can be run, for example, if a condition is met. This also handles errors in a `try/except` fashion. If the code from the `block` fails then it proceeds to run the tasks in the `rescue` section. There is also a final `always` section that will execute whether the block failed or not.
 
 
 Syntax (minimal):
