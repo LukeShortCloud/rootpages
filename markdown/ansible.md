@@ -3876,14 +3876,21 @@ Various dashboards are available that provide a graphical user interface (GUI) a
 
 Ansible Tower is the official dashboard maintained by Red Hat. The program requires PostgreSQL, Python, and RabbitMQ. A free trial of it can be used to manage up to 10 servers for testing purposes only. A license can be bought to use Tower for managing more servers and to provide support. [1]
 
-Ansible Tower 3.1 Requirements [2]:
+Ansible Tower 3.1 Requirements:
 
 * Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
     * Support for RHEL 6 was dropped in 3.1.0
 * Ansible >= 2.1
 * PostgreSQL 9.4
 
-Tower can be downloaded from [http://releases.ansible.com/ansible-tower/](http://releases.ansible.com/ansible-tower/). The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for offline installation. At least a free trial license will be required to use the software which can be obtained from the [Ansible Tower license page](https://www.ansible.com/license).
+Ansible Tower 3.2 Requirements [2]:
+
+* Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
+* Ansible >= 2.3
+   * Access to an Azure inventory source requires >= 2.4.
+* PostgreSQL 9.6
+
+Tower can be downloaded from [http://releases.ansible.com/ansible-tower/](http://releases.ansible.com/ansible-tower/). The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for offline installation on RHEL servers. At least a free trial license will be required to use the software which can be obtained from the [Ansible Tower license page](https://www.ansible.com/license).
 
 Once downloaded, it can be installed. This will at least setup a Nginx server and a virtual host for serving Ansible Tower via HTTP.
 
@@ -4151,6 +4158,54 @@ Version 1 of the API provides these endpoints:
 }
 ```
 
+`https://<ANSIBLE_TOWER_HOST>/api/v2/`
+
+Version 2 of the API provides these endpoints:
+
+```
+{
+    "authtoken": "/api/v2/authtoken/",
+    "ping": "/api/v2/ping/",
+    "instances": "/api/v2/instances/",
+    "instance_groups": "/api/v2/instance_groups/",
+    "config": "/api/v2/config/",
+    "settings": "/api/v2/settings/",
+    "me": "/api/v2/me/",
+    "dashboard": "/api/v2/dashboard/",
+    "organizations": "/api/v2/organizations/",
+    "users": "/api/v2/users/",
+    "projects": "/api/v2/projects/",
+    "project_updates": "/api/v2/project_updates/",
+    "teams": "/api/v2/teams/",
+    "credentials": "/api/v2/credentials/",
+    "credential_types": "/api/v2/credential_types/",
+    "inventory": "/api/v2/inventories/",
+    "inventory_scripts": "/api/v2/inventory_scripts/",
+    "inventory_sources": "/api/v2/inventory_sources/",
+    "inventory_updates": "/api/v2/inventory_updates/",
+    "groups": "/api/v2/groups/",
+    "hosts": "/api/v2/hosts/",
+    "job_templates": "/api/v2/job_templates/",
+    "jobs": "/api/v2/jobs/",
+    "job_events": "/api/v2/job_events/",
+    "ad_hoc_commands": "/api/v2/ad_hoc_commands/",
+    "system_job_templates": "/api/v2/system_job_templates/",
+    "system_jobs": "/api/v2/system_jobs/",
+    "schedules": "/api/v2/schedules/",
+    "roles": "/api/v2/roles/",
+    "notification_templates": "/api/v2/notification_templates/",
+    "notifications": "/api/v2/notifications/",
+    "labels": "/api/v2/labels/",
+    "unified_job_templates": "/api/v2/unified_job_templates/",
+    "unified_jobs": "/api/v2/unified_jobs/",
+    "activity_stream": "/api/v2/activity_stream/",
+    "workflow_job_templates": "/api/v2/workflow_job_templates/",
+    "workflow_jobs": "/api/v2/workflow_jobs/",
+    "workflow_job_template_nodes": "/api/v2/workflow_job_template_nodes/",
+    "workflow_job_nodes": "/api/v2/workflow_job_nodes/"
+}
+```
+
 [1]
 
 Source:
@@ -4214,7 +4269,7 @@ Source:
 
 ## Dashboards - Tensor
 
-Tensor is a open source dashboard and API for both Ansible and Terraform, written in Go by Pearson. Most of the public facing documentation is either incomplete or missing.
+Tensor is a open source dashboard and API for both Ansible and Terraform, written in Go by Pearson. Most of the public facing documentation on it's GitHub page is either incomplete or missing.
 
 Requirements:
 
@@ -4288,7 +4343,7 @@ sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using
 * "Ansible Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro_windows.html
 * "Ansible Python API." Ansible Documentation. September 19, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible/devel/dev_guide/developing_api.html
 * "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
-* "Ansible Tower API Guide." Ansible Documentation. Accessed August 14, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
+* "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
 * "[Ansible Tower] Organizations." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/organizations.html
 * "[Ansible Tower] Users." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html
 * "[Ansible Tower] Installation Notes." Ansible Documentation. Accessed August 15, 2017. http://docs.ansible.com/ansible-tower/latest/html/installandreference/install_notes_reqs.html
