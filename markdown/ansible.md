@@ -4217,6 +4217,28 @@ Source:
 
 AWX is the upstream and open source version of Ansible Tower released by Red Hat to the public on September 7, 2017. [1] The source code for the project can be found in the [ansible/awx](https://github.com/ansible/awx) repository on GitHub.
 
+Install:
+
+By default, AWX will install Docker containers from DockerHub. It is also possible to have the installer build Docker conatiners from scratch an deploy them into a OpenShift cluster.
+
+```
+$ git clone https://github.com/ansible/awx.git
+$ cd ./awx/installer/
+$ sudo ansible-playbook -i inventory install.yml
+```
+
+Manually start:
+
+```
+# for docker_container in tmp_gulp postgres rabbitmq memcached awx_web awx_task; do docker start ${docker_container}; done
+```
+
+Manually stop:
+
+```
+# for docker_container in awx_task awx_web memcached rabbitmq postgres tmp_gulp; do docker stop ${docker_container}; done
+```
+
 Source:
 
 1. "Ansible announces AWX open source project."
