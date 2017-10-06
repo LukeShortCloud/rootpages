@@ -130,6 +130,7 @@
             * [Authentication](#dashboards---ansible-tower-3---security---authentication)
             * [SSL](#dashboards---ansible-tower-3---security---ssl)
     * [AWX](#dashboards---awx)
+        * [Install](#dashboards---awx---install)
     * [Rundeck](#dashboards---rundeck)
     * [Semaphore](#dashboards---semaphore)
     * [Tensor](#dashboards---tensor)
@@ -1651,7 +1652,7 @@ Source:
 
 ### Modules - Main Modules - Loops
 
-Loops can be used to iterate through lists and/or dictionaries.
+Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is "with_items."
 
 
 ### Modules - Main Modules - Loops - With First Found
@@ -4067,6 +4068,7 @@ User authentication, by default, will store encrypted user information into the 
     * LDAP
     * RADIUS
     * SAML
+    * TACACS+
 
 [1]
 
@@ -4217,9 +4219,49 @@ Source:
 
 AWX is the upstream and open source version of Ansible Tower released by Red Hat to the public on September 7, 2017. [1] The source code for the project can be found in the [ansible/awx](https://github.com/ansible/awx) repository on GitHub.
 
+
+### Dashboards - AWX - Install
+
+The "installer/inventory" file has an example inventory that can be used without any configuration. These are many options that can be fine tuned to change the enviornment and deploy it to different platforms.
+
+Deployment inventory options:
+
+* All
+    * default_admin_user = The administrator account's username.
+    * default_admin_password = nThe administrator account's password.
+    * awx_secret_key = A string that is used as a private key kept on all of the AWX nodes for encrypting and decrypting information that goes to/from the PostgreSQL database.
+    * pg_username = The PostgreSQL username to use.
+    * pg_password = The PostgreSQL password to use.
+    * pg_database = The PostgreSQL database name.
+    * pg_port = The PostgreSQL port to connect to.
+    * http_proxy = A HTTP proxy to use.
+    * https_proxy = A HTTPS proxy to use.
+    * no_proxy = Websites that should not be proxied.
+* Docker (build)
+    * dockerhub_base and dockerhub_version = Comment out these variables to build Docker images from scratch instead of downloading them from Docker Hub.
+    * postgres_data_dir = The directory to store persistent PostgreSQL data. By default, this is stored in the temporary file system at `/tmp/`.
+    * host_port = The local HTTP port that Docker should bind to for the AWX dashboard.
+    * use_container_for_build = Use a container to deploy the other container. This keeps dependencies installed for installation in the container instead of the local system.
+    * awx_official = Use the official AWX logos. The [awx-logos GitHub project](https://github.com/ansible/awx-logos) will need to be cloned in the directory that "awx" was also cloned into.
+* Docker (prebuilt)
+    * dockerhub_base = The Docker Hub repository to use.
+    * dockerhub_version = The version of AWX containers to use.
+    * postgres_data_dir
+    * host_port
+* OpenShift
+    * openshift_host = The OpenShift cluster to connect to.
+    * openshift_user = The username used to connect to OpenShift.
+    * openshift_password = The password used to connect to OpenShift.
+    * docker_registry = The Docker Registry to connect to.
+    * docker_registry_repository = The Docker Repository to use.
+    * docker_registry_username = The username to login into the Docker Registry.
+    * docker_registry_password = The password to login into the Docker Registry.
+    * awx_openshift_project = The name of the project to create and use in OpenShift.
+    * awx_node_port = The HTTP port to use inside of the AWX pod for accessing the dashboard.
+
 Install:
 
-By default, AWX will install Docker containers from DockerHub. It is also possible to have the installer build Docker conatiners from scratch an deploy them into a OpenShift cluster.
+By default, AWX will install Docker containers from Docker Hub. It is also possible to have the installer build Docker conatiners from scratch an deploy them into a OpenShift cluster.
 
 ```
 $ git clone https://github.com/ansible/awx.git
@@ -4227,16 +4269,31 @@ $ cd ./awx/installer/
 $ sudo ansible-playbook -i inventory install.yml
 ```
 
+After installation, the containers will be started. On a server, the containers are configured to automatically restart up on boot if the `docker` service is enabled. With workstations and other environments where Docker is not running on boot, the containers can still be started and stopped manually.
+
 Manually start:
 
 ```
-# for docker_container in tmp_gulp postgres rabbitmq memcached awx_web awx_task; do docker start ${docker_container}; done
+# for docker_container in postgres rabbitmq memcached awx_web awx_task; do docker start ${docker_container}; done
 ```
 
 Manually stop:
 
 ```
-# for docker_container in awx_task awx_web memcached rabbitmq postgres tmp_gulp; do docker stop ${docker_container}; done
+# for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; done
+```
+
+Update:
+
+For updating a local installation of AWX that is using images from Docker Hub, update all of the containers and then re-run the installation Playbook.
+
+```
+# docker pull docker.io/ansible/awx_task:latest
+# docker pull docker.io/ansible/awx_web:latest
+# docker pull docker.io/rabbitmq:3
+# docker pull docker.io/memcached:alpine
+# docker pull docker.io/postgres:9.6
+# ansible-playbook -i inventory install.yml
 ```
 
 Source:
