@@ -82,7 +82,7 @@ This guide is aimed to help guide Cloud Administrators through deploying, managi
 
 # Introduction - Versions
 
-Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as `15.X.X`. A new release comes out about every 6 months and is supported for 1 year.
+Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as `15.X.X`. A new release comes out about every 6 months and is supported for 1 year before becoming end-of-life (EOL).
 
 Releases:
 
@@ -99,28 +99,31 @@ Releases:
 11. Kilo
 12. Liberty
 13. Mitaka
-    * End-of-life (EOL): 2017-04-10
 14. Newton
     * EOL: 2017-10-11
 15. Ocata
     * EOL: 2018-02-26 [1]
     * Goals:
         1. Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
-        2. Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packagse. [3]
+        2. Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages. [3]
 16. Pike
-    * Currently in development. The expected release date is in September of 2017. [1]
+    * EOL: 2018-09-03 [1]
     * Goals:
-        1.  Convert all of the OpenStack code from Python 2 into Python 3. This is because Python 2 will become EOL in 2020.
+        1.  Convert all of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
         2.  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
 17. Queens
-    * On the roadmap. [1]
+    * Currently in development. The expected release date is in February of 2018. [1]
+    * Goals:
+        * Remove the need for the access control list "policy" files by having default values defined in the source code.
+        * Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
 
 Sources:
 
-1. "OpenStack Releases." OpenStack Releases. April 3, 2017. Accessed April 3, 2017. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. October 4, 2017. Accessed October 4, 2017. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
+5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 
 
 ### Introduction - Versions - Red Hat OpenStack Platform
