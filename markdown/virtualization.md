@@ -135,15 +135,37 @@ Raw disk partitions have the greatest speeds with the "virtio" driver and cache 
 
 [1][2]
 
+When using the QCOW2 image format, create the image using metadata preallocation or else there could be up to a x5 performance penalty. [3]
+
+```
+# qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
+```
+
 Sources:
 
 1. "Tuning KVM." KVM. Accessed January 7, 2016. http://www.linux-kvm.org/page/Tuning_KVM
 2. "Virtio." libvirt Wiki. October 3, 2013. Accessed January 7, 2016. https://wiki.libvirt.org/page/Virtio
+3. "KVM I/O slowness on RHEL 6." March 11, 2011. Accessed August 30, 2017. http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html
 
 
 ### Hardware Virtualization - KVM - Nested Virtualization
 
 KVM supports nested virtualization. This allows a virtual machine full access to the processor to run another virtual machine in itself. This is disabled by default.
+
+Verify that the computer's processor supports nested KVM virtualization. [3]
+
+* Intel:
+```
+$ cat /sys/module/kvm_intel/parameters/nested
+Y
+```
+
+* AMD:
+```
+$ cat /sys/module/amd_intel/parameters/nested
+Y
+```
+
 
 #### Option #1 - Modprobe
 
@@ -213,7 +235,7 @@ Sources:
 
 1. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275
 2. "Configure DevStack with KVM-based Nested Virtualization." December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html
-3. "How to enable nested virtualization in KVM." Fedora Project Wiki. June 19, 2015. Accessed August 18, 2017. https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM
+3. "How to enable nested virtualization in KVM." Fedora Project Wiki. June 19, 2015. Accessed August 30, 2017. https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM
 
 ### Hardware Virtualization - KVM - GPU Passthrough
 
