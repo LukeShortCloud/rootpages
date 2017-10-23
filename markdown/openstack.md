@@ -7,6 +7,8 @@
 * [Overview](#overview)
 * [Automation](#automation)
     * [PackStack](#automation---packstack)
+        * [Isolated Network Install](#automation---packstack---isolated-network-install)
+        * [Exposed Network Install](#automation---packstack---isolated-network-install)
         * [Answer File](#automation---packstack---answer-file)
     * [OpenStack-Ansible](#automation---openstack-ansible)
         * [Quick](#automation---openstack-ansible---quick)
@@ -209,15 +211,16 @@ It is possible to easily install OpenStack as an all-in-one (AIO) server or onto
 
 ## Automation - PackStack
 
-Supported operating system: RHEL 7, Fedora
+Supported operating system: RHEL 7
 
 PackStack is part of the Red Hat Development of OpenStack (RDO). It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
 
-First, install the OpenStack repository.
+First, install the required repositories for OpenStack.
 
 RHEL:
 ```
-# yum install https://www.rdoproject.org/repos/rdo-release.rpm
+# yum install https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm
+# subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 ```
 
 CentOS:
@@ -225,10 +228,20 @@ CentOS:
 # yum install centos-release-openstack-ocata
 ```
 
-Then install PackStack and generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
+Finally, install the PackStack utility.
 
 ```
-# yum install openstack-packstack
+# yum -y install openstack-packstack
+```
+
+There are two network scenarios that PackStack can deploy. The defauly is to have an isolated network. Floating IPs will not be able to access the network on the public interface. For lab environments, PackStack can also configure Neutron to expose the network instead to allow instances with floating IPs to access other IP addresses on the network.
+
+
+### Automation - PackStack - Isolated Network Install
+
+Generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
+
+```
 # packstack --gen-answer-file <FILE>
 # packstack --answer-file <FILE>
 ```
@@ -240,17 +253,19 @@ PackStack logs are stored in /var/tmp/packstack/. The administrator and demo use
 # source ~/keystonerc_demo
 ```
 
-It is also possible to deploy OpenStack where Neutron has access to the public network. This is useful for expanding access to instances in a lab environment.
+### Automation - PackStack - Exposed Network Install
+
+It is also possible to deploy OpenStack where Neutron can have access to the public network. Run the PackStack instllation with the command below and replace "eth0" with the public interface name.
 
 ```
 # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
 ```
 
-After the installation is finished, create the necessary network in Neutron as the admin user.
+After the installation is finished, create the necessary network in Neutron as the admin user. In this example, the network will automatically allocate IP addresses between 192.168.1.201 and 192.168.1.254. The IP 192.168.1.1 is the router / default gateway.
 
 ```
 # . keystonerc_admin
-# neutron net-create external_network --provider:network_type flat --provider:physical_network extnet  --router:external
+# neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
 # neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
 ```
 
@@ -266,7 +281,7 @@ Sources:
 
 ## Automation - PackStack - Answer File
 
-The "answer" configuration file defines the environment.
+The "answer" configuration file defines how OpenStack should be setup and installed. Using a answer file can provide a more customizable deployment.
 
 Common options:
 
