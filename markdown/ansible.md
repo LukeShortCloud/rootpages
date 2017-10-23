@@ -36,6 +36,7 @@
         * [When](#modules---main-modules---when)
         * [Errors](#modules---main-modules---errors)
             * [Any Errors Fatal](#modules---main-modules---errors---any-errors-fatal)
+            * [Changed When](http://docs.ansible.com/ansible/latest/playbooks_error_handling.html#overriding-the-changed-result)
             * [Fail](#modules---main-modules---errors---fail)
             * [Failed When](#modules---main-modules---errors---failed-when)
             * [Ignore Errors](#modules---main-modules---errors---ignore-errors)
@@ -46,23 +47,23 @@
             * [Include (deprecated in 2.4)](#modules---main-modules---includes---include)
             * [Include Variables](#modules---main-modules---includes---include-variables)
         * [Loops](#modules---main-modules---loops)
-            * Until
-            * With Dict[ionary]
+            * [Until](http://docs.ansible.com/ansible/latest/playbooks_loops.html#do-until-loops)
+            * [With Dict[ionary]](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-hashes)
             * [With First Found](#modules---main-modules---loops---with-first-found)
             * [With Flattened](#modules---main-modules---loops---with-flattened)
-            * With File
-            * With Fileglob
-            * With Filetree
-            * With Indexed Items
-            * With INI
-            * With Inventory Hostnames
+            * [With File](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-files)
+            * [With Fileglob](http://docs.ansible.com/ansible/latest/playbooks_loops.html#id4)
+            * [With Filetree](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-filetrees)
+            * [With Indexed Items](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-a-list-with-an-index)
+            * [With INI](http://docs.ansible.com/ansible/latest/playbooks_loops.html#using-ini-file-with-a-loop)
+            * [With Inventory Hostnames](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-the-inventory)
             * [With Items](#modules---main-modules---loops---with-items)
-            * With Lines
-            * With Nested
-            * With Random Choice
-            * With Sequence
-            * With Subelements
-            * With Together
+            * [With Lines](http://docs.ansible.com/ansible/latest/playbooks_loops.html#iterating-over-the-results-of-a-program-execution)
+            * [With Nested](http://docs.ansible.com/ansible/latest/playbooks_loops.html#nested-loops)
+            * [With Random Choice](http://docs.ansible.com/ansible/latest/playbooks_loops.html#random-choices)
+            * [With Sequence](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-integer-sequences)
+            * [With Subelements](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-subelements)
+            * [With Together](http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-parallel-sets-of-data)
         * [Variables](#modules---main-modules---variables)
             * [Prompts](#modules---main-modules---variables---prompts)
             * [Register](#modules---main-modules---variables---register)
@@ -86,27 +87,27 @@
         * [File Management](#modules---windows-modules---file-management)
             * [Copy](#modules---windows-modules---file-management---copy)
             * [File](#modules---windows-modules---file-management---file)
-            * Get URL
+            * [Get URL](http://docs.ansible.com/ansible/latest/win_get_url_module.html)
             * [Robocopy](#modules---windows-modules---file-management---robocopy)
             * [Shortcut](#modules---windows-modules---file-management---shortcut)
             * [Template](#modules---windows-modules---file-management---template)
-        * Firewall
-        * Firewall Rule
+        * [Firewall](http://docs.ansible.com/ansible/latest/win_firewall_module.html)
+        * [Firewall Rule](http://docs.ansible.com/ansible/latest/win_firewall_rule_module.html)
         * [Installations](#modules---windows-modules---installations)
             * [Chocolatey](#modules---windows-modules---installations---chocolatey)
             * [Feature](#modules---windows-modules---installations---feature)
             * [MSI (deprecated in 2.3)](#modules---windows-modules---installations---msi)
             * [Package](#modules---windows-modules---installations---package)
             * [Updates](#modules---windows-modules---installations---updates)
-        * Registry
-            * Edit
-            * Stat
+        * [Registry](#modules---windows-modules---registry)
+            * [Edit](http://docs.ansible.com/ansible/latest/win_regedit_module.html)
+            * [Stat](http://docs.ansible.com/ansible/latest/win_reg_stat_module.html)
         * [Scheduled Task](#modules---windows-modules---scheduled-task)
         * [Service](#modules---windows-modules---service)
-        * Stat
-        * URI
+        * [Stat](http://docs.ansible.com/ansible/latest/win_stat_module.html)
+        * [URI](http://docs.ansible.com/ansible/latest/win_uri_module.html)
         * [User](#modules---windows-modules---user)
-        * Wait For
+        * [Wait For](http://docs.ansible.com/ansible/latest/win_wait_for_module.html)
     * [Module Development](#modules---module-development)
 * [Roles](#roles)
     * [Galaxy](#roles---galaxy)
@@ -1135,7 +1136,7 @@ Source:
 
 ### Modules - Main Modules - Roles
 
-A Playbook consists of roles. Each role that needs to be run needs to be specified in a list. Additional roles can be added within a role dynamically or statically using "inculde_role" or "import_role." [1]
+A Playbook consists of roles. Each role that needs to be run needs to be specified in a list. Additional roles can be added within a role dynamically or statically using "include_role" or "import_role." [1]
 
 Syntax:
 
@@ -1521,12 +1522,12 @@ The `include_role` is a dynamic inclusion of a role that can be used in loops. T
 
 All options:
 
-* allow_uplicates = Allow a role ot be used more than once. Default: True.
+* allow_duplicates = Allow a role to be used more than once. Default: True.
 * defaults_from = A default variable file to load from the role's "default" directory.
 * **name** = The name of the role to import.
 * private = All of the "default" an "vars" variables in the role are private and not accessible via the rest of the Playbook.
 * tasks_from = A task file to load from the role's "tasks" directory.
-* vars_from = A vaiables file to load from the role's "vars" directory.
+* vars_from = A variables file to load from the role's "vars" directory.
 
 Syntax:
 
@@ -2096,8 +2097,8 @@ The `get_url` module is used to download files from online.
 
 Common options:
 
-* backup = Backup the destinatino file if it already exists. Default: no.
-* checksum = Speicfy a checksum method to use and the hash that is expected.
+* backup = Backup the destination file if it already exists. Default: no.
+* checksum = Specify a checksum method to use and the hash that is expected.
 * **dest** = Where the downloaded file should be saved to
 * timeout = The time, in seconds, to wait for a connection to the URL before failing. Default: 10.
 * {group|mode|owner} = Specify the permissions for the downloaded file.
@@ -2248,7 +2249,7 @@ Sources:
 
 ### Modules - UNIX Modules - Stat
 
-This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix commmand `stat`. All the information from this module can be saved to a variable and accessed as a from new `<VARIABLE>.stat` dictionary.
+This module provides detailed information about a file, directory, or link. It was designed to be similar to the Unix command `stat`. All the information from this module can be saved to a variable and accessed as a from new `<VARIABLE>.stat` dictionary.
 
 Syntax:
 
@@ -2326,7 +2327,7 @@ Common options:
 
 * HEADER_* = Modify different types of header content.
 * body = The body of the request to send.
-* body_format = The format to ues for the body. Default: raw.
+* body_format = The format to uses for the body. Default: raw.
     * json
     * raw
 * dest = A path to where a file should be downloaded to.
@@ -2360,7 +2361,7 @@ uri:
 Example:
 
 ```
-- name: Authencate with OpenStack's Keystone v3 service
+- name: Authenticate with OpenStack's Keystone v3 service
   uri:
     HEADER_Content-Type="application/json"
     body_format: json
@@ -2780,7 +2781,7 @@ Manage official features and roles in Windows.
 
 All options:
 
-* include_managemnet_tools = Install related management tools. This only works in Windows Server >= 2012.
+* include_management_tools = Install related management tools. This only works in Windows Server >= 2012.
 * include_sub_features = Install all subfeatures related to the main feature.
 * **name** = The name of the feature or role.
 * restart = Restart the server after installation.
@@ -2828,7 +2829,7 @@ Sources:
 
 #### Modules - Windows Modules - Installations - MSI
 
-**Depreacted in: 2.3
+**Deprecated in: 2.3
 Replaced by: `win_package`**
 
 The MSI module is used to install executable packages. [1]
@@ -2840,7 +2841,7 @@ Source:
 
 #### Modules - Windows Modules - Installations - Package
 
-Manage offical Microsoft packages for Windows. Examples of these include the .NET Framework, Remote Desktop Connection Manager, Visual C++ Redistributable, and more.
+Manage official Microsoft packages for Windows. Examples of these include the .NET Framework, Remote Desktop Connection Manager, Visual C++ Redistributable, and more.
 
 All options:
 
@@ -2922,6 +2923,10 @@ win_updates: category_names=['CriticalUpdates'] state=searched log_path="c:\tmp\
 Source:
 
 1. "Windows Modules."
+
+### Modules - Windows Modules - Registry
+
+The registry can be viewed and edited using the [win_regedit](http://docs.ansible.com/ansible/latest/win_regedit_module.html) and [win_reg_stat](http://docs.ansible.com/ansible/latest/win_reg_stat_module.html) modules.
 
 
 ### Modules - Windows Modules - Scheduled Task
@@ -3031,7 +3036,7 @@ Create, read, update, or delete (CRUD) a Windows user account.
 
 All options:
 
-* account_disalbed = Disable the account. The user can no longer be used.
+* account_disabled = Disable the account. The user can no longer be used.
 * account_locked = Lock the account. The user will no longer have access to log into their account.
 * description = A description of the user's purpose.
 * fullname = The full name of the user.
@@ -3097,7 +3102,7 @@ module = AnsibleModule(
 
 These are all of the various settings that can be defined and used AnsibleModule object.
 
-**`AnsibleModule` initalization:**
+**`AnsibleModule` initialization:**
 
 * argument_spec = A dictionary of arguments that can be provided by a user using this module. Each argument can have it's own settings.
     * `<ARGUMENT_NAME>` = A unique argument name should be given. This will contain a dictionary of additional settings for this argument.
@@ -3888,7 +3893,7 @@ Ansible Tower 3.2 Requirements [2]:
 
 * Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
 * Ansible >= 2.3
-   * Access to an Azure inventory source requires >= 2.4.
+   * Access to some inventory sources, including Azure, requires >= 2.4.
 * PostgreSQL 9.6
 
 Tower can be downloaded from [http://releases.ansible.com/ansible-tower/](http://releases.ansible.com/ansible-tower/). The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for offline installation on RHEL servers. At least a free trial license will be required to use the software which can be obtained from the [Ansible Tower license page](https://www.ansible.com/license).
@@ -3907,7 +3912,7 @@ At a bare minimum for 1 node Ansible Tower installation, the passwords to use fo
 * pg_password
 * rabbitmq_password
 
-Ansible Tower supports clustering. This requires that the PostgreSQL service is configured on a dedicated server that is not running Ansible Tower. The Playbook that installs Tower can install PostgreSQL or use credentials to an existing server. The PostgreSQL user for Ansible Tower also requires `CREATEDB` access during the inital installation to setup the necessary database and tables.
+Ansible Tower supports clustering. This requires that the PostgreSQL service is configured on a dedicated server that is not running Ansible Tower. The Playbook that installs Tower can install PostgreSQL or use credentials to an existing server. The PostgreSQL user for Ansible Tower also requires `CREATEDB` access during the intial installation to setup the necessary database and tables.
 
 * Installing PostgreSQL:
 
@@ -4222,13 +4227,13 @@ AWX is the upstream and open source version of Ansible Tower released by Red Hat
 
 ### Dashboards - AWX - Install
 
-The "installer/inventory" file has an example inventory that can be used without any configuration. These are many options that can be fine tuned to change the enviornment and deploy it to different platforms.
+The "installer/inventory" file has an example inventory that can be used without any configuration. These are many options that can be fine tuned to change the environment and deploy it to different platforms.
 
 Deployment inventory options:
 
 * All
     * default_admin_user = The administrator account's username.
-    * default_admin_password = nThe administrator account's password.
+    * default_admin_password = The administrator account's password.
     * awx_secret_key = A string that is used as a private key kept on all of the AWX nodes for encrypting and decrypting information that goes to/from the PostgreSQL database.
     * pg_username = The PostgreSQL username to use.
     * pg_password = The PostgreSQL password to use.
@@ -4261,7 +4266,7 @@ Deployment inventory options:
 
 Install:
 
-By default, AWX will install Docker containers from Docker Hub. It is also possible to have the installer build Docker conatiners from scratch an deploy them into a OpenShift cluster.
+By default, AWX will install Docker containers from Docker Hub. It is also possible to have the installer build Docker containers from scratch an deploy them into a OpenShift cluster.
 
 ```
 $ git clone https://github.com/ansible/awx.git
@@ -4357,7 +4362,7 @@ Requirements:
 * Go
 * MongoDB 3.3
 
-The `Makefile` supports building packges for Debian and RHEL based distributions as well creating Docker containers.
+The `Makefile` supports building packages for Debian and RHEL based distributions as well creating Docker containers.
 
 ```
 $ make deb
