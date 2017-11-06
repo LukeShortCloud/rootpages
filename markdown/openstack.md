@@ -44,12 +44,12 @@
         * [Ceph](#configurations---nova---ceph)
     * [Neutron](#configurations---neutron)
         * [Network Types](#configurations---neutron---network-types)
-            * Provider Networks
-                * Open vSwitch
-                * Linux Bridge
+            * [Provider Networks](#configurations---neutron---network-types---provider-networks)
+                * [Open vSwitch](https://docs.openstack.org/neutron/pike/admin/deploy-ovs-provider.html)
+                * [Linux Bridge](https://docs.openstack.org/neutron/pike/admin/deploy-lb-provider.html)
             * [Self-Service Networks](#configurations---neutron---network-types---self-service-networks)
                 * [Open vSwitch](#configurations---neutron---network-types---self-service-networks---open-vswitch)
-                * Linux Bridge
+                * [Linux Bridge](https://docs.openstack.org/neutron/pike/admin/deploy-lb-selfservice.html)
         * [DNS](#configurations---neutron---dns)
         * [Metadata](#configurations---neutron---metadata)
         * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
@@ -64,7 +64,6 @@
         * [Ceph](#configurations---glance---ceph)
 * [Neutron Troubleshooting](#neutron-troubleshooting)
     * [Open vSwitch](#neutron-troubleshooting---open-vswitch)
-        * Network connections
         * [Floating IPs](#neutron-troubleshooting---open-vswitch---floating-ips)
 * [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
@@ -354,6 +353,7 @@ done
 Source:
 
 1. "CHAPTER 5. REMOVING PACKSTACK DEPLOYMENTS." Red Hat Documentation. Accessed November 6, 2017. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Deploying_OpenStack_Proof_of_Concept_Environments/chap-Removing_Packstack_Deployments.html
+
 
 ## Automation - OpenStack Ansible
 
@@ -1368,17 +1368,18 @@ Source:
 
 ### Configurations - Neutron - Network Types
 
-In OpenStack, there are two common scenarios for networks.
+In OpenStack, there are two common scenarios for networks: "provider" and "self-service."
 
-The first is known as `self-service` networks. This is a simpler approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.
+Provider is is a simpler approach. It gives virtual machines direct access to a bridge device.
 
-The second approach is known as `provider` networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, private networks can be created with VLAN, VXLAN, and/or GRE tagging to create isolated networks.
-
-[1]
+Self-service networks are more complex due to the added bridge and tunnel devices. This complexity allows for more advanced features such as isolated private networks, load-balancing-as-a-service (LBaaS), Firewall-as-a-Service (FWaaS), and more. [1]
 
 Source:
 
-1. "[RDO Installation] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/overview.html
+1. "[RDO Nova Installation] Overview." OpenStack Documentation. October 28, 2017. Accessed November 6, 2017. https://docs.openstack.org/nova/pike/install/overview.html
+
+
+#### Configurations - Neutron - Network Types - Provider Networks
 
 
 #### Configurations - Neutron - Network Types - Self-Service Networks
