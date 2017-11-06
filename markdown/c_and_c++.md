@@ -1,12 +1,12 @@
-# C++
+# C and C++
 
-* Introduction
+* [Introduction](#introduction)
 * [Tutorials](#tutorials)
 * [Data Types](#data-types)
     * [Arrays](#data-types---arrays)
-    * [Vectors](#data-types---vectors)
+    * [Vectors (C++)](#data-types---vectors)
     * [Pointers](#data-types---pointers)
-    * [Scope](#data-types---scope)
+    * [Scope (C++)](#data-types---scope)
 * [Conditionals](#conditionals)
     * [Operators](#conditionals---operators)
     * [If](#conditionals---if)
@@ -20,20 +20,41 @@
     * Scope
 * Templates
 * Libraries
-* Object Oriented
-* Differences Between C and C++
+* Object Oriented (C++)
+* [Differences Between C and C++](https://web.eecs.umich.edu/~sugih/pointers/C++NotInC.html)
+
+
+# Introduction
+
+C was created in 1972 as an easier and more portable alternative to assembly language. It is a procedural and human readable language. [1] C is ideal for some projects such as writing hardware drivers and operating systems. C++ was created in 1979 as an enhanced version of C. It is also backwards compatible with C.
+
+Features of C++:
+
+* Object oriented programming
+* Exception handling
+* Better memory management
+
+[2]
+
+Sources:
+
+1. "The C Programming Language." University of Michigan. December 7, 1992. Accessed November 2, 2017. http://groups.engin.umd.umich.edu/CIS/course.des/cis400/c/c.html
+2. "Features of C++." Sitesbay. Accessed November 2, 2017. https://www.sitesbay.com/cpp/features-of-cpp
 
 
 # Tutorials
 
-This is an additional list of tutorials and reference guides for becoming familiar with C++.
+This is an additional list of tutorials and reference guides for becoming familiar with C and C++.
 
-* Websites
-    * [cplusplus.com](http://www.cplusplus.com/doc/tutorial/)
-    * [Cprogramming.com](http://www.cprogramming.com/tutorial.html)
-    * [LearnCpp.com](http://www.learncpp.com/)
-* Videos
-    * [The New Boston](https://www.thenewboston.com/videos.php?cat=16 )
+* C
+    * Websites
+        * [Cprogramming.com](http://www.cprogramming.com/tutorial.html)
+* C++
+    * Websites
+        * [cplusplus.com](http://www.cplusplus.com/doc/tutorial/)
+        * [LearnCpp.com](http://www.learncpp.com/)
+    * Videos
+        * [The New Boston](https://www.thenewboston.com/videos.php?cat=16 )
 
 
 # Data Types
@@ -43,9 +64,10 @@ This is an additional list of tutorials and reference guides for becoming famili
 | bool | Boolean. A value of "true" or "false." | 1 | N/A |
 | int | Integer. A whole number. | 16 | 32 |
 | float | Float. A decimal number. | 32 | N/A |
-| double | Double. A longer and more precise number. | 64 | 80 |
+| double | Double. A longer and more precise number due to allowing double the amount of bits as float does. | 64 | 80 |
 | char | Character. A single character. | 8 | N/A |
-| std::string | String (from the "std" namespace). A text containing one or more characters. | 16 | N/A |
+| char* | String. A collection of characters at a pointer address. | |
+| std::string (C++) | String (from the "std" namespace). A text containing one or more characters. | 16 | N/A |
 
 Integers can be "signed" or "unsigned." An "unsigned" digit can be a negative number.
 
@@ -65,6 +87,7 @@ long unsigned int integer_var = "-100";
 float float_var = "100.99";
 double double_var = "99.99999999999999999999999999";
 char character = "a";
+char* simple_string = "yes";
 std::string string_var = "Hello world.";
 ```
 
@@ -401,12 +424,12 @@ Source:
 
 Text from a terminal can either be displayed (standard output) and/or saved as a variable (standard input). C++ can even use C standard input/output functions since they are compatible.
 
-| Name | Type | Language |
+| Name | Type | Language | Library |
 | --- | --- | --- |
-| printf | Output | C |
-| cout | Output | C++ |
-| scanf | Input | C |
-| cin | Input | C++ |
+| printf | Output | C | Standard Input and Output (stdio) |
+| cout | Output | C++ | Input and Output Stream (iostream) |
+| scanf | Input | C | stdio |
+| cin | Input | C++ | iostream |
 
 Syntax:
 
@@ -427,7 +450,7 @@ Example:
 
 ```
 string w = "world";
-printf("Hello %s", string w  );
+printf("Hello %s\n", string w  );
 ```
 
 [1]
