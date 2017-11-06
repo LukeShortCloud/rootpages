@@ -4,15 +4,16 @@
     * [Versions](#introduction---versions)
         * [Red Hat OpenStack Platform](#introduction---versions---red-hat-openstack-platform)
     * [Services](#introduction---services)
-* [Overview](#overview)
 * [Automation](#automation)
     * [PackStack](#automation---packstack)
         * [Isolated Network Install](#automation---packstack---isolated-network-install)
         * [Exposed Network Install](#automation---packstack---isolated-network-install)
         * [Answer File](#automation---packstack---answer-file)
+        * [Uninstall](#automation---packstack---uninstall)
     * [OpenStack-Ansible](#automation---openstack-ansible)
         * [Quick](#automation---openstack-ansible---quick)
             * [Operations](#automation---openstack-ansible---quick---operations)
+            * [Uninstall](#automation---openstack-ansible---quick---uninstall)
         * [Full](#automation---openstack-ansible---full)
             * [Configurations](#automation---openstack-ansible---full---configurations)
                 * [Nova](#automation---openstack-ansible---full---configurations---nova)
@@ -43,12 +44,12 @@
         * [Ceph](#configurations---nova---ceph)
     * [Neutron](#configurations---neutron)
         * [Network Types](#configurations---neutron---network-types)
-            * Provider Networks
-                * Open vSwitch
-                * Linux Bridge
+            * [Provider Networks](#configurations---neutron---network-types---provider-networks)
+                * [Open vSwitch](https://docs.openstack.org/neutron/pike/admin/deploy-ovs-provider.html)
+                * [Linux Bridge](https://docs.openstack.org/neutron/pike/admin/deploy-lb-provider.html)
             * [Self-Service Networks](#configurations---neutron---network-types---self-service-networks)
                 * [Open vSwitch](#configurations---neutron---network-types---self-service-networks---open-vswitch)
-                * Linux Bridge
+                * [Linux Bridge](https://docs.openstack.org/neutron/pike/admin/deploy-lb-selfservice.html)
         * [DNS](#configurations---neutron---dns)
         * [Metadata](#configurations---neutron---metadata)
         * [Load-Balancing-as-a-Service](#configurations---neutron---load-balancing-as-a-service)
@@ -63,7 +64,6 @@
         * [Ceph](#configurations---glance---ceph)
 * [Neutron Troubleshooting](#neutron-troubleshooting)
     * [Open vSwitch](#neutron-troubleshooting---open-vswitch)
-        * Network connections
         * [Floating IPs](#neutron-troubleshooting---open-vswitch---floating-ips)
 * [Upgrades](#upgrades)
 * [Command Line Interface Utilities](#command-line-interface-utilities)
@@ -312,6 +312,49 @@ Source:
 1. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 
 
+## Automation - PackStack - Uninstall
+
+For uninstalling everything that is installed by PackStack, run this Bash script on all of the OpenStack nodes [1]. Use at your own risk.
+
+```
+#!/usr/bin/bash
+# Warning! Dangerous step! Destroys VMs
+for x in $(virsh list --all | grep instance- | awk '{print $2}') ; do
+    virsh destroy $x ;
+    virsh undefine $x ;
+done ;
+
+# Warning! Dangerous step! Removes lots of packages, including many
+# which may be unrelated to RDO.
+yum remove -y nrpe "*nagios*" puppet ntp ntp-perl ntpdate "*openstack*" \
+"*nova*" "*keystone*" "*glance*" "*cinder*" "*swift*" \
+mysql mysql-server httpd "*memcache*" scsi-target-utils \
+iscsi-initiator-utils perl-DBI perl-DBD-MySQL ;
+
+ps -ef | grep -i repli | grep swift | awk '{print $2}' | xargs kill ;
+
+# Warning! Dangerous step! Deletes local application data
+rm -rf /etc/nagios /etc/yum.repos.d/packstack_* /root/.my.cnf \
+/var/lib/mysql/ /var/lib/glance /var/lib/nova /etc/nova /etc/swift \
+/srv/node/device*/* /var/lib/cinder/ /etc/rsync.d/frag* \
+/var/cache/swift /var/log/keystone ;
+
+umount /srv/node/device* ;
+killall -9 dnsmasq tgtd httpd ;
+setenforce 1 ;
+vgremove -f cinder-volumes ;
+losetup -a | sed -e 's/:.*//g' | xargs losetup -d ;
+find /etc/pki/tls -name "ssl_ps*" | xargs rm -rf ;
+for x in $(df | grep "/lib/" | sed -e 's/.* //g') ; do
+    umount $x ;
+done
+```
+
+Source:
+
+1. "CHAPTER 5. REMOVING PACKSTACK DEPLOYMENTS." Red Hat Documentation. Accessed November 6, 2017. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Deploying_OpenStack_Proof_of_Concept_Environments/chap-Removing_Packstack_Deployments.html
+
+
 ## Automation - OpenStack Ansible
 
 Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42, SUSE Linux Enterprise 12
@@ -386,7 +429,52 @@ Then OpenStack-Ansible project can now setup and deploy the LXC containers to ru
 # scripts/run-playbooks.sh
 ```
 
-If the installation fails, it is recommended to reinstall the operating system to truly clear out all of the custom configurations that OpenStack-Ansible creates. Running the `scripts/run-playbooks.sh` script will not work again until the existing LXC containers and configurations have been removed. However, this official Bash script can be used to clean up most of the OpenStack-Ansible installation. Use at your own risk.
+If the installation fails, it is recommended to reinstall the operating system to completely clear out all of the custom configurations that OpenStack-Ansible creates. Running the `scripts/run-playbooks.sh` script will not work again until the existing LXC containers and configurations have been removed. [1]
+
+Source:
+
+1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+
+
+#### Automation - OpenStack Ansible - Quick - Operations
+
+A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.
+
+```
+# cd /opt/openstack-ansible/
+# cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
+```
+
+Add the new container to the list of inventory servers.
+
+```
+# /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
+```
+
+Update the repository server to include the new packages required.
+
+```
+# cd playbooks/
+# openstack-ansible repo-install.yml
+```
+
+Deploy the new container and then run the Playbook.
+
+```
+# openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
+# openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
+```
+
+[1]
+
+Source:
+
+1. "Quick Start." OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+
+
+#### Automation - OpenStack Ansible - Quick - Uninstall
+
+This Bash script can be used to clean up and uninstall most of the OpenStack-Ansible installation. Use at your own risk. The recommended way to uninstall OpenStack-Ansible is to reinstall the operating system.
 
 ```
 # # Move to the playbooks directory.
@@ -424,42 +512,6 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy
 Source:
 
 1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-
-
-#### Automation - OpenStack Ansible - Quick - Operations
-
-A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.
-
-```
-# cd /opt/openstack-ansible/
-# cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
-```
-
-Add the new container to the list of inventory servers.
-
-```
-# /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
-```
-
-Update the repository server to include the new packages required.
-
-```
-# cd playbooks/
-# openstack-ansible repo-install.yml
-```
-
-Deploy the new contianer and then run the Playbook.
-
-```
-# openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
-# openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
-```
-
-[1]
-
-Source:
-
-1. "Quick Start." OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
 ### Automation - OpenStack Ansible - Full
@@ -909,7 +961,7 @@ $ bash quickstart.sh --install-deps
 
 * Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on. `--clean` will recreate the Python dependencies and `--teardown all` will remove any lingering files from a previous tripleo-quickstart deployment.
 ```
-$ bash quickstart.sh -v --clean --teardown all --release trunk/ocata <HYPERVISOR_IP>
+$ bash quickstart.sh -v --clean --teardown all --release stable/ocata <HYPERVISOR_IP>
 ```
 
 * Note that all of the available releases can be found in the GitHub project in the `config/release/` directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
@@ -1316,17 +1368,18 @@ Source:
 
 ### Configurations - Neutron - Network Types
 
-In OpenStack, there are two common scenarios for networks.
+In OpenStack, there are two common scenarios for networks: "provider" and "self-service."
 
-The first is known as `self-service` networks. This is a simpler approach to providing virtual machines direct access to a bridge device. A public IP address can be assigned for the instance to have direct Internet access.
+Provider is is a simpler approach. It gives virtual machines direct access to a bridge device.
 
-The second approach is known as `provider` networks. These are more complex but allow full customization of private networks that can also be used with network address translation (NAT) for Internet access. With Open vSwitch, private networks can be created with VLAN, VXLAN, and/or GRE tagging to create isolated networks.
-
-[1]
+Self-service networks are more complex due to the added bridge and tunnel devices. This complexity allows for more advanced features such as isolated private networks, load-balancing-as-a-service (LBaaS), Firewall-as-a-Service (FWaaS), and more. [1]
 
 Source:
 
-1. "[RDO Installation] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/overview.html
+1. "[RDO Nova Installation] Overview." OpenStack Documentation. October 28, 2017. Accessed November 6, 2017. https://docs.openstack.org/nova/pike/install/overview.html
+
+
+#### Configurations - Neutron - Network Types - Provider Networks
 
 
 #### Configurations - Neutron - Network Types - Self-Service Networks
@@ -1899,7 +1952,7 @@ Source:
 
 # Orchestration
 
-Automating deployments can be accomplished in a few ways. The built-in OpenStack way is via Orhcestration as a Service (OaaS), typically handled by Heat. It is also possible to use Ansible or Vagrant to automate OpenStack deploys.
+Automating resource management can be accomplished in a few ways. OpenStack provides Orchestration as a Service (OaaS) via Heat. It is also possible to use Ansible or Vagrant to automate creating, reading, updating, and deleting resources in an OpenStack cloud.
 
 
 ## Orchestration - Heat
