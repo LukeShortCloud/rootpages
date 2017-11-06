@@ -961,7 +961,7 @@ $ bash quickstart.sh --install-deps
 
 * Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on. `--clean` will recreate the Python dependencies and `--teardown all` will remove any lingering files from a previous tripleo-quickstart deployment.
 ```
-$ bash quickstart.sh -v --clean --teardown all --release trunk/ocata <HYPERVISOR_IP>
+$ bash quickstart.sh -v --clean --teardown all --release stable/ocata <HYPERVISOR_IP>
 ```
 
 * Note that all of the available releases can be found in the GitHub project in the `config/release/` directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
