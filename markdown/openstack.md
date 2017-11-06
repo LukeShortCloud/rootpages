@@ -4,7 +4,6 @@
     * [Versions](#introduction---versions)
         * [Red Hat OpenStack Platform](#introduction---versions---red-hat-openstack-platform)
     * [Services](#introduction---services)
-* [Overview](#overview)
 * [Automation](#automation)
     * [PackStack](#automation---packstack)
         * [Isolated Network Install](#automation---packstack---isolated-network-install)
@@ -1899,7 +1898,7 @@ Source:
 
 # Orchestration
 
-Automating deployments can be accomplished in a few ways. The built-in OpenStack way is via Orhcestration as a Service (OaaS), typically handled by Heat. It is also possible to use Ansible or Vagrant to automate OpenStack deploys.
+Automating resource management can be accomplished in a few ways. OpenStack provides Orchestration as a Service (OaaS) via Heat. It is also possible to use Ansible or Vagrant to automate creating, reading, updating, and deleting resources in an OpenStack cloud.
 
 
 ## Orchestration - Heat
