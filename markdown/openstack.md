@@ -5,13 +5,13 @@
         * [Red Hat OpenStack Platform](#introduction---versions---red-hat-openstack-platform)
     * [Services](#introduction---services)
 * [Automation](#automation)
-    * [PackStack](#automation---packstack)
-        * [Isolated Network Install](#automation---packstack---isolated-network-install)
-        * [Exposed Network Install](#automation---packstack---isolated-network-install)
+    * [Packstack](#automation---packstack)
+        * [Install](#automation---packstack---install)
         * [Answer File](#automation---packstack---answer-file)
         * [Uninstall](#automation---packstack---uninstall)
     * [OpenStack-Ansible](#automation---openstack-ansible)
         * [Quick](#automation---openstack-ansible---quick)
+            * [Install](#automation---openstack-ansible---quick---install)
             * [Operations](#automation---openstack-ansible---quick---operations)
             * [Uninstall](#automation---openstack-ansible---quick---uninstall)
         * [Full](#automation---openstack-ansible---full)
@@ -28,6 +28,7 @@
                 * [Major](#automation---openstack-ansible---full---upgrades---major)
     * [TripleO](#automation---tripleo)
         * [Quick](#automation---tripleo---quick)
+            * [Install](#automation---tripleo---quick---install)
         * [Full](#automation---tripleo---full)
             * [Undercloud](#automation---tripleo---full---undercloud)
             * Overcloud
@@ -209,11 +210,14 @@ Source:
 It is possible to easily install OpenStack as an all-in-one (AIO) server or onto a cluster of servers. Various tools exist for automating the deployment and management of OpenStack.
 
 
-## Automation - PackStack
+## Automation - Packstack
 
 Supported operating system: RHEL 7
 
-PackStack is part of the Red Hat Development of OpenStack (RDO). It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
+Packstack is part of the Red Hat Development of OpenStack (RDO). It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
+
+
+### Automation - Packstack - Install
 
 First, install the required repositories for OpenStack.
 
@@ -228,16 +232,15 @@ CentOS:
 # yum install centos-release-openstack-ocata
 ```
 
-Finally, install the PackStack utility.
+Finally, install the Packstack utility.
 
 ```
 # yum -y install openstack-packstack
 ```
 
-There are two network scenarios that PackStack can deploy. The defauly is to have an isolated network. Floating IPs will not be able to access the network on the public interface. For lab environments, PackStack can also configure Neutron to expose the network instead to allow instances with floating IPs to access other IP addresses on the network.
+There are two network scenarios that Packstack can deploy. The default is to have an isolated network (1). Floating IPs will not be able to access the network on the public interface. For lab environments, Packstack can also configure Neutron to expose the network instead to allow instances with floating IPs to access other IP addresses on the network (2).
 
-
-### Automation - PackStack - Isolated Network Install
+`1.` Isolated Network Install
 
 Generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
 
@@ -246,16 +249,16 @@ Generate a configuration file refered to as the "answer" file. This can optional
 # packstack --answer-file <FILE>
 ```
 
-PackStack logs are stored in /var/tmp/packstack/. The administrator and demo user credentials will be saved to the user's home directory.
+Packstack logs are stored in /var/tmp/packstack/. The administrator and demo user credentials will be saved to the user's home directory.
 
 ```
 # source ~/keystonerc_admin
 # source ~/keystonerc_demo
 ```
 
-### Automation - PackStack - Exposed Network Install
+`2.` Exposed Network Install
 
-It is also possible to deploy OpenStack where Neutron can have access to the public network. Run the PackStack instllation with the command below and replace "eth0" with the public interface name.
+It is also possible to deploy OpenStack where Neutron can have access to the public network. Run the Packstack instllation with the command below and replace "eth0" with the public interface name.
 
 ```
 # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
@@ -269,7 +272,7 @@ After the installation is finished, create the necessary network in Neutron as t
 # neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
 ```
 
-This can now be associated with a router in any user account.
+The "external_network" can now be associated with a router in user accounts.
 
 [2]
 
@@ -279,7 +282,7 @@ Sources:
 2. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 
 
-## Automation - PackStack - Answer File
+## Automation - Packstack - Answer File
 
 The "answer" configuration file defines how OpenStack should be setup and installed. Using a answer file can provide a more customizable deployment.
 
@@ -302,22 +305,20 @@ Common options:
     * CONFIG_HORIZON_SSL_CACERT=/etc/pki/tls/certs/selfcert.crt
 * `CONFIG_<SERVICE>_INSTALL` = Install a specific OpenStack service.
 * `CONFIG_<NODE>_HOST` = The host to setup the relevant services on.
-* `CONFIG_<NODE>_HOSTS` = A list of hosts to setup the relevant services on. This currently only exists for "COMPUTE" and "NETWORK." New hosts can be added and PackStack re-run to have them added to the OpenStack cluster.
+* `CONFIG_<NODE>_HOSTS` = A list of hosts to setup the relevant services on. This currently only exists for "COMPUTE" and "NETWORK." New hosts can be added and Packstack re-run to have them added to the OpenStack cluster.
 * CONFIG_PROVISION_DEMO = Setup a demo project and user account with an image and network configured.
-
-
 
 Source:
 
 1. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 
 
-## Automation - PackStack - Uninstall
+## Automation - Packstack - Uninstall
 
-For uninstalling everything that is installed by PackStack, run this Bash script on all of the OpenStack nodes [1]. Use at your own risk.
+For uninstalling everything that is installed by Packstack, run this Bash script on all of the OpenStack nodes [1]. Use at your own risk.
 
-```
-#!/usr/bin/bash
+```bash
+#!/bin/bash
 # Warning! Dangerous step! Destroys VMs
 for x in $(virsh list --all | grep instance- | awk '{print $2}') ; do
     virsh destroy $x ;
@@ -379,6 +380,9 @@ Source:
 
 ### Automation - OpenStack Ansible - Quick
 
+
+#### Automation - OpenStack Ansible - Quick - Install
+
 Minimum requirements:
 
 * 8 CPU cores
@@ -426,7 +430,10 @@ Then OpenStack-Ansible project can now setup and deploy the LXC containers to ru
 ```
 # scripts/bootstrap-ansible.sh
 # scripts/bootstrap-aio.sh
-# scripts/run-playbooks.sh
+# cd /opt/openstack-ansible/playbooks
+# openstack-ansible setup-hosts.yml
+# openstack-ansible setup-infrastructure.yml
+# openstack-ansible setup-openstack.yml
 ```
 
 If the installation fails, it is recommended to reinstall the operating system to completely clear out all of the custom configurations that OpenStack-Ansible creates. Running the `scripts/run-playbooks.sh` script will not work again until the existing LXC containers and configurations have been removed. [1]
@@ -476,7 +483,8 @@ Source:
 
 This Bash script can be used to clean up and uninstall most of the OpenStack-Ansible installation. Use at your own risk. The recommended way to uninstall OpenStack-Ansible is to reinstall the operating system.
 
-```
+```bash
+#!/bin/bash
 # # Move to the playbooks directory.
 cd /opt/openstack-ansible/playbooks
 
@@ -943,12 +951,20 @@ Source:
 
 The "TripleO Quickstart" project was created to use Ansible to automate deploying TripleO as fast and easily as possible. [1]
 
-TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space. [3] 3 virtual machines will be created to meet the minimum cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) compute node. [2] A Quickstart deployment has to use a baremetal hypervisor. Deploying TripleO within a nested virtual machine is not supported. [4]
+Source:
+
+1. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
+
+
+#### Automation - TripleO - Quick - Install
+
+TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space. [3] A Quickstart deployment has to use a baremetal hypervisor. Deploying TripleO within a nested virtual machine is not supported. [4]
 
 * Download tripleo-quickstart script or clone the entire repository from GitHub.
 ```
 $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
 ```
+OR
 ```
 $ git clone https://github.com/openstack/tripleo-quickstart.git
 $ cd tripleo-quickstart
@@ -959,14 +975,59 @@ $ cd tripleo-quickstart
 $ bash quickstart.sh --install-deps
 ```
 
-* Run the quickstart script to install TripleO. Use "127.0.0.2" as the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on. `--clean` will recreate the Python dependencies and `--teardown all` will remove any lingering files from a previous tripleo-quickstart deployment.
-```
-$ bash quickstart.sh -v --clean --teardown all --release stable/ocata <HYPERVISOR_IP>
-```
+TripleO can now be installed automatically with the default setup of 3 virtual machines. This will be created to meet the minimum TripleO cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) compute node. [2] . Otherwise, there is a manual process for more customization during the installation.
 
-* Note that all of the available releases can be found in the GitHub project in the `config/release/` directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
+`1.` Automatic
+
+* Run the quickstart script to install TripleO. Use "127.0.0.2" for the localhost IP address if TripleO will be installed on the same system that the quickstart commmand is running on.
+
+```
+$ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
+```
 
 [1]
+
+`2.` Manual
+
+* Common quickstart.sh options:
+    * `--clean` = Remove previously created files from the working directory on the start of TripleO-Quickstart.
+    * `--no-clone` = Use the current working directory for TripleO-Quickstart. This should only be if the entire repository has been cloned.
+    * `--nodes config/nodes/<CONFIGURATION>.yml` = Specify the configuration that determines how many Overcloud nodes should be deployed.
+    * `-p` = Specify a Playbook to run.
+    * `--release` = The OpenStack release to use. All of the available releases can be found in the GitHub project in the "config/release/" directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
+    * `--retain-inventory` = Use the exisitng inventory. This is useful for managing an existing TripleO-Quickstart infrastructure.
+    * `--teardown {all|nodes|none|virthost}` = Delete everything related to TripleO (all), only the virtual machines (nodes), nothing (none), or the virtual machines and settings on the hypervisor (virthost).
+    * `--tags all` = Deploy a complete all-in-one TripleO installation automatically. If a Playbook is specified via `-p`, then everything in that Playbook will run.
+    * `-v` = Show verbose output from the Ansible Playbooks.
+
+---
+
+* Setup the virtual machines for the Undercloud and Overcloud.
+```
+$ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all -p quickstart.yml <REMOTE_HYPERVISOR_IP>
+```
+
+* Install the Undercloud services.
+```
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory -p quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
+```
+
+* Prepare the Overcloud virtual machines.
+```
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory -p quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
+```
+
+* Install the Overcloud services.
+```
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory -p quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
+```
+
+* Validate the installation.
+```
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  -p quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
+```
+
+[5]
 
 Sources:
 
@@ -974,6 +1035,8 @@ Sources:
 2. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
 3. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
 4. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
+5. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed November 7, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
+
 
 ### Automation - TripleO - Full
 
