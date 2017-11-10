@@ -31,7 +31,7 @@
             * [Install](#automation---tripleo---quick---install)
         * [Full](#automation---tripleo---full)
             * [Undercloud](#automation---tripleo---full---undercloud)
-            * Overcloud
+            * [Overcloud](#automation---tripleo---full---overcloud)
 * [Configurations](#configurations)
     * [Common](#configurations---common)
         * [Database](#configurations---common---database)
@@ -1042,7 +1042,7 @@ Sources:
 ### Automation - TripleO - Full
 
 
-## Automation - TripleO - Full - Undercloud
+#### Automation - TripleO - Full - Undercloud
 
 * **Hypervisor**
     * Install the EPEL for extra packages that will be required.
@@ -1063,10 +1063,9 @@ Sources:
 ```
 
 * **Undercloud virtual machine**
-    * Install the stable RDO Delorean repositories.
+    * Install the stable RDO Delorean repository.
 ```
 # curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
-# curl -L -o /etc/yum.repos.d/delorean-deps-newton.repo https://trunk.rdoproject.org/centos7-newton/delorean-deps.repo
 ```
     * Install TripleO.
 ```
@@ -1095,6 +1094,49 @@ $ openstack catalog list
 Source:
 
 1. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
+
+
+#### Automation - TripleO - Full - Overcloud
+
+* Download the prebuilt Overcloud image files from https://images.rdoproject.org/
+    * ironic-python-agent.initramfs
+    * ironic-python-agent.kernel
+    * overcloud-full.initrd
+    * overcloud-full.qcow2
+    * overcloud-full.vmlinuz
+* Upload those images.
+```
+$ openstack overcloud image upload
+```
+* Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as [outlined here](https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv). By default, everything is managed by IPMI. PXE can also be used, however it cannot manage power cycling a server.
+* Import the configuration that defines the Overcloud infrastructure and have it introspected so it can be deployed:
+```
+$ openstack overcloud node import --introspect --provide instackenv.json
+```
+    * Alternatively, automatically discover the available servers by scanning IPMI devices via a CIDR range and using different IPMI logins.
+```
+$ openstack overcloud node discover --range <CIDR> \
+    --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+```
+* Deploy the Overcloud with any custom Heat configurations.
+```
+$ openstack help overcloud deploy
+```
+* Verify that the Overcloud was deployed.
+```
+$ openstack stack list
+$ openstack stack show <OVERCLOUD_STACK_ID>
+```
+* Source the Overcloud credentials to manage it.
+```
+$ source ~/overcloudrc
+```
+
+[1]
+
+Source:
+
+1. "Basic Deployment (CLI)." OpenStack Documentation. Accessed November 9, 2017. https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html
 
 
 # Configurations
