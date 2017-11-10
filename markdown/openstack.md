@@ -43,6 +43,7 @@
         * [Hypervisors](#configurations---nova---hypervisors)
         * [CPU Pinning](#configurations---nova---cpu-pinning)
         * [Ceph](#configurations---nova---ceph)
+        * [Nested Virtualization](#configurations---nova---nested-virtualization)
     * [Neutron](#configurations---neutron)
         * [Network Types](#configurations---neutron---network-types)
             * [Provider Networks](#configurations---neutron---network-types---provider-networks)
@@ -1424,6 +1425,38 @@ Nova can be configured to use Ceph as the storage provider for the instance. Thi
 Source:
 
 1. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+
+
+### Configurations - Nova - Nested Virtualization
+
+Nested virtualization allows virtual machines to run virtual machines inside of them.
+
+The kernel module must be stopped, the nested setting enabled, and then the module must be started again.
+
+Intel:
+```
+# rmmod kvm_intel
+# echo “options kvm_intel nested=1” >> /etc/modprobe.d/kvm_inet.conf
+# modprobe kvm_intel
+```
+
+AMD:
+```
+# rmmod kvm_amd
+# echo “options kvm_amd nested=1” >> /etc/modprobe.d/kvm_amd.conf
+# modprobe kvm_amd
+```
+
+* /etc/nova/nova.conf
+    * [libvirt]
+        * virt_type = kvm
+        * cpu_mode = host-passthrough
+
+[1]
+
+Source:
+
+1. "Nested Virtualizaiton in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
 
 
 ## Configurations - Neutron
