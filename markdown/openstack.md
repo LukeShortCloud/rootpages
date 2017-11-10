@@ -721,6 +721,7 @@ storage_hosts:
 
 [1]
 
+Another real-world example of deploying and managing Ceph as part of OpenStack-Ansible can be found here: https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
 
 Sources:
 
