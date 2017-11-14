@@ -6,7 +6,8 @@
     * [Arrays](#data-types---arrays)
     * [Vectors (C++)](#data-types---vectors)
     * [Pointers](#data-types---pointers)
-    * [Scope (C++)](#data-types---scope)
+    * [Scope](#data-types---scope)
+    * Structs and Unions
 * [Conditionals](#conditionals)
     * [Operators](#conditionals---operators)
     * [If](#conditionals---if)
@@ -18,7 +19,7 @@
     * File
 * Functions
     * Scope
-* Templates
+* Templates (C++)
 * Libraries
 * Object Oriented (C++)
 * [Differences Between C and C++](https://web.eecs.umich.edu/~sugih/pointers/C++NotInC.html)
@@ -26,7 +27,7 @@
 
 # Introduction
 
-C was created in 1972 as an easier and more portable alternative to assembly language. It is a procedural and human readable language. [1] C is ideal for some projects such as writing hardware drivers and operating systems. C++ was created in 1979 as an enhanced version of C. It is also backwards compatible with C.
+C was created in 1972 as an easier and more portable alternative to assembly language. It is a procedural and human readable language. [1] C is ideal for some projects such as writing hardware drivers and operating systems. C\++ was created in 1979 as an enhanced version of C. It is also backwards compatible with C. Conversely, C is not forward compatible with C++.
 
 Features of C++:
 
@@ -36,10 +37,41 @@ Features of C++:
 
 [2]
 
+Most lines in C need to end with a semi-colon. The only exceptions are for library inclusion and defining a function or conditional
+
+Every C program requires the "main" function. It uses the data type "int" (integer) because when the program ends, it returns a numerical return code. The default is "0" for success.
+
+If a developer wants to recieve standard input from a user or provide standard output, then the C standard input/out (stdio) library needs to be included. This is not included by default to keep C program dependencies explicit and minimal.
+
+Comments can be placed throughout the code as a reminder of why something is done a certain way. This is a human note to help any developer working on the program to understand the reasoning for how the program was coded. These comment blocks have to start with `/*` and end with a `*/`.
+
+An simple C example is provided below:
+
+```
+#include <stdio.h>
+
+int main() {
+    /* This will tell a user "Hello world" */
+	printf("Hello world\n");
+	return 0;
+}
+```
+
+On Linux, C programs can be compiled with the GNU C compiler (gcc) and C\++ programs with the GNU C\++ compiler (g++).
+
+```
+$ gcc hello.c -o hello
+$ ./hello
+Hello world
+```
+
+[3]
+
 Sources:
 
 1. "The C Programming Language." University of Michigan. December 7, 1992. Accessed November 2, 2017. http://groups.engin.umd.umich.edu/CIS/course.des/cis400/c/c.html
 2. "Features of C++." Sitesbay. Accessed November 2, 2017. https://www.sitesbay.com/cpp/features-of-cpp
+3. "Minimal standard c program." SlideShare. May 12, 2016. Accessed November 13, 2017. https://www.slideshare.net/SwainLoda/minimal-standard-c-program
 
 
 # Tutorials
