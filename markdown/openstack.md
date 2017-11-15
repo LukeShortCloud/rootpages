@@ -155,9 +155,12 @@ Releases:
 
 [1]
 
+Red Hat provides most of the development to the core OpenStack services. The RPM Distribution of OpenStack (RDO) project is a community project lead by Red Hat to use the latest upstream code from OpenStack and package it to work and be distributable on Red Hat Enterprise Linux based systems. [2]
+
 Source:
 
 1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 12, 2017. https://access.redhat.com/support/policy/updates/openstack/platform
+2. "Frequently Asked Questions." RDO Project. Accessed November 15, 2017. https://www.rdoproject.org/rdo/faq/
 
 
 ## Introduction - Services
@@ -213,9 +216,9 @@ It is possible to easily install OpenStack as an all-in-one (AIO) server or onto
 
 ## Automation - Packstack
 
-Supported operating system: RHEL 7
+Supported operating system: RHEL 7, Fedora
 
-Packstack is part of the Red Hat Development of OpenStack (RDO). It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
+Packstack is part of Red Hat's RDO project. It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
 
 
 ### Automation - Packstack - Install
@@ -1064,9 +1067,12 @@ Sources:
 ```
 
 * **Undercloud virtual machine**
-    * Install the stable RDO Delorean repository.
+    * Install the stable Delorean, sometimes also refered to as RDO Trunk, repository and it's related dependency repository.
 ```
 # curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
+```
+```
+# curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
 ```
     * Install TripleO.
 ```
