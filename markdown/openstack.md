@@ -360,11 +360,11 @@ Source:
 1. "CHAPTER 5. REMOVING PACKSTACK DEPLOYMENTS." Red Hat Documentation. Accessed November 6, 2017. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Deploying_OpenStack_Proof_of_Concept_Environments/chap-Removing_Packstack_Deployments.html
 
 
-## Automation - OpenStack Ansible
+## Automation - OpenStack-Ansible
 
 Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42, SUSE Linux Enterprise 12
 
-OpenStack Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
+OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 It offers key features that include:
 
@@ -382,10 +382,10 @@ Source:
 1. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed August 25, 2017. https://github.com/openstack/openstack-ansible
 
 
-### Automation - OpenStack Ansible - Quick
+### Automation - OpenStack-Ansible - Quick
 
 
-#### Automation - OpenStack Ansible - Quick - Install
+#### Automation - OpenStack-Ansible - Quick - Install
 
 Minimum requirements:
 
@@ -444,10 +444,10 @@ If the installation fails, it is recommended to reinstall the operating system t
 
 Source:
 
-1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+1. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
-#### Automation - OpenStack Ansible - Quick - Operations
+#### Automation - OpenStack-Ansible - Quick - Operations
 
 A new node can be added at any time to an existing all-in-one deployment. Copy the configuration file for an all-in-one instance.
 
@@ -480,10 +480,10 @@ Deploy the new container and then run the Playbook.
 
 Source:
 
-1. "Quick Start." OpenStack Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+1. "Quick Start." OpenStack-Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
-#### Automation - OpenStack Ansible - Quick - Uninstall
+#### Automation - OpenStack-Ansible - Quick - Uninstall
 
 This Bash script can be used to clean up and uninstall most of the OpenStack-Ansible installation. Use at your own risk. The recommended way to uninstall OpenStack-Ansible is to reinstall the operating system.
 
@@ -523,10 +523,10 @@ rm /etc/apt/apt.conf.d/00apt-cacher-proxy
 
 Source:
 
-1. "Quick Start." OpenStack Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
+1. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 
-### Automation - OpenStack Ansible - Full
+### Automation - OpenStack-Ansible - Full
 
 Minimum requirements:
 
@@ -541,7 +541,7 @@ It is also required to have 4 different network bridges.
 * `br-vlan` = This should exist on the "network" (when using bare-metal) and "compute" nodes. It is used for self-service networks.
 * `br-vxlan` = This should exist on the "network" and "compute" nodes. It is used for self-service networks.
 
-Download and install the latest stable OpenStack Ansible suite from GitHub.
+Download and install the latest stable OpenStack-Ansible suite from GitHub.
 
 ```
 # apt-get install git
@@ -564,7 +564,7 @@ Source:
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 
-#### Automation - OpenStack Ansible - Full - Configurations
+#### Automation - OpenStack-Ansible - Full - Configurations
 
 View the `/etc/openstack_deploy/openstack_user_config.yml.prod.example` for a real production example and reference.
 
@@ -641,7 +641,7 @@ Source:
 1. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 
-##### Automation - OpenStack Ansible - Full - Configurations - Nova
+##### Automation - OpenStack-Ansible - Full - Configurations - Nova
 
 The default variables for Nova are listed at https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/. These can be overriden.
 
@@ -656,7 +656,7 @@ Source:
 1. "Nova role for OpenStack-Ansible." OpenStack Documentation. April 7, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-os_nova/ocata/
 
 
-##### Automation - OpenStack Ansible - Full - Configurations - Ceph
+##### Automation - OpenStack-Ansible - Full - Configurations - Ceph
 
 Ceph can be customized to be deployed differently from the default configuration or to use an existing Ceph cluster.
 
@@ -732,10 +732,10 @@ Sources:
 2. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
 
 
-#### Automation - OpenStack Ansible - Full - Operations
+#### Automation - OpenStack-Ansible - Full - Operations
 
 
-##### Automation - OpenStack Ansible - Full - Operations - OpenStack Utilities
+##### Automation - OpenStack-Ansible - Full - Operations - OpenStack Utilities
 
 Once OpenStack-Ansible is installed, it can be used immediately. The primary container to use is the `utility` container.
 
@@ -765,7 +765,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Operations - Ansible Inventory
+##### Automation - OpenStack-Ansible - Full - Operations - Ansible Inventory
 
 Ansible's inventory contains all of the connection and variable details about the hosts (in this case, LXC containers) and which group they are a part of. This section covers finding and using these inventory values for management and troubleshooting.
 
@@ -801,7 +801,7 @@ Source:
 1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Operations - Add a Infrastructure Container
+##### Automation - OpenStack-Ansible - Full - Operations - Add a Infrastructure Container
 
 Add the new host to the `infra_hosts` section in `/etc/openstack_deploy/openstack_user_config.yml`. Then the inventory can be updated which will generate a new unique node name that the OpenStack-Ansible Playbooks can run against. The `--limit` options are important because they will ensure that it will only run on the new infrastructure node.
 
@@ -821,7 +821,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Operations - Add a Compute Container
+##### Automation - OpenStack-Ansible - Full - Operations - Add a Compute Container
 
 Add the new host to the `compute_hosts` section in `/etc/openstack_deploy/openstack_user_config.yml`. Then the OpenStack-Ansible deployment Playbooks can be run again.
 
@@ -839,7 +839,7 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Operations - Remove a Compute Container
+##### Automation - OpenStack-Ansible - Full - Operations - Remove a Compute Container
 
 Stop the services on the compute container and then use the `openstack-ansible-ops` project's Playbook `remote_compute_node.yml` to fully it. Be sure to also remove the host from the `/etc/openstack_deploy/openstack_user_config.yml` configuration when done.
 
@@ -862,10 +862,10 @@ Source:
 https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 
-#### Automation - OpenStack Ansible - Full - Upgrades
+#### Automation - OpenStack-Ansible - Full - Upgrades
 
 
-##### Automation - OpenStack Ansible - Full - Upgrades - Minor
+##### Automation - OpenStack-Ansible - Full - Upgrades - Minor
 
 This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 15.0.0 to 15.1.1.
 
@@ -913,7 +913,7 @@ Source:
 1. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 
-##### Automation - OpenStack Ansible - Full - Upgrades - Major
+##### Automation - OpenStack-Ansible - Full - Upgrades - Major
 
 OpenStack-Ansible has scripts capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the official guide: https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html. Below outlines how to do this automatically. [1]
 
