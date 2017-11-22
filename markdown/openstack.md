@@ -120,6 +120,8 @@ Releases:
     * Goals:
         * Remove the need for the access control list "policy" files by having default values defined in the source code.
         * Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
+18. Rocky
+    * On the roadmap.
 
 Sources:
 
@@ -259,6 +261,34 @@ Packstack logs are stored in /var/tmp/packstack/. The administrator and demo use
 # source ~/keystonerc_admin
 # source ~/keystonerc_demo
 ```
+
+Although the network will not be exposed by default, it can still be configured later. The primary interface to the lab's network, typically `eth0`, will need to be configured as a Open vSwitch bridge to allow this. Be sure to replace the "IPADDR", "PREFIX", and "GATEWAY" with the server's correct settings. Neutron will also need to be configured to allow "flat" networks.
+
+```
+# vim /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+ONBOOT=yes
+DEVICETYPE=ovs
+TYPE=OVSPort
+OVS_BRIDGE=br-ex
+BOOTPROTO=none
+NM_CONTROLLED=no
+```
+```
+# vim /etc/sysconfig/network-scripts/ifcfg-br-ex
+DEVICE=br-ex
+ONBOOT=yes
+DEVICETYPE=ovs
+TYPE=OVSBridge
+DEFROUTE=yes
+IPADDR=192.168.1.200
+PREFIX=24
+GATEWAY=192.168.1.1
+PEERDNS=no
+BOOTPROTO=none
+NM_CONTROLLED=no
+```
+
 
 `2.` Exposed Network Install
 
@@ -1670,7 +1700,7 @@ Source:
 
 ### Configurations - Neutron - Load-Balancing-as-a-Service
 
-Load-Balancing-as-a-Service version 2 (LBaaSv2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end.
+Load-Balancing-as-a-Service version 2 (LBaaS v2) has been stable since Liberty. It can be configured with either the HAProxy or Octavia back-end. LBaaS v1 has been removed since the Newton release.
 
 * /etc/neutron/neutron.conf
     * [DEFAULT]
@@ -2107,17 +2137,44 @@ Heat is used to orchestrate the deployment of multiple OpenStack components at o
 
 ### Orchestration - Heat - Resources
 
-Heat templates are made of multiple resources. All of the different resource types are listed here [http://docs.openstack.org/developer/heat/template_guide/openstack.html](http://docs.openstack.org/developer/heat/template_guide/openstack.html). Resources use properties to create a component. If no name is specified (for example, a network name), a random string will be used. Most properties also accept either an exact ID of a resource or a reference to a dynamically generated resource (which will provide it's ID once it has been created).
+Heat templates use YAML formatting and are made of multiple resources. All of the different resource types are listed here: https://docs.openstack.org/heat/latest/template_guide/openstack.html. Resources use properties to create a component. If no name is specified (for example, a network name), a random string will be used. Most properties also accept either an exact ID of a resource or a reference to a dynamically generated resource (which will provide it's ID once it has been created). [1]
 
-This section will go over examples of the more common modules.
+All Heat templates must began with defining the version of OpenStack is was designed for (using the release date as the version) and enclose all resources in a "resources" dictionary. The version indicates that all features up until that specific release are used. This is for backwards compatibility reasons.
+
+```
+---
+heat_template_version: 2017-02-24
+
+resources:
+```
+
+Valid Heat template versions include [2]:
+
+* 2018-03-02 (Queens)
+* 2017-09-01 (Pike)
+* 2017-02-24 (Ocata)
+* 2016-10-14 (Newton)
+* 2016-04-08 (Mitaka)
+* 2015-10-15 (Liberty)
+* 2015-04-30 (Kilo)
+* 2014-10-16 (Juno)
+* 2013-05-23 (Icehouse)
+
+This section will go over examples of the more common modules. Each resource must be nested under the single "resources" section.
 
 Syntax:
+
 ```
-<DESCRIPTIVE_OBJECT_NAME>:
+  <DESCRIPTIVE_OBJECT_NAME>:
     type: <HEAT_RESOURCE_TYPE>
     properties:
-        <PROPERTY_1>: <VALUE_1>
-        <PROPERTY_2>: <VALUE_2>
+      <PROPERTY_1>: <VALUE_1>
+      <PROPERTY_2>:
+        - <LIST_VALUE_1>
+        - <LIST_VALUE_2>
+      <PROPERTY_3>:
+        <DICTIONARY_KEY_1>: <DICTIONARY_VALUE_1>
+        <DICTIONARY_KEY_2>: <DICTIONARY_VALUE_2>
 ```
 
 For referencing created resources (for example, creating a subnet in a created network) the "get_resource" function should be used.
@@ -2125,107 +2182,125 @@ For referencing created resources (for example, creating a subnet in a created n
 { get_resource: <OBJECT_NAME> }
 ```
 
+Official examples of Heat templates can be found here: https://github.com/openstack/heat-templates/tree/master/hot. Below is a demonstration on  how to create a virtual machine with public networking.
+
 * Create a network, assigned to the "internal_network" object.
+
 ```
-internal_network: {type: 'OS::Neutron::Net'}
+  internal_network:
+    type: OS::Neutron::Net
 ```
 
 * Create a subnet for the created network. Required properties: network name or ID.
+
 ```
-internal_subnet:
+  internal_subnet:
     type: OS::Neutron::Subnet
     properties:
-      ip_version: 4
+      network: { get_resource: internal_network }
       cidr: 10.0.0.0/24
-      dns_nameservers: [8.8.4.4, 8.8.8.8]
-      network_id: {get_resource: internal_network}
+      dns_nameservers:
+        - 8.8.4.4
+        - 8.8.8.8
 ```
 
 * Create a port. This object can be used during the instance creation. Required properties: network name or ID.
+
 ```
-subnet_port:
+  subnet_port:
     type: OS::Neutron::Port
     properties:
-        fixed_ips:
-            - subnet_id: {get_resource: internal_subnet}
-        network: {get_resource: internal_network}
+      network: { get_resource: internal_network }
+      fixed_ips:
+        - subnet_id: { get_resource: internal_subnet }
+      security_groups:
+        - basic_allow
 ```
 
 * Create a router associated with the public "ext-net" network.
+
 ```
-external_router:
+  external_router:
     type: OS::Neutron::Router
     properties:
-        external_gateway_info: [ network: ext-net ]
+      external_gateway_info:
+        network: ext-net
 ```
 
 * Attach a port from the network to the router.
+
 ```
-external_router_interface:
+  external_router_interface:
     type: OS::Neutron::RouterInterface
     properties:
-        router: {get_resource: external_router}
-        subnet: {get_resource: internal_subnet}
+      router: { get_resource: external_router }
+      subnet: { get_resource: internal_subnet }
 ```
 
 * Create a key pair called "HeatKeyPair." Required property: name.
+
 ```
-ssh_keys:
+  ssh_keys:
     type: OS::Nova::KeyPair
     properties:
-        name: HeatKeyPair
-        public_key: HeatKeyPair
-        save_private_key: true
+      name: HeatKeyPair
+      public_key: HeatKeyPair
+      save_private_key: true
 ```
 
-* Create an instance using the "m1.small" flavor, "centos7" image, assign the subnet port creaetd by "subnet_port" and use the "default" security group.
+* Create an instance using the "m1.small" flavor, "RHEL7" image, and assign the subnet port created by "OS::Neutron::Port."
+
 ```
-instance_creation:
-  type: OS::Nova::Server
-  properties:
-    flavor: m1.small
-    image: centos7
-    networks:
-        - port: {get_resource: subnet_port}
-    security_groups: {default}
+  instance_creation:
+    type: OS::Nova::Server
+    properties:
+      flavor: m1.small
+      image: RHEL7
+      networks:
+        - port: { get_resource: subnet_port }
 ```
 
 * Allocate an IP from the "ext-net" floating IP pool.
+
 ```
-floating_ip:
+  floating_ip:
     type: OS::Neutron::FloatingIP
-    properties: {floating_network: ext-net}
+    properties:
+      floating_network: ext-net
 ```
 
 * Allocate a a floating IP to the created instance from a "instance_creation" function. Alternatively, a specific instance's ID can be defined here.
+
 ```
-floating_ip_association:
+  floating_ip_association:
     type: OS::Nova::FloatingIPAssociation
     properties:
-	    floating_ip: {get_resource: floating_ip}
-		server_id: {get_resource: instance_creation}
+	  floating_ip: { get_resource: floating_ip }
+      server_id: { get_resource: instance_creation }
 ```
 
 Source:
 
 1. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
+2. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. November 17, 2017. Accessed November 17, 2017. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
 
 
 ### Orchestration - Heat - Parameters
 
 Parameters allow users to input custom variables for Heat templates.
 
-Options:
+Common options:
+
 * type = The input type. This can be a string, number, JSON, a comma separated list or a boolean.
 * label = String. The text presented to the end-user for the fillable entry.
 * description = String. Detailed information about the parameter.
 * default = A default value for the parameter.
 * constraints = A parameter has to match a specified constrant. Any number of constraints can be used from the available ones below.
-  * length = How long a string can be.
-  * range = How big a number can be.
-  * allowed_values = Allow only one of these specific values to be used.
-  * allowed_pattern = Allow only a value matching a regular expression.
-  * custom_constraint = A full list of custom service constraints can be found at [http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint](#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint).
+    * length = How long a string can be.
+    * range = How big a number can be.
+    * allowed_values = Allow only one of these specific values to be used.
+    * allowed_pattern = Allow only a value matching a regular expression.
+    * custom_constraint = A full list of custom service constraints can be found at [http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint](#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint).
 * hidden = Boolean. Specify if the text entered should be hidden or not. Default: false.
 * immutable = Boolean. Specify whether this variable can be changed. Default: false.
 
