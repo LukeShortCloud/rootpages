@@ -217,7 +217,7 @@ Source:
 
 # Data Types - Pointers
 
-Pointers refers to a location in memory and can store multiple values. In C, this is useful because pointers can be used as arrays. A pointer can only be associated with one data type and cannot be resized. For C++, it is recommended to use vectors instead. Pointers will require manual memory cleanup with a `delete` statement.
+Pointers refers to a location in memory and can store multiple values. In C, this is useful because pointers can be used as array to create things such as a string from multiple characters. A pointer can only be associated with one data type and cannot be resized. For C++, it is recommended to use vectors instead. Pointers will require manual memory cleanup with a `delete` statement.
 
 There are a few different ways to define a pointer.
 
@@ -256,11 +256,30 @@ the_answer_to_life = &answer; // point to the address location of the "answer" v
 cout << *the_answer_to_life << endl; // 42
 ```
 
-[1]
+C and C++ do not provide a native way to see how many elements are in an array. The most simple method is to find the size of one element in the array and then the size of the entire array.
 
-Source:
+Example of founding the size of array `x`:
+
+```
+char x[5] = {'h', 'e', 'l', 'l', 'o' };
+int x_array_size = sizeof(x) / sizeof(*x);
+```
+
+The GNU C Compiler (GCC) provides the "ARRAY_SIZE" to do this automatically.
+
+Example:
+
+```
+char x[5] = {'w', 'o', 'r', 'l', 'd' };
+int x_array_size = ARRAY_SIZE(x);
+```
+
+[2]
+
+Sources:
 
 1. "Pointers, References and Dynamic Memory Allocation." Nanyang Technoligcal University. Accessed May 21, 2017. https://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp4_PointerReference.html
+2. "GCC \*is\* wonderful: a better ARRAY_SIZE macro." Zubplot. January 4, 2015. Accessed December 3, 2017. http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
 
 
 # Data Types - Scope
