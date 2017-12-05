@@ -162,7 +162,7 @@ Y
 
 * AMD:
 ```
-$ cat /sys/module/amd_intel/parameters/nested
+$ cat /sys/module/kvm_amd/parameters/nested
 Y
 ```
 
@@ -172,7 +172,7 @@ Y
 * Intel
 ```
 # vim /etc/modprobe.d/nested_virtualization.conf
-options intel nested=1
+options kvm-intel nested=1
 ```
 ```
 # modprobe -r kvm-intel
@@ -181,7 +181,7 @@ options intel nested=1
 * AMD
 ```
 # vim /etc/modprobe.d/nested_virtualization.conf
-options amd nested=1
+options kvm-amd nested=1
 ```
 ```
 # modprobe -r kvm-amd
@@ -190,15 +190,17 @@ options amd nested=1
 
 #### Option #2 - GRUB2
 
+Append this option to the already existing "GRUB_CMDLINE_LINUX" options.
+
 * Intel
 ```
 # vim /etc/default/grub
-GRUB_CMDLINE_LINUX="console=tty0 kvm-intel.nested=1"
+GRUB_CMDLINE_LINUX="kvm-intel.nested=1"
 ```
 * AMD
 ```
 # vim /etc/default/grub
-GRUB_CMDLINE_LINUX="console=tty0 kvm-amd.nested=1"
+GRUB_CMDLINE_LINUX="kvm-amd.nested=1"
 ```
 * Then rebuild the GRUB 2 configuration.
 ```
@@ -230,12 +232,12 @@ Finally verify that, in the virtual machine, it has full hardware virtualization
 
 [3]
 
-
 Sources:
 
-1. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 18, 2016. http://www.rdoxenham.com/?p=275
+1. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 1, 2017. http://www.rdoxenham.com/?p=275
 2. "Configure DevStack with KVM-based Nested Virtualization." December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html
 3. "How to enable nested virtualization in KVM." Fedora Project Wiki. June 19, 2015. Accessed August 30, 2017. https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM
+
 
 ### Hardware Virtualization - KVM - GPU Passthrough
 
