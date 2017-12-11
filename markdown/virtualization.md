@@ -508,7 +508,7 @@ end
 ```
 ```
 Vagrant.configure("2") do |config|
-  config.vm.network "private_network", ip: <IP4_OR_IP6_ADDRESS>, netmask: <SUBNET_MASK>
+  config.vm.network "private_network", ip: "<IP4_OR_IP6_ADDRESS>", netmask: "<SUBNET_MASK>"
 end
 ```
 
