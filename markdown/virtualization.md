@@ -13,7 +13,7 @@
 * [Software Virtualization](#software-virtualization)
     * QEMU
     * [Containers](#software-virtualization---containers)
-        * [Docker](#software-virtualization---containers---docker)
+        * [docker](#software-virtualization---containers---docker)
             * [Networking](#software-virtualization---containers---docker---networking)
         * [LXC](#software-virtualization---containers---lxc)
 * [Orchestration](#orchestration)
@@ -77,7 +77,7 @@ Source:
 
 ### Hardware Virtualization - KVM - Performance Tuning
 
-Configuration detials for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]
+Configuration details for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]
 
 ```
 # qemu -cpu host ...
@@ -100,7 +100,7 @@ The network driver that provides the best performance is "virtio." Some guests m
 </interface>****
 ```
 
-Using a tap device (that will be greated to an existing interface) or a bridge will speed up network greatly.
+Using a tap device (that will be assigned to an existing interface) or a bridge will speed up network connections.
 ```
 ... -net tap,ifname=<NETWORK_DEVICE> ...
 ```
@@ -218,7 +218,7 @@ Edit the virtual machine's XML configuration to change the CPU mode to be "host-
 
 [2]
 
-Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabiltiies and processor information.
+Reboot the virtual machine and verify that the hypervisor and the virtual machine both report the same capabilities and processor information.
 
 ```
 # virsh capabilities
@@ -294,12 +294,12 @@ Source:
 
 # Software Virtualization - Containers
 
-Containers are a type of software virtualization. Using a directory structure that contains an entire operating system (typically referred to as a chroot), containers can easily spin up and utilize system resources without the overhead of full hardware allocation. It is not possible to use seperate kernels with this approach.
+Containers are a type of software virtualization. Using a directory structure that contains an entire operating system (typically referred to as a chroot), containers can easily spin up and utilize system resources without the overhead of full hardware allocation. It is not possible to use separate kernels with this approach.
 
 
-### Software Virtualization - Containers - Docker
+### Software Virtualization - Containers - docker
 
-Docker creates containers using the LXC kernel module on Linux.
+The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.
 
 A command is run to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append `&& tail -f /dev/null` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]
 
@@ -308,13 +308,13 @@ Source:
 1. "Get started with Docker." Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted
 
 
-### Software Virtualization - Containers - Docker - Networking
+### Software Virtualization - Containers - docker - Networking
 
-Networking is automatically bridged to the public interface and set up with a NAT. This allows full communication to/from the container, provided that the necessary ports are open in the firewall and configured in the Docker image.
+Networking is automatically bridged to the public interface and set up with a NAT. This allows full communication to/from the container, provided that the necessary ports are open in the firewall and configured in the docker image.
 
 Networking issues from within a container are commonly due to network packet size (MTU) issues. There are a few work-a-rounds.
 
-1. Configure the default MTU size for Docker deployments by modifying the daemon's process settings. This value should generally be below the default of 1500.
+1. Configure the default MTU size for docker deployments by modifying the daemon's process settings. This value should generally be below the default of 1500.
 ```
 # vim /etc/sysconfig/docker
 OPTIONS='--selinux-enabled --log-driver=journald --mtu 1400'
@@ -334,7 +334,7 @@ ExecStart=/usr/bin/docker-current daemon \
 # systemctl daemon-reload
 # systemctl restart docker
 ```
-2. Forward all packets between the Docker link through the physical link.
+2. Forward all packets between the docker link through the physical link.
 ```
 # iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 ```
@@ -347,7 +347,7 @@ In rare cases, the bridge networking will not be working properly. An error mess
 ERROR: for <CONTAINER_NAME> failed to create endpoint <NETWORK_ENDPOINT> on network bridge: iptables failed: iptables --wait -t nat -A DOCKER -p tcp -d 0/0 --dport <DESTINATION_PORT_HOST> -j DNAT --to-destination <IP_ADDRESS>:<DESTINATION_PORT_CONTAINER> ! -i docker0: iptables: No chain/target/match by that name.
 ```
 
-The solution is to delete the virtual "docker0" interface and then restart the Docker service for it to be properly recreated.
+The solution is to delete the virtual "docker0" interface and then restart the docker service for it to be properly recreated.
 
 ```
 # ip link delete docker0
@@ -380,7 +380,7 @@ RHEL install [2] requires the Extra Packages for Enterprise Linux (EPEL) reposit
 # yum install lxc lxc-templates libvirt
 ```
 
-On RHEL family systems the `lxcbr0` interface is not created or used. Alternatively, the Libvirt interface `virbr0` should be uesd.
+On RHEL family systems the `lxcbr0` interface is not created or used. Alternatively, the Libvirt interface `virbr0` should be used.
 
 ```
 # vim /etc/lxc/default.conf
@@ -572,10 +572,10 @@ After a virtual machine (VM) has been created, additional commands can be run to
     * ansible_local = Run a Ansible Playbook from within the VM.
     * cfengine = Use CFEngine to configure the VM.
     * chef_solo = Run a Chef Cookbook from inside the VM using `chef-solo`.
-    * chef_zero = Run a Chef Cookbook, but uset `chef-zero` to emulate a Chef server inside of the VM.
+    * chef_zero = Run a Chef Cookbook, but use `chef-zero` to emulate a Chef server inside of the VM.
     * chef_client = Use a remote Chef server to run a Cookbook inside the VM.
     * chef_apply = Run a Chef recipe with `chef-apply`.
-    * docker = Install and configure Docker inside of the VM.
+    * docker = Install and configure docker inside of the VM.
     * file = Copy files from the hypervisor to the VM. Note that the directory that the `Vagrantfile` is in will be mounted as the directory `/vagrant/` inside of the VM.
     * puppet = Run single Puppet manifests with `puppet apply`.
     * puppet_server = Run a Puppet manifest inside of the VM using an external Puppet server.
