@@ -134,7 +134,7 @@ Sources:
 
 ### Introduction - Versions - Red Hat OpenStack Platform
 
-Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life (LL) releases were introduced with RHOSP 10 where it will recieve up to 5 years of support. Every 3rd release of RHOSP will have LL support. Rolling major upgrades are supported from one version to the next sequential version, starting with RHOSP 8.
+Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life (LL) releases were introduced with RHOSP 10 where it will receive up to 5 years of support. Every 3rd release of RHOSP will have LL support. Rolling major upgrades are supported from one version to the next sequential version, starting with RHOSP 8.
 
 Releases:
 
@@ -159,10 +159,28 @@ Releases:
 
 Red Hat provides most of the development to the core OpenStack services. The RPM Distribution of OpenStack (RDO) project is a community project lead by Red Hat to use the latest upstream code from OpenStack and package it to work and be distributable on Red Hat Enterprise Linux based systems. [2]
 
-Source:
+The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/rhosp-release" file.
+
+```
+$ cat /etc/rhosp-release
+Red Hat OpenStack Platform release 10.0 (Newton)
+```
+
+On other nodes, the version can be found by checking the "version" and "release" of the RPM packages. The version consists of the year and month of the upstream OpenStack release. The last number in the version is the bugfix release for this specific package. The release section is the minor version of the RHOSP. In the example below, the upstream OpenStack release is Newton that was released on the 10th month of 2016. The corresponding major RHOSP version is 10 for Newton. This is the 2nd bugfix release for the package "openstack-nova-common." The minor release is 8. The full RHOSP version is referenced as "10z8." [3]
+
+```
+$ rpm -qi openstack-nova-common
+Name        : openstack-nova-common
+Version     : 2016.10.2
+Release     : 8.el7ost
+...
+```
+
+Sources:
 
 1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 12, 2017. https://access.redhat.com/support/policy/updates/openstack/platform
 2. "Frequently Asked Questions." RDO Project. Accessed November 15, 2017. https://www.rdoproject.org/rdo/faq/
+3. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 
 
 ## Introduction - Services
@@ -220,7 +238,7 @@ It is possible to easily install OpenStack as an all-in-one (AIO) server or onto
 
 Supported operating system: RHEL 7, Fedora
 
-Packstack is part of Red Hat's RDO project. It's purpose is for providing small and simple demontrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
+Packstack is part of Red Hat's RDO project. It's purpose is for providing small and simple demonstrations of OpenStack. This tool does not handle any upgrades of the OpenStack services.
 
 
 ### Automation - Packstack - Install
@@ -248,7 +266,7 @@ There are two network scenarios that Packstack can deploy. The default is to hav
 
 `1.` Isolated Network Install
 
-Generate a configuration file refered to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
+Generate a configuration file referred to as the "answer" file. This can optionally be customized. Then install OpenStack using the answer file. By default, the network will be entirely isolated. [1]
 
 ```
 # packstack --gen-answer-file <FILE>
@@ -292,7 +310,7 @@ NM_CONTROLLED=no
 
 `2.` Exposed Network Install
 
-It is also possible to deploy OpenStack where Neutron can have access to the public network. Run the Packstack instllation with the command below and replace "eth0" with the public interface name.
+It is also possible to deploy OpenStack where Neutron can have access to the public network. Run the Packstack installation with the command below and replace "eth0" with the public interface name.
 
 ```
 # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
@@ -433,7 +451,7 @@ Setup the OpenStack-Ansible project.
 # git checkout stable/ocata
 ```
 
-There are two all-in-one scenarios that will run different Ansible Playbooks. The default is "aio" but this can be changed to the second scenario by setting the `SCENARIO` shell variable to "ceph." Alternatively, the roles to run can be manaully modified in `/opt/openstack-ansible/tests/bootstrap-aio.yml` Playbook.
+There are two all-in-one scenarios that will run different Ansible Playbooks. The default is "aio" but this can be changed to the second scenario by setting the `SCENARIO` shell variable to "ceph." Alternatively, the roles to run can be manually modified in `/opt/openstack-ansible/tests/bootstrap-aio.yml` Playbook.
 
 `# export SCENARIO="ceph"`
 
@@ -604,7 +622,7 @@ Configure the networks that are used in the environment.
     * `container` = The network range that the LXC containers will use an IP address from. This is the management network that is on "br-mgmt."
     * `tunnel` = The network range for accessing network services between the "compute" and "network" nodes over the VXLAN or GRE tunnel interface. The tunnel network should be on "br-vxlan."
     * `storage` = The network range for accessing storage. This is the network that is on "br-storage."
-* `used_ips` = Lists of IP addressess that are already in use and should not be used for the container networks.
+* `used_ips` = Lists of IP addresses that are already in use and should not be used for the container networks.
 * `global_overrides`
     * `tunnel_bridge` = The interface to use for tunneling VXLAN traffic. This is typically "br-vxlan."
     * `management_bridge` = The interface to use for management access. This is typically `br-mgmt`.
@@ -1005,7 +1023,7 @@ $ git clone https://github.com/openstack/tripleo-quickstart.git
 $ cd tripleo-quickstart
 ```
 
-* Installl dependencies for the quickstart script.
+* Install dependencies for the quickstart script.
 ```
 $ bash quickstart.sh --install-deps
 ```
@@ -1030,7 +1048,7 @@ $ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
     * `--nodes config/nodes/<CONFIGURATION>.yml` = Specify the configuration that determines how many Overcloud nodes should be deployed.
     * `-p` = Specify a Playbook to run.
     * `--release` = The OpenStack release to use. All of the available releases can be found in the GitHub project in the "config/release/" directory. Use "trunk/`<RELEASE_NAME>`" for the development version and "stable/`<RELEASE_NAME>`" for the stable version.
-    * `--retain-inventory` = Use the exisitng inventory. This is useful for managing an existing TripleO-Quickstart infrastructure.
+    * `--retain-inventory` = Use the existing inventory. This is useful for managing an existing TripleO-Quickstart infrastructure.
     * `--teardown {all|nodes|none|virthost}` = Delete everything related to TripleO (all), only the virtual machines (nodes), nothing (none), or the virtual machines and settings on the hypervisor (virthost).
     * `--tags all` = Deploy a complete all-in-one TripleO installation automatically. If a Playbook is specified via `-p`, then everything in that Playbook will run.
     * `-v` = Show verbose output from the Ansible Playbooks.
@@ -1190,7 +1208,7 @@ These are general configuration options that apply to most OpenStack configurati
 
 Different database backends can be used by the API services on the controller nodes.
 
-* MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with Liberty, this is prefered on Ubuntu over using "`mysql://`" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1] RHEL still requires the use of the legacy "`mysql://`" connector. [4]
+* MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with Liberty, this is preferred on Ubuntu over using "`mysql://`" as the latest OpenStack libraries are written for PyMySQL connections (not to be confused with "MySQL-python"). [1] RHEL still requires the use of the legacy "`mysql://`" connector. [4]
 ```
 [ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 ```
@@ -1234,7 +1252,7 @@ On the controller nodes, RabbitMQ needs to be installed. Then a user must be cre
 # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 ```
 
-In the configuraiton file for every service, set the transport_url options for RabbitMQ. A virtual host is not required. By default it will use `/`.
+In the configuration file for every service, set the transport_url options for RabbitMQ. A virtual host is not required. By default it will use `/`.
 ```
 [ DEFAULT ] transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 ```
@@ -1243,7 +1261,7 @@ In the configuraiton file for every service, set the transport_url options for R
 
 #### Scenario #2 - ZeroMQ
 
-This provides the best performance and stability. Scalability becomes a concern only when getting into hundreds of nodes. Instead of relying on a messaing queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is reuqired to be running and installed for acting as a message storage back-end for all of the servers. [1][2]
+This provides the best performance and stability. Scalability becomes a concern only when getting into hundreds of nodes. Instead of relying on a messaging queue, OpenStack services talk directly to each other using the ZeroMQ library. Redis is required to be running and installed for acting as a message storage back-end for all of the servers. [1][2]
 
 ```
 [ DEFAULT ] transport_url = "zmq+redis://<REDIS_HOST>:6379"
@@ -1535,7 +1553,7 @@ AMD:
 
 Source:
 
-1. "Nested Virtualizaiton in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
+1. "Nested Virtualization in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
 
 
 ## Configurations - Neutron
@@ -1587,7 +1605,7 @@ One device is required, but it is recommended to separate traffic onto two diffe
         * bridge_mappings = `<LABEL>`:br-vlan
             * The `<LABEL>` can be any unique name. It is used as an alias for the interface name.
         * local_ip = `<IP_ADDRESS>`
-            * This IP address should be accesible on the `br-vlan` interface.
+            * This IP address should be accessible on the `br-vlan` interface.
     * [agent]
         * tunnel_types = vxlan
         * l2_population = True
@@ -1656,7 +1674,7 @@ Source:
 
 The metadata service provides useful information about the instance from the IP address 169.254.169.254/32. This service is also used to communicate with "cloud-init" on the instance to configure SSH keys and other post-boot tasks.
 
-Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delievering/receiving requests.
+Assuming authentication is already configured, set these options for the OpenStack environment. These are the basics needed before the metadata service can be used correctly. Then you can choose to use DHCP namespaces (layer 2) or router namespaces (layer 3) for delivering/receiving requests.
 
 * /etc/neutron/metadata_agent.ini
     * [DEFAULT]
@@ -1906,7 +1924,7 @@ Ceph has become the most popular backend to Cinder due to it's high availability
             * This is the RBD pool to use for volumes.
         * rbd_ceph_conf = /etc/ceph/ceph.conf
         * rbd_flatten_volume_from_snapshot = false
-            * Ceph supports efficent thin provisioned snapshots.
+            * Ceph supports efficient thin provisioned snapshots.
         * rbd_max_clone_depth = 5
         * rbd_store_chunk_size = 4
         * rados_connect_timeout = -1
@@ -1962,7 +1980,7 @@ Ceph can be used to store images.
 * /etc/glance/glance-api.conf
     * [DEFAULT]
         * show_image_direct_url = True
-            * This will allow copy-on-write (CoW) operations for efficent usage of storage for instances. Instead of cloning the entire image, CoW will be used to store changes between the instance and the original image. This assumes that Cinder is also configured to use Ceph.
+            * This will allow copy-on-write (CoW) operations for efficient usage of storage for instances. Instead of cloning the entire image, CoW will be used to store changes between the instance and the original image. This assumes that Cinder is also configured to use Ceph.
             * The back-end Ceph addressing will be viewable by the public Glance API. It is important to make sure that Ceph is not publicly accessible.
     * [glance_store]
         * stores = rbd
@@ -2295,7 +2313,7 @@ Common options:
 * label = String. The text presented to the end-user for the fillable entry.
 * description = String. Detailed information about the parameter.
 * default = A default value for the parameter.
-* constraints = A parameter has to match a specified constrant. Any number of constraints can be used from the available ones below.
+* constraints = A parameter has to match a specified constraint. Any number of constraints can be used from the available ones below.
     * length = How long a string can be.
     * range = How big a number can be.
     * allowed_values = Allow only one of these specific values to be used.
@@ -2382,7 +2400,7 @@ Source:
 
 Tempest is used to query all of the different APIs in use. This helps to validate the functionality of OpenStack. This software is a rolling release aimed towards verifying the latest OpenStack release in development but it should also work for older versions as well.
 
-The sample configuration flie "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources:
+The sample configuration file "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources:
 * http://docs.openstack.org/developer/tempest/sampleconf.html
 * http://docs.openstack.org/developer/tempest/_static/tempest.conf.sample
 
