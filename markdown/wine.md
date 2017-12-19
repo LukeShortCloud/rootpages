@@ -56,7 +56,7 @@ $ WINEPATH="c:/program_dir" wine setup.exe
 | WINELOADER | The "wine" binary to use for launching new Windows processes. | `/usr/bin/wine` |
 | WINEDEBUG | The debug options to use for logging. | |
 | WINEDLLPATH | The directory to load builtin Wine DLLs. | `/usr/lib64/wine` |
-| WINEDLLOVERRIDES | A list Wine DLLs that should be overriden. If a DLL fails to load it will attempt to load another DLL (if applicable). By default, all operating system DLLs will only use Wine's built-in DLLs. |
+| WINEDLLOVERRIDES | A list Wine DLLs that should be overridden. If a DLL fails to load it will attempt to load another DLL (if applicable). By default, all operating system DLLs will only use Wine's built-in DLLs. |
 | WINEPATH | Additional paths to append to the Windows `PATH` variable. | |
 | WINEARCH | The Windows architecture to use. Valid options are "win32" or "win64." | `win64` |
 | DISPLAY | The X11 display to run Windows programs in. | |
@@ -102,14 +102,14 @@ Common channels:
 * snoop = Calls between native DLLS.
 * synchronous = Use X11's synchronous mode.
 * tid = Provides the process ID from where each call came from.
-* timestamp = Provides a timestmap for each log.
+* timestamp = Provides a timestamp for each log.
 
 The full list of debug channels can be found at https://wiki.winehq.org/Debug_Channels.
 
 WINEDLLOVERRIDES can be configured to use DLLs provided by Wine and/or Windows DLLs. There are two different types of DLLs in Wine:
 
 * b = Builtin Wine DLLs.
-* n = Natie Windows DLLs.
+* n = Native Windows DLLs.
 
 Syntax:
 

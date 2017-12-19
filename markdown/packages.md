@@ -282,7 +282,7 @@ Sources:
 | Inline with Upstream (IUS) | RHEL | No | The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [2] | <li>[RHEL 6](https://rhel6.iuscommunity.org/ius-release.rpm) <li>[RHEL 7](https://rhel7.iuscommunity.org/ius-release.rpm) <li>[CentOS 6](https://centos6.iuscommunity.org/ius-release.rpm) <li>[CentOS 7](https://centos7.iuscommunity.org/ius-release.rpm) |
 | Enterprise Linux Repository (ELRepo) | RHEL | No | The latest hardware drivers and Linux kernels. [3] | <li>[RHEL 6](http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm) <li>[RHEL 7](http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm) |
 | RPM Fusion | Fedora, RHEL | No | Packages that Fedora does not ship by default due to license conflicts. [4] | <li>[Fedora 25](https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm) <li>[Fedora 26](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm) <li>[Fedora 27](https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm) <li>[RHEL 6](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm) <li>[RHEL 7](https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm) |
-| RPM Sphere | Fedora | No | OpenSUSE packages that are not available in Fedora. [5] | <li>[Fedora 25](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_25/home:zhonghuaren.repo)<li>[Fedora 26](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo) |
+| RPM Sphere | Fedora | No | openSUSE packages that are not available in Fedora. [5] | <li>[Fedora 25](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_25/home:zhonghuaren.repo)<li>[Fedora 26](http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo) |
 | Kernel Vanilla | Fedora | Yes | Kernel packages for the latest stable and mainline Linux kernels. [6] | <li>[Fedora](https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo) |
 | Wine | Fedora | Yes | The latest stable, development, and staging packages for Wine. | <li>Fedora 24<li>Fedora 25<li>[Fedora 26](https://dl.winehq.org/wine-builds/fedora/26/winehq.repo) |
 
@@ -293,7 +293,7 @@ Sources:
 3. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May 14, 2017. http://elrepo.org/tiki/tiki-index.php
 4. "RPM Fusion." RPM Fusion. March 31, 2017. Accessed May 14, 2017. https://rpmfusion.org/RPM%20Fusion
 5. "RPM Sphere." openSUSE Build Service. Accessed September 4, 2017. https://build.opensuse.org/project/show/home:zhonghuaren
-6. "Kernel Vanilla Repositories." Fedora Project Wiki. Feburary 28, 2017. Accessed September 8, 2017. https://fedoraproject.org/wiki/Kernel_Vanilla_Repositories
+6. "Kernel Vanilla Repositories." Fedora Project Wiki. February 28, 2017. Accessed September 8, 2017. https://fedoraproject.org/wiki/Kernel_Vanilla_Repositories
 
 
 ## RPM - Packaging
@@ -339,7 +339,7 @@ Sections:
 * `%prep` = Define how to extract the source code for building.
 * `%setup` = 
 * `%build` = This is where the program is built from the source code.
-* `%install` = Copy files to a directory structure under `%{buildroot}` that mirrors where their installed location. The `%{buildroot}` is the top-level directory of a typical Linux file system hiercharchy.
+* `%install` = Copy files to a directory structure under `%{buildroot}` that mirrors where their installed location. The `%{buildroot}` is the top-level directory of a typical Linux file system hierarchy.
 * `%file` = These are the files that should be copied over during installation. Permissions can also be set.
     * `%attr(<MODE>, <USER>, <GROUP>)` = Define this in front of a file or folder to give it custom permissions.
 
@@ -385,9 +385,9 @@ Source:
 Creating a user or group can be done one of two ways.
 
 * Dynamically = Let the system deciede what user identification number (UID) and group ID (GID) to use.
-* Static = Specify a specific UID or GID number to use. This is useful for keeping permissions identifical on multiple platforms.
+* Static = Specify a specific UID or GID number to use. This is useful for keeping permissions identical on multiple platforms.
 
-The Fedora Project recommends using these standarized blocks of code to accomplish these methods. [1]
+The Fedora Project recommends using these standardized blocks of code to accomplish these methods. [1]
 
 Dynamic:
 ```
@@ -469,7 +469,7 @@ Example patch file:
 +++ d20-1.0.0/src/dice.h
 ```
 
-A patch can also be made without the `%patch` macro by specifiying the location of the patch file.
+A patch can also be made without the `%patch` macro by specifying the location of the patch file.
 
 ```
 patch < %{_sourcedir}/<FILE_NAME>
@@ -525,7 +525,7 @@ $ cd "${pkgname}-${pkgver}"
 ```
 
 * package()
-    * These are the steps to copy and/or modify files from the "srcdir" to be placed in the "pkgdir" to represent where they will be installed on an end-user's system. This acts as the top-level directory of a Linux filesystem hierarchy.
+    * These are the steps to copy and/or modify files from the "srcdir" to be placed in the "pkgdir" to represent where they will be installed on an end-user's system. This acts as the top-level directory of a Linux file system hierarchy.
 ```
 $ cd "${pkgdir}"
 ```

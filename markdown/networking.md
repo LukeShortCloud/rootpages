@@ -53,7 +53,7 @@ Network Settings:
     * MACAddress = Override the MAC address with a custom address.
     * MTUBytes = The MTU size for packets.
 * [DHCPServer] = Configure DHCP server settings.
-    * PoolOffset = The offset count (not including network or broadcsat addresses) to start the IP allocation pool from.
+    * PoolOffset = The offset count (not including network or broadcast addresses) to start the IP allocation pool from.
     * PoolSize = The number of IP addresses that can be allocated.
     * DNS = A list of DNS servers to provide.
     * EmitRouter = The default gateway to provide.
@@ -264,7 +264,7 @@ Source:
 
 Red Hat Enterprise Linux uses their own "network" service. Although Network Manager has started taking it's place, the network service is less intrusive and better supported by most programs that rely on managing network settings.
 
-There are two udev modules that manage new device naming schemes: "net.ifnames" and "biosdevname." Only "net.ifnames" is installed by default on RHEL. Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will benamed based on their physical location and connection to the motherboard. [1]
+There are two udev modules that manage new device naming schemes: "net.ifnames" and "biosdevname." Only "net.ifnames" is installed by default on RHEL. Set these both to 0 in the kernel/boot options to revert back to eth* and wlan* naming. Otherwise, devices will be named based on their physical location and connection to the motherboard. [1]
 
 Network configurations are saved in `/etc/sysconfig/network-scripts/`. The ethernet device names start with "ifcfg-eth" when ifnames is disabled or "ifcfg-e" if not.
 
@@ -278,7 +278,7 @@ Options:
     * dhcp = Dynamic IP addressing. Use DHCP to obtain IP addressing information.
     * bootp = Dynamic IP addressing. Use BOOTP to obtain IP addressing information.
 * DHCP_HOSTNAME = If a DHCP server requires a hostname, specify the hostname for the system.
-* DHCPV6C = {yes|no}. Enable or disable the abillity to obtain an IPv6 address via DHCP.
+* DHCPV6C = {yes|no}. Enable or disable the ability to obtain an IPv6 address via DHCP.
 * DHCPV6C = Specify DHCP options for IPv6.
     * -P = Prefix delegation.
     * -S = Obtain a stateless address.

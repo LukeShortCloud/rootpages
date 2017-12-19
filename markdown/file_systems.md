@@ -59,7 +59,7 @@ Btrfs stands for the "B-tree file system." The file system is commonly referred 
 
 Common mount options:
 
-* autodefrag = Automatically defragement the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.
+* autodefrag = Automatically defragment the file system. This can negatively impact performance, especially if the partition has active virtual machine images on it.
 * compress = File system compression can be used. Valid options are:
     * zlib = Higher compression
     * lzo = Faster file system performance
@@ -97,7 +97,7 @@ Known limitations:
 
 Source:
 
-1. "Preventing a btrfs Nightmare." Jupiter Boradcasting. July 6, 2014.
+1. "Preventing a btrfs Nightmare." Jupiter Broadcasting. July 6, 2014.
 http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
 
 
@@ -118,7 +118,7 @@ Mount options:
 * noacl = Disable the Linux extended access control lists.
 * nouser_xattr = Disable extended file attributes.
 * errors = Specify what happens when there is an error in the file system.
-    * remount-ro = Automatically remound the partition into a read-only mode.
+    * remount-ro = Automatically remount the partition into a read-only mode.
     * continue = Ignore the error.
     * panic = Shutdown the operating system if any errors are found.
 * discard = Enables TRIM support. The file system will immediately free up the space from a deleted file for use with new files.
@@ -391,7 +391,7 @@ For setting up a target storage, these are the general steps to follow in order:
 > set auth password=pass
 ```
 
-* Any ACL rules that were created can be overriden by turning off authentication entirely.
+* Any ACL rules that were created can be overridden by turning off authentication entirely.
     * Syntax:
 ```
 > set attribute authentication=0
@@ -460,7 +460,7 @@ Vocabulary:
 * Ceph Monitors (MONs) = Store and provide a map of data locations.
 * Ceph Metadata Server (MDS) = Provides metadata about file system hierarchy for CephFS. This is not required for RBD or RGW.
 * Ceph File System (CephFS) = A POSIX-compliant distributed file system with unlimited size.
-* Controlled Repllication Under Scalable Hash (CRUSH) = Uses an algorithm to provide metadata about an object's location.
+* Controlled Replication Under Scalable Hash (CRUSH) = Uses an algorithm to provide metadata about an object's location.
 * Placement Groups (PGs) = Object storage data.
 
 Ceph monitor nodes have a master copy of a cluster map. This contains 5 separate maps that have information about data location and the cluster's status. If an OSD fails, the monitor daemon will automatically reorganize everything and provided end-user's with an updated cluster map.
@@ -770,8 +770,8 @@ Bucket instances are used to group OSD configurations together. Typically these 
 * id = Required. A unique negative number to identify the bucket.
 * weight = Optional. A floating/decimal number for all of the weight of all of the OSDs in this bucket.
 * alg = Required. Choose which Ceph bucket type/method that is used to read and write objects. This should not be confused with the user-defined bucket types.
-    * Uniform = Assumes that all hardware in the bucket instance is exactly the same so all OSDs recieve the same weight.
-    * List = Lists use the RUSH algorithim to read and write objects in sequencial order from the first OSD to the last. This is best suited for data that does not need to be deleted (to avoid rebalancing).
+    * Uniform = Assumes that all hardware in the bucket instance is exactly the same so all OSDs receive the same weight.
+    * List = Lists use the RUSH algorithim to read and write objects in sequential order from the first OSD to the last. This is best suited for data that does not need to be deleted (to avoid rebalancing).
     * Tree = The binary search tree uses the RUSH algorithim to efficiently handle larger amounts of data.
     * Straw = A combination of both "list" and "tree." One of the two bucket types will randomly be selected for operations. Replication is fast but rebalancing will be slow.
 * hash = Required. The hashing algorithim used by CRUSH to lookup and store files. As of the Jewel release, only option "0" for "rjenkins1" is supported.

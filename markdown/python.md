@@ -17,7 +17,7 @@
     * stdin and stdout
     * Files
     * Network
-* Object Orientended Programming
+* Object Oriented Programming
 * Virtual Environments
 
 

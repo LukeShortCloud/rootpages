@@ -51,7 +51,7 @@ Common system calls:
 | pipe | Process | Stream output data from one process to another. |
 | read | File | Read data. |
 | setgid | Process | Change a process's group ID. |
-| setpriority | Processo | Change a process's kernel scheduling priority. |
+| setpriority | Processor | Change a process's kernel scheduling priority. |
 | setuid | Process | Change a process's user ID. |
 | socket | File/Network/Process | Create a socket that can listen for requests. This can be a UNIX file socket, network port, or a special process. |
 | symlink | File. | Create a shortcut that redirects to another file (a symbolic link). |
@@ -68,7 +68,7 @@ Common system calls:
 
 Source:
 
-1. "UNIX System Calls." University of Miami's Department of Computer Science. August 22, 2016. Accesesd July 1, 2017. http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml
+1. "UNIX System Calls." University of Miami's Department of Computer Science. August 22, 2016. Accessed July 1, 2017. http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml
 
 
 ## Linux - Modules
@@ -139,7 +139,7 @@ Source:
 
 The Linux kernel can handling incoming requests differently depending on the scheduler method. By default, all processes use the Completely Fair Scheduler (CFS) that tries to handle all incoming tasks equally. It is only technically possible to change the default scheduler by modifying the Linux kernel's source code and then recompiling the kernel. [2] There are 5 different kernel scheduling policies that can be set to processes manually. These are set by using the `chrt` command.
 
-* SCHED_BATCH = Batch handles CPU-intesnive tasks with real time priority.
+* SCHED_BATCH = Batch handles CPU-intensive tasks with real time priority.
 * SCHED_FIFO (first-in first-out) = Handles each task that is requested, in order.
 * SCHED_IDLE = Tasks will only be processed when the processor is mostly idle.
 * SCHED_OTHER (CFS) = All tasks are treated equally and are handled with the same amount of priority.
@@ -228,7 +228,7 @@ All modifications of the initramfs in Arch Linux are handled by the "mkinitcpio"
         * btrfs = BtrFS RAID.
         * net = Add networking.
         * mdadm = mdadm software RAID modules.
-        * fsck = FSCK utilies for available operating systems.
+        * fsck = FSCK utilities for available operating systems.
         * encrypt = LUKS encyrption modules.
         * lvm2 = Logical volume manager (LVM) modules.
         * shutdown = Allows the initramfs to properly shutdown.

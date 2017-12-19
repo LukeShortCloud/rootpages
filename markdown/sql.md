@@ -161,7 +161,7 @@ Server options:
 
 For replication, a maxscale MySQL user needs "REPLICATION SET" and "SELECT" grants for all databases.
 ```
-GRANT REPLICATION SET, SELCT ON *.* TO 'maxscale'@'%' IDENTIFIED BY 'securepassword123';
+GRANT REPLICATION SET, SELECT ON *.* TO 'maxscale'@'%' IDENTIFIED BY 'securepassword123';
 ```
 
 In a master-slave configuration, at least two servers are required to be running. This is because MaxScale is unsure if other nodes are present and cannot determine if a server is a master or a slave. This will prevent it from working properly and this error will occur for all connections. [3] It is ideal to follow the quorum theory by having 3 servers to support a failed host properly.

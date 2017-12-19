@@ -21,7 +21,7 @@ It is important to note that every DNS record has to be associated with a state 
 
 # PowerDNS
 
-The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authorative server. [1] A few of the most popular backends are "bind" (BIND) due to it's large usage in the Linux community and "gmysql" (MySQL) due to it's scalability.
+The pdns service can be both an authoritative and recursive DNS server. It supports a large number of backends that can be used for it's authoritative server. [1] A few of the most popular backends are "bind" (BIND) due to it's large usage in the Linux community and "gmysql" (MySQL) due to it's scalability.
 
 This is the SOA format that pdns uses. At the bare minimum, the nameserver and email should be defined. [3]
 ```
@@ -35,7 +35,7 @@ SOA options:
 * serial = 0 for automatic serial creation (default). Not all backends support automatic serials, such as bind. gmysql supports it. If using automatic serial numbers, place the number here. If any records are updated, the serial should also be updated.
 * refresh = When DNS servers should check for DNS updates (in seconds).
 * retry = How long to wait (in seconds) to recheck the zone after a failed refresh.
-* expire = How long (in seconds) before this zone should longer be queired for a failed retry. This value only applies to slave DNS servers.
+* expire = How long (in seconds) before this zone should longer be queried for a failed retry. This value only applies to slave DNS servers.
 * ttl = How long (in seconds) a record is allowed to be cached by another DNS server. [5]
 
 

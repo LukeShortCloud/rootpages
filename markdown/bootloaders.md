@@ -102,7 +102,7 @@ Common "grub-install" options:
 Sources:
 
 1. "GRUB." Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB
-2. "GRUB2-INSTALL MAN PAGE." Mankier. Feburary 26, 2014. https://www.mankier.com/8/grub2-install
+2. "GRUB2-INSTALL MAN PAGE." Mankier. February 26, 2014. https://www.mankier.com/8/grub2-install
 
 
 ### GRUB 2 - Configuration

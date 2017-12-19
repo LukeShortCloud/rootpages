@@ -9,9 +9,9 @@
 
 # Kerberos
 
-Kerberos helps to faciliate a single sign-on and secure approach to authenticating across multiple services. The Kerberos server is also known as a Key Distribution Center (KDC) server that maintains a KDC database of encrypted keys.
+Kerberos helps to facilitate a single sign-on and secure approach to authenticating across multiple services. The Kerberos server is also known as a Key Distribution Center (KDC) server that maintains a KDC database of encrypted keys.
 
-A client authenticates once to a KDC server with a username and password. Once validated through a authentication service, an initial "Ticket Granting Ticket" (TGT) is issued by the "Ticket Granting Service" (TGS). This ticket contains information about the client including their hostname, IP address, initial ticket creation time, ticket expiration time, and more. When this client tries to access acess a remote resouce (for example, FTP or SSH) the TGT's access privileges are verified by the TGS and then a "Service Ticket" is issued. The client then uses this service ticket to access the remote resource.
+A client authenticates once to a KDC server with a username and password. Once validated through a authentication service, an initial "Ticket Granting Ticket" (TGT) is issued by the "Ticket Granting Service" (TGS). This ticket contains information about the client including their hostname, IP address, initial ticket creation time, ticket expiration time, and more. When this client tries to access access a remote resource (for example, FTP or SSH) the TGT's access privileges are verified by the TGS and then a "Service Ticket" is issued. The client then uses this service ticket to access the remote resource.
 
 Ports:
 
@@ -152,7 +152,7 @@ Source:
 
 # OpenLDAP
 
-The Lightweight Directory Access Protocol (LDAP) is a network protocol for accessing user information. OpenLDAP is an open source implmentation of this protocol.
+The Lightweight Directory Access Protocol (LDAP) is a network protocol for accessing user information. OpenLDAP is an open source implementation of this protocol.
 
 OpenLDAP supports storing user information in many relational database management systems (RDMSs) including IBM db2, MariaDB/MySQL, MS SQL Server, Oracle Database, PostgreSQL and more. [2]
 

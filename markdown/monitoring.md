@@ -24,7 +24,7 @@ Ubuntu
 # apt-get install monit
 ```
 
-Depending on your system, the main confiugraiton file is one of these two below. The default settings can be used. The configurations are not case sensitive.
+Depending on your system, the main configuration file is one of these two below. The default settings can be used. The configurations are not case sensitive.
 
 * /etc/monitrc
 * /etc/monit.conf
@@ -80,15 +80,15 @@ stop program = "/bin/systemctl stop nginx"
 * check host `<HOSTNAME>` WITH ADDRESS `<IP_ADDRESS>`
   * Verify that the remote host is accessible.
   * Checks:
-    * IF FAILED PING[4|6] [COUNT `<NUMBER_VALUE>`] [SIZE `<MTU_SIZE>`] [TIMEOUT `<NUMBER_VALUE>` `<TIME_UNIT>`] [ADDRESS `<IP_ADDRES>`] THEN `<ACTION>`
+    * IF FAILED PING[4|6] [COUNT `<NUMBER_VALUE>`] [SIZE `<MTU_SIZE>`] [TIMEOUT `<NUMBER_VALUE>` `<TIME_UNIT>`] [ADDRESS `<IP_ADDRESS>`] THEN `<ACTION>`
     * IF FAILED PORT `<PORT_NUMBER>` [TYPE `[TCP|UDP]`] [PROTOCOL `<PROTOCOL>`]
 * check network `<NETWORK_NAME>` WITH INTERFACE `<INTERFACE>`
   * Verify that an IP address exists on the local machine. This is useful for failover type load balancers.
   * Checks:
     * IF FAILED LINK THEN `<ACTION>` 
     * IF SATURATION `<OPERATOR>` `<PERCENT>` THEN `<ACTION>`
-* check filesystem `<FILESYSTEM_NAME>`with path `<PATH_TO_DEVICE>`
-  * Verify statistics about a filesystem.
+* check filesystem `<FILE_SYSTEM_NAME>`with path `<PATH_TO_DEVICE>`
+  * Verify statistics about a file system.
     * `<PATH_TO_DEVICE>` can be a block device, mount, or directory.
   * Checks:
     * IF SPACE USAGE `<OPERATOR>` `<SIZE_VALUE>` `<SIZE_UNIT>` THEN `<ACTION>`

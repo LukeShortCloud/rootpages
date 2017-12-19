@@ -2070,7 +2070,7 @@ Source:
 
 # Command Line Interface Utilities
 
-The OpenStack CLI resources used to be handled by separate commands. These have all been modified and are managed by the universal "openstack" command. The various options and arguments are explained in Root Pages' OpenStack section [Linux Commands excel sheet](https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx).
+The OpenStack command line interface (CLI) resources used to be handled by separate commands. These have all been modified and are managed by the universal "openstack" command. The various options and arguments are explained in Root Pages' OpenStack section [Linux Commands excel sheet](https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx).
 
 For the CLI utilities to work, the environment variables need to be set for the project and user. This way the commands can automatically authenticate.
 
@@ -2477,4 +2477,4 @@ A few general tips for getting the fastest OpenStack performance.
   * Utilize /etc/hosts.
     * Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
   * Use memcache.
-    * This is generally configured by an option called "memcache_servers" in the configuration files for most services. Consider using "CouchBase" for its ease of clustering and redundancy support.
+    * This is generally configured by an option called "memcache_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.

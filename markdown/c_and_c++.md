@@ -41,7 +41,7 @@ Most lines in C need to end with a semi-colon. The only exceptions are for libra
 
 Every C program requires the "main" function. It uses the data type "int" (integer) because when the program ends, it returns a numerical return code. The default is "0" for success.
 
-If a developer wants to recieve standard input from a user or provide standard output, then the C standard input/out (stdio) library needs to be included. This is not included by default to keep C program dependencies explicit and minimal.
+If a developer wants to receive standard input from a user or provide standard output, then the C standard input/out (stdio) library needs to be included. This is not included by default to keep C program dependencies explicit and minimal.
 
 Comments can be placed throughout the code as a reminder of why something is done a certain way. This is a human note to help any developer working on the program to understand the reasoning for how the program was coded. These comment blocks have to start with `/*` and end with a `*/`.
 
@@ -150,7 +150,7 @@ Sources:
 
 ## Data Types - Arrays
 
-Arrays can be used to store multiple values for a certian type of data. It is similar to defining a variable, except the number of elements (the size) of the array needs to explicitly be defined. For more dynamic arrays, use vectors instead.
+Arrays can be used to store multiple values for a certain type of data. It is similar to defining a variable, except the number of elements (the size) of the array needs to explicitly be defined. For more dynamic arrays, use vectors instead.
 
 Syntax:
 
@@ -202,7 +202,7 @@ vector<<DATA_TYPE>> <VARIABLE_NAME> (<SIZE>);
 Example:
 
 ```
-vector<int> resturant_order_numbers (999);
+vector<int> restaurant_order_numbers (999);
 ```
 ```
 vector<std::string> (3);
@@ -407,7 +407,7 @@ Source:
 
 ## Conditionals - For
 
-For loops initialize a variable, check if a compairison of an expression is true, and then increments the initalized variable. This is useful for running a loop a specific number of times.
+For loops initialize a variable, check if a comparison of an expression is true, and then increments the initialized variable. This is useful for running a loop a specific number of times.
 
 Syntax:
 
@@ -435,7 +435,7 @@ Source:
 
 ## Conditionals - While
 
-While statements can be used to continually run a task while a statement is true. A "do-while" statement uses the same concept but garuntees that the tasks will be run at least once.
+While statements can be used to continually run a task while a statement is true. A "do-while" statement uses the same concept and guarantees that the tasks will be run at least once.
 
 Syntax:
 
@@ -508,4 +508,4 @@ printf("Hello %s\n", string w  );
 
 Source:
 
-1. "C++ Programming Language Stream IO and File IO." Nanyang Technoligcal University. May, 2013. Accessed May 21, 2017. http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10_io.html
+1. "C++ Programming Language Stream IO and File IO." Nanyang Technological University. May, 2013. Accessed May 21, 2017. http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10_io.html

@@ -15,7 +15,7 @@
 
 # Apache 2.4
 
-The Apache HTTP Server Project is designed to provide a versatile open source HTTP and HTTPS web server. It has been one, and continues to be, one of peoples' favorite web servers. [1]
+The Apache HTTP Server Project is designed to provide a versatile open source HTTP and HTTPS web server. It is one of the top used web servers. [1]
 
 Source:
 
@@ -54,7 +54,7 @@ Options:
     * debug
 * ErrorDocument = Provide a custom page for specific error numbers. This can either be text, a file, script, or redirect.
     * Example #1: ErrorDocument 500 "Contact your System Administrator for help. Thank you."
-    * Examlpe #2: ErrorDocument 403 "/cgi-bin/you_didnt_say_the_magic_word.py"
+    * Example #2: ErrorDocument 403 "/cgi-bin/you_didnt_say_the_magic_word.py"
 * ErrorLog = The file to use for the error log.
 * CustomLog = The file to use for logging Apache access information.
 * IncludeOptional = Specify what directory (under ServerRoot) to load other configurations from.
@@ -291,7 +291,7 @@ drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 .
 drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 ..
 ```
 
-Permanetely fix SELinux permissions on a custom directory using the semanage tool and then apply the permissions by running restorecon:
+Permanently fix SELinux permissions on a custom directory using the semanage tool and then apply the permissions by running restorecon:
 ```
 # semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
 # restorecon -Rv /path/to/custom/dir
@@ -306,7 +306,7 @@ Source:
 
 # NGINX
 
-NGINX was originally desgined to be a proxy server but has eventually added the functionality of being a HTTP web server. For HTTP, it is focused on high-performance static content handling. Dynamic scripts must be processed by a different web server.
+NGINX was originally designed to be a proxy server and had eventually added the functionality of being a HTTP web server. For HTTP, it is focused on high-performance static content handling. Dynamic scripts must be processed by a different web server.
 
 
 # NGINX - Configuration

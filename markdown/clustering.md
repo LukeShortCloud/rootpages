@@ -26,7 +26,7 @@ Source:
 
 The IP Virtual Server (IPVS) service utilizes the Linux kernel directly for load balancing. It is designed to be a simple load balancer for internal/private networks. [1]
 
-The only prequiste for IPVS is that it requires the Linux system to be configured as a router (masquerading). This is an example of using the internal network 10.0.0.0/24 on the interface eth1 and forward requests to/from the public interface eth0.
+The only prerequisite for IPVS is that it requires the Linux system to be configured as a router (masquerading). This is an example of using the internal network 10.0.0.0/24 on the interface eth1 and forward requests to/from the public interface eth0.
 
 ```
 # iptables -F
@@ -71,7 +71,7 @@ IPVS is easily managed via the "ipvsadm" command.
 # ipvsadm -a -t 192.168.1.10:80 -r 10.0.0.12 -m
 ```
 
-* The configuration rules are automatically saved, but they can viewed in standard output. These rules can then be migrated or restoed to an IPVS server.
+* The configuration rules are automatically saved, but they can viewed in standard output. These rules can then be migrated or restored to an IPVS server.
 ```
 # ipvsadm {-S|--save}
 ```
@@ -79,7 +79,7 @@ IPVS is easily managed via the "ipvsadm" command.
 # ipvsadm {-R|--restore}
 ```
 
-* The entire configuraiton can be cleared at any time. [1]
+* The entire configuration can be cleared at any time. [1]
 ```
 # ipvsadm {-C|--clear}
 ```
