@@ -134,12 +134,16 @@ Sources:
 
 ### Introduction - Versions - Red Hat OpenStack Platform
 
-Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life (LL) releases were introduced with RHOSP 10 where it will receive up to 5 years of support. Every 3rd release of RHOSP will have LL support. Rolling major upgrades are supported from one version to the next sequential version, starting with RHOSP 8.
+Red Hat provides most of the development to the core OpenStack services. The RPM Distribution of OpenStack (RDO) project is a community project lead by Red Hat to use the latest upstream code from OpenStack and package it to work and be distributable on Red Hat Enterprise Linux and Fedora based operating systems. [2]
+
+The Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that takes the upstream OpenStack source code and makes it enterprise quality by hardening the security and increasing it's stability. Normal releases are supported for 3 years. Long-life (LL) releases were introduced with RHOSP 10 where it will receive up to 5 years of support. Every 3rd release of RHOSP will have LL support. Rolling major upgrades are supported from one version to the next sequential version, starting with RHOSP 8.
 
 Releases:
 
 * RHOSP 3 (Grizzly)
+    * EOL: 2014-07-31
 * RHOSP 4 (Havana)
+    * EOL: 2015-06-19
 * RHOSP 5 (Icehouse)
     * EOL: 2017-06-30
 * RHOSP 6 (Juno)
@@ -150,14 +154,21 @@ Releases:
     * EOL: 2019-04-20
 * RHOSP 9 (Mitaka)
     * EOL: 2017-08-24
-* RHOSP 10 LL (Newton)
+* **RHOSP 10 LL (Newton)**
     * EOL: 2021-12-16
 * RHOSP 11 (Ocata)
     * EOL: 2018-05-18
+* RHOSP 12 (Pike)
+    * EOL: 2018-12-13
 
 [1]
 
-Red Hat provides most of the development to the core OpenStack services. The RPM Distribution of OpenStack (RDO) project is a community project lead by Red Hat to use the latest upstream code from OpenStack and package it to work and be distributable on Red Hat Enterprise Linux based systems. [2]
+RHOSP 10 supports these 4 hypervisors [4]:
+
+* Kernel-based Virtual Machine (QEMU with KVM acceleration)
+* Red Hat Enterprise Virtualization (RHEV)
+* Microsoft Hyper-V
+* VMWare ESX and ESXi
 
 The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/rhosp-release" file.
 
@@ -179,8 +190,9 @@ Release     : 8.el7ost
 Sources:
 
 1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 12, 2017. https://access.redhat.com/support/policy/updates/openstack/platform
-2. "Frequently Asked Questions." RDO Project. Accessed November 15, 2017. https://www.rdoproject.org/rdo/faq/
+2. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 3. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
+4. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-10-Director_Installation_and_Usage-en-US.pdf
 
 
 ## Introduction - Services
@@ -997,12 +1009,12 @@ TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a sm
 
 Source:
 
-1. "tripleo-quickstart." TripleO Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
+1. "tripleo-quickstart." TripleO-Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
 
 
 ### Automation - TripleO - Quick
 
-The "TripleO Quickstart" project was created to use Ansible to automate deploying TripleO as fast and easily as possible. [1]
+The "TripleO-Quickstart" project was created to use Ansible to automate deploying TripleO as fast and easily as possible. [1]
 
 Source:
 
@@ -1011,9 +1023,9 @@ Source:
 
 #### Automation - TripleO - Quick - Install
 
-TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space. [3] A Quickstart deployment has to use a baremetal hypervisor. Deploying TripleO within a nested virtual machine is not supported. [4]
+TripleO-Quickstart recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [3] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [4]
 
-* Download tripleo-quickstart script or clone the entire repository from GitHub.
+* Download the tripleo-quickstart script or clone the entire repository from GitHub.
 ```
 $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
 ```
@@ -1028,7 +1040,14 @@ $ cd tripleo-quickstart
 $ bash quickstart.sh --install-deps
 ```
 
-TripleO can now be installed automatically with the default setup of 3 virtual machines. This will be created to meet the minimum TripleO cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) compute node. [2] . Otherwise, there is a manual process for more customization during the installation.
+TripleO can now be installed automatically with the default setup of 3 virtual machines. This will be created to meet the minimum TripleO cloud requirements: (1) an Undercloud to deploy a (2) controller and (3) compute node. [2] . Otherwise, a different node configuration from "config/nodes/" can be specified or created.
+
+Common node variables:
+
+* {block|ceph|compute|control|default|objectstorage|undercloud}_{memory|vcpu} = Define the amount of processor cores or RAM (in megabytes) to allocate to the respective virtual machine type. Use "default" to apply to all nodes that are not explicitly defined.
+
+Further customizations should be configured now before deploying the TripleO environment. Refer to the [Undercloud Deploy role's documentation](https://github.com/openstack/tripleo-quickstart-extras/blob/master/roles/undercloud-deploy/README.md) on all of the Ansible variables for the Undercloud. Add any override variables to a YAML file and then add the arguments `-e @<VARIABLE_FILE>.yaml` to the "quickstart.sh" commands.
+
 
 `1.` Automatic
 
@@ -1055,29 +1074,29 @@ $ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
 
 ---
 
-* Setup the virtual machines for the Undercloud and Overcloud.
+* Setup the Undercloud virtual machine.
 ```
-$ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all -p quickstart.yml <REMOTE_HYPERVISOR_IP>
+$ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
 ```
 
 * Install the Undercloud services.
 ```
-$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory -p quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
 ```
 
-* Prepare the Overcloud virtual machines.
+* Setup the Overcloud virtual machines.
 ```
-$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory -p quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
 ```
 
 * Install the Overcloud services.
 ```
-$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory -p quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
 ```
 
 * Validate the installation.
 ```
-$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  -p quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
+$ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 ```
 
 [5]
@@ -1088,7 +1107,7 @@ Sources:
 2. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
 3. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
 4. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
-5. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed November 7, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
+5. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
 
 
 ### Automation - TripleO - Full
@@ -1096,41 +1115,63 @@ Sources:
 
 #### Automation - TripleO - Full - Undercloud
 
-* **Hypervisor**
-    * Install the EPEL for extra packages that will be required.
+The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine.
+
+* **Hypervisor** (optional)
+    * Install the RDO Trunk / Delorean repositories.
 ```
-# yum install epel-release
+$ sudo curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
+$ sudo curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
 ```
+
     * Install the Undercloud environment deployment tools.
 ```
-# yum install instack-undercloud
+$ sudo yum install instack-undercloud
 ```
     * Deploy a new virtual machine to be used for the Undercloud.
 ```
-# instack–virt–setup
+$ instack–virt–setup
 ```
-    * Log into the virtual machine with the provided credentials from the previous command.
+    * Alternatively, use the TripleO-Quickstart project to deploy the Undercloud virtual machine. Leave the overcloud_nodes variable blank to only deploy the Undercloud. Otherwise, provide a number of virtual machines that should be created for use in the Overcloud.
 ```
-# ssh root@<VIRTUAL_MACHINE_IP>
+$ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+$ bash quickstart.sh --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
+```
+    * Log into the virtual machine once TripleO-Quickstart has completed setting up the environment.
+```
+$ ssh -F ~/.quickstart/ssh.config.ansible undercloud
 ```
 
-* **Undercloud virtual machine**
-    * Install the stable Delorean, sometimes also refered to as RDO Trunk, repository and it's related dependency repository.
+* **Undercloud**
+    * It is recommended to create a user named "stack" with sudo privileges to manage the Undercloud.
 ```
-# curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
+# useradd stack
+# passwd stack
+# echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack
+# chmod 0440 /etc/sudoers.d/stack
+# su - stack
 ```
-```
-# curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
-```
+    * Install the RDO Trunk repositories.
     * Install TripleO.
 ```
 # yum install python-tripleoclient
 ```
-    * It is recommended to create a user named "stack" with sudo privileges to manage the Undercloud.
+
     * Copy the sample configuration to use as a base template.
 ```
 $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 ```
+    * Common Undercloud configuration options:
+        * enable_* = Enable or disable non-essential OpenStack services on the Undercloud.
+        * dhcp_{start|end} = The range of IP addresses to temporarily use for provisioning Overcloud nodes. This range is a limiting factor in how many nodes can be provisioned at once.
+        * local_interface = The network interface to use for provisioning new Overcloud nodes. This will be configured as an Open vSwitch bridge.
+        * local_mtu = The MTU size to use for the local interface.
+        * network_cidr = The CIDR range of IP addresses to temporarily use for provisioning.
+        * masquerade_network = The network CIDR that will be used for masquerading external network connections.
+        * network_gateway = The default gateway to use for external connectivity to the Internet during provisioning.
+        * undercloud_admin_vip = The IP address to listen on for admin API endpoints.
+        * undercloud_hostname = The fully qualified hostname to use for the Undercloud.
+        * undercloud_public_vip = The IP address to listen on for public API endpoints.
     * At the very least the "local_ip" and "local_interface" variables need to be defined in the "DEFAULT" section.
     * Deploy an all-in-one Undercloud on the virtual machine.
 ```
@@ -1312,7 +1353,7 @@ In Newton, the Keystone v2.0 API has been completely deprecated. It will be remo
 
 Sources:
 
-1. "Newton Series Release Notes." Accessed February 18, 2017. http://docs.openstack.org/releasenotes/keystone/newton.html
+1. "Newton Series Release Notes." OpenStack Documentation. Accessed February 18, 2017. http://docs.openstack.org/releasenotes/keystone/newton.html
 2. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 
 
