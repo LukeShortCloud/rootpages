@@ -1,17 +1,14 @@
 # Virtualization
 
+* [libvirt](#libvirt)
 * [Hardware Virtualization](#hardware-virtualization)
     * [KVM](#hardware-virtualization---kvm)
         * [Performance Tuning](#hardware-virtualization---kvm---performance-tuning)
         * [Nested Virtualization](#hardware-virtualization---kvm---nested-virtualization)
         * [GPU Passthrough](#hardware-virtualization---kvm---gpu-passthrough)
-        * virt-manager
-        * oVirt
     * [Xen](#hardware-virtualization---xen)
         * [Nested Virtualization](#hardware-virtualization---xen---nested-virtualization)
-        * XenServer
 * [Software Virtualization](#software-virtualization)
-    * QEMU
     * [Containers](#software-virtualization---containers)
         * [docker](#software-virtualization---containers---docker)
             * [Networking](#software-virtualization---containers---docker---networking)
@@ -24,6 +21,19 @@
             * [Provisioning](#orchestration---vagrant---vagrantfile---provisioning)
             * [Multiple Machines](#orchestration---vagrant---vagrantfile---multiple-machines)
     * Terraform
+* GUI
+    * oVirt
+    * virt-manager
+    * XenServer
+
+
+# libvirt
+
+"libvirt" provides a framework and API for accessing and controlling different virtualization hypervisors. This Root Pages' guide assumes that libvirt is used for managing Quick Emulator (QEMU) virtual machines. [1]
+
+Source:
+
+1. "libvirt Introduction." libvirt VIRTUALIZATION API. Accessed December 22, 2017. https://libvirt.org/index.html
 
 
 # Hardware Virtualization
@@ -68,20 +78,23 @@ Sources:
 
 ## Hardware Virtualization - KVM
 
-The "Kernel-based Virtual Machine (KVM)" is the default kernel module for handling hardware virtualization in Linux since the 2.6.20 kernel. [1]
+The "Kernel-based Virtual Machine (KVM)" is the default kernel module for handling hardware virtualization in Linux since the 2.6.20 kernel. [1] It is used to accelerate the QEMU hypervisor. [2]
 
-Source:
+Sources:
 
 1. "Kernel Virtual Machine." KVM. Accessed December 18, 2016. http://www.linux-kvm.org/page/Main_Page
+2. "KVM vs QEMU vs Libvirt." The Geeky Way. February 14, 2014. Accessed December 22, 2017. http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/
 
 
 ### Hardware Virtualization - KVM - Performance Tuning
 
 Configuration details for virtual machines can be modified to provide better performance. For processors, it is recommended to use the same CPU settings so that all of it's features are available to the guest. [1]
 
+QEMU:
 ```
 # qemu -cpu host ...
 ```
+libvirt:
 ```
 # virsh edit <VIRTUAL_MACHINE>
 <cpu mode='host-passthrough'>
@@ -89,9 +102,11 @@ Configuration details for virtual machines can be modified to provide better per
 
 The network driver that provides the best performance is "virtio." Some guests may not support this feature and require additional drivers.
 
+QEMU:
 ```
 # qemu -net nic,model=virtio ...
 ```
+libvirt:
 ```
 # virsh edit <VIRTUAL_MACHINE>
 <interface type='network'>
@@ -101,12 +116,15 @@ The network driver that provides the best performance is "virtio." Some guests m
 ```
 
 Using a tap device (that will be assigned to an existing interface) or a bridge will speed up network connections.
+
+QEMU:
 ```
 ... -net tap,ifname=<NETWORK_DEVICE> ...
 ```
 ```
 ... -net bridge,br=<NETWORK_BRIDGE_DEVICE> ...
 ```
+libvirt:
 ```
 # virsh edit <VIRTUAL_MACHINE>
     <interface type='bridge'>
@@ -117,14 +135,19 @@ Using a tap device (that will be assigned to an existing interface) or a bridge 
 ```
 
 If possible, PCI passthrough provides the best performance as there is no virtualization overhead.
+
+QEMU:
 ```
 # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 ```
 
 Raw disk partitions have the greatest speeds with the "virtio" driver and cache disabled.
+
+QEMU:
 ```
 # qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
 ```
+libvirt:
 ```
 # virsh edit <VIRTUAL_MACHINE>
 <disk type='...' device='disk'>
@@ -266,27 +289,28 @@ Sources:
 
 ## Hardware Virtualization - Xen
 
-Xen is a free and open source software published under the GNU General Public License (GPL). It was originally designed to be a competitor of VMWare. It is currently owned by Citrix and offers a paid support package for it's virtual machine hypervisor/manager XenServer. [1]
+Xen is a free and open source software hypervisor under the GNU General Public License (GPL). It was originally designed to be a competitor of VMWare. It is currently owned by Citrix and offers a paid support package for it's virtual machine hypervisor/manager XenServer. [1] By itself it can be used as a basic hypervisor, similar to QEMU. It can also be used with QEMU to provide accelerated hardware virtualization.
 
 Source:
 
 1. "Xen Definition." TechTarget. March, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Xen
 
+
 ### Hardware Virtualization - Xen - Nested Virtualization
 
-Since Xen 4.4, nested virtualization has been supported by default. It needs to be configured in the guest virtual machine using "nestedhvm." The "hap" feature also needs to be enabled for better performance and stability. Lastly, the CPU's ID needs to be modified to hide the original virtualization ID.
+Since Xen 4.4, experimental support was added for nested virtualization. A few settings need to be added to the Xen virtual machine's file, typically located in the "/etc/xen/" directory. Turn "nestedhvm" on for nested virtualization support. The "hap" feature also needs to be enabled for faster performance. Lastly, the CPU's ID needs to be modified to hide the original virtualization ID.
 
 ```
-nestedhvm=1
-hap=1
-cpuid = ['0x1:ecx=0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']
+    nestedhvm=1
+    hap=1
+    cpuid = ['0x1:ecx=0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']
 ```
 
 [1]
 
 Source:
 
-1. "Nested Virtualization in Xen." Xen Project Wiki. December 13, 2016. Accessed December 18, 2016. https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen
+1. "Nested Virtualization in Xen." Xen Project Wiki. November 2, 2017. Accessed December 22, 2017. https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen
 
 
 # Software Virtualization
@@ -380,7 +404,7 @@ RHEL install [2] requires the Extra Packages for Enterprise Linux (EPEL) reposit
 # yum install lxc lxc-templates libvirt
 ```
 
-On RHEL family systems the `lxcbr0` interface is not created or used. Alternatively, the Libvirt interface `virbr0` should be used.
+On RHEL family systems the `lxcbr0` interface is not created or used. Alternatively, the libvirt interface `virbr0` should be used.
 
 ```
 # vim /etc/lxc/default.conf
@@ -537,7 +561,7 @@ Source:
 
 1. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
 
-##### Orchestration - Vagrant - Vagrantfile - Networks - Libvirt
+##### Orchestration - Vagrant - Vagrantfile - Networks - libvirt
 
 The options and syntax for public networks with the "libvirt" provider are slightly different.
 
