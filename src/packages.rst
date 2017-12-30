@@ -44,13 +44,13 @@ Packages
 -  Snap
 
 DEB
-===
+---
 
 DEB - Repositories
-------------------
+~~~~~~~~~~~~~~~~~~
 
 DEB - Repositories - Adding a Repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Debian repositories can be managed by editing the primary file
 ``/etc/apt/sources.list`` or by adding new files to the
@@ -99,7 +99,7 @@ Source:
    https://wiki.debian.org/SourcesList
 
 DEB - Packaging
----------------
+~~~~~~~~~~~~~~~
 
 Official guides for building Debian packages:
 
@@ -224,7 +224,7 @@ Sources:
    2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
 
 DEB - Packaging - Macros
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Many macros exist for helping to build and install Debian packages.
 
@@ -250,16 +250,16 @@ Source:
    https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
 
 RPM
-===
+---
 
 RPM - Repositories
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Repositories (sometimes called "repos") are a central location where
 packages can easily be found and installed from.
 
 RPM - Repositories - Adding a Repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 On Red Hat based systems, the repositories are all defined as text files
 with the ".repo" extension in this directory.
@@ -317,7 +317,7 @@ Sources:
    2016. http://linux.die.net/man/5/yum.conf
 
 RPM - Repositories - Creating a Repository
-------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Any directory can be used as a repository to host RPMs. The standard
 naming convention used for RHEL based operating systems is
@@ -363,7 +363,7 @@ Sources:
    http://createrepo.baseurl.org/
 
 RPM - Repositories - Common Repositories
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------+------+------+------+------+
 | Repo | Supp | Offi | Desc | Repo |
@@ -538,7 +538,7 @@ Sources:
    https://fedoraproject.org/wiki/Kernel\_Vanilla\_Repositories
 
 RPM - Packaging
----------------
+~~~~~~~~~~~~~~~
 
 An RPM is built from a "spec" file. This modified shell script contains
 all of the information about the program and on how to install and
@@ -623,7 +623,7 @@ Source:
    http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
 
 RPM - Packaging - Macros
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Macros are variables in the RPM spec file that are expanded upon
 compilation of the RPM.
@@ -638,7 +638,7 @@ Source:
 1. https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
 
 RPM - Packaging - Macros - Directories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''
 
 During the creation of an RPM there are a few important directories that
 can and will be refereneced.
@@ -667,7 +667,7 @@ Source:
    https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
 
 RPM - Packaging - Users and Groups
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating a user or group can be done one of two ways.
 
@@ -716,7 +716,7 @@ Source:
    https://fedoraproject.org/wiki/Packaging:UsersAndGroups
 
 RPM - Packaging - Patches
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Some applications may require patches to work properly. Pathces should
 be stored in the ``SOURCES`` directories. At the beginning of the spec
@@ -789,10 +789,10 @@ Source:
    http://cromwell-intl.com/linux/rpm-patch.html
 
 PKGBUILD
-========
+--------
 
 PKGBUILD - Packaging
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Arch Linux packages are design to be simple and easy to create. A
 PKGBUILD file is compressed with a software's contents into a XZ
@@ -878,7 +878,7 @@ Sources:
    https://www.archlinux.org/pacman/PKGBUILD.5.html
 
 Flatpak
-=======
+-------
 
 Flatpak is a sandbox solution to providing a universal application
 packaging. It was first started by an employee from Red Hat in their

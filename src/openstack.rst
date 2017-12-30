@@ -147,14 +147,14 @@ OpenStack Ocata
 -  `Performance <#performance>`__
 
 Introduction
-============
+------------
 
 This guide is aimed to help guide Cloud Administrators through
 deploying, managing, and upgrading OpenStack. Most topics mentioned in
 this guide can be applied to similar environments and/or versions.
 
 Introduction - Versions
-=======================
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Each OpenStack release starts with a letter, chronologically starting
 with A. These are usually named after the city where one of the recent
@@ -242,7 +242,7 @@ Sources:
    https://governance.openstack.org/tc/goals/pike/index.html
 
 Introduction - Versions - Red Hat OpenStack Platform
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Red Hat provides most of the development to the core OpenStack services.
 The RPM Distribution of OpenStack (RDO) project is a community project
@@ -352,7 +352,7 @@ Sources:
    https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
 
 Introduction - Services
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack has a large range of services that manage different different
 components in a modular way.
@@ -400,14 +400,14 @@ Source:
    https://www.openstack.org/software/project-navigator/
 
 Automation
-==========
+----------
 
 It is possible to easily install OpenStack as an all-in-one (AIO) server
 or onto a cluster of servers. Various tools exist for automating the
 deployment and management of OpenStack.
 
 Automation - Packstack
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Supported operating system: RHEL 7, Fedora
 
@@ -416,7 +416,7 @@ providing small and simple demonstrations of OpenStack. This tool does
 not handle any upgrades of the OpenStack services.
 
 Automation - Packstack - Install
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, install the required repositories for OpenStack.
 
@@ -534,7 +534,7 @@ Sources:
    https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 
 Automation - Packstack - Answer File
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The "answer" configuration file defines how OpenStack should be setup
 and installed. Using a answer file can provide a more customizable
@@ -580,7 +580,7 @@ Source:
    https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 
 Automation - Packstack - Uninstall
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For uninstalling everything that is installed by Packstack, run this
 Bash script on all of the OpenStack nodes [1]. Use at your own risk.
@@ -626,7 +626,7 @@ Source:
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux\_OpenStack\_Platform/6/html/Deploying\_OpenStack\_Proof\_of\_Concept\_Environments/chap-Removing\_Packstack\_Deployments.html
 
 Automation - OpenStack-Ansible
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42,
 SUSE Linux Enterprise 12
@@ -653,10 +653,10 @@ Source:
    2017. https://github.com/openstack/openstack-ansible
 
 Automation - OpenStack-Ansible - Quick
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Automation - OpenStack-Ansible - Quick - Install
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''
 
 Minimum requirements:
 
@@ -738,7 +738,7 @@ Source:
    http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 Automation - OpenStack-Ansible - Quick - Operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''''''''''''''
 
 A new node can be added at any time to an existing all-in-one
 deployment. Copy the configuration file for an all-in-one instance.
@@ -777,7 +777,7 @@ Source:
    http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 Automation - OpenStack-Ansible - Quick - Uninstall
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''''
 
 This Bash script can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
@@ -824,7 +824,7 @@ Source:
    http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
 
 Automation - OpenStack-Ansible - Full
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Minimum requirements:
 
@@ -872,7 +872,7 @@ Source:
    https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 Automation - OpenStack-Ansible - Full - Configurations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 View the
 ``/etc/openstack_deploy/openstack_user_config.yml.prod.example`` for a
@@ -990,7 +990,7 @@ Source:
    https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
 
 Automation - OpenStack-Ansible - Full - Configurations - Nova
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 The default variables for Nova are listed at
 https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/.
@@ -1013,7 +1013,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/
 
 Automation - OpenStack-Ansible - Full - Configurations - Ceph
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Ceph can be customized to be deployed differently from the default
 configuration or to use an existing Ceph cluster.
@@ -1101,10 +1101,10 @@ Sources:
    https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
 
 Automation - OpenStack-Ansible - Full - Operations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Automation - OpenStack-Ansible - Full - Operations - OpenStack Utilities
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Once OpenStack-Ansible is installed, it can be used immediately. The
 primary container to use is the ``utility`` container.
@@ -1137,7 +1137,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Operations - Ansible Inventory
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Ansible's inventory contains all of the connection and variable details
 about the hosts (in this case, LXC containers) and which group they are
@@ -1183,7 +1183,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Operations - Add a Infrastructure Container
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``infra_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the inventory
@@ -1209,7 +1209,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Operations - Add a Compute Container
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
@@ -1231,7 +1231,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Operations - Remove a Compute Container
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Stop the services on the compute container and then use the
 ``openstack-ansible-ops`` project's Playbook ``remote_compute_node.yml``
@@ -1259,10 +1259,10 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Upgrades
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''
 
 Automation - OpenStack-Ansible - Full - Upgrades - Minor
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 This is for upgrading OpenStack from one minor version to another in the
 same major release. An example would be going from 15.0.0 to 15.1.1.
@@ -1324,7 +1324,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 Automation - OpenStack-Ansible - Full - Upgrades - Major
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 OpenStack-Ansible has scripts capable of fully upgrading OpenStack from
 one major release to the next. It is recommended to do a manual upgrade
@@ -1362,7 +1362,7 @@ Source:
    https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
 
 Automation - TripleO
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Supported operating systems: RHEL 7, Fedora >= 22
 
@@ -1378,7 +1378,7 @@ Source:
    https://github.com/openstack/tripleo-quickstart
 
 Automation - TripleO - Quick
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The "TripleO-Quickstart" project was created to use Ansible to automate
 deploying TripleO as fast and easily as possible. [1]
@@ -1389,7 +1389,7 @@ Source:
    https://www.rdoproject.org/tripleo/
 
 Automation - TripleO - Quick - Install
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''
 
 TripleO-Quickstart recommends a minimum of 32GB RAM and 120GB of disk
 space when deploying with the default settings. [3] This deployment has
@@ -1528,10 +1528,10 @@ Sources:
    https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
 
 Automation - TripleO - Full
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Automation - TripleO - Full - Undercloud
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''
 
 The Undercloud can be installed onto a bare metal server or a virtual
 machine. Follow the "hypervisor" section to assist with automatically
@@ -1656,7 +1656,7 @@ Source:
    12, 2017. https://docs.openstack.org/tripleo-docs/latest/
 
 Automation - TripleO - Full - Overcloud
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''
 
 -  Download the prebuilt Overcloud image files from
    https://images.rdoproject.org/
@@ -1722,19 +1722,19 @@ Source:
    https://docs.openstack.org/tripleo-docs/latest/install/basic\_deployment/basic\_deployment\_cli.html
 
 Configurations
-==============
+--------------
 
 This section will focus on important settings for each service's
 configuration files.
 
 Configurations - Common
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 These are general configuration options that apply to most OpenStack
 configuration files.
 
 Configurations - Common - Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Different database backends can be used by the API services on the
 controller nodes.
@@ -1786,7 +1786,7 @@ Sources:
    https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 
 Configurations - Common - Messaging
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For high availability and scalability, servers should be configured with
 a messaging agent. This allows a client's request to correctly be
@@ -1802,7 +1802,6 @@ naming a virtual host.
     transport_url = <TRANSPORT>://<USER1>:<PASS1>@<HOST1>:<PORT1>,<USER2>:<PASS2>@<HOST2>:<PORT2>/<VIRTUAL_HOST>
 
 Scenario #1 - RabbitMQ
-^^^^^^^^^^^^^^^^^^^^^^
 
 On the controller nodes, RabbitMQ needs to be installed. Then a user
 must be created with full privileges.
@@ -1823,7 +1822,6 @@ use ``/``.
 [1]
 
 Scenario #2 - ZeroMQ
-^^^^^^^^^^^^^^^^^^^^
 
 This provides the best performance and stability. Scalability becomes a
 concern only when getting into hundreds of nodes. Instead of relying on
@@ -1868,10 +1866,10 @@ Sources:
    https://docs.openstack.org/developer/oslo.messaging/zmq\_driver.html
 
 Configurations - Keystone
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configurations - Keystone - API v3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In Newton, the Keystone v2.0 API has been completely deprecated. It will
 be removed entirely from OpenStack in the ``Queens`` release. [1] It is
@@ -1916,13 +1914,12 @@ Sources:
    https://adam.younglogic.com/2015/05/rdo-v3-only/
 
 Configurations - Keystone - Token Provider
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The token provider is used to create and delete tokens for
 authentication. Different providers can be used as the backend.
 
 Scenario #1 - UUID (default)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/keystone/keystone.conf
 
@@ -1931,7 +1928,6 @@ Scenario #1 - UUID (default)
       -  provider = uuid
 
 Scenario #2 - PKI
-^^^^^^^^^^^^^^^^^
 
 PKI tokens have been removed since the Ocata release. [3]
 
@@ -1949,7 +1945,6 @@ PKI tokens have been removed since the Ocata release. [3]
        # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
 
 Scenario #3 - Fernet (fastest token creation)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A public and private key wil need to be created for Fernet and the
 related Credential authentication.
@@ -2005,7 +2000,7 @@ Sources:
    https://docs.openstack.org/ocata/install-guide-rdo/keystone-install.html
 
 Configurations - Nova
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 -  /etc/nova/nova.conf
 
@@ -2042,14 +2037,13 @@ Configurations - Nova
             "nova."
 
 Configurations - Nova - Hypervisors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nova supports a wide range of virtualization technologies. Full hardware
 virtualization, paravirtualization, or containers can be used. Even
 Windows' Hyper-V is supported. [1]
 
 Scenario #1 - KVM
-^^^^^^^^^^^^^^^^^
 
 -  /etc/nova/nova.conf
 
@@ -2064,7 +2058,6 @@ Scenario #1 - KVM
 [2]
 
 Scenario #2 - Xen
-^^^^^^^^^^^^^^^^^
 
 -  /etc/nova/nova.conf
 
@@ -2079,7 +2072,6 @@ Scenario #2 - Xen
 [3]
 
 Scenario #3 - LXC
-^^^^^^^^^^^^^^^^^
 
 -  /etc/nova/nova.conf
 
@@ -2109,7 +2101,7 @@ Sources:
    https://docs.openstack.org/ocata/config-reference/compute/hypervisor-lxc.html
 
 Configurations - Nova - CPU Pinning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  Verify that the processor(s) has hardware support for non-uniform
    memory access (NUMA). If it does, NUMA may still need to be turned on
@@ -2196,7 +2188,7 @@ Sources:
    https://www.suse.com/documentation/suse-openstack-cloud-7/pdfdoc/book\_cloud\_admin/book\_cloud\_admin.pdf
 
 Configurations - Nova - Ceph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nova can be configured to use Ceph as the storage provider for the
 instance. This works with any QEMU based hypervisor.
@@ -2220,7 +2212,7 @@ Source:
    http://docs.ceph.com/docs/master/rbd/rbd-openstack
 
 Configurations - Nova - Nested Virtualization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Nested virtualization allows virtual machines to run virtual machines
 inside of them.
@@ -2260,10 +2252,10 @@ Source:
    https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
 
 Configurations - Neutron
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configurations - Neutron - Network Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In OpenStack, there are two common scenarios for networks: "provider"
 and "self-service."
@@ -2282,14 +2274,11 @@ Source:
    28, 2017. Accessed November 6, 2017.
    https://docs.openstack.org/nova/pike/install/overview.html
 
-Configurations - Neutron - Network Types - Provider Networks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Configurations - Neutron - Network Types - Self-Service Networks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuraitons - Neutron - Network Types - Self-Service Networks
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Configurations - Neutron - Network Types - Self-Service Networks - Open vSwitch
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 One device is required, but it is recommended to separate traffic onto
 two different network interfaces. There is ``br-vlan`` (sometimes also
@@ -2384,7 +2373,7 @@ Sources:
    https://docs.openstack.org/ocata/install-guide-rdo/neutron.html
 
 Configurations - Neutron - DNS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 By default, Neutron does not provide any DNS resolvers. This means that
 DNS will not work. It is possible to either provide a default list of
@@ -2392,7 +2381,6 @@ name servers or configure Neutron to refer to the relevant
 /etc/resolv.conf file on the server.
 
 Scenario #1 - Define default resolvers (recommended)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/dhcp\_agent.ini
 
@@ -2401,12 +2389,10 @@ Scenario #1 - Define default resolvers (recommended)
       -  dnsmasq\_dns\_servers = 8.8.8.8,8.8.4.4
 
 Scenario #2 - Leave resolvers to be configured by the subnet details
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  Nothing needs to be configured. This is the default setting.
 
 Scenario #3 - Do not provide resolvers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/dhcp\_agent.ini
 
@@ -2423,7 +2409,7 @@ Source:
    https://docs.openstack.org/ocata/networking-guide/config-dns-res.html
 
 Configurations - Neutron - Metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The metadata service provides useful information about the instance from
 the IP address 169.254.169.254/32. This service is also used to
@@ -2455,7 +2441,6 @@ delivering/receiving requests.
       -  metadata\_proxy\_shared\_secret = ``<SECRET_KEY>``
 
 Scenario #1 - DHCP Namespace (recommended for DVR)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/dhcp\_agent.ini
 
@@ -2472,7 +2457,6 @@ Scenario #1 - DHCP Namespace (recommended for DVR)
       -  enable\_metadata\_proxy = False
 
 Scenario #2 - Router Namespace
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/dhcp\_agent.ini
 
@@ -2497,7 +2481,7 @@ Source:
    https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
 
 Configurations - Neutron - Load-Balancing-as-a-Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Load-Balancing-as-a-Service version 2 (LBaaS v2) has been stable since
 Liberty. It can be configured with either the HAProxy or Octavia
@@ -2527,7 +2511,6 @@ back-end. LBaaS v1 has been removed since the Newton release.
          -  This is for Neutron with the Linux Bridge backend only.
 
 Scenario #1 - HAProxy (recommended for it's maturity)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/neutron\_lbaas.conf
 
@@ -2551,7 +2534,6 @@ Scenario #1 - HAProxy (recommended for it's maturity)
             ``haproxy``.
 
 Scenario #2 - Octavia
-^^^^^^^^^^^^^^^^^^^^^
 
 -  /etc/neutron/neutron\_lbaas.conf
 
@@ -2569,7 +2551,7 @@ Source:
    http://docs.openstack.org/draft/networking-guide/config-lbaas.html
 
 Configurations - Neutron - Quality of Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Quality of Service (QoS) plugin can be used to rate limit the amount
 of bandwidth that is allowed through a network port.
@@ -2611,7 +2593,7 @@ Source:
    http://docs.openstack.org/draft/networking-guide/config-qos.html
 
 Configurations - Neutron - Distributed Virtual Routing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Distributed virtual routing (DVR) is a concept that involves deploying
 routers to both the compute and network nodes to spread out resource
@@ -2660,7 +2642,7 @@ Source:
    7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
 
 Configurations - Neutron - High Availability
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 High availability (HA) in Neutron allows for routers to failover to
 another duplicate router if one fails or is no longer present. All new
@@ -2683,7 +2665,7 @@ Source:
    https://docs.openstack.org/ocata/networking-guide/config-dvr-ha-snat.html
 
 Configurations - Ceph
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 For Cinder and/or Glance to work with Ceph, the Ceph configuration needs
 to exist on each controller and compute node. This can be copied over
@@ -2777,12 +2759,12 @@ Sources:
    https://docs.openstack.org/developer/glance/configuring.html
 
 Configurations - Cinder
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The Cinder service provides block devices for instances.
 
 Configurations - Cinder - Ceph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ceph has become the most popular backend to Cinder due to it's high
 availability and scalability.
@@ -2848,7 +2830,7 @@ Source:
    http://docs.ceph.com/docs/master/rbd/rbd-openstack
 
 Configurations - Cinder - Encryption
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cinder volumes support the Linux LUKS encryption. The only requirement
 is that the compute nodes have the "cryptsetup" package installed. [1]
@@ -2871,12 +2853,12 @@ Source:
    https://docs.openstack.org/ocata/config-reference/block-storage/volume-encryption.html
 
 Configurations - Glance
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Glance is used to store and manage images for instance deployment.
 
 Configurations - Glance - Ceph
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ceph can be used to store images.
 
@@ -2913,7 +2895,7 @@ Source:
    http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 
 Neutron Troubleshooting
-=======================
+-----------------------
 
 Neutron is one of the most complicated services offered by OpenStack.
 Due to it's wide range of configurations and technologies that it
@@ -2922,10 +2904,10 @@ to clearly layout common techniques to track down and fix issues with
 Neutron.
 
 Neutron Troubleshooting - Open vSwitch
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Neutron Troubleshooting - Open vSwitch - Floating IPs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Floating IPs can be manually added to the namespace. Depending on the
 environment, these rules either need to be added to the
@@ -2977,7 +2959,7 @@ Sources:
    https://www.rdoproject.org/networking/networking-in-too-much-detail/
 
 Upgrades
-========
+--------
 
 Upgrading a production OpenStack environment requires a lot of planning.
 It is recommended to test an upgrade of the environment virtually before
@@ -3007,7 +2989,7 @@ Source:
    http://docs.openstack.org/ops-guide/ops-upgrades.html
 
 Command Line Interface Utilities
-================================
+--------------------------------
 
 The OpenStack command line interface (CLI) resources used to be handled
 by separate commands. These have all been modified and are managed by
@@ -3098,7 +3080,7 @@ Source:
    http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
 
 Orchestration
-=============
+-------------
 
 Automating resource management can be accomplished in a few ways.
 OpenStack provides Orchestration as a Service (OaaS) via Heat. It is
@@ -3106,14 +3088,14 @@ also possible to use Ansible or Vagrant to automate creating, reading,
 updating, and deleting resources in an OpenStack cloud.
 
 Orchestration - Heat
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Heat is used to orchestrate the deployment of multiple OpenStack
 components at once. It can also install and configure software on newly
 built instances.
 
 Orchestration - Heat - Resources
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Heat templates use YAML formatting and are made of multiple resources.
 All of the different resource types are listed here:
@@ -3288,7 +3270,7 @@ Source:
    https://docs.openstack.org/heat/latest/template\_guide/hot\_spec.html
 
 Orchestration - Heat - Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Parameters allow users to input custom variables for Heat templates.
 
@@ -3353,7 +3335,7 @@ Source:
    http://docs.openstack.org/developer/heat/template\_guide/hot\_spec.html
 
 Orchestration - Vagrant
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Vagrant is a tool to automate the deployment of virtual machines. A
 "Vagrantfile" file is used to initalize the instance. An example is
@@ -3399,10 +3381,10 @@ Source:
    https://github.com/ggiamarchi/vagrant-openstack-provider
 
 Testing
-=======
+-------
 
 Testing - Tempest
------------------
+~~~~~~~~~~~~~~~~~
 
 Tempest is used to query all of the different APIs in use. This helps to
 validate the functionality of OpenStack. This software is a rolling
@@ -3480,7 +3462,7 @@ Source:
    http://docs.openstack.org/developer/tempest/configuration.html
 
 Performance
-===========
+-----------
 
 A few general tips for getting the fastest OpenStack performance.
 

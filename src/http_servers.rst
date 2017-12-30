@@ -19,7 +19,7 @@ HTTP Servers
 -  `OpenSSL <#openssl>`__
 
 Apache 2.4
-==========
+----------
 
 The Apache HTTP Server Project is designed to provide a versatile open
 source HTTP and HTTPS web server. It is one of the top used web servers.
@@ -31,7 +31,7 @@ Source:
    Project. Accessed October 1, 2016. https://httpd.apache.org/
 
 Apache - Configuration
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 There is generally one primary Apache configuration file that then
 includes other possible configuration files.
@@ -108,7 +108,7 @@ Source:
    http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html
 
 Apache - Virtual Hosts
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 A virtual host file is part of the configuration that is required for
 Apache to load a domain.
@@ -153,7 +153,7 @@ Source:
    https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/
 
 Apache - Files, Directories, and Locations
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Different settings can be used on items based on if a matched file,
 directory, or location is found. Regular expressions can be used to
@@ -233,7 +233,7 @@ Sources:
    2016. http://httpd.apache.org/docs/2.4/mod/core.html#options
 
 Apache - Authentication
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Locations can be secured by a username and password. Users can also be
 assigned to groups.
@@ -298,7 +298,7 @@ Source:
    https://httpd.apache.org/docs/2.4/howto/auth.html
 
 Apache - CGI
-------------
+~~~~~~~~~~~~
 
 The common gateway interface (CGI) is a method of the web server
 executing a script and then sending the results to a web browser. The
@@ -352,7 +352,7 @@ Source:
    https://httpd.apache.org/docs/2.4/howto/cgi.html
 
 Apache - SELinux
-----------------
+~~~~~~~~~~~~~~~~
 
 Red Hat Enterprise Linux and related distributions use SELinux as an
 extra layer of security. In this case, by having SELinux, this ensures
@@ -405,7 +405,7 @@ Source:
    2017. https://wiki.centos.org/HowTos/SELinux
 
 NGINX
-=====
+-----
 
 NGINX was originally designed to be a proxy server and had eventually
 added the functionality of being a HTTP web server. For HTTP, it is
@@ -413,7 +413,7 @@ focused on high-performance static content handling. Dynamic scripts
 must be processed by a different web server.
 
 NGINX - Configuration
-=====================
+~~~~~~~~~~~~~~~~~~~~~
 
 The NGINX configuration file ``/etc/nginx/nginx.conf`` contains
 different blocks defined by using brackets ``{}``. Each line in the file
@@ -515,7 +515,7 @@ Sources:
    https://nginx.org/en/docs/http/ngx\_http\_core\_module.html
 
 OpenSSL
-=======
+-------
 
 OpenSSL is a free and open source library for managing secure socket
 layer (SSL) and Transport Layer Security (TLS) encryption. [1]

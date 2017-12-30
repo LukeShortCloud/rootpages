@@ -33,7 +33,7 @@ Python 3
 -  Virtual Environments
 
 PEP
-===
+---
 
 Python Enhancement Proposals (PEPs) are guidelines to improve Python
 itself and developer's code. Each PEP is assigned a specific number. [1]
@@ -45,7 +45,7 @@ Source:
    https://www.python.org/dev/peps/
 
 PEP - Style Guide for Python Code
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PEP 8 is the "Style Guide for Python Code."
 
@@ -113,7 +113,7 @@ Source:
    Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
 
 Data Types
-==========
+----------
 
 Python automatically guesses what datatype a variable should be used
 when it is defined. The datatype a variable is using can be found using
@@ -236,7 +236,7 @@ Example:
         print(var)
 
 Data Types - Dictionaries
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dictionaries are a variable that provides a key-value store. It can be
 used as a nested array of variables.

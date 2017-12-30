@@ -11,10 +11,10 @@ NoSQL
 -  Apache Phoneix
 
 Cassandra
-=========
+---------
 
 Cassandra - Configuration
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RHEL Install [1][2]:
 
@@ -90,11 +90,11 @@ compaction. \* (Default: false)
 3. http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra\_yaml.html
 
 Cassandra - Configuration - Optimization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 http://www.slideshare.net/planetcassandra/datastax-extreme-cassandra-optimization-the-sequel
 
 Cassandra - Configuration - Clustering
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://www.digitalocean.com/community/tutorials/how-to-run-a-multi-node-cluster-database-with-cassandra-on-ubuntu-14-04

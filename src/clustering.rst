@@ -8,7 +8,7 @@ Clustering and High Availability
 -  Keepalived
 
 Introduction
-============
+------------
 
 Clustering is the concept of using a load balancer to distribute
 connections to multiple destinations. Three of the most common load
@@ -29,7 +29,7 @@ Source:
    https://www.nginx.com/resources/admin-guide/load-balancer/
 
 IP Virtual Server
-=================
+-----------------
 
 The IP Virtual Server (IPVS) service utilizes the Linux kernel directly
 for load balancing. It is designed to be a simple load balancer for

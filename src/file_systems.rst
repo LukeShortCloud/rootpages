@@ -40,7 +40,7 @@ File Systems
       -  `CephFS <#network---ceph---cephfs>`__
 
 Types
-=====
+-----
 
 Many types of file systems exist for various operating systems. These
 are used to handle the underlying file and data structure when it is
@@ -188,7 +188,7 @@ Sources:
    https://btrfs.wiki.kernel.org/index.php/Main\_Page
 
 Types - Btrfs
--------------
+~~~~~~~~~~~~~
 
 Btrfs stands for the "B-tree file system." The file system is commonly
 referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model,
@@ -225,7 +225,7 @@ Sources:
    https://btrfs.wiki.kernel.org/index.php/Mount\_options
 
 Types - Btrfs - Btrfs RAIDs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are
 supported. [1]
@@ -236,7 +236,7 @@ Source:
    https://btrfs.wiki.kernel.org/index.php/Using\_Btrfs\_with\_Multiple\_Devices
 
 Types - Btrfs - Btrfs Limitations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Known limitations:
 
@@ -260,7 +260,7 @@ Source:
    http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
 
 Types - ext4
-------------
+~~~~~~~~~~~~
 
 The Extended File System 4 (ext4) is the default file system for most
 Linux operating systems. It's focus is on performance and reliability.
@@ -311,7 +311,7 @@ Sources:
    https://kernel.org/doc/Documentation/filesystems/ext4.txt
 
 RAIDs
-=====
+-----
 
 RAID officially stands for "Redundant Array of Independent Disks." The
 idea of a RAID is to get either increased performance and/or an
@@ -392,7 +392,7 @@ Source:
    http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html
 
 RAIDs - mdadm
--------------
+~~~~~~~~~~~~~
 
 Most software RAIDs in Linux are handled by the "mdadm" utility and the
 "md\_mod" kernel module. Creating a new RAID requires specifying the
@@ -431,10 +431,10 @@ Source:
    https://wiki.archlinux.org/index.php/RAID
 
 Network
-=======
+-------
 
 Network - NFS
--------------
+~~~~~~~~~~~~~
 
 The Network File System (NFS) aims to universally provide a way to
 remotely mount directories between servers. All subdirectories from a
@@ -494,7 +494,7 @@ Source:
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/Storage\_Administration\_Guide/nfs-serverconfig.html
 
 Network - SMB
--------------
+~~~~~~~~~~~~~
 
 The Server Message Block (SMB) protocol was created to view and edit
 files remotely over a network. The Common Internet File System (CIFS)
@@ -574,7 +574,7 @@ Sources:
    https://www.certdepot.net/rhel7-provide-smb-network-shares/
 
 Network - iSCSI
----------------
+~~~~~~~~~~~~~~~
 
 The "Internet Small Computer Systems Interface" (also known as "Internet
 SCSI" or simply "iSCSI") is used to allocate block storage to servers
@@ -582,8 +582,8 @@ over a network. It relies on two components: the target (server) and the
 initiator (client). The target must first be configured to allow the
 client to attach the storage device.
 
-Network - iSCSI Target
-~~~~~~~~~~~~~~~~~~~~~~
+Network - iSCSI - Target
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 For setting up a target storage, these are the general steps to follow
 in order:
@@ -725,7 +725,7 @@ in order:
    the firewall. [1]
 
 Network - iSCSI - Initiator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This should be configured on the client server.
 
@@ -784,7 +784,7 @@ Source:
    https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
 
 Network - Ceph
---------------
+~~~~~~~~~~~~~~
 
 Ceph has developed a concept called Reliable Autonomic Distributed
 Object Store (RADOS). It provides scalable, fast, and reliable
@@ -928,7 +928,7 @@ Sources:
    http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 
 Network - Ceph - Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ceph Requirements:
 
@@ -945,7 +945,7 @@ Source:
    http://docs.ceph.com/docs/jewel/start/intro/
 
 Network - Ceph - Installation - Quick
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''
 
 This example demonstrates how to deploy a 3 node Ceph cluster with both
 the monitor and OSD services. In production, monitor servers should be
@@ -1013,7 +1013,7 @@ Source:
    2017. http://docs.ceph.com/docs/jewel/rados/deployment/
 
 Network - Ceph - Installation - ceph-ansible
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''
 
 The ceph-ansible project is used to help deploy and automate updates.
 
@@ -1151,7 +1151,7 @@ Source:
    January 15, 2017. https://github.com/ceph/ceph-ansible/wiki
 
 Network - Ceph - CRUSH Map
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 CRUSH maps are used to keep track of OSDs, physical locations of
 servers, and it defines how to replicate objects.
@@ -1180,7 +1180,7 @@ be loaded.
     # ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>
 
 Network - Ceph - CRUSH Map - Devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''
 
 Devices must follow the format of ``device <COUNT> <OSD_NAME>``. These
 are automatically generated but can be adjusted and new nodes can be
@@ -1194,7 +1194,7 @@ manually added here.
     device 2 osd.2
 
 Network - Ceph - CRUSH Map - Bucket Types
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''''
 
 Bucket types follow a similar format of ``type <COUNT> <TYPE_NAME>``.
 The name of the type can be anything. The higher numbered type always
@@ -1216,7 +1216,7 @@ inherits the lower numbers. The default types include:
     type 10 root
 
 Network - Ceph - CRUSH Map - Bucket Instances
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''''''''
 
 Bucket instances are used to group OSD configurations together.
 Typically these should define physical locations of the OSDs.
@@ -1261,7 +1261,7 @@ Typically these should define physical locations of the OSDs.
    useful if a bucket instance has hard drives of different speeds.
 
 Network - Ceph - CRUSH Map - Rules
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''
 
 By modifying the CRUSH map, replication can be configured to go to a
 different drive, server, chassis, row, rack, datacenter, etc.
@@ -1301,7 +1301,7 @@ Source:
    http://docs.ceph.com/docs/master/rados/operations/crush-map/
 
 Network - Ceph - Repair
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Ceph automatically runs through a data integrity check called
 "scrubbing." This checks the health of each placement group (object).
@@ -1438,7 +1438,7 @@ Source:
    2017. http://ceph.com/planet/ceph-manually-repair-object/
 
 Network - Ceph - libvirt
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Virtual machines that are run via the libvirt front-end can utilize
 Ceph's RADOS block devices (RBDs) as their main disk.
@@ -1518,7 +1518,7 @@ Sources:
    https://libvirt.org/formatsecret.html
 
 Network - Ceph - CephFS
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 CephFS has been stable since the Ceph Jewel 10.2.0 release. This now
 includes repair utilities, including fsck. For clients, it is

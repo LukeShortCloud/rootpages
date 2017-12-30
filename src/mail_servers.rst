@@ -1,27 +1,23 @@
-Mail
-====
+Mail Servers
+============
 
--  `Mail Servers <#mail-servers>`__
--  `Postfix <#mail-servers---postfix>`__
+-  `Postfix <#postfix>`__
 
    -  `Null Client
-      Configuration <#mail-servers---postfix---null-client-configuration>`__
+      Configuration <#postfix---null-client-configuration>`__
    -  `Gateway
-      Configuration <#mail-servers---postfix---gateway-configuration>`__
+      Configuration <#postfix---gateway-configuration>`__
 
 -  Exim
 -  IMAP/POP Servers
 -  Courier
 -  Dovecot
 
-Mail Servers
-============
-
 Mail transfer agents (MTAs) are servers that are used to receive local
 e-mail and send outgoing e-mail.
 
-Mail Servers - Postfix
-----------------------
+Postfix
+-------
 
 Configuration options: \* myhostname = The hostname of the mail server.
 \* Default: If a fully qualified domain name (FQDN) is configured on the
@@ -31,8 +27,8 @@ mydestination = Define allowed destinations for e-mails. \* Default:
 :math:`myhostname localhost.`\ mydomain localhost \* relayhost = Define
 the server to forward mail to. [1]
 
-Mail Servers - Postfix - Null Client Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Postfix - Null Client Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In a null client configuration, mail is not accepted by the mail server.
 It only forwards local e-mails to another MTA.
@@ -49,8 +45,8 @@ Example - Forward all e-mails from the localhost to the server at the
     mydestination =
     relayhost = 10.0.0.1
 
-Mail Servers - Postfix - Gateway Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Postfix - Gateway Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In a gateway-client setup, mail is forwarded from the one or more
 specified networks to another MTA.

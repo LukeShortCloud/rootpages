@@ -17,10 +17,10 @@ SQL
       -  `MaxScale <#mariadb---clustering---maxscale>`__
 
 MariaDB
-=======
+-------
 
 MaraiDB - Configuration
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 RHEL Install [1]:
 
@@ -40,13 +40,13 @@ Source:
    October 16, 2016. https://mariadb.com/kb/en/mariadb/yum/
 
 MariaDB - Table Engines
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A full list of the available engines are provided at
 https://mariadb.com/kb/en/mariadb/storage-engines.
 
 MariaDB - Table Engines - CassandraSE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Cassandra Storage Engine (CassandraSE) is used to connect to a NoSQL
 Cassandra cluster. This allows the relational management of MariaDB to
@@ -105,10 +105,10 @@ Sources:
    https://mariadb.com/kb/en/mariadb/missing-centos7-rpm-mariadb-10116-centos7-x86\_64-cassandra-enginerpm/
 
 MariaDB - Clustering
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 MariaDB - Clustering - Maxscale
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 MaxScale is a proxy that can load balance requests in different ways.
 This is useful for specifying reads and writes to specific servers. [1]
@@ -120,7 +120,7 @@ Source:
    https://mariadb.com/kb/en/mariadb-enterprise/about-mariadb-maxscale/
 
 MariaDB - Clustering - Maxscale - Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'''''''''''''''''''''''''''''''''''''''''''''''
 
 The latest version of MariaDB's MaxScale can be found at
 https://mariadb.com/downloads/maxscale.

@@ -35,7 +35,7 @@ C and C++
    C++ <https://web.eecs.umich.edu/~sugih/pointers/C++NotInC.html>`__
 
 Introduction
-============
+------------
 
 C was created in 1972 as an easier and more portable alternative to
 assembly language. It is a procedural and human readable language. [1] C
@@ -105,7 +105,7 @@ Sources:
    https://www.slideshare.net/SwainLoda/minimal-standard-c-program
 
 Tutorials
-=========
+---------
 
 This is an additional list of tutorials and reference guides for
 becoming familiar with C and C++.
@@ -129,7 +129,7 @@ becoming familiar with C and C++.
          Boston <https://www.thenewboston.com/videos.php?cat=16>`__
 
 Data Types
-==========
+----------
 
 +------+------+------+
 | Data | Desc | ``sh |
@@ -307,7 +307,7 @@ Sources:
    http://radio.feld.cvut.cz/Docs4Soft/ptolemy/prog\_man.html/ptlang.doc7.html
 
 Data Types - Arrays
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 Arrays can be used to store multiple values for a certain type of data.
 It is similar to defining a variable, except the number of elements (the
@@ -345,7 +345,7 @@ Source:
    https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 
 Data Types - Vectors
-====================
+~~~~~~~~~~~~~~~~~~~~
 
 Vectors are very similar to arrays because they store multiple data
 points. However, vectors provide more functionality. Memory cleanup is
@@ -386,7 +386,7 @@ Source:
    https://cal-linux.com/tutorials/vectors.html
 
 Data Types - Pointers
-=====================
+~~~~~~~~~~~~~~~~~~~~~
 
 Pointers refers to a location in memory and can store multiple values.
 In C, this is useful because pointers can be used as array to create
@@ -467,7 +467,7 @@ Sources:
    http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
 
 Data Types - Scope
-==================
+~~~~~~~~~~~~~~~~~~
 
 -  Local = Defined within a function. This cannot be referenced by
    another function.
@@ -485,10 +485,10 @@ Source:
    http://www.studytonight.com/cpp/variables-scope-details.php
 
 Conditionals
-============
+------------
 
 Conditionals - Operators
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Conditional statements require comparison operators. If the outcome of
 the operator is true then the conditional will execute.
@@ -529,7 +529,7 @@ Source:
    http://www.cplusplus.com/doc/tutorial/operators/
 
 Conditionals - If
------------------
+~~~~~~~~~~~~~~~~~
 
 If statements execute a task if an expression of comparing two or more
 things is returned as true.
@@ -574,7 +574,7 @@ Source:
    2017. http://www.cprogramming.com/tutorial/lesson2.html
 
 Conditionals - Switch
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Switches provide a good way to execute a task based on a specific value
 of a variable. If a switch condition is met, it is a good idea to a
@@ -616,7 +616,7 @@ Source:
    21, 2017. http://en.cppreference.com/w/cpp/language/switch
 
 Conditionals - For
-------------------
+~~~~~~~~~~~~~~~~~~
 
 For loops initialize a variable, check if a comparison of an expression
 is true, and then increments the initialized variable. This is useful
@@ -647,7 +647,7 @@ Source:
    https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 
 Conditionals - While
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 While statements can be used to continually run a task while a statement
 is true. A "do-while" statement uses the same concept and guarantees
@@ -686,10 +686,10 @@ Source:
    https://www.programiz.com/cpp-programming/do-while-loop
 
 Input and Output
-================
+----------------
 
 Input and Output - Terminal
-===========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Text from a terminal can either be displayed (standard output) and/or
 saved as a variable (standard input). C++ can even use C standard

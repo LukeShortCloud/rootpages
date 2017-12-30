@@ -11,7 +11,7 @@ Authentication
    -  `Server <#openldap---server>`__
 
 Kerberos
-========
+--------
 
 Kerberos helps to facilitate a single sign-on and secure approach to
 authenticating across multiple services. The Kerberos server is also
@@ -44,7 +44,7 @@ Source:
    Asghar Ghori, 2015.
 
 Kerberos - Server
------------------
+~~~~~~~~~~~~~~~~~
 
 Install the Kerberos service.
 
@@ -153,7 +153,7 @@ Source:
    https://fedoraproject.org/wiki/Kerberos\_KDC\_Quickstart\_Guide
 
 Kerberos - Client
------------------
+~~~~~~~~~~~~~~~~~
 
 Install the Kerberos client utilities.
 
@@ -185,7 +185,7 @@ Source:
    https://fedoraproject.org/wiki/Infrastructure/Kerberos
 
 OpenLDAP
-========
+--------
 
 The Lightweight Directory Access Protocol (LDAP) is a network protocol
 for accessing user information. OpenLDAP is an open source
@@ -201,7 +201,7 @@ Source:
 2. https://linux.die.net/man/5/slapd-sql
 
 OpenLDAP - Server
------------------
+~~~~~~~~~~~~~~~~~
 
 RHEL:
 

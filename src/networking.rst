@@ -25,13 +25,13 @@ Networking
       -  `Bonding <#operating-system-specific---rhel---bonding>`__
 
 Generic
-=======
+-------
 
 The generic section will cover networking utilities that are platform
 agnostic.
 
 Generic - systemd
------------------
+~~~~~~~~~~~~~~~~~
 
 The systemd init suite provides both "systemd-networkd" and
 systemd-resolved" to control networking devices. These services have
@@ -207,10 +207,10 @@ Sources:
    27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625
 
 Generic - Open vSwitch
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Generic - Open vSwitch - Bridging
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Any physical network interface can be turned into a bridge. This allows
 multiple devices to be able to utilize the bridge for straight
@@ -282,10 +282,10 @@ Source:
    http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html
 
 Operating System Specific
-=========================
+-------------------------
 
 Operating System Specific - Debian
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Debian network configuration file is located at
 ``/etc/networks/interfaces``. Run ``ifup`` or ``ifdown`` to add or
@@ -344,7 +344,7 @@ Source:
    https://help.ubuntu.com/lts/serverguide/network-configuration.html
 
 Operating System Specific - RHEL
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Red Hat Enterprise Linux uses their own "network" service. Although
 Network Manager has started taking it's place, the network service is
@@ -434,7 +434,7 @@ Sources:
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-interfaces.html
 
 Operating System Specific - RHEL - Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In RHEL 7, static routes now use the ``iproute2`` syntax. A new
 ``route-<INTERFACE>`` file defines the route. Only one default
@@ -466,7 +466,7 @@ Sources:
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-static-routes.html
 
 Operating System Specific - RHEL - Bridging
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A simple bridge using the Linux kernel can be configured using this
 basic template. The physical network interface should reference a bridge
@@ -498,7 +498,7 @@ Source:
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s2-networkscripts-interfaces\_network-bridge.html
 
 Operating System Specific - RHEL - Bridging - Open vSwitch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Various bridge configurations can be made. It is common to use a normal
 bridge for allow virtual machines to have full access to the network or
@@ -567,7 +567,7 @@ Sources:
    https://gist.github.com/jdoss/64ecd24b74792efaa794
 
 Operating System Specific - RHEL - Bonding
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Bonding allows for multiple devices to be used as a single virtual
 device. The physical NICs need to be configured as bond slaves. Then a

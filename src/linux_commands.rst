@@ -9,10 +9,10 @@ Linux Commands
    -  Audio
 
 Hardware
-========
+--------
 
 Hardware - North Bridge
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 See also: Administrative, Drives, Virtualization
 

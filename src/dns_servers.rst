@@ -13,7 +13,7 @@ DNS
 -  Unbound
 
 Introduction to DNS
-===================
+-------------------
 
 Domain Name Servers (DNS) provide friendly domain names that are
 generally associated with an IP address or a string of text. There are
@@ -30,7 +30,7 @@ a state of authority (SOA) record. This provides the primary
 nameserver/resolver along with time to live (TTL) related information.
 
 PowerDNS
-========
+--------
 
 The pdns service can be both an authoritative and recursive DNS server.
 It supports a large number of backends that can be used for it's
@@ -65,13 +65,13 @@ SOA options:
    another DNS server. [5]
 
 PowerDNS - PowerAdmin
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 PowerAdmin is the graphic control panel that can be installed and
 accessed via a web browser.
 
 PowerDNS - gmysql
------------------
+~~~~~~~~~~~~~~~~~
 
 The generic MySQL backend (gmysql) was created to allow any MySQL server
 to store and serve records. [2] This is not to be confused with using
@@ -181,7 +181,7 @@ file to connect to the MySQL server.
     gmysql-password=<MYSQL_PASS>
 
 PowerDNS - gmysql - Records
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After pdns is configured to use gmysql, a domain zones can be added.
 This requires that a information about the domain is added to the

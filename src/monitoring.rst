@@ -2,7 +2,8 @@ Monitoring
 ==========
 
 -  `Monit <#monit>`__
--  `Configuration <#monit---configuration>`__
+
+    -  `Configuration <#monit---configuration>`__
 
 Monit
 -----

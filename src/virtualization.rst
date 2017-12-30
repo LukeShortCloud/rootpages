@@ -51,7 +51,7 @@ Virtualization
    -  XenServer
 
 libvirt
-=======
+-------
 
 "libvirt" provides a framework and API for accessing and controlling
 different virtualization hypervisors. This Root Pages' guide assumes
@@ -64,7 +64,7 @@ Source:
    22, 2017. https://libvirt.org/index.html
 
 Hardware Virtualization
-=======================
+-----------------------
 
 Hardware virtualization uses specially supported processors to speed up
 and isolate virtualized environments. Most newer CPUs support this.
@@ -113,7 +113,7 @@ Sources:
    http://searchservervirtualization.techtarget.com/definition/Intel-VT
 
 Hardware Virtualization - KVM
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The "Kernel-based Virtual Machine (KVM)" is the default kernel module
 for handling hardware virtualization in Linux since the 2.6.20 kernel.
@@ -127,7 +127,7 @@ Sources:
    December 22, 2017. http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/
 
 Hardware Virtualization - KVM - Performance Tuning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Configuration details for virtual machines can be modified to provide
 better performance. For processors, it is recommended to use the same
@@ -238,7 +238,7 @@ Sources:
    http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html
 
 Hardware Virtualization - KVM - Nested Virtualization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 KVM supports nested virtualization. This allows a virtual machine full
 access to the processor to run another virtual machine in itself. This
@@ -262,7 +262,6 @@ Verify that the computer's processor supports nested KVM virtualization.
        Y
 
 Option #1 - Modprobe
-^^^^^^^^^^^^^^^^^^^^
 
 -  Intel
 
@@ -289,7 +288,6 @@ Option #1 - Modprobe
        # modprobe kvm-amd
 
 Option #2 - GRUB2
-^^^^^^^^^^^^^^^^^
 
 Append this option to the already existing "GRUB\_CMDLINE\_LINUX"
 options.
@@ -356,7 +354,7 @@ Sources:
    https://fedoraproject.org/wiki/How\_to\_enable\_nested\_virtualization\_in\_KVM
 
 Hardware Virtualization - KVM - GPU Passthrough
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 GPU passthrough is useful for running a Windows virtual machine guest
 for gaming inside of Linux. It is recommended to have two video cards,
@@ -394,7 +392,7 @@ Sources:
    https://wiki.archlinux.org/index.php/PCI\_passthrough\_via\_OVMF
 
 Hardware Virtualization - Xen
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Xen is a free and open source software hypervisor under the GNU General
 Public License (GPL). It was originally designed to be a competitor of
@@ -409,7 +407,7 @@ Source:
    2016. http://searchservervirtualization.techtarget.com/definition/Xen
 
 Hardware Virtualization - Xen - Nested Virtualization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since Xen 4.4, experimental support was added for nested virtualization.
 A few settings need to be added to the Xen virtual machine's file,
@@ -433,10 +431,10 @@ Source:
    https://wiki.xenproject.org/wiki/Nested\_Virtualization\_in\_Xen
 
 Software Virtualization
-=======================
+-----------------------
 
 Software Virtualization - Containers
-====================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Containers are a type of software virtualization. Using a directory
 structure that contains an entire operating system (typically referred
@@ -445,7 +443,7 @@ resources without the overhead of full hardware allocation. It is not
 possible to use separate kernels with this approach.
 
 Software Virtualization - Containers - docker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The docker software (with a lowercase "d") was created by the Docker
 company to manage and create containers using the LXC kernel module on
@@ -464,7 +462,7 @@ Source:
    https://docs.docker.com/engine/getstarted
 
 Software Virtualization - Containers - docker - Networking
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Networking is automatically bridged to the public interface and set up
 with a NAT. This allows full communication to/from the container,
@@ -536,7 +534,7 @@ Sources:
    https://github.com/docker/docker/issues/16816
 
 Software Virtualization - Containers - LXC
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Linux Containers (LXC) utilizes the Linux kernel to natively run
 containers.
@@ -585,13 +583,13 @@ Sources:
    https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
 
 Orchestration
-=============
+-------------
 
 Virtual machine provisioning can be automated through the use of
 different tools.
 
 Orchestration - Vagrant
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Vagrant is programmed in Ruby to help automate virtual machine (VM)
 deployment. It uses a single file called "Vagrantfile" to describe the
@@ -657,7 +655,7 @@ Sources:
    https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
 
 Orchestration - Vagrant - Vagrantfile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A default Vagrantfile can be created to start customizing with.
 
@@ -763,7 +761,7 @@ Source:
    Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
 
 Orchestration - Vagrant - Vagrantfile - Networks - libvirt
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 The options and syntax for public networks with the "libvirt" provider
 are slightly different.
@@ -796,7 +794,7 @@ Source:
    https://github.com/vagrant-libvirt/vagrant-libvirt
 
 Orchestration - Vagrant - Vagrantfile - Provisioning
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 After a virtual machine (VM) has been created, additional commands can
 be run to configure the guest VMs. This is referred to as
@@ -831,7 +829,7 @@ Source:
    Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
 
 Orchestration - Vagrant - Vagrantfile - Multiple Machines
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 A ``Vagrantfile`` can specify more than one virtual machine.
 

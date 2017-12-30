@@ -22,10 +22,10 @@ Security
    -  `Configuration <#authentication---kerberos---configuration>`__
 
 Permissions
-===========
+-----------
 
 Permissions - User, Group, and Other
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Normal Linux flie permissions are grouped into three categories: owner,
 group, and other users access. Permissions can be defined for what the
@@ -72,10 +72,10 @@ Sources:
    https://www.linux.com/learn/understanding-linux-file-permissions
 
 Authentication
-==============
+--------------
 
 Authentication - Kerberos
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kerberos provides authentication for services over a network. A Kerberos
 server provides remote users with a "ticket" to use after they log in.
@@ -86,7 +86,7 @@ Ports: \* 88 TCP/UDP \* 464 TCP/UDP \* 749 TCP/UDP \* 6620 TCP/UDP \*
 6621 TCP/UDP \* 6623 TCP/UDP [2]
 
 Authentication - Kerberos - Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Kerberos sever is referred to as the Kerberos Distribution Center
 (KDC). These packages will need to be installed for the service:

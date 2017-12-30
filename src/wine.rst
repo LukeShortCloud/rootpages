@@ -18,9 +18,6 @@
    -  Ansible Playgames
    -  PlayOnLinux
 
-Wine
-====
-
 Wine Is Not an Emulator (Wine) is a compatibility layer that translates
 Windows systems calls into native POSIX system calls. This provides a
 fast way to run Windows programs natively on UNIX-like systems. [1]
@@ -43,13 +40,13 @@ Source:
    29, 2017. https://wiki.winehq.org/Clean\_Room\_Guidelines
 
 User
-====
+----
 
 This user guide is aimed at explaining how to use Wine, and related
 tools, to run Windows programs on Linux.
 
 User - Environment Variables
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Environment variables can be set by using the "export" Linux shell
 command or specifying the variables before a Wine command.
@@ -64,8 +61,6 @@ Examples:
 ::
 
     $ WINEPATH="c:/program_dir" wine setup.exe
-
---------------
 
 +------+------+------+
 | Name | Desc | Defa |
