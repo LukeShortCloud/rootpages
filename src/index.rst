@@ -1,0 +1,42 @@
+.. Root Pages documentation master file, created by
+   sphinx-quickstart on Sat Dec 23 12:50:38 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to Root Pages!
+======================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Table of Contents:
+
+   ansible
+   authentication
+   bootloaders
+   c_and_c++
+   clustering
+   dns_servers
+   file_systems
+   http_servers
+   linux_commands
+   linux
+   mail_servers
+   monitoring
+   networking
+   nosql
+   openstack
+   packages
+   python
+   security
+   sql
+   virtualization
+   wine
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
