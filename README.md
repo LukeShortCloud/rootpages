@@ -32,6 +32,7 @@ $ sudo dnf install python3-sphinx
 
 Sphinx will save newly generated documents into the "build/" directory by default.
 
+
 ### Usage - Automatic
 
 
@@ -86,6 +87,14 @@ Recommended text editors:
     * [Atom](https://atom.io/) with the [rst-snippets plugin](https://atom.io/packages/rst-snippets).
 * Command-Line Interface (CLI):
     * [Vim](https://github.com/vim/vim) with the [vim-rst-tables plugin](https://github.com/nvie/vim-rst-tables).
+
+RST header characters to use:
+
+1. `=====`
+2. `-----`
+3. `~~~~~`
+4. `'''''`
+5. `&&&&&`
 
 
 ## Legal
