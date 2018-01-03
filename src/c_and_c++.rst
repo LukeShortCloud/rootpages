@@ -1,38 +1,7 @@
 C and C++
 =========
 
--  `Introduction <#introduction>`__
--  `Tutorials <#tutorials>`__
--  `Data Types <#data-types>`__
-
-   -  `Arrays <#data-types---arrays>`__
-   -  `Vectors (C++) <#data-types---vectors>`__
-   -  `Pointers <#data-types---pointers>`__
-   -  `Scope <#data-types---scope>`__
-   -  Structs and Unions
-
--  `Conditionals <#conditionals>`__
-
-   -  `Operators <#conditionals---operators>`__
-   -  `If <#conditionals---if>`__
-   -  `Switch <#conditionals---switch>`__
-   -  `For <#conditionals---for>`__
-   -  `While <#conditionals---while>`__
-
--  `Input and Output <#input-and-output>`__
-
-   -  `Terminal <#input-and-output---terminal>`__
-   -  File
-
--  Functions
-
-   -  Scope
-
--  Templates (C++)
--  Libraries
--  Object Oriented (C++)
--  `Differences Between C and
-   C++ <https://web.eecs.umich.edu/~sugih/pointers/C++NotInC.html>`__
+.. contents::
 
 Introduction
 ------------
