@@ -1,7 +1,7 @@
 C and C++
 =========
 
-.. contents::
+.. contents:: Table of Contents
 
 Introduction
 ------------
@@ -39,7 +39,7 @@ developer working on the program to understand the reasoning for how the
 program was coded. These comment blocks have to start with ``/*`` and
 end with a ``*/``.
 
-An simple C example is provided below:
+A simple C example is provided below:
 
 ::
 
@@ -227,7 +227,7 @@ Syntax:
 
     <DATA_TYPE> <VARIABLE_NAME> = <VALUE>;
 
-Example:
+Examples:
 
 ::
 
@@ -275,8 +275,8 @@ Sources:
    Engineering K 13137 CTU FEE Prague. Accessed May 21, 2017.
    http://radio.feld.cvut.cz/Docs4Soft/ptolemy/prog\_man.html/ptlang.doc7.html
 
-Data Types - Arrays
-~~~~~~~~~~~~~~~~~~~
+Arrays
+~~~~~~
 
 Arrays can be used to store multiple values for a certain type of data.
 It is similar to defining a variable, except the number of elements (the
@@ -313,8 +313,8 @@ Source:
 1. "C++ Arrays." Tutorials Point. Accessed May 21, 2017.
    https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 
-Data Types - Vectors (C++)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Vectors (C++)
+~~~~~~~~~~~~~
 
 Vectors are very similar to arrays because they store multiple data
 points. However, vectors provide more functionality. Memory cleanup is
@@ -354,8 +354,8 @@ Source:
 1. "C++ Vectors." Cal-linux Tutorials. Accessed May 21, 2017.
    https://cal-linux.com/tutorials/vectors.html
 
-Data Types - Pointers
-~~~~~~~~~~~~~~~~~~~~~
+Pointers
+~~~~~~~~
 
 Pointers refers to a location in memory and can store multiple values.
 In C, this is useful because pointers can be used as array to create
@@ -435,12 +435,12 @@ Sources:
    4, 2015. Accessed December 3, 2017.
    http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
 
-Data Types - Structs and Unions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Structures and Unions
+~~~~~~~~~~~~~~~~~~~~~
 
 Both a "struct" and a "union" store multiple variables within themselves. A struct can have variables that are of different data types. The memory allocated to the struct is equal to the memory allocation of each variable within it combined. A union should only contain one data type. The union is only allocated memory for the data type that is the largest. This memory is shared between all variables which is why they should be the same type or else a variable might not contain it's full value when read. [1]
 
-`struct` syntax:
+Structure syntax:
 
 ::
 
@@ -450,7 +450,7 @@ Both a "struct" and a "union" store multiple variables within themselves. A stru
       <DATA_TYPE_3> <VARIABLE_NAME_3>;
   } <NAME>
 
-`union` syntax:
+Union syntax:
 
 ::
 
@@ -470,8 +470,8 @@ Source:
 
 1. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
 
-Data Types - Scope
-~~~~~~~~~~~~~~~~~~
+Scope
+~~~~~
 
 -  Local = Defined within a function. This cannot be referenced by
    another function.
@@ -491,8 +491,8 @@ Source:
 Conditionals
 ------------
 
-Conditionals - Operators
-~~~~~~~~~~~~~~~~~~~~~~~~
+Operators
+~~~~~~~~~
 
 Conditional statements require comparison operators. If the outcome of
 the operator is true then the conditional will execute.
@@ -532,8 +532,8 @@ Source:
 1. "[C++] Operators." cpluspluss.com. Accessed May 21, 2017.
    http://www.cplusplus.com/doc/tutorial/operators/
 
-Conditionals - If
-~~~~~~~~~~~~~~~~~
+If
+~~
 
 If statements execute a task if an expression of comparing two or more
 things is returned as true.
@@ -577,8 +577,8 @@ Source:
 1. "Lesson 2: If statements in C++." Cprogramming.com. Accessed May 21,
    2017. http://www.cprogramming.com/tutorial/lesson2.html
 
-Conditionals - Switch
-~~~~~~~~~~~~~~~~~~~~~
+Switch
+~~~~~~
 
 Switches provide a good way to execute a task based on a specific value
 of a variable. If a switch condition is met, it is a good idea to a
@@ -619,8 +619,8 @@ Source:
 1. "[C++] switch statement." C++ reference. March 6, 2017. Accessed May
    21, 2017. http://en.cppreference.com/w/cpp/language/switch
 
-Conditionals - For
-~~~~~~~~~~~~~~~~~~
+For
+~~~
 
 For loops initialize a variable, check if a comparison of an expression
 is true, and then increments the initialized variable. This is useful
@@ -650,8 +650,8 @@ Source:
 1. "C++ for loop." Tutorials Point. Accessed May 21, 2017.
    https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 
-Conditionals - While
-~~~~~~~~~~~~~~~~~~~~
+While
+~~~~~
 
 While statements can be used to continually run a task while a statement
 is true. A "do-while" statement uses the same concept and guarantees
@@ -692,8 +692,8 @@ Source:
 Input and Output
 ----------------
 
-Input and Output - Terminal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Terminal
+~~~~~~~~
 
 Text from a terminal can either be displayed (standard output) and/or
 saved as a variable (standard input). C++ can even use C standard
