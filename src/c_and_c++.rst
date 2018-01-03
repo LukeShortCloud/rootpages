@@ -313,8 +313,8 @@ Source:
 1. "C++ Arrays." Tutorials Point. Accessed May 21, 2017.
    https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 
-Data Types - Vectors
-~~~~~~~~~~~~~~~~~~~~
+Data Types - Vectors (C++)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Vectors are very similar to arrays because they store multiple data
 points. However, vectors provide more functionality. Memory cleanup is
@@ -434,6 +434,41 @@ Sources:
 2. "GCC \*is\* wonderful: a better ARRAY\_SIZE macro." Zubplot. January
    4, 2015. Accessed December 3, 2017.
    http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
+
+Data Types - Structs and Unions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Both a "struct" and a "union" store multiple variables within themselves. A struct can have variables that are of different data types. The memory allocated to the struct is equal to the memory allocation of each variable within it combined. A union should only contain one data type. The union is only allocated memory for the data type that is the largest. This memory is shared between all variables which is why they should be the same type or else a variable might not contain it's full value when read. [1]
+
+`struct` syntax:
+
+::
+
+  struct <NAME> {
+      <DATA_TYPE_1> <VARIABLE_NAME_1>;
+      <DATA_TYPE_2> <VARIABLE_NAME_2>;
+      <DATA_TYPE_3> <VARIABLE_NAME_3>;
+  } <NAME>
+
+`union` syntax:
+
+::
+
+  union <NAME> {
+      <DATA_TYPE_1> <VARIABLE_NAME_1>;
+      <DATA_TYPE_1> <VARIABLE_NAME_2>;
+      <DATA_TYPE_1> <VARIABLE_NAME_3>;
+  } <NAME>
+
+A variable in a struct or union can be referenced using it's name, a period, and then the actual variable name.
+
+::
+
+  <STRUCT_OR_UNION_NAME>.<VARIABLE_NAME>;
+
+Source:
+
+1. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
 
 Data Types - Scope
 ~~~~~~~~~~~~~~~~~~
