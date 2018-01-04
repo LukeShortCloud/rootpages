@@ -25,6 +25,7 @@ Welcome to Root Pages!
    networking
    nosql
    openstack
+   operating_systems
    packages
    python
    security
