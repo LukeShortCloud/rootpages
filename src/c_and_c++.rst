@@ -480,13 +480,15 @@ Scope
 -  Static = There is only one static variable that is shared between
    different objects from the same class. The keyword ``static`` must be
    used when defining the variable.
--  Final = This variable is set once and cannot be changed. The keyword
-   ``final`` must be used when defining the variable. [1]
+-  Constant = This variable is set once and cannot be changed. The keyword
+   ``const`` must be used when defining the variable. [1]
+- Final (C++) = This is exactly like a Constant and it also extends to classes and objects in that their parent virtual functions cannot be overridden. Use the keyword ``final``. [2]
 
-Source:
+Sources:
 
 1. "Variables in C++." Studytonight. Accessed May 21, 2017.
    http://www.studytonight.com/cpp/variables-scope-details.php
+2. "C++ final specifier." GeeksForGeeks. January 4, 2017. https://www.geeksforgeeks.org/c-final-specifier/
 
 Conditionals
 ------------
