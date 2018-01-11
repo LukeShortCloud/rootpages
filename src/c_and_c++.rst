@@ -665,6 +665,32 @@ Example:
 
 [18]
 
+Argument Parsing
+''''''''''''''''
+
+Command-line arguments, given to a compiled program, are stored into two variables: an int `argc` and a char array `argv`. The "argc" variable contains the number of command line arguments that were given to the program, including itself. The "argv" variable contains an array of strings that are the actual arguments. These two variables have to be defined as function arguments for the "main" function. [19]
+
+Example:
+
+::
+
+    #include <stdio.h>
+
+    int main(int argc, char *argv[])
+    {
+        printf("There are %d arguments.\n", argc);
+        printf("The program name is: %s\n", argv[0]);
+        printf("The first command-line argument is: %s\n", argv[1]);
+    }
+
+::
+
+    $ gcc example.c -o example
+    $ ./example 123
+    There are 2 arguments.
+    The program name is: ./example
+    The first command-line argument is: 123
+
 Bibliography
 ------------
 
@@ -686,3 +712,4 @@ Bibliography
 16. "C++ for loop." Tutorials Point. Accessed May 21, 2017. https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 17. "C++ while and do...while Loop." Progamiz. Accessed May 21, 2017. https://www.programiz.com/cpp-programming/do-while-loop
 18. "C++ Programming Language Stream IO and File IO." Nanyang Technological University. May, 2013. Accessed May 21, 2017. http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10\_io.html
+19. "C Tutorial – More on Functions." CodingUnit Programming Tutorials. Accessed January 11, 2018. https://www.codingunit.com/c-tutorial-more-on-c-functions
