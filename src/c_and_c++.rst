@@ -62,17 +62,6 @@ C++ programs with the GNU C++ compiler (g++).
 
 [3]
 
-Sources:
-
-1. "The C Programming Language." University of Michigan. December 7,
-   1992. Accessed November 2, 2017.
-   http://groups.engin.umd.umich.edu/CIS/course.des/cis400/c/c.html
-2. "Features of C++." Sitesbay. Accessed November 2, 2017.
-   https://www.sitesbay.com/cpp/features-of-cpp
-3. "Minimal standard c program." SlideShare. May 12, 2016. Accessed
-   November 13, 2017.
-   https://www.slideshare.net/SwainLoda/minimal-standard-c-program
-
 Tutorials
 ---------
 
@@ -239,13 +228,13 @@ Examples:
     char* simple_string = "yes";
     std::string string_var = "Hello world.";
 
-[1]
+[4]
 
 Blank and/or dynamic variables can be created with the ``new``
 functions. These will not be cleaned up and will result in the program
 wasting RAM (a memory leak) if not handled correctly. In a class, a
 destructor should be used to ``delete`` the variables when an object is
-no longer in use. [2] On modern operating systems such as Linux, macOS,
+no longer in use. [5] On modern operating systems such as Linux, macOS,
 and Windows, any leaked memory from a program will be cleaned up
 automatically after the main process is complete.
 
@@ -266,14 +255,6 @@ Syntax:
 ::
 
     delete[] <ARRAY_VARIABLE_NAME>
-
-Sources:
-
-1. "Fundamental types. C++ reference. May 14, 2017. Accessed May 21,
-   2017. http://en.cppreference.com/w/cpp/language/types
-2. "Preventing Memory Leaks in C++ Code." Department of Radio
-   Engineering K 13137 CTU FEE Prague. Accessed May 21, 2017.
-   http://radio.feld.cvut.cz/Docs4Soft/ptolemy/prog\_man.html/ptlang.doc7.html
 
 Arrays
 ~~~~~~
@@ -306,12 +287,7 @@ Example:
 
     empty_array = new float [3];
 
-[1]
-
-Source:
-
-1. "C++ Arrays." Tutorials Point. Accessed May 21, 2017.
-   https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
+[6]
 
 Vectors (C++)
 ~~~~~~~~~~~~~
@@ -347,12 +323,7 @@ Example:
 
     vector<std::string> (3);
 
-[1]
-
-Source:
-
-1. "C++ Vectors." Cal-linux Tutorials. Accessed May 21, 2017.
-   https://cal-linux.com/tutorials/vectors.html
+[7]
 
 Pointers
 ~~~~~~~~
@@ -362,7 +333,7 @@ In C, this is useful because pointers can be used as array to create
 things such as a string from multiple characters. A pointer can only be
 associated with one data type and cannot be resized. For C++, it is
 recommended to use vectors instead. Pointers will require manual memory
-cleanup with a ``delete`` statement.
+cleanup with a ``delete`` statement. [8]
 
 There are a few different ways to define a pointer.
 
@@ -415,7 +386,7 @@ Example of founding the size of array ``x``:
     int x_array_size = sizeof(x) / sizeof(*x);
 
 The GNU C Compiler (GCC) provides the "ARRAY\_SIZE" to do this
-automatically.
+automatically. [9]
 
 Example:
 
@@ -424,21 +395,10 @@ Example:
     char x[5] = {'w', 'o', 'r', 'l', 'd' };
     int x_array_size = ARRAY_SIZE(x);
 
-[2]
-
-Sources:
-
-1. "Pointers, References and Dynamic Memory Allocation." Nanyang
-   Technoligcal University. Accessed May 21, 2017.
-   https://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp4\_PointerReference.html
-2. "GCC \*is\* wonderful: a better ARRAY\_SIZE macro." Zubplot. January
-   4, 2015. Accessed December 3, 2017.
-   http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
-
 Structures and Unions
 ~~~~~~~~~~~~~~~~~~~~~
 
-Both a "struct" and a "union" store multiple variables within themselves. A struct can have variables that are of different data types. The memory allocated to the struct is equal to the memory allocation of each variable within it combined. A union should only contain one data type. The union is only allocated memory for the data type that is the largest. This memory is shared between all variables which is why they should be the same type or else a variable might not contain it's full value when read. [1]
+Both a "struct" and a "union" store multiple variables within themselves. A struct can have variables that are of different data types. The memory allocated to the struct is equal to the memory allocation of each variable within it combined. A union should only contain one data type. The union is only allocated memory for the data type that is the largest. This memory is shared between all variables which is why they should be the same type or else a variable might not contain it's full value when read. [10]
 
 Structure syntax:
 
@@ -466,10 +426,6 @@ A variable in a struct or union can be referenced using it's name, a period, and
 
   <STRUCT_OR_UNION_NAME>.<VARIABLE_NAME>;
 
-Source:
-
-1. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
-
 Scope
 ~~~~~
 
@@ -481,14 +437,8 @@ Scope
    different objects from the same class. The keyword ``static`` must be
    used when defining the variable.
 -  Constant = This variable is set once and cannot be changed. The keyword
-   ``const`` must be used when defining the variable. [1]
-- Final (C++) = This is exactly like a Constant and it also extends to classes and objects in that their parent virtual functions cannot be overridden. Use the keyword ``final``. [2]
-
-Sources:
-
-1. "Variables in C++." Studytonight. Accessed May 21, 2017.
-   http://www.studytonight.com/cpp/variables-scope-details.php
-2. "C++ final specifier." GeeksForGeeks. January 4, 2017. https://www.geeksforgeeks.org/c-final-specifier/
+   ``const`` must be used when defining the variable. [11]
+- Final (C++) = This is exactly like a Constant and it also extends to classes and objects in that their parent virtual functions cannot be overridden. Use the keyword ``final``. [12]
 
 Conditionals
 ------------
@@ -527,12 +477,7 @@ Using logical operators allows for multiple statements to be compared.
 | \|\|               | At least one statement must be true.   |
 +--------------------+----------------------------------------+
 
-[1]
-
-Source:
-
-1. "[C++] Operators." cpluspluss.com. Accessed May 21, 2017.
-   http://www.cplusplus.com/doc/tutorial/operators/
+[13]
 
 If
 ~~
@@ -572,12 +517,7 @@ Example:
         dog_owner = true;
     }
 
-[1]
-
-Source:
-
-1. "Lesson 2: If statements in C++." Cprogramming.com. Accessed May 21,
-   2017. http://www.cprogramming.com/tutorial/lesson2.html
+[14]
 
 Switch
 ~~~~~~
@@ -614,12 +554,7 @@ Example:
       default: cout << "There are too few or too many forks on the table.";
     }
 
-[1]
-
-Source:
-
-1. "[C++] switch statement." C++ reference. March 6, 2017. Accessed May
-   21, 2017. http://en.cppreference.com/w/cpp/language/switch
+[15]
 
 For
 ~~~
@@ -645,12 +580,7 @@ Example:
         cout << count;
     }
 
-[1]
-
-Source:
-
-1. "C++ for loop." Tutorials Point. Accessed May 21, 2017.
-   https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
+[16]
 
 While
 ~~~~~
@@ -684,12 +614,7 @@ Example:
         cout << "This fruit is: " << fruit << endl;
     }
 
-[1]
-
-Source:
-
-1. "C++ while and do...while Loop." Progamiz. Accessed May 21, 2017.
-   https://www.programiz.com/cpp-programming/do-while-loop
+[17]
 
 Input and Output
 ----------------
@@ -738,10 +663,26 @@ Example:
     string w = "world";
     printf("Hello %s\n", string w  );
 
-[1]
+[18]
 
-Source:
+Bibliography
+------------
 
-1. "C++ Programming Language Stream IO and File IO." Nanyang
-   Technological University. May, 2013. Accessed May 21, 2017.
-   http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10\_io.html
+1. "The C Programming Language." University of Michigan. December 7, 1992. Accessed November 2, 2017. http://groups.engin.umd.umich.edu/CIS/course.des/cis400/c/c.html
+2. "Features of C++." Sitesbay. Accessed November 2, 2017. https://www.sitesbay.com/cpp/features-of-cpp
+3. "Minimal standard c program." SlideShare. May 12, 2016. Accessed November 13, 2017. https://www.slideshare.net/SwainLoda/minimal-standard-c-program
+4. "Fundamental types. C++ reference. May 14, 2017. Accessed May 21, 2017. http://en.cppreference.com/w/cpp/language/types
+5. "Preventing Memory Leaks in C++ Code." Department of Radio Engineering K 13137 CTU FEE Prague. Accessed May 21, 2017. http://radio.feld.cvut.cz/Docs4Soft/ptolemy/prog\_man.html/ptlang.doc7.html
+6. "C++ Arrays." Tutorials Point. Accessed May 21, 2017. https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
+7. "C++ Vectors." Cal-linux Tutorials. Accessed May 21, 2017. https://cal-linux.com/tutorials/vectors.html
+8. "Pointers, References and Dynamic Memory Allocation." Nanyang Technoligcal University. Accessed May 21, 2017. https://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp4\_PointerReference.html
+9. "GCC \*is\* wonderful: a better ARRAY\_SIZE macro." Zubplot. January 4, 2015. Accessed December 3, 2017. http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
+10. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
+11. "Variables in C++." Studytonight. Accessed May 21, 2017. http://www.studytonight.com/cpp/variables-scope-details.php
+12. "C++ final specifier." GeeksForGeeks. January 4, 2017. https://www.geeksforgeeks.org/c-final-specifier/
+13. "[C++] Operators." cpluspluss.com. Accessed May 21, 2017. http://www.cplusplus.com/doc/tutorial/operators/
+14. "Lesson 2: If statements in C++." Cprogramming.com. Accessed May 21, 2017. http://www.cprogramming.com/tutorial/lesson2.html
+15. "[C++] switch statement." C++ reference. March 6, 2017. Accessed May 21, 2017. http://en.cppreference.com/w/cpp/language/switch
+16. "C++ for loop." Tutorials Point. Accessed May 21, 2017. https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
+17. "C++ while and do...while Loop." Progamiz. Accessed May 21, 2017. https://www.programiz.com/cpp-programming/do-while-loop
+18. "C++ Programming Language Stream IO and File IO." Nanyang Technological University. May, 2013. Accessed May 21, 2017. http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10\_io.html
