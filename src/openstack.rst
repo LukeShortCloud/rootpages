@@ -1694,7 +1694,7 @@ Automation - TripleO - Full - Overcloud
           $ openstack overcloud node discover --range <CIDR> \
           --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
--  Deploy the Overcloud with any custom Heat configurations.
+-  Deploy the Overcloud with any custom Heat configurations. [1] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [2]
 
    ::
 
@@ -1715,11 +1715,12 @@ Automation - TripleO - Full - Overcloud
 
 [1]
 
-Source:
+Sources:
 
 1. "Basic Deployment (CLI)." OpenStack Documentation. Accessed November
    9, 2017.
    https://docs.openstack.org/tripleo-docs/latest/install/basic\_deployment/basic\_deployment\_cli.html
+2. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
 
 Configurations
 --------------
