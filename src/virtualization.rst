@@ -1,54 +1,7 @@
 Virtualization
 ==============
 
--  `libvirt <#libvirt>`__
--  `Hardware Virtualization <#hardware-virtualization>`__
-
-   -  `KVM <#hardware-virtualization---kvm>`__
-
-      -  `Performance
-         Tuning <#hardware-virtualization---kvm---performance-tuning>`__
-      -  `Nested
-         Virtualization <#hardware-virtualization---kvm---nested-virtualization>`__
-      -  `GPU
-         Passthrough <#hardware-virtualization---kvm---gpu-passthrough>`__
-
-   -  `Xen <#hardware-virtualization---xen>`__
-
-      -  `Nested
-         Virtualization <#hardware-virtualization---xen---nested-virtualization>`__
-
--  `Software Virtualization <#software-virtualization>`__
-
-   -  `Containers <#software-virtualization---containers>`__
-
-      -  `docker <#software-virtualization---containers---docker>`__
-
-         -  `Networking <#software-virtualization---containers---docker---networking>`__
-
-      -  `LXC <#software-virtualization---containers---lxc>`__
-
--  `Orchestration <#orchestration>`__
-
-   -  `Vagrant <#orchestration---vagrant>`__
-
-      -  `Vagrantfile <#orchestration---vagrant---vagrantfile>`__
-
-         -  `Networks <#orchestration---vagrant---vagrantfile---networks>`__
-
-            -  `libvirt <#orchestration---vagrant---vagrantfile---networks---libvirt>`__
-
-         -  `Provisioning <#orchestration---vagrant---vagrantfile---provisioning>`__
-         -  `Multiple
-            Machines <#orchestration---vagrant---vagrantfile---multiple-machines>`__
-
-   -  Terraform
-
--  GUI
-
-   -  oVirt
-   -  virt-manager
-   -  XenServer
+.. contents:: Table of Contents
 
 libvirt
 -------
@@ -112,8 +65,8 @@ Sources:
    October, 2009. Accessed December 18, 2016.
    http://searchservervirtualization.techtarget.com/definition/Intel-VT
 
-Hardware Virtualization - KVM
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+KVM
+~~~
 
 The "Kernel-based Virtual Machine (KVM)" is the default kernel module
 for handling hardware virtualization in Linux since the 2.6.20 kernel.
@@ -126,8 +79,8 @@ Sources:
 2. "KVM vs QEMU vs Libvirt." The Geeky Way. February 14, 2014. Accessed
    December 22, 2017. http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/
 
-Hardware Virtualization - KVM - Performance Tuning
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Performance Tuning
+^^^^^^^^^^^^^^^^^^
 
 Configuration details for virtual machines can be modified to provide
 better performance. For processors, it is recommended to use the same
@@ -237,8 +190,8 @@ Sources:
    2017.
    http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html
 
-Hardware Virtualization - KVM - Nested Virtualization
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nested Virtualization
+^^^^^^^^^^^^^^^^^^^^^
 
 KVM supports nested virtualization. This allows a virtual machine full
 access to the processor to run another virtual machine in itself. This
@@ -353,8 +306,8 @@ Sources:
    June 19, 2015. Accessed August 30, 2017.
    https://fedoraproject.org/wiki/How\_to\_enable\_nested\_virtualization\_in\_KVM
 
-Hardware Virtualization - KVM - GPU Passthrough
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GPU Passthrough
+^^^^^^^^^^^^^^^
 
 GPU passthrough is useful for running a Windows virtual machine guest
 for gaming inside of Linux. It is recommended to have two video cards,
@@ -391,8 +344,8 @@ Sources:
    Accessed December 18, 2016.
    https://wiki.archlinux.org/index.php/PCI\_passthrough\_via\_OVMF
 
-Hardware Virtualization - Xen
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Xen
+~~~
 
 Xen is a free and open source software hypervisor under the GNU General
 Public License (GPL). It was originally designed to be a competitor of
@@ -406,8 +359,8 @@ Source:
 1. "Xen Definition." TechTarget. March, 2009. Accessed December 18,
    2016. http://searchservervirtualization.techtarget.com/definition/Xen
 
-Hardware Virtualization - Xen - Nested Virtualization
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Nested Virtualization
+^^^^^^^^^^^^^^^^^^^^^
 
 Since Xen 4.4, experimental support was added for nested virtualization.
 A few settings need to be added to the Xen virtual machine's file,
@@ -433,8 +386,8 @@ Source:
 Software Virtualization
 -----------------------
 
-Software Virtualization - Containers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Containers
+~~~~~~~~~~
 
 Containers are a type of software virtualization. Using a directory
 structure that contains an entire operating system (typically referred
@@ -442,8 +395,8 @@ to as a chroot), containers can easily spin up and utilize system
 resources without the overhead of full hardware allocation. It is not
 possible to use separate kernels with this approach.
 
-Software Virtualization - Containers - docker
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+docker
+^^^^^^
 
 The docker software (with a lowercase "d") was created by the Docker
 company to manage and create containers using the LXC kernel module on
@@ -461,8 +414,8 @@ Source:
 1. "Get started with Docker." Docker. Accessed November 19, 2016.
    https://docs.docker.com/engine/getstarted
 
-Software Virtualization - Containers - docker - Networking
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Networking
+''''''''''
 
 Networking is automatically bridged to the public interface and set up
 with a NAT. This allows full communication to/from the container,
@@ -533,8 +486,8 @@ Sources:
    GitHub. November 10, 2016. Accessed December 17, 2016.
    https://github.com/docker/docker/issues/16816
 
-Software Virtualization - Containers - LXC
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+LXC
+^^^
 
 Linux Containers (LXC) utilizes the Linux kernel to natively run
 containers.
@@ -588,8 +541,8 @@ Orchestration
 Virtual machine provisioning can be automated through the use of
 different tools.
 
-Orchestration - Vagrant
-~~~~~~~~~~~~~~~~~~~~~~~
+Vagrant
+~~~~~~~
 
 Vagrant is programmed in Ruby to help automate virtual machine (VM)
 deployment. It uses a single file called "Vagrantfile" to describe the
@@ -654,8 +607,8 @@ Sources:
    2016. Accessed May 8, 2017.
    https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
 
-Orchestration - Vagrant - Vagrantfile
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Vagrantfile
+^^^^^^^^^^^
 
 A default Vagrantfile can be created to start customizing with.
 
@@ -698,8 +651,8 @@ Source:
 1. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed
    May 9, 2017. https://www.vagrantup.com/docs/boxes.html
 
-Orchestration - Vagrant - Vagrantfile - Networks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Networks
+^^^^^^^^
 
 Networks are either ``private`` or ``public``. ``private`` networks use
 host-only networking and use network address translation (NAT) to
@@ -760,8 +713,8 @@ Source:
 1. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017.
    Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
 
-Orchestration - Vagrant - Vagrantfile - Networks - libvirt
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+libvirt
+&&&&&&&
 
 The options and syntax for public networks with the "libvirt" provider
 are slightly different.
@@ -793,8 +746,8 @@ Source:
    2017. Accessed June 17, 2017.
    https://github.com/vagrant-libvirt/vagrant-libvirt
 
-Orchestration - Vagrant - Vagrantfile - Provisioning
-''''''''''''''''''''''''''''''''''''''''''''''''''''
+Provisioning
+''''''''''''
 
 After a virtual machine (VM) has been created, additional commands can
 be run to configure the guest VMs. This is referred to as
@@ -828,8 +781,8 @@ Source:
 1. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017.
    Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
 
-Orchestration - Vagrant - Vagrantfile - Multiple Machines
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Multiple Machines
+'''''''''''''''''
 
 A ``Vagrantfile`` can specify more than one virtual machine.
 
@@ -897,3 +850,14 @@ Sources:
 2. "Vagrantfile." Linux system administration and monitoring / Windows
    servers and CDN video. May 9, 2017. Accessed May 9, 2017.
    http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html
+
+GUI
+---
+
+There are many programs for managing virtualization from a graphical user interface (GUI).
+
+Common GUIs:
+
+-  oVirt
+-  virt-manager
+-  XenServer
