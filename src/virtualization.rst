@@ -652,7 +652,7 @@ Source:
    May 9, 2017. https://www.vagrantup.com/docs/boxes.html
 
 Networks
-^^^^^^^^
+''''''''
 
 Networks are either ``private`` or ``public``. ``private`` networks use
 host-only networking and use network address translation (NAT) to
