@@ -1,36 +1,7 @@
 Python 3
 ========
 
--  `PEP <#pep>`__
-
-   -  `Style Guide for Python
-      Code <#pep---style-guide-for-python-code>`__
-
--  `Data Types <#data-types>`__
-
-   -  `Dictionaries <#data-types---dictionaries>`__
-
--  Conditional Statements
-
-   -  If
-   -  For
-   -  While
-
--  Libraries
--  Errors
-
-   -  Exceptions
-   -  Logging
-   -  Unit Tests
-
--  Input and Output
-
-   -  stdin and stdout
-   -  Files
-   -  Network
-
--  Object Oriented Programming
--  Virtual Environments
+.. contents:: Table of Contents
 
 PEP
 ---
@@ -44,8 +15,8 @@ Source:
    Developer's Guide. Accessed November 15, 2017.
    https://www.python.org/dev/peps/
 
-PEP - Style Guide for Python Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Style Guide for Python Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PEP 8 is the "Style Guide for Python Code."
 
@@ -235,8 +206,8 @@ Example:
         global var
         print(var)
 
-Data Types - Dictionaries
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Dictionaries
+~~~~~~~~~~~~
 
 Dictionaries are a variable that provides a key-value store. It can be
 used as a nested array of variables.
