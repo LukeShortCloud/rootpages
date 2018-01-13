@@ -41,7 +41,7 @@ end with a ``*/``.
 
 A simple C example is provided below:
 
-::
+.. code-block:: c
 
     #include <stdio.h>
 
@@ -54,7 +54,7 @@ A simple C example is provided below:
 On Linux, C programs can be compiled with the GNU C compiler (gcc) and
 C++ programs with the GNU C++ compiler (g++).
 
-::
+.. code-block:: sh
 
     $ gcc hello.c -o hello
     $ ./hello
@@ -212,13 +212,13 @@ Below shows how to assign/create variables using these data types.
 
 Syntax:
 
-::
+.. code-block:: c
 
     <DATA_TYPE> <VARIABLE_NAME> = <VALUE>;
 
 Examples:
 
-::
+.. code-block:: c++
 
     bool boolean_var = "true";
     long unsigned int integer_var = "-100";
@@ -240,19 +240,19 @@ automatically after the main process is complete.
 
 Syntax:
 
-::
+.. code-block:: c
 
     <DATA_TYPE> <VARIABLE_NAME> = new <DATA_TYPE>;
 
-::
+.. code-block:: c
 
     <ARRAY_VARIABLE_NAME> = new <DATA_TYPE> [<SIZE>];
 
-::
+.. code-block:: c
 
     delete <VARIABLE_NAME>
 
-::
+.. code-block:: c
 
     delete[] <ARRAY_VARIABLE_NAME>
 
@@ -266,24 +266,25 @@ arrays, use vectors instead.
 
 Syntax:
 
-::
+.. code-block:: c
 
     <DAYA_TYPE> <ARRAY_VARIABLE_NAME> [<SIZE>] = { <VALUE_1>, <VALUE_2>, <VALUE_3> };
 
-::
+.. code-block:: c
 
     <ARRAY_VARIABLE_NAME> = new <DATA_TYPE> [<SIZE>];
 
 Example:
 
-::
+.. code-block:: c++
 
     std::string first_array[3] = { "us", "uk", "de" };
+
     for (int count = 0; count < 3; count++) {
         cout << first_array[count];
     }
 
-::
+.. code-block:: c
 
     empty_array = new float [3];
 
@@ -299,27 +300,27 @@ information, and vectors can be resized.
 
 Include:
 
-::
+.. code-block:: c++
 
     #include <vector>
 
 Syntax:
 
-::
+.. code-block:: c++
 
     vector<<DATA_TYPE> <VARIABLE_NAME>;
 
-::
+.. code-block:: c++
 
     vector<<DATA_TYPE>> <VARIABLE_NAME> (<SIZE>);
 
 Example:
 
-::
+.. code-block:: c++
 
     vector<int> restaurant_order_numbers (999);
 
-::
+.. code-block:: c++
 
     vector<std::string> (3);
 
@@ -339,21 +340,21 @@ There are a few different ways to define a pointer.
 
 Syntax:
 
-::
+.. code-block:: c
 
     <DATA_TYPE> *<POINTER>
 
-::
+.. code-block:: c
 
     <DATA_TYPE>* <POINTER>;
 
-::
+.. code-block:: c
 
     <DATA_TYPE> * <POINTER>;
 
 Example:
 
-::
+.. code-block:: c
 
     char *pointer_variable;
 
@@ -361,13 +362,13 @@ It is possible to get the pointer address of an existing variable.
 
 Syntax:
 
-::
+.. code-block:: c
 
     &<VARIABLE_NAME>
 
 Example:
 
-::
+.. code-block:: c++
 
     int *the_answer_to_life; // pointer int
     int answer = 42; // int
@@ -380,7 +381,7 @@ array and then the size of the entire array.
 
 Example of founding the size of array ``x``:
 
-::
+.. code-block:: c
 
     char x[5] = {'h', 'e', 'l', 'l', 'o' };
     int x_array_size = sizeof(x) / sizeof(*x);
@@ -390,7 +391,7 @@ automatically. [9]
 
 Example:
 
-::
+.. code-block:: c
 
     char x[5] = {'w', 'o', 'r', 'l', 'd' };
     int x_array_size = ARRAY_SIZE(x);
@@ -402,7 +403,7 @@ Both a "struct" and a "union" store multiple variables within themselves. A stru
 
 Structure syntax:
 
-::
+.. code-block:: c
 
   struct <NAME> {
       <DATA_TYPE_1> <VARIABLE_NAME_1>;
@@ -412,7 +413,7 @@ Structure syntax:
 
 Union syntax:
 
-::
+.. code-block:: c
 
   union <NAME> {
       <DATA_TYPE_1> <VARIABLE_NAME_1>;
@@ -422,7 +423,7 @@ Union syntax:
 
 A variable in a struct or union can be referenced using it's name, a period, and then the actual variable name.
 
-::
+.. code-block:: c
 
   <STRUCT_OR_UNION_NAME>.<VARIABLE_NAME>;
 
@@ -487,7 +488,7 @@ things is returned as true.
 
 Syntax:
 
-::
+.. code-block:: c
 
     if (<TRUE_STATEMENT>) {
         // <DO_SOMETHING_1>
@@ -499,12 +500,12 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: c
 
     if ( number_of_cats_owned > 9 ) {
         cat_lover = true;
 
-::
+.. code-block:: c
 
     if ( number_of_dogs_owned == 0 ) {
         dog_lover = false;
@@ -529,7 +530,7 @@ of a variable. If a switch condition is met, it is a good idea to a
 
 Syntax:
 
-::
+.. code-block:: c
 
     switch(<VARIABLE>) {
         case <VALUE_1> : <DO>;
@@ -544,7 +545,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: c++
 
     int number_of_forks = 3;
     switch(number_of_forks) {
@@ -565,7 +566,7 @@ for running a loop a specific number of times.
 
 Syntax:
 
-::
+.. code-block:: c
 
     for ( <INITIALIZE>; <COMPAIRISON>; <INCREMENT>) {
         // <DO_SOMETHING>
@@ -573,9 +574,10 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: c++
 
-    count << "The countdown started."
+    count << "The countdown started.";
+
     for ( int count = 10; 0 < count ; --count) {
         cout << count;
     }
@@ -591,13 +593,13 @@ that the tasks will be run at least once.
 
 Syntax:
 
-::
+.. code-block:: c
 
     while (<EXPRESSION>) {
         // <DO_SOMETHING>
     }
 
-::
+.. code-block:: c
 
     do {
         // <DO_SOMETHING>
@@ -605,7 +607,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: c++
 
     std::string every_fruit = { "apples", "bananas", "oranges"}
     std::string fruit = new std::string();
@@ -641,25 +643,25 @@ input/output functions since they are compatible.
 
 Syntax:
 
-::
+.. code-block:: c++
 
     cout << "<TEXT>";
 
-::
+.. code-block:: c
 
     printf("<TEXT>");
 
-::
+.. code-block:: c
 
     scanf("<FORMATER>", <VARIABLE>);
 
-::
+.. code-block:: c++
 
     cin >> <VARIABLE>;
 
 Example:
 
-::
+.. code-block:: c
 
     string w = "world";
     printf("Hello %s\n", string w  );
@@ -673,7 +675,7 @@ Command-line arguments, given to a compiled program, are stored into two variabl
 
 Example:
 
-::
+.. code-block:: c
 
     #include <stdio.h>
 
@@ -684,7 +686,7 @@ Example:
         printf("The first command-line argument is: %s\n", argv[1]);
     }
 
-::
+.. code-block:: sh
 
     $ gcc example.c -o example
     $ ./example 123
@@ -716,7 +718,7 @@ Valid modes [21]:
 
 Syntax:
 
-::
+.. code-block:: c
 
     fopen("<FILE_NAME>", "<MODE>");
 
@@ -724,13 +726,13 @@ When a file is done being read and/or written to then it needs to be closed to p
 
 Syntax:
 
-::
+.. code-block:: c
 
     fclose(<FILE_VARIABLE>);
 
 fgetc example:
 
-::
+.. code-block:: c
 
     #include <stdio.h>
 
