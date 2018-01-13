@@ -9,12 +9,6 @@ PEP
 Python Enhancement Proposals (PEPs) are guidelines to improve Python
 itself and developer's code. Each PEP is assigned a specific number. [1]
 
-Source:
-
-1. "PEP 0 -- Index of Python Enhancement Proposals (PEPs)." Python's
-   Developer's Guide. Accessed November 15, 2017.
-   https://www.python.org/dev/peps/
-
 Style Guide for Python Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -76,12 +70,7 @@ Example:
 
    -  Be full sentences.
 
-[1]
-
-Source:
-
-1. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide.
-   Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
+[2]
 
 Data Types
 ----------
@@ -231,3 +220,9 @@ YAML libraries:
 
 -  yaml.load = Load a YAML dictionary from a string.
 -  yaml.dump = Convert a YAML dictionary into a string.
+
+Bibliography
+------------
+
+1. "PEP 0 -- Index of Python Enhancement Proposals (PEPs)." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/
+2. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
