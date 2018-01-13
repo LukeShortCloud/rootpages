@@ -609,6 +609,7 @@ Example:
 
     std::string every_fruit = { "apples", "bananas", "oranges"}
     std::string fruit = new std::string();
+
     while (fruit != "orange") {
         fruit = every_fruit[random_number];
         cout << "This fruit is: " << fruit << endl;
@@ -691,6 +692,67 @@ Example:
     The program name is: ./example
     The first command-line argument is: 123
 
+Files
+~~~~~
+
+Files use the "FILE" data type. In C, there are 9 different functions that can be used for reading and writing contents of a file.
+
+- fgetc/fputc
+- fgets/fputs
+- fread/fwrite
+
+Using fread and frwrite is preferred for larger files due to the performance improvement of not having to read or write contents of the storage device constantly. Instead, a buffer is used to read or write many characters at once. Use fgetc and fputc for processing smaller files faster. [20] The `fopen()` and `fclose()` functions are used to open and close a file.
+
+fopen requires two arguments: the file name and the mode to open it in.
+
+Valid modes [21]:
+
+- a = Append write.
+- a+ = Read and append write.
+- r = Read.
+- r+ = Read and write.
+- w = Write and remove the contents of the file.
+- w+ = Read and then remove the contents of the file before writing.
+
+Syntax:
+
+::
+
+    fopen("<FILE_NAME>", "<MODE>");
+
+When a file is done being read and/or written to then it needs to be closed to prevent a memory leak.
+
+Syntax:
+
+::
+
+    fclose(<FILE_VARIABLE>);
+
+fgetc example:
+
+::
+
+    #include <stdio.h>
+
+    int main() {
+        FILE *file_to_read;
+        char buffer;
+
+        file_to_read = fopen("/etc/hosts", "r");
+
+        if (file_to_read == NULL) {
+            perror("Unable to read the file.\n");
+        } else {
+            printf("The file was read.\n");
+        }
+
+        while ( (buffer=fgetc(file_to_read)) != EOF) {
+            printf("%c", buffer);
+        }
+
+        fclose(file_to_read);
+    }
+
 Bibliography
 ------------
 
@@ -713,3 +775,5 @@ Bibliography
 17. "C++ while and do...while Loop." Progamiz. Accessed May 21, 2017. https://www.programiz.com/cpp-programming/do-while-loop
 18. "C++ Programming Language Stream IO and File IO." Nanyang Technological University. May, 2013. Accessed May 21, 2017. http://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp10\_io.html
 19. "C Tutorial – More on Functions." CodingUnit Programming Tutorials. Accessed January 11, 2018. https://www.codingunit.com/c-tutorial-more-on-c-functions
+20. "Disk I/O in C – avoid fgetc/fputc." Left 404. March 17, 2011. Accessed January 12, 2018. http://left404.com/2011/03/17/disk-io-in-c-avoid-fgetcfputc/
+21. "File Handling in C with Examples (fopen, fread, fwrite, fseek)." The Geek Stuff. July 9, 2012. Accessed January 13, 2018. https://www.thegeekstuff.com/2012/07/c-file-handling
