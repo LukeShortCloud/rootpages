@@ -20,7 +20,7 @@ PEP 8 is the "Style Guide for Python Code."
    -  Have two new lines above it.
    -  Example:
 
-::
+.. code-block:: python
 
     import os
 
@@ -34,7 +34,7 @@ PEP 8 is the "Style Guide for Python Code."
    -  Have it's contents intended by 4 spaces.
    -  Example:
 
-::
+.. code-block:: python
 
     def hello_world():
         print("Hello world")
@@ -56,15 +56,16 @@ PEP 8 is the "Style Guide for Python Code."
 
 Example:
 
-::
-
+.. code-block:: python
 
     if (phoneNumber == 999):
 
         if (callerID is “Frank”):
             print(“Hello Frank.”)
+        else:
+            print("Hello everyone else.")
 
-    print("Hello everyone else.")
+    print("Welcome to work.")
 
 -  Comments should:
 
@@ -187,7 +188,7 @@ return their new values.
 
 Example:
 
-.. code:: python
+.. code-block:: python
 
     var = "Hello world"
 
@@ -203,7 +204,7 @@ used as a nested array of variables.
 
 Example replacing a key:
 
-.. code:: python
+.. code-block:: python
 
     dictionary = {'stub_host': '123'}
     dictionary['hello_world'] = dictionary.pop('stub_host')
