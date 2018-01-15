@@ -365,161 +365,31 @@ Sources:
 RPM - Repositories - Common Repositories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-+------+------+------+------+------+
-| Repo | Supp | Offi | Desc | Repo |
-| sito | orte | cial | ript | sito |
-| ry   | d    |      | ion  | ry   |
-| Name | Oper |      |      | RPM  |
-|      | atin |      |      |      |
-|      | g    |      |      |      |
-|      | Syst |      |      |      |
-|      | ems  |      |      |      |
-+======+======+======+======+======+
-+------+------+------+------+------+
-
-\| Extra Packages for Enterprise Linux (EPEL) \| RHEL \| Yes \| Packages
-from Fedora built for Red Hat Enterprise Linux (RHEL) based operating
-systems. [1] \|
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__
-\| Inline with Upstream (IUS) \| RHEL \| No \| The latest upstream
-software that is built for RHEL. IUS packages that can safely replace
-system packages will. IUS packages known to cause conflicts with
-operating system packages are installed in a separate location. [2] \|
-
-.. raw:: html
-
-   <li>
-
-`RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__ \| \|
-Enterprise Linux Repository (ELRepo) \| RHEL \| No \| The latest
-hardware drivers and Linux kernels. [3] \|
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-6 <http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-7 <http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm>`__
-\| \| RPM Fusion \| Fedora, RHEL \| No \| Packages that Fedora does not
-ship by default due to license conflicts. [4] \|
-
-.. raw:: html
-
-   <li>
-
-`Fedora
-25 <https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-25.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`Fedora
-26 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`Fedora
-27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__
-
-.. raw:: html
-
-   <li>
-
-`RHEL
-7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__
-\| \| RPM Sphere \| Fedora \| No \| openSUSE packages that are not
-available in Fedora. [5] \|
-
-.. raw:: html
-
-   <li>
-
-`Fedora
-25 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_25/home:zhonghuaren.repo>`__
-
-.. raw:: html
-
-   <li>
-
-`Fedora
-26 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo>`__
-\| \| Kernel Vanilla \| Fedora \| Yes \| Kernel packages for the latest
-stable and mainline Linux kernels. [6] \|
-
-.. raw:: html
-
-   <li>
-
-`Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__
-\| \| Wine \| Fedora \| Yes \| The latest stable, development, and
-staging packages for Wine. \|
-
-.. raw:: html
-
-   <li>
-
-Fedora 24
-
-.. raw:: html
-
-   <li>
-
-Fedora 25
-
-.. raw:: html
-
-   <li>
-
-`Fedora 26 <https://dl.winehq.org/wine-builds/fedora/26/winehq.repo>`__
-\|
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Repository Name                            | Supported Operating System(s) | Official | Description                                                                                                                                                                                                                    | Repository                                                                                                 |
++============================================+===============================+==========+================================================================================================================================================================================================================================+============================================================================================================+
+| Enterprise Linux Repository (ELRepo)       | RHEL                          | No       | The latest hardware drivers and Linux kernels. [3]                                                                                                                                                                             | `RHEL6 <http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm>`__,                                |
+|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm>`__                               |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Extra Packages for Enterprise Linux (EPEL) | RHEL                          | Yes      | Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. [1]                                                                                                                                    | `RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__,                        |
+|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__                         |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Inline with Upstream (IUS)                 | RHEL                          | No       | The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [2] | `RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,                                               |
+|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__,                                               |
+|                                            |                               |          |                                                                                                                                                                                                                                | `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,                                           |
+|                                            |                               |          |                                                                                                                                                                                                                                | `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__                                            |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Kernel Vanilla                             | Fedora                        | Yes      | Kernel packages for the latest stable and mainline Linux kernels. [6]                                                                                                                                                          | `Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__                                  |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| RPM Fusion                                 | Fedora, RHEL                  | No       | Packages that Fedora does not ship by default (primarily due to license conflicts). [4]                                                                                                                                        | `Fedora26 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm>`__,           |
+|                                            |                               |          |                                                                                                                                                                                                                                | `Fedora27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__,           |
+|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__,             |
+|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__              |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| RPM Sphere                                 | Fedora                        | No       | openSUSE packages that are not available in Fedora. [5]                                                                                                                                                                        | `Fedora26 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo>`__ |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Wine                                       | Fedora                        | Yes      | The latest stable, development, and staging packages for Wine.                                                                                                                                                                 | `Fedora 26 <https://dl.winehq.org/wine-builds/fedora/26/winehq.repo>`__                                    |
++--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
 Sources:
 
