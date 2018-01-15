@@ -142,44 +142,15 @@ GRUB 2 - Configuration
 
 Important files:
 
-+-------+--------------+
-| FILE  | DESCRIPTION  |
-+=======+==============+
-| /etc/ | GRUB         |
-| defau | settings.    |
-| lt/gr |              |
-| ub    |              |
-+-------+--------------+
-| /etc/ | A folder     |
-| grub. | with various |
-| d/    | scripts that |
-|       | make up the  |
-|       | grub.cfg.    |
-|       | Scripts      |
-|       | prefixed     |
-|       | with lower   |
-|       | numbers are  |
-|       | executed     |
-|       | first.       |
-+-------+--------------+
-| /boot | This is      |
-| /grub | automaticall |
-| /grub | y            |
-| .cfg  | generated    |
-|       | using the    |
-|       | settings     |
-|       | from         |
-|       | /etc/default |
-|       | /grub        |
-|       | and the      |
-|       | scripts in   |
-|       | /etc/grub.d/ |
-|       | .            |
-|       | Manual       |
-|       | changes may  |
-|       | get          |
-|       | overwritten. |
-+-------+--------------+
++---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+| FILE                | DESCRIPTION                                                                                                                                     |
++=====================+=================================================================================================================================================+
+| /etc/default/grub   | GRUB default settings.                                                                                                                          |
++---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+| /etc/grub.d/        | A folder with various scripts that make up the grub.cfg. Scripts prefixed with lower numbers are executed first.                                |
++---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+| /boot/grub/grub.cfg | This is automatically generated using the settings from /etc/default/grub and the scripts in /etc/grub.d/ . Manual changes may get overwritten. |
++---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Common Options: \* /etc/default/grub \* GRUB\_DEFAULT = The default menu
 entry to autoboot into. \* saved = Boot from the last option selected.

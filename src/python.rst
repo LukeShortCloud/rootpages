@@ -76,110 +76,29 @@ Example:
 Data Types
 ----------
 
-Python automatically guesses what datatype a variable should be used
+Python automatically guesses what data type a variable should be used
 when it is defined. The datatype a variable is using can be found using
 the ``type()`` function.
 
-+------+------+------+
-| Func | Name | Desc |
-| tion |      | ript |
-|      |      | ion  |
-+======+======+======+
-| chr  | char | one  |
-|      | acte | lett |
-|      | r    | er   |
-|      |      | or   |
-|      |      | numb |
-|      |      | er   |
-+------+------+------+
-| str  | stri | word |
-|      | ngs  | s    |
-|      |      | or   |
-|      |      | numb |
-|      |      | ers  |
-|      |      | defi |
-|      |      | ned  |
-|      |      | with |
-|      |      | in   |
-|      |      | sing |
-|      |      | le   |
-|      |      | or   |
-|      |      | doub |
-|      |      | le   |
-|      |      | quot |
-|      |      | es   |
-+------+------+------+
-| int  | inte | a    |
-|      | ger  | whol |
-|      |      | e    |
-|      |      | numb |
-|      |      | er   |
-+------+------+------+
-| floa | floa | a    |
-| t    | t    | deci |
-|      |      | mal  |
-|      |      | numb |
-|      |      | er   |
-+------+------+------+
-| bool | bool | a    |
-| ean  | ean  | true |
-|      |      | or   |
-|      |      | fals |
-|      |      | e    |
-|      |      | valu |
-|      |      | e;   |
-|      |      | this |
-|      |      | can  |
-|      |      | be a |
-|      |      | “1”  |
-|      |      | or   |
-|      |      | “0”, |
-|      |      | or   |
-|      |      | it   |
-|      |      | can  |
-|      |      | be   |
-|      |      | “Tru |
-|      |      | e”   |
-|      |      | or   |
-|      |      | “Fal |
-|      |      | se”  |
-+------+------+------+
-| list | list | simi |
-|      |      | lar  |
-|      |      | to   |
-|      |      | an   |
-|      |      | arra |
-|      |      | y,   |
-|      |      | it   |
-|      |      | is a |
-|      |      | list |
-|      |      | of   |
-|      |      | mult |
-|      |      | iple |
-|      |      | vari |
-|      |      | able |
-|      |      | s    |
-+------+------+------+
-| dict | dict | a    |
-|      | iona | list |
-|      | ry   | that |
-|      |      | has  |
-|      |      | sub- |
-|      |      | list |
-|      |      | s    |
-+------+------+------+
-| tupl | tupl | a    |
-| e    | e    | read |
-|      |      | -onl |
-|      |      | y    |
-|      |      | list |
-|      |      | that |
-|      |      | cann |
-|      |      | ot   |
-|      |      | be   |
-|      |      | modi |
-|      |      | fied |
-+------+------+------+
++----------+------------+----------------------------------------------------------------------------------+
+| Function | Name       | Description                                                                      |
++==========+============+==================================================================================+
+| chr      | character  | One alphanumeric character.                                                      |
++----------+------------+----------------------------------------------------------------------------------+
+| str      | string     | One or more characters.                                                          |
++----------+------------+----------------------------------------------------------------------------------+
+| int      | integer    | A whole number.                                                                  |
++----------+------------+----------------------------------------------------------------------------------+
+| float    | float      | A decimal number.                                                                |
++----------+------------+----------------------------------------------------------------------------------+
+| boolean  | boolean    | a true or false value; this can be a “1” or “0”, or it can be “True” or “False." |
++----------+------------+----------------------------------------------------------------------------------+
+| list     | list       | A list of multiple variables that is similar to an array.                        |
++----------+------------+----------------------------------------------------------------------------------+
+| dict     | dictionary | An array of arrays.                                                              |
++----------+------------+----------------------------------------------------------------------------------+
+| tuple    | tuple      | A read-only list that cannot be modified.                                        |
++----------+------------+----------------------------------------------------------------------------------+
 
 Variables defined outside of a function are global variables. Although
 this practice is discouraged, these can be referenced using the
