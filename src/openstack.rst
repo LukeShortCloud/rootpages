@@ -391,7 +391,7 @@ Sources:
    https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 
 Answer File
-~~~~~~~~~~~
+'''''''''''
 
 The "answer" configuration file defines how OpenStack should be setup
 and installed. Using a answer file can provide a more customizable
