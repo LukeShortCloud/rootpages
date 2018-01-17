@@ -750,15 +750,7 @@ Sources:
 Flatpak
 -------
 
-Flatpak is a sandbox solution to providing a universal application
-packaging. It was first started by an employee from Red Hat in their
-spare time. Flatpak has a strong focus on portability, security, and
-effective space usage. [1]
-
-This package manager is available for most modern Linux distributions.
-[2] RHEL does not have an official package but unofficial RPMs are
-provided here:
-https://copr.fedorainfracloud.org/coprs/amigadave/flatpak-epel7/.
+Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [1] This package manager is available for most modern Linux distributions. [2]
 
 Source:
 
