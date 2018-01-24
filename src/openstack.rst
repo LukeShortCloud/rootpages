@@ -13,13 +13,7 @@ this guide can be applied to similar environments and/or versions.
 Versions
 ~~~~~~~~
 
-Each OpenStack release starts with a letter, chronologically starting
-with A. These are usually named after the city where one of the recent
-development conferences were held. The major version number of OpenStack
-represents the major version number of each software in that release.
-For example, Ocata software is versioned as ``15.X.X``. A new release
-comes out about every 6 months and is supported for 1 year before
-becoming end-of-life (EOL).
+Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as ``15.X.X``. A new release comes out after about 6 months of development. After a release, phase 1 of support provides bug fixes for 6 months. Then phase 2 starts for the next 6-12 months that will only provide major bug fixes. Phase 3 only provides security patches for the now end-of-life (EOL) release. Each release is typically supported for 1 year before becoming EOL. [85]
 
 Releases:
 
@@ -38,10 +32,12 @@ Releases:
 13. Mitaka
 14. Newton
 
+    -  Release: 2016-10-06
     -  EOL: 2017-10-11
 
 15. Ocata
 
+    -  Release: 2017-02-22
     -  EOL: 2018-02-26 [1]
     -  Goals:
 
@@ -55,6 +51,7 @@ Releases:
 
 16. Pike
 
+    -  Release: 2017-08-30
     -  EOL: 2018-09-03 [1]
     -  Goals:
 
@@ -67,7 +64,7 @@ Releases:
 17. Queens
 
     -  Currently in development. The expected release date is in
-       February of 2018. [1]
+       February or March of 2018. [1]
     -  Goals:
 
        -  Remove the need for the access control list "policy" files by
@@ -103,42 +100,52 @@ Releases:
 
 -  RHOSP 3 (Grizzly)
 
+   -  Release: 2013-07-10
    -  EOL: 2014-07-31
 
 -  RHOSP 4 (Havana)
 
+   -  Release: 2013-12-19
    -  EOL: 2015-06-19
 
 -  RHOSP 5 (Icehouse)
 
+   -  Release: 2014-06-30
    -  EOL: 2017-06-30
 
 -  RHOSP 6 (Juno)
 
+   - Release: 2015-02-09
    -  EOL: 2018-02-17
 
 -  RHOSP 7 (Kilo)
 
+   - Release: 2015-08-05
    -  EOL: 2018-08-05
 
 -  RHOSP 8 (Liberty)
 
+   -  Release: 2016-04-20
    -  EOL: 2019-04-20
 
 -  RHOSP 9 (Mitaka)
 
+   -  Release: 2016-08-24
    -  EOL: 2017-08-24
 
 -  **RHOSP 10 LL (Newton)**
 
+   -  Release: 2016-12-15
    -  EOL: 2021-12-16
 
 -  RHOSP 11 (Ocata)
 
+   -  Release: 2017-05-18
    -  EOL: 2018-05-18
 
 -  RHOSP 12 (Pike)
 
+   -  Release: 2017-12-13
    -  EOL: 2018-12-13
 
 [6]
@@ -2978,7 +2985,7 @@ Bibliography
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 12, 2017. https://access.redhat.com/support/policy/updates/openstack/platform
+6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. January 24, 2018. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
@@ -3057,3 +3064,4 @@ Bibliography
 82. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template\_guide/hot\_spec.html
 83. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 84. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
+85. "Stable branches." OpenStack Documentation. December 12, 2017. Accessed January 24, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
