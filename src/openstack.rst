@@ -335,6 +335,19 @@ below and replace "eth0" with the public interface name.
 
     # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
 
+Alternatively, use these configuration options in the answer file.
+
+::
+
+    CONFIG_NEUTRON_ML2_TYPE_DRIVERS=vxlan,flat
+    CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=extnet:br-ex
+    CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:eth0
+    CONFIG_PROVISION_DEMO=n
+
+::
+
+    # packstack --answer-file <ANSWER_FILE>
+
 After the installation is finished, create the necessary network in
 Neutron as the admin user. In this example, the network will
 automatically allocate IP addresses between 192.168.1.201 and
