@@ -1,20 +1,7 @@
--  `Linux <#linux>`__
-
-   -  `System Calls <#linux---system-calls>`__
-   -  `Modules <#linux---modules>`__
-   -  `Schedulers <#linux---schedulers>`__
-
-      -  `Processor <#linux---schedulers---processor>`__
-      -  `I/O <#linux---schedulers---i/o>`__
-
--  `Initial RAM Filesystem <#initial-ram-filesystem>`__
-
-   -  `Arch Linux (mkinitcpio) <#initial-ram-filesystem---arch-linux>`__
-   -  Debian (initramfs-tools)
-   -  `RHEL (dracut) <#initial-ram-filesystem---rhel>`__
-
 Linux
 =====
+
+.. contents:: Table of Contents
 
 Linux is a kernel designed to be similar to the original UNIX kernel. It
 is a modern, free, and open source alternative that was originally
@@ -28,8 +15,8 @@ Source:
 1. "About Linux Kernel." The Linux Kernel Archives. April 23, 2017.
    Accessed July 9, 2016. https://www.kernel.org/linux.html
 
-Linux - System Calls
---------------------
+System Calls
+------------
 
 Programs use system calls to interact with the kernel to do tasks.
 
@@ -119,8 +106,8 @@ Source:
    Science. August 22, 2016. Accessed July 1, 2017.
    http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml
 
-Linux - Modules
----------------
+Modules
+-------
 
 The kernel is composed of a large number of modules. These can be found
 here:
@@ -197,11 +184,11 @@ Source:
    November 19, 2016.
    https://wiki.archlinux.org/index.php/Kernel\_modules
 
-Linux - Schedulers
-------------------
+Schedulers
+----------
 
-Linux - Schedulers - Processor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Processor
+~~~~~~~~~
 
 The Linux kernel can handling incoming requests differently depending on
 the scheduler method. By default, all processes use the Completely Fair
@@ -256,7 +243,8 @@ Sources:
    Accessed July 9, 2017.
    https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/
 
-### Linux - Schedulers - I/O
+I/O
+~~~
 
 The kernel provides many input/output (I/O) schedulers to configure how
 a hard drive handles a queue of read/write requests from the operating
@@ -301,10 +289,10 @@ Sources:
    Knowledgebase. December 16, 2016. Accessed December 18, 2016.
    https://access.redhat.com/solutions/5427
 
-Initial RAM Filesystem
-======================
+Initial RAM File System
+-----------------------
 
-The initramfs (initial RAM filesystem) is used to boot up a system
+The initramfs (initial RAM file system) is used to boot up a system
 before loading the full Linux kernel. It is the successor to the initrd
 (initial RAM disk). A boot loader, such as GRUB, loads the initramfs
 first. This usually contains a minimum copy of the kernel and drivers
@@ -321,8 +309,8 @@ Sources:
    29, 2015. Accessed November 19, 2016.
    https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
 
-Initial RAM Filesystem - Arch Linux
------------------------------------
+Arch Linux
+~~~~~~~~~~
 
 All modifications of the initramfs in Arch Linux are handled by the
 "mkinitcpio" utility.
@@ -362,8 +350,8 @@ Source:
 1. "mkinitcpio." The Arch Linux Wiki. November 13, 2016. Accessed
    November 19, 2016. https://wiki.archlinux.org/index.php/mkinitcpio
 
-Initial RAM Filesystem - RHEL
------------------------------
+RHEL
+~~~~
 
 On Red Hat Enterprise Linux (RHEL) based operating systems (such as RHEL
 itself, CentOS, and Fedora), Dracut is used to manage the initramfs.
