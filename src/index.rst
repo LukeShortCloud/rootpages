@@ -18,7 +18,6 @@ Welcome to Root Pages!
    dns_servers
    file_systems
    http_servers
-   linux_commands
    linux
    mail_servers
    monitoring
@@ -33,11 +32,3 @@ Welcome to Root Pages!
    virtualization
    wine
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
