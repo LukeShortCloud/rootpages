@@ -218,6 +218,7 @@ Other services:
 -  Monasca = Monitoring
 -  Murano = Application Catalog
 -  Octavia = Load Balancing
+-  Rally = Benchmarking
 -  Sahara = Elastic Map Reduce
 -  Searchlight = Indexing
 -  Trove = Database
@@ -2957,15 +2958,151 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 [84]
 
+Rally
+~~~~~
+
+Rally is the benchmark-as-a-service (BaaS) that tests the OpenStack APIs for both functionality and for helping with performance tuning. This tool has support for using different verifier plugins. It is primarily built to be a wrapper for Tempest that is easier to configure and saves the results to a database so it can generate reports.
+
+Installation
+^^^^^^^^^^^^
+
+Install (RHEL):
+
+::
+
+    $ curl -L -o ~/install_rally.sh https://raw.githubusercontent.com/openstack/rally/master/install_rally.sh
+    $ sudo yum install gcc gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
+    $ bash ~/install_rally.sh --target ~/rally-venv
+
+Rally can now be used by activating the Python virtual environment.
+
+::
+
+    $ . ~/rally-venv/bin/activate
+
+Before the first use, finish the installation by creating the Rally SQLite database.
+
+::
+
+    (rally-venv)$ rally db recreate
+
+If Rally is ever upgraded to the latest version, the database also needs to be upgraded.
+
+::
+
+    (rally-venv)$ rally db revision
+    (rally-venv)$ rally db upgrade
+
+[86]
+
+Registering
+^^^^^^^^^^^
+
+Rally requires a configuration, that defines the OpenStack credentials to test with, is registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. As of June 3, 2017, the use of an "admin" user is no longer required. [89]
+
+View registered deployments:
+
+::
+
+    (rally-venv)$ rally deployment list
+    (rally-venv)$ rally deployment show <DEPLOYMENT_NAME>
+
+`1.` Automatic
+
+The fastest way to create this configuration is by referencing the OpenStack credential's shell environment variables.
+
+::
+
+    (rally-venv)$ . <OPENSTACK_RC_FILE>
+    (rally-venv)$ rally deployment create --fromenv --name=existing
+
+`2.` Manual
+
+A JSON file can be created to define the OpenStack credentials that Rally be using. Example files can be found at `~/rally-venv/samples/deployments/`.
+
+::
+
+    (rally-venv)$ cp ~/rally-venv/samples/deployments/existing.json ~/existing.json
+
+::
+
+    {
+        "devstack": {
+            "auth_url": "https://<KEYSTONE_ENDPOINT_HOST>:5000/v3/",
+            "region_name": "RegionOne",
+            "endpoint_type": "public",
+            "admin": {
+                "username": "admin",
+                "password": "<PASSWORD>",
+                "user_domain_name": "admin",
+                "project_name": "admin",
+                "project_domain_name": "admin"
+            },
+            "https_insecure": false,
+            "https_cacert": "<PATH_TO_CA_CERT>"
+        }
+    }
+
+::
+
+    (rally-venv)$ rally deployment create --file=~/existing.json --name=<DEPLOYMENT_NAME>
+
+[87]
+
+Scenarios
+^^^^^^^^^
+
+Scenarios define the tests that will be ran. Variables can be tweaked to customize them. All Rally scenario files are Jinja2 templates and can be in JSON or YAML format. Multiple scenarios can be setup in a single file for Rally to test them all.
+
+Example scenarios:
+
+::
+
+    (rally-venv)$ ls -1 ~/rally-venv/samples/tasks/scenarios/*
+
+Each scenario can be configured using similar options.
+
+-  args = Override default values for a task.
+-  context = Defines the resources that need to be created before a task runs.
+-  runner [90]
+
+    -  concurrency (constant types) = The number of tasks to run at the same time (as different threads).
+    -  duration (constant_for_duration type) = The number of seconds to run a scenario before finishing.
+    -  max_concurrent (rps type) = The maximum number of threads that should spawn.
+    -  rps (rps type) = The number of seconds to wait before starting a task in a new thread.
+    -  times = The number of times the scenario should run.
+    -  type
+
+        -  constant =  The number of *times* a scenario should run. Optionally run in parallel by setting the *concurrency*.
+        -  constant_for_duration = Run the scenario for a specified amount of time, in seconds, as defined by *duration*.
+        -  rps = Runs per second. Every *rps* amount of seconds a task is ran as a new thread.
+        -  serial = Specify the number of *times* to run a single task (without any concurrency support).
+
+-  sla = "Service level agreement." This defines when to mark a scenario as being failed.
+
+    -  failure_rate
+
+        -  max = The number of times a task can fail before the scenario is marked as a failure.
+
+    -  max_seconds_per_iteration = The amount of seconds before a task is considered failed.
+
+After creating a scenario, it can be run from the CLI:
+
+::
+
+    (rally-venv)$ rally task start <SCENARIO_FILE>.<JSON_OR_YAML>
+
+[87]
+
 Performance
 -----------
 
-A few general tips for getting the fastest OpenStack performance.
+OpenStack can be tuned to use less load and run faster.
 
 -  KeyStone
 -  Switch to Fernet keys.
 
-   -  Creation of tokens is significantly faster.
+   -  Creation of tokens is significantly faster because it does not rely on storing them in a database.
    -  Refer to `Configurations - Keystone - Token
       Provider <#configurations---keystone---token-provider>`__.
 
@@ -3078,3 +3215,8 @@ Bibliography
 83. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 84. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
 85. "Stable branches." OpenStack Documentation. December 12, 2017. Accessed January 24, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
+86. "[Rally] Installation and upgrades." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html
+87. "[Rally] Quick start." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/quick_start/index.html
+88. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html
+89. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
+90. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
