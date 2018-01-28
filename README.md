@@ -4,6 +4,12 @@ Root Pages is a collection of quick and easy-to-reference tutorials, examples, a
 
 All Root Pages are written in the reStructuredText (RST) markup language. Sphinx is used for building the documentation into ePub, HTML, PDF, and other common document formats.
 
+## Website
+
+Root Pages is automatically published online to GitHub Pages via updates to the "gh-pages" branch. This branch only contains the HTML compiled website.
+
+https://ekultails.github.io/rootpages/
+
 
 ## Install
 
