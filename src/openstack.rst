@@ -1368,11 +1368,21 @@ Overcloud
 
        $ openstack overcloud image upload
 
--  Create a "instackenv.json" file that describes the physical
-   infrastructure of the Overcloud as `outlined
-   here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__.
-   By default, everything is managed by IPMI. PXE can also be used,
-   however it cannot manage power cycling a server.
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [91]
+
+    -  Virtual lab environment notes:
+
+        -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
+        -  Alternatively, VirtualBMC can be used to emulate IPMI with Libvirt. [92]
+
+.. code-block:: sh
+
+  $ sudo yum install -y python-virtualbmc
+  $ vbmc add <VM_NAME> --port <IPMI_PORT> --username admin --password password
+  $ vbmc start <VM_NAME>
+  $ echo "Verifying that IPMI now works."
+  $ ipmitool -I lanplus -U admin -P password -H 127.0.0.1 -p <IPMI_PORT> power on
+
 -  Import the configuration that defines the Overcloud infrastructure
    and have it introspected so it can be deployed:
 
@@ -1526,6 +1536,33 @@ ZeroMQ should be used.
     [ DEFAULT ] transport_url = "zmq://"
 
 [47]
+
+Ironic
+~~~~~~
+
+Drivers
+^^^^^^^
+
+Ironic supports different ways of managing power cycling of managed nodes. The default enabled driver for this is IPMI. Other drivers may require additional dependencies to be installed.
+
+-  /etc/ironic/ironic.conf
+
+    -  [DEFAULT]
+
+        -  enabled_drivers = <DRIVER1>, <DRIVER2>, DRIVER3>
+
+Supported drivers:
+
+-  iscsi_ilo = HPE ProLiant servers (iLO).
+-  iscsi_pxe_oneview,agent_pxe_oneview = HP OneView.
+-  pxe_ipmitool,agent_ipmitool = IPMI.
+-  pxe_drac = DRAC.
+-  pxe_irmc = FUJITSU PRIMERGY servers (iRMC).
+-  pxe_iscsi_cimc,pxe_agent_cimc = Cisco UCS servers (C series only).
+-  pxe_snmp = SNMP power racks.
+-  pxe_ucs,agent_ucs = Cisco UCS servers (B and C series).
+
+[91]
 
 Keystone
 ~~~~~~~~
@@ -3220,3 +3257,5 @@ Bibliography
 88. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html
 89. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
 90. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
+91. "[Ironic] Enabling drivers." OpenStack Documentation. January 17, 2018. Accessed January 29, 2018. https://docs.openstack.org/ironic/pike/admin/drivers.html
+92. "VirtualBMC." TrpileO Documentation. Accessed January 29, 2018.
