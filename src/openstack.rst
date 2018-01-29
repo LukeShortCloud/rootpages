@@ -227,12 +227,10 @@ Other services:
 
 [10]
 
-Automation
+Deployment
 ----------
 
-It is possible to easily install OpenStack as an all-in-one (AIO) server
-or onto a cluster of servers. Various tools exist for automating the
-deployment and management of OpenStack.
+OpenStack can be installed as an all-in-one (AIO) server or onto a cluster of servers. Various tools exist for automating the deployment and management of OpenStack for day 0, 1, and 2 operations.
 
 Packstack
 ~~~~~~~~~
@@ -3258,4 +3256,4 @@ Bibliography
 89. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
 90. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
 91. "[Ironic] Enabling drivers." OpenStack Documentation. January 17, 2018. Accessed January 29, 2018. https://docs.openstack.org/ironic/pike/admin/drivers.html
-92. "VirtualBMC." TrpileO Documentation. Accessed January 29, 2018.
+92. "VirtualBMC." TripleO Documentation. Accessed January 29, 2018.
