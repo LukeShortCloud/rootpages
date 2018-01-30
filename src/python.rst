@@ -141,8 +141,156 @@ YAML libraries:
 -  yaml.load = Load a YAML dictionary from a string.
 -  yaml.dump = Convert a YAML dictionary into a string.
 
+Conditionals
+------------
+
+Control and Operators
+~~~~~~~~~~~~~~~~~~~~~
+
++---------------------+---------------------------+
+| Comparison Operator | Description               |
++=====================+===========================+
+| ==                  | Equal to.                 |
++---------------------+---------------------------+
+| !=                  | Not equal to.             |
++---------------------+---------------------------+
+| >                   | Greater than.             |
++---------------------+---------------------------+
+| <                   | Lesser than.              |
++---------------------+---------------------------+
+| \>=                 | Greater than or equal to. |
++---------------------+---------------------------+
+| <=                  | Lesser than or equal to.  |
++---------------------+---------------------------+
+
++-------------------+----------------------------------------------------------------+
+| Identity Operator | Description                                                    |
++===================+================================================================+
+| is                | Compares two memory addresses to see if they are the same.     |
++-------------------+----------------------------------------------------------------+
+| is not            | Compares two memory addresses to see if they are not the same. |
++-------------------+----------------------------------------------------------------+
+
++------------------+------------------------------------+
+| Logical Operator | Description                        |
++==================+====================================+
+| and              | All booleans must be true.         |
++------------------+------------------------------------+
+| or               | At least one boolean must be true. |
++------------------+------------------------------------+
+| not              | No booleans can be true.           |
++------------------+------------------------------------+
+
++---------------------+------------------------------------------------------------------------------------------+
+| Membership Operator | Description                                                                              |
++=====================+==========================================================================================+
+| in                  | The first variable needs to exist as at least a substring or key in the second variable. |
++---------------------+------------------------------------------------------------------------------------------+
+| not in              | The first variable must not be in the second variable.                                   |
++---------------------+------------------------------------------------------------------------------------------+
+
+[3]
+
+Control statements for loops [4]:
+
+-  break = Stops the most outer loop that is currently in progress.
+-  continue = Skips the inner loop once.
+-  pass = This does nothing and is only meant to be a place holder.
+-  else = After all iterations of a loop are over, the else block is executed. This is specifically for "for" and "while" loops (not "if" statements).
+
+For
+~~~
+
+For loops will iterate through each element in a variable. This is normally an array, list, or dictionary.
+
+Syntax:
+
+.. code-block:: python
+
+    for <VALUE> in <LIST_OR_DICTIONARY>:
+        # Insert code to use <VALUE> here.
+
+The "else" statement can be used to always execute code after the "for" loop has iterated through each element.
+
+Example:
+
+.. code-block:: python
+
+    cars = ["sedan", "truck", "van"]
+
+    for car in cars:
+        print("Consider buying a %s." % car)
+    else:
+        print("This FOR loop is now completed.")
+
+[5]
+
+If
+~~
+
+If statements will check different comparisons and execute the first code block that is matched. The first comparison is defined as "if" and other comparisons after that can be defined using "elif." The "else" block will be executed if nothing else was matched. In Python, there is no traditional "switch" conditional so an "if" statement must be used instead.
+
+Syntax:
+
+.. code-block:: python
+
+    if <COMPARISON_STATEMENT_1>:
+        # Execute if this statement is True.
+    elif <COMPARISON_STATEMENT_2>:
+        # Execute if this statement is True.
+    else:
+        # If not other matches are found, execute this.
+
+Example:
+
+.. code-block:: python
+
+    bread_required = 13
+
+    if bread_required == 12:
+        print("You need a dozen loafs of bread.")
+    elif bread_required == 13:
+        print("You need a baker's dozen loafs of bread.")
+    elif bread_required == 1:
+        print("You need one loaf of bread.")
+    else:
+        print("You need %d loafs of bread." % bread_required)
+
+[5]
+
+While
+~~~~~
+
+While statements will continue to loop until the condition it is checking becomes False.
+
+Syntax:
+
+.. code-block:: python
+
+    while <COMPARISON_STATEMENT_OR_BOOLEAN_VARIABLE>:
+        # Insert code to use while the statement is true.
+
+The "while" statement can be used to always execute code after the loop has completed.
+
+Example:
+
+.. code-block:: python
+
+    x = 0
+
+    while x < 10:
+        x += 1
+        print("Looping...")
+    else:
+        print("This WHILE loop is now completed.")
+
+[5]
+
 Bibliography
 ------------
 
 1. "PEP 0 -- Index of Python Enhancement Proposals (PEPs)." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/
 2. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
+3. "Python Operators." Programiz. Accessed January 29, 2018. https://www.programiz.com/python-programming/operators
+4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
+5. "Compound statements." Python Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
