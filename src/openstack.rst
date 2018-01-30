@@ -937,8 +937,8 @@ for management and troubleshooting.
 
 [25]
 
-Add a Infrastructure Container
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+Add a Infrastructure Node
+&&&&&&&&&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``infra_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the inventory
@@ -957,8 +957,8 @@ infrastructure node.
 
 [26]
 
-Add a Compute Container
-&&&&&&&&&&&&&&&&&&&&&&&
+Add a Compute Node
+&&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
@@ -973,8 +973,8 @@ OpenStack-Ansible deployment Playbooks can be run again.
 
 [27]
 
-Remove a Compute Container
-&&&&&&&&&&&&&&&&&&&&&&&&&&
+Remove a Compute Node
+&&&&&&&&&&&&&&&&&&&&&
 
 Stop the services on the compute container and then use the
 ``openstack-ansible-ops`` project's Playbook ``remote_compute_node.yml``
@@ -1228,8 +1228,11 @@ variables to a YAML file and then add the arguments
 Full
 ^^^^
 
+Install
+'''''''
+
 Undercloud
-''''''''''
+&&&&&&&&&&
 
 The Undercloud can be installed onto a bare metal server or a virtual
 machine. Follow the "hypervisor" section to assist with automatically
@@ -1349,7 +1352,7 @@ creating an Undercloud virtual machine.
 [38]
 
 Overcloud
-'''''''''
+&&&&&&&&&
 
 -  Download the prebuilt Overcloud image files from
    https://images.rdoproject.org/
@@ -1417,6 +1420,47 @@ Overcloud
        $ source ~/overcloudrc
 
 [39]
+
+Operations
+''''''''''
+
+Add a Compute Node
+&&&&&&&&&&&&&&&&&&
+
+-  From the Undercloud, create a `instackenv.json` file describing the new node. Import the file using Ironic.
+
+::
+
+    $ source ~/stackrc
+    $ openstack baremetal import --json instackenv.json
+
+-  Automatically configure it to use the existing kernel and ramdisk for PXE booting.
+
+::
+
+    $ openstack baremetal configure boot
+
+
+-  Set the new node to the "managable" state. Then introspect the new node so Ironic can automatically determine it's resources and hardware information.
+
+::
+
+    $ openstack baremetal node manage <NODE_UUID>
+    $ openstack overcloud node introspect <NODE_UUID> --provided
+
+-  Configure the node to be a compute node.
+
+::
+
+    $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' <NODE_UUID>
+
+-  Redeploy the Overcloud while specifying the number of compute nodes that should exist in total after it is complete. The `ComputeCount` parameter in the Heat templates should also be increased to reflect it's new value.
+
+::
+
+    $ openstack overcloud deploy --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
+
+[93]
 
 Configurations
 --------------
@@ -3135,32 +3179,27 @@ Performance
 OpenStack can be tuned to use less load and run faster.
 
 -  KeyStone
--  Switch to Fernet keys.
 
-   -  Creation of tokens is significantly faster because it does not rely on storing them in a database.
-   -  Refer to `Configurations - Keystone - Token
-      Provider <#configurations---keystone---token-provider>`__.
+    -  Switch to Fernet keys.
+
+        -  Creation of tokens is significantly faster because it does not rely on storing them in a database.
+        -  Refer to `Configurations - Keystone - Token Provider <#configurations---keystone---token-provider>`__.
 
 -  Neutron
--  Use distributed virtual routing (DVR).
 
-   -  This offloads a lot of networking resources onto the compute
-      nodes.
+    -  Use distributed virtual routing (DVR).
+
+        -  This offloads a lot of networking resources onto the compute nodes.
 
 -  General
--  Utilize /etc/hosts.
 
-   -  Ensure that all of your domain names (including the public
-      domains) are listed in the /etc/hosts. This avoids a performance
-      hit from DNS lookups. Alternatively, consider setting up a
-      recursive DNS server on the controller nodes.
+    -  Utilize /etc/hosts.
 
--  Use memcache.
+        -  Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
 
-   -  This is generally configured by an option called
-      "memcache\_servers" in the configuration files for most services.
-      Consider using "CouchBase" for it's ease of clustering and
-      redundancy support.
+    -  Use memcache.
+
+        -  This is generally configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
 Bibliography
 ------------
@@ -3257,3 +3296,4 @@ Bibliography
 90. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
 91. "[Ironic] Enabling drivers." OpenStack Documentation. January 17, 2018. Accessed January 29, 2018. https://docs.openstack.org/ironic/pike/admin/drivers.html
 92. "VirtualBMC." TripleO Documentation. Accessed January 29, 2018.
+93. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
