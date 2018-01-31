@@ -33,6 +33,12 @@ Fedora:
 $ sudo dnf install python3-sphinx
 ```
 
+openSUSE:
+
+```
+$ sudo zypper install python3-Sphinx
+```
+
 
 ## Usage
 
