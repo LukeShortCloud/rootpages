@@ -3077,7 +3077,7 @@ If Rally is ever upgraded to the latest version, the database also needs to be u
 Registering
 ^^^^^^^^^^^
 
-Rally requires a configuration, that defines the OpenStack credentials to test with, is registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. As of June 3, 2017, the use of an "admin" user is no longer required. [89]
+Rally requires a configuration, that defines the OpenStack credentials to test with, is registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. The "admin" user is no longer required in Rally version >= 0.10.0. [89]
 
 View registered deployments:
 
