@@ -3045,13 +3045,15 @@ Rally is the benchmark-as-a-service (BaaS) that tests the OpenStack APIs for bot
 Installation
 ^^^^^^^^^^^^
 
-Install (RHEL):
+Install Rally on RHEL. A specific GitHub branch or tag can be specified. Otherwise, the default "master" branch will be used. A target virtual environment directory can also be specified to isolate the installation.
+
+RHEL:
 
 ::
 
-    $ curl -L -o ~/install_rally.sh https://raw.githubusercontent.com/openstack/rally/master/install_rally.sh
+    $ curl -L -o ~/install_rally.sh https://raw.githubusercontent.com/openstack/rally/0.10.1/install_rally.sh
     $ sudo yum install gcc gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
-    $ bash ~/install_rally.sh --target ~/rally-venv
+    $ bash ~/install_rally.sh --branch 0.10.1 --target ~/rally-venv
 
 Rally can now be used by activating the Python virtual environment.
 
@@ -3097,7 +3099,7 @@ The fastest way to create this configuration is by referencing the OpenStack cre
 
 `2.` Manual
 
-A JSON file can be created to define the OpenStack credentials that Rally be using. Example files can be found at `~/rally-venv/samples/deployments/`.
+A JSON file can be created to define the OpenStack credentials that Rally will be using. Example files can be found at `~/rally-venv/samples/deployments/`.
 
 ::
 
@@ -3119,6 +3121,27 @@ A JSON file can be created to define the OpenStack credentials that Rally be usi
             },
             "https_insecure": false,
             "https_cacert": "<PATH_TO_CA_CERT>"
+        }
+    }
+
+For only using non-privileged OpenStack users, omit the "admin" dictionary.
+
+::
+
+    {
+        "openstack": {
+            "auth_url": "https://<KEYSTONE_ENDPOINT_HOST>:5000/v3",
+            "region_name": "RegionOne",
+            "endpoint_type": "public",
+            "users": [
+                {
+                    "username": "<USER_NAME>",
+                    "password": "<PASSWORD>",
+                    "user_domain_name": "Default"
+                    "project_name": "<PROJECT_NAME>"
+                    "project_domain_name": "Default"
+                }
+            ]
         }
     }
 
