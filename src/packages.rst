@@ -1,56 +1,16 @@
 Packages
 ========
 
--  Source Code
-
-   -  Makefile
-
--  `DEB (Debian) <#deb>`__
-
-   -  `Repositories <#deb---repositories>`__
-
-      -  `Adding a
-         Repository <#deb---repositories---adding-a-repository>`__
-
-   -  `Packaging <#deb---packaging>`__
-
-      -  `Macros <#deb---packaging---macros>`__
-
--  `RPM (RHEL) <#rpm>`__
-
-   -  `Repositories <#rpm---repositories>`__
-
-      -  `Adding a
-         Repository <#rpm---repositories---adding-a-repository>`__
-      -  `Creating a
-         Repository <#rpm---repositories---creating-a-repository>`__
-      -  `Common
-         Repositories <#rpm---repositories---common-repositories>`__
-
-   -  `Packaging <#rpm---packaging>`__
-
-      -  `Macros <#rpm---packaging---macros>`__
-
-         -  `Directories <#rpm---packaging---macros---directories>`__
-
-      -  `Users and Groups <#rpm---packaging---users-and-groups>`__
-      -  `Patches <#rpm---packaging---patches>`__
-
--  `PKGBUILD (Arch) <#pkgbuild>`__
-
-   -  `Packaging <#pkgbuild---packaging>`__
-
--  `Flatpak <#flatpak>`__
--  Snap
+.. contents:: Table of Contents
 
 DEB
 ---
 
-DEB - Repositories
-~~~~~~~~~~~~~~~~~~
+Repositories
+~~~~~~~~~~~~
 
-DEB - Repositories - Adding a Repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adding a Repository
+^^^^^^^^^^^^^^^^^^^
 
 Debian repositories can be managed by editing the primary file
 ``/etc/apt/sources.list`` or by adding new files to the
@@ -98,8 +58,8 @@ Source:
 1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017.
    https://wiki.debian.org/SourcesList
 
-DEB - Packaging
-~~~~~~~~~~~~~~~
+Packaging
+~~~~~~~~~
 
 Official guides for building Debian packages:
 
@@ -223,8 +183,8 @@ Sources:
 2. "hello-debian README.md." streadway/hello-debian GitHub. March 24,
    2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
 
-DEB - Packaging - Macros
-^^^^^^^^^^^^^^^^^^^^^^^^
+Macros
+^^^^^^
 
 Many macros exist for helping to build and install Debian packages.
 
@@ -252,14 +212,14 @@ Source:
 RPM
 ---
 
-RPM - Repositories
-~~~~~~~~~~~~~~~~~~
+Repositories
+~~~~~~~~~~~~
 
 Repositories (sometimes called "repos") are a central location where
 packages can easily be found and installed from.
 
-RPM - Repositories - Adding a Repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adding a Repository
+^^^^^^^^^^^^^^^^^^^
 
 On Red Hat based systems, the repositories are all defined as text files
 with the ".repo" extension in this directory.
@@ -316,8 +276,8 @@ Sources:
 2. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28,
    2016. http://linux.die.net/man/5/yum.conf
 
-RPM - Repositories - Creating a Repository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creating a Repository
+^^^^^^^^^^^^^^^^^^^^^
 
 Any directory can be used as a repository to host RPMs. The standard
 naming convention used for RHEL based operating systems is
@@ -362,8 +322,8 @@ Sources:
 2. "createrepo/rpm metadata." createrepo. Accessed June 28 2016.
    http://createrepo.baseurl.org/
 
-RPM - Repositories - Common Repositories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Common Repositories
+^^^^^^^^^^^^^^^^^^^
 
 +--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 | Repository Name                            | Supported Operating System(s) | Official | Description                                                                                                                                                                                                                    | Repository                                                                                                 |
@@ -407,8 +367,8 @@ Sources:
    2017. Accessed September 8, 2017.
    https://fedoraproject.org/wiki/Kernel\_Vanilla\_Repositories
 
-RPM - Packaging
-~~~~~~~~~~~~~~~
+Packaging
+~~~~~~~~~
 
 An RPM is built from a "spec" file. This modified shell script contains
 all of the information about the program and on how to install and
@@ -492,8 +452,8 @@ Source:
    Accessed June 28, 2016.
    http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
 
-RPM - Packaging - Macros
-^^^^^^^^^^^^^^^^^^^^^^^^
+Macros
+^^^^^^
 
 Macros are variables in the RPM spec file that are expanded upon
 compilation of the RPM.
@@ -507,8 +467,8 @@ Source:
 
 1. https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
 
-RPM - Packaging - Macros - Directories
-''''''''''''''''''''''''''''''''''''''
+Directories
+'''''''''''
 
 During the creation of an RPM there are a few important directories that
 can and will be refereneced.
@@ -536,8 +496,8 @@ Source:
    Accessed March 13, 2017.
    https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
 
-RPM - Packaging - Users and Groups
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Users and Groups
+^^^^^^^^^^^^^^^^
 
 Creating a user or group can be done one of two ways.
 
@@ -585,8 +545,8 @@ Source:
    Accessed February 25, 2017.
    https://fedoraproject.org/wiki/Packaging:UsersAndGroups
 
-RPM - Packaging - Patches
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Patches
+^^^^^^^
 
 Some applications may require patches to work properly. Pathces should
 be stored in the ``SOURCES`` directories. At the beginning of the spec
@@ -661,8 +621,8 @@ Source:
 PKGBUILD
 --------
 
-PKGBUILD - Packaging
-~~~~~~~~~~~~~~~~~~~~
+Packaging
+~~~~~~~~~
 
 Arch Linux packages are design to be simple and easy to create. A
 PKGBUILD file is compressed with a software's contents into a XZ

@@ -1,190 +1,7 @@
 Ansible
 =======
 
--  `Introduction <#introduction>`__
-
-   -  `Editions <#introduction---editions>`__
-
--  `Installation <#installation>`__
--  `Configuration <#configuration>`__
-
-   -  `Main <#configuration---main>`__
-   -  `Python 3 <#configuration---python-3>`__
-
--  `Command Usage <#command-usage>`__
--  `Playbooks <#playbooks>`__
-
-   -  `Directory Structure <#playbooks---directory-structure>`__
-   -  `Performance Tuning <#playbooks---performance-tuning>`__
-
--  `Inventory <#inventory>`__
-
-   -  `Production and Staging <#inventory---production-and-staging>`__
-   -  `Variables <#inventory---variables>`__
-   -  `Vault Encryption <#inventory---vault-encryption>`__
-   -  `Dynamic <#inventory---dynamic>`__
-
--  `Modules <#modules>`__
-
-   -  `Main Modules <#modules---main-modules>`__
-
-      -  `Assert <#modules---main-modules---assert>`__
-      -  `Async <#modules---main-modules---async>`__
-      -  `Block <#modules---main-modules---block>`__
-      -  `Check Mode <#modules---main-modules---check-mode>`__
-      -  `Debug <#modules---main-modules---debug>`__
-      -  `Gather Facts <#modules---main-modules---gather-facts>`__
-      -  `Handlers and
-         Notify <#modules---main-modules---handlers-and-notify>`__
-      -  `Meta <#modules---main-modules---meta>`__
-      -  `Pause <#modules---main-modules---pause>`__
-      -  `Roles <#modules---main-modules---roles>`__
-      -  `Run Once <#modules---main-modules---run-once>`__
-      -  `Serial <#modules---main-modules---serial>`__
-      -  `Strategy <#modules---main-modules---strategy>`__
-      -  `Tags <#modules---main-modules---tags>`__
-      -  `Tasks <#modules---main-modules---tasks>`__
-      -  `Wait For <#modules---main-modules---wait-for>`__
-      -  `When <#modules---main-modules---when>`__
-      -  `Errors <#modules---main-modules---errors>`__
-
-         -  `Any Errors
-            Fatal <#modules---main-modules---errors---any-errors-fatal>`__
-         -  `Changed
-            When <http://docs.ansible.com/ansible/latest/playbooks_error_handling.html#overriding-the-changed-result>`__
-         -  `Fail <#modules---main-modules---errors---fail>`__
-         -  `Failed
-            When <#modules---main-modules---errors---failed-when>`__
-         -  `Ignore
-            Errors <#modules---main-modules---errors---ignore-errors>`__
-
-      -  `Includes <#modules---main-modules---includes>`__
-
-         -  `Import
-            Playbook <#modules---main-modules---includes---import-playbook>`__
-         -  `Import and Include
-            Role <#modules---main-modules---includes---import-and-include-role>`__
-         -  `Import and Include
-            Tasks <#modules---main-modules---includes---import-and-include-tasks>`__
-         -  `Include (deprecated in
-            2.4) <#modules---main-modules---includes---include>`__
-         -  `Include
-            Variables <#modules---main-modules---includes---include-variables>`__
-
-      -  `Loops (Ansible < 2.5) <#modules---main-modules---loops>`__
-
-      -  `Variables <#modules---main-modules---variables>`__
-
-         -  `Prompts <#modules---main-modules---variables---prompts>`__
-         -  `Register <#modules---main-modules---variables---register>`__
-         -  `Set
-            Fact <#modules---main-modules---variables---set-fact>`__
-
-   -  `UNIX Modules <#modules---unix-modules>`__
-
-      -  `Command and
-         Shell <#modules---unix-modules---command-and-shell>`__
-      -  `Copy, File, Synchronize, and
-         Template <#modules---unix-modules---copy,-file,-synchronize,-and-template>`__
-      -  `Cron <#modules---unix-modules---cron>`__
-      -  `Expect <#modules---unix-modules---expect>`__
-      -  `Get URL <#modules---unix-modules---get-url>`__
-      -  `Git <#modules---unix-modules---git>`__
-      -  `MySQL Database and
-         User <#modules---unix-modules---mysql-database-and-user>`__
-      -  `Service <#modules---unix-modules---service>`__
-      -  `Stat <#modules---unix-modules---stat>`__
-      -  `URI <#modules---unix-modules---uri>`__
-      -  `Package
-         Managers <#modules---unix-modules---package-managers>`__
-
-         -  `Apt <#modules---unix-modules---package-managers---apt>`__
-         -  `Yum <#modules---unix-modules---package-managers---yum>`__
-
-   -  `Windows Modules <#modules---windows-modules>`__
-
-      -  `Command and
-         Shell <#modules---windows-modules---command-and-shell>`__
-      -  `File
-         Management <#modules---windows-modules---file-management>`__
-
-         -  `Copy <#modules---windows-modules---file-management---copy>`__
-         -  `File <#modules---windows-modules---file-management---file>`__
-         -  `Get
-            URL <http://docs.ansible.com/ansible/latest/win_get_url_module.html>`__
-         -  `Robocopy <#modules---windows-modules---file-management---robocopy>`__
-         -  `Shortcut <#modules---windows-modules---file-management---shortcut>`__
-         -  `Template <#modules---windows-modules---file-management---template>`__
-
-      -  `Firewall <http://docs.ansible.com/ansible/latest/win_firewall_module.html>`__
-      -  `Firewall
-         Rule <http://docs.ansible.com/ansible/latest/win_firewall_rule_module.html>`__
-      -  `Installations <#modules---windows-modules---installations>`__
-
-         -  `Chocolatey <#modules---windows-modules---installations---chocolatey>`__
-         -  `Feature <#modules---windows-modules---installations---feature>`__
-         -  `MSI (deprecated in
-            2.3) <#modules---windows-modules---installations---msi>`__
-         -  `Package <#modules---windows-modules---installations---package>`__
-         -  `Updates <#modules---windows-modules---installations---updates>`__
-
-      -  `Registry <#modules---windows-modules---registry>`__
-
-         -  `Edit <http://docs.ansible.com/ansible/latest/win_regedit_module.html>`__
-         -  `Stat <http://docs.ansible.com/ansible/latest/win_reg_stat_module.html>`__
-
-      -  `Scheduled
-         Task <#modules---windows-modules---scheduled-task>`__
-      -  `Service <#modules---windows-modules---service>`__
-      -  `Stat <http://docs.ansible.com/ansible/latest/win_stat_module.html>`__
-      -  `URI <http://docs.ansible.com/ansible/latest/win_uri_module.html>`__
-      -  `User <#modules---windows-modules---user>`__
-      -  `Wait
-         For <http://docs.ansible.com/ansible/latest/win_wait_for_module.html>`__
-
-   -  `Module Development <#modules---module-development>`__
-
--  `Roles <#roles>`__
-
-   -  `Galaxy <#roles---galaxy>`__
-
-      -  `Dependencies <#roles---galaxy---dependencies>`__
-      -  `Community Roles <#roles---galaxy---community-roles>`__
-
-         -  `Network
-            Interface <#roles---galaxy---community-roles---network-interface>`__
-
--  `Jinja2 <#jinja2>`__
-
-   -  `Variables <#jinja2---variables>`__
-   -  `Filters <#jinja2---filters>`__
-   -  `Comments <#jinja2---comments>`__
-   -  `Blocks <#jinja2---blocks>`__
-   -  `Loops <#jinja2---loops>`__
-
--  `Python API <#python-api>`__
--  `Containers <#containers>`__
--  `Dashboards <#dashboards>`__
-
-   -  `Ansible Tower 3 <#dashboards---ansible-tower-3>`__
-
-      -  `GUI <#dashboards---ansible-tower-3---gui>`__
-      -  `API <#dashboards---ansible-tower-3---api>`__
-      -  `Security <#dashboards---ansible-tower-3---security>`__
-
-         -  `ACLs <#dashboards---ansible-tower-3---security---acls>`__
-         -  `Authentication <#dashboards---ansible-tower-3---security---authentication>`__
-         -  `SSL <#dashboards---ansible-tower-3---security---ssl>`__
-
-   -  `AWX <#dashboards---awx>`__
-
-      -  `Install <#dashboards---awx---install>`__
-
-   -  `Rundeck <#dashboards---rundeck>`__
-   -  `Semaphore <#dashboards---semaphore>`__
-   -  `Tensor <#dashboards---tensor>`__
-
--  `Bibliography <#bibliography>`__
+.. contents:: Table of Contents
 
 Introduction
 ------------
@@ -210,8 +27,8 @@ Sources:
 1. "An Ansible Tutorial."
 2. "Windows Support."
 
-Introduction - Editions
-~~~~~~~~~~~~~~~~~~~~~~~
+Editions
+~~~~~~~~
 
 There are two editions of Ansible available. There is the upstream
 Ansible community project that gets frequent updates and there is also
@@ -280,8 +97,8 @@ Sources:
 Configuration
 -------------
 
-Configuraiton - Main
-~~~~~~~~~~~~~~~~~~~~
+Main
+~~~~
 
 All of the possible configuration files are listed below in the order
 that they are read. The last file overrides any previous settings.
@@ -386,8 +203,8 @@ Source:
 
 1. "Ansible Configuration file."
 
-Configuration - Python 3
-~~~~~~~~~~~~~~~~~~~~~~~~
+Python 3
+~~~~~~~~
 
 Python 3 is supported on the control node and managed nodes. For using
 Python 3 on the managed nodes, the ``ansible_python_interpreter``
@@ -423,8 +240,8 @@ self-contained file or a large project organized in a directory.
 Official examples can he found here at
 https://github.com/ansible/ansible-examples.
 
-Playbooks - Directory Structure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Directory Structure
+~~~~~~~~~~~~~~~~~~~
 
 A Playbook can be self-contained entirely into one file. However,
 especially for large projects, each segment of the Playbook should be
@@ -558,8 +375,8 @@ Sources:
 1. "An Ansible Tutorial."
 2. “Ansible Best Practices.”
 
-Playbooks - Performance Tuning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Performance Tuning
+~~~~~~~~~~~~~~~~~~
 
 A few configuration changes can help to speed up the runtime of Ansible
 modules and Playbooks.
@@ -765,8 +582,8 @@ Sources:
 4. "Ansible Become (Privilege Escalation)"
 5. "Ansible Vault."
 
-Inventory - Production and Staging
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Production and Staging
+~~~~~~~~~~~~~~~~~~~~~~
 
 Ansible best practices suggest having a separation between a production
 and staging inventory. Changes should be tested in the staging
@@ -887,8 +704,8 @@ Sources:
 1. "Ansible Best Practices."
 2. "Organizing Group Vars Files in Ansible."
 
-Inventory - Variables
-~~~~~~~~~~~~~~~~~~~~~
+Variables
+~~~~~~~~~
 
 Variables that Playbooks will use can be defined for specific hosts
 and/or groups. The file that stores the variables should reflect the
@@ -971,8 +788,8 @@ Sources:
 2. "Ansible Variables."
 3. "Ansible Best Practices."
 
-Inventory - Vault Encryption
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Vault Encryption
+~~~~~~~~~~~~~~~~
 
 Any file in a Playbook can be encrypted. This is useful for storing
 sensitive username and passwords securely. A password is used to open
@@ -1037,8 +854,8 @@ Source:
 
 1. "Ansible Vault."
 
-Inventory - Dynamic
-~~~~~~~~~~~~~~~~~~~
+Dynamic
+~~~~~~~
 
 Dynamic inventory can be used to automatically obtain information about
 hosts from various infrastructure platforms and tools. Community
@@ -1048,16 +865,16 @@ https://github.com/ansible/ansible/tree/devel/contrib/inventory.
 Modules
 -------
 
-Modules - Main Modules
-~~~~~~~~~~~~~~~~~~~~~~
+Main Modules
+~~~~~~~~~~~~
 
 Root Pages refers to generic Playbook-related modules as the "main
 modules." This is not to be confused with official naming of "core
 modules" which is a mixture of both the main and regular modules
 mentioned in this guide.
 
-Modules - Main Modules - Assert
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Assert
+^^^^^^
 
 Assert is used to check if one or more statements is True. The module
 will fail if any statement returns False. Optionally, a message can be
@@ -1092,8 +909,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Async
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Async
+^^^^^
 
 The "async" function can be used to start a detached task on a remote
 system. Ansible will then poll the server periodically to see if the
@@ -1118,8 +935,8 @@ Source:
 
 1. "Ansible Asynchronous Actions and Polling."
 
-Modules - Main Modules - Block
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Block
+^^^^^
 
 A ``block`` is used to handle logic for executing tasks. A set of tasks
 can be run, for example, if a condition is met. This also handles errors
@@ -1170,8 +987,8 @@ Source:
 
 1. "`Ansible <#ansible>`__ Blocks."
 
-Modules - Main Modules - Check Mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Check Mode
+^^^^^^^^^^
 
 A Playbook can run in a test mode with ``--check``. No changes will be
 made. Optionally, the ``--diff`` argument can also be added to show
@@ -1228,8 +1045,8 @@ Source:
 
 1. "Ansible Check Mode ("Dry Run")."
 
-Modules - Main Modules - Debug
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Debug
+^^^^^
 
 The debug module is used for helping facilitate troubleshooting. It
 prints out specified information to standard output.
@@ -1261,8 +1078,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Gather Facts
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Gather Facts
+^^^^^^^^^^^^
 
 By default, Ansible will connect to all hosts related to a Playbook and
 cache information about them. This includes hostnames, IP addresses, the
@@ -1304,8 +1121,8 @@ Source:
 
 1. "Ansible Glossary."
 
-Modules - Main Modules - Handlers and Notify
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Handlers and Notify
+^^^^^^^^^^^^^^^^^^^
 
 The ``notify`` function will run a handler defined in the
 ``handlers/main.yml`` file within a role if the state of the module it's
@@ -1364,8 +1181,8 @@ Source:
 
 1. "Ansible Intro to Playbooks."
 
-Modules - Main Modules - Meta
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Meta
+^^^^
 
 The meta module handles some aspects of the Ansible Playbooks execution.
 
@@ -1403,8 +1220,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Pause
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Pause
+^^^^^
 
 The ``pause`` module is used to temporarily pause an entire Playbook. If
 no time argument is specified, the end-user will need to hit ``CTRL+c``
@@ -1435,8 +1252,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Roles
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Roles
+^^^^^
 
 A Playbook consists of roles. Each role that needs to be run needs to be
 specified in a list. Additional roles can be added within a role
@@ -1463,8 +1280,8 @@ Source:
 
 1. "Creating Reusable Playbooks."
 
-Modules - Main Modules - Run Once
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Run Once
+^^^^^^^^
 
 In some situations a command should only need to be run on one node. An
 example is when using a MariaDB Galera cluster where database changes
@@ -1491,8 +1308,8 @@ Source:
 
 1. "Ansible Delegation, Rolling Updates, and Local Actions."
 
-Modules - Main Modules - Serial
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Serial
+^^^^^^
 
 By default, Ansible will only run tasks on 5 hosts at once. This limit
 can be modified to run on a different number of hosts or a percentage of
@@ -1519,8 +1336,8 @@ Source:
 
 1. "Delegation, Rolling Updates, and Local Actions."
 
-Modules - Main Modules - Strategy
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Strategy
+^^^^^^^^
 
 By default, a Playbook strategy is set to "linear" meaning that it will
 only move onto the next task once it completes on all hosts. This can be
@@ -1548,8 +1365,8 @@ Source:
 
 1. "Ansible Strategies."
 
-Modules - Main Modules - Tags
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tags
+^^^^
 
 Each task in a tasks file can have a tag associated to it. This should
 be appended to the end of the task. This is useful for debugging and
@@ -1598,8 +1415,8 @@ Source:
 
 1. "Ansible Tags."
 
-Modules - Main Modules - Tasks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tasks
+^^^^^
 
 Playbooks can include specific task files or define and run tasks in the
 Playbook file itself. In Ansible 2.0, loops, variables, and other
@@ -1629,8 +1446,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Wait For
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Wait For
+^^^^^^^^
 
 A condition can be searched for before continuing on to the next task.
 
@@ -1673,8 +1490,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - When
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When
+^^^^
 
 The "when" function can be used to specify that a sub-task should only
 run if the condition returns turn. This is similar to an "if" statement
@@ -1704,13 +1521,13 @@ Source:
 
 1. "Ansible Conditionals."
 
-Modules - Main Modules - Errors
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Errors
+^^^^^^
 
 These modules handle Playbook errors.
 
-Modules - Main Modules - Errors - Any Errors Fatal
-''''''''''''''''''''''''''''''''''''''''''''''''''
+Any Errors Fatal
+''''''''''''''''
 
 By default, a Playbook will continue to run on all of the hosts that do
 not have any failures reported by modules. It is possible to stop the
@@ -1735,8 +1552,8 @@ Source:
 
 1. "Ansible Error Handling In Playbooks."
 
-Modules - Main Modules - Errors - Fail
-''''''''''''''''''''''''''''''''''''''
+Fail
+''''
 
 The simple ``fail`` module will make a Playbook fail. This is useful
 when checking if a certain condition has to exist to continue on.
@@ -1763,8 +1580,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Errors - Failed When
-'''''''''''''''''''''''''''''''''''''''''''''
+Failed When
+'''''''''''
 
 In some situations, a error from a command or module may not be reported
 properly. This module can be used to force a failure based on a certain
@@ -1788,8 +1605,8 @@ Source:
 
 1. "Ansible Error Handling In Playbooks."
 
-Modules - Main Modules - Errors - Ignore Errors
-'''''''''''''''''''''''''''''''''''''''''''''''
+Ignore Errors
+'''''''''''''
 
 Playbooks, by default, will stop running on a host if it fails to run a
 module. Sometimes a module will report a false-positive or an error will
@@ -1814,14 +1631,14 @@ Source:
 
 1. "Ansible Error Handling In Playbooks."
 
-Modules - Main Modules - Includes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Includes
+^^^^^^^^
 
 Include and import modules allow other elements of a Playbook to be
 called and executed.
 
-Modules - Main Modules - Includes - Import Playbook
-'''''''''''''''''''''''''''''''''''''''''''''''''''
+Import Playbook
+'''''''''''''''
 
 The proper way to use other Playbooks in a Playbook is to use the
 ``import_playbook``. Before Ansible 2.4 this was handled via the
@@ -1850,8 +1667,8 @@ Source:
 
 1. "Creating Reusable Playbooks."
 
-Modules - Main Modules - Includes - Import and Include Role
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Import and Include Role
+'''''''''''''''''''''''
 
 The ``import_role`` is a static inclusion of a role that cannot be used
 in loops. This is loaded on runtime of the Playbook
@@ -1908,8 +1725,8 @@ Source:
 1. "Creating Reusable Playbooks."
 2. "Utilities Modules."
 
-Modules - Main Modules - Includes - Import and Include Tasks
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Import and Include Tasks
+''''''''''''''''''''''''
 
 Use the ``import_tasks`` to statically include tasks at a Playbook's
 runtime or ``include_tasks`` to dynamically run tasks once the Playbook
@@ -1931,8 +1748,8 @@ Source:
 
 1. "Creating Reusable Playbooks."
 
-Modules - Main Modules - Includes - Include
-'''''''''''''''''''''''''''''''''''''''''''
+Include
+'''''''
 
 **Deprecated in: 2.4 Replaced by: include\_tasks, import\_plays,
 import\_tasks** [1]
@@ -1964,8 +1781,8 @@ Sources:
 1. "Creating Reusable Playbooks."
 2. "Utilities Modules."
 
-Modules - Main Modules - Includes - Include Variables
-'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Include Variables
+'''''''''''''''''
 
 Additional variables can be defined within a Playbook file. These can be
 openly added to the ``include_vars`` module via YAML syntax.
@@ -2005,8 +1822,8 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Loops (Ansible < 2.5)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loops (Ansible < 2.5)
+^^^^^^^^^^^^^^^^^^^^^
 
 Loops can be used to iterate through lists and/or dictionaries. The most
 commonly used loop is "with\_items."
@@ -2047,8 +1864,8 @@ Valid loops:
    Together <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-parallel-sets-of-data>`__
 
 
-Modules - Main Modules - Loops - With First Found
-'''''''''''''''''''''''''''''''''''''''''''''''''
+With First Found
+''''''''''''''''
 
 Multiple file locations can be checked to see what file exists. The
 first file found in a given list will be returned to the task. [1]
@@ -2076,8 +1893,8 @@ Source:
 
 1. "Ansible Loops."
 
-Modules - Main Modules - Loops - With Flattened
-'''''''''''''''''''''''''''''''''''''''''''''''
+With Flattened
+''''''''''''''
 
 Lists and dictionaries can be converted into one long string. This
 allows a task to run once with all of the arguments. This is especially
@@ -2113,8 +1930,8 @@ Source:
 
 1. "Ansible Loops."
 
-Modules - Main Modules - Loops - With Items
-'''''''''''''''''''''''''''''''''''''''''''
+With Items
+''''''''''
 
 A task can be re-used with items in a list and/or dictionary. [1]
 
@@ -2166,13 +1983,13 @@ Source:
 
 1. "Ansible Loops."
 
-Modules - Main Modules - Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Variables
+^^^^^^^^^
 
 These are modules relating to defining new variables.
 
-Modules - Main Modules - Variables - Prompts
-''''''''''''''''''''''''''''''''''''''''''''
+Prompts
+'''''''
 
 Prompts can be used to assign a user's input as a variable. [1] Note
 that this module is not compatible with Ansible Tower and that a Survey
@@ -2223,8 +2040,8 @@ Sources:
 1. "Ansible Prompts."
 2. "Ansible Tower Job Templates."
 
-Modules - Main Modules - Variables - Register
-'''''''''''''''''''''''''''''''''''''''''''''
+Register
+''''''''
 
 The output of modules and commands can be saved to a variable.
 
@@ -2275,8 +2092,8 @@ Sources:
 1. "Ansible Return Values."
 2. "Ansible Error Handling In Playbooks."
 
-Modules - Main Modules - Variables - Set Fact
-'''''''''''''''''''''''''''''''''''''''''''''
+Set Fact
+''''''''
 
 New variables can be defined set the "set\_fact" module. These are added
 to the available variables/facts tied to a inventory host. [1]
@@ -2301,11 +2118,11 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - UNIX Modules
-^^^^^^^^^^^^^^^^^^^^^^
+UNIX Modules
+~~~~~~~~~~~~
 
-Modules - UNIX Modules - Command and Shell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Command and Shell
+^^^^^^^^^^^^^^^^^
 
 Both the command and shell modules provide the ability to run command
 line programs. The big difference is that shell provides a full shell
@@ -2342,8 +2159,8 @@ Sources:
 1. "Ansible Command Module."
 2. "Ansible Shell Module."
 
-Modules - UNIX Modules - Copy, File, Synchronize, and Template
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Copy, File, Synchronize, and Template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The ``copy``, ``file``, ``synchronize``, and ``template`` modules
 provide ways for creating and modifying various files. The ``file``
@@ -2440,8 +2257,8 @@ Source:
 
 1. "Files Modules."
 
-Modules - UNIX Modules - Cron
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Cron
+^^^^
 
 The cron module is used to manage crontab entries. Crons are
 scheduled/automated tasks that run on Unix-like systems.
@@ -2500,8 +2317,8 @@ Source:
 
 1. "System Modules."
 
-Modules - UNIX Modules - Expect
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Expect
+^^^^^^
 
 The ``expect`` module executes a command, searches for a regular
 expression pattern and, if found, it will provide standard input back to
@@ -2545,8 +2362,8 @@ Source:
 
 1. "Command Modules."
 
-Modules - UNIX Modules - Get URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Get URL
+^^^^^^^
 
 The ``get_url`` module is used to download files from online.
 
@@ -2594,8 +2411,8 @@ Source:
 
 1. "Net Tools Modules."
 
-Modules - UNIX Modules - Git
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Git
+^^^
 
 Git is a utility used for provisioning and versioning software. Ansible
 has built-in support for handling most Git-related tasks.
@@ -2620,8 +2437,8 @@ Source:
 
 1. "Ansible Git Module"
 
-Modules - UNIX Modules - Service
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Service
+^^^^^^^
 
 The service module is used to handle system services.
 
@@ -2657,8 +2474,8 @@ Source:
 
 1. "System Modules."
 
-Modules - UNIX Modules - MySQL Database and User
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+MySQL Database and User
+^^^^^^^^^^^^^^^^^^^^^^^
 
 MySQL databases and users can be managed via Ansible. It requires the
 "MySQLdb" Python library and the "mysql" and "mysqldump" binaries.
@@ -2723,8 +2540,8 @@ Sources:
    host."
 2. "Ansible mysql\_user - Adds or removes a user from a MySQL database."
 
-Modules - UNIX Modules - Stat
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Stat
+^^^^
 
 This module provides detailed information about a file, directory, or
 link. It was designed to be similar to the Unix command ``stat``. All
@@ -2809,8 +2626,8 @@ Source:
 
 1. "Ansible stat - retrieve file or file system status."
 
-Modules - UNIX Modules - URI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+URI
+^^^
 
 The ``uri`` module is used for handling HTTP requests.
 
@@ -2902,8 +2719,8 @@ Source:
 
 1. "Net Tools Modules."
 
-Modules - UNIX Modules - Package Managers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Package Managers
+^^^^^^^^^^^^^^^^
 
 Ansible has the ability to add, remove, or update software packages.
 Almost every popular package manager is supported. [1] This can
@@ -2942,8 +2759,8 @@ Sources:
 1. "Ansible Packaging Modules."
 2. "Ansible Generic OS package manager."
 
-Modules - UNIX Modules - Package Managers - Apt
-'''''''''''''''''''''''''''''''''''''''''''''''
+Apt
+'''
 
 Apt is used to install and manage packages on Debian based operating
 systems.
@@ -2975,8 +2792,8 @@ Source:
 
 1. "Packaging Modules."
 
-Modules - UNIX Modules - Package Managers - Yum
-'''''''''''''''''''''''''''''''''''''''''''''''
+Yum
+'''
 
 There are two commands to primarily handle Red Hat's Yum package
 manager: "yum" and "yum\_repository."
@@ -3051,15 +2868,15 @@ Source:
 
 1. "Packaging Modules."
 
-Modules - Windows Modules
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Windows Modules
+~~~~~~~~~~~~~~~
 
 These modules are specific to managing Windows servers and are not
 related to the normal modules designed for UNIX-like operating systems.
 These module names start with the "win\_" prefix.
 
-Modules - Windows Modules - Command and Shell
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Command and Shell
+^^^^^^^^^^^^^^^^^
 
 Windows commands can be executed via a console. The ``command`` module
 uses the DOS "cmd" binary and shell, by default, uses PowerShell.
@@ -3101,11 +2918,11 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - File Management
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+File Management
+^^^^^^^^^^^^^^^
 
-Modules - Windows Modules - File Management - Copy
-''''''''''''''''''''''''''''''''''''''''''''''''''
+Copy
+''''
 
 Copy files from the Playbook to the remote server.
 
@@ -3142,8 +2959,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - File Management - File
-''''''''''''''''''''''''''''''''''''''''''''''''''
+File
+''''
 
 All options:
 
@@ -3177,8 +2994,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - File Management - Robocopy
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Robocopy
+''''''''
 
 Robocopy is a CLI utility, available on the latest versions of Windows,
 for synchronizing directories.
@@ -3213,8 +3030,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - File Management - Shortcut
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Shortcut
+''''''''
 
 Manage Windows shortcuts.
 
@@ -3260,8 +3077,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - File Management - Template
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Template
+''''''''
 
 The Windows Jinja2 template module uses the same options as the normal
 ``template`` module.
@@ -3276,11 +3093,11 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - Installations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installations
+^^^^^^^^^^^^^
 
-Modules - Windows Modules - Installations - Chocolatey
-''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Chocolatey
+''''''''''
 
 Chocolatey is an unofficial package manager for Windows. Packages can be
 installed from a public or private Chocolatey repository.
@@ -3320,8 +3137,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - Installations - Feature
-'''''''''''''''''''''''''''''''''''''''''''''''''''
+Feature
+'''''''
 
 Manage official features and roles in Windows.
 
@@ -3377,8 +3194,8 @@ Sources:
 1. "Windows Modules."
 2. "Get-WindowsFeature."
 
-Modules - Windows Modules - Installations - MSI
-'''''''''''''''''''''''''''''''''''''''''''''''
+MSI
+'''
 
 **Deprecated in: 2.3 Replaced by: ``win_package``**
 
@@ -3388,8 +3205,8 @@ Source:
 
 1. Windows Modules."
 
-Modules - Windows Modules - Installations - Package
-'''''''''''''''''''''''''''''''''''''''''''''''''''
+Package
+'''''''
 
 Manage official Microsoft packages for Windows. Examples of these
 include the .NET Framework, Remote Desktop Connection Manager, Visual
@@ -3445,8 +3262,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - Installations - Updates
-'''''''''''''''''''''''''''''''''''''''''''''''''''
+Updates
+'''''''
 
 Windows Updates can be managed by Ansible.
 
@@ -3492,8 +3309,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - Registry
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Registry
+^^^^^^^^
 
 The registry can be viewed and edited using the
 `win\_regedit <http://docs.ansible.com/ansible/latest/win_regedit_module.html>`__
@@ -3501,8 +3318,8 @@ and
 `win\_reg\_stat <http://docs.ansible.com/ansible/latest/win_reg_stat_module.html>`__
 modules.
 
-Modules - Windows Modules - Scheduled Task
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Scheduled Task
+^^^^^^^^^^^^^^
 
 Manage scheduled tasks in Windows.
 
@@ -3552,8 +3369,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - Service
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Service
+^^^^^^^
 
 Manage services on Windows.
 
@@ -3618,8 +3435,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Windows Modules - User
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+User
+^^^^
 
 Create, read, update, or delete (CRUD) a Windows user account.
 
@@ -3678,8 +3495,8 @@ Source:
 
 1. "Windows Modules."
 
-Modules - Module Development
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Module Development
+~~~~~~~~~~~~~~~~~~
 
 Official Ansible module development documentation:
 
@@ -3810,8 +3627,8 @@ Roles are used to accomplish and/or manage one specific item. Usually
 this will be to install and setup a program. A Playbook can be created
 to use multiple roles.
 
-Roles - Galaxy
-~~~~~~~~~~~~~~
+Galaxy
+~~~~~~
 
 Ansible Galaxy provides a way to easily manage remote Ansible Galaxy
 roles from https://galaxy.ansible.com/ and other software configuration
@@ -3856,8 +3673,8 @@ Sources:
 1. "Ansible Galaxy."
 2. "Ansible Playbook Roles and Include Statements."
 
-Roles - Galaxy - Dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Dependencies
+^^^^^^^^^^^^
 
 Roles can define dependencies to other roles hosted remotely. By
 default, the Ansible Galaxy repository is used to pull roles from.
@@ -3926,15 +3743,15 @@ Source:
 
 1. "Ansible Galaxy."
 
-Roles - Galaxy - Community Roles
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Community Roles
+^^^^^^^^^^^^^^^
 
 Unofficial community Roles can be used within Playbooks. Most of these
 can be found on `Ansible Galaxy <https://galaxy.ansible.com/>`__ or
 `GitHub <https://github.com/>`__. This section covers some useful Roles.
 
-Roles - Galaxy - Community Roles - Network Interface
-''''''''''''''''''''''''''''''''''''''''''''''''''''
+Network Interface
+'''''''''''''''''
 
 URL: https://github.com/MartinVerges/ansible.network\_interface
 
@@ -4022,8 +3839,8 @@ Jinja2 is the Python library used for variable manipulation and
 substitution in Ansible. This is also commonly used when creating files
 for the "``template``" module.
 
-Jinja2 - Variables
-~~~~~~~~~~~~~~~~~~
+Variables
+~~~~~~~~~
 
 Variables defined in Ansible can be single variables, lists, and
 dictionaries. This can be referenced from the template.
@@ -4124,8 +3941,8 @@ Does not work:
           msg: "{{ ansible_%s| format(item)] }}"
         with_items: "{{ ansible_interfaces }}"
 
-Jinja2 - Filters
-~~~~~~~~~~~~~~~~
+Filters
+~~~~~~~
 
 In certain situations it is desired to apply filters to alert a variable
 or expression. The syntax for running Jinja filters is
@@ -4224,8 +4041,8 @@ Source:
 
 1. "Jinja Template Designer Documentation."
 
-Jinja2 - Comments
-~~~~~~~~~~~~~~~~~
+Comments
+~~~~~~~~
 
 Comments are template comments that will be removed when once a template
 has been generated.
@@ -4273,8 +4090,8 @@ Examples:
           {{ jinja.wont.replace.this }}
       {% endraw %}
 
-Jinja2 - Blocks
-~~~~~~~~~~~~~~~
+Blocks
+~~~~~~
 
 Templates can extend other templates by replacing "block" elements. At
 least two files are required. The first file creates a place holder
@@ -4316,8 +4133,8 @@ Example (file 2):
     Welcome to the Hello World page!
     {% endblock %}
 
-Jinja2 - Loops
-~~~~~~~~~~~~~~
+Loops
+~~~~~
 
 Loops can use standard comparison and/or logic operators.
 
@@ -4646,8 +4463,8 @@ be used for user access control lists (ACLs), scheduling automated
 tasks, and having a visual representation of Ansible's deployment
 statistics.
 
-Dashboards - Ansible Tower 3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ansible Tower 3
+~~~~~~~~~~~~~~~
 
 Ansible Tower is the official dashboard maintained by Red Hat. The
 program requires PostgreSQL, Python, and RabbitMQ. A free trial of it
@@ -4814,8 +4631,8 @@ Source:
 3. "Installing and Configuring Ansible Tower Clusters - AnsbileFest
    London 2017."
 
-Dashboards - Ansible Tower 3 - GUI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+GUI
+^^^
 
 There is a navigation bar that contains links to the most important
 parts of Ansible Tower.
@@ -4880,11 +4697,11 @@ Sources:
 2. "Ansible Tower User Guide."
 3. "Ansible Tower Administration Guide"
 
-Dashboards - Ansible Tower 3 - Security
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Security
+^^^^^^^^
 
-Dashboards - Ansible Tower 3 - Security - Authentication
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Authentication
+''''''''''''''
 
 User authentication, by default, will store encrypted user information
 into the PostgreSQL database. Instead of using this, Tower can be
@@ -4915,8 +4732,8 @@ Source:
 
 1. "Ansible Tower Administration Guide."
 
-Dashboards - Ansible Tower 3 - Security - ACLs
-''''''''''''''''''''''''''''''''''''''''''''''
+ACLs
+''''
 
 Every user in Tower is associated with at least one organization. The
 level of access the user has to that organizations resources is defined
@@ -4947,8 +4764,8 @@ Sources:
 1. "[Ansible Tower] Organizations."
 2. "[Ansible Tower] Users."
 
-Dashboards - Ansible Tower 3 - Security - SSL
-'''''''''''''''''''''''''''''''''''''''''''''
+SSL
+'''
 
 By default, Tower creates a self-signed SSL certificate to secure web
 traffic. [1] Most web browsers will mark this as an untrusted
@@ -4962,8 +4779,8 @@ Source:
 
 1. "[Ansible Tower] Installation Notes."
 
-Dashboards - Ansible Tower 3 - API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+API
+^^^
 
 Ansible Tower has a strong focus on automating Ansible even more by
 providing an API interface. Programs can interact with this by making
@@ -5069,16 +4886,16 @@ Source:
 
 1. "Ansible Tower API Guide."
 
-Dashboards - AWX
-~~~~~~~~~~~~~~~~
+AWX
+~~~
 
 AWX is the upstream and open source version of Ansible Tower released by
 Red Hat to the public on September 7, 2017. [1] The source code for the
 project can be found in the
 `ansible/awx <https://github.com/ansible/awx>`__ repository on GitHub.
 
-Dashboards - AWX - Install
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Install
+^^^^^^^
 
 The "installer/inventory" file has an example inventory that can be used
 without any configuration. These are many options that can be fine tuned
@@ -5190,8 +5007,8 @@ Source:
 
 1. "Ansible announces AWX open source project."
 
-Dashboards - Rundeck
-~~~~~~~~~~~~~~~~~~~~
+Rundeck
+~~~~~~~
 
 Rundeck is an open source dashboard and API framework, programmed with
 Java, for automating the execution of commands and scripts via SSH.
@@ -5215,8 +5032,8 @@ Source:
 
 1. "Rundeck Ansible Plugin [README.md]."
 
-Dashboards - Semaphore
-~~~~~~~~~~~~~~~~~~~~~~
+Semaphore
+~~~~~~~~~
 
 Semaphore was designed to be an unofficial open source alternative to
 Ansible Tower, written in Go. The latest release can be found at
@@ -5244,8 +5061,8 @@ Source:
 
 1. "semaphore Installation."
 
-Dashboards - Tensor
-~~~~~~~~~~~~~~~~~~~
+Tensor
+~~~~~~
 
 Tensor is a open source dashboard and API for both Ansible and
 Terraform, written in Go by Pearson. Most of the public facing

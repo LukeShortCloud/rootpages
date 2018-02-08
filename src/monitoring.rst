@@ -1,9 +1,7 @@
 Monitoring
 ==========
 
--  `Monit <#monit>`__
-
-    -  `Configuration <#monit---configuration>`__
+.. contents:: Table of Contents
 
 Monit
 -----
@@ -13,8 +11,8 @@ that is available by default on the localhost interface via port 2812.
 It can detect if a service is down and restart it. Automatically alerts
 can also be configured.
 
-Monit - Configuration
-~~~~~~~~~~~~~~~~~~~~~
+Configuration
+~~~~~~~~~~~~~
 
 Install monit:
 

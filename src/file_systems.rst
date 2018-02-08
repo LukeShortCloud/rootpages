@@ -1,43 +1,7 @@
 File Systems
 ============
 
--  `Types <#types>`__
-
-   -  `Btrfs <#types---btrfs>`__
-
-      -  `Btrfs RAIDs <#types---btrfs---btrfs-raids>`__
-      -  `Btrfs Limitations <#types---btrfs---btrfs-limitations>`__
-
-   -  `ext4 <#types---ext4>`__
-   -  XFS
-   -  ZFS
-
--  LVM
--  `RAIDs <#raids>`__
-
-   -  `mdadm <#raids---mdadm>`__
-
--  `Network <#network>`__
-
-   -  `NFS <#network---nfs>`__
-   -  `SMB <#network---smb>`__
-   -  `iSCSI <#network---iscsi>`__
-
-      -  `Target <#network---iscsi---target>`__
-      -  `Initiator <#network---iscsi---initiator>`__
-
-   -  `Ceph <#network---ceph>`__
-
-      -  `Installation <#network---ceph---installation>`__
-
-         -  `Quick <#network---ceph---installation---quick>`__
-         -  Full
-         -  `Ceph-Ansible <#ceph---installation---ceph-ansible>`__
-
-      -  `CRUSH Map <#network---ceph---crush-map>`__
-      -  `Repair <#network---ceph---repair>`__
-      -  `libvirt <#network---ceph---libvirt>`__
-      -  `CephFS <#network---ceph---cephfs>`__
+.. contents:: Table of Contents
 
 Types
 -----
@@ -82,8 +46,8 @@ Sources:
 3. "Btrfs Main Page." Btrfs Kernel Wiki. June 24, 2016.
    https://btrfs.wiki.kernel.org/index.php/Main\_Page
 
-Types - Btrfs
-~~~~~~~~~~~~~
+Btrfs
+~~~~~
 
 Btrfs stands for the "B-tree file system." The file system is commonly
 referred to as "BtreeFS", "ButterFS", and "BetterFS". In this model,
@@ -119,8 +83,8 @@ Sources:
 2. "Mount Options" Btrfs Kernel Wiki. May 5, 2016.
    https://btrfs.wiki.kernel.org/index.php/Mount\_options
 
-Types - Btrfs - Btrfs RAIDs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Btrfs RAIDs
+^^^^^^^^^^^
 
 In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are
 supported. [1]
@@ -130,8 +94,8 @@ Source:
 1. "Using Btrfs with Multiple Devices" Btrfs Kernel Wiki. May 14, 2016.
    https://btrfs.wiki.kernel.org/index.php/Using\_Btrfs\_with\_Multiple\_Devices
 
-Types - Btrfs - Btrfs Limitations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Btrfs Limitations
+^^^^^^^^^^^^^^^^^
 
 Known limitations:
 
@@ -154,8 +118,8 @@ Source:
 1. "Preventing a btrfs Nightmare." Jupiter Broadcasting. July 6, 2014.
    http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
 
-Types - ext4
-~~~~~~~~~~~~
+ext4
+~~~~
 
 The Extended File System 4 (ext4) is the default file system for most
 Linux operating systems. It's focus is on performance and reliability.
@@ -277,8 +241,8 @@ Source:
 Network
 -------
 
-Network - NFS
-~~~~~~~~~~~~~
+NFS
+~~~
 
 The Network File System (NFS) aims to universally provide a way to
 remotely mount directories between servers. All subdirectories from a
@@ -337,8 +301,8 @@ Source:
    19, 2016.
    https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/Storage\_Administration\_Guide/nfs-serverconfig.html
 
-Network - SMB
-~~~~~~~~~~~~~
+SMB
+~~~
 
 The Server Message Block (SMB) protocol was created to view and edit
 files remotely over a network. The Common Internet File System (CIFS)
@@ -417,8 +381,8 @@ Sources:
    August 25, 2016. Accessed September 18th, 2016.
    https://www.certdepot.net/rhel7-provide-smb-network-shares/
 
-Network - iSCSI
-~~~~~~~~~~~~~~~
+iSCSI
+~~~~~
 
 The "Internet Small Computer Systems Interface" (also known as "Internet
 SCSI" or simply "iSCSI") is used to allocate block storage to servers
@@ -426,8 +390,8 @@ over a network. It relies on two components: the target (server) and the
 initiator (client). The target must first be configured to allow the
 client to attach the storage device.
 
-Network - iSCSI - Target
-^^^^^^^^^^^^^^^^^^^^^^^^
+Target
+^^^^^^
 
 For setting up a target storage, these are the general steps to follow
 in order:
@@ -568,8 +532,8 @@ in order:
 -  Finally, make sure that both the TCP and UDP port 3260 are open in
    the firewall. [1]
 
-Network - iSCSI - Initiator
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initiator
+^^^^^^^^^
 
 This should be configured on the client server.
 
@@ -627,8 +591,8 @@ Source:
    Accessed August 13, 2016.
    https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
 
-Network - Ceph
-~~~~~~~~~~~~~~
+Ceph
+~~~~
 
 Ceph has developed a concept called Reliable Autonomic Distributed
 Object Store (RADOS). It provides scalable, fast, and reliable
@@ -771,8 +735,8 @@ Sources:
    2017.
    http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 
-Network - Ceph - Installation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation
+^^^^^^^^^^^^
 
 Ceph Requirements:
 
@@ -788,8 +752,8 @@ Source:
 1. "INTRO TO CEPH." Ceph Documentation. Accessed January 15, 2017.
    http://docs.ceph.com/docs/jewel/start/intro/
 
-Network - Ceph - Installation - Quick
-'''''''''''''''''''''''''''''''''''''
+Quick
+'''''
 
 This example demonstrates how to deploy a 3 node Ceph cluster with both
 the monitor and OSD services. In production, monitor servers should be
@@ -856,8 +820,8 @@ Source:
 1. "Ceph Deployment." Ceph Jewel Documentation. Accessed January 14,
    2017. http://docs.ceph.com/docs/jewel/rados/deployment/
 
-Network - Ceph - Installation - ceph-ansible
-''''''''''''''''''''''''''''''''''''''''''''
+ceph-ansible
+''''''''''''
 
 The ceph-ansible project is used to help deploy and automate updates.
 
@@ -994,8 +958,8 @@ Source:
 1. "ceph-ansible Wiki." ceph-ansible GitHub. February 29, 2016. Accessed
    January 15, 2017. https://github.com/ceph/ceph-ansible/wiki
 
-Network - Ceph - CRUSH Map
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+CRUSH Map
+^^^^^^^^^
 
 CRUSH maps are used to keep track of OSDs, physical locations of
 servers, and it defines how to replicate objects.
@@ -1023,8 +987,8 @@ be loaded.
     # crushtool -c <NEW_DECOMPILED_FILE> -o <UPDATED_COMPILED_FILE>
     # ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>
 
-Network - Ceph - CRUSH Map - Devices
-''''''''''''''''''''''''''''''''''''
+Devices
+'''''''
 
 Devices must follow the format of ``device <COUNT> <OSD_NAME>``. These
 are automatically generated but can be adjusted and new nodes can be
@@ -1037,8 +1001,8 @@ manually added here.
     device 1 osd.1
     device 2 osd.2
 
-Network - Ceph - CRUSH Map - Bucket Types
-'''''''''''''''''''''''''''''''''''''''''
+Bucket Types
+''''''''''''
 
 Bucket types follow a similar format of ``type <COUNT> <TYPE_NAME>``.
 The name of the type can be anything. The higher numbered type always
@@ -1059,8 +1023,8 @@ inherits the lower numbers. The default types include:
     type 9 region
     type 10 root
 
-Network - Ceph - CRUSH Map - Bucket Instances
-'''''''''''''''''''''''''''''''''''''''''''''
+Bucket Instances
+''''''''''''''''
 
 Bucket instances are used to group OSD configurations together.
 Typically these should define physical locations of the OSDs.
@@ -1104,8 +1068,8 @@ Typically these should define physical locations of the OSDs.
 -  item = Optional. The OSD name and weight for individual OSDs. This is
    useful if a bucket instance has hard drives of different speeds.
 
-Network - Ceph - CRUSH Map - Rules
-''''''''''''''''''''''''''''''''''
+Rules
+'''''
 
 By modifying the CRUSH map, replication can be configured to go to a
 different drive, server, chassis, row, rack, datacenter, etc.
@@ -1144,8 +1108,8 @@ Source:
 1. "CRUSH MAPS." Ceph Documentation. Accessed January 29, 2017.
    http://docs.ceph.com/docs/master/rados/operations/crush-map/
 
-Network - Ceph - Repair
-^^^^^^^^^^^^^^^^^^^^^^^
+Repair
+^^^^^^
 
 Ceph automatically runs through a data integrity check called
 "scrubbing." This checks the health of each placement group (object).
@@ -1281,8 +1245,8 @@ Source:
 1. "Ceph: manually repair object." April 27, 2015. Accessed January 15,
    2017. http://ceph.com/planet/ceph-manually-repair-object/
 
-Network - Ceph - libvirt
-^^^^^^^^^^^^^^^^^^^^^^^^
+libvirt
+^^^^^^^
 
 Virtual machines that are run via the libvirt front-end can utilize
 Ceph's RADOS block devices (RBDs) as their main disk.
@@ -1361,8 +1325,8 @@ Sources:
 2. "Secret XML." libvirt. Accessed January 27, 2017.
    https://libvirt.org/formatsecret.html
 
-Network - Ceph - CephFS
-^^^^^^^^^^^^^^^^^^^^^^^
+CephFS
+^^^^^^
 
 CephFS has been stable since the Ceph Jewel 10.2.0 release. This now
 includes repair utilities, including fsck. For clients, it is

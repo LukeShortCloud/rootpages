@@ -1,16 +1,7 @@
 Bootloaders
 ===========
 
--  `GRUB 1 <#grub-1>`__
-
-   -  `Installation <#grub-1---installation>`__
-   -  `Recovery <#grub-1---recovery>`__
-
--  `GRUB 2 <#grub-2>`__
-
-   -  `Installation <#grub-2---installation>`__
-   -  `Configuration <#grub-2---configuration>`__
-   -  `Recovery <#grub-2---recovery>`__
+.. contents:: Table of Contents
 
 GRUB 1
 ------
@@ -19,8 +10,8 @@ GRUB 1 is a legacy version of GRUB that is no longer supported. The last
 version made available was 0.97 in 2008. GRUB 2 should be used for newer
 Linux distributions.
 
-GRUB 1 - Installation
-~~~~~~~~~~~~~~~~~~~~~
+Installation
+~~~~~~~~~~~~
 
 Install GRUB to the primary drive. This will use the MSDOS partition
 scheme on the first 512 bytes as GPT was not supported until GRUB 2.
@@ -47,8 +38,8 @@ Source:
 1. "GRUB Legacy." Arch Linux Wiki. January 11, 2017. Accessed February
    8, 2017. https://wiki.archlinux.org/index.php/GRUB\_Legacy
 
-GRUB 1 - Recovery
-~~~~~~~~~~~~~~~~~
+Recovery
+~~~~~~~~
 
 When GRUB fails to boot, or if the boot settings need to be modified,
 the GRUB recovery shell can be used.
@@ -93,8 +84,8 @@ GRUB stands for the GRand Unified Bootloader. It was designed to be
 cross platform compatible with most operating systems including BSD,
 Linux, and Windows variants.
 
-GRUB 2 - Installation
-~~~~~~~~~~~~~~~~~~~~~
+Installation
+~~~~~~~~~~~~
 
 GRUB must be installed onto the start of the entire drive, not a
 partition, to avoid issues in the case of partitions needing to be
@@ -137,8 +128,8 @@ Sources:
 2. "GRUB2-INSTALL MAN PAGE." Mankier. February 26, 2014.
    https://www.mankier.com/8/grub2-install
 
-GRUB 2 - Configuration
-~~~~~~~~~~~~~~~~~~~~~~
+Configuration
+~~~~~~~~~~~~~
 
 Important files:
 
@@ -193,8 +184,8 @@ Source:
 1. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015.
    https://help.ubuntu.com/community/Grub2/Setup
 
-GRUB 2 - Recovery
-~~~~~~~~~~~~~~~~~
+Recovery
+~~~~~~~~
 
 In cases where GRUB fails (because it was installed incorrectly), the
 end-user is automatically switched into GRUB's rescue shell.

@@ -1,22 +1,7 @@
 HTTP Servers
 ============
 
--  `Apache 2.4 <#apache-2.4>`__
-
-   -  `Configuration <#apache---configuration>`__
-   -  `Virtual Hosts <#apache---virtual-hosts>`__
-   -  `Files, Directories, and
-      Locations <#apache---files,-directories,-and-locations>`__
-   -  `Authentication <#apache---authentication>`__
-   -  `CGI <#apache---cgi>`__
-   -  `SELinux <#apache---selinux>`__
-
--  `NGINX <#nginx>`__
-
-   -  `Configuration <#nginx---configuration>`__
-
--  Lighttpd
--  `OpenSSL <#openssl>`__
+.. contents:: Table of Contents
 
 Apache 2.4
 ----------
@@ -30,8 +15,8 @@ Source:
 1. "The Number One HTTP Server On The Internet." Apache HTTP Server
    Project. Accessed October 1, 2016. https://httpd.apache.org/
 
-Apache - Configuration
-~~~~~~~~~~~~~~~~~~~~~~
+Configuration
+~~~~~~~~~~~~~
 
 There is generally one primary Apache configuration file that then
 includes other possible configuration files.
@@ -107,8 +92,8 @@ Source:
    Optimizing Linux. 2000. Accessed October 1, 2016.
    http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html
 
-Apache - Virtual Hosts
-~~~~~~~~~~~~~~~~~~~~~~
+Virtual Hosts
+~~~~~~~~~~~~~
 
 A virtual host file is part of the configuration that is required for
 Apache to load a domain.
@@ -152,8 +137,8 @@ Source:
    July 8, 2016. Accessed October 1, 2016.
    https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/
 
-Apache - Files, Directories, and Locations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Files, Directories, and Locations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Different settings can be used on items based on if a matched file,
 directory, or location is found. Regular expressions can be used to
@@ -232,8 +217,8 @@ Sources:
 2. "Options Directive." Apache HTTP Server Project. Accessed October 1,
    2016. http://httpd.apache.org/docs/2.4/mod/core.html#options
 
-Apache - Authentication
-~~~~~~~~~~~~~~~~~~~~~~~
+Authentication
+~~~~~~~~~~~~~~
 
 Locations can be secured by a username and password. Users can also be
 assigned to groups.
@@ -297,8 +282,8 @@ Source:
    Accessed October 1, 2016.
    https://httpd.apache.org/docs/2.4/howto/auth.html
 
-Apache - CGI
-~~~~~~~~~~~~
+CGI
+~~~
 
 The common gateway interface (CGI) is a method of the web server
 executing a script and then sending the results to a web browser. The
@@ -351,8 +336,8 @@ Source:
    Project. Accessed October 1, 2016.
    https://httpd.apache.org/docs/2.4/howto/cgi.html
 
-Apache - SELinux
-~~~~~~~~~~~~~~~~
+SELinux
+~~~~~~~
 
 Red Hat Enterprise Linux and related distributions use SELinux as an
 extra layer of security. In this case, by having SELinux, this ensures
@@ -412,8 +397,8 @@ added the functionality of being a HTTP web server. For HTTP, it is
 focused on high-performance static content handling. Dynamic scripts
 must be processed by a different web server.
 
-NGINX - Configuration
-~~~~~~~~~~~~~~~~~~~~~
+Configuration
+~~~~~~~~~~~~~
 
 The NGINX configuration file ``/etc/nginx/nginx.conf`` contains
 different blocks defined by using brackets ``{}``. Each line in the file
