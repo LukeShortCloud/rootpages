@@ -1,31 +1,13 @@
 Security
 ========
 
--  `Permissions <#permissions>`__
--  `User, Group, and Other <#permissions---user,-group,-and-other>`__
--  Special
-
-   -  sticky
-   -  setuid
-   -  setguid
-
--  Attributes
--  Firewalls
--  iptables
--  firewalld
--  ufw
--  SELinux
--  `Authentication <#authentication>`__
--  LDAP
--  `Kerberos <#authentication---kerberos>`__
-
-   -  `Configuration <#authentication---kerberos---configuration>`__
+.. contents:: Table of Contents
 
 Permissions
 -----------
 
-Permissions - User, Group, and Other
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+User, Group, and Other
+~~~~~~~~~~~~~~~~~~~~~~
 
 Normal Linux flie permissions are grouped into three categories: owner,
 group, and other users access. Permissions can be defined for what the
@@ -74,8 +56,8 @@ Sources:
 Authentication
 --------------
 
-Authentication - Kerberos
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Kerberos
+~~~~~~~~
 
 Kerberos provides authentication for services over a network. A Kerberos
 server provides remote users with a "ticket" to use after they log in.
@@ -85,8 +67,8 @@ including FTP, SSH, NFS, etc. [1]
 Ports: \* 88 TCP/UDP \* 464 TCP/UDP \* 749 TCP/UDP \* 6620 TCP/UDP \*
 6621 TCP/UDP \* 6623 TCP/UDP [2]
 
-Authentication - Kerberos - Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuration
+^^^^^^^^^^^^^
 
 The Kerberos sever is referred to as the Kerberos Distribution Center
 (KDC). These packages will need to be installed for the service:

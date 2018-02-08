@@ -1,16 +1,7 @@
 DNS
 ===
 
--  `Introduction to DNS <#introduction-to-dns>`__
--  BIND
--  Dnsmasq
--  `PowerDNS <#powerdns>`__
--  `PowerAdmin <#powerdns---poweradmin>`__
--  `gmysql <#powerdns---gmysql>`__
-
-   -  `Records <#powerdns---gmysql---records>`__
-
--  Unbound
+.. contents:: Table of Contents
 
 Introduction to DNS
 -------------------
@@ -64,14 +55,14 @@ SOA options:
 -  ttl = How long (in seconds) a record is allowed to be cached by
    another DNS server. [5]
 
-PowerDNS - PowerAdmin
-~~~~~~~~~~~~~~~~~~~~~
+PowerAdmin
+~~~~~~~~~~
 
 PowerAdmin is the graphic control panel that can be installed and
 accessed via a web browser.
 
-PowerDNS - gmysql
-~~~~~~~~~~~~~~~~~
+gmysql
+~~~~~~
 
 The generic MySQL backend (gmysql) was created to allow any MySQL server
 to store and serve records. [2] This is not to be confused with using
@@ -180,8 +171,8 @@ file to connect to the MySQL server.
     gmysql-dbname=pdns
     gmysql-password=<MYSQL_PASS>
 
-PowerDNS - gmysql - Records
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Records
+^^^^^^^
 
 After pdns is configured to use gmysql, a domain zones can be added.
 This requires that a information about the domain is added to the

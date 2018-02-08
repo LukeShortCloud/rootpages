@@ -1,22 +1,7 @@
 `Wine <#wine>`__
 ================
 
--  `User <#user>`__
-
-   -  Commands
-   -  `Environment Variables <#user---environment---variables>`__
-   -  Registry
-
--  Developer
-
-   -  Mailing Lists
-   -  Resources
-   -  Winetricks
-
--  Frameworks
-
-   -  Ansible Playgames
-   -  PlayOnLinux
+.. contents:: Table of Contents
 
 Wine Is Not an Emulator (Wine) is a compatibility layer that translates
 Windows systems calls into native POSIX system calls. This provides a
@@ -45,8 +30,8 @@ User
 This user guide is aimed at explaining how to use Wine, and related
 tools, to run Windows programs on Linux.
 
-User - Environment Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Environment Variables
+~~~~~~~~~~~~~~~~~~~~~
 
 Environment variables can be set by using the "export" Linux shell
 command or specifying the variables before a Wine command.

@@ -1,11 +1,7 @@
 Clustering and High Availability
 ================================
 
--  `Introduction <#introduction>`__
--  HAProxy
--  `IP Virtual Server <#ip-virtual-server>`__
--  Nginx
--  Keepalived
+.. contents:: Table of Contents
 
 Introduction
 ------------

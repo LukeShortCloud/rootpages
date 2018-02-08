@@ -14,6 +14,7 @@ Welcome to Root Pages!
    authentication
    bootloaders
    c_and_c++
+   databases
    clustering
    dns_servers
    file_systems
@@ -22,13 +23,11 @@ Welcome to Root Pages!
    mail_servers
    monitoring
    networking
-   nosql
    openstack
    operating_systems
    packages
    python
    security
-   sql
    virtualization
    wine
 

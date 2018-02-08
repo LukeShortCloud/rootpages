@@ -1,14 +1,7 @@
 Authentication
 ==============
 
--  `Kerberos <#kerberos>`__
-
-   -  `Server <#kerberos---server>`__
-   -  `Client <#kerberos---client>`__
-
--  `OpenLDAP <#openldap>`__
-
-   -  `Server <#openldap---server>`__
+.. contents:: Table of Contents
 
 Kerberos
 --------
@@ -43,8 +36,8 @@ Source:
    Exam Preparation Guide (EX200 and EX300)*. 3rd ed. Toronto, Canada:
    Asghar Ghori, 2015.
 
-Kerberos - Server
-~~~~~~~~~~~~~~~~~
+Server
+~~~~~~
 
 Install the Kerberos service.
 
@@ -152,8 +145,8 @@ Source:
    2010. Accessed September 11, 2017.
    https://fedoraproject.org/wiki/Kerberos\_KDC\_Quickstart\_Guide
 
-Kerberos - Client
-~~~~~~~~~~~~~~~~~
+Client
+~~~~~~
 
 Install the Kerberos client utilities.
 
@@ -197,11 +190,11 @@ Server, Oracle Database, PostgreSQL and more. [2]
 
 Source:
 
-1. 
+1.
 2. https://linux.die.net/man/5/slapd-sql
 
-OpenLDAP - Server
-~~~~~~~~~~~~~~~~~
+Server
+~~~~~~
 
 RHEL:
 
