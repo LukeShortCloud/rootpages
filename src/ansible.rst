@@ -71,41 +71,7 @@ Ansible
          -  `Include
             Variables <#modules---main-modules---includes---include-variables>`__
 
-      -  `Loops <#modules---main-modules---loops>`__
-
-         -  `Until <http://docs.ansible.com/ansible/latest/playbooks_loops.html#do-until-loops>`__
-         -  `With
-            Dict[ionary] <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-hashes>`__
-         -  `With First
-            Found <#modules---main-modules---loops---with-first-found>`__
-         -  `With
-            Flattened <#modules---main-modules---loops---with-flattened>`__
-         -  `With
-            File <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-files>`__
-         -  `With
-            Fileglob <http://docs.ansible.com/ansible/latest/playbooks_loops.html#id4>`__
-         -  `With
-            Filetree <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-filetrees>`__
-         -  `With Indexed
-            Items <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-a-list-with-an-index>`__
-         -  `With
-            INI <http://docs.ansible.com/ansible/latest/playbooks_loops.html#using-ini-file-with-a-loop>`__
-         -  `With Inventory
-            Hostnames <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-the-inventory>`__
-         -  `With
-            Items <#modules---main-modules---loops---with-items>`__
-         -  `With
-            Lines <http://docs.ansible.com/ansible/latest/playbooks_loops.html#iterating-over-the-results-of-a-program-execution>`__
-         -  `With
-            Nested <http://docs.ansible.com/ansible/latest/playbooks_loops.html#nested-loops>`__
-         -  `With Random
-            Choice <http://docs.ansible.com/ansible/latest/playbooks_loops.html#random-choices>`__
-         -  `With
-            Sequence <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-integer-sequences>`__
-         -  `With
-            Subelements <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-subelements>`__
-         -  `With
-            Together <http://docs.ansible.com/ansible/latest/playbooks_loops.html#looping-over-parallel-sets-of-data>`__
+      -  `Loops (Ansible < 2.5) <#modules---main-modules---loops>`__
 
       -  `Variables <#modules---main-modules---variables>`__
 
@@ -2039,11 +2005,47 @@ Source:
 
 1. "Utilities Modules."
 
-Modules - Main Modules - Loops
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Modules - Main Modules - Loops (Ansible < 2.5)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loops can be used to iterate through lists and/or dictionaries. The most
 commonly used loop is "with\_items."
+
+Valid loops:
+
+-  `Until <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#do-until-loops>`__
+-  `WithDict[ionary] <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-hashes>`__
+-  `With First
+   Found <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#finding-first-matched-files>`__
+-  `With
+   Flattened <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#flattening-a-list>`__
+-  `With
+   File <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-files>`__
+-  `With
+   Fileglob <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#id4>`__
+-  `With
+   Filetree <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-filetrees>`__
+-  `With Indexed
+   Items <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-a-list-with-an-index>`__
+-  `With
+   INI <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#using-ini-file-with-a-loop>`__
+-  `With Inventory
+   Hostnames <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-the-inventory>`__
+-  `With
+   Items <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#standard-loops>`__
+-  `With
+   Lines <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#iterating-over-the-results-of-a-program-execution>`__
+-  `With
+   Nested <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#nested-loops>`__
+-  `With Random
+   Choice <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#random-choices>`__
+-  `With
+   Sequence <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-integer-sequences>`__
+-  `With
+   Subelements <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-subelements>`__
+-  `With
+   Together <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-parallel-sets-of-data>`__
+
 
 Modules - Main Modules - Loops - With First Found
 '''''''''''''''''''''''''''''''''''''''''''''''''
@@ -2560,7 +2562,7 @@ Common options:
 -  {group\|mode\|owner} = Specify the permissions for the downloaded
    file.
 -  **url** = The URL to download.
--  
+-
 
    -  use\_proxy = Use the proxy settings from the environment
       variables. Default: yes.
@@ -4190,7 +4192,7 @@ more common functions.
    ::
 
        {% autoescape true %}
-       <html>These HTML tags will be 
+       <html>These HTML tags will be
        escaped and visible via a HTML browser.</html>
        {% endautoescape %}
 
@@ -4595,7 +4597,7 @@ Common ``container.yml`` options:
 
    -  roles = A list of Ansible roles to run on the container. \`\`\`
       roles:
-   -  
+   -
    -   \`\`\`
    -  ports = The hypervisor port to bind to and the container port to
       forward traffic to/from. \`\`\` ports:
