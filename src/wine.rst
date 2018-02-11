@@ -15,15 +15,6 @@ ReactOS and the Wine project. [2]
 Both projects are clean-room reversed engineered to prevent legal
 issues. [3]
 
-Source:
-
-1. "WineHQ." WineHQ. October 20, 2017. Accessed October 29, 2017.
-   https://www.winehq.org/
-2. "Wine." ReactOS Wiki. April 28, 2017. Accessed October 29, 2017.
-   https://www.reactos.org/wiki/WINE
-3. "Clean Room Guidelines." WineHQ. February 13, 2016. Accessed October
-   29, 2017. https://wiki.winehq.org/Clean\_Room\_Guidelines
-
 User
 ----
 
@@ -77,7 +68,7 @@ Examples:
 | WINE             | This variable is only used for Winetricks. The full path to the Wine binary to use.                                                                                                               | `/usr/bin/wine`       |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
 
-[1]
+[4]
 
 WINEDEBUG can be configured to log, or not log, specific information.
 Specify the log level class, if it should be added "+" or removed "-",
@@ -142,11 +133,13 @@ Example:
 The override can set to only run native, native then builtin, or builtin
 then native DLLs.
 
-[2]
+[5]
 
-Sources:
+Bibliography
+------------
 
-1. "Wine User's Guide." WineHQ. September 15, 2017. Accessed October 29,
-   2017. https://wiki.winehq.org/Wine\_User%27s\_Guide
-2. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29,
-   2017. https://wiki.winehq.org/Debug\_Channels
+1. "WineHQ." WineHQ. October 20, 2017. Accessed October 29, 2017. https://www.winehq.org/
+2. "Wine." ReactOS Wiki. April 28, 2017. Accessed October 29, 2017. https://www.reactos.org/wiki/WINE
+3. "Clean Room Guidelines." WineHQ. February 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Clean\_Room\_Guidelines
+4. "Wine User's Guide." WineHQ. September 15, 2017. Accessed October 29, 2017. https://wiki.winehq.org/Wine\_User%27s\_Guide
+5. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Debug\_Channels

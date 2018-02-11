@@ -235,16 +235,11 @@ Here is an example of converting addresses to nibble.
 
           $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
 
-Sources:
+Bibliography
+------------
 
-1. "PowerDNS." PowerDNS Docs. Accessed July 7, 2016.
-   https://doc.powerdns.com/md/
-2. "PowerDNS Generic MySQL backend." PowerDNS Docs. Accessed July 7,
-   2016.
-   https://doc.powerdns.com/md/authoritative/backend-generic-mysql/
-3. "PowerDNS How To's" PowerDNS Docs. Accessed July 7, 2016.
-   https://doc.powerdns.com/md/authoritative/howtos/
-4. "Supported Record Types. PowerDNS Docs. Accessed July 7, 2016.
-   https://doc.powerdns.com/md/types/
-5. "Start of Authority Resource Record (SOA RR)." zytrax open. Accessed
-   July 7, 2016. http://www.zytrax.com/books/dns/ch8/soa.html
+1. "PowerDNS." PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/
+2. "PowerDNS Generic MySQL backend." PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/authoritative/backend-generic-mysql/
+3. "PowerDNS How To's" PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/authoritative/howtos/
+4. "Supported Record Types. PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/types/
+5. "Start of Authority Resource Record (SOA RR)." zytrax open. Accessed July 7, 2016. http://www.zytrax.com/books/dns/ch8/soa.html

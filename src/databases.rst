@@ -24,11 +24,6 @@ RHEL Install [1]:
     gpgcheck=1
     # yum install MariaDB-server MariaDB-client
 
-Source:
-
-1. "Installing MariaDB with yum." MariaDB Knowledgebase. Accessed
-   October 16, 2016. https://mariadb.com/kb/en/mariadb/yum/
-
 Table Engines
 ^^^^^^^^^^^^^
 
@@ -40,10 +35,10 @@ CassandraSE
 
 The Cassandra Storage Engine (CassandraSE) is used to connect to a NoSQL
 Cassandra cluster. This allows the relational management of MariaDB to
-work with the fast and scalable Cassandra server. [1]
+work with the fast and scalable Cassandra server. [2]
 
 The Cassandra storage engine is missing from the official RHEL 7
-repositories but can be installed from the RHEL 6 repository. [3]
+repositories but can be installed from the RHEL 6 repository. [4]
 
 ::
 
@@ -79,20 +74,7 @@ repositories but can be installed from the RHEL 6 repository. [3]
 
        > CREATE TABLE <NAME> ENGINE=cassandra KEYSPACE="<KEYSPACE_NAME>" COLUMN_FAMILY="<COLUMN_FAMILY_NAME>";
 
-[1][2]
-
-Sources:
-
-1. "Cassandra Storage Engine Overview." MariaDB Knowledgebase. Accessed
-   October 16, 2016.
-   https://mariadb.com/kb/en/mariadb/cassandra-storage-engine-overview/
-2. "Cassandra Storage Engine Use Example." MariaDB Knowledgebase.
-   Accessed October 16, 2016.
-   https://mariadb.com/kb/en/mariadb/cassandra-storage-engine-use-example/
-3. "Missing CentOS7 RPM:
-   MariaDB-10.1.16-centos7-x86\_64-cassandra-engine.rpm?" MariaDB
-   Knowledgebase. Accessed October 16, 2016.
-   https://mariadb.com/kb/en/mariadb/missing-centos7-rpm-mariadb-10116-centos7-x86\_64-cassandra-enginerpm/
+[2][3]
 
 Clustering
 ^^^^^^^^^^
@@ -101,13 +83,7 @@ Maxscale
 ''''''''
 
 MaxScale is a proxy that can load balance requests in different ways.
-This is useful for specifying reads and writes to specific servers. [1]
-
-Source:
-
-1. "About MariaDB MaxScale." MariaDB Knowledgebase. Accessed October 16,
-   2016.
-   https://mariadb.com/kb/en/mariadb-enterprise/about-mariadb-maxscale/
+This is useful for specifying reads and writes to specific servers. [5]
 
 Configuration
 &&&&&&&&&&&&&
@@ -115,7 +91,7 @@ Configuration
 The latest version of MariaDB's MaxScale can be found at
 https://mariadb.com/downloads/maxscale.
 
-RHEL Install [1]:
+RHEL Install [6]:
 
 ::
 
@@ -188,7 +164,7 @@ Server options:
 -  port= Specify the MySQL port (default: 3306).
 -  protocol=MySQLBackend
 
-[2]
+[7]
 
 For replication, a maxscale MySQL user needs "REPLICATION SET" and
 "SELECT" grants for all databases.
@@ -201,24 +177,12 @@ In a master-slave configuration, at least two servers are required to be
 running. This is because MaxScale is unsure if other nodes are present
 and cannot determine if a server is a master or a slave. This will
 prevent it from working properly and this error will occur for all
-connections. [3] It is ideal to follow the quorum theory by having 3
+connections. [8] It is ideal to follow the quorum theory by having 3
 servers to support a failed host properly.
 
 ::
 
     ERROR 1045 (28000): failed to create new session
-
-Sources:
-
-1. "MariaDB MaxScale Installation Guide." MariaDB Knowledgebase.
-   Accessed October 22, 2016.
-   https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/mariadb-maxscale-installation-guide/
-2. "MaxScale Configuration & Usage Scenarios." MariaDB Knowledgebase.
-   Accessed October 22, 2016.
-   https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-configuration-usage-scenarios/
-3. "Issue with MaxScale when slaves are broken." MaxScale Google Groups.
-   August 28, 2014. Accessed November 12, 2016.
-   https://groups.google.com/forum/#!topic/maxscale/HK49D15s21s
 
 NoSQL
 -----
@@ -229,7 +193,7 @@ Cassandra
 Configuration
 ^^^^^^^^^^^^^
 
-RHEL Install [1][2]:
+RHEL Install [9][10]:
 
 ::
 
@@ -290,14 +254,19 @@ for efficient backups. \* (Default: false) \* snapshot\_before\_compact
 = Choose whether or not to automatically take backups before running a
 compaction. \* (Default: false)
 
-[3]
+[11]
 
-1. "How To Install Cassandra on CentOS 7" liquidweb Knowledgebase.
-   Accessed October 16, 2016.
-   https://www.liquidweb.com/kb/how-to-install-cassandra-on-centos-7/
-2. "Installing the DataStax Distribution of Apache Cassandra 3.x on
-   RHEL-based systems." DataStax Distribution of Apache Cassandra 3
-   Documentation. October 14, 2016. Accessed October 16, 2016.
-   http://docs.datastax.com/en/cassandra/3.x/cassandra/install/installRHEL.html
+Bibliography
+------------
 
-3. http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra\_yaml.html
+1. "Installing MariaDB with yum." MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb/yum/
+2. "Cassandra Storage Engine Overview." MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb/cassandra-storage-engine-overview/
+3. "Cassandra Storage Engine Use Example." MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb/cassandra-storage-engine-use-example/
+4. "Missing CentOS7 RPM: MariaDB-10.1.16-centos7-x86\_64-cassandra-engine.rpm?" MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb/missing-centos7-rpm-mariadb-10116-centos7-x86\_64-cassandra-enginerpm/
+5. "About MariaDB MaxScale." MariaDB Knowledgebase. Accessed October 16, 2016. https://mariadb.com/kb/en/mariadb-enterprise/about-mariadb-maxscale/
+6. "MariaDB MaxScale Installation Guide." MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/mariadb-maxscale-installation-guide/
+7. "MaxScale Configuration & Usage Scenarios." MariaDB Knowledgebase. Accessed October 22, 2016. https://mariadb.com/kb/en/mariadb-enterprise/mariadb-maxscale-14/maxscale-configuration-usage-scenarios/
+8. "Issue with MaxScale when slaves are broken." MaxScale Google Groups. August 28, 2014. Accessed November 12, 2016. https://groups.google.com/forum/#!topic/maxscale/HK49D15s21s
+9. "How To Install Cassandra on CentOS 7" liquidweb Knowledgebase. Accessed October 16, 2016. https://www.liquidweb.com/kb/how-to-install-cassandra-on-centos-7/
+10. "Installing the DataStax Distribution of Apache Cassandra 3.x on RHEL-based systems." DataStax Distribution of Apache Cassandra 3 Documentation. October 14, 2016. Accessed October 16, 2016. http://docs.datastax.com/en/cassandra/3.x/cassandra/install/installRHEL.html
+11. "The cassandra.yaml configuration file." DataStax Documentation. Accessed February 8, 2018. http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra\_yaml.html

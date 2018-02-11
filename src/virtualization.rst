@@ -11,18 +11,10 @@ different virtualization hypervisors. This Root Pages' guide assumes
 that libvirt is used for managing Quick Emulator (QEMU) virtual
 machines. [1]
 
-Source:
-
-1. "libvirt Introduction." libvirt VIRTUALIZATION API. Accessed December
-   22, 2017. https://libvirt.org/index.html
-
 Hardware Virtualization
 -----------------------
 
-Hardware virtualization uses specially supported processors to speed up
-and isolate virtualized environments. Most newer CPUs support this.
-There is "Intel VT (Virtualization Techonology)" and "AMD SVM (Secure
-Virtual Machine)" for x86 processors. [1]
+Hardware virtualization speeds up and further isolates virtualized environments. Most newer CPUs support this. There is "Intel VT (Virtualization Techonology)" and "AMD SVM (Secure Virtual Machine)" for x86 processors. Hardware virtualization must be supported by both the motherboard and processor. It should also be enabled in the BIOS. [2]
 
 Intel has three subtypes of virtualization:
 
@@ -30,7 +22,7 @@ Intel has three subtypes of virtualization:
 -  VT-d = I/O passthrough support.
 -  VT-c = Improved network I/O passthrough support.
 
-[2]
+[3]
 
 AMD has two subtypes of virtualization:
 
@@ -53,31 +45,12 @@ Verify the exact subtype of virtualization:
 
     $ lscpu | grep ^Virtualization # Intel or AMD
 
-Hardware virtualization must be supported by both the motherboard and
-processor. It should also be enabled in the BIOS. [1]
-
-Sources:
-
-1. "Linux: Find Out If CPU Support Intel VT and AMD-V Virtualization
-   Support." February 11, 2015. nixCraft. Accessed December 18, 2016.
-   https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/
-2. "Intel VT (Virtualization Technology) Definition." TechTarget.
-   October, 2009. Accessed December 18, 2016.
-   http://searchservervirtualization.techtarget.com/definition/Intel-VT
-
 KVM
 ~~~
 
 The "Kernel-based Virtual Machine (KVM)" is the default kernel module
 for handling hardware virtualization in Linux since the 2.6.20 kernel.
-[1] It is used to accelerate the QEMU hypervisor. [2]
-
-Sources:
-
-1. "Kernel Virtual Machine." KVM. Accessed December 18, 2016.
-   http://www.linux-kvm.org/page/Main\_Page
-2. "KVM vs QEMU vs Libvirt." The Geeky Way. February 14, 2014. Accessed
-   December 22, 2017. http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/
+[4] It is used to accelerate the QEMU hypervisor. [5]
 
 Performance Tuning
 ^^^^^^^^^^^^^^^^^^
@@ -85,7 +58,7 @@ Performance Tuning
 Configuration details for virtual machines can be modified to provide
 better performance. For processors, it is recommended to use the same
 CPU settings so that all of it's features are available to the guest.
-[1]
+[6]
 
 QEMU:
 
@@ -171,24 +144,14 @@ libvirt:
       <target dev='<DEVICE_NAME>' bus='virtio'/>
     </disk>
 
-[1][2]
+[6][7]
 
 When using the QCOW2 image format, create the image using metadata
-preallocation or else there could be up to a x5 performance penalty. [3]
+preallocation or else there could be up to a x5 performance penalty. [8]
 
 ::
 
     # qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
-
-Sources:
-
-1. "Tuning KVM." KVM. Accessed January 7, 2016.
-   http://www.linux-kvm.org/page/Tuning\_KVM
-2. "Virtio." libvirt Wiki. October 3, 2013. Accessed January 7, 2016.
-   https://wiki.libvirt.org/page/Virtio
-3. "KVM I/O slowness on RHEL 6." March 11, 2011. Accessed August 30,
-   2017.
-   http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -198,7 +161,7 @@ access to the processor to run another virtual machine in itself. This
 is disabled by default.
 
 Verify that the computer's processor supports nested KVM virtualization.
-[3]
+[11]
 
 -  Intel:
 
@@ -265,7 +228,7 @@ options.
 
        # grub-mkconfig -o /boot/grub/grub.cfg
 
-[1]
+[9]
 
 Edit the virtual machine's XML configuration to change the CPU mode to
 be "host-passthrough."
@@ -275,7 +238,7 @@ be "host-passthrough."
     # virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
 
-[2]
+[10]
 
 Reboot the virtual machine and verify that the hypervisor and the
 virtual machine both report the same capabilities and processor
@@ -292,26 +255,14 @@ virtualization support.
 
     # virt-host-validate
 
-[3]
-
-Sources:
-
-1. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog.
-   June 26, 2012. Accessed December 1, 2017.
-   http://www.rdoxenham.com/?p=275
-2. "Configure DevStack with KVM-based Nested Virtualization." December
-   18, 2016. Accessed December 18, 2016.
-   http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html
-3. "How to enable nested virtualization in KVM." Fedora Project Wiki.
-   June 19, 2015. Accessed August 30, 2017.
-   https://fedoraproject.org/wiki/How\_to\_enable\_nested\_virtualization\_in\_KVM
+[11]
 
 GPU Passthrough
 ^^^^^^^^^^^^^^^
 
 GPU passthrough is useful for running a Windows virtual machine guest
 for gaming inside of Linux. It is recommended to have two video cards,
-one for Linux and one for the guest virtual machine. [1]
+one for Linux and one for the guest virtual machine. [12]
 
 Nvidia cards have a detection in the driver to see if the operating
 system has a hypervisor running. This can lead to a "Code: 43" error in
@@ -319,7 +270,7 @@ the driver as it false-positively reports none. This affects Nvidia
 drivers starting with version 337.88. A work-a-round for this is to set
 a random "vendor\_id" to a alphanumeric 12 character value and forcing
 KVM's emulation to be hidden. This does not affect ATI/AMD graphics
-cards. [2]
+cards.
 
 ::
 
@@ -333,16 +284,7 @@ cards. [2]
         </kvm>
     </features>
 
-[2]
-
-Sources:
-
-1. "GPU Passthrough with KVM and Debian Linux." scottlinux.com Linux
-   Blog. August 28, 2016. Accessed December 18, 2016.
-   https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/
-2. "PCI passthrough via OVMF." Arch Linux Wiki. December 18, 2016.
-   Accessed December 18, 2016.
-   https://wiki.archlinux.org/index.php/PCI\_passthrough\_via\_OVMF
+[13]
 
 Xen
 ~~~
@@ -350,14 +292,9 @@ Xen
 Xen is a free and open source software hypervisor under the GNU General
 Public License (GPL). It was originally designed to be a competitor of
 VMWare. It is currently owned by Citrix and offers a paid support
-package for it's virtual machine hypervisor/manager XenServer. [1] By
+package for it's virtual machine hypervisor/manager XenServer. [14] By
 itself it can be used as a basic hypervisor, similar to QEMU. It can
 also be used with QEMU to provide accelerated hardware virtualization.
-
-Source:
-
-1. "Xen Definition." TechTarget. March, 2009. Accessed December 18,
-   2016. http://searchservervirtualization.techtarget.com/definition/Xen
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -375,13 +312,7 @@ modified to hide the original virtualization ID.
         hap=1
         cpuid = ['0x1:ecx=0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']
 
-[1]
-
-Source:
-
-1. "Nested Virtualization in Xen." Xen Project Wiki. November 2, 2017.
-   Accessed December 22, 2017.
-   https://wiki.xenproject.org/wiki/Nested\_Virtualization\_in\_Xen
+[15]
 
 Software Virtualization
 -----------------------
@@ -407,12 +338,7 @@ process is still running in the foreground, the container will remain
 active. Some processes may spawn in the background. A workaround for
 this is to append ``&& tail -f /dev/null`` to the command. If the daemon
 successfully starts, then a never-ending task can be run instead (such
-as viewing the never ending file of /dev/null). [1]
-
-Source:
-
-1. "Get started with Docker." Docker. Accessed November 19, 2016.
-   https://docs.docker.com/engine/getstarted
+as viewing the never ending file of /dev/null). [16]
 
 Networking
 ''''''''''
@@ -458,7 +384,7 @@ packet size (MTU) issues. There are a few work-a-rounds.
 
        # iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
-[1]
+[17]
 
 In rare cases, the bridge networking will not be working properly. An
 error message similar to this may appear during creation.
@@ -475,16 +401,7 @@ restart the docker service for it to be properly recreated.
     # ip link delete docker0
     # systemctl restart docker
 
-[2]
-
-Sources:
-
-1. "containers in docker 1.11 does not get same MTU as host #22297."
-   Docker GitHub. September 26, 2016. Accessed November 19, 2016.
-   https://github.com/docker/docker/issues/22297
-2. "iptables failed - No chain/target/match by that name #16816." Docker
-   GitHub. November 10, 2016. Accessed December 17, 2016.
-   https://github.com/docker/docker/issues/16816
+[18]
 
 LXC
 ^^^
@@ -492,13 +409,13 @@ LXC
 Linux Containers (LXC) utilizes the Linux kernel to natively run
 containers.
 
-Debian install [1]:
+Debian install [19]:
 
 ::
 
     # apt-get install lxc
 
-RHEL install [2] requires the Extra Packages for Enterprise Linux (EPEL)
+RHEL install [20] requires the Extra Packages for Enterprise Linux (EPEL)
 repository:
 
 -  RHEL:
@@ -527,14 +444,6 @@ able to run.
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
 
-Sources:
-
-1. "LXC." Ubuntu Documentation. Accessed August 8, 2017.
-   https://help.ubuntu.com/lts/serverguide/lxc.html
-2. "How to install and setup LXC (Linux Container) on Fedora Linux 26."
-   nixCraft. July 13, 2017. Accessed August 8, 2017.
-   https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
-
 Orchestration
 -------------
 
@@ -549,7 +458,7 @@ deployment. It uses a single file called "Vagrantfile" to describe the
 virtual machines to create. By default, Vagrant will use VirtualBox as
 the hypervisor but other technologies can be used.
 
--  Officially supported hypervisors [1]:
+-  Officially supported hypervisors [21]:
 
    -  docker
    -  hyperv
@@ -557,7 +466,7 @@ the hypervisor but other technologies can be used.
    -  vmware\_desktop
    -  vmware\_fusion
 
--  Unofficial hypervisors [2]:
+-  Unofficial hypervisors [22]:
 
    -  aws
    -  azure
@@ -598,15 +507,6 @@ The default username and password should be ``vagrant``.
 This guide can be followed for creating custom Vagrant boxes:
 https://www.vagrantup.com/docs/boxes/base.html.
 
-Sources:
-
-1. "Introduction to Vagrant." Vagrant Documentation. April 24, 2017.
-   Accessed May 9, 2017.
-   https://www.vagrantup.com/intro/getting-started/index.html
-2. "Available Vagrant Plugins." mitchell/vagrant GitHub. November 9,
-   2016. Accessed May 8, 2017.
-   https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
-
 Vagrantfile
 ^^^^^^^^^^^
 
@@ -644,12 +544,7 @@ Example:
       config.vm.box_url = "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box"
     end
 
-[1]
-
-Source:
-
-1. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed
-   May 9, 2017. https://www.vagrantup.com/docs/boxes.html
+[23]
 
 Networks
 ''''''''
@@ -708,10 +603,7 @@ hypervisor will forward to port 22 of the VM.
         config.vm.network "forwarded_port", id: "ssh", guest: 22, host: 2222
     ...
 
-Source:
-
-1. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017.
-   Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
+[24]
 
 libvirt
 &&&&&&&
@@ -740,11 +632,7 @@ Example:
         controller.vm.network "public_network", ip: "10.0.0.205", dev: "br0", mode: "bridge", type: "bridge"
     end
 
-Source:
-
-1. "Vagrant Libvirt Provider [README]." vagrant-libvirt GitHub. May 8,
-   2017. Accessed June 17, 2017.
-   https://github.com/vagrant-libvirt/vagrant-libvirt
+[25]
 
 Provisioning
 ''''''''''''
@@ -753,7 +641,7 @@ After a virtual machine (VM) has been created, additional commands can
 be run to configure the guest VMs. This is referred to as
 "provisioning."
 
--  Provisioners [1]:
+-  Provisioners [26]:
 
    -  `ansible <https://www.vagrantup.com/docs/provisioning/ansible_intro.html>`__
       = Run a Ansible Playbook from the hypervisor node.
@@ -776,18 +664,13 @@ be run to configure the guest VMs. This is referred to as
    -  salt = Run Salt states inside of the VM.
    -  shell = Run CLI shell commands.
 
-Source:
-
-1. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017.
-   Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
-
 Multiple Machines
 '''''''''''''''''
 
 A ``Vagrantfile`` can specify more than one virtual machine.
 
 The recommended way to provision multiple VMs is to statically define
-each individual VM to create as shown here. [1]
+each individual VM to create as shown here. [27]
 
 ::
 
@@ -809,7 +692,7 @@ each individual VM to create as shown here. [1]
 
 However, it is possible to use Ruby to dynamically define and create
 VMs. This will work for creating the VMs but using the ``vagrant``
-command to manage the VMs will not work properly [2]:
+command to manage the VMs will not work properly [28]:
 
 ::
 
@@ -843,13 +726,6 @@ command to manage the VMs will not work properly [2]:
         end
     end
 
-Sources:
-
-1. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017.
-   Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
-2. "Vagrantfile." Linux system administration and monitoring / Windows
-   servers and CDN video. May 9, 2017. Accessed May 9, 2017.
-   http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html
 
 GUI
 ---
@@ -861,3 +737,36 @@ Common GUIs:
 -  oVirt
 -  virt-manager
 -  XenServer
+
+
+Bibliography
+------------
+
+1. "libvirt Introduction." libvirt VIRTUALIZATION API. Accessed December 22, 2017. https://libvirt.org/index.html
+2. "Linux: Find Out If CPU Support Intel VT and AMD-V Virtualization Support." February 11, 2015. nixCraft. Accessed December 18, 2016. https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/
+3. "Intel VT (Virtualization Technology) Definition." TechTarget. October, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Intel-VT
+4. "Kernel Virtual Machine." KVM. Accessed December 18, 2016. http://www.linux-kvm.org/page/Main\_Page
+5. "KVM vs QEMU vs Libvirt." The Geeky Way. February 14, 2014. Accessed December 22, 2017. http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/
+6. "Tuning KVM." KVM. Accessed January 7, 2016. http://www.linux-kvm.org/page/Tuning\_KVM
+7. "Virtio." libvirt Wiki. October 3, 2013. Accessed January 7, 2016. https://wiki.libvirt.org/page/Virtio
+8. "KVM I/O slowness on RHEL 6." March 11, 2011. Accessed August 30, 2017. http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html
+9. "How to Enable Nested KVM." Rhys Oxenhams' Cloud Technology Blog. June 26, 2012. Accessed December 1, 2017. http://www.rdoxenham.com/?p=275
+10. "Configure DevStack with KVM-based Nested Virtualization." December 18, 2016. Accessed December 18, 2016. http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html
+11. "How to enable nested virtualization in KVM." Fedora Project Wiki. June 19, 2015. Accessed August 30, 2017. https://fedoraproject.org/wiki/How\_to\_enable\_nested\_virtualization\_in\_KVM
+12. "GPU Passthrough with KVM and Debian Linux." scottlinux.com Linux Blog. August 28, 2016. Accessed December 18, 2016. https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/
+13. "PCI passthrough via OVMF." Arch Linux Wiki. December 18, 2016. Accessed December 18, 2016. https://wiki.archlinux.org/index.php/PCI\_passthrough\_via\_OVMF
+14. "Xen Definition." TechTarget. March, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Xen
+15. "Nested Virtualization in Xen." Xen Project Wiki. November 2, 2017. Accessed December 22, 2017. https://wiki.xenproject.org/wiki/Nested\_Virtualization\_in\_Xen
+16. "Get started with Docker." Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted
+17. "containers in docker 1.11 does not get same MTU as host #22297." Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297
+18. "iptables failed - No chain/target/match by that name #16816." Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816
+19. "LXC." Ubuntu Documentation. Accessed August 8, 2017. https://help.ubuntu.com/lts/serverguide/lxc.html
+20. "How to install and setup LXC (Linux Container) on Fedora Linux 26." nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
+21. "Introduction to Vagrant." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/intro/getting-started/index.html
+22. "Available Vagrant Plugins." mitchell/vagrant GitHub. November 9, 2016. Accessed May 8, 2017. https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
+23. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/boxes.html
+24. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
+25. "Vagrant Libvirt Provider [README]." vagrant-libvirt GitHub. May 8, 2017. Accessed June 17, 2017. https://github.com/vagrant-libvirt/vagrant-libvirt
+26. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
+27. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
+28. "Vagrantfile." Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html

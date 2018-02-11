@@ -54,9 +54,10 @@ network to the 10.0.0.1 server.
     mynetworks = 10.0.0.0/24 127.0.0.0/8
     relayhost = 10.0.0.1
 
-[2] [3]
+[2][3]
 
-Sources:
+Bibliography
+------------
 
 1. "Postfix Basic Configuration." Postfix. Accessed October 1, 2016.
    http://www.postfix.org/BASIC\_CONFIGURATION\_README.html

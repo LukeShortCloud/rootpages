@@ -19,17 +19,12 @@ balancing methods used in clustering are:
 Ideally, high availability of services should also be of high importance
 to keep services working 100% of the time. [1]
 
-Source:
-
-1. "Nginx Load Balancing." Nginx. Accessed July 9, 2016.
-   https://www.nginx.com/resources/admin-guide/load-balancer/
-
 IP Virtual Server
 -----------------
 
 The IP Virtual Server (IPVS) service utilizes the Linux kernel directly
 for load balancing. It is designed to be a simple load balancer for
-internal/private networks. [1]
+internal/private networks. [2]
 
 The only prerequisite for IPVS is that it requires the Linux system to
 be configured as a router (masquerading). This is an example of using
@@ -54,7 +49,7 @@ IPVS is easily managed via the "ipvsadm" command.
 
        # ipvsadm -l
 
--  View more verbose information about current connections. [2]
+-  View more verbose information about current connections. [3]
 
    ::
 
@@ -104,16 +99,15 @@ IPVS is easily managed via the "ipvsadm" command.
 
        # ipvsadm {-R|--restore}
 
--  The entire configuration can be cleared at any time. [1]
+-  The entire configuration can be cleared at any time. [2]
 
    ::
 
        # ipvsadm {-C|--clear}
 
-Sources:
+Bibliography
+------------
 
-1. "LVS-mini-HOWTO." Austintek. March, 2012. Accessed July 9, 2016.
-   http://www.austintek.com/LVS/LVS-HOWTO/mini-HOWTO/LVS-mini-HOWTO.html
-2. "Building a Load Balancer with LVS - Linux Virtual Server." Linux
-   Admins. January, 2013. Accessed July 9, 2016.
-   http://www.linux-admins.net/2013/01/building-load-balancer-with-lvs-linux.html
+1. "Nginx Load Balancing." Nginx. Accessed July 9, 2016. https://www.nginx.com/resources/admin-guide/load-balancer/
+2. "LVS-mini-HOWTO." Austintek. March, 2012. Accessed July 9, 2016. http://www.austintek.com/LVS/LVS-HOWTO/mini-HOWTO/LVS-mini-HOWTO.html
+3. "Building a Load Balancer with LVS - Linux Virtual Server." Linux Admins. January, 2013. Accessed July 9, 2016. http://www.linux-admins.net/2013/01/building-load-balancer-with-lvs-linux.html

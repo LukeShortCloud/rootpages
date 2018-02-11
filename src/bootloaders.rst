@@ -33,11 +33,6 @@ load.
 
 [1]
 
-Source:
-
-1. "GRUB Legacy." Arch Linux Wiki. January 11, 2017. Accessed February
-   8, 2017. https://wiki.archlinux.org/index.php/GRUB\_Legacy
-
 Recovery
 ~~~~~~~~
 
@@ -70,19 +65,14 @@ Example of manually booting a server:
     grub> initrd /initramfs-4.0.img
     grub> boot
 
-[1]
-
-Source:
-
-1. "GNU GRUB Manual 0.97." GNU. Accessed February 8, 2017.
-   https://www.gnu.org/software/grub/manual/legacy/grub.html
+[2]
 
 GRUB 2
 ------
 
 GRUB stands for the GRand Unified Bootloader. It was designed to be
 cross platform compatible with most operating systems including BSD,
-Linux, and Windows variants.
+Linux, and Windows variants. [7]
 
 Installation
 ~~~~~~~~~~~~
@@ -105,7 +95,7 @@ end-user upon boot.
     # grub-mkconfig -o /boot/grub/grub.cfg
 
 If any changes are made to GRUB's settings and/or it's various scripts,
-run this command to update the changes. [1]
+run this command to update the changes. [3]
 
 ::
 
@@ -119,14 +109,7 @@ may be required. \* --force = Install despite any warnings. \* --recheck
 = Remove the original /boot/grub/device.map file (if it exists) and then
 review the current mapping of partitions. \* --boot-directory = The
 directory that the "grub/" folder should exist in. This is typically
-"/boot". [2]
-
-Sources:
-
-1. "GRUB." Arch Linux Wiki. May 27, 2016.
-   https://wiki.archlinux.org/index.php/GRUB
-2. "GRUB2-INSTALL MAN PAGE." Mankier. February 26, 2014.
-   https://www.mankier.com/8/grub2-install
+"/boot". [4]
 
 Configuration
 ~~~~~~~~~~~~~
@@ -177,12 +160,7 @@ specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7
 -  GRUB\_BACKGROUND = Specify the full path to a custom image for GRUB's
    menu background.
 
-[1]
-
-Source:
-
-1. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015.
-   https://help.ubuntu.com/community/Grub2/Setup
+[5]
 
 Recovery
 ~~~~~~~~
@@ -236,7 +214,7 @@ modify configuration files and re-install GRUB using the same commands
 used during the installation.
 
 In this example, /dev/sda2 is the root partition and /dev/sda1 is the
-boot partition. [1]
+boot partition. [6]
 
 ::
 
@@ -263,9 +241,13 @@ it can properly see the logical volume as a block device.
     RHEL/Fedora
     # yum install lvm2
 
-Sources:
+Bibliography
+------------
 
-1. "Grub2/Installing." Ubuntu Documentation. March 6, 2015.
-   https://help.ubuntu.com/community/Grub2/Installing
-2. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016.
-   https://www.gnu.org/software/grub/manual/grub.html
+1. "GRUB Legacy." Arch Linux Wiki. January 11, 2017. Accessed February 8, 2017. https://wiki.archlinux.org/index.php/GRUB\_Legacy
+2. "GNU GRUB Manual 0.97." GNU. Accessed February 8, 2017. https://www.gnu.org/software/grub/manual/legacy/grub.html
+3. "GRUB." Arch Linux Wiki. May 27, 2016. https://wiki.archlinux.org/index.php/GRUB
+4. "GRUB2-INSTALL MAN PAGE." Mankier. February 26, 2014. https://www.mankier.com/8/grub2-install
+5. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015. https://help.ubuntu.com/community/Grub2/Setup
+6. "Grub2/Installing." Ubuntu Documentation. March 6, 2015. https://help.ubuntu.com/community/Grub2/Installing
+7. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html

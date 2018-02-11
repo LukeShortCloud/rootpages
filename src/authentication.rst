@@ -30,12 +30,6 @@ Ports:
 
 [1]
 
-Source:
-
-1. Ghori, Asghar. *RHCSA & RHCE Red Hat Enterprise Linux 7: Training and
-   Exam Preparation Guide (EX200 and EX300)*. 3rd ed. Toronto, Canada:
-   Asghar Ghori, 2015.
-
 Server
 ~~~~~~
 
@@ -137,13 +131,7 @@ Log into the administrator account to manage accounts.
 It is also recommended to use a NTP service to keep time synchronized to
 prevent authentication issues due to time drift.
 
-[1]
-
-Source:
-
-1. "Kerberos KDC Quickstart Guide." Fedora Project Wiki. Februray 3,
-   2010. Accessed September 11, 2017.
-   https://fedoraproject.org/wiki/Kerberos\_KDC\_Quickstart\_Guide
+[2]
 
 Client
 ~~~~~~
@@ -161,7 +149,7 @@ that the server does. The easiest way to ensure this is to copy the
 ``/etc/krb5.conf`` file over.
 
 When authenticating, the username has to be in lowercase and the domain
-must be in uppercase. [1]
+must be in uppercase. [3]
 
 Syntax:
 
@@ -170,12 +158,6 @@ Syntax:
 Example:
 
 ``bob@ENTERPRISE.TLD``
-
-Source:
-
-1. "Infrastructure/Kerberos." Fedora Project Wiki. June 23, 2017.
-   Accessed September 11, 2017.
-   https://fedoraproject.org/wiki/Infrastructure/Kerberos
 
 OpenLDAP
 --------
@@ -186,12 +168,7 @@ implementation of this protocol.
 
 OpenLDAP supports storing user information in many relational database
 management systems (RDMSs) including IBM db2, MariaDB/MySQL, MS SQL
-Server, Oracle Database, PostgreSQL and more. [2]
-
-Source:
-
-1.
-2. https://linux.die.net/man/5/slapd-sql
+Server, Oracle Database, PostgreSQL and more. [4]
 
 Server
 ~~~~~~
@@ -215,10 +192,13 @@ Enable and start the service.
     # systemctl enable slapd
     # systemctl start slapd
 
-[1]
+[5]
 
-Source:
+Bibliography
+------------
 
-1. "Step By Step OpenLDAP Server Configuration On CentOS 7 / RHEL 7."
-   ItzGeek. September 14, 2017. Accessed September 20, 2017.
-   http://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html
+1. Ghori, Asghar. *RHCSA & RHCE Red Hat Enterprise Linux 7: Training and Exam Preparation Guide (EX200 and EX300)*. 3rd ed. Toronto, Canada: Asghar Ghori, 2015.
+2. "Kerberos KDC Quickstart Guide." Fedora Project Wiki. February 3, 2010. Accessed September 11, 2017. https://fedoraproject.org/wiki/Kerberos\_KDC\_Quickstart\_Guide
+3. "Infrastructure/Kerberos." Fedora Project Wiki. June 23, 2017. Accessed September 11, 2017. https://fedoraproject.org/wiki/Infrastructure/Kerberos
+4. "slapd-sql(5) - Linux man page." die.net. Accessed February 8, 2018. https://linux.die.net/man/5/slapd-sql
+5. "Step By Step OpenLDAP Server Configuration On CentOS 7 / RHEL 7." ItzGeek. September 14, 2017. Accessed September 20, 2017. http://www.itzgeek.com/how-tos/linux/centos-how-tos/step-step-openldap-server-configuration-centos-7-rhel-7.html

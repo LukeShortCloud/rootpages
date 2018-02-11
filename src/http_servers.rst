@@ -10,11 +10,6 @@ The Apache HTTP Server Project is designed to provide a versatile open
 source HTTP and HTTPS web server. It is one of the top used web servers.
 [1]
 
-Source:
-
-1. "The Number One HTTP Server On The Internet." Apache HTTP Server
-   Project. Accessed October 1, 2016. https://httpd.apache.org/
-
 Configuration
 ~~~~~~~~~~~~~
 
@@ -74,7 +69,7 @@ Options:
 
    -  Example: IncludeOptional conf.d/\*.conf
 
-[1]
+[2]
 
 Verify that the configuration is correct with one of these commands:
 
@@ -85,12 +80,6 @@ Verify that the configuration is correct with one of these commands:
 ::
 
     # httpd -t
-
-Source:
-
-1. "Configure the /etc/httpd/conf/httpd.conf file." Securing and
-   Optimizing Linux. 2000. Accessed October 1, 2016.
-   http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html
 
 Virtual Hosts
 ~~~~~~~~~~~~~
@@ -129,13 +118,7 @@ Example:
       CustomLog /var/log/httpd/rootpages_tld.custom_log
     </VirtualHost>
 
-[1]
-
-Source:
-
-1. "Set up Apache virtual hosts on Ubuntu." Rackspace Network Support.
-   July 8, 2016. Accessed October 1, 2016.
-   https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/
+[3]
 
 Files, Directories, and Locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,7 +164,7 @@ Options:
       -  denied = Deny the matched rule.
 
 -  Require not [all\|host\|ip] = Deny access to a host or IP. This
-   should be configured after a Require rule. [1]
+   should be configured after a Require rule. [4]
 -  Options = Specify attributes of the matched area. Enable an option
    with a "+" or disable it with "-". If no sign is present, Apache
    assumes it should be enabled. If at least one option requires a sign
@@ -195,7 +178,7 @@ Options:
       files to execute commands or scripts.
    -  Indexes = Show the content of a directory if the DirectoryIndex is
       not found.
-   -  FollowSymLinks = Allow symlinks to different directories. [2]
+   -  FollowSymLinks = Allow symlinks to different directories. [5]
 
 A combination of a "Require all" or "Require not all" and then an
 explicit allow/deny list can only be used within a "RequireAll" block.
@@ -209,13 +192,6 @@ explicit allow/deny list can only be used within a "RequireAll" block.
             Require not host server.hostname.tld
         </RequireAll>
     </Directory>
-
-Sources:
-
-1. "Access Control." Apache HTTP Server Project. Accessed October 1,
-   2016. https://httpd.apache.org/docs/2.4/howto/access.html
-2. "Options Directive." Apache HTTP Server Project. Accessed October 1,
-   2016. http://httpd.apache.org/docs/2.4/mod/core.html#options
 
 Authentication
 ~~~~~~~~~~~~~~
@@ -243,7 +219,7 @@ A new file can be created to assign multiple users to a group.
     # vim /etc/httpd/conf.d/group
     <GROUP>: <USER1> <USER2>
 
-Authentication can now be applied to any location. [1] The syntax is:
+Authentication can now be applied to any location. [6] The syntax is:
 
 ::
 
@@ -275,12 +251,6 @@ Example #2:
         AuthGroupFile "/etc/httpd/conf.d/spring_2016"
         Require group spring_2016
     </File>
-
-Source:
-
-1. "Authentication and Authorization." Apache HTTP Server Project.
-   Accessed October 1, 2016.
-   https://httpd.apache.org/docs/2.4/howto/auth.html
 
 CGI
 ~~~
@@ -328,13 +298,7 @@ anonymous user ("other") access category.
 
     # chmod -R o+rx /path/to/custom/cgi-bin/
 
-[1]
-
-Source:
-
-1. "Apache Tutorial: Dynamic Content with CGI." Apache HTTP Server
-   Project. Accessed October 1, 2016.
-   https://httpd.apache.org/docs/2.4/howto/cgi.html
+[7]
 
 SELinux
 ~~~~~~~
@@ -382,12 +346,7 @@ semanage tool and then apply the permissions by running restorecon:
     # semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
     # restorecon -Rv /path/to/custom/dir
 
-[1]
-
-Source:
-
-1. "HowTos SELinux." CentOS Wiki. February 26, 2017. Accessed May 7,
-   2017. https://wiki.centos.org/HowTos/SELinux
+[8]
 
 NGINX
 -----
@@ -467,7 +426,7 @@ configuration settings.
    -  root
    -  try\_files
 
-[2][3]
+[10][11]
 
 ::
 
@@ -486,24 +445,13 @@ configuration settings.
         }
     }
 
-[1]
-
-Sources:
-
-1. "NGINX Beginner’s Guide." NGINX Documentation. April 18, 2017.
-   Accessed May 7, 2017. https://nginx.org/en/docs/beginners\_guide.html
-2. "`NGINX <#nginx>`__ Core functionality." NGINX Documentation. April
-   18, 2017. Accessed May 7, 2017.
-   https://nginx.org/en/docs/ngx\_core\_module.html
-3. "`NGINX <#nginx>`__ Module ngx\_http\_core\_module." NGINX
-   Documentation. April 18, 2017. Accessed May 7, 2017.
-   https://nginx.org/en/docs/http/ngx\_http\_core\_module.html
+[9]
 
 OpenSSL
 -------
 
 OpenSSL is a free and open source library for managing secure socket
-layer (SSL) and Transport Layer Security (TLS) encryption. [1]
+layer (SSL) and Transport Layer Security (TLS) encryption. [12]
 
 PEM files can either be a single certificate or a full encapsulation of
 all related certificates and keys. This is useful for distributing an
@@ -548,12 +496,21 @@ Full Verified Syntax:
     -----BEGIN RSA PRIVATE KEY-----
     -----END RSA PRIVATE KEY-----
 
-[2]
+[13]
 
-Sources:
+Bibliography
+------------
 
-1. "Welcome to OpenSSL!" Accessed November 27, 2016.
-   https://www.openssl.org/
-2. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed
-   November 27, 2016.
-   http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl
+1. "The Number One HTTP Server On The Internet." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/
+2. "Configure the /etc/httpd/conf/httpd.conf file." Securing and Optimizing Linux. 2000. Accessed October 1, 2016. http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html
+3. "Set up Apache virtual hosts on Ubuntu." Rackspace Network Support. July 8, 2016. Accessed October 1, 2016. https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/
+4. "Access Control." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/access.html
+5. "Options Directive." Apache HTTP Server Project. Accessed October 1, 2016. http://httpd.apache.org/docs/2.4/mod/core.html#options
+6. "Authentication and Authorization." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/auth.html
+7. "Apache Tutorial: Dynamic Content with CGI." Apache HTTP Server Project. Accessed October 1, 2016. https://httpd.apache.org/docs/2.4/howto/cgi.html
+8. "HowTos SELinux." CentOS Wiki. February 26, 2017. Accessed May 7, 2017. https://wiki.centos.org/HowTos/SELinux
+9. "NGINX Beginner’s Guide." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/beginners\_guide.html
+10. "`NGINX <#nginx>`__ Core functionality." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/ngx\_core\_module.html
+11. "`NGINX <#nginx>`__ Module ngx\_http\_core\_module." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/http/ngx\_http\_core\_module.html
+12. "Welcome to OpenSSL!" Accessed November 27, 2016. https://www.openssl.org/
+13. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed November 27, 2016. http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl
