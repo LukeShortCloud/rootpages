@@ -53,11 +53,6 @@ Components:
 
 [1]
 
-Source:
-
-1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017.
-   https://wiki.debian.org/SourcesList
-
 Packaging
 ~~~~~~~~~
 
@@ -89,7 +84,7 @@ creating these files and/or directories.
    -  patches/ = Optional. Files for patching the source code.
    -  {preinst\|postinst\|prerm\|postrm} = Optional. These are
       executable scripts that run before installation, after
-      installation, before removable, or after removable. [1]
+      installation, before removable, or after removable. [2]
 
 Install the required packaging dependencies.
 
@@ -153,7 +148,7 @@ actual package will be named
 
      -- Bob Smith <bob@smith.tld>  Mon, 22 Mar 2017 23:12:12 +0100
 
-``control`` File Example [2]:
+``control`` File Example [3]:
 
 ::
 
@@ -175,14 +170,6 @@ actual package will be named
      The build output from a repository listing the steps to setup a debian
      package in a long-format under 80 characters per line.
 
-Sources:
-
-1. "Chapter 7 - Basics of the Debian package management system." The
-   Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017.
-   https://www.debian.org/doc/manuals/debian-faq/ch-pkg\_basics.en.html
-2. "hello-debian README.md." streadway/hello-debian GitHub. March 24,
-   2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
-
 Macros
 ^^^^^^
 
@@ -201,13 +188,7 @@ Many macros exist for helping to build and install Debian packages.
 
        make install DESTDIR=/<PATH_TO_>/<PACKAGE>-<VERSION>-revision/debian/<PACKAGE>
 
-[1]
-
-Source:
-
-1. "Chapter 4. Required files under the debian directory." Debian New
-   Maintainers' Guide. February 25, 2017. Accessed March 24, 2017.
-   https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+[4]
 
 RPM
 ---
@@ -236,7 +217,7 @@ ignored. \* baseurl = The location of the repository. Valid location
 types include "http://", "ftp://", and "file://" for using the local
 file system. \* mirrorlist = Instead of a baseurl, a link to a list of
 repository mirrors can be given. \* enabled = Enable or disable a
-repository with a "1" or "0". The default is value is "1". [1] \*
+repository with a "1" or "0". The default is value is "1". [5] \*
 gpgcheck = Force a GPG encryption check against signed packages. Enable
 or disable with a "1" or "0". \* gpgkey = Specify the path to the GPG
 key.
@@ -245,7 +226,7 @@ Variables for repository files: \* $releasever = The RHEL release
 version. This is typically the major operating system versioning number
 such as "5" or "6". \* $basearch = The CPU architecture. For most modern
 PCs this is typically either automatically filled in as "x86\_64" for
-64-bit operating systems or "i386" for 32-bit. [2]
+64-bit operating systems or "i386" for 32-bit. [6]
 
 At the bare minimum, a repository file needs to include a name and a
 baseurl.
@@ -268,13 +249,6 @@ using a mirrorlist.
     gpgcheck=1
     gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
-Sources:
-
-1. "Fedora 24 System Administrator's Guide" Fedora Documentation. 2016.
-   Accessed June 28, 2016.
-   https://docs.fedoraproject.org/en-US/Fedora/24/html/System\_Administrators\_Guide/sec-Setting\_repository\_Options.html
-2. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28,
-   2016. http://linux.die.net/man/5/yum.conf
 
 Creating a Repository
 ^^^^^^^^^^^^^^^^^^^^^
@@ -306,66 +280,43 @@ the full listing of every directory and file. \* other.xml = Holds a
 changelog of all the packages. \* groups.xml = If a repository has a
 "group" that should install multiple packages, the group is specified
 here. By default, this file is not created when running "createrepo"
-without any arguments. [2]
+without any arguments. [8]
 
 If new packages are added and/or signed via a GPG key then the
-repository cache needs to be updated again. [1]
+repository cache needs to be updated again. [7]
 
 ::
 
     # createrepo --update /var/www/html/centos/7/x86_64/
 
-Sources:
-
-1. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016.
-   http://linux.die.net/man/8/createrepo
-2. "createrepo/rpm metadata." createrepo. Accessed June 28 2016.
-   http://createrepo.baseurl.org/
-
 Common Repositories
 ^^^^^^^^^^^^^^^^^^^
 
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Repository Name                            | Supported Operating System(s) | Official | Description                                                                                                                                                                                                                    | Repository                                                                                                 |
-+============================================+===============================+==========+================================================================================================================================================================================================================================+============================================================================================================+
-| Enterprise Linux Repository (ELRepo)       | RHEL                          | No       | The latest hardware drivers and Linux kernels. [3]                                                                                                                                                                             | `RHEL6 <http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm>`__,                                |
-|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm>`__                               |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Extra Packages for Enterprise Linux (EPEL) | RHEL                          | Yes      | Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. [1]                                                                                                                                    | `RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__,                        |
-|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__                         |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Inline with Upstream (IUS)                 | RHEL                          | No       | The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [2] | `RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,                                               |
-|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__,                                               |
-|                                            |                               |          |                                                                                                                                                                                                                                | `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,                                           |
-|                                            |                               |          |                                                                                                                                                                                                                                | `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__                                            |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Kernel Vanilla                             | Fedora                        | Yes      | Kernel packages for the latest stable and mainline Linux kernels. [6]                                                                                                                                                          | `Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__                                  |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| RPM Fusion                                 | Fedora, RHEL                  | No       | Packages that Fedora does not ship by default (primarily due to license conflicts). [4]                                                                                                                                        | `Fedora26 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm>`__,           |
-|                                            |                               |          |                                                                                                                                                                                                                                | `Fedora27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__,           |
-|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__,             |
-|                                            |                               |          |                                                                                                                                                                                                                                | `RHEL7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__              |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| RPM Sphere                                 | Fedora                        | No       | openSUSE packages that are not available in Fedora. [5]                                                                                                                                                                        | `Fedora26 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo>`__ |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-| Wine                                       | Fedora                        | Yes      | The latest stable, development, and staging packages for Wine.                                                                                                                                                                 | `Fedora 26 <https://dl.winehq.org/wine-builds/fedora/26/winehq.repo>`__                                    |
-+--------------------------------------------+-------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
-
-Sources:
-
-1. "EPEL." Fedora Project. March 1, 2017. Accessed May 14, 2017.
-   https://fedoraproject.org/wiki/EPEL
-2. "IUS Community Project." IUS. May 5, 2017. Accessed May 14, 2017.
-   https://ius.io/
-3. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May
-   14, 2017. http://elrepo.org/tiki/tiki-index.php
-4. "RPM Fusion." RPM Fusion. March 31, 2017. Accessed May 14, 2017.
-   https://rpmfusion.org/RPM%20Fusion
-5. "RPM Sphere." openSUSE Build Service. Accessed September 4, 2017.
-   https://build.opensuse.org/project/show/home:zhonghuaren
-6. "Kernel Vanilla Repositories." Fedora Project Wiki. February 28,
-   2017. Accessed September 8, 2017.
-   https://fedoraproject.org/wiki/Kernel\_Vanilla\_Repositories
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Repository Name                            | Supported Operating System(s) | Official | Description                                                                                                                                                                                                                     | Repository                                                                                                 |
++============================================+===============================+==========+=================================================================================================================================================================================================================================+============================================================================================================+
+| Enterprise Linux Repository (ELRepo)       | RHEL                          | No       | The latest hardware drivers and Linux kernels. [11]                                                                                                                                                                             | `RHEL6 <http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm>`__,                                |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm>`__                               |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Extra Packages for Enterprise Linux (EPEL) | RHEL                          | Yes      | Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. [9]                                                                                                                                     | `RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__,                        |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__                         |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Inline with Upstream (IUS)                 | RHEL                          | No       | The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [10] | `RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,                                               |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__,                                               |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,                                           |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__                                            |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Kernel Vanilla                             | Fedora                        | Yes      | Kernel packages for the latest stable and mainline Linux kernels. [14]                                                                                                                                                          | `Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__                                  |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| RPM Fusion                                 | Fedora, RHEL                  | No       | Packages that Fedora does not ship by default (primarily due to license conflicts). [12]                                                                                                                                        | `Fedora26 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-26.noarch.rpm>`__,           |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `Fedora27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__,           |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `RHEL6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__,             |
+|                                            |                               |          |                                                                                                                                                                                                                                 | `RHEL7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__              |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| RPM Sphere                                 | Fedora                        | No       | openSUSE packages that are not available in Fedora. [13]                                                                                                                                                                        | `Fedora26 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_26/home:zhonghuaren.repo>`__ |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| Wine                                       | Fedora                        | Yes      | The latest stable, development, and staging packages for Wine.                                                                                                                                                                  | `Fedora 26 <https://dl.winehq.org/wine-builds/fedora/26/winehq.repo>`__                                    |
++--------------------------------------------+-------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
 
 Packaging
 ~~~~~~~~~
@@ -446,11 +397,7 @@ Sections:
    -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a
       file or folder to give it custom permissions.
 
-Source:
-
-1. "How to create an RPM package." Fedora Project. June 22, 2016.
-   Accessed June 28, 2016.
-   http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+[15]
 
 Macros
 ^^^^^^
@@ -463,9 +410,7 @@ Some useful macros include:
 -  ``%{patches}`` = An array of all of the defined patch files.
 -  ``%{sources}`` = An array of all of the defined source files.
 
-Source:
-
-1. https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+[16]
 
 Directories
 '''''''''''
@@ -488,13 +433,7 @@ can and will be refereneced.
    installed to. This is also set to the ``$RPM_BUILD_ROOT`` shell
    variable.
 
-[1]
-
-Source:
-
-1. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016.
-   Accessed March 13, 2017.
-   https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
+[17]
 
 Users and Groups
 ^^^^^^^^^^^^^^^^
@@ -507,7 +446,7 @@ Creating a user or group can be done one of two ways.
    for keeping permissions identical on multiple platforms.
 
 The Fedora Project recommends using these standardized blocks of code to
-accomplish these methods. [1]
+accomplish these methods. [18]
 
 Dynamic:
 
@@ -538,12 +477,6 @@ Static:
         fi
     fi
     exit 0
-
-Source:
-
-1. "Packaging: Users and Groups" Fedora Project. September 14, 2016.
-   Accessed February 25, 2017.
-   https://fedoraproject.org/wiki/Packaging:UsersAndGroups
 
 Patches
 ^^^^^^^
@@ -610,13 +543,7 @@ location of the patch file.
 
     patch < %{_sourcedir}/<FILE_NAME>
 
-[1]
-
-Source:
-
-1. "How to Create and Use Patch Files for RPM Packages." Bob Cromwell.
-   March 20, 2017. Accessed March 20, 2017.
-   http://cromwell-intl.com/linux/rpm-patch.html
+[19]
 
 PKGBUILD
 --------
@@ -653,7 +580,7 @@ Optional Variables:
 -  conflicts = List any conflicting packages.
 -  replaces = List packages that this software should replace.
 
-[1]
+[20]
 
 Functions
 
@@ -694,27 +621,37 @@ Required:
 
           $ make DESTDIR="${pkgdir}" install
 
-      [2][3]
-
-Sources:
-
-1. "PKGBUILD." Arch Linux Wiki. October 26, 2016. Accessed November 19,
-   2016. https://wiki.archlinux.org/index.php/PKGBUILD
-2. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed
-   November 19, 2016.
-   https://wiki.archlinux.org/index.php/creating\_packages
-3. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016.
-   Accessed November 19, 2016.
-   https://www.archlinux.org/pacman/PKGBUILD.5.html
+[21][22]
 
 Flatpak
 -------
 
-Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [1] This package manager is available for most modern Linux distributions. [2]
+Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [23] This package manager is available for most modern Linux distributions. [24]
 
-Source:
+Bibliography
+------------
 
-1. "About `Flatpak <#flatpak>`__." Flatpak. March 18, 2017. Accessed
-   March 19, 2017. http://flatpak.org/
-2. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017.
-   http://flatpak.org/getting.html
+1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
+2. "Chapter 7 - Basics of the Debian package management system." The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg\_basics.en.html
+3. "hello-debian README.md." streadway/hello-debian GitHub. March 24, 2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
+4. "Chapter 4. Required files under the debian directory." Debian New Maintainers' Guide. February 25, 2017. Accessed March 24, 2017. https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+5. "Fedora 24 System Administrator's Guide" Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System\_Administrators\_Guide/sec-Setting\_repository\_Options.html
+6. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf
+7. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
+8. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
+9. "EPEL." Fedora Project. March 1, 2017. Accessed May 14, 2017. https://fedoraproject.org/wiki/EPEL
+10. "IUS Community Project." IUS. May 5, 2017. Accessed May 14, 2017. https://ius.io/
+11. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May 14, 2017. http://elrepo.org/tiki/tiki-index.php
+12. "RPM Fusion." RPM Fusion. March 31, 2017. Accessed May 14, 2017. https://rpmfusion.org/RPM%20Fusion
+13. "RPM Sphere." openSUSE Build Service. Accessed September 4, 2017. https://build.opensuse.org/project/show/home:zhonghuaren
+14. "Kernel Vanilla Repositories." Fedora Project Wiki. February 28, 2017. Accessed September 8, 2017. https://fedoraproject.org/wiki/Kernel\_Vanilla\_Repositories
+15. "How to create an RPM package." Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+16. https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+17. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
+18. "Packaging: Users and Groups" Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups
+19. "How to Create and Use Patch Files for RPM Packages." Bob Cromwell. March 20, 2017. Accessed March 20, 2017. http://cromwell-intl.com/linux/rpm-patch.html
+20. "PKGBUILD." Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD
+21. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating\_packages
+22. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
+23. "About `Flatpak <#flatpak>`__." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/
+24. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html

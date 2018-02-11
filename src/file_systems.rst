@@ -36,16 +36,6 @@ calculated by using the equation: ``2^<BIT_SIZE> - 1``.
 
 [1]
 
-Sources:
-
-1. "Linux File systems Explained." Ubuntu Documentation. November 8,
-   2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained
-2. "How many files can I put in a directory?" Stack Overflow. July 14,
-   2015.
-   http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory
-3. "Btrfs Main Page." Btrfs Kernel Wiki. June 24, 2016.
-   https://btrfs.wiki.kernel.org/index.php/Main\_Page
-
 Btrfs
 ~~~~~
 
@@ -55,7 +45,7 @@ data is organized efficiently for fast I/O operations. This helps to
 provide copy-on-write (CoW) for efficient file copies as well as other
 useful features. Btrfs supports subvolumes, CoW snapshots, online
 defragmentation, built-in RAID, compression, and the ability to upgrade
-an existing ext file systems to Btrfs. [1]
+an existing ext file systems to Btrfs. [4]
 
 Common mount options:
 
@@ -73,26 +63,13 @@ Common mount options:
 -  subvol = Mount a subvolume contained inside a Btrfs file system.
 -  ssd = Enables various solid state drive optimizations. This does not
    turn on TRIM support.
--  discard = Enables TRIM support. [2]
-
-Sources:
-
-1. "What’s All This I Hear About Btrfs For Linux." The Personal Blog of
-   Dan Calloway. December 16, 2012.
-   https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/
-2. "Mount Options" Btrfs Kernel Wiki. May 5, 2016.
-   https://btrfs.wiki.kernel.org/index.php/Mount\_options
+-  discard = Enables TRIM support. [5]
 
 Btrfs RAIDs
 ^^^^^^^^^^^
 
 In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are
-supported. [1]
-
-Source:
-
-1. "Using Btrfs with Multiple Devices" Btrfs Kernel Wiki. May 14, 2016.
-   https://btrfs.wiki.kernel.org/index.php/Using\_Btrfs\_with\_Multiple\_Devices
+supported. [6]
 
 Btrfs Limitations
 ^^^^^^^^^^^^^^^^^
@@ -111,19 +88,14 @@ Known limitations:
       -  ``# btrfs balance start /``
       -  ``# btrfs defragment -r /``
 
-[1]
-
-Source:
-
-1. "Preventing a btrfs Nightmare." Jupiter Broadcasting. July 6, 2014.
-   http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
+[7]
 
 ext4
 ~~~~
 
 The Extended File System 4 (ext4) is the default file system for most
 Linux operating systems. It's focus is on performance and reliability.
-It is also backwards compatible with the ext3 file system. [1]
+It is also backwards compatible with the ext3 file system. [8]
 
 Mount options:
 
@@ -158,16 +130,7 @@ Mount options:
 
 -  discard = Enables TRIM support. The file system will immediately free
    up the space from a deleted file for use with new files.
--  nodiscard = Disables TRIM. [2]
-
-Sources:
-
-1. "Linux File Systems: Ext2 vs Ext3 vs Ext4." The Geek Stuff. May 16,
-   2011. Accessed October 1, 2016.
-   http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4
-2. "Ext4 Filesystem." Kernel Documentation. May 29, 2015. Accessed
-   October 1, 2016.
-   https://kernel.org/doc/Documentation/filesystems/ext4.txt
+-  nodiscard = Disables TRIM. [9]
 
 RAIDs
 -----
@@ -191,13 +154,7 @@ drives to create 1 logical drive.
 | 10    | 4              | This uses both RAID 1 and 0 together.                                          | Requires more physical drives. Rebuilding or restoring a RAID 10 will require downtime.                                    | X     | X                 | X          |
 +-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
 
-[1]
-
-Source:
-
-1. "RAID levels 0, 1, 2, 3, 4, 5, 6, 0+1, 1+0 features explained in
-   detail." GOLINUXHUB. April 09, 2016. Accessed August 13th, 2016.
-   http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html
+[10]
 
 RAIDs - mdadm
 ~~~~~~~~~~~~~
@@ -231,12 +188,7 @@ Finally, you can initialize the RAID.
 
     # mdadm --assemble --scan
 
-[1]
-
-Source:
-
-1. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016.
-   https://wiki.archlinux.org/index.php/RAID
+[11]
 
 Network
 -------
@@ -285,7 +237,7 @@ NFS export options:
 
    -  krb5 = Use Kerberos for authentication only.
 
-[1]
+[12]
 
 On Red Hat Enterprise Linux systems, the exported directory will need to
 have the "nfs\_t" file context for SELinux to work properly.
@@ -295,12 +247,6 @@ have the "nfs\_t" file context for SELinux to work properly.
     # semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
     # restorecon -R "/path/to/dir"
 
-Source:
-
-1. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September
-   19, 2016.
-   https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/Storage\_Administration\_Guide/nfs-serverconfig.html
-
 SMB
 ~~~
 
@@ -308,7 +254,7 @@ The Server Message Block (SMB) protocol was created to view and edit
 files remotely over a network. The Common Internet File System (CIFS)
 was created by Microsoft as an enhanced fork of SMB but was eventually
 replaced with newer versions of SMB. On Linux, the "Samba" service is
-typically used for setting up SMB share. [1]
+typically used for setting up SMB share. [13]
 
 SMB Ports:
 
@@ -341,7 +287,7 @@ Configuration - Share:
    -  write list = Specify users that can write to the share, separated
       by spaces. Groups can also be specified using by appending a "+"
       to the front of the name.
-   -  comment = Place a comment about the share. [2]
+   -  comment = Place a comment about the share. [14]
 
 Verify the Samba configuration.
 
@@ -362,24 +308,12 @@ running:
 
 On Red Hat Enterprise Linux systems, the exported directory will need to
 have the "samba\_share\_t" file context for SELinux to work properly.
-[3]
+[15]
 
 ::
 
     # semanage fcontext -a -t samba_share_t "/path/to/dir{/.*)?"
     # restorecon -R "/path/to/dir"
-
-Sources:
-
-1. "The Difference between CIFS and SMB." VARONIS. February 14, 1024.
-   Accessed September 18th, 2016.
-   https://blog.varonis.com/the-difference-between-cifs-and-smb/
-2. "The Samba Configuration File." SAMBA. September 26th, 2003. Accessed
-   September 18th, 2016.
-   https://www.samba.org/samba/docs/using\_samba/ch06.html
-3. "RHEL7: Provide SMB network shares to specific clients." CertDepot.
-   August 25, 2016. Accessed September 18th, 2016.
-   https://www.certdepot.net/rhel7-provide-smb-network-shares/
 
 iSCSI
 ~~~~~
@@ -530,7 +464,7 @@ in order:
           > set attribute demo_mode_write_protect=0
 
 -  Finally, make sure that both the TCP and UDP port 3260 are open in
-   the firewall. [1]
+   the firewall. [16]
 
 Initiator
 ^^^^^^^^^
@@ -582,14 +516,7 @@ This should be configured on the client server.
 
           # lsblk --scsi
 
-[1]
-
-Source:
-
-1. "RHEL7: Configure a system as either an iSCSI target or initiator
-   that persistently mounts an iSCSI target." CertDepot. July 30, 2016.
-   Accessed August 13, 2016.
-   https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
+[16]
 
 Ceph
 ~~~~
@@ -648,7 +575,7 @@ Cluster map:
 
 When the end-user asks for a file, that name is combined with it's PG ID
 and then CRUSH hashes it to find the exact location of it on all of the
-OSDs. The master OSD for that file serves the content. [1]
+OSDs. The master OSD for that file serves the content. [17]
 
 The current back-end for handling data storage is FileStore. When data
 is written to a Ceph OSD, it is first fully written to the OSD journal.
@@ -663,7 +590,7 @@ FileStore by writing the the data to the block device first and then
 updating the metadata of the data's location. All of the metadata is
 also stored in the fast RocksDB key-value store. File systems are no
 longer required for OSDs because BlueStore can write data directly to
-the block device of the hard drive. [2]
+the block device of the hard drive. [18]
 
 The optimal number of PGs is found be using this equation (replacing the
 number of OSD daemons and how many replicas are set). This number should
@@ -711,11 +638,11 @@ Cache pools can be configured used to cache files onto faster drives.
 When a file is continually being read, it will be copied to the faster
 drive. When a file is first written, it will go to the faster drives.
 After a period of time of lesser use, those files will be moved to the
-slow drives. [3]
+slow drives. [19]
 
 For testing, the "cephx" authentication protocols can temporarily be
 disabled. This will require a restart of all of the Ceph services.
-Re-enable ``cephx`` by setting these values from "none" to "cephx." [4]
+Re-enable ``cephx`` by setting these values from "none" to "cephx." [20]
 
 ::
 
@@ -724,16 +651,6 @@ Re-enable ``cephx`` by setting these values from "none" to "cephx." [4]
     auth cluster required = none
     auth service required = none
     auth client required = none
-
-Sources:
-
-1. Karan Singh *Learning Ceph* (Birmingham, UK: Packet Publishing, 2015)
-2. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
-3. "CACHE POOL." Ceph Documentation. Accessed January 19, 2017.
-   http://docs.ceph.com/docs/jewel/dev/cache-pool/
-4. "CEPHX CONFIG REFERENCE." Ceph Docmentation. Accessed January 28,
-   2017.
-   http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 
 Installation
 ^^^^^^^^^^^^
@@ -745,12 +662,7 @@ Ceph Requirements:
 -  1GB RAM per monitor daemon.
 -  1GB RAM per metadata daemon.
 -  An odd number of montior nodes (starting at least 3 for high
-   availability and quorum). [1]
-
-Source:
-
-1. "INTRO TO CEPH." Ceph Documentation. Accessed January 15, 2017.
-   http://docs.ceph.com/docs/jewel/start/intro/
+   availability and quorum). [21]
 
 Quick
 '''''
@@ -813,12 +725,7 @@ separated from the OSD storage nodes.
 
        # ceph status
 
-[1]
-
-Source:
-
-1. "Ceph Deployment." Ceph Jewel Documentation. Accessed January 14,
-   2017. http://docs.ceph.com/docs/jewel/rados/deployment/
+[22]
 
 ceph-ansible
 ''''''''''''
@@ -951,12 +858,7 @@ Finally, run the Playbook to deploy the Ceph cluster.
 
     # ansible-playbook -i production site.yml
 
-[1]
-
-Source:
-
-1. "ceph-ansible Wiki." ceph-ansible GitHub. February 29, 2016. Accessed
-   January 15, 2017. https://github.com/ceph/ceph-ansible/wiki
+[23]
 
 CRUSH Map
 ^^^^^^^^^
@@ -1101,12 +1003,7 @@ different drive, server, chassis, row, rack, datacenter, etc.
 -  step take
 -  step emit = Required. This signifies the end of the rule block.
 
-[1]
-
-Source:
-
-1. "CRUSH MAPS." Ceph Documentation. Accessed January 29, 2017.
-   http://docs.ceph.com/docs/master/rados/operations/crush-map/
+[24]
 
 Repair
 ^^^^^^
@@ -1238,12 +1135,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
           # ceph pg repair 1.28
 
-[1]
-
-Source:
-
-1. "Ceph: manually repair object." April 27, 2015. Accessed January 15,
-   2017. http://ceph.com/planet/ceph-manually-repair-object/
+[25]
 
 libvirt
 ^^^^^^^
@@ -1295,7 +1187,7 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 
        # virsh secret-list
 
--  Set the secret to the Ceph client's key. [1]
+-  Set the secret to the Ceph client's key. [26]
 
    ::
 
@@ -1303,7 +1195,7 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 
 -  Finally, the secret needs to be referenced as type "ceph" with either
    the "usage" (description) or "uuid" or the secret element that has
-   been created. [2]
+   been created. [27]
 
    ::
 
@@ -1318,22 +1210,42 @@ Ceph's RADOS block devices (RBDs) as their main disk.
        ...
        </devices>
 
-Sources:
-
-1. "USING LIBVIRT WITH CEPH RBD." Ceph Documentation. Accessed January
-   27, 2017. http://docs.ceph.com/docs/master/rbd/libvirt/
-2. "Secret XML." libvirt. Accessed January 27, 2017.
-   https://libvirt.org/formatsecret.html
-
 CephFS
 ^^^^^^
 
 CephFS has been stable since the Ceph Jewel 10.2.0 release. This now
 includes repair utilities, including fsck. For clients, it is
 recommended to use a Linux kernel in the 4 series, or newer, to have the
-latest features and bug fixes for the file system. [1]
+latest features and bug fixes for the file system. [28]
 
-Source:
+Bibliography
+------------
 
-1. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017.
-   http://docs.ceph.com/docs/master/cephfs/
+1. "Linux File systems Explained." Ubuntu Documentation. November 8, 2015. https://help.ubuntu.com/community/LinuxFilesystemsExplained
+2. "How many files can I put in a directory?" Stack Overflow. July 14, 2015.http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory
+3. "Btrfs Main Page." Btrfs Kernel Wiki. June 24, 2016. https://btrfs.wiki.kernel.org/index.php/Main\_Page
+4. "What’s All This I Hear About Btrfs For Linux." The Personal Blog of Dan Calloway. December 16, 2012. https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/
+5. "Mount Options" Btrfs Kernel Wiki. May 5, 2016. https://btrfs.wiki.kernel.org/index.php/Mount\_options
+6. "Using Btrfs with Multiple Devices" Btrfs Kernel Wiki. May 14, 2016. https://btrfs.wiki.kernel.org/index.php/Using\_Btrfs\_with\_Multiple\_Devices
+7. "Preventing a btrfs Nightmare." Jupiter Broadcasting. July 6, 2014. http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/
+8. "Linux File Systems: Ext2 vs Ext3 vs Ext4." The Geek Stuff. May 16, 2011. Accessed October 1, 2016. http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4
+9. "Ext4 Filesystem." Kernel Documentation. May 29, 2015. Accessed October 1, 2016. https://kernel.org/doc/Documentation/filesystems/ext4.txt
+10. "RAID levels 0, 1, 2, 3, 4, 5, 6, 0+1, 1+0 features explained in detail." GOLINUXHUB. April 09, 2016. Accessed August 13th, 2016. http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html
+11. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID
+12. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September 19, 2016.  https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/Storage\_Administration\_Guide/nfs-serverconfig.html
+13. "The Difference between CIFS and SMB." VARONIS. February 14, 1024. Accessed September 18th, 2016. https://blog.varonis.com/the-difference-between-cifs-and-smb/
+14. "The Samba Configuration File." SAMBA. September 26th, 2003. Accessed September 18th, 2016. https://www.samba.org/samba/docs/using\_samba/ch06.html
+15. "RHEL7: Provide SMB network shares to specific clients." CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/
+16. "RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target." CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
+17. Karan Singh *Learning Ceph* (Birmingham, UK: Packet Publishing, 2015)
+18. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
+19. "CACHE POOL." Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/jewel/dev/cache-pool/
+20. "CEPHX CONFIG REFERENCE." Ceph Docmentation. Accessed January 28, 2017. http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
+21. "INTRO TO CEPH." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/jewel/start/intro/
+22. "Ceph Deployment." Ceph Jewel Documentation. Accessed January 14, 2017. http://docs.ceph.com/docs/jewel/rados/deployment/
+23. "ceph-ansible Wiki." ceph-ansible GitHub. February 29, 2016. Accessed January 15, 2017. https://github.com/ceph/ceph-ansible/wiki
+24. "CRUSH MAPS." Ceph Documentation. Accessed January 29, 2017. http://docs.ceph.com/docs/master/rados/operations/crush-map/
+25. "Ceph: manually repair object." April 27, 2015. Accessed January 15, 2017. http://ceph.com/planet/ceph-manually-repair-object/
+26. "USING LIBVIRT WITH CEPH RBD." Ceph Documentation. Accessed January 27, 2017. http://docs.ceph.com/docs/master/rbd/libvirt/
+27. "Secret XML." libvirt. Accessed January 27, 2017. https://libvirt.org/formatsecret.html
+28. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/

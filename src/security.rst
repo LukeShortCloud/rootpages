@@ -47,12 +47,6 @@ Example (letters):
 
 [1]
 
-Sources:
-
-1. "Understanding Linux File Permissions." Linux.com. May 18, 2010.
-   Accessed October 22, 2016.
-   https://www.linux.com/learn/understanding-linux-file-permissions
-
 Authentication
 --------------
 
@@ -62,10 +56,10 @@ Kerberos
 Kerberos provides authentication for services over a network. A Kerberos
 server provides remote users with a "ticket" to use after they log in.
 This ticket is used to validate authentication with various services
-including FTP, SSH, NFS, etc. [1]
+including FTP, SSH, NFS, etc. [2]
 
 Ports: \* 88 TCP/UDP \* 464 TCP/UDP \* 749 TCP/UDP \* 6620 TCP/UDP \*
-6621 TCP/UDP \* 6623 TCP/UDP [2]
+6621 TCP/UDP \* 6623 TCP/UDP [3]
 
 Configuration
 ^^^^^^^^^^^^^
@@ -122,7 +116,7 @@ Uncomment all of the lines in /etc/krb5.conf and then replace all
 references to "example.com" and EXAMPLE.COM" with the server's domain
 name/realm. [3] For testing, "rdns=false" and
 "ignore\_acceptor\_hostname=true" in the "[libdefaults]" section should
-be used to prevent DNS issues. [4]
+be used to prevent DNS issues. [5]
 
 ::
 
@@ -204,18 +198,13 @@ Verify that the authentication works.
     $ kinit cloud-user
     $ klist
 
-[1] [3]
+[2][4]
 
-Sources:
+Bibliography
+------------
 
-1. "Kerberos." Ubuntu Documentation. November 18, 2014. Accessed
-   September 25, 2016. https://help.ubuntu.com/community/Kerberos
-2. "Configuring Your Firewall to Work With Kerberos V5." Accessed
-   September 25, 2016.
-   https://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-admin/Configuring-Your-Firewall-to-Work-With-Kerberos-V5.html
-3. "CentOS 7 Configure Kerberos KDC and Client." theurbanpengiun.
-   September 5, 2016. Accessed September 25, 2016.
-   https://www.youtube.com/watch?v=7Q-Xx0I8PXc
-4. "Principal names and DNS." MIT Kerberos Documentation. Accessed
-   October 22, 2016.
-   https://web.mit.edu/kerberos/krb5-1.13/doc/admin/princ\_dns.html
+1. "Understanding Linux File Permissions." Linux.com. May 18, 2010. Accessed October 22, 2016. https://www.linux.com/learn/understanding-linux-file-permissions
+2. "Kerberos." Ubuntu Documentation. November 18, 2014. Accessed September 25, 2016. https://help.ubuntu.com/community/Kerberos
+3. "Configuring Your Firewall to Work With Kerberos V5." Accessed September 25, 2016. https://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-admin/Configuring-Your-Firewall-to-Work-With-Kerberos-V5.html
+4. "CentOS 7 Configure Kerberos KDC and Client." theurbanpengiun. September 5, 2016. Accessed September 25, 2016. https://www.youtube.com/watch?v=7Q-Xx0I8PXc
+5. "Principal names and DNS." MIT Kerberos Documentation. Accessed October 22, 2016. https://web.mit.edu/kerberos/krb5-1.13/doc/admin/princ\_dns.html

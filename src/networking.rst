@@ -170,21 +170,6 @@ WiFi example:
 
 [4]
 
-Sources:
-
-1. "How to switch from NetworkManager to systemd-networkd on Linux."
-   Xmodulo. August 31, 2015. Accessed November 27, 2016.
-   http://xmodulo.com/switch-from-networkmanager-to-systemd-networkd.html
-2. "systemd.network — Network configuration." freedesktop.org. Accessed
-   November 27, 2016.
-   https://www.freedesktop.org/software/systemd/man/systemd.network.html
-3. "systemd.netdev — Virtual Network Device configuration."
-   freedesktop.org. Accessed November 27, 2016.
-   https://www.freedesktop.org/software/systemd/man/systemd.netdev.html
-4. "Managing WPA wireless with systemd-networkd ?" Arch Linux Wiki -
-   Networking, Server, and Protection. March 13, 2014. Accessed November
-   27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625
-
 Open vSwitch
 ~~~~~~~~~~~~
 
@@ -234,7 +219,7 @@ Open vSwitch uses virtual ``tap`` interfaces to connect virtual machines
 to a bridge instead of providing striaght access to a bridge device.
 This makes it easier to manage interfaces for many virtual machines and
 it helps to isolate and track down traffic. Tools such as ``tcpdump``
-can be used to analyze specific ``tap`` traffic. [1]
+can be used to analyze specific ``tap`` traffic. [5]
 
 Example:
 
@@ -253,12 +238,6 @@ Syntax:
     # ovs-vsctl add-br <NEW_BRIDGE>
     # ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
     # ovs-vsctl add-port <NEW_BRIDGE> <NEW_TAP_INTERFACE>
-
-Source:
-
-1. "Frequently Asked Questions Open vSwitch." Open vSwitch Suppport.
-   March 30, 2017. April 9, 2017.
-   http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html
 
 Operating System Specific
 -------------------------
@@ -314,13 +293,7 @@ Common:
    -  dns-nameservers = A list of DNS resolvers to use, separated by a
       space.
 
-[1]
-
-Source:
-
-1. "[Ubuntu 16.04] Network Configuration." Ubuntu Documentation. June
-   23, 2017. Accessed July 2, 2017.
-   https://help.ubuntu.com/lts/serverguide/network-configuration.html
+[6]
 
 RHEL
 ~~~~~
@@ -334,7 +307,7 @@ There are two udev modules that manage new device naming schemes:
 "net.ifnames" and "biosdevname." Only "net.ifnames" is installed by
 default on RHEL. Set these both to 0 in the kernel/boot options to
 revert back to eth\* and wlan\* naming. Otherwise, devices will be named
-based on their physical location and connection to the motherboard. [1]
+based on their physical location and connection to the motherboard. [7]
 
 Network configurations are saved in ``/etc/sysconfig/network-scripts/``.
 The ethernet device names start with "ifcfg-eth" when ifnames is
@@ -402,15 +375,7 @@ Options:
 -  NM\_CONTROLLED = {yes\|no}. Enable or disable Network Manager control
    over this interface.
 
-[2]
-
-Sources:
-
-1. "Disable consistent network device naming in RHEL7." Red Hat
-   Community Discussions. June 11, 2014. Accessed January 7, 2016.
-   https://access.redhat.com/discussions/916973
-2. "Interface Configuration Files." Accessed January 7, 2016.
-   https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-interfaces.html
+[8]
 
 Routes
 ^^^^^^
@@ -433,16 +398,7 @@ Example:
     # vim /etc/sysconfig/network-scripts/route-eth0
     192.168.100.0/24 via 10.0.0.1 dev eth0
 
-[1]
-
-Sources:
-
-1. "How to add a new static route on RHEL7 Linux." Linux Config. March
-   17, 2015. Accessed April 9, 2017.
-   https://linuxconfig.org/how-to-add-new-static-route-on-rhel7-linux
-2. "Static Routes and the Default Gateway." Red Hat Documentation. March
-   15, 2017. Accessed April 9, 2017.
-   https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-static-routes.html
+[9][10]
 
 Bridging
 ^^^^^^^^
@@ -468,13 +424,7 @@ information.
     ONBOOT=yes
     NM_CONTROLLED=no
 
-[1]
-
-Source:
-
-1. "Network Bridge." Red Hat Documentation. May 29, 2016. Accessed
-   February 24, 2017.
-   https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s2-networkscripts-interfaces\_network-bridge.html
+[11]
 
 Open vSwitch
 ^^^^^^^^^^^^
@@ -491,7 +441,7 @@ Open vSwitch bridge syntax (CLI):
     # ovs-vsctl add-port <OVS_BRIDGE> <NIC>
     # ovs-vsctl add-br <OVS_BRIDGE>
 
-[1]
+[12]
 
 Open vSwitch bridge syntax (configuration file):
 
@@ -534,16 +484,7 @@ Open vSwitch bridge example (configuration file):
     BOOTPROTO="none"
     ONBOOT="yes"
 
-[2]
-
-Sources:
-
-1. Configuring Libvirt guests with an Open vSwitch bridge." Kashyap
-   Chamarthy. July 13, 2013. Accessed November 27, 2016.
-   https://kashyapc.com/2013/07/13/configuring-libvirt-guests-with-an-open-vswitch-bridge/
-2. "Configure Fedora Server with Open vSwitch and Libvirt." GitHub Gist
-   - jdoss. October 31, 2015. Accessed November 27, 2016.
-   https://gist.github.com/jdoss/64ecd24b74792efaa794
+[13]
 
 Bonding
 ^^^^^^^
@@ -584,7 +525,7 @@ Bond slave example:
     MASTER=bond0
     SLAVE=yes
 
-[1]
+[14]
 
 A full list of bonding driver options for "bonding\_opts" can be found
 here:
@@ -612,14 +553,23 @@ Common bonding\_opts options:
    -  {6\|balance-alb} = Adaptive load balancing. Load balance incoming
       and outgoing requests based on slave usage.
 
-[2]
+[15]
 
-Sources:
+Bibliography
+------------
 
-1. "RHEL: Linux Bond / Team Multiple Network Interfaces (NIC) Into a
-   Single Interface." nixCraft. March 27, 2016. Accessed January 7,
-   2016.
-   https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html
-2. "Bonding Interfaces." CentOS Tips and Tricks. January 22, 2013.
-   Accessed January 7, 2016.
-   https://wiki.centos.org/TipsAndTricks/BondingInterfaces
+1. "How to switch from NetworkManager to systemd-networkd on Linux." Xmodulo. August 31, 2015. Accessed November 27, 2016. http://xmodulo.com/switch-from-networkmanager-to-systemd-networkd.html
+2. "systemd.network — Network configuration." freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.network.html
+3. "systemd.netdev — Virtual Network Device configuration." freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.netdev.html
+4. "Managing WPA wireless with systemd-networkd ?" Arch Linux Wiki - Networking, Server, and Protection. March 13, 2014. Accessed November 27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625
+5. "Frequently Asked Questions Open vSwitch." Open vSwitch Suppport. March 30, 2017. April 9, 2017. http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html
+6. "[Ubuntu 16.04] Network Configuration." Ubuntu Documentation. June 23, 2017. Accessed July 2, 2017. https://help.ubuntu.com/lts/serverguide/network-configuration.html
+7. "Disable consistent network device naming in RHEL7." Red Hat Community Discussions. June 11, 2014. Accessed January 7, 2016. https://access.redhat.com/discussions/916973
+8. "Interface Configuration Files." Accessed January 7, 2016. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-interfaces.html
+9. "How to add a new static route on RHEL7 Linux." Linux Config. March 17, 2015. Accessed April 9, 2017. https://linuxconfig.org/how-to-add-new-static-route-on-rhel7-linux
+10. "Static Routes and the Default Gateway." Red Hat Documentation. March 15, 2017. Accessed April 9, 2017. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-static-routes.html
+11. "Network Bridge." Red Hat Documentation. May 29, 2016. Accessed February 24, 2017. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s2-networkscripts-interfaces\_network-bridge.html
+12. Configuring Libvirt guests with an Open vSwitch bridge." Kashyap Chamarthy. July 13, 2013. Accessed November 27, 2016. https://kashyapc.com/2013/07/13/configuring-libvirt-guests-with-an-open-vswitch-bridge/
+13. "Configure Fedora Server with Open vSwitch and Libvirt." GitHub Gist - jdoss. October 31, 2015. Accessed November 27, 2016. https://gist.github.com/jdoss/64ecd24b74792efaa794
+14. "RHEL: Linux Bond / Team Multiple Network Interfaces (NIC) Into a Single Interface." nixCraft. March 27, 2016. Accessed January 7, 2016. https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html
+15. "Bonding Interfaces." CentOS Tips and Tricks. January 22, 2013. Accessed January 7, 2016. https://wiki.centos.org/TipsAndTricks/BondingInterfaces

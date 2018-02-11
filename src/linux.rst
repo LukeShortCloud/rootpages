@@ -10,11 +10,6 @@ architectures. "Linux" is sometimes used to generally describe the many
 operating systems that use the Linux kernel. [1] In the context of this
 Root Pages guide, the focus is on the actual kernel.
 
-Source:
-
-1. "About Linux Kernel." The Linux Kernel Archives. April 23, 2017.
-   Accessed July 9, 2016. https://www.kernel.org/linux.html
-
 System Calls
 ------------
 
@@ -98,13 +93,7 @@ Common system calls:
 | write       | File                 | Write data.                                                                                                       |
 +-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
 
-[1]
-
-Source:
-
-1. "UNIX System Calls." University of Miami's Department of Computer
-   Science. August 22, 2016. Accessed July 1, 2017.
-   http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml
+[2]
 
 Modules
 -------
@@ -176,13 +165,7 @@ Modules can also be blocked from starting on boot:
 
     blacklist <MODULE>
 
-[1]
-
-Source:
-
-1. "Kernel modules." The Arch Linux Wiki. August 8, 2016. Accessed
-   November 19, 2016.
-   https://wiki.archlinux.org/index.php/Kernel\_modules
+[3]
 
 Schedulers
 ----------
@@ -194,7 +177,7 @@ The Linux kernel can handling incoming requests differently depending on
 the scheduler method. By default, all processes use the Completely Fair
 Scheduler (CFS) that tries to handle all incoming tasks equally. It is
 only technically possible to change the default scheduler by modifying
-the Linux kernel's source code and then recompiling the kernel. [2]
+the Linux kernel's source code and then recompiling the kernel. [5]
 There are 5 different kernel scheduling policies that can be set to
 processes manually. These are set by using the ``chrt`` command.
 
@@ -232,16 +215,7 @@ scheduling settings are:
     kernel.sched_tunable_scaling = 1
     kernel.sched_wakeup_granularity_ns = 15000000
 
-[1]
-
-Sources:
-
-1. "Tuning the Task Scheduler." openSUSE Documentation. December 15,
-   2016. Accessed July 9, 2017.
-   https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html
-2. "Change Linux CPU default scheduler." A else B. January 6, 2016.
-   Accessed July 9, 2017.
-   https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/
+[4]
 
 I/O
 ~~~
@@ -257,12 +231,12 @@ the hardware and/or software requirements.
    task. This is ideal for heavy read/write applications on a spinning
    disk drive.
 -  CFQ (Completely Fair Queueing) = All I/O requests are treated equally
-   and are handled in the order that they are received. [1]
+   and are handled in the order that they are received. [6]
 -  NOOP (No Operation) = Only basic merging of read and/or write
    requests and no rescheduling. This is ideal for virtual drives (such
-   as QCOW2) where the hypervisor node handles the I/O scheduling [2]
+   as QCOW2) where the hypervisor node handles the I/O scheduling [7]
    and physical flash based media or RAID cards with write-back cache
-   where the hardware's firmware takes care of the sorting. [1]
+   where the hardware's firmware takes care of the sorting. [6]
 
 Temporarily change the scheduler to one of the three options:
 
@@ -279,15 +253,7 @@ GRUB\_CMDLINE\_LINUX kernel arguments:
     GRUB_CMDLINE_LINUX="elevator={deadline|cfg|noop}"
     # grub-mkconfig -o /boot/grub/grub.cfg
 
-[2]
-
-Sources:
-
-1. Linux System Programming. (Love: O’Reilly Media, Inc., 2007).
-2. "What is the suggested I/O scheduler to improve disk performance when
-   using Red Hat Enterprise Linux with virtualization?" Red Hat
-   Knowledgebase. December 16, 2016. Accessed December 18, 2016.
-   https://access.redhat.com/solutions/5427
+[7]
 
 Initial RAM File System
 -----------------------
@@ -298,16 +264,7 @@ before loading the full Linux kernel. It is the successor to the initrd
 first. This usually contains a minimum copy of the kernel and drivers
 required to boot up the system. Once the boot initialization is
 complete, the initramfs continues to load all of the available kernel
-modules. [1][2]
-
-Sources:
-
-1. 'The Kernel Newbie Corner: "initrd" and "initramfs"--What's Up With
-   That?' Linux.com September 30, 2009. Accessed November 19, 2016.
-   https://www.linux.com/learn/kernel-newbie-corner-initrd-and-initramfs-whats
-2. "ramfs, rootfs and initramfs." The Linux Kernel Documentation. May
-   29, 2015. Accessed November 19, 2016.
-   https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+modules. [8][9]
 
 Arch Linux
 ~~~~~~~~~~
@@ -343,12 +300,7 @@ Create a new initramfs.
 
     # mkinitcpio
 
-[1]
-
-Source:
-
-1. "mkinitcpio." The Arch Linux Wiki. November 13, 2016. Accessed
-   November 19, 2016. https://wiki.archlinux.org/index.php/mkinitcpio
+[10]
 
 RHEL
 ~~~~
@@ -364,10 +316,19 @@ itself, CentOS, and Fedora), Dracut is used to manage the initramfs.
 -  install\_items+= A list of files to compile in.
 -  add\_dracutmodules+= A list of Dracut modules to compile.
 
-[1]
+[11]
 
-Source:
+Bibliography
+------------
 
-1. "Dracut." The Linux Kernel Archives. October, 2013. Accessed November
-   19, 2016.
-   https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html
+1. "About Linux Kernel." The Linux Kernel Archives. April 23, 2017. Accessed July 9, 2016. https://www.kernel.org/linux.html
+2. "UNIX System Calls." University of Miami's Department of Computer Science. August 22, 2016. Accessed July 1, 2017. http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml
+3. "Kernel modules." The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/Kernel\_modules
+4. "Tuning the Task Scheduler." openSUSE Documentation. December 15, 2016. Accessed July 9, 2017. https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html
+5. "Change Linux CPU default scheduler." A else B. January 6, 2016. Accessed July 9, 2017. https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/
+6. Linux System Programming. (Love: O’Reilly Media, Inc., 2007).
+7. "What is the suggested I/O scheduler to improve disk performance when using Red Hat Enterprise Linux with virtualization?" Red Hat Knowledgebase. December 16, 2016. Accessed December 18, 2016. https://access.redhat.com/solutions/5427
+8. 'The Kernel Newbie Corner: "initrd" and "initramfs"--What's Up With That?' Linux.com September 30, 2009. Accessed November 19, 2016. https://www.linux.com/learn/kernel-newbie-corner-initrd-and-initramfs-whats
+9. "ramfs, rootfs and initramfs." The Linux Kernel Documentation. May 29, 2015. Accessed November 19, 2016. https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+10. "mkinitcpio." The Arch Linux Wiki. November 13, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/mkinitcpio
+11. "Dracut." The Linux Kernel Archives. October, 2013. Accessed November 19, 2016. https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html

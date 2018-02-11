@@ -223,7 +223,8 @@ Event Types:
 -  2097152=status
 -  4194304=uptime [3]
 
-Sources:
+Bibliography
+------------
 
 1. "Installing Monit for Server Monitoring." Linode. October 15, 2015.
    Accessed November 22, 2016.
