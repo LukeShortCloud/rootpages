@@ -444,6 +444,56 @@ able to run.
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
 
+Container Management Platforms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenShift
+^^^^^^^^^
+
+OpenShift is a Red hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+
+MiniShift
+'''''''''
+
+MiniShift is an easy to use all-in-one installation for testing out OpenShift.
+
+Install (Fedora):
+
+-  Install Libvirt and KVM and add non-privileged MiniShift users to the "libvirt" group.
+
+::
+
+    $ sudo dnf -y install qemu-kvm libvirt
+    $ sudo usermod -a -G libvirt $USER
+
+-  Download the latest release of MiniShift from: https://github.com/minishift/minishift/releases
+
+::
+
+    $ OPENSHIFT_VER=1.13.1
+    $ wget https://github.com/minishift/minishift/releases/download/v${OPENSHIFT_VER}/minishift-${OPENSHIFT_VER}-linux-amd64.tgz
+    $ tar -v -x -f minishift-${OPENSHIFT_VER}-linux-amd64.tgz
+    $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
+    $ chmod 0755 /usr/local/bin/docker-machine-driver-kvm
+    $ cd ./minishift-${OPENSHIFT_VER}-linux-amd64/
+    $ ./minishift start
+
+[31][32]
+
+Install (RHEL):
+
+Enable the Red Hat Developer Tools repository first. Then MiniShift can be installed.
+
+::
+
+    $ sudo subscription-manager repos --enable rhel-7-server-devtools-rpms
+    $ sudo yum install cdk-minishift
+    $ minishift setup-cdk --force --default-vm-driver="kvm"
+    $ sudo ln -s ~/.minishift/cache/oc/v3.*/linux/oc /usr/bin/oc
+    $ minishift start
+
+[33]
+
 Orchestration
 -------------
 
@@ -770,3 +820,8 @@ Bibliography
 26. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
 27. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
 28. "Vagrantfile." Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html
+29. "OpenShift: Container Application Platform by Red Hat." OpenShift. Accessed February 26, 2018. https://www.openshift.com/
+30. "Persistent Storage." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/storage.html
+31. "Minishift Quickstart." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html
+32. "Run OpenShift Locally with Minishift." Fedora Magazine. June 20, 2017. Accessed February 26, 2018. https://fedoramagazine.org/run-openshift-locally-minishift/
+33. "CHAPTER 5. INSTALLING RED HAT CONTAINER DEVELOPMENT KIT." Red Hat Customer Portal. Accessed February 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_container_development_kit/3.0/html/installation_guide/installing-rhcdk
