@@ -15,17 +15,12 @@ programming. [1]
 There is also support for Windows modules. Ansible is executed on a
 control node that runs on Linux, using Python. A remote connection to
 WinRM (via HTTPS, by default) is made and then modules are executed
-remotely using PowerShell commands. [2]
+remotely using PowerShell commands. [39]
 
 The official documentation can be found here:
 
 -  Latest stable: http://docs.ansible.com/ansible/latest/index.html
 -  Development: http://docs.ansible.com/ansible/devel/index.html
-
-Sources:
-
-1. "An Ansible Tutorial."
-2. "Windows Support."
 
 Editions
 ~~~~~~~~
@@ -35,18 +30,14 @@ Ansible community project that gets frequent updates and there is also
 Red Hat Ansible Engine, which is an enterprise solution. Ansible Engine
 is designed to provide a downstream version that is more stable, secure,
 and reliable. Support is provided that includes covers Core modules,
-priority bug and feature updates, documentation, and more. [1]
-
-Source:
-
-1. "Red Hat Ansible Engine."
+priority bug and feature updates, documentation, and more. [50]
 
 Installation
 ------------
 
 The Ansible community edition 2.4 requires Python 2.6, 2.7, or >= 3.5 on
 both the control and managed nodes. [1] Python 3 support is still in
-development but should be stable within the next few releases. [2]
+development but should be stable within the next few releases. [24]
 
 RHEL:
 
@@ -82,17 +73,11 @@ Updating source code installations:
     # git pull --rebase
     # git submodule update --init --recursive
 
-[1]
+[23]
 
 For managing Windows servers, the "winrm" Python library is required on
 the Ansible control node. The remote Windows servers need PowerShell >=
-3.0 installed and WinRM enabled. [3]
-
-Sources:
-
-1. "Ansible Installation."
-2. "Ansible 2.2.0 RC1 is ready for testing."
-3. "Windows Support."
+3.0 installed and WinRM enabled. [39]
 
 Configuration
 -------------
@@ -197,11 +182,7 @@ Common settings:
    -  ansible\_ssh\_executable = String. Default: ssh (found in the
       $PATH environment variable). The path to the ``ssh`` binary.
 
-[1]
-
-Source:
-
-1. "Ansible Configuration file."
+[34]
 
 Python 3
 ~~~~~~~~
@@ -221,11 +202,7 @@ Documentation on how to create Ansible modules for Python 3 with
 backwards compatibility with Python 2 can be found here:
 http://docs.ansible.com/ansible/latest/dev\_guide/developing\_python3.html
 
-[1]
-
-Source:
-
-1. "Ansible Python 3 Support."
+[51]
 
 Command Usage
 -------------
@@ -333,7 +310,7 @@ Examples:
 
 -  site.yml = This is generally the main Playbook file. It should
    include all other Playbook files required if more than one is used.
-   [2]
+   [6]
 
    ::
 
@@ -370,11 +347,6 @@ Examples:
        <body>My domain name is {{ domain }}</body>
        </html>
 
-Sources:
-
-1. "An Ansible Tutorial."
-2. “Ansible Best Practices.”
-
 Performance Tuning
 ~~~~~~~~~~~~~~~~~~
 
@@ -388,13 +360,13 @@ modules and Playbooks.
       -  forks = The number of parallel processes that are spun up for
          remote connections. The default is 5. This should be increased
          to a larger number to handle . The recommended number is
-         ``forks = (processor_cores * 5)``. [4]
+         ``forks = (processor_cores * 5)``. [41]
       -  pipelining = Enable pipelining to bundle commands together that
          do not require a file transfer. This is disabled by default
          because most sudo users are enforced to use the ``requiretty``
-         sudo option that pipelining is incompatible with. [1]
+         sudo option that pipelining is incompatible with. [33]
       -  gathering = Set this to "explicit" to only gather the necessary
-         facts when/if they are required by the Playbook. [2]
+         facts when/if they are required by the Playbook. [34]
 
 Fact caching will help to cache host information. By only gathering the
 setup facts information once, this helps to speed up execution time if
@@ -435,15 +407,7 @@ Redis:
             custom IP and/or port of a Redis server. It is assumed to be
             running on localhost with the default port.
 
-[3]
-
-Sources:
-
-1. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)."
-2. "Ansible Configuration file."
-3. "Ansible Variables."
-4. "Installing and Configuring Ansible Tower Clusters - AnsbileFest
-   London 2017."
+[5]
 
 Inventory
 ---------
@@ -501,7 +465,7 @@ Example:
 Variables are created for a host and/or group using the tag ":vars".
 Then any custom variable can be defined and associated with a string. A
 host specifically can also have it's variables defined on the same line
-as it's Ansible inventory variables. [1] A few examples are listed
+as it's Ansible inventory variables. [4] A few examples are listed
 below. These can also be defined in separate files as explained in
 `Configuration - Inventory -
 Variables <#configuration---inventory---variables>`__.
@@ -553,9 +517,9 @@ Common inventory options:
 -  ansible\_python\_interpreter = This will force Ansible to run on
    remote systems using a different Python binary. Ansible only supports
    Python 2 so on server's where only Python 3 is available a custom
-   install of Python 2 can be used instead. [1]
+   install of Python 2 can be used instead. [4]
 -  ansible\_vault\_password\_file = Specify the file to read the Vault
-   password from. [5]
+   password from. [26]
 -  ansible\_become = Set to "true" or "yes" to become a different user
    than the ansible\_user once logged in.
 
@@ -563,7 +527,7 @@ Common inventory options:
       options are: sudo, su, pbrun, pfexec, doas, or dzdo.
    -  ansible\_become\_user = Specify the user to become.
    -  ansible\_become\_pass = Optionally use a password to change users.
-      [4]
+      [18]
 
 Examples:
 
@@ -574,13 +538,7 @@ Examples:
     dns2 ansible_host=192.168.1.54
     /home/user/ubuntu1604 ansible_connection=chroot
 
-Sources:
-
-1. "Ansible Inventory"
-2. "Ansible Variables."
-3. "Ansible Best Practices."
-4. "Ansible Become (Privilege Escalation)"
-5. "Ansible Vault."
+[5]
 
 Production and Staging
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -699,10 +657,7 @@ Example:
     │   │   ├── db3
     │   └── inventory
 
-Sources:
-
-1. "Ansible Best Practices."
-2. "Organizing Group Vars Files in Ansible."
+[6][27]
 
 Variables
 ~~~~~~~~~
@@ -710,7 +665,7 @@ Variables
 Variables that Playbooks will use can be defined for specific hosts
 and/or groups. The file that stores the variables should reflect the
 name of the host and/or group. Global variables can be found in the
-``/etc/ansible/`` directory. [1]
+``/etc/ansible/`` directory. [4]
 
 Inventory variable directories and files: \* host\_vars/ \* ``<HOST>`` =
 Variables for a host defined in the inventory file. \* group\_vars/ \*
@@ -732,7 +687,7 @@ Example:
     hello_string: Hello World!
 
 In the Playbook and/or template files, these variables can then be
-referenced when enclosed by double braces "{{" and "}}". [2]
+referenced when enclosed by double braces "{{" and "}}". [5]
 
 Example:
 
@@ -780,13 +735,7 @@ locations get overridden by anything above them.
 -  inventory vars
 -  role defaults
 
-[2]
-
-Sources:
-
-1. "Ansible Inventory"
-2. "Ansible Variables."
-3. "Ansible Best Practices."
+[6]
 
 Vault Encryption
 ~~~~~~~~~~~~~~~~
@@ -848,11 +797,7 @@ Playbook Usage:
 
        $ ansible-playbook --vault-password-file <PATH_TO_VAULT_PASSWORD_FILE> <PLAYBOOK>.yml
 
-[1]
-
-Source:
-
-1. "Ansible Vault."
+[26]
 
 Dynamic
 ~~~~~~~
@@ -903,11 +848,7 @@ Example:
           - "'2017' in date_command.stdout"
         msg: "Date either failed or did not return the correct year."
 
-[1]
-
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Async
 ^^^^^
@@ -915,7 +856,7 @@ Async
 The "async" function can be used to start a detached task on a remote
 system. Ansible will then poll the server periodically to see if the
 task is complete (by default, it checks every 10 seconds). Optionally a
-custom poll time can be set. [1]
+custom poll time can be set. [20]
 
 Syntax:
 
@@ -930,10 +871,6 @@ Example:
      - command: bash /usr/local/bin/example.sh
         async: 15
         poll: 5
-
-Source:
-
-1. "Ansible Asynchronous Actions and Polling."
 
 Block
 ^^^^^
@@ -981,11 +918,7 @@ Example:
         - debug:
             msg: "Continuing onto the next set of tasks..."
 
-[1]
-
-Source:
-
-1. "`Ansible <#ansible>`__ Blocks."
+[63]
 
 Check Mode
 ^^^^^^^^^^
@@ -1023,7 +956,7 @@ Examples:
         ignore_errors: "{{ ansible_check_mode }}"
 
 In Ansible 2.2, the ``check_mode`` module can be forced to run during a
-check mode. [1]
+check mode. [36]
 
 Syntax:
 
@@ -1040,10 +973,6 @@ Example:
         name: epel-release
         state: latest
       check_mode: no
-
-Source:
-
-1. "Ansible Check Mode ("Dry Run")."
 
 Debug
 ^^^^^
@@ -1062,7 +991,7 @@ Common options:
 -  msg = Display a message.
 -  var = Display a variable.
 -  verbosity = Show more verbose information. The higher the number, the
-   more verbose the information will be. [1]
+   more verbose the information will be. [54]
 
 Example:
 
@@ -1073,10 +1002,6 @@ Example:
 
     debug:
       msg: The inventory host name is {{ inventory_hostname }}
-
-Source:
-
-1. "Utilities Modules."
 
 Gather Facts
 ^^^^^^^^^^^^
@@ -1092,7 +1017,7 @@ Syntax:
     gather_facts: <BOOLEAN>
 
 If these variables are not required then gather\_facts and be set to
-"False" to speed up a Playbook's run time. [1]
+"False" to speed up a Playbook's run time. [28]
 
 Example:
 
@@ -1116,10 +1041,6 @@ Example:
       roles:
        - common
        - haproxy
-
-Source:
-
-1. "Ansible Glossary."
 
 Handlers and Notify
 ^^^^^^^^^^^^^^^^^^^
@@ -1175,11 +1096,7 @@ Example (tasks/main.yml):
     - template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
       notify: restart stack
 
-[1]
-
-Source:
-
-1. "Ansible Intro to Playbooks."
+[2]
 
 Meta
 ^^^^
@@ -1214,11 +1131,7 @@ Example:
 
     meta: flush_handlers
 
-[1]
-
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Pause
 ^^^^^
@@ -1248,16 +1161,14 @@ Example:
         minutes: 3
         prompt: "The new program needs to finish initializing."
 
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Roles
 ^^^^^
 
 A Playbook consists of roles. Each role that needs to be run needs to be
 specified in a list. Additional roles can be added within a role
-dynamically or statically using "include\_role" or "import\_role." [1]
+dynamically or statically using "include\_role" or "import\_role." [58]
 
 Syntax:
 
@@ -1275,10 +1186,6 @@ Example:
       - common
       - httpd
       - sql
-
-Source:
-
-1. "Creating Reusable Playbooks."
 
 Run Once
 ^^^^^^^^
@@ -1302,11 +1209,7 @@ Syntax:
     run_once: True
     delegate_to: <HOST>
 
-[1]
-
-Source:
-
-1. "Ansible Delegation, Rolling Updates, and Local Actions."
+[19]
 
 Serial
 ^^^^^^
@@ -1314,7 +1217,7 @@ Serial
 By default, Ansible will only run tasks on 5 hosts at once. This limit
 can be modified to run on a different number of hosts or a percentage of
 the amount of hosts. This is useful for running Playbooks on a large
-amount of servers. [1]
+amount of servers. [19]
 
 Syntax:
 
@@ -1331,10 +1234,6 @@ Example:
         - name: Installing Nginx
           package: name=nginx state=present
           serial: 50%
-
-Source:
-
-1. "Delegation, Rolling Updates, and Local Actions."
 
 Strategy
 ^^^^^^^^
@@ -1359,11 +1258,7 @@ Example (site.yml):
       roles:
         - gitlab
 
-[1]
-
-Source:
-
-1. "Ansible Strategies."
+[46]
 
 Tags
 ^^^^
@@ -1409,11 +1304,7 @@ Example:
 
     $ ansible-playbook --tags "yum" site.yml webnode1
 
-[1]
-
-Source:
-
-1. "Ansible Tags."
+[11]
 
 Tasks
 ^^^^^
@@ -1442,9 +1333,7 @@ Example:
         - common
         - docker
 
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Wait For
 ^^^^^^^^
@@ -1486,16 +1375,14 @@ Common options:
 
 -  timeout = How long to wait (in seconds) before continuing on.
 
-Source:
-
-1. "Utilities Modules."
+[54]
 
 When
 ^^^^
 
 The "when" function can be used to specify that a sub-task should only
 run if the condition returns turn. This is similar to an "if" statement
-in programming languages. It is usually the last line to a sub-task. [1]
+in programming languages. It is usually the last line to a sub-task. [15]
 
 "When" Example:
 
@@ -1517,10 +1404,6 @@ in programming languages. It is usually the last line to a sub-task. [1]
     when: (ansible_os_family == "Fedora") and
           (ansible_distribution_major_version == "26")
 
-Source:
-
-1. "Ansible Conditionals."
-
 Errors
 ^^^^^^
 
@@ -1531,7 +1414,7 @@ Any Errors Fatal
 
 By default, a Playbook will continue to run on all of the hosts that do
 not have any failures reported by modules. It is possible to stop the
-Playbook from running on all hosts once an error has occurred. [1]
+Playbook from running on all hosts once an error has occurred. [16]
 
 Syntax:
 
@@ -1547,10 +1430,6 @@ Example:
       any_errors_fatal: true
       roles:
        - nfs
-
-Source:
-
-1. "Ansible Error Handling In Playbooks."
 
 Fail
 ''''
@@ -1576,16 +1455,14 @@ Example:
         msg: "Unexpected return code."
       when: (command_variable.rc != 0) or (command_variable.rc != 900)
 
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Failed When
 '''''''''''
 
 In some situations, a error from a command or module may not be reported
 properly. This module can be used to force a failure based on a certain
-condition. [1]
+condition. [16]
 
 Syntax:
 
@@ -1601,17 +1478,13 @@ Example:
       register: cmd
       failed_when: "'123' in cmd.stdout"
 
-Source:
-
-1. "Ansible Error Handling In Playbooks."
-
 Ignore Errors
 '''''''''''''
 
 Playbooks, by default, will stop running on a host if it fails to run a
 module. Sometimes a module will report a false-positive or an error will
 be expected. This will allow the Playbook to continue onto the next
-step. [1]
+step. [16]
 
 Syntax:
 
@@ -1626,10 +1499,6 @@ Example:
     - name: Even though this will fail, the Playbook will keep running.
       package: name=does-not-exist state=present
       ignore_errors: yes
-
-Source:
-
-1. "Ansible Error Handling In Playbooks."
 
 Includes
 ^^^^^^^^
@@ -1661,11 +1530,7 @@ Example:
     - import_playbook: phpfpm.yml
     - import_playbook: mariadb.yml
 
-[1]
-
-Source:
-
-1. "Creating Reusable Playbooks."
+[58][68]
 
 Import and Include Role
 '''''''''''''''''''''''
@@ -1676,7 +1541,7 @@ in loops. This is loaded on runtime of the Playbook
 The ``include_role`` is a dynamic inclusion of a role that can be used
 in loops. Tags will not automatically be shown with the ``--list-tags``
 Ansible Playbook argument. This can be loaded dynamically based on
-conditions. [1]
+conditions. [58][68]
 
 All options:
 
@@ -1718,12 +1583,7 @@ Examples:
       vars:
         listen_port: 8080
 
-[2]
-
-Source:
-
-1. "Creating Reusable Playbooks."
-2. "Utilities Modules."
+[54]
 
 Import and Include Tasks
 ''''''''''''''''''''''''
@@ -1742,21 +1602,17 @@ Syntax:
 
     - include_tasks: <TASK_FILE>.yml
 
-[1]
-
-Source:
-
-1. "Creating Reusable Playbooks."
+[58]
 
 Include
 '''''''
 
 **Deprecated in: 2.4 Replaced by: include\_tasks, import\_plays,
-import\_tasks** [1]
+import\_tasks**
 
 Other task files and Playbooks can be included. The functions in them
 will immediately run. Variables can be defined for the inclusion as
-well. [1]
+well. [58]
 
 Syntax:
 
@@ -1774,12 +1630,7 @@ Example:
 
     include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget
 
-[2]
-
-Sources:
-
-1. "Creating Reusable Playbooks."
-2. "Utilities Modules."
+[54]
 
 Include Variables
 '''''''''''''''''
@@ -1816,11 +1667,7 @@ Examples:
       roles:
        - nagios
 
-[1]
-
-Source:
-
-1. "Utilities Modules."
+[54]
 
 Loops (Ansible < 2.5)
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1868,7 +1715,7 @@ With First Found
 ''''''''''''''''
 
 Multiple file locations can be checked to see what file exists. The
-first file found in a given list will be returned to the task. [1]
+first file found in a given list will be returned to the task. [14]
 
 Syntax:
 
@@ -1889,16 +1736,12 @@ Example:
        - "/root/nova.conf"
        - "/etc/nova_backup/nova.conf"
 
-Source:
-
-1. "Ansible Loops."
-
 With Flattened
 ''''''''''''''
 
 Lists and dictionaries can be converted into one long string. This
 allows a task to run once with all of the arguments. This is especially
-useful for installing multiple packages at once. [1]
+useful for installing multiple packages at once. [14]
 
 Loop syntax:
 
@@ -1926,14 +1769,10 @@ Example:
        - python2-heatclient
        - [ 'python2-manilaclient', 'python2-troveclient' ]
 
-Source:
-
-1. "Ansible Loops."
-
 With Items
 ''''''''''
 
-A task can be re-used with items in a list and/or dictionary. [1]
+A task can be re-used with items in a list and/or dictionary. [14]
 
 Loop syntax:
 
@@ -1979,10 +1818,6 @@ Dictionary example:
        - { name: "bob", group: "colab", passwd: "123456" }
        - { name: "sam", group: "colab", passwd: "654321" }
 
-Source:
-
-1. "Ansible Loops."
-
 Variables
 ^^^^^^^^^
 
@@ -1991,9 +1826,9 @@ These are modules relating to defining new variables.
 Prompts
 '''''''
 
-Prompts can be used to assign a user's input as a variable. [1] Note
+Prompts can be used to assign a user's input as a variable. [12] Note
 that this module is not compatible with Ansible Tower and that a Survey
-should be created within Tower instead. [2]
+should be created within Tower instead. [48]
 
 Common options:
 
@@ -2033,19 +1868,14 @@ Examples:
          encrypt: "sha512_crypt"
          salt_size: 12
 
-[1]
-
-Sources:
-
-1. "Ansible Prompts."
-2. "Ansible Tower Job Templates."
+[12]
 
 Register
 ''''''''
 
 The output of modules and commands can be saved to a variable.
 
-Variable return values [1]:
+Variable return values [37]:
 
 -  backup\_file = String. If a module creates a backup file, this is
    that file's name.
@@ -2071,7 +1901,7 @@ Syntax:
 
     register: <NEW_VARIABLE>
 
-Examples [2]:
+Examples:
 
 ::
 
@@ -2087,16 +1917,13 @@ Examples [2]:
     - debug: msg="Copying example.conf failed."
       when: copy_example|failed
 
-Sources:
-
-1. "Ansible Return Values."
-2. "Ansible Error Handling In Playbooks."
+[16]
 
 Set Fact
 ''''''''
 
 New variables can be defined set the "set\_fact" module. These are added
-to the available variables/facts tied to a inventory host. [1]
+to the available variables/facts tied to a inventory host. [54]
 
 Syntax:
 
@@ -2114,10 +1941,6 @@ Example:
         is_installed: True
         sql_server: mariadb
 
-Source:
-
-1. "Utilities Modules."
-
 UNIX Modules
 ~~~~~~~~~~~~
 
@@ -2129,7 +1952,7 @@ line programs. The big difference is that shell provides a full shell
 environment where operand redirection and pipping works, along with
 loading up all of the shell variables. Conversely, command will not load
 a full shell environment so it will lack in features and functionality
-but it makes up for that by being faster and more efficient. [1][2]
+but it makes up for that by being faster and more efficient. [8]
 
 Syntax:
 
@@ -2153,11 +1976,6 @@ Example:
     - shell: echo "Hello world" >> /tmp/hello_world.txt
       args:
         executable: /bin/bash
-
-Sources:
-
-1. "Ansible Command Module."
-2. "Ansible Shell Module."
 
 Copy, File, Synchronize, and Template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2251,11 +2069,7 @@ Example:
 
     template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody
 
-[1]
-
-Source:
-
-1. "Files Modules."
+[55]
 
 Cron
 ^^^^
@@ -2311,11 +2125,7 @@ Example #2:
 
     cron: job="/usr/bin/yum -y update" weekday=0 hour=6 backup=yes
 
-[1]
-
-Source:
-
-1. "System Modules."
+[65]
 
 Expect
 ^^^^^^
@@ -2356,11 +2166,7 @@ Example:
         responses:
           password: "{{ mysql_pass_dave }}"
 
-[1]
-
-Source:
-
-1. "Command Modules."
+[8]
 
 Get URL
 ^^^^^^^
@@ -2405,11 +2211,7 @@ Example:
         mode: 0644
         validate_certs: no
 
-[1]
-
-Source:
-
-1. "Net Tools Modules."
+[64]
 
 Git
 ^^^
@@ -2433,9 +2235,7 @@ Common options:
 -  ssh\_opts = If using SSH, specify custom SSH options.
 -  force = Override local changes. The default is "yes."
 
-Source:
-
-1. "Ansible Git Module"
+[10]
 
 Service
 ^^^^^^^
@@ -2460,7 +2260,7 @@ Common options:
 -  stopped = Stop the service.
 -  restarted = Stop and then start the service.
 -  reloaded = If supported by the service, it will reload it's
-   configuration file without restarting it's main thread. [1]
+   configuration file without restarting it's main thread. [65]
 
 Example:
 
@@ -2469,10 +2269,6 @@ Example:
    ::
 
        service: name=httpd state=restarted sleep=3
-
-Source:
-
-1. "System Modules."
 
 MySQL Database and User
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -2513,8 +2309,8 @@ Options:
 -  login\_unix\_socket = On Unix, a socket file can be used to connect
    to MySQL instead of a host and port.
 -  connection\_timeout = How long to wait (in seconds) before closing
-   the MySQL connection. The default is "30." [1]
--  priv (mysql\_user) = The privileges for the MySQL user. [2]
+   the MySQL connection. The default is "30." [21]
+-  priv (mysql\_user) = The privileges for the MySQL user. [22]
 
 Example #1:
 
@@ -2533,12 +2329,6 @@ Example #3:
 ::
 
     mysql_user: name=maxscale host="10.0.0.%" priv="*.*:REPLICATION CLIENT,SELECT" password=supersecure123 state=present
-
-Sources:
-
-1. "Ansible mysql\_db - Add or remove MySQL databases from a remote
-   host."
-2. "Ansible mysql\_user - Adds or removes a user from a MySQL database."
 
 Stat
 ^^^^
@@ -2620,11 +2410,7 @@ Common options:
 -  size = Integer. The size, in bytes, of the file.
 -  {uid\|gid} = Integer. The ID of user or group owner of the file.
 
-[1]
-
-Source:
-
-1. "Ansible stat - retrieve file or file system status."
+[55]
 
 URI
 ^^^
@@ -2713,17 +2499,13 @@ Example:
         url: https://openstack.tld:5000/v3/auth/tokens
       register: os_token_request
 
-[1]
-
-Source:
-
-1. "Net Tools Modules."
+[64]
 
 Package Managers
 ^^^^^^^^^^^^^^^^
 
 Ansible has the ability to add, remove, or update software packages.
-Almost every popular package manager is supported. [1] This can
+Almost every popular package manager is supported. This can
 generically be handled by the "package" module or the specific module
 for the operating system's package manager.
 
@@ -2744,7 +2526,7 @@ Common options:
 -  auto = Automatically detect the package manager to use. This is the
    default.
 -  apt = Use Debian's Apt package manager.
--  yum = Use Red Hat's yum package manager. [2]
+-  yum = Use Red Hat's yum package manager.
 
 Example:
 
@@ -2754,10 +2536,7 @@ Example:
 
     package: name=mariadb state=latest
 
-Sources:
-
-1. "Ansible Packaging Modules."
-2. "Ansible Generic OS package manager."
+[56]
 
 Apt
 '''
@@ -2788,9 +2567,7 @@ Common options:
       conflicting packages (apt-get full-upgrade).
    -  dist = Upgrade the operating system (apt-get dist-upgrade).
 
-Source:
-
-1. "Packaging Modules."
+[56]
 
 Yum
 '''
@@ -2862,11 +2639,7 @@ Example:
 
     yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description="Third-party RepoForge packages"
 
-[1]
-
-Source:
-
-1. "Packaging Modules."
+[56]
 
 Windows Modules
 ~~~~~~~~~~~~~~~
@@ -2912,11 +2685,7 @@ Example:
 
     win_shell: "echo Hello World > c:\hello.txt" chdir="c:\" creates="c:\hello.txt"
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 File Management
 ^^^^^^^^^^^^^^^
@@ -2953,11 +2722,7 @@ Example:
         dest: C:\temp\
         remote_src: True
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 File
 ''''
@@ -2974,7 +2739,7 @@ All options:
       does not exist.
    -  touch = Create a file if it does not exist.
 
-Synatx:
+Syntax:
 
 ::
 
@@ -2988,11 +2753,7 @@ Example:
         path: C:\Users\admin\runtime_files
         state: directory
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Robocopy
 ''''''''
@@ -3024,11 +2785,7 @@ Example:
       dest: C:\tmp_old\
       recurse: True
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Shortcut
 ''''''''
@@ -3071,11 +2828,7 @@ Example:
       src: C:\Program Files (x86)\game\game.exe
       dest: C:\Users\Ben\Desktop\game.lnk
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Template
 ''''''''
@@ -3089,9 +2842,7 @@ Syntax:
 
     win_template:
 
-Source:
-
-1. "Windows Modules."
+[57]
 
 Installations
 ^^^^^^^^^^^^^
@@ -3131,11 +2882,7 @@ Example:
 
     win_chocolatey: name="libreoffice" state="upgrade" version="5.4.0"
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Feature
 '''''''
@@ -3172,7 +2919,7 @@ Example:
         name: Web-Server
         state: present
 
-[1]
+[57]
 
 On Windows, all of the available features can be found via PowerShell.
 
@@ -3187,23 +2934,14 @@ narrow it down.
 
     > Get-WindowsFeature -Name <PART_OF_A_NAME>*
 
-[2]
-
-Sources:
-
-1. "Windows Modules."
-2. "Get-WindowsFeature."
+[47]
 
 MSI
 '''
 
 **Deprecated in: 2.3 Replaced by: ``win_package``**
 
-The MSI module is used to install executable packages. [1]
-
-Source:
-
-1. Windows Modules."
+The MSI module is used to install executable packages. [57]
 
 Package
 '''''''
@@ -3245,7 +2983,7 @@ Syntax:
 
     win_package:
 
-Example [1]:
+Example:
 
 ::
 
@@ -3258,9 +2996,7 @@ Example [1]:
         # Return code "3010" means that Windows requires a reboot
         expected_return_code: 3010
 
-Source:
-
-1. "Windows Modules."
+[57]
 
 Updates
 '''''''
@@ -3303,11 +3039,7 @@ Example:
 
     win_updates: category_names=['CriticalUpdates'] state=searched log_path="c:\tmp\win_updates_log.txt"
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Registry
 ^^^^^^^^
@@ -3363,11 +3095,7 @@ Example:
       days_of_week: saturday
       time: 2am
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Service
 ^^^^^^^
@@ -3429,11 +3157,7 @@ Example:
       username: .\Administrator
       password: {{ admin_pass }}
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 User
 ^^^^
@@ -3489,11 +3213,7 @@ Example:
 
     win_user: name="default" password="abc123xyz890" user_cannot_change_password="yes" groups=['privileged', 'shares'] state="present"
 
-[1]
-
-Source:
-
-1. "Windows Modules."
+[57]
 
 Module Development
 ~~~~~~~~~~~~~~~~~~
@@ -3614,11 +3334,7 @@ AnsibleModule object.
    on what ``module.supports_check_mode`` value is set to.
 -  params = Dictionary. All of the module argument variables.
 
-[1]
-
-Source:
-
-1. "Ansible [README.md]."
+[52]
 
 Roles
 -----
@@ -3632,7 +3348,7 @@ Galaxy
 
 Ansible Galaxy provides a way to easily manage remote Ansible Galaxy
 roles from https://galaxy.ansible.com/ and other software configuration
-management (SCM) sources. [1]
+management (SCM) sources. [32]
 
 ::
 
@@ -3649,7 +3365,7 @@ management (SCM) sources. [1]
 For a Role to work with Ansible Galaxy, it is required to have the
 ``meta/main.yml`` file. This will define supported Ansible versions and
 systems, dependencies on other Roles, the license, and other useful
-information. [2]
+information. [68]
 
 ::
 
@@ -3667,11 +3383,6 @@ information. [2]
       dependencies:
         - { role: <ROLE_NAME> }
         - { role: <ROLE_NAME>, <VARIABLE>: <VALUE> }
-
-Sources:
-
-1. "Ansible Galaxy."
-2. "Ansible Playbook Roles and Include Statements."
 
 Dependencies
 ^^^^^^^^^^^^
@@ -3737,11 +3448,7 @@ Git with SSH example (useful for GitLab):
       version: 1.2.0
       scm: git
 
-[1]
-
-Source:
-
-1. "Ansible Galaxy."
+[32]
 
 Community Roles
 ^^^^^^^^^^^^^^^
@@ -3826,11 +3533,7 @@ Example:
             vlan: True
             bootproto: static
 
-[1]
-
-Source:
-
-1. "network\_interface."
+[35]
 
 Jinja2
 ------
@@ -3921,7 +3624,7 @@ Example:
 
 Using a variable for a variable name is not possible with Jinja
 templates. Only substitution for dictionary keys can be done with format
-substitution. [7]
+substitution.
 
 Works:
 
@@ -4035,11 +3738,7 @@ more common functions.
 
        {{ <VARIABLE>|length }}
 
-[1]
-
-Source:
-
-1. "Jinja Template Designer Documentation."
+[25]
 
 Comments
 ~~~~~~~~
@@ -4220,11 +3919,7 @@ Example:
         Taco day is not on a Tuesday.
     {% endif %}
 
-[1]
-
-Source:
-
-1. "Jinja Template Designer Documentation."
+[25]
 
 Python API
 ----------
@@ -4234,7 +3929,7 @@ Playbooks. This does not provide a thread-safe interface and is subject
 to change depending on the needs of the actual Ansible utilities. It is
 recommended to use a RESTful API from a dashboard for other languages or
 more advanced tasks. Below is an example from the official documentation
-of using the Python library for Ansible 2 [1]:
+of using the Python library for Ansible 2 [40]:
 
 ::
 
@@ -4309,10 +4004,6 @@ of using the Python library for Ansible 2 [1]:
 An unofficial example can also be found at
 https://serversforhackers.com/running-ansible-2-programmatically.
 
-Source:
-
-1. "Ansible Python API."
-
 Containers
 ----------
 
@@ -4324,7 +4015,7 @@ Ansible to orchestrate both infrastructure and applications.
 Install Ansible Container into a Python virtual environment. This helps
 to separate Python packages provided by the operating system's package
 manager. Source the "activate" file to use the new Python environment.
-[1]
+[29]
 
 ::
 
@@ -4447,12 +4138,7 @@ is completed to describe the container deployment.
 
     $ ansible-container build
 
-[2]
-
-Sources:
-
-1. "Ansible Container README."
-2. "Ansible Container."
+[30]
 
 Dashboards
 ----------
@@ -4470,7 +4156,7 @@ Ansible Tower is the official dashboard maintained by Red Hat. The
 program requires PostgreSQL, Python, and RabbitMQ. A free trial of it
 can be used to manage up to 10 servers for testing purposes only. A
 license can be bought to use Tower for managing more servers and to
-provide support. [1]
+provide support.
 
 Ansible Tower 3.1 Requirements:
 
@@ -4481,7 +4167,7 @@ Ansible Tower 3.1 Requirements:
 -  Ansible >= 2.1
 -  PostgreSQL 9.4
 
-Ansible Tower 3.2 Requirements [2]:
+Ansible Tower 3.2 Requirements:
 
 -  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
 -  Ansible >= 2.3
@@ -4622,14 +4308,7 @@ Cluster ports:
 -  25672/tcp = External RabbitMQ port.
 -  15672/tcp = RabbitMQ dashboard.
 
-[3]
-
-Source:
-
-1. "Installing Ansible Tower."
-2. "Ansible Tower Installation and Reference Guide."
-3. "Installing and Configuring Ansible Tower Clusters - AnsbileFest
-   London 2017."
+[41][45]
 
 GUI
 ^^^
@@ -4679,23 +4358,17 @@ parts of Ansible Tower.
 -  (The book image) = A shortcut to Ansible Tower's official
    documentation.
 
-[1][2]
+[59][61]
 
 The default timeout for an authorization token is 30 minutes. After this
 time, the token will expire and the end-user will need to re-login into
 their account. This setting can be modified in the ``settings.py`` file.
-[3]
+[62]
 
 ::
 
     # vim /etc/tower/conf.d/settings.py
     AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
-
-Sources:
-
-1. "Ansible Tower Quick Setup Guide."
-2. "Ansible Tower User Guide."
-3. "Ansible Tower Administration Guide"
 
 Security
 ^^^^^^^^
@@ -4726,11 +4399,7 @@ configured to use an external authentication serverice by going into
    -  SAML
    -  TACACS+
 
-[1]
-
-Source:
-
-1. "Ansible Tower Administration Guide."
+[62]
 
 ACLs
 ''''
@@ -4752,32 +4421,25 @@ Hierarchy [1]:
          always associated with an Organization. An ACL is set for what
          resources the user is allowed to use.
 
-User types / ACLs [2]:
+User types / ACLs:
 
 -  System Administrator = Has full access to all organizations and the
    Tower installation.
 -  System Auditor = Has read-only access to an organization.
 -  Normal User = Has read and write access to an organization.
 
-Sources:
-
-1. "[Ansible Tower] Organizations."
-2. "[Ansible Tower] Users."
+[61]
 
 SSL
 '''
 
 By default, Tower creates a self-signed SSL certificate to secure web
-traffic. [1] Most web browsers will mark this as an untrusted
+traffic. [45] Most web browsers will mark this as an untrusted
 connection. For using a different SSL that is trusted, the contents of
 these two files need to be replaced on each Tower node:
 
 -  ``/etc/tower/tower.cert``
 -  ``/etc/tower/tower.key``
-
-Source:
-
-1. "[Ansible Tower] Installation Notes."
 
 API
 ^^^
@@ -4880,17 +4542,13 @@ Version 2 of the API provides these endpoints:
         "workflow_job_nodes": "/api/v2/workflow_job_nodes/"
     }
 
-[1]
-
-Source:
-
-1. "Ansible Tower API Guide."
+[42]
 
 AWX
 ~~~
 
 AWX is the upstream and open source version of Ansible Tower released by
-Red Hat to the public on September 7, 2017. [1] The source code for the
+Red Hat to the public on September 7, 2017. [49] The source code for the
 project can be found in the
 `ansible/awx <https://github.com/ansible/awx>`__ repository on GitHub.
 
@@ -5003,10 +4661,6 @@ installation Playbook.
     # docker pull docker.io/postgres:9.6
     # ansible-playbook -i inventory install.yml
 
-Source:
-
-1. "Ansible announces AWX open source project."
-
 Rundeck
 ~~~~~~~
 
@@ -5026,11 +4680,7 @@ Log into the dashboard at ``http://127.0.0.1:4440`` and use the username
 "admin" and the password that was set by the ``RDECK_ADMIN_PASS``
 variable.
 
-[1]
-
-Source:
-
-1. "Rundeck Ansible Plugin [README.md]."
+[66]
 
 Semaphore
 ~~~~~~~~~
@@ -5055,11 +4705,7 @@ Installation:
 
 Semaphore will now be available at ``http://<SEMAPHORE_HOST>:3000``.
 
-[1]
-
-Source:
-
-1. "semaphore Installation."
+[31]
 
 Tensor
 ~~~~~~
@@ -5090,199 +4736,69 @@ distributions as well creating Docker containers.
 
     $ make docker
 
-[1]
-
-Source:
-
-1. "Tensor [README.md]."
+[67]
 
 Bibliography
 ------------
 
--  "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed
-   June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
--  "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed
-   August 6, 2017. http://docs.ansible.com/ansible/playbooks\_intro.html
--  "Ansible Frequently Asked Questions." Ansible Documentation. April
-   21, 2017. Accessed April 23, 2017.
-   http://docs.ansible.com/ansible/faq.html
--  "Ansible Inventory." Ansible Docs. June 22, 2016. Accessed July 9,
-   2016. http://docs.ansible.com/ansible/intro\_inventory.html
--  "Ansible Variables." Ansible Documentation. June 1, 2017. Accessed
-   June 17, 2017.
-   http://docs.ansible.com/ansible/playbooks\_variables.html
--  "Ansible Best Practices." Ansible Documentation. June 4, 2017.
-   Accessed June 4, 2017.
-   http://docs.ansible.com/ansible/playbooks\_best\_practices.html
--  "Ansible Generic OS package manager" Ansible Documentation. June 22,
-   2016. Access July 10, 2016.
-   http://docs.ansible.com/ansible/package\_module.html
--  "Ansible Command Module." Ansible Documentation. June 22, 2016.
-   Accessed July 10, 2016.
-   http://docs.ansible.com/ansible/yum\_repository\_module.html
--  "Ansible Shell Module." Ansible Documentation. June 22, 2016.
-   Accessed July 10, 2016.
-   http://docs.ansible.com/ansible/yum\_repository\_module.html
--  "Ansible Git Module." Ansible Documentation. June 22, 2016. Accessed
-   July 30, 2016. http://docs.ansible.com/ansible/git\_module.html
--  "Ansible Tags." Ansible Documentation. April 21, 2017. Accessed April
-   22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
--  "Ansible Prompts." Ansible Documentation. August 05, 2016. Accessed
-   August 13, 2016.
-   http://docs.ansible.com/ansible/playbooks\_prompts.html
--  "Ansible Using Lookups." Ansible Documentation. August 05, 2016.
-   Accessed August 13, 2016.
-   http://docs.ansible.com/ansible/playbooks\_lookups.html
--  "Ansible Loops." Ansible Documentation. April 12, 2017. Accessed
-   April 13, 2017. http://docs.ansible.com/ansible/playbooks\_loops.html
--  "Ansible Conditionals." Ansible Documentation. April 12, 2017.
-   Accessed April 13, 2017.
-   http://docs.ansible.com/ansible/playbooks\_conditionals.html
--  "Ansible Error Handling In Playbooks." Ansible Documentation. August
-   24, 2016. Accessed August 27, 2016.
-   http://docs.ansible.com/ansible/playbooks\_error\_handling.html
--  "Ansible - some random useful things." Code Poets. August 4, 2014.
-   Accessed August 27, 2016.
-   https://codepoets.co.uk/2014/ansible-random-things/
--  "Ansible Become (Privilege Escalation)." Ansible Documentation.
-   August 24, 2016. Accessed August 27, 2016.
-   http://docs.ansible.com/ansible/become.html
--  "Ansible Delegation, Rolling Updates, and Local Actions." Ansible
-   Documentation. April 12, 2017. Accessed April 13, 2017.
-   http://docs.ansible.com/ansible/playbooks\_delegation.html
--  "Ansible Asynchronous Actions and Polling." Ansible Documentation.
-   September 1, 2016. Accessed September 11, 2016.
-   http://docs.ansible.com/ansible/playbooks\_async.html
--  "Ansible mysql\_db - Add or remove MySQL databases from a remote
-   host." Ansible Documentation. September 28, 2016. Accessed October 1,
-   2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
--  "Ansible mysql\_user - Adds or removes a user from a MySQL database."
-   Ansible Documentation. September 28, 2016. Accessed October 1, 2016.
-   http://docs.ansible.com/ansible/mysql\_user\_module.html
--  "Ansible Installation." Ansible Documentation. October 10, 2016.
-   Accessed October 16, 2016.
-   http://docs.ansible.com/ansible/intro\_installation.html
--  "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group.
-   October 3, 2016. Accessed October 16, 2016.
-   https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ
--  "Jinja Template Designer Documentation." Jinja2 Documentation.
-   Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
--  "Ansible Vault." Ansible Documentation. October 31, 2016. Accessed
-   November 6, 2016.
-   http://docs.ansible.com/ansible/intro\_installation.html
--  "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops
-   and videotapes. Accessed November 6, 2016.
-   http://toja.io/using-host-and-group-vars-files-in-ansible/
--  "Ansible Glossary." Ansible Documentation. October 31, 2016. Accessed
-   November 12, 2016.
-   http://docs.ansible.com/ansible/intro\_installation.html
--  "Ansible Container README." Ansible GitHub. October, 2016. Accessed
-   November 19, 2016. https://github.com/ansible/ansible-container
--  "Ansible Container." Ansible Documentation. June 3, 2017. Accessed
-   June 3, 2017. http://docs.ansible.com/ansible-container/
--  "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June
-   1, 2017. Accessed August 14, 2017.
-   https://github.com/ansible-semaphore/semaphore/wiki/Installation
--  "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed
-   April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
--  "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July
-   10, 2014. Accessed January 25, 2017.
-   https://www.ansible.com/blog/ansible-performance-tuning
--  "Ansible Configuration file." Ansible Documentation. April 17, 2017.
-   Accessed April 20, 2017.
-   http://docs.ansible.com/ansible/intro\_configuration.html
--  "network\_interface." MartinVerges GitHub. January 24, 2017. Accessed
-   April 4, 2017.
-   https://github.com/MartinVerges/ansible.network\_interface
--  "Ansible Check Mode ("Dry Run")." Ansible Documentation. April 12,
-   2017. Accessed April 13, 2017.
-   http://docs.ansible.com/ansible/playbooks\_checkmode.html
--  "Ansible Return Values." Ansible Documentation. April 17, 2017.
-   Accessed April 18, 2017.
-   http://docs.ansible.com/ansible/common\_return\_values.html
--  "Installing Ansible Tower." Ansible Tower Documentation. April 18,
-   2017. Accessed April 23, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/installandreference/tower\_install\_wizard.html
--  "Ansible Windows Support." Ansible Documentation. August 4, 2017.
-   Accessed August 10, 2017.
-   http://docs.ansible.com/ansible/latest/intro\_windows.html
--  "Ansible Python API." Ansible Documentation. September 19, 2017.
-   Accessed September 20, 2017.
-   http://docs.ansible.com/ansible/devel/dev\_guide/developing\_api.html
--  "Installing and Configuring Ansible Tower Clusters - AnsbileFest
-   London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10,
-   2017. https://www.youtube.com/watch?v=NiM4xNkauig
--  "Ansible Tower API Guide." Ansible Documentation. Accessed October 2,
-   2017.
-   http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
--  "[Ansible Tower] Organizations." Ansible Documentation. Accessed
-   August 15, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/userguide/organizations.html
--  "[Ansible Tower] Users." Ansible Documentation. Accessed August 15,
-   2017.
-   http://docs.ansible.com/ansible-tower/latest/html/userguide/users.html
--  "[Ansible Tower] Installation Notes." Ansible Documentation. Accessed
-   August 15, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/installandreference/install\_notes\_reqs.html
--  "Ansible Strategies." Ansible Documentation. August 16, 2017.
-   Accessed August 24, 2017.
-   http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
--  "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August
-   6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
--  "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed
-   September 7, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
--  "Ansible announces AWX open source project." OpenSource.com.
-   September 7, 2017. Accessed September 7, 2017.
-   https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
--  "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017.
-   https://www.ansible.com/ansible-engine
--  "Ansible Python 3 Support." Ansible Documentation. September 12,
-   2017. Accessed September 14, 2017.
-   http://docs.ansible.com/ansible/latest/python\_3\_support.html
--  "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed
-   September 18, 2017. https://github.com/ansible/ansible
--  "Ansible Tower Installation and Reference Guide." Ansible
-   Documentation. September 18, 2017. Accessed September 20, 2017.
-   http://docs.ansible.com/ansible-tower/3.1.5/pdf/AnsibleTowerInstallationandReferenceGuide.pdf
--  "Utilities Modules." Ansible Documentation. September 18, 2017.
-   Accessed September 26, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
--  "Files Modules." Ansible Documentation. September 18, 2017. Accessed
-   September 21, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_files\_modules.html
--  "Packaging Modules." Ansible Documentation. September 18, 2017.
-   Accessed September 21, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_packaging\_modules.html
--  "Windows Modules." Ansible Documentation. September 18, 2017.
-   Accessed September 21, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_windows\_modules.html
--  "Creating Reusable Playbooks." Ansible Documentation. September 18,
-   2017. Accessed September 21, 2017.
-   http://docs.ansible.com/ansible/latest/playbooks\_reuse.html
--  "Ansible Tower Quick Setup Guide." Ansible Documentation. September
-   18, 2017. Accessed September 25, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/quickstart/index.html
--  "Changing the Default Timeout for Authentication." Ansible
-   Documentation. Accessed September 25, 2017,
-   http://docs.ansible.com/ansible-tower/latest/html/administration/authentication\_timeout.html
--  "Ansible Tower User Guide." Ansible Documentation. September 18,
-   2017. Accessed September 25, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/userguide/index.html
--  "Ansible Tower Administration Guide." Ansible Documentation.
-   September 18, 2017. Accessed September 25, 2017.
-   http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
--  "`Ansible <#ansible>`__ Blocks." Ansible Documentation. September 18,
-   2017. Accessed September 26, 2017.
-   http://docs.ansible.com/ansible/latest/playbooks\_blocks.html
--  "Net Tools Modules." Ansible Documentation. September 18, 2017.
-   Accessed September 26, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_net\_tools\_modules.html
--  "System Modules." Ansible Documentation. September 18, 2017. Accessed
-   September 26, 2017.
-   http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
--  "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017.
-   Accessed September 26, 2017.
-   https://github.com/Batix/rundeck-ansible-plugin
--  "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed
-   September 26, 2017. https://github.com/pearsonappeng/tensor
+1. "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
+2. "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks\_intro.html
+4. "Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro\_inventory.html
+5. "Variables." Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks\_variables.html
+6. "Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks\_best\_practices.html
+8. "Commands Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
+10. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
+11. "Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
+12. "Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks\_prompts.html
+13. "Lookups." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/playbooks\_lookups.html
+14. "Loops." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_loops.html
+15. "Conditionals." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_conditionals.html
+16. "Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks\_error\_handling.html
+17. "Ansible - some random useful things." Code Poets. August 4, 2014. Accessed August 27, 2016. https://codepoets.co.uk/2014/ansible-random-things/
+18. "Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
+19. "Delegation, Rolling Updates, and Local Actions." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_delegation.html
+20. "Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks\_async.html
+21. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
+22. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
+23. "Ansible Installation." Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro\_installation.html
+24. "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ
+25. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
+26. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
+27. "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
+28. "Glossary." Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro\_installation.html
+29. "Ansible Container README." Ansible GitHub. October, 2016. Accessed November 19, 2016. https://github.com/ansible/ansible-container
+30. "Ansible Container." Ansible Documentation. June 3, 2017. Accessed June 3, 2017. http://docs.ansible.com/ansible-container/
+31. "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
+32. "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
+33. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
+34. "Configuration file." Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro\_configuration.html
+35. "network\_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network\_interface
+36. "Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_checkmode.html
+37. "Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common\_return\_values.html
+39. "Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro\_windows.html
+40. "Ansible Python API." Ansible Documentation. September 19, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible/devel/dev\_guide/developing\_api.html
+41. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
+42. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
+45. "Ansible Tower Installation and Reference Guide." Ansible Documentation. February 20, 2018. Accessed March 2, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
+46. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
+47. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
+48. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
+49. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
+50. "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
+51. "Ansible Python 3 Support." Ansible Documentation. September 12, 2017. Accessed September 14, 2017. http://docs.ansible.com/ansible/latest/python\_3\_support.html
+52. "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
+54. "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
+55. "Files Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_files\_modules.html
+56. "Packaging Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_packaging\_modules.html
+57. "Windows Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_windows\_modules.html
+58. "Creating Reusable Playbooks." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/playbooks\_reuse.html
+59. "Ansible Tower Quick Setup Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/quickstart/index.html
+60. "Changing the Default Timeout for Authentication." Ansible Documentation. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/administration/authentication\_timeout.html
+61. "Ansible Tower User Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/index.html
+62. "Ansible Tower Administration Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
+63. "Blocks." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/playbooks\_blocks.html
+64. "Net Tools Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_net\_tools\_modules.html
+65. "System Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
+66. "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017. Accessed September 26, 2017. https://github.com/Batix/rundeck-ansible-plugin
+67. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 26, 2017. https://github.com/pearsonappeng/tensor
+68. "Including and Importing." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/playbooks\_reuse\_includes.html
