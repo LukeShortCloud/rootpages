@@ -71,7 +71,7 @@ libvirt:
 ::
 
     # virsh edit <VIRTUAL_MACHINE>
-    <cpu mode='host-passthrough'>
+    <cpu mode='host-passthrough'/>
 
 The network driver that provides the best performance is "virtio." Some
 guests may not support this feature and require additional drivers.
@@ -260,17 +260,54 @@ virtualization support.
 GPU Passthrough
 ^^^^^^^^^^^^^^^
 
-GPU passthrough is useful for running a Windows virtual machine guest
-for gaming inside of Linux. It is recommended to have two video cards,
-one for Linux and one for the guest virtual machine. [12]
+GPU passthrough provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU passthrough to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it's own IOMMU group. The QEMU settings for the guest should be configured to use "SeaBIOS" for older cards or "OVMF" for newer cards that support UEFI. [36]
 
-Nvidia cards have a detection in the driver to see if the operating
-system has a hypervisor running. This can lead to a "Code: 43" error in
-the driver as it false-positively reports none. This affects Nvidia
-drivers starting with version 337.88. A work-a-round for this is to set
-a random "vendor\_id" to a alphanumeric 12 character value and forcing
-KVM's emulation to be hidden. This does not affect ATI/AMD graphics
-cards.
+-  Enable IOMMU on the hypervisor via the bootloader's kernel options. This will provide a static ID to each hardware device. The "vfio-pci" kernel module also needs to start on boot.
+
+Intel:
+
+::
+
+    intel_iommu=on rd.driver.pre=vfio-pci
+
+AMD:
+
+::
+
+    amd_iommu=on rd.driver.pre=vfio-pci
+
+-  For the GRUB bootloader, rebuild the configuration.
+
+Fedora:
+
+::
+
+    # grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+-  Find the IOMMU number for the graphics card. This should be the last alphanumeric set at the end of the line for the graphics card. The format should look similar to `XXXX:XXXX`. Add it to the options for the "vfio-pci" kernel module. This will bind a stub kernel driver to the device so that Linux does not use it.
+
+::
+
+    # lspci -k -nn -v | less
+    # vim /etc/modprobe.d/vfio.conf
+    options vfio-pci ids=XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ
+
+-  Rebuild the initramfs to include the VFIO related drivers.
+
+Fedora:
+
+::
+
+    $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci"' > /etc/dracut.conf.d/vfio.conf
+    $ sudo dracut --force
+
+-  Reboot the hypervisor operating system.
+
+[34][35]
+
+Nvidia cards initialized in the guest with a driver version >= 337.88 can detect if the operating system is being virtualized. This can lead to a "Code: 43" error being returned by the driver and the graphics card not working. A work-a-round for this is to set a random "vendor\_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards.
+
+Libvirt:
 
 ::
 
@@ -825,3 +862,6 @@ Bibliography
 31. "Minishift Quickstart." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html
 32. "Run OpenShift Locally with Minishift." Fedora Magazine. June 20, 2017. Accessed February 26, 2018. https://fedoramagazine.org/run-openshift-locally-minishift/
 33. "CHAPTER 5. INSTALLING RED HAT CONTAINER DEVELOPMENT KIT." Red Hat Customer Portal. Accessed February 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_container_development_kit/3.0/html/installation_guide/installing-rhcdk
+34. "PCI passthrough via OVMF." Arch Linux Wiki. February 13, 2018. Accessed February 26, 2018. https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
+35. "RYZEN GPU PASSTHROUGH SETUP GUIDE: FEDORA 26 + WINDOWS GAMING ON LINUX." Level One Techs. June 25, 2017. Accessed February 26, 2018. https://level1techs.com/article/ryzen-gpu-passthrough-setup-guide-fedora-26-windows-gaming-linux
+36. "IOMMU Groups – What You Need to Consider." Heiko's Blog. July 25, 2017. Accessed March 3, 2018. https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/
