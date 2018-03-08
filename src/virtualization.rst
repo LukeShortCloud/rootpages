@@ -31,17 +31,17 @@ AMD has two subtypes of virtualization:
 
 Check for Intel or AMD virtualization support:
 
-::
+.. code-block:: sh
 
     $ grep vmx /proc/cpuinfo # Intel
 
-::
+.. code-block:: sh
 
     $ grep svm /proc/cpuinfo # AMD
 
 Verify the exact subtype of virtualization:
 
-::
+.. code-block:: sh
 
     $ lscpu | grep ^Virtualization # Intel or AMD
 
@@ -62,13 +62,13 @@ CPU settings so that all of it's features are available to the guest.
 
 QEMU:
 
-::
+.. code-block:: sh
 
     # qemu -cpu host ...
 
 libvirt:
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
@@ -78,13 +78,13 @@ guests may not support this feature and require additional drivers.
 
 QEMU:
 
-::
+.. code-block:: sh
 
     # qemu -net nic,model=virtio ...
 
 libvirt:
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
     <interface type='network'>
@@ -97,17 +97,17 @@ bridge will speed up network connections.
 
 QEMU:
 
-::
+.. code-block:: sh
 
     ... -net tap,ifname=<NETWORK_DEVICE> ...
 
-::
+.. code-block:: sh
 
     ... -net bridge,br=<NETWORK_BRIDGE_DEVICE> ...
 
 libvirt:
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
         <interface type='bridge'>
@@ -121,7 +121,7 @@ no virtualization overhead.
 
 QEMU:
 
-::
+.. code-block:: sh
 
     # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 
@@ -130,13 +130,13 @@ and cache disabled.
 
 QEMU:
 
-::
+.. code-block:: sh
 
     # qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
 
 libvirt:
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
     <disk type='...' device='disk'>
@@ -149,7 +149,7 @@ libvirt:
 When using the QCOW2 image format, create the image using metadata
 preallocation or else there could be up to a x5 performance penalty. [8]
 
-::
+.. code-block:: sh
 
     # qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
 
@@ -165,14 +165,14 @@ Verify that the computer's processor supports nested KVM virtualization.
 
 -  Intel:
 
-   ::
+   .. code-block:: sh
 
        $ cat /sys/module/kvm_intel/parameters/nested
        Y
 
 -  AMD:
 
-   ::
+   .. code-block:: sh
 
        $ cat /sys/module/kvm_amd/parameters/nested
        Y
@@ -181,24 +181,25 @@ Option #1 - Modprobe
 
 -  Intel
 
-   ::
+File: /etc/modprobe.d/nested_virtualization.conf
 
-       # vim /etc/modprobe.d/nested_virtualization.conf
+   ::
        options kvm-intel nested=1
 
-   ::
+   .. code-block:: sh
 
        # modprobe -r kvm-intel
        # modprobe kvm-intel
 
 -  AMD
 
+File: /etc/modprobe.d/nested_virtualization.conf
+
    ::
 
-       # vim /etc/modprobe.d/nested_virtualization.conf
        options kvm-amd nested=1
 
-   ::
+   .. code-block:: sh
 
        # modprobe -r kvm-amd
        # modprobe kvm-amd
@@ -210,21 +211,23 @@ options.
 
 -  Intel
 
+File: /etc/default/grub
+
    ::
 
-       # vim /etc/default/grub
        GRUB_CMDLINE_LINUX="kvm-intel.nested=1"
 
 -  AMD
 
+File: /etc/default/grub
+
    ::
 
-       # vim /etc/default/grub
        GRUB_CMDLINE_LINUX="kvm-amd.nested=1"
 
 -  Then rebuild the GRUB 2 configuration.
 
-   ::
+   .. code-block:: sh
 
        # grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -233,7 +236,7 @@ options.
 Edit the virtual machine's XML configuration to change the CPU mode to
 be "host-passthrough."
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
@@ -244,14 +247,14 @@ Reboot the virtual machine and verify that the hypervisor and the
 virtual machine both report the same capabilities and processor
 information.
 
-::
+.. code-block:: sh
 
     # virsh capabilities
 
 Finally verify that, in the virtual machine, it has full hardware
 virtualization support.
 
-::
+.. code-block:: sh
 
     # virt-host-validate
 
@@ -280,13 +283,13 @@ AMD:
 
 Fedora:
 
-::
+.. code-block:: sh
 
     # grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
 -  Find the IOMMU number for the graphics card. This should be the last alphanumeric set at the end of the line for the graphics card. The format should look similar to `XXXX:XXXX`. Add it to the options for the "vfio-pci" kernel module. This will bind a stub kernel driver to the device so that Linux does not use it.
 
-::
+.. code-block:: sh
 
     # lspci -k -nn -v | less
     # vim /etc/modprobe.d/vfio.conf
@@ -296,7 +299,7 @@ Fedora:
 
 Fedora:
 
-::
+.. code-block:: sh
 
     $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci"' > /etc/dracut.conf.d/vfio.conf
     $ sudo dracut --force
@@ -309,7 +312,7 @@ Nvidia cards initialized in the guest with a driver version >= 337.88 can detect
 
 Libvirt:
 
-::
+.. code-block:: sh
 
     # virsh edit <VIRTUAL_MACHINE>
     <features>
@@ -392,7 +395,7 @@ packet size (MTU) issues. There are a few work-a-rounds.
    the daemon's process settings. This value should generally be below
    the default of 1500.
 
-   ::
+   .. code-block:: sh
 
        # vim /etc/sysconfig/docker
        OPTIONS='--selinux-enabled --log-driver=journald --mtu 1400'
@@ -400,7 +403,7 @@ packet size (MTU) issues. There are a few work-a-rounds.
 
    OR
 
-   ::
+   .. code-block:: sh
 
        # vim /usr/lib/systemd/system/docker.service
        ExecStart=/usr/bin/docker-current daemon \
@@ -417,7 +420,7 @@ packet size (MTU) issues. There are a few work-a-rounds.
 2. Forward all packets between the docker link through the physical
    link.
 
-   ::
+   .. code-block:: sh
 
        # iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
@@ -433,7 +436,7 @@ error message similar to this may appear during creation.
 The solution is to delete the virtual "docker0" interface and then
 restart the docker service for it to be properly recreated.
 
-::
+.. code-block:: sh
 
     # ip link delete docker0
     # systemctl restart docker
@@ -448,7 +451,7 @@ containers.
 
 Debian install [19]:
 
-::
+.. code-block:: sh
 
     # apt-get install lxc
 
@@ -457,7 +460,7 @@ repository:
 
 -  RHEL:
 
-   ::
+   .. code-block:: sh
 
        # yum install epel-release
        # yum install lxc lxc-templates libvirt
@@ -465,7 +468,7 @@ repository:
 On RHEL family systems the ``lxcbr0`` interface is not created or used.
 Alternatively, the libvirt interface ``virbr0`` should be used.
 
-::
+.. code-block:: sh
 
     # vim /etc/lxc/default.conf
     lxc.network.link = virbr0
@@ -473,7 +476,7 @@ Alternatively, the libvirt interface ``virbr0`` should be used.
 The required services need to be started before LXC containers will be
 able to run.
 
-::
+.. code-block:: sh
 
     # systemctl start libvirtd
     # systemctl start lxc
@@ -498,14 +501,14 @@ Install (Fedora):
 
 -  Install Libvirt and KVM and add non-privileged MiniShift users to the "libvirt" group.
 
-::
+.. code-block:: sh
 
     $ sudo dnf -y install qemu-kvm libvirt
     $ sudo usermod -a -G libvirt $USER
 
 -  Download the latest release of MiniShift from: https://github.com/minishift/minishift/releases
 
-::
+.. code-block:: sh
 
     $ OPENSHIFT_VER=1.13.1
     $ wget https://github.com/minishift/minishift/releases/download/v${OPENSHIFT_VER}/minishift-${OPENSHIFT_VER}-linux-amd64.tgz
@@ -521,7 +524,7 @@ Install (RHEL):
 
 Enable the Red Hat Developer Tools repository first. Then MiniShift can be installed.
 
-::
+.. code-block:: sh
 
     $ sudo subscription-manager repos --enable rhel-7-server-devtools-rpms
     $ sudo yum install cdk-minishift
@@ -567,25 +570,25 @@ the hypervisor but other technologies can be used.
 Most unoffocial hypervisor providers can be automatically installed as a
 plugin from the command line.
 
-::
+.. code-block:: sh
 
     $ vagrant plugin install vagrant-<HYPERVISOR>
 
 Deploy VMs using a Vagrant file:
 
-::
+.. code-block:: sh
 
     $ vagrant up
 
 OR
 
-::
+.. code-block:: sh
 
     $ vagrant up --provider <HYPERVISOR>
 
 Destroy VMs using a Vagrant file:
 
-::
+.. code-block:: sh
 
     $ vagrant destroy
 
@@ -599,14 +602,14 @@ Vagrantfile
 
 A default Vagrantfile can be created to start customizing with.
 
-::
+.. code-block:: sh
 
     $ vagrant init
 
 All of the settings should be defined within the ``Vagrant.configure()``
 block.
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
         # Define VM settings here.
@@ -623,7 +626,7 @@ default (if the ``box_url`` is not changed) from the HashiCorp website.
 
 Example:
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
       config.vm.box = "ubuntu/xenial64"
@@ -649,13 +652,13 @@ virtualization provider.
 With a ``private`` network, the IP address can either be a random
 address assigned by DHCP or a static IP that is defined.
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
       config.vm.network "private_network", type: "dhcp"
     end
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
       config.vm.network "private_network", ip: "<IP4_OR_IP6_ADDRESS>", netmask: "<SUBNET_MASK>"
@@ -664,7 +667,7 @@ address assigned by DHCP or a static IP that is defined.
 The same rules apply to ``public`` networks except it uses the external
 DHCP server on the network (if it exists).
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
       config.vm.network "public_network", use_dhcp_assigned_default_route: true
@@ -675,7 +678,7 @@ end-user is prompted to pick a physical network interface device to
 bridge onto for public network access. This bridge device can also be
 specified manually.
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
       config.vm.network "public_network", bridge: "eth0: First NIC"
@@ -684,7 +687,7 @@ specified manually.
 In this example, port 2222 on the localhost (127.0.0.1) of the
 hypervisor will forward to port 22 of the VM.
 
-::
+.. code-block:: ruby
 
     ...
         config.vm.network "forwarded_port", id: "ssh", guest: 22, host: 2222
@@ -713,7 +716,7 @@ Options:
 
 Example:
 
-::
+.. code-block:: ruby
 
     config.vm.define "controller" do |controller|
         controller.vm.network "public_network", ip: "10.0.0.205", dev: "br0", mode: "bridge", type: "bridge"
@@ -759,7 +762,7 @@ A ``Vagrantfile`` can specify more than one virtual machine.
 The recommended way to provision multiple VMs is to statically define
 each individual VM to create as shown here. [27]
 
-::
+.. code-block:: ruby
 
     Vagrant.configure("2") do |config|
 
@@ -781,7 +784,7 @@ However, it is possible to use Ruby to dynamically define and create
 VMs. This will work for creating the VMs but using the ``vagrant``
 command to manage the VMs will not work properly [28]:
 
-::
+.. code-block:: ruby
 
     servers=[
       {

@@ -18,14 +18,14 @@ Install monit:
 
 RHEL
 
-::
+.. code-block:: sh
 
     # yum install epel-release
     # yum install monit
 
 Ubuntu
 
-::
+.. code-block:: sh
 
     # apt-get install monit
 

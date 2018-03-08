@@ -26,7 +26,7 @@ It only forwards local e-mails to another MTA.
 Example - Forward all e-mails from the localhost to the server at the
 10.0.0.1 address.
 
-::
+.. code-block:: sh
 
     myhostname = server.rootpages.tld
     mydomain = rootpages.tld
@@ -44,7 +44,7 @@ specified networks to another MTA.
 Example - Forward all e-mails from localhost and from the 10.0.0.0/24
 network to the 10.0.0.1 server.
 
-::
+.. code-block:: ini
 
     myhostname = server.example.com
     mydomain = example.com

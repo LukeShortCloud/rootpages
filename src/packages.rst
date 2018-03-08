@@ -88,7 +88,7 @@ creating these files and/or directories.
 
 Install the required packaging dependencies.
 
-::
+.. code-block:: sh
 
     # apt-get update
     # apt-get install devscripts dh-make dpkg-dev
@@ -96,7 +96,7 @@ Install the required packaging dependencies.
 Create a working build directory, download the source code, and then run
 ``dh_make``.
 
-::
+.. code-block:: sh
 
     $ mkdir build
     $ cd build
@@ -112,7 +112,7 @@ source code. A copy tarball of the source code is also created as
 
 The DEB package can now be built.
 
-::
+.. code-block:: sh
 
     $ dpkg-buildpackage
 
@@ -184,7 +184,7 @@ Many macros exist for helping to build and install Debian packages.
 -  dh\_auto\_test = ``make test``
 -  dh\_auto\_install =
 
-   ::
+   .. code-block:: sh
 
        make install DESTDIR=/<PATH_TO_>/<PACKAGE>-<VERSION>-revision/debian/<PACKAGE>
 
@@ -205,7 +205,7 @@ Adding a Repository
 On Red Hat based systems, the repositories are all defined as text files
 with the ".repo" extension in this directory.
 
-::
+.. code-block:: sh
 
     # ls /etc/yum.repos.d/
 
@@ -231,7 +231,7 @@ PCs this is typically either automatically filled in as "x86\_64" for
 At the bare minimum, a repository file needs to include a name and a
 baseurl.
 
-::
+.. code-block:: ini
 
     [example-repo]
     name=example-repo
@@ -240,7 +240,7 @@ baseurl.
 Here is an example repository file for the official CentOS 7 repository
 using a mirrorlist.
 
-::
+.. code-block:: ini
 
     [base]
     name=CentOS-$releasever - Base
@@ -263,12 +263,12 @@ In this example, a default Apache web server will have the repository
 access via the URL "http://localhost/centos/7/x86\_64/." Be sure to
 place your RPMs in this directory. [1]
 
-::
+.. code-block:: sh
 
     # yum install createrepo
     # mkdir -p /var/www/html/centos/7/x86_64/
 
-::
+.. code-block:: sh
 
     # createrepo /var/www/html/centos/7/x86_64/
 
@@ -285,7 +285,7 @@ without any arguments. [8]
 If new packages are added and/or signed via a GPG key then the
 repository cache needs to be updated again. [7]
 
-::
+.. code-block:: sh
 
     # createrepo --update /var/www/html/centos/7/x86_64/
 
@@ -325,7 +325,7 @@ Red Hat provides different repositories for Red Hat Enterprise Linux operating s
 
 The "subscription-manager" command is used to manage these repositories.
 
-::
+.. code-block:: sh
 
     $ sudo subscription-manager repos --enable <RED_HAT_REPOSITORY>
 
@@ -387,13 +387,13 @@ Sample SPEC file:
 
 If you want to build the RPM, simply run:
 
-::
+.. code-block:: sh
 
     # rpmbuild -bb <SPECFILE>.spec
 
 In case you also want to build a source RPM (SRPM) run:
 
-::
+.. code-block:: sh
 
     # rpmbuild -ba <SPECFILE>.spec
 
@@ -524,14 +524,14 @@ These patches can then be referenced in the ``%setup`` phase (after
 
 A patched file can be created using the ``diff`` command.
 
-::
+.. code-block:: sh
 
     $ diff -u <ORIGINAL_FILE> <PATCHED_FILE> > <PATCH_NAME>.patch
 
 If multiple files in a directory have been patched, a more comphrensive
 patch file can be made.
 
-::
+.. code-block:: sh
 
     $ diff -urN <ORIGINAL_SOURCE_DIRECTORY>/ <PATCHED_SOURCE_DIRECTORY>/ > <PATCH_NAME>.patch
 
@@ -555,7 +555,7 @@ Example patch file:
 A patch can also be made without the ``%patch`` macro by specifying the
 location of the patch file.
 
-::
+.. code-block:: sh
 
     patch < %{_sourcedir}/<FILE_NAME>
 
@@ -610,13 +610,13 @@ Required:
       situations this should be the package name and version separated
       by a dash.
 
-      ::
+      .. code-block:: sh
 
           $ cd "${srcdir}"
 
       OR
 
-      ::
+      .. code-block:: sh
 
           $ cd "${pkgname}-${pkgver}"
 
@@ -627,13 +627,13 @@ Required:
       installed on an end-user's system. This acts as the top-level
       directory of a Linux file system hierarchy.
 
-      ::
+      .. code-block:: sh
 
           $ cd "${pkgdir}"
 
    -  An example of installing compiled source code using a Make file.
 
-      ::
+      .. code-block:: sh
 
           $ make DESTDIR="${pkgdir}" install
 

@@ -37,7 +37,7 @@ Install the Kerberos service.
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install krb5-server krb5-workstation
 
@@ -45,72 +45,75 @@ Modify the example Kerberos configuration files and replace the domain
 "example.com" with a different domain. This domain needs to be
 resolvable on both the server and client computers.
 
-::
+File: /etc/krb5.conf
 
-    # vim /etc/krb5.conf
+.. code-block:: ini
+
     [logging]
-     default = FILE:/var/log/krb5libs.log
-     kdc = FILE:/var/log/krb5kdc.log
-     admin_server = FILE:/var/log/kadmind.log
+    default = FILE:/var/log/krb5libs.log
+    kdc = FILE:/var/log/krb5kdc.log
+    admin_server = FILE:/var/log/kadmind.log
 
     [libdefaults]
-     dns_lookup_realm = false
-     ticket_lifetime = 24h
-     renew_lifetime = 7d
-     forwardable = true
-     rdns = false
-     default_realm = EXAMPLE.COM
-     default_ccache_name = KEYRING:persistent:%{uid}
+    dns_lookup_realm = false
+    ticket_lifetime = 24h
+    renew_lifetime = 7d
+    forwardable = true
+    rdns = false
+    default_realm = EXAMPLE.COM
+    default_ccache_name = KEYRING:persistent:%{uid}
 
     [realms]
-     EXAMPLE.COM = {
-      kdc = kerberos.example.com
-      admin_server = kerberos.example.com
-     }
+    EXAMPLE.COM = {
+     kdc = kerberos.example.com
+     admin_server = kerberos.example.com
+    }
 
     [domain_realm]
-     .example.com = EXAMPLE.COM
-     example.com = EXAMPLE.COM
+    .example.com = EXAMPLE.COM
+    example.com = EXAMPLE.COM
 
-::
+File: /var/kerberos/krb5kdc/kdc.conf
 
-    # vim /var/kerberos/krb5kdc/kdc.conf
+.. code-block:: ini
+
     [kdcdefaults]
-     kdc_ports = 88
-     kdc_tcp_ports = 88
+    kdc_ports = 88
+    kdc_tcp_ports = 88
 
     [realms]
-     EXAMPLE.COM = {
-      #master_key_type = aes256-cts
-      acl_file = /var/kerberos/krb5kdc/kadm5.acl
-      dict_file = /usr/share/dict/words
-      admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
-      supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
-     }
+    EXAMPLE.COM = {
+     #master_key_type = aes256-cts
+     acl_file = /var/kerberos/krb5kdc/kadm5.acl
+     dict_file = /usr/share/dict/words
+     admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+     supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
+    }
+
+File: /var/kerberos/krb5kdc/kadm5.acl
 
 ::
 
-    # vim /var/kerberos/krb5kdc/kadm5.acl
     */admin@EXAMPLE.COM     *
 
 On a new installation, create the KDC database and save the generated
 master database password to a file called the "stash file." By default,
 the database will be saved to ``/var/kerberos/krb5kdc/principal``.
 
-::
+.. code-block:: sh
 
     # kdb5_util create -s
 
 Start and enable the Kerberos service to start on boot.
 
-::
+.. code-block:: sh
 
     # systemctl start krb5kdc
     # systemctl enable krb5kdc
 
 Create an administrator account.
 
-::
+.. code-block:: sh
 
     # kadmin.local -q "addprinc root/admin"
 
@@ -118,13 +121,13 @@ Optionally start the remote "kadmin" administrator service.
 Alternatively, the ``kadmin.local`` command be used exclusively for
 manage Kerberos from the local system.
 
-::
+.. code-block:: sh
 
     # systemctl start kadmin
 
 Log into the administrator account to manage accounts.
 
-::
+.. code-block:: sh
 
     # kadmin
 
@@ -140,7 +143,7 @@ Install the Kerberos client utilities.
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install krb5-workstation
 
@@ -175,19 +178,19 @@ Server
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install compat-openldap openldap openldap-clients openldap-servers
 
 For using a RDMS, install the required dependency:
 
-::
+.. code-block:: sh
 
     # yum install openldap-servers-sql
 
 Enable and start the service.
 
-::
+.. code-block:: sh
 
     # systemctl enable slapd
     # systemctl start slapd

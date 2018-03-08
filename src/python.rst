@@ -56,15 +56,15 @@ PEP 8 is the "Style Guide for Python Code."
 
 Example:
 
-.. code-block:: python
+::
 
     if (phoneNumber == 999):
-
+        
         if (callerID is “Frank”):
             print(“Hello Frank.”)
         else:
             print("Hello everyone else.")
-
+    
     print("Welcome to work.")
 
 -  Comments should:

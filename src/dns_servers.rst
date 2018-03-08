@@ -163,7 +163,7 @@ This is the recommend InnoDB table schema to use. [2]
 Then make sure that the pdns service is configured via the ``pdns.conf``
 file to connect to the MySQL server.
 
-::
+.. code-block:: ini
 
     launch=gmysql
     gmysql-host=<MYSQL_HOST>
@@ -231,7 +231,7 @@ Here is an example of converting addresses to nibble.
    -  nibble address =
       a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.
 
-      ::
+      .. code-block:: sh
 
           $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
 

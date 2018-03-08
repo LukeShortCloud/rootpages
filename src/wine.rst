@@ -29,12 +29,12 @@ command or specifying the variables before a Wine command.
 
 Examples:
 
-::
+.. code-block:: sh
 
     $ export WINEPREFIX="/home/windowsguy/wine_prefix"
     $ winecfg
 
-::
+.. code-block:: sh
 
     $ WINEPATH="c:/program_dir" wine setup.exe
 
@@ -76,13 +76,13 @@ and the channel to use.
 
 Syntax:
 
-::
+.. code-block:: sh
 
     WINEDEBUG=<CLASS1>[+|-]<CHANNEL1>,<CLASS2>[+|-]<CHANNEL2>
 
 Example:
 
-::
+.. code-block:: sh
 
     WINEDEBUG=warn+all
 
@@ -120,13 +120,13 @@ Windows DLLs. There are two different types of DLLs in Wine:
 
 Syntax:
 
-::
+.. code-block:: sh
 
     WINEDLLOVERRIDES="<DLL1_OR_PATH_TO_DLL1>=[n|b],[b|n];<DLL2_OR_PATH_TO_DLL2>=[n|b],[b|n]"
 
 Example:
 
-::
+.. code-block:: sh
 
     WINEDLLOVERRIDES="shell32=n,b"
 

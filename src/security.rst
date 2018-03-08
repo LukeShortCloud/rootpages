@@ -35,13 +35,13 @@ These permissions can be modified with the "chmod" command.
 
 Example (numbers):
 
-::
+.. code-block:: sh
 
     # chmod 775
 
 Example (letters):
 
-::
+.. code-block:: sh
 
     # chmod g+w,o+x
 
@@ -69,13 +69,13 @@ The Kerberos sever is referred to as the Kerberos Distribution Center
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install krb5-server krb5-workstation pam_krb5
 
 Debian:
 
-::
+.. code-block:: sh
 
     # apt-get install krb5-kdc krb5-admin-server libpam-krb5
 
@@ -85,19 +85,19 @@ The principal database needs to be generated. First replace
 
 -  /var/kerberos/krb5kdc/kdc.conf
 
-::
+.. code-block:: ini
 
     [kdcdefaults]
-     kdc_ports = 88
-     kdc_tcp_ports = 88
+    kdc_ports = 88
+    kdc_tcp_ports = 88
     [realms]
-     ROOTPAGES.TLD = {
-      #master_key_type = aes256-cts
-      acl_file = /var/kerberos/krb5kdc/kadm5.acl
-      dict_file = /usr/share/dict/words
-      admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
-      supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
-     }
+    ROOTPAGES.TLD = {
+     #master_key_type = aes256-cts
+     acl_file = /var/kerberos/krb5kdc/kadm5.acl
+     dict_file = /usr/share/dict/words
+     admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+     supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
+    }
 
 -  /var/kerberos/krb5kdc/adm5.acl
 
@@ -108,7 +108,7 @@ The principal database needs to be generated. First replace
 The principal is made by running the command below. It will create a new
 database and associated files for the realm "ROOTPAGES.TLD."
 
-::
+.. code-block:: sh
 
     # kdb5_util create -s -r ROOTPAGES.TLD
 
@@ -118,48 +118,48 @@ name/realm. [3] For testing, "rdns=false" and
 "ignore\_acceptor\_hostname=true" in the "[libdefaults]" section should
 be used to prevent DNS issues. [5]
 
-::
+.. code-block:: ini
 
     [logging]
-     default = FILE:/var/log/krb5libs.log
-     kdc = FILE:/var/log/krb5kdc.log
-     admin_server = FILE:/var/log/kadmind.log
+    default = FILE:/var/log/krb5libs.log
+    kdc = FILE:/var/log/krb5kdc.log
+    admin_server = FILE:/var/log/kadmind.log
 
     [libdefaults]
-     dns_lookup_realm = false
-     ticket_lifetime = 24h
-     renew_lifetime = 7d
-     forwardable = true
-     rdns = false
-     default_realm = ROOTPAGES.TLD
-     default_ccache_name = KEYRING:persistent:%{uid}
+    dns_lookup_realm = false
+    ticket_lifetime = 24h
+    renew_lifetime = 7d
+    forwardable = true
+    rdns = false
+    default_realm = ROOTPAGES.TLD
+    default_ccache_name = KEYRING:persistent:%{uid}
 
     [realms]
-     ROOTPAGES = {
-      kdc = kdc.rootpages.tld
-      admin_server = kdc.rootpages.tld
-     }
+    ROOTPAGES = {
+     kdc = kdc.rootpages.tld
+     admin_server = kdc.rootpages.tld
+    }
 
     [domain_realm]
-     .rootpages.tld = ROOTPAGES.TLD
-     rootpages.tld = ROOTPAGES.TLD
+    .rootpages.tld = ROOTPAGES.TLD
+    rootpages.tld = ROOTPAGES.TLD
 
 Start the KDC service.
 
-::
+.. code-block:: sh
 
     # systemctl start krb5kdc
 
 Optionally, the admin authentication service can be started to allow
 remote management.
 
-::
+.. code-block:: sh
 
     # systemctl start kadmin
 
 Now define the root user and KDC host as allowed principals.
 
-::
+.. code-block:: sh
 
     # kadmin.local -p root/admin
     kadmin: addprinc root/admin
@@ -167,32 +167,40 @@ Now define the root user and KDC host as allowed principals.
 
 Additional Kerberos users can also be created.
 
-::
+.. code-block:: sh
 
     kadmin: addprinc cloud-user
 
 Allow Kerberos authentication via SSH.
 
+File: /etc/ssh/sshd_config
+
 ::
 
-    # vim /etc/ssh/sshd_config
     GSSAPIAuthentication yes
     GSSAPICleanupCredentials yes
-    # vim /etc/ssh/ssh_config
+
+File: /etc/ssh/ssh_config
+
+::
+
     Host *
        GSSAPIAuthentication yes
        GSSAPIDelegateCredentials yes
+
+.. code-block:: sh
+
     # systemctl reload sshd
 
 Allow remote authentication through this KDC.
 
-::
+.. code-block:: sh
 
     # authconfig --enablekrb5 --update
 
 Verify that the authentication works.
 
-::
+.. code-block:: sh
 
     # su - cloud-user
     $ kinit cloud-user

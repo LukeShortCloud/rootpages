@@ -16,7 +16,7 @@ Installation
 Install GRUB to the primary drive. This will use the MSDOS partition
 scheme on the first 512 bytes as GPT was not supported until GRUB 2.
 
-::
+.. code-block:: sh
 
     # grub-install --root-directory=/ /dev/<DEVICE>
 
@@ -24,9 +24,10 @@ A basic boot menu must be configured to specify the boot partition, the
 kernel to use, the root partition to mount, and the initrd/initramfs to
 load.
 
+File: /boot/grub/menu.lst
+
 ::
 
-    # vim /boot/grub/menu.lst
     root   (hd0,0)
     kernel /vmlinuz-linux root=/dev/sda2 ro
     initrd /initramfs-linux.img
@@ -58,7 +59,7 @@ Common options:
 
 Example of manually booting a server:
 
-::
+.. code-block:: sh
 
     grub> root hd(0,0)
     grub> kernel /vmzlinuz-4.0.img root=/dev/sda2 ro
@@ -89,7 +90,7 @@ Install GRUB to a drive (replace "X") and then generate a boot menu
 configuration file. This will create the menu file that loads up to the
 end-user upon boot.
 
-::
+.. code-block:: sh
 
     # grub-install /dev/sdX
     # grub-mkconfig -o /boot/grub/grub.cfg
@@ -97,7 +98,7 @@ end-user upon boot.
 If any changes are made to GRUB's settings and/or it's various scripts,
 run this command to update the changes. [3]
 
-::
+.. code-block:: sh
 
     # update-grub
 
@@ -134,16 +135,10 @@ to bottom, starting at 0. \* Or the menu entry title can be explicitly
 specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7
 (Core)."
 
-::
+.. code-block:: sh
 
     # grep ^menuentry /boot/grub2/grub.cfg
-
-::
-
     menuentry 'CentOS Linux (3.10.0-327.18.2.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.18.2.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
-
-::
-
     menuentry 'CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.13.1.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
 
 -  GRUB\_TIMEOUT = Set the timeout (in seconds) before booting into the
@@ -181,13 +176,13 @@ Common options:
 
 The rescue prompt will look similar to this.
 
-::
+.. code-block:: sh
 
     grub rescue>
 
 Example of using these commands to do a custom rescue boot.
 
-::
+.. code-block:: sh
 
     grub rescue> ls
     (hd0) (hd0,msdos1)
@@ -203,7 +198,7 @@ Example of using these commands to do a custom rescue boot.
 Alternatively, you can switch back to the graphical GRUB menu and make
 changes there.
 
-::
+.. code-block:: sh
 
     grub rescue> insmod normal
     grub rescue> normal
@@ -216,7 +211,7 @@ used during the installation.
 In this example, /dev/sda2 is the root partition and /dev/sda1 is the
 boot partition. [6]
 
-::
+.. code-block:: sh
 
     # mount /dev/sda2 /mnt
     # mount /dev/sda1 /mnt/boot
@@ -231,14 +226,16 @@ If you need to recover GRUB from a chroot that is based on a LVM on the
 host node, make sure that LVM tools are installed on the guest. This way
 it can properly see the logical volume as a block device.
 
-::
+Debian:
 
-    Debian/Ubuntu
+.. code-block:: sh
+
     # apt-get install lvm2
 
-::
+Fedora:
 
-    RHEL/Fedora
+.. code-block:: sh
+
     # yum install lvm2
 
 Bibliography

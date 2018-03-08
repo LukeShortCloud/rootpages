@@ -31,7 +31,7 @@ be configured as a router (masquerading). This is an example of using
 the internal network 10.0.0.0/24 on the interface eth1 and forward
 requests to/from the public interface eth0.
 
-::
+.. code-block:: sh
 
     # iptables -F
     # iptables -t nat -F

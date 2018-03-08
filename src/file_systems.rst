@@ -165,26 +165,26 @@ RAID level and the partitions you will use to create it.
 
 Syntax:
 
-::
+.. code-block:: sh
 
     # mdadm --create --level=<LEVEL> --raid-devices=<NUMBER_OF_DISKS> /dev/md<DEVICE_NUMBER_TO_CREATE> /dev/sd<PARTITION1> /dev/sd<PARTITION2>
 
 Example:
 
-::
+.. code-block:: sh
 
     # mdadm --create --level=10 --raid-devices=4 /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1
 
 Then to automatically create the partition layout file run this:
 
-::
+.. code-block:: sh
 
     # echo 'DEVICE partitions' > /etc/mdadm.conf
     # mdadm --detail --scan >> /etc/mdadm.conf
 
 Finally, you can initialize the RAID.
 
-::
+.. code-block:: sh
 
     # mdadm --assemble --scan
 
@@ -207,17 +207,17 @@ a directory can be specified to be shared via NFS to a specific IP
 address or CIDR range. After adjusting the exports, the NFS daemon will
 need to be restarted.
 
--  Syntax:
+Syntax:
 
-   ::
+::
 
-       <DIRECTORY> <ALLOWED_HOST>(<OPTIONS>)
+    <DIRECTORY> <ALLOWED_HOST>(<OPTIONS>)
 
--  Example:
+Example:
 
-   ::
+::
 
-       /path/to/dir 192.168.0.0/24(rw,no_root_squash)
+    /path/to/dir 192.168.0.0/24(rw,no_root_squash)
 
 NFS export options:
 
@@ -242,7 +242,7 @@ NFS export options:
 On Red Hat Enterprise Linux systems, the exported directory will need to
 have the "nfs\_t" file context for SELinux to work properly.
 
-::
+.. code-block:: sh
 
     # semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
     # restorecon -R "/path/to/dir"
@@ -291,7 +291,7 @@ Configuration - Share:
 
 Verify the Samba configuration.
 
-::
+.. code-block:: sh
 
     # testparm
     # smbclient //localhost/<SHARE_NAME> -U <SMB_USER1>%<SMB_USER1_PASS>
@@ -301,7 +301,7 @@ have their password added to the Samba configuration. These are stored
 in a binary file at "/var/lib/samba/passdb.tdb." This can be updated by
 running:
 
-::
+.. code-block:: sh
 
     # useradd <SMB_USER1>
     # smbpasswd -a <SMB_USER1>
@@ -310,7 +310,7 @@ On Red Hat Enterprise Linux systems, the exported directory will need to
 have the "samba\_share\_t" file context for SELinux to work properly.
 [15]
 
-::
+.. code-block:: sh
 
     # semanage fcontext -a -t samba_share_t "/path/to/dir{/.*)?"
     # restorecon -R "/path/to/dir"
@@ -339,25 +339,26 @@ in order:
 
 -  First, start and enable the iSCSI service to start on bootup.
 
-   -  Syntax:
+Syntax:
 
-      ::
+.. code-block:: sh
 
-          # systemctl enable target && systemctl start target
+    # systemctl enable target && systemctl start target
 
 -  Create a storage device. This is typically either a block device or a
    file.
--  Block syntax:
 
-   ::
+Block syntax:
+
+.. code-block:: sh
 
        # targetcli
        > cd /backstores/block/
        > create iscsidisk1 dev=/dev/sd<DISK>
 
--  File syntax:
+File syntax:
 
-   ::
+.. code-block:: sh
 
        # targetcli
        > cd /backstore/fileio/
@@ -366,102 +367,107 @@ in order:
 -  A special iSCSI Qualified Name (IQN) is required to create a Target
    Portal Group (TPG). The syntax is
    "iqn.YYYY-MM.tld.domain.subdomain:exportname."
--  Syntax:
 
-   ::
+Syntax:
 
-       > cd /iscsi
-       > create iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>
+.. code-block:: sh
 
--  Example:
+    > cd /iscsi
+    > create iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>
 
-   ::
+Example:
 
-       > cd /iscsi
-       > create iqn.2016-01.com.example.server:iscsidisk
-       > ls
+.. code-block:: sh
+
+    > cd /iscsi
+    > create iqn.2016-01.com.example.server:iscsidisk
+    > ls
 
 -  Create a portal for the iSCSI device to be accessible on.
--  Syntax:
 
-   ::
+Syntax:
 
-       > cd /iscsi/iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>/tpg1
-       > portals/ create
+.. code-block:: sh
 
--  Example:
+    > cd /iscsi/iqn.YYYY-MM.<TLD.DOMAIN>:<ISCSINAME>/tpg1
+    > portals/ create
 
-   ::
+Example:
 
-         > cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
-         > ls
-         o- tpg1
-         o- acls
-         o- luns
-         o- portals
-         > portals/ create
-         > ls
-         o- tpg1
-         o- acls
-         o- luns
-         o- portals
-             o- 0.0.0.0:3260
+.. code-block:: sh
+
+    > cd /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+    > ls
+    o- tpg1
+    o- acls
+    o- luns
+    o- portals
+    > portals/ create
+    > ls
+    o- tpg1
+    o- acls
+    o- luns
+    o- portals
+        o- 0.0.0.0:3260
 
 -  Create a LUN.
--  Syntax:
+  
+Syntax:
 
-   ::
+.. code-block:: sh
 
-       > luns/ create /backstores/block/<DEVICE>
+    > luns/ create /backstores/block/<DEVICE>
 
--  Example:
+Example:
 
-   ::
+.. code-block:: sh
 
-       > luns/ create /backstores/block/iscsidisk
+    > luns/ create /backstores/block/iscsidisk
 
 -  Create a blank ACL. By default, this will allow any user to access
    this iSCSI target.
 
--  Syntax:
+Syntax:
 
-   ::
+.. code-block:: sh
 
-       > acls/ create iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
+    > acls/ create iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
 
--  Example:
+Example:
 
-   ::
+.. code-block:: sh
 
-       > acls/ create iqn.2016-01.com.example.server:client
+   > acls/ create iqn.2016-01.com.example.server:client
 
 -  Optionally, add a username and password.
--  Syntax:
 
-   ::
+  
+Syntax:
 
-       > cd acls/iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
-       > set auth userid=<USER>
-       > set auth password=<PASSWORD>
+.. code-block:: sh
 
--  Example:
+    > cd acls/iqn.YYYY-MM.<TLD.DOMAIN>:<ACL_NAME>
+    > set auth userid=<USER>
+    > set auth password=<PASSWORD>
 
-   ::
+Example:
 
-       > cd acls/iqn.2016-01.com.example.server:client
-       > set auth userid=toor
-       > set auth password=pass
+.. code-block:: sh
+
+    > cd acls/iqn.2016-01.com.example.server:client
+    > set auth userid=toor
+    > set auth password=pass
 
 -  Any ACL rules that were created can be overridden by turning off
    authentication entirely.
 
-   -  Syntax:
+Syntax:
 
-      ::
+.. code-block:: sh
 
-          > set attribute authentication=0
-          > set attribute generate_node_acls=1
-          > set attribute demo_mode_write_protect=0
+    > set attribute authentication=0
+    > set attribute generate_node_acls=1
+    > set attribute demo_mode_write_protect=0
 
 -  Finally, make sure that both the TCP and UDP port 3260 are open in
    the firewall. [16]
@@ -473,48 +479,50 @@ This should be configured on the client server.
 
 -  In the initiator configuration file, specify the IQN along with the
    ACL used to access it.
--  Syntax:
 
-   ::
+Syntax:
 
-       # vim /etc/iscsi/initiatorname.iscsi
-       InitiatorName=<IQN>:<ACL>
+.. code-block:: sh
 
--  Example:
+    # vim /etc/iscsi/initiatorname.iscsi
+    InitiatorName=<IQN>:<ACL>
 
-   ::
+Example:
 
-       # vim /etc/iscsi/initiatorname.iscsi
-       InitiatorName=iqn.2016-01.com.example.server:client
+.. code-block:: sh
+
+    # vim /etc/iscsi/initiatorname.iscsi
+    InitiatorName=iqn.2016-01.com.example.server:client
 
 -  Start and enable the iSCSI initiator to load on bootup.
 
-   -  Syntax:
+Syntax:
 
-      ::
+.. code-block:: sh
 
-          # systemctl start iscsi && systemctl enable iscsi
+    # systemctl start iscsi && systemctl enable iscsi
 
 -  Once started, the iSCSI device should be able to be attached.
--  Syntax:
 
-   ::
+Syntax:
 
-       # iscsiadm --mode node --targetname <IQN>:<TARGET> --portal <iSCSI_SERVER_IP> --login
+.. code-block:: sh
 
--  Example:
+    # iscsiadm --mode node --targetname <IQN>:<TARGET> --portal <iSCSI_SERVER_IP> --login
 
-   ::
+Example:
 
-       # iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login
+.. code-block:: sh
+
+    # iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login
 
 -  Verify that a new "iscsi" device exists.
 
-   -  Syntax:
+Syntax:
 
-      ::
+.. code-block:: sh
 
-          # lsblk --scsi
+    # lsblk --scsi
 
 [16]
 
@@ -596,10 +604,7 @@ The optimal number of PGs is found be using this equation (replacing the
 number of OSD daemons and how many replicas are set). This number should
 be rounded up to the next power of 2.
 
-Syntax:
-
 ::
-
     Total PGs = (<NUMBER_OF_OSDS> * 100) / <REPLICA_COUNT> / <NUMBER_OF_POOLS>
 
 Example:
@@ -619,20 +624,20 @@ rebalance when the PGP count is increased.
 
 -  New pools:
 
-   ::
+File:  /etc/ceph/ceph.conf
 
-       # vim /etc/ceph/ceph.conf
-       ...
+.. code-block:: ini
+
        [global]
        osd pool default pg num = <OPTIMAL_PG_NUMBER>
        osd pool default pgp num = <OPTIMAL_PG_NUMBER>
 
 -  Existing pools:
 
-   ::
+.. code-block:: sh
 
-       # ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
-       # ceph osd pool set <POOL> pgp_num <OPTIMAL_PG_NUMBER>
+    # ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
+    # ceph osd pool set <POOL> pgp_num <OPTIMAL_PG_NUMBER>
 
 Cache pools can be configured used to cache files onto faster drives.
 When a file is continually being read, it will be copied to the faster
@@ -644,9 +649,10 @@ For testing, the "cephx" authentication protocols can temporarily be
 disabled. This will require a restart of all of the Ceph services.
 Re-enable ``cephx`` by setting these values from "none" to "cephx." [20]
 
-::
+File: /etc/ceph/ceph.conf
 
-    # vim /etc/ceph/ceph.conf
+.. code-block:: ini
+
     [global]
     auth cluster required = none
     auth service required = none
@@ -673,26 +679,26 @@ separated from the OSD storage nodes.
 
 -  Create a new Ceph cluster group, by default called "ceph."
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy new <SERVER1>
 
 -  Install the latest LTS release for production environments on the
    specified servers. SSH access is required.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy install --release jewel <SERVER1> <SERVER2> <SERVER3>
 
 -  Initialize the first monitor.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy mon create-inital <SERVER1>
 
 -  Install the monitor service on the other nodes.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy mon create <SERVER2> <SERVER3>
 
@@ -700,14 +706,14 @@ separated from the OSD storage nodes.
    recommended to have a fully dedicated drive, not a partition, for
    each Ceph OSD.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy disk list <SERVER1> <SERVER2> <SERVER3>
 
 -  Carefully select the drives to use. Then use the "disk zap" arguments
    to zero out the drive before use.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy disk zap <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 
@@ -715,13 +721,13 @@ separated from the OSD storage nodes.
    default file system is XFS, but Btrfs is much feature-rich with
    technologies such as copy-on-write (CoW) support.
 
-   ::
+   .. code-block:: sh
 
        # ceph-deploy osd create --fs-type btrfs <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 
 -  Verify it's working.
 
-   ::
+   .. code-block:: sh
 
        # ceph status
 
@@ -732,7 +738,7 @@ ceph-ansible
 
 The ceph-ansible project is used to help deploy and automate updates.
 
-::
+.. code-block:: sh
 
     # git clone https://github.com/ceph/ceph-ansible/
     # cd ceph-ansible/
@@ -750,7 +756,7 @@ Inventory hosts:
 
 Example inventory:
 
-::
+.. code-block:: ini
 
     ceph_monitor_01 ansible_host=192.168.20.11
     ceph_monitor_02 ansible_host=192.168.20.12
@@ -771,7 +777,7 @@ Example inventory:
 
 Copy the sample configurations and modify the variables.
 
-::
+.. code-block:: sh
 
     # cp site.yml.sample site.yml
     # cd group_vars/
@@ -854,7 +860,7 @@ Common variables:
 
 Finally, run the Playbook to deploy the Ceph cluster.
 
-::
+.. code-block:: sh
 
     # ansible-playbook -i production site.yml
 
@@ -881,7 +887,7 @@ A binary of the configuration must be saved and then decompiled before
 changes can be made. Then the file must be recompiled for the updates to
 be loaded.
 
-::
+.. code-block:: sh
 
     # ceph osd getcrushmap -o <NEW_COMPILED_FILE>
     # crushtool -d <NEW_COMPILED_FILE> -o <NEW_DECOMPILED_FILE>
@@ -1020,7 +1026,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # ceph health detail
           HEALTH_ERR 1 pgs inconsistent; 1 scrub errors
@@ -1031,13 +1037,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # ceph pg repar <PLACEMENT_GROUP>
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # ceph pg repair 1.28
 
@@ -1045,13 +1051,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # grep ERR /var/log/ceph/ceph-osd.<OSD_NUMBER>.log
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # grep ERR /var/log/ceph/ceph-osd.11.log
           2017-01-12 22:27:52.626252 7f5b511e8700 -1 log_channel(cluster) log [ERR] : 1.27 shard 12: soid 1:e4c200f7:::rbd_data.a1e002238e1f29.000000000000136d:head candidate had a read error
@@ -1060,13 +1066,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # find /var/lib/ceph/osd/ceph-<OSD_NUMBER>/current/<PLACEMENT_GROUP>_head/ -name '*<OBJECT_ID>*' -ls
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # find /var/lib/ceph/osd/ceph-11/current/1.28_head/ -name "*a1e002238e1f29.000000000000136d*"
           /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\udata.b3e012238e1f29.000000000000136d__head_EF004327__1
@@ -1075,13 +1081,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # systemctl stop ceph-osd@<OSD_NUMBER>.service
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # systemctl stop ceph-osd@11.service
 
@@ -1089,13 +1095,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # ceph-osd -i <OSD_NUMBER> --flush-journal
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # ceph-osd -i 11 --flush-journal
 
@@ -1103,7 +1109,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # mv /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\\udata.b3e012238e1f29.000000000000136d__head_EF004327__1 /root/ceph_osd_backups/
 
@@ -1111,13 +1117,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # systemctl restart ceph-osd@<OSD_NUMBER>.service
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # systemctl restart ceph-osd@11.service
 
@@ -1125,13 +1131,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
    -  Syntax:
 
-      ::
+      .. code-block:: sh
 
           # ceph pg repar <PLACEMENT_GROUP>
 
    -  Example:
 
-      ::
+      .. code-block:: sh
 
           # ceph pg repair 1.28
 
@@ -1146,7 +1152,7 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 -  Add the network disk to the available devices in the Virsh
    configuration.
 
-   ::
+   .. code-block:: xml
 
        <devices>
        <disk type='network' device='disk'>
@@ -1163,11 +1169,10 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 
 -  Create a Virsh template that has a secret of type "ceph" with a
    description for the end user. Optionally specify a UUID for this
-   secret to be associated with or else one will be generated.
+   secret to be associated with or else one will be generated. Example file: ceph-secret.xml
 
-   ::
+   .. code-block:: xml
 
-       # vim ceph-secret.xml
        <secret ephemeral='no' private='no'>
        <uuid>51757078-7d63-476f-8524-5d46119cfc8a</uuid>
        <usage type='ceph'>
@@ -1177,19 +1182,19 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 
 -  Define a blank secret from this template.
 
-   ::
+   .. code-block:: sh
 
        # virsh secret-define --file ceph-secret.xml
 
 -  Verify that the secret was created.
 
-   ::
+   .. code-block:: sh
 
        # virsh secret-list
 
 -  Set the secret to the Ceph client's key. [26]
 
-   ::
+   .. code-block:: sh
 
        # virsh secret-set-value --secret <GENERATED_UUID> --base64 $(ceph auth get-key client.<USER>)
 
@@ -1197,7 +1202,7 @@ Ceph's RADOS block devices (RBDs) as their main disk.
    the "usage" (description) or "uuid" or the secret element that has
    been created. [27]
 
-   ::
+   .. code-block:: xml
 
        <devices>
        <disk type='network' device='disk'>

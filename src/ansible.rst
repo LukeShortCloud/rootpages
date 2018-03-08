@@ -41,14 +41,14 @@ development but should be stable within the next few releases. [24]
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install epel-release
     # yum install ansible
 
 Debian:
 
-::
+.. code-block:: sh
 
     # apt-get install software-properties-common
     # apt-add-repository ppa:ansible/ansible
@@ -57,7 +57,7 @@ Debian:
 
 Source code:
 
-::
+.. code-block:: sh
 
     # git clone git://github.com/ansible/ansible.git
     # cd ansible/
@@ -68,7 +68,7 @@ Source code:
 
 Updating source code installations:
 
-::
+.. code-block:: sh
 
     # git pull --rebase
     # git submodule update --init --recursive
@@ -194,7 +194,7 @@ Python 3.
 
 Example:
 
-::
+.. code-block:: sh
 
     $ /usr/bin/python3 /usr/bin/ansible -e "ansible_python_interpreter=/usr/bin/python3" -m setup localhost
 
@@ -312,26 +312,33 @@ Examples:
    include all other Playbook files required if more than one is used.
    [6]
 
-   ::
+   .. code-block:: yaml
 
-        # FILE: site.yml
         ---
+        # File: site.yaml
         include: nginx.yml
         include: php-fpm.yml
 
-   \`\`\` # FILE: nginx.yml ---
--  hosts: webnodes roles:
+   .. code-block:: yaml
 
-   -  common
-   -  nginx \`\`\`
+        ---
+        # File: nginx.yml
+        -  hosts: webnodes
+           roles:
+             - common
+             - nginx
 
 -  roles/\ ``<ROLENAME>``/vars/main.yml = Global variables for a role.
 
-   ::
+   .. code-block:: yaml
 
         ---
-        memcache_hosts=192.168.1.11,192.168.1.12,192.168.1.13
-        ldap_ip=192.168.10.1
+        # File: vars/main.yaml
+        memcache_hosts:
+          - 192.168.1.11
+          - 192.168.1.12
+          - 192.168.1.13
+        ldap_ip: 192.168.10.1
 
 -  group\_vars/ and host\_vars/ = These files define variables for hosts
    and/or groups. Details about this can be found in the
@@ -341,7 +348,8 @@ Examples:
    here end with a ".j2" suffix to signify that it uses the Jinja2
    template engine. [1]
 
-   ::
+   
+   .. code-block:: html
 
        <html>
        <body>My domain name is {{ domain }}</body>
@@ -424,7 +432,7 @@ any groups. User defined groups are created by using brackets "[" and
 
 Syntax:
 
-::
+.. code-block:: ini
 
     <SERVER1NAME> ansible_host=<SERVER1_HOSTNAME>
 
@@ -433,7 +441,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: ini
 
     [dns-us]
     dns-us01
@@ -445,7 +453,7 @@ dynamically define a large number of hosts.
 
 Example:
 
-::
+.. code-block:: ini
 
     [dns-us]
     dns-us[01:03]
@@ -455,7 +463,7 @@ tag.
 
 Example:
 
-::
+.. code-block:: ini
 
     [dns-global:children]
     dns-us
@@ -472,11 +480,11 @@ Variables <#configuration---inventory---variables>`__.
 
 Example:
 
-::
+.. code-block:: ini
 
     examplehost ansible_user=toor ansible_host=192.168.0.1 custom_var_here=True
 
-::
+.. code-block:: ini
 
     [examplegroup:vars]
     domain_name=examplehost.tld
@@ -531,7 +539,7 @@ Common inventory options:
 
 Examples:
 
-::
+.. code-block:: ini
 
     localhost ansible_connection=local
     dns1 ansible_host=192.168.1.53 ansible_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo
@@ -564,11 +572,11 @@ Syntax:
     ├── host_vars
     │   ├── <HOST>
 
-::
+.. code-block:: sh
 
     $ ansible-playbook -i production <PLAYBOOK>.yml
 
-::
+.. code-block:: sh
 
     $ ansible-playbook -i staging <PLAYBOOK>.yml
 
@@ -617,11 +625,11 @@ Syntax:
     │   │   ├── <HOST>
     │   └── inventory
 
-::
+.. code-block:: sh
 
     $ ansible-playbook -i production <PLAYBOOK>.yml
 
-::
+.. code-block:: sh
 
     $ ansible-playbook -i staging <PLAYBOOK>.yml
 
@@ -679,7 +687,7 @@ is an example for a host variable file.
 
 Example:
 
-::
+.. code-block:: yaml
 
     ---
     domain_name: examplehost.tld
@@ -706,14 +714,14 @@ Syntax:
 
 ::
 
-    ${groupvars.<HOSTNAME>.<VARIABLE>}
-    ${hostvars.<HOSTNAME>.<VARIABLE>}
+    {{ groupvars.<HOSTNAME>.<VARIABLE>}}
+    {{ hostvars.<HOSTNAME>.<VARIABLE> }}
 
 Example:
 
 ::
 
-    command: echo ${hostvars.db3.hostname}
+    - command: echo {{ hostvars.db3.hostname }}
 
 The order that variables take precedence in is listed below. The bottom
 locations get overridden by anything above them.
@@ -749,37 +757,37 @@ Vault Usage:
 
 -  Create a new encrypted file.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault create <FILE>.yml
 
 -  Encrypt an existing plaintext file.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault encrypt <FILE>.yml
 
 -  Viewing the contents of the file.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault view <FILE>.yml
 
 -  Edit the encrypted file.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault edit <FILE>.yml
 
 -  Change the password.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault rekey <FILE>.yml
 
 -  Decrypt to plaintext.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-vault decrypt <FILE>.yml
 
@@ -787,13 +795,13 @@ Playbook Usage:
 
 -  Run a Playbook, prompting the user for the Vault password.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-playbook --ask-vault-pass <PLAYBOOK>.yml
 
 -  Run the Playbook, reading the file for the vault password.
 
-   ::
+   .. code-block:: sh
 
        $ ansible-playbook --vault-password-file <PATH_TO_VAULT_PASSWORD_FILE> <PLAYBOOK>.yml
 
@@ -827,7 +835,7 @@ displayed if any operator comparisons return False.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     - assert:
         that:
@@ -836,7 +844,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - cmd: /usr/bin/date
       register: date_command
@@ -860,13 +868,13 @@ custom poll time can be set. [20]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     async: <SECONDS_TO_RUN>
 
 Example:
 
-::
+.. code-block:: yaml
 
      - command: bash /usr/local/bin/example.sh
         async: 15
@@ -884,13 +892,13 @@ not.
 
 Syntax (minimal):
 
-::
+.. code-block:: yaml
 
     block:
 
 Syntax (full):
 
-::
+.. code-block:: yaml
 
     block:
       <ACTIONS>
@@ -901,7 +909,7 @@ Syntax (full):
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Installing Docker
       block:
@@ -929,11 +937,11 @@ exactly what would be changed.
 
 Syntax:
 
-::
+.. code-block:: sh
 
     $ ansible-playbook --check site.yml
 
-::
+.. code-block:: sh
 
     $ ansible-playbook --check --diff site.yml
 
@@ -943,12 +951,12 @@ even if check mode is on.
 
 Examples:
 
-::
+.. code-block:: yaml
 
-    command: echo "Hello world"
-    when: not ansible_check_mode
+    - command: echo "Hello world"
+      when: not ansible_check_mode
 
-::
+.. code-block:: yaml
 
      - name: Continue if this fails when check_mode is enabled
         stat: path=/etc/neutron/neutron.conf
@@ -960,13 +968,13 @@ check mode. [36]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     check_mode: no
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Install the EPEL repository
       yum:
@@ -982,7 +990,7 @@ prints out specified information to standard output.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     debug:
 
@@ -998,7 +1006,7 @@ Example:
 -  Print Ansible's hostname of the current server that the script is
    being run on.
 
-::
+.. code-block:: yaml
 
     debug:
       msg: The inventory host name is {{ inventory_hostname }}
@@ -1012,7 +1020,7 @@ operating system version, etc.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     gather_facts: <BOOLEAN>
 
@@ -1021,7 +1029,7 @@ If these variables are not required then gather\_facts and be set to
 
 Example:
 
-::
+.. code-block:: yaml
 
     gather_facts: False
 
@@ -1031,7 +1039,7 @@ before the roles in a Playbook are executed.
 
 Example:
 
-::
+.. code-block:: yaml
 
     ---
     - hosts: squidproxy1,squidproxy2,squidproxy3
@@ -1059,7 +1067,7 @@ documentation.
 
 Syntax (handlers/main.yml):
 
-::
+.. code-block:: yaml
 
     handlers:
       - name: <HANDLER_NAME>
@@ -1068,7 +1076,7 @@ Syntax (handlers/main.yml):
 
 Syntax (tasks/main.yml):
 
-::
+.. code-block:: yaml
 
     - <MODULE>: <ARGS>
       notify:
@@ -1076,7 +1084,7 @@ Syntax (tasks/main.yml):
 
 Example (handlers/main.yml):
 
-::
+.. code-block:: yaml
 
     handlers:
       - name: restart nginx
@@ -1091,7 +1099,7 @@ Example (handlers/main.yml):
 
 Example (tasks/main.yml):
 
-::
+.. code-block:: yaml
 
     - template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
       notify: restart stack
@@ -1121,13 +1129,13 @@ All options (free form):
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     meta:
 
 Example:
 
-::
+.. code-block:: yaml
 
     meta: flush_handlers
 
@@ -1149,13 +1157,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     pause:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - pause:
         minutes: 3
@@ -1172,7 +1180,7 @@ dynamically or statically using "include\_role" or "import\_role." [58]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     roles:
       - <ROLE1>
@@ -1180,7 +1188,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     roles:
       - common
@@ -1196,7 +1204,7 @@ will get synced to all nodes.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     run_once: True
 
@@ -1204,7 +1212,7 @@ This can also be assigned to a specific host.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     run_once: True
     delegate_to: <HOST>
@@ -1221,13 +1229,13 @@ amount of servers. [19]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     serial: <NUMBER_OR_PERCENTAGE>
 
 Example:
 
-::
+.. code-block:: yaml
 
     - hosts: web
       tasks:
@@ -1245,13 +1253,13 @@ will instantly move onto the next available task.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     strategy: free
 
 Example (site.yml):
 
-::
+.. code-block:: yaml
 
     - hosts: all
       strategy: free
@@ -1269,7 +1277,7 @@ separating tasks into specific groups. Here is the syntax:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     tags:
      - <TAG1>
@@ -1278,29 +1286,29 @@ Syntax:
 
 Run only tasks that include specific tags.
 
-::
+.. code-block:: sh
 
     $ ansible-playbook --tags "<TAG1>,<TAG2>,<TAG3>"
 
 Alternatively, skip specific tags.
 
-::
+.. code-block:: sh
 
     $ ansible-playbook --skip-tags "<TAG1>,<TAG2>,<TAG3>"
 
 Example:
 
-::
+.. code-block:: yaml
 
-    $ head webserver.yml
     ---
+    # File: webserver.yaml
      - package: name=nginx state=latest
        tags:
         - yum
         - rpm
         - nginx
 
-::
+.. code-block:: sh
 
     $ ansible-playbook --tags "yum" site.yml webnode1
 
@@ -1315,7 +1323,7 @@ dynamic elements now work correctly.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     - hosts: <HOSTS>
       tasks:
@@ -1323,7 +1331,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
      - hosts: jenkins
        tasks:
@@ -1342,13 +1350,13 @@ A condition can be searched for before continuing on to the next task.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     wait_for:
 
 Example:
 
-::
+.. code-block:: yaml
 
     wait_for:
       timeout: 60
@@ -1386,20 +1394,20 @@ in programming languages. It is usually the last line to a sub-task. [15]
 
 "When" Example:
 
-::
+.. code-block:: yaml
 
      - package: name=httpd state=latest
         when: ansible_os_family == "CentOS"
 
 "Or" example:
 
-::
+.. code-block:: yaml
 
     when: ansible_os_family == "CentOS" or when: ansible_os_family == "Debian"
 
 "And" example:
 
-::
+.. code-block:: yaml
 
     when: (ansible_os_family == "Fedora") and
           (ansible_distribution_major_version == "26")
@@ -1418,13 +1426,13 @@ Playbook from running on all hosts once an error has occurred. [16]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     any_errors_fatal: true
 
 Example:
 
-::
+.. code-block:: yaml
 
     - hosts: nfs_servers
       any_errors_fatal: true
@@ -1443,13 +1451,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     fail:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - fail:
         msg: "Unexpected return code."
@@ -1466,13 +1474,13 @@ condition. [16]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     failed_when: <CONDITION>
 
 Example:
 
-::
+.. code-block:: yaml
 
     - command: echo "Testing a failure. 123."
       register: cmd
@@ -1488,13 +1496,13 @@ step. [16]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     ignore_errors: yes
 
 Example:
 
-::
+.. code-block:: sh
 
     - name: Even though this will fail, the Playbook will keep running.
       package: name=does-not-exist state=present
@@ -1516,14 +1524,14 @@ The proper way to use other Playbooks in a Playbook is to use the
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     ---
     - import_playbook: <PLAYBOOK>
 
 Example:
 
-::
+.. code-block:: yaml
 
     ---
     - import_playbook: nginx.yml
@@ -1558,24 +1566,24 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     - import_role: <ROLE_NAME>
 
-::
+.. code-block:: yaml
 
     - include_role: <ROLE_NAME>
 
 Examples:
 
-::
+.. code-block:: yaml
 
     - name: Run only the install.yml task from the openshift role
       import_role:
         name: openshift
         tasks_from: install
 
-::
+.. code-block:: yaml
 
     - name: Run the Nagios role
       include_role:
@@ -1594,11 +1602,11 @@ gets to it.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     - import_tasks: <TASK_FILE>.yml
 
-::
+.. code-block:: yaml
 
     - include_tasks: <TASK_FILE>.yml
 
@@ -1616,17 +1624,17 @@ well. [58]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     include:
 
-::
+.. code-block:: yaml
 
     include: <TASK>.yml <VAR1>=<VAULE1> <VAR2>=<VALUE2>
 
 Example:
 
-::
+.. code-block:: yaml
 
     include: wine.yml wine_version=1.8.0 compression_format=xz download_util=wget
 
@@ -1645,13 +1653,13 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     include_vars: <VARIABLE>
 
 Examples:
 
-::
+.. code-block:: yaml
 
     - hosts: all
       include_vars:
@@ -1660,7 +1668,7 @@ Examples:
       roles:
        - addressing
 
-::
+.. code-block:: yaml
 
     - hosts: all
       include_vars: file=monitor_vars.yml
@@ -1719,7 +1727,7 @@ first file found in a given list will be returned to the task. [14]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     with_first_round:
       - <FILE1>
@@ -1728,7 +1736,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Copy over the first Nova configuration that is found
       copy: src={{ item }} dest=/etc/nova/ remote_src=true
@@ -1745,7 +1753,7 @@ useful for installing multiple packages at once. [14]
 
 Loop syntax:
 
-::
+.. code-block:: yaml
 
     with_flattened:
        - <LIST_OR_DICT>
@@ -1759,7 +1767,7 @@ Variable syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - set_fact: openstack_client_packages="[ 'python2-cinderclient', 'python2-glanceclient', python2-keystoneclient', 'python2-novaclient', 'python2-neutronclient' ]"
 
@@ -1776,7 +1784,7 @@ A task can be re-used with items in a list and/or dictionary. [14]
 
 Loop syntax:
 
-::
+.. code-block:: yaml
 
     with_items:
       - <ITEM1>
@@ -1801,7 +1809,7 @@ Dictionary variable syntax:
 
 List example:
 
-::
+.. code-block:: yaml
 
     - service: name={{ item }} state=started enabled=true
       with_items:
@@ -1811,7 +1819,7 @@ List example:
 
 Dictionary example:
 
-::
+.. code-block:: yaml
 
     - user: name={{ item.name }} group={{ item.group }} password={{ item.2 }} state=present
       with_items:
@@ -1846,7 +1854,7 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     vars_prompt:
       - name: "<VARIABLE>"
@@ -1854,13 +1862,13 @@ Syntax:
 
 Examples:
 
-::
+.. code-block:: yaml
 
     vars_prompt:
       - name: "zipcode"
         prompt: "Enter your zipcode."
 
-::
+.. code-block:: yaml
 
     vars_prompt:
        - name: "pw"
@@ -1897,20 +1905,20 @@ Variable return values [37]:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     register: <NEW_VARIABLE>
 
 Examples:
 
-::
+.. code-block:: yaml
 
      - command: echo Hello World
         register: hello
      - debug: msg="We heard you"
         when: "'Hello World' in hello.stdout"
 
-::
+.. code-block:: yaml
 
     - copy: src=example.conf dest=/etc/example.conf
       register: copy_example
@@ -1927,7 +1935,7 @@ to the available variables/facts tied to a inventory host. [54]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     set_fact:
       <VARIABLE_NAME1>: <VARIABLE_VALUE1>
@@ -1935,7 +1943,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - set_fact:
         is_installed: True
@@ -1956,11 +1964,11 @@ but it makes up for that by being faster and more efficient. [8]
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     command:
 
-::
+.. code-block:: yaml
 
     shell:
 
@@ -1971,7 +1979,7 @@ Common options:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - shell: echo "Hello world" >> /tmp/hello_world.txt
       args:
@@ -1992,19 +2000,19 @@ four modules.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     copy:
 
-::
+.. code-block:: yaml
 
     file:
 
-::
+.. code-block:: yaml
 
     synchronize:
 
-::
+.. code-block:: yaml
 
     template:
 
@@ -2065,7 +2073,7 @@ Example:
 -  Copy a template from roles/\ ``<ROLE>``/templates/ and set the
    permissions for the file.
 
-::
+.. code-block:: yaml
 
     template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody
 
@@ -2079,7 +2087,7 @@ scheduled/automated tasks that run on Unix-like systems.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     cron:
 
@@ -2115,13 +2123,13 @@ Common options:
 
 Example #1:
 
-::
+.. code-block:: yaml
 
     cron: job="/usr/bin/wall This actually works" minute="*/1" user=ubuntu
 
 Example #2:
 
-::
+.. code-block:: yaml
 
     cron: job="/usr/bin/yum -y update" weekday=0 hour=6 backup=yes
 
@@ -2149,7 +2157,7 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     expect:
       command: <COMMAND>
@@ -2158,7 +2166,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Find all of the available fruit
       expect:
@@ -2194,13 +2202,13 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     get_url:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Downloading a configuration file
       get_url:
@@ -2221,7 +2229,7 @@ has built-in support for handling most Git-related tasks.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     git:
 
@@ -2244,7 +2252,7 @@ The service module is used to handle system services.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     service:
 
@@ -2266,7 +2274,7 @@ Example:
 
 -  Restart the Apache service "httpd."
 
-   ::
+   .. code-block:: yaml
 
        service: name=httpd state=restarted sleep=3
 
@@ -2278,13 +2286,13 @@ MySQL databases and users can be managed via Ansible. It requires the
 
 MySQL database syntax:
 
-::
+.. code-block:: yaml
 
     mysql_db:
 
 MySQL user syntax:
 
-::
+.. code-block:: yaml
 
     mysql_user:
 
@@ -2314,19 +2322,19 @@ Options:
 
 Example #1:
 
-::
+.. code-block:: yaml
 
     mysql_db: name=toorsdb state=present config_file=/secrets/.my.cnf
 
 Example #2:
 
-::
+.. code-block:: yaml
 
     mysql_user: name=toor login_user=root login_password=supersecret priv=somedb.*:ALL state=present
 
 Example #3:
 
-::
+.. code-block:: yaml
 
     mysql_user: name=maxscale host="10.0.0.%" priv="*.*:REPLICATION CLIENT,SELECT" password=supersecure123 state=present
 
@@ -2340,14 +2348,14 @@ as a from new ``<VARIABLE>.stat`` dictionary.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     stat: path=<FILE>
     register: <STAT_VARIABLE>
 
 Example:
 
-::
+.. code-block:: yaml
 
     - stat: path=/root/.ssh/id_rsa
       register: id_rsa
@@ -2456,13 +2464,13 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     uri:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Authenticate with OpenStack's Keystone v3 service
       uri:
@@ -2511,7 +2519,7 @@ for the operating system's package manager.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     package:
 
@@ -2532,7 +2540,7 @@ Example:
 
 -  Update the MariaDB package.
 
-::
+.. code-block:: yaml
 
     package: name=mariadb state=latest
 
@@ -2577,7 +2585,7 @@ manager: "yum" and "yum\_repository."
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     yum:
 
@@ -2597,13 +2605,13 @@ Example:
 -  Install the "wget" package with the EPEL repository enabled and
    disable GPG validation checks.
 
-::
+.. code-block:: yaml
 
     yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes
 
 Yum repository syntax:
 
-::
+.. code-block:: yaml
 
     yum_repository:
 
@@ -2635,7 +2643,7 @@ Example:
 
 -  Install the RepoForge Yum repository.
 
-::
+.. code-block:: yaml
 
     yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description="Third-party RepoForge packages"
 
@@ -2671,11 +2679,11 @@ All similar ``command`` and ``shell`` options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_command:
 
-::
+.. code-block:: yaml
 
     win_shell
 
@@ -2683,7 +2691,9 @@ Example:
 
 ::
 
-    win_shell: "echo Hello World > c:\hello.txt" chdir="c:\" creates="c:\hello.txt"
+    win_shell: "echo Hello World > c:\hello.txt"
+      chdir: "c:\"
+      creates: "c:\hello.txt"
 
 [57]
 
@@ -2708,13 +2718,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_copy:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Copying a configuration file
       win_copy:
@@ -2741,13 +2751,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_file:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - win_file:
         path: C:\Users\admin\runtime_files
@@ -2772,13 +2782,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_robocopy:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_robocopy:
       src: C:\tmp\
@@ -2816,13 +2826,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_shortcut:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_shortcut:
       src: C:\Program Files (x86)\game\game.exe
@@ -2838,7 +2848,7 @@ The Windows Jinja2 template module uses the same options as the normal
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_template:
 
@@ -2872,13 +2882,13 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_chocolatey:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_chocolatey: name="libreoffice" state="upgrade" version="5.4.0"
 
@@ -2906,13 +2916,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_feature:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: Install the IIS HTTP web server
       win_feature:
@@ -2923,14 +2933,14 @@ Example:
 
 On Windows, all of the available features can be found via PowerShell.
 
-::
+.. code-block:: sh
 
     > Get-WindowsFeature
 
 If part of the name is known, a PowerShell wildcard can be used to
 narrow it down.
 
-::
+.. code-block:: sh
 
     > Get-WindowsFeature -Name <PART_OF_A_NAME>*
 
@@ -2979,13 +2989,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_package:
 
 Example:
 
-::
+.. code-block:: yaml
 
     - name: 'Microsoft .NET Framework 4.5.1'
       win_package:
@@ -3029,13 +3039,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_updates:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_updates: category_names=['CriticalUpdates'] state=searched log_path="c:\tmp\win_updates_log.txt"
 
@@ -3080,13 +3090,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_scheduled_task:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_scheduled_task:
       name: RestartIIS
@@ -3142,13 +3152,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_service:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_service:
       name: CustomService
@@ -3203,13 +3213,13 @@ All options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     win_user:
 
 Example:
 
-::
+.. code-block:: yaml
 
     win_user: name="default" password="abc123xyz890" user_cannot_change_password="yes" groups=['privileged', 'shares'] state="present"
 
@@ -3228,14 +3238,14 @@ At the bare minimum, the `AnsibleModule
 class <https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/basic.py>`__
 should be used to create a new module object.
 
-::
+.. code-block:: python
 
     from ansible.module_utils.basic import AnsibleModule
 
 That basic syntax and layout of creating a module object looks like
 this.
 
-::
+.. code-block:: python
 
     module = AnsibleModule(
         argument_spec=dict(
@@ -3323,7 +3333,7 @@ AnsibleModule object.
    return the return code, the standard output, and the standard error
    from the process. Example:
 
-::
+.. code-block:: python
 
     cmd = "echo Hello world"
     rc, out, err = module.run_command(cmd)
@@ -3350,15 +3360,15 @@ Ansible Galaxy provides a way to easily manage remote Ansible Galaxy
 roles from https://galaxy.ansible.com/ and other software configuration
 management (SCM) sources. [32]
 
-::
+.. code-block:: sh
 
     $ ansible-galaxy install <USER_NAME>.<ROLE_NAME>
 
-::
+.. code-block:: sh
 
     $ ansible-galaxy install <USER_NAME>.<ROLE_NAME>,<VERSION>
 
-::
+.. code-block:: sh
 
     $ ansible-galaxy install --roles-path <PATH> <USER_NAME>.<ROLE_NAME>
 
@@ -3367,7 +3377,7 @@ For a Role to work with Ansible Galaxy, it is required to have the
 systems, dependencies on other Roles, the license, and other useful
 information. [68]
 
-::
+.. code-block:: yaml
 
     galaxy_info:
       author:
@@ -3395,7 +3405,7 @@ can be defined in ``requirements.yml`` or inside the role at
 
 Install the dependencies by running:
 
-::
+.. code-block:: sh
 
     $ ansible-galaxy install -r requirements.yml
 
@@ -3420,7 +3430,7 @@ Install the dependencies by running:
 
 Dependency syntax:
 
-::
+.. code-block:: yaml
 
     dependencies:
       - src: <USER_NAME>.<ROLE_NAME>
@@ -3431,7 +3441,7 @@ Dependency syntax:
 
 Dependency example:
 
-::
+.. code-block:: yaml
 
     - src: https://github.com/hux/starkiller
       version: 3101u9e243r90adf0a98avn4bmz
@@ -3442,7 +3452,7 @@ Dependency example:
 
 Git with SSH example (useful for GitLab):
 
-::
+.. code-block:: yaml
 
     - src: git+ssh://git@<DOMAIN>/<USER>/<PROJECT>.git
       version: 1.2.0
@@ -3507,7 +3517,7 @@ Example:
 -  ``bond0.10`` and ``bond0.20`` are created as VLAN tagged devices off
    of the newly created bond.
 
-::
+.. code-block:: yaml
 
     - hosts: gluster01
       roles:
@@ -3606,7 +3616,7 @@ Syntax:
 
 Example:
 
-::
+.. code-block:: yaml
 
     members:
      - name: Frank
@@ -3614,7 +3624,7 @@ Example:
         - address: "111 Puppet Drive"
         - phone: "1111111111"
 
-::
+.. code-block:: yaml
 
      - debug: msg="Contact {{ item.name }} at {{ item.contact.phone }}"
        with_items:
@@ -3628,7 +3638,7 @@ substitution.
 
 Works:
 
-::
+.. code-block:: yaml
 
       - name: find interface facts
         debug:
@@ -3637,7 +3647,7 @@ Works:
 
 Does not work:
 
-::
+.. code-block:: yaml
 
       - name: find interface facts
         debug:
@@ -3813,7 +3823,7 @@ Syntax (file 2):
 
 Example (file 1):
 
-::
+.. code-block:: html
 
     <html>
     <h1>{% block header %}{% endblock %}</h1>
@@ -3931,7 +3941,7 @@ recommended to use a RESTful API from a dashboard for other languages or
 more advanced tasks. Below is an example from the official documentation
 of using the Python library for Ansible 2 [40]:
 
-::
+.. code-block:: python
 
     #!/usr/bin/env python
 
@@ -4017,7 +4027,7 @@ to separate Python packages provided by the operating system's package
 manager. Source the "activate" file to use the new Python environment.
 [29]
 
-::
+.. code-block:: sh
 
     $ virtualenv ansible-container
     $ source ansible-container/bin/activate
@@ -4038,7 +4048,7 @@ manager. Source the "activate" file to use the new Python environment.
 
 Example ``container.yml``:
 
-::
+.. code-block:: yaml
 
     version: "2"
     services:
@@ -4059,7 +4069,7 @@ Common ``container.yml`` options:
 -  version = The version of Docker Compose to use. Valid options are
    ``1`` or ``2`` since Ansible Container 0.3.0.
 
-   ::
+   .. code-block:: yaml
 
        version: '2'
 
@@ -4068,10 +4078,12 @@ Common ``container.yml`` options:
    -  conductor\_base = The container to run Ansible from. This should
       mirror the development environment used for Ansible-Container.
 
-      ::
+Example:
 
-            settings:
-          conductor_base: centos:7
+      .. code-block:: yaml
+
+          settings:
+            conductor_base: centos:7
 
    -  deployment\_output\_path = The directory mounted for placing the
       generated Ansible Playbook(s). Default: ``./ansible-deployment``.
@@ -4083,58 +4095,77 @@ Common ``container.yml`` options:
    unique name should be provided to each different container. These
    names are used as the hosts in the Playbook file.
 
-   ::
+Syntax:
 
-       services:
-       <GROUP_OR_HOST>:
+ .. code-block:: yaml
 
-   ::
+   services:
+     <GROUP_OR_HOST>:
 
-       service:
-       mysql:
+Example:
 
-   -  image = The Docker image to use for a service.
+.. code-block:: yaml
 
-      ::
+  services:
+    mysql:
 
-          from: "<IMAGE>:<VERSION>"
+-  from = The Docker image to use for a service.
 
-      ::
+Syntax:
 
-          from: "ubuntu:xenial"
+.. code-block:: yaml
 
-   -  roles = A list of Ansible roles to run on the container. \`\`\`
-      roles:
-   -
-   -   \`\`\`
-   -  ports = The hypervisor port to bind to and the container port to
-      forward traffic to/from. \`\`\` ports:
+  from: "<IMAGE>:<VERSION>"
 
--  "4444:443"
+Example:
 
-   ::
+.. code-block:: yaml
 
-       * expose = Similar to `ports` but the port forwarding is only done on the hypervisor's localhost address.
-       * links = Directly connect container networks for container-to-container traffic.
-       * command = Specify a shell command, providing all of the arguments separated via a list. This is the default command run to start the container. If this command stops then the container will be stopped.
+  from: "ubuntu:xenial"
 
-   command: ['', '', '', '']
+-  roles = A list of Ansible roles to run on the container.
+-  ports = The hypervisor port to bind to and the container port to
+      forward traffic to/from.
 
-   ::
+Syntax:
 
-       * entrypoint = Specify a shell command to run before starting the main `command`. This allows for checks to ensure dependencies are running.
-       * depends_on = The services/containers that this container requires before starting. This helps to start services in a specific sequence.
-       * volumes = Define all of the bind mounts from the hypervisor to the Docker container.
 
-   volumes: - : - : \`\`\`
+.. code-block:: yaml
 
-   -  volumes\_from = Mount some or all all the same mounts that another
-      container is using.
+  ports: <DOCKER_PORT>:<HYPERVISOR_PORT>
+
+Example:
+
+
+.. code-block:: yaml
+
+  ports: "4444:443"
+
+
+-  expose = Similar to `ports` but the port forwarding is only done on the hypervisor's localhost address.
+-  links = Directly connect container networks for container-to-container traffic.
+-  command = Specify a shell command, providing all of the arguments separated via a list. This is the default command run to start the container. If this command stops then the container will be stopped.
+
+Syntax:
+
+
+.. code-block:: yaml
+
+   command:
+     - <COMMAND>
+     - <ARGUMENT_1>
+     - <ARGUMENT_2>
+     - <ARGUMENT_3>
+
+-  entrypoint = Specify a shell command to run before starting the main `command`. This allows for checks to ensure dependencies are running.
+-  depends_on = The services/containers that this container requires before starting. This helps to start services in a specific sequence.
+-  volumes = Define all of the bind mounts from the hypervisor to the Docker container.
+-  volumes\_from = Mount some or all all the same mounts that another container is using.
 
 The Docker container(s) can be created after the ``container.yml`` file
 is completed to describe the container deployment.
 
-::
+.. code-block:: sh
 
     $ ansible-container build
 
@@ -4184,7 +4215,7 @@ page <https://www.ansible.com/license>`__.
 Once downloaded, it can be installed. This will at least setup a Nginx
 server and a virtual host for serving Ansible Tower via HTTP.
 
-::
+.. code-block:: sh
 
     $ curl -O http://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
     $ tar -x -z -v -f ansible-tower-setup-latest.tar.gz
@@ -4207,7 +4238,7 @@ setup the necessary database and tables.
 
 -  Installing PostgreSQL:
 
-::
+.. code-block:: ini
 
     [tower]
     <TOWER1>
@@ -4235,7 +4266,7 @@ setup the necessary database and tables.
 
 -  Using an existing PostgreSQL server:
 
-::
+.. code-block:: ini
 
     [tower]
     <TOWER1>
@@ -4264,14 +4295,14 @@ The "ansible" package needs to be available in a package repository. On
 RHEL systems, the Extra Packages for Enterprise Linux (EPEL) repository
 should be installed.
 
-::
+.. code-block:: sh
 
     # yum -y install epel-release
 
 Then install Ansible Tower using the setup shell script. This will run
 an Ansible Playbook to install Tower.
 
-::
+.. code-block:: sh
 
     $ ./setup.sh
 
@@ -4365,7 +4396,7 @@ time, the token will expire and the end-user will need to re-login into
 their account. This setting can be modified in the ``settings.py`` file.
 [62]
 
-::
+.. code-block:: sh
 
     # vim /etc/tower/conf.d/settings.py
     AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
@@ -4453,7 +4484,7 @@ by going to:
 
 Version 1 of the API provides these endpoints:
 
-::
+.. code-block:: json
 
     {
         "authtoken": "/api/v1/authtoken/",
@@ -4498,7 +4529,7 @@ Version 1 of the API provides these endpoints:
 
 Version 2 of the API provides these endpoints:
 
-::
+.. code-block:: json
 
     {
         "authtoken": "/api/v2/authtoken/",
@@ -4622,7 +4653,7 @@ By default, AWX will install Docker containers from Docker Hub. It is
 also possible to have the installer build Docker containers from scratch
 an deploy them into a OpenShift cluster.
 
-::
+.. code-block:: sh
 
     $ git clone https://github.com/ansible/awx.git
     $ cd ./awx/installer/
@@ -4636,13 +4667,13 @@ and stopped manually.
 
 Manually start:
 
-::
+.. code-block:: sh
 
     # for docker_container in postgres rabbitmq memcached awx_web awx_task; do docker start ${docker_container}; done
 
 Manually stop:
 
-::
+.. code-block:: sh
 
     # for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; done
 
@@ -4652,7 +4683,7 @@ For updating a local installation of AWX that is using images from
 Docker Hub, update all of the containers and then re-run the
 installation Playbook.
 
-::
+.. code-block:: sh
 
     # docker pull docker.io/ansible/awx_task:latest
     # docker pull docker.io/ansible/awx_web:latest
@@ -4671,7 +4702,7 @@ currently only *alpha* quality. It supports using Ansible inventory as
 well as running modules and Playbooks. This can be tested out using a
 pre-built Docker image:
 
-::
+.. code-block:: sh
 
     # docker pull batix/rundeck-ansible
     # docker run -d --name rundeck-test -p 127.0.0.1:4440:4440 -e RDECK_ADMIN_PASS=password -v `pwd`:/data batix/rundeck-ansible
@@ -4698,7 +4729,7 @@ Requirements:
 
 Installation:
 
-::
+.. code-block:: sh
 
     # curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 > /usr/bin/semaphore
     # /usr/bin/semaphore -setup
@@ -4724,15 +4755,15 @@ Requirements:
 The ``Makefile`` supports building packages for Debian and RHEL based
 distributions as well creating Docker containers.
 
-::
+.. code-block:: sh
 
     $ make deb
 
-::
+.. code-block:: sh
 
     $ make rpm
 
-::
+.. code-block:: sh
 
     $ make docker
 

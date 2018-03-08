@@ -107,7 +107,7 @@ here:
 
 View all of the loaded modules:
 
-::
+.. code-block:: sh
 
     # lsmod
 
@@ -121,45 +121,41 @@ respective driver directory. A few common drivers types are "iscsi",
 
 After copying over the necessary \*.ko file(s) for custom modules, load
 
-::
+.. code-block:: sh
 
     # depmod <MODULE>
 
 If there are a large number of new modules, it is possible to make sure
 all module dependencies are installed.
 
-::
+.. code-block:: sh
 
     # depmod --all
 
 Modules can be temporarily loaded:
 
-::
+.. code-block:: sh
 
     # modprobe <MODULE>
 
 Or permanently add the module to a file with the extension ".conf" in
 the modules load directory.
 
-::
-
-    /etc/modules-load.d/*.conf
+Files: /etc/modules-load.d/\*.conf
 
 Modules can be deactivated by running one of these two commands:
 
-::
+.. code-block:: sh
 
     # rmmod <MODULE>
 
-::
+.. code-block:: sh
 
     # modprobe -r <MODULE>
 
 Modules can also be blocked from starting on boot:
 
-::
-
-    /etc/modprobe.d/blacklist.conf
+File: /etc/modprobe.d/blacklist.conf
 
 ::
 
@@ -196,7 +192,7 @@ processes manually. These are set by using the ``chrt`` command.
 The relevant ``sysctl`` parameters can be adjusted for system-wide
 scheduling settings are:
 
-::
+.. code-block:: sh
 
     # sysctl -a | grep "sched_"
     kernel.sched_autogroup_enabled = 0
@@ -240,14 +236,14 @@ the hardware and/or software requirements.
 
 Temporarily change the scheduler to one of the three options:
 
-::
+.. code-block:: sh
 
     # echo {deadline|cfg|noop} > /sys/block/<DEVICE>/queue/scheduler
 
 Permanently change the scheduler by appending the existing
 GRUB\_CMDLINE\_LINUX kernel arguments:
 
-::
+.. code-block:: sh
 
     # vim /etc/default/grub
     GRUB_CMDLINE_LINUX="elevator={deadline|cfg|noop}"
@@ -272,9 +268,7 @@ Arch Linux
 All modifications of the initramfs in Arch Linux are handled by the
 "mkinitcpio" utility.
 
-::
-
-    /etc/mkinitcpio.conf
+File: /etc/mkinitcpio.conf
 
 -  MODULES = A list of kernel modules to compile in.
 -  FILES = A list of files that should be included in the initramfs.
@@ -296,7 +290,7 @@ All modifications of the initramfs in Arch Linux are handled by the
 
 Create a new initramfs.
 
-::
+.. code-block:: sh
 
     # mkinitcpio
 
@@ -308,9 +302,7 @@ RHEL
 On Red Hat Enterprise Linux (RHEL) based operating systems (such as RHEL
 itself, CentOS, and Fedora), Dracut is used to manage the initramfs.
 
-::
-
-    /etc/dracut.conf
+File: /etc/dracut.conf
 
 -  add\_drivers+= A list of kernel modules to compile in.
 -  install\_items+= A list of files to compile in.

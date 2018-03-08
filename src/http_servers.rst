@@ -16,17 +16,9 @@ Configuration
 There is generally one primary Apache configuration file that then
 includes other possible configuration files.
 
-RHEL/Fedora
+Fedora file: /etc/http/conf/httpd.conf
 
-::
-
-    /etc/http/conf/httpd.conf
-
-Debian/Ubuntu
-
-::
-
-    /etc/apache2/apache2.conf
+Debian file: /etc/apache2/apache2.conf
 
 Options:
 
@@ -73,11 +65,11 @@ Options:
 
 Verify that the configuration is correct with one of these commands:
 
-::
+.. code-block:: sh
 
     # apachectl configtest
 
-::
+.. code-block:: sh
 
     # httpd -t
 
@@ -109,13 +101,13 @@ Example:
 ::
 
     <VirtualHost 127.0.0.1:80>
-      ServerName  rootpages.tld
-      ServerAlias www.rootpages.tld
-      DirectoryIndex index.html
-      DocumentRoot /var/www/html/rootpages/
-      LogLevel warn
-      ErrorLog /var/log/httpd/rootpages_tld.error_log
-      CustomLog /var/log/httpd/rootpages_tld.custom_log
+        ServerName  rootpages.tld
+        ServerAlias www.rootpages.tld
+        DirectoryIndex index.html
+        DocumentRoot /var/www/html/rootpages/
+        LogLevel warn
+        ErrorLog /var/log/httpd/rootpages_tld.error_log
+        CustomLog /var/log/httpd/rootpages_tld.custom_log
     </VirtualHost>
 
 [3]
@@ -201,28 +193,28 @@ assigned to groups.
 
 Create an Apache user.
 
-::
+.. code-block:: sh
 
     # htpasswd -c /etc/httpd/conf.d/passwd <USER1>
 
 Another user can be appended to this file by omitting the "-c" create
 option.
 
-::
+.. code-block:: sh
 
     # htpasswd /etc/httpd/conf.d/passwd <USER2>
 
 A new file can be created to assign multiple users to a group.
 
+File: /etc/httpd/conf.d/group
+
 ::
 
-    # vim /etc/httpd/conf.d/group
     <GROUP>: <USER1> <USER2>
 
 Authentication can now be applied to any location. [6] The syntax is:
 
 ::
-
     AuthType Basic
     AuthName "Login Prompt Text"
     AuthUserFile "/path/to/passwd/file"
@@ -285,7 +277,7 @@ example shebang is "#!/bin/bash." The program will also need to first
 print out "Content-type: text/html" so the web browser knows that it is
 a HTML page. An example is shown below.
 
-::
+.. code-block:: sh
 
     #!/bin/bash
     echo "Content-type: text/html"
@@ -294,7 +286,7 @@ a HTML page. An example is shown below.
 All scripts should have readable and executable Unix permissions by the
 anonymous user ("other") access category.
 
-::
+.. code-block:: sh
 
     # chmod -R o+rx /path/to/custom/cgi-bin/
 
@@ -312,27 +304,27 @@ will need to be modified.
 
 Install the troubleshooting utilities:
 
-::
+.. code-block:: sh
 
     # yum install setroubleshoot
 
 View the current Apache ports allowed by SELinux:
 
-::
+.. code-block:: sh
 
     # semanage port -l | grep ^http_port_t
     http_port_t                    tcp      80, 81, 443, 488, 8008, 8009, 8443, 9000
 
 Add a new allowed TCP port:
 
-::
+.. code-block:: sh
 
     # semanage port -a -t http_port_t -p tcp <PORT_NUMBER>
 
 Lookup the Apache SELinux file context permissions. It should be
 "httpd\_sys\_content\_t."
 
-::
+.. code-block:: sh
 
     # ls -lahZ /var/www/html/
     drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 .
@@ -341,7 +333,7 @@ Lookup the Apache SELinux file context permissions. It should be
 Permanently fix SELinux permissions on a custom directory using the
 semanage tool and then apply the permissions by running restorecon:
 
-::
+.. code-block:: sh
 
     # semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
     # restorecon -Rv /path/to/custom/dir
@@ -467,14 +459,14 @@ domain's certificate key (RSA PRIVATE KEY).
 
 Minimal Syntax:
 
-::
+.. code-block:: sh
 
     -----BEGIN MY CERTIFICATE-----
     -----END MY CERTIFICATE-----
 
 Full Self-signed Syntax:
 
-::
+.. code-block:: sh
 
     -----BEGIN MY CERTIFICATE-----
     -----END MY CERTIFICATE-----
@@ -483,7 +475,7 @@ Full Self-signed Syntax:
 
 Full Verified Syntax:
 
-::
+.. code-block:: sh
 
     -----BEGIN MY CERTIFICATE-----
     -----END MY CERTIFICATE-----

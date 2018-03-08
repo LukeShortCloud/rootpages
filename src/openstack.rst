@@ -160,7 +160,7 @@ RHOSP 10 supports these 4 hypervisors [9]:
 The version of RHOSP in use can be found on the Undercloud by viewing
 the "/etc/rhosp-release" file.
 
-::
+.. code-block:: sh
 
     $ cat /etc/rhosp-release
     Red Hat OpenStack Platform release 10.0 (Newton)
@@ -175,7 +175,7 @@ The corresponding major RHOSP version is 10 for Newton. This is the 2nd
 bugfix release for the package "openstack-nova-common." The minor
 release is 8. The full RHOSP version is referenced as "10z8." [8]
 
-::
+.. code-block:: sh
 
     $ rpm -qi openstack-nova-common
     Name        : openstack-nova-common
@@ -248,20 +248,20 @@ First, install the required repositories for OpenStack.
 
 RHEL:
 
-::
+.. code-block:: sh
 
     # yum install https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm
     # subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 
 CentOS:
 
-::
+.. code-block:: sh
 
     # yum install centos-release-openstack-ocata
 
 Finally, install the Packstack utility.
 
-::
+.. code-block:: sh
 
     # yum -y install openstack-packstack
 
@@ -278,7 +278,7 @@ Generate a configuration file referred to as the "answer" file. This can
 optionally be customized. Then install OpenStack using the answer file.
 By default, the network will be entirely isolated. [11]
 
-::
+.. code-block:: sh
 
     # packstack --gen-answer-file <FILE>
     # packstack --answer-file <FILE>
@@ -286,7 +286,7 @@ By default, the network will be entirely isolated. [11]
 Packstack logs are stored in /var/tmp/packstack/. The administrator and
 demo user credentials will be saved to the user's home directory.
 
-::
+.. code-block:: sh
 
     # source ~/keystonerc_admin
     # source ~/keystonerc_demo
@@ -298,9 +298,10 @@ this. Be sure to replace the "IPADDR", "PREFIX", and "GATEWAY" with the
 server's correct settings. Neutron will also need to be configured to
 allow "flat" networks.
 
+File: /etc/sysconfig/network-scripts/ifcfg-eth0
+
 ::
 
-    # vim /etc/sysconfig/network-scripts/ifcfg-eth0
     DEVICE=eth0
     ONBOOT=yes
     DEVICETYPE=ovs
@@ -309,9 +310,10 @@ allow "flat" networks.
     BOOTPROTO=none
     NM_CONTROLLED=no
 
+File: /etc/sysconfig/network-scripts/ifcfg-br-ex
+
 ::
 
-    # vim /etc/sysconfig/network-scripts/ifcfg-br-ex
     DEVICE=br-ex
     ONBOOT=yes
     DEVICETYPE=ovs
@@ -330,20 +332,20 @@ It is also possible to deploy OpenStack where Neutron can have access to
 the public network. Run the Packstack installation with the command
 below and replace "eth0" with the public interface name.
 
-::
+.. code-block:: sh
 
     # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
 
 Alternatively, use these configuration options in the answer file.
 
-::
+.. code-block:: ini
 
     CONFIG_NEUTRON_ML2_TYPE_DRIVERS=vxlan,flat
     CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=extnet:br-ex
     CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:eth0
     CONFIG_PROVISION_DEMO=n
 
-::
+.. code-block:: sh
 
     # packstack --answer-file <ANSWER_FILE>
 
@@ -352,7 +354,7 @@ Neutron as the admin user. In this example, the network will
 automatically allocate IP addresses between 192.168.1.201 and
 192.168.1.254. The IP 192.168.1.1 is the router / default gateway.
 
-::
+.. code-block:: sh
 
     # . keystonerc_admin
     # neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
@@ -484,7 +486,7 @@ configurations are changed.
 
 Setup the OpenStack-Ansible project.
 
-::
+.. code-block:: sh
 
     # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
     # cd /opt/openstack-ansible/
@@ -529,7 +531,7 @@ from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 Then OpenStack-Ansible project can now setup and deploy the LXC
 containers to run OpenStack.
 
-::
+.. code-block:: sh
 
     # scripts/bootstrap-ansible.sh
     # scripts/bootstrap-aio.sh
@@ -550,27 +552,27 @@ Operations
 A new node can be added at any time to an existing all-in-one
 deployment. Copy the configuration file for an all-in-one instance.
 
-::
+.. code-block:: sh
 
     # cd /opt/openstack-ansible/
     # cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
 
 Add the new container to the list of inventory servers.
 
-::
+.. code-block:: sh
 
     # /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
 
 Update the repository server to include the new packages required.
 
-::
+.. code-block:: sh
 
     # cd playbooks/
     # openstack-ansible repo-install.yml
 
 Deploy the new container and then run the Playbook.
 
-::
+.. code-block:: sh
 
     # openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
     # openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
@@ -642,7 +644,7 @@ It is also required to have 4 different network bridges.
 Download and install the latest stable OpenStack-Ansible suite from
 GitHub.
 
-::
+.. code-block:: sh
 
     # apt-get install git
     # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
@@ -652,7 +654,7 @@ GitHub.
 
 Then copy over and modify the main configuration file.
 
-::
+.. code-block:: sh
 
     # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
 
@@ -796,9 +798,10 @@ configuration or to use an existing Ceph cluster.
 These settings can be adjusted to use different Ceph users, pools,
 and/or monitor nodes.
 
-::
+File: /etc/openstack_deploy/user_variables.yml
 
-    # File: /etc/openstack_deploy/user_variables.yml
+.. code-block:: yaml
+
     glance_default_store: rbd
     glance_ceph_client: <GLANCE_CEPH_USER>
     glance_rbd_store_pool: <GLANCE_CEPH_POOL>
@@ -817,7 +820,7 @@ file by connecting to the Ceph monitor hosts and obtaining the
 information from there. Extra configuration options can be specified or
 overriden using the "ceph\_extra"confs" dictionary.
 
-::
+.. code-block:: yaml
 
     ceph_extra_confs:
     -  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
@@ -831,7 +834,7 @@ overriden using the "ceph\_extra"confs" dictionary.
 Alternatively, the entire configuration file can be defined as a
 variable using proper YAML syntax. [23]
 
-::
+.. code-block:: yaml
 
     ceph_conf_file: |
       [global]
@@ -844,9 +847,10 @@ variable using proper YAML syntax. [23]
 A new custom deployment of Ceph can be configured. It is recommended to
 use at least 3 hosts for high availability and quorum. [22]
 
-::
+File: /etc/openstack_deploy/openstack_user_config.yml
 
-    # File: /etc/openstack_deploy/openstack_user_config.yml
+.. code-block:: yaml
+
     storage_hosts:
       infra<#>:
         ip: <CINDER_HOST1_IP>
@@ -876,7 +880,7 @@ OpenStack Utilities
 Once OpenStack-Ansible is installed, it can be used immediately. The
 primary container to use is the ``utility`` container.
 
-::
+.. code-block:: sh
 
     # lxc-ls -1 | grep utility
     # lxc-attach -n <UTILITY_CONTAINER_NAME>
@@ -884,13 +888,13 @@ primary container to use is the ``utility`` container.
 The file ``/root/openrc`` should exist on the container with the
 administrator credentials. Source this file to use them.
 
-::
+.. code-block:: sh
 
     # source /root/openrc
 
 Verify that all of the correct services and endpoints exist.
 
-::
+.. code-block:: sh
 
     # openstack service list
     # openstack endpoint list
@@ -907,31 +911,31 @@ for management and troubleshooting.
 
 -  Change into the OpenStack-Ansible directory.
 
-   ::
+   .. code-block:: sh
 
        # cd /opt/openstack-ansible/
 
 -  Show all of the groups and the hosts that are a part of it.
 
-   ::
+   .. code-block:: sh
 
        # ./scripts/inventory-manage.py -G
 
 -  Show all of the hosts and the groups they are a part of.
 
-   ::
+   .. code-block:: sh
 
        # ./scripts/inventory-manage.py -g
 
 -  List hosts that a Playbook will run against.
 
-   ::
+   .. code-block:: sh
 
        # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
 
 -  List all the Ansible tasks that will be executed on a group or host.
 
-   ::
+   .. code-block:: sh
 
        # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
@@ -947,7 +951,7 @@ OpenStack-Ansible Playbooks can run against. The ``--limit`` options are
 important because they will ensure that it will only run on the new
 infrastructure node.
 
-::
+.. code-block:: sh
 
     # cd /opt/openstack-ansible/playbooks
     # /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py > /dev/null
@@ -964,7 +968,7 @@ Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
 OpenStack-Ansible deployment Playbooks can be run again.
 
-::
+.. code-block:: sh
 
     # cd /opt/openstack-ansible/playbooks
     # openstack-ansible setup-hosts.yml --limit <NEW_COMPUTE_HOST_NAME>
@@ -982,7 +986,7 @@ to fully it. Be sure to also remove the host from the
 ``/etc/openstack_deploy/openstack_user_config.yml`` configuration when
 done.
 
-::
+.. code-block:: sh
 
     # lxc-ls -1 | grep compute
     # lxc-attach -n <COMPUTE_CONTAINER_TO_REMOVE>
@@ -1008,7 +1012,7 @@ same major release. An example would be going from 15.0.0 to 15.1.1.
    branch for a OpenStack release name is being used already, pull the
    latest branch commits down from GitHub.
 
-   ::
+   .. code-block:: sh
 
        # cd /opt/openstack-ansible/
        # git fetch --all
@@ -1018,7 +1022,7 @@ same major release. An example would be going from 15.0.0 to 15.1.1.
 
    -  **All services.**
 
-      ::
+      .. code-block:: sh
 
           # ./scripts/bootstrap-ansible.sh
           # cd ./playbooks/
@@ -1030,25 +1034,25 @@ same major release. An example would be going from 15.0.0 to 15.1.1.
 
       -  Update the cached package repository.
 
-         ::
+         .. code-block:: sh
 
              # cd ./playbooks/
              # openstack-ansible repo-install.yml
 
       -  A single service can be upgraded now.
 
-         ::
+         .. code-block:: sh
 
              # openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
 
       -  Some services, such as MariaDB and RabbitMQ, require special
          variables to be set to force an upgrade.
 
-         ::
+         .. code-block:: sh
 
              # openstack-ansible galera-install.yml -e 'galera_upgrade=true'
 
-         ::
+         .. code-block:: sh
 
              # openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
 
@@ -1065,24 +1069,21 @@ Below outlines how to do this automatically. [30]
 
 -  Move into the OpenStack-Ansible project.
 
-   ::
+   .. code-block:: sh
 
        # cd /opt/openstack-ansible
 
 -  View the available OpenStack releases and choose which one to use.
 
-   ::
+   .. code-block:: sh
 
        # git branch -a
        # git tag
-
-   ::
-
        # git checkout <BRANCH_OR_TAG>
 
 -  Run the upgrade script.
 
-   ::
+   .. code-block:: sh
 
        # ./scripts/run-upgrade.sh
 
@@ -1113,20 +1114,20 @@ machine that uses nested virtualization is not supported. [36]
 -  Download the tripleo-quickstart script or clone the entire repository
    from GitHub.
 
-   ::
+   .. code-block:: sh
 
        $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
 
    OR
 
-   ::
+   .. code-block:: sh
 
        $ git clone https://github.com/openstack/tripleo-quickstart.git
        $ cd tripleo-quickstart
 
 -  Install dependencies for the quickstart script.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --install-deps
 
@@ -1156,7 +1157,7 @@ variables to a YAML file and then add the arguments
    localhost IP address if TripleO will be installed on the same system
    that the quickstart commmand is running on.
 
-::
+.. code-block:: sh
 
     $ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
 
@@ -1195,31 +1196,31 @@ variables to a YAML file and then add the arguments
 
 -  Setup the Undercloud virtual machine.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Undercloud services.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Setup the Overcloud virtual machines.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Overcloud services.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Validate the installation.
 
-   ::
+   .. code-block:: sh
 
        $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 
@@ -1242,20 +1243,20 @@ creating an Undercloud virtual machine.
 
    -  Install the RDO Trunk / Delorean repositories.
 
-      ::
+      .. code-block:: sh
 
           $ sudo curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
           $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
 
    -  Install the Undercloud environment deployment tools.
 
-      ::
+      .. code-block:: sh
 
           $ sudo yum install instack-undercloud
 
    -  Deploy a new virtual machine to be used for the Undercloud.
 
-      ::
+      .. code-block:: sh
 
           $ instack–virt–setup
 
@@ -1265,7 +1266,7 @@ creating an Undercloud virtual machine.
       of virtual machines that should be created for use in the
       Overcloud.
 
-      ::
+      .. code-block:: sh
 
           $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
           $ bash quickstart.sh --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
@@ -1273,7 +1274,7 @@ creating an Undercloud virtual machine.
    -  Log into the virtual machine once TripleO-Quickstart has completed
       setting up the environment.
 
-      ::
+      .. code-block:: sh
 
           $ ssh -F ~/.quickstart/ssh.config.ansible undercloud
 
@@ -1282,7 +1283,7 @@ creating an Undercloud virtual machine.
    -  It is recommended to create a user named "stack" with sudo
       privileges to manage the Undercloud.
 
-      ::
+      .. code-block:: sh
 
           # useradd stack
           # passwd stack
@@ -1293,13 +1294,13 @@ creating an Undercloud virtual machine.
    -  Install the RDO Trunk repositories.
    -  Install TripleO.
 
-      ::
+      .. code-block:: sh
 
           # yum install python-tripleoclient
 
    -  Copy the sample configuration to use as a base template.
 
-      ::
+      .. code-block:: sh
 
           $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 
@@ -1331,7 +1332,7 @@ creating an Undercloud virtual machine.
       need to be defined in the "DEFAULT" section.
    -  Deploy an all-in-one Undercloud on the virtual machine.
 
-      ::
+      .. code-block:: sh
 
           $ openstack undercloud install
 
@@ -1341,7 +1342,7 @@ creating an Undercloud virtual machine.
       to ``$HOME/stackrc``. Source this file before running OpenStack
       commands to verify that the Undercloud is operational.
 
-      ::
+      .. code-block:: sh
 
           $ source ~/stackrc
           $ openstack catalog list
@@ -1365,7 +1366,7 @@ Overcloud
 
 -  Upload those images.
 
-   ::
+   .. code-block:: sh
 
        $ openstack overcloud image upload
 
@@ -1387,7 +1388,7 @@ Overcloud
 -  Import the configuration that defines the Overcloud infrastructure
    and have it introspected so it can be deployed:
 
-   ::
+   .. code-block:: sh
 
        $ openstack overcloud node import --introspect --provide instackenv.json
 
@@ -1395,27 +1396,27 @@ Overcloud
       scanning IPMI devices via a CIDR range and using different IPMI
       logins.
 
-      ::
+      .. code-block:: sh
 
           $ openstack overcloud node discover --range <CIDR> \
           --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
 -  Deploy the Overcloud with any custom Heat configurations. [39] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [40]
 
-   ::
+   .. code-block:: sh
 
        $ openstack help overcloud deploy
 
 -  Verify that the Overcloud was deployed.
 
-   ::
+   .. code-block:: sh
 
        $ openstack stack list
        $ openstack stack show <OVERCLOUD_STACK_ID>
 
 -  Source the Overcloud credentials to manage it.
 
-   ::
+   .. code-block:: sh
 
        $ source ~/overcloudrc
 
@@ -1429,34 +1430,34 @@ Add a Compute Node
 
 -  From the Undercloud, create a `instackenv.json` file describing the new node. Import the file using Ironic.
 
-::
+.. code-block:: sh
 
     $ source ~/stackrc
     $ openstack baremetal import --json instackenv.json
 
 -  Automatically configure it to use the existing kernel and ramdisk for PXE booting.
 
-::
+.. code-block:: sh
 
     $ openstack baremetal configure boot
 
 
 -  Set the new node to the "managable" state. Then introspect the new node so Ironic can automatically determine it's resources and hardware information.
 
-::
+.. code-block:: sh
 
     $ openstack baremetal node manage <NODE_UUID>
     $ openstack overcloud node introspect <NODE_UUID> --provided
 
 -  Configure the node to be a compute node.
 
-::
+.. code-block:: sh
 
     $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' <NODE_UUID>
 
 -  Redeploy the Overcloud while specifying the number of compute nodes that should exist in total after it is complete. The `ComputeCount` parameter in the Heat templates should also be increased to reflect it's new value.
 
-::
+.. code-block:: sh
 
     $ openstack overcloud deploy --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
 
@@ -1486,26 +1487,26 @@ controller nodes.
    to be confused with "MySQL-python"). [41] RHEL still requires the use
    of the legacy "``mysql://``" connector. [44]
 
-   ::
+   .. code-block:: ini
 
        [ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 
 -  PostgreSQL. Requires the "psycopg2" Python library. [42]
 
-   ::
+   .. code-block:: ini
 
        [ database ] connection = postgresql://<USER>:<PASSWORD>@<POSTGRESQL_HOST>:<POSTGRESQL_PORT>/<DATABASE>
 
 -  SQLite.
 
-   ::
+   .. code-block:: ini
 
        [ database ] connection = sqlite:///<DATABASE>.sqlite
 
 -  MongoDB is generally only used for Ceilometer when it is not using
    the Gnocchi back-end. [43]
 
-   ::
+   .. code-block:: ini
 
        [ database ] mongodb://<USER>:<PASSWORD>@<MONGODB_HOST>:<MONGODB_PORT>/<DATABASE>
 
@@ -1521,7 +1522,7 @@ The configuration has been consolidated into the ``transport_url``
 option. Multiple messaging hosts can be defined by using a comma before
 naming a virtual host.
 
-::
+.. code-block:: ini
 
     transport_url = <TRANSPORT>://<USER1>:<PASS1>@<HOST1>:<PORT1>,<USER2>:<PASS2>@<HOST2>:<PORT2>/<VIRTUAL_HOST>
 
@@ -1530,7 +1531,7 @@ Scenario #1 - RabbitMQ
 On the controller nodes, RabbitMQ needs to be installed. Then a user
 must be created with full privileges.
 
-::
+.. code-block:: sh
 
     # rabbitmqctl add_user <RABBIT_USER> <RABBIT_PASSWORD>
     # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
@@ -1539,7 +1540,7 @@ In the configuration file for every service, set the transport\_url
 options for RabbitMQ. A virtual host is not required. By default it will
 use ``/``.
 
-::
+.. code-block:: ini
 
     [ DEFAULT ] transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 
@@ -1553,11 +1554,11 @@ a messaging queue, OpenStack services talk directly to each other using
 the ZeroMQ library. Redis is required to be running and installed for
 acting as a message storage back-end for all of the servers. [45][46]
 
-::
+.. code-block:: ini
 
     [ DEFAULT ] transport_url = "zmq+redis://<REDIS_HOST>:6379"
 
-::
+.. code-block:: ini
 
     [ oslo_messaging_zmq ] rpc_zmq_bind_address = <IP>
     [ oslo_messaging_zmq ] rpc_zmq_bind_matchmaker = redis
@@ -1566,14 +1567,14 @@ acting as a message storage back-end for all of the servers. [45][46]
 Alternatively, for high availability, use Redis Sentinel servers for the
 ``transport_url``.
 
-::
+.. code-block:: ini
 
     [ DEFAULT ] transport_url = "zmq+redis://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
 
 For all-in-one deployments, the minimum requirement is to specify that
 ZeroMQ should be used.
 
-::
+.. code-block:: ini
 
     [ DEFAULT ] transport_url = "zmq://"
 
@@ -1672,7 +1673,7 @@ PKI tokens have been removed since the Ocata release. [52]
 -  Create the certificates. A new directory "/etc/keystone/ssl/" will be
    used to store these files.
 
-   ::
+   .. code-block:: sh
 
        # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
 
@@ -1702,14 +1703,14 @@ related Credential authentication.
 
 -  Create the required keys:
 
-   ::
+   .. code-block:: sh
 
        # mkdir /etc/keystone/fernet-keys/
        # chmod 750 /etc/keystone/fernet-keys/
        # chown keystone.keystone /etc/keystone/fernet-keys/
        # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 
-   ::
+   .. code-block:: sh
 
        # mkdir /etc/keystone/credential-keys/
        # chmod 750 /etc/keystone/credential-keys/
@@ -1812,14 +1813,14 @@ CPU Pinning
    in the BIOS. NUMA nodes are the physical processors. These processors
    are then mapped to specific sectors of RAM.
 
-   ::
+   .. code-block:: sh
 
        # lscpu | grep NUMA
        NUMA node(s):          2
        NUMA node0 CPU(s):     0-9,20-29
        NUMA node1 CPU(s):     10-19,30-39
 
-   ::
+   .. code-block:: sh
 
        # numactl --hardware
        available: 2 nodes (0-1)
@@ -1834,7 +1835,7 @@ CPU Pinning
          0:  10  21
          1:  21  10
 
-   ::
+   .. code-block:: sh
 
        # virsh nodeinfo | grep NUMA
        NUMA cell(s):        2
@@ -1843,7 +1844,7 @@ CPU Pinning
    ``AggregateInstanceExtraSpecsFilter`` to the Nova
    ``scheduler_default_filters``. [58]
 
-   ::
+   .. code-block:: sh
 
        # vim /etc/nova/nova.conf
        [ DEFAULT ] scheduler_default_filters = RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImageProp
@@ -1851,33 +1852,33 @@ CPU Pinning
 
 -  Restart the Nova scheduler service on the controller node(s).
 
-   ::
+   .. code-block:: sh
 
        # systemctl restart openstack-nova-scheduler
 
 -  Set the aggregate/availability zone to allow pinning.
 
-   ::
+   .. code-block:: sh
 
        # openstack aggregate create <AGGREGATE_ZONE>
        # openstack aggregate set --property pinned=true <AGGREGATE_ZONE>
 
 -  Add the compute hosts to the new aggregate zone.
 
-   ::
+   .. code-block:: sh
 
        # openstack host list | grep compute
        # openstack aggregate host add <AGGREGATE_ZONE> <COMPUTE_HOST>
 
 -  Modify a flavor to provide dedicated CPU pinning.
 
-   ::
+   .. code-block:: sh
 
        # openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=prefer
 
 -  Optionally, force images to only work with CPU pinned flavors. [59]
 
-   ::
+   .. code-block:: sh
 
        # openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=isolate
 
@@ -1910,7 +1911,7 @@ the module must be started again.
 
 Intel:
 
-::
+.. code-block:: sh
 
     # rmmod kvm_intel
     # echo “options kvm_intel nested=1” >> /etc/modprobe.d/kvm_inet.conf
@@ -1918,7 +1919,7 @@ Intel:
 
 AMD:
 
-::
+.. code-block:: sh
 
     # rmmod kvm_amd
     # echo “options kvm_amd nested=1” >> /etc/modprobe.d/kvm_amd.conf
@@ -1979,7 +1980,7 @@ two different network interfaces. There is ``br-vlan`` (sometimes also
 referred to as ``br-provider``) for internal tagged traffic and
 ``br-ex`` for external connectivity.
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br br-vlan
     # ovs-vsctl add-port br-vlan <VLAN_INTERFACE>
@@ -2040,7 +2041,7 @@ referred to as ``br-provider``) for internal tagged traffic and
 On the controller node, restart the Nova API service and then start the
 required Neutron services.
 
-::
+.. code-block:: sh
 
     # systemctl restart openstack-nova-api
     # systemctl enable neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
@@ -2049,7 +2050,7 @@ required Neutron services.
 Finally, on the compute nodes, restart the compute service and then
 start the Open vSwitch agent.
 
-::
+.. code-block:: sh
 
     # systemctl restart openstack-nova-compute
     # systemctl enable neutron-openvswitch-agent
@@ -2321,7 +2322,7 @@ For Cinder and/or Glance to work with Ceph, the Ceph configuration needs
 to exist on each controller and compute node. This can be copied over
 from the Ceph nodes. An example is provided below.
 
-::
+.. code-block:: ini
 
     [global]
     fsid = <UNIQUE_ID>
@@ -2352,7 +2353,7 @@ from the Ceph nodes. An example is provided below.
 It is recommended to create a separate pool and related user for both
 the Glance and Cinder service.
 
-::
+.. code-block:: sh
 
     # ceph osd pool create glance <PG_NUM> <PGP_NUM>
     # ceph osd pool create cinder <PG_NUM> <PGP_NUM>
@@ -2364,9 +2365,10 @@ file should be created on the controller and compute nodes. This will
 allow the services to communicate to Ceph as a specific user. The
 usernames should match the client users that were just created. [71]
 
-::
+File: ``/etc/ceph/ceph.client.<USERNAME>.keyring``
 
-    # vim /etc/ceph/ceph.client.<USERNAME>.keyring
+.. code-block:: ini
+
     [client.<USERNAME>]
             key = <KEY>
 
@@ -2376,7 +2378,7 @@ client configurations at ``/etc/ceph/ceph.client.<USERNAME>.keyring``.
 The service users should be added to a common group to help securely
 share these settings.
 
-::
+.. code-block:: sh
 
     # for openstack_service in "cinder glance nova"; do usermod -a -G ceph ${openstack_service}; done
     # chmod -R 640 /etc/ceph/
@@ -2386,18 +2388,14 @@ For the services to work, the relevant Python libraries for accessing
 Ceph need to be installed. These can be installed by the operating
 system's package manager. [72]
 
-RHEL:
+Fedora:
 
-::
-
-    python-ceph-compat
-    python-rbd
+-  python-ceph-compat
+-  python-rbd
 
 Debian:
 
-::
-
-    python-ceph
+-  python-ceph
 
 Cinder
 ~~~~~~
@@ -2458,7 +2456,7 @@ availability and scalability.
             ``virsh`` secret commands. Refer to the Root Page's
             ``Virtualization`` guide for more information.
 
-            ::
+            .. code-block:: sh
 
                 # virsh --help | grep secret
 
@@ -2470,14 +2468,14 @@ Encryption
 Cinder volumes support the Linux LUKS encryption. The only requirement
 is that the compute nodes have the "cryptsetup" package installed. [74]
 
-::
+.. code-block:: sh
 
     $ openstack volume type create LUKS
     $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor
 
 Encrypted volumes can now be created.
 
-::
+.. code-block:: sh
 
     $ openstack volume create --size <SIZE_IN_GB> --type LUKS <VOLUME_NAME>
 
@@ -2538,7 +2536,7 @@ environment, these rules either need to be added to the
 ``qrouter-<ROUTER_ID>`` namespace. All floating IPs need to be added
 with the /32 CIDR, not the CIDR that represents it's true subnet mask.
 
-::
+.. code-block:: sh
 
     # ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-OUTPUT -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
     # ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-PREROUTING -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
@@ -2548,7 +2546,7 @@ with the /32 CIDR, not the CIDR that represents it's true subnet mask.
 With no floating IPs allocated, the iptables NAT table in the SNAT
 namespace should look similar to this.
 
-::
+.. code-block:: sh
 
     # ip netns exec snat-<ROUTER_ID> iptables -t nat -S
     -P PREROUTING ACCEPT
@@ -2614,7 +2612,7 @@ authenticate.
    are filled in below.
 -  Keystone v2.0
 
-   ::
+   .. code-block:: sh
 
        # unset any variables used
        unset OS_PROJECT_ID
@@ -2638,7 +2636,7 @@ authenticate.
 
 -  Keystone v3
 
-   ::
+   .. code-block:: sh
 
        # unset any variables used
        unset OS_PROJECT_ID
@@ -2665,17 +2663,17 @@ authenticate.
 
 -  Source the credential file to load it into the shell environment:
 
-   ::
+   .. code-block:: sh
 
        $ source <USER_CREDENTIALS_FILE>.sh
 
 -  View the available command line options.
 
-   ::
+   .. code-block:: sh
 
        $ openstack help
 
-   ::
+   .. code-block:: sh
 
        $ openstack help <OPTION>
 
@@ -2714,7 +2712,7 @@ resources in a "resources" dictionary. The version indicates that all
 features up until that specific release are used. This is for backwards
 compatibility reasons.
 
-::
+.. code-block:: yaml
 
     ---
     heat_template_version: 2017-02-24
@@ -2738,7 +2736,7 @@ resource must be nested under the single "resources" section.
 
 Syntax:
 
-::
+.. code-block:: yaml
 
       <DESCRIPTIVE_OBJECT_NAME>:
         type: <HEAT_RESOURCE_TYPE>
@@ -2754,7 +2752,7 @@ Syntax:
 For referencing created resources (for example, creating a subnet in a
 created network) the "get\_resource" function should be used.
 
-::
+.. code-block:: yaml
 
     { get_resource: <OBJECT_NAME> }
 
@@ -2764,7 +2762,7 @@ demonstration on how to create a virtual machine with public networking.
 
 -  Create a network, assigned to the "internal\_network" object.
 
-::
+.. code-block:: yaml
 
       internal_network:
         type: OS::Neutron::Net
@@ -2772,7 +2770,7 @@ demonstration on how to create a virtual machine with public networking.
 -  Create a subnet for the created network. Required properties: network
    name or ID.
 
-::
+.. code-block:: yaml
 
       internal_subnet:
         type: OS::Neutron::Subnet
@@ -2786,7 +2784,7 @@ demonstration on how to create a virtual machine with public networking.
 -  Create a port. This object can be used during the instance creation.
    Required properties: network name or ID.
 
-::
+.. code-block:: yaml
 
       subnet_port:
         type: OS::Neutron::Port
@@ -2799,7 +2797,7 @@ demonstration on how to create a virtual machine with public networking.
 
 -  Create a router associated with the public "ext-net" network.
 
-::
+.. code-block:: yaml
 
       external_router:
         type: OS::Neutron::Router
@@ -2809,7 +2807,7 @@ demonstration on how to create a virtual machine with public networking.
 
 -  Attach a port from the network to the router.
 
-::
+.. code-block:: yaml
 
       external_router_interface:
         type: OS::Neutron::RouterInterface
@@ -2819,7 +2817,7 @@ demonstration on how to create a virtual machine with public networking.
 
 -  Create a key pair called "HeatKeyPair." Required property: name.
 
-::
+.. code-block:: yaml
 
       ssh_keys:
         type: OS::Nova::KeyPair
@@ -2831,7 +2829,7 @@ demonstration on how to create a virtual machine with public networking.
 -  Create an instance using the "m1.small" flavor, "RHEL7" image, and
    assign the subnet port created by "OS::Neutron::Port."
 
-::
+.. code-block:: yaml
 
       instance_creation:
         type: OS::Nova::Server
@@ -2843,7 +2841,7 @@ demonstration on how to create a virtual machine with public networking.
 
 -  Allocate an IP from the "ext-net" floating IP pool.
 
-::
+.. code-block:: yaml
 
       floating_ip:
         type: OS::Neutron::FloatingIP
@@ -2854,7 +2852,7 @@ demonstration on how to create a virtual machine with public networking.
    "instance\_creation" function. Alternatively, a specific instance's
    ID can be defined here.
 
-::
+.. code-block:: yaml
 
       floating_ip_association:
         type: OS::Nova::FloatingIPAssociation
@@ -2895,7 +2893,7 @@ Common options:
 
 Syntax:
 
-::
+.. code-block:: yaml
 
     parameters:
         <CUSTOM_NAME>:
@@ -2915,7 +2913,7 @@ Syntax:
 For referencing this parameter elsewhere in the Heat template, use this
 syntax for the variable:
 
-::
+.. code-block:: yaml
 
     { get_param: <CUSTOM_NAME> }
 
@@ -2928,7 +2926,7 @@ Vagrant is a tool to automate the deployment of virtual machines. A
 "Vagrantfile" file is used to initalize the instance. An example is
 provided below.
 
-::
+.. code-block:: ruby
 
     require 'vagrant-openstack-provider'
 
@@ -2955,7 +2953,7 @@ provided below.
 Once those settings are configured for the end user's cloud environment,
 it can be created by running:
 
-::
+.. code-block:: sh
 
     $ vagrant up --provider=openstack
 
@@ -2981,7 +2979,7 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 -  Provide credentials to a user with the "admin" role.
 
-   ::
+   .. code-block:: ini
 
        [auth]
        admin_username
@@ -2992,14 +2990,14 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 -  Specify the Keystone version to use. Valid options are "v2" and "v3."
 
-   ::
+   .. code-block:: ini
 
        [identity]
        auth_version
 
 -  Provide the admin Keystone endpoint for v2 (uri) or v3 (uri\_v3).
 
-   ::
+   .. code-block:: ini
 
        [identity]
        uri
@@ -3007,7 +3005,7 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 -  Two different size flavor IDs should be given.
 
-   ::
+   .. code-block:: ini
 
        [compute]
        flavor_ref
@@ -3015,7 +3013,7 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 -  Two different image IDs should be given.
 
-   ::
+   .. code-block:: ini
 
        [compute]
        image_ref
@@ -3023,7 +3021,7 @@ http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
 
 -  Define what services should be tested for the specific cloud.
 
-   ::
+   .. code-block:: ini
 
        [service_available]
        cinder = true
@@ -3049,7 +3047,7 @@ Install Rally on RHEL. A specific GitHub branch or tag can be specified. Otherwi
 
 RHEL:
 
-::
+.. code-block:: sh
 
     $ curl -L -o ~/install_rally.sh https://raw.githubusercontent.com/openstack/rally/0.10.1/install_rally.sh
     $ sudo yum install gcc gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
@@ -3057,19 +3055,19 @@ RHEL:
 
 Rally can now be used by activating the Python virtual environment.
 
-::
+.. code-block:: sh
 
     $ . ~/rally-venv/bin/activate
 
 Before the first use, finish the installation by creating the Rally SQLite database.
 
-::
+.. code-block:: sh
 
     (rally-venv)$ rally db recreate
 
 If Rally is ever upgraded to the latest version, the database also needs to be upgraded.
 
-::
+.. code-block:: sh
 
     (rally-venv)$ rally db revision
     (rally-venv)$ rally db upgrade
@@ -3083,7 +3081,7 @@ Rally requires a configuration, that defines the OpenStack credentials to test w
 
 View registered deployments:
 
-::
+.. code-block:: sh
 
     (rally-venv)$ rally deployment list
     (rally-venv)$ rally deployment show <DEPLOYMENT_NAME>
@@ -3092,7 +3090,7 @@ View registered deployments:
 
 The fastest way to create this configuration is by referencing the OpenStack credential's shell environment variables.
 
-::
+.. code-block:: sh
 
     (rally-venv)$ . <OPENSTACK_RC_FILE>
     (rally-venv)$ rally deployment create --fromenv --name=existing
@@ -3101,11 +3099,11 @@ The fastest way to create this configuration is by referencing the OpenStack cre
 
 A JSON file can be created to define the OpenStack credentials that Rally will be using. Example files can be found at `~/rally-venv/samples/deployments/`.
 
-::
+.. code-block:: sh
 
     (rally-venv)$ cp ~/rally-venv/samples/deployments/existing.json ~/existing.json
 
-::
+.. code-block:: json
 
     {
         "devstack": {
@@ -3126,7 +3124,7 @@ A JSON file can be created to define the OpenStack credentials that Rally will b
 
 For only using non-privileged OpenStack users, omit the "admin" dictionary.
 
-::
+.. code-block:: json
 
     {
         "openstack": {
@@ -3145,7 +3143,7 @@ For only using non-privileged OpenStack users, omit the "admin" dictionary.
         }
     }
 
-::
+.. code-block:: sh
 
     (rally-venv)$ rally deployment create --file=~/existing.json --name=<DEPLOYMENT_NAME>
 
@@ -3158,7 +3156,7 @@ Scenarios define the tests that will be ran. Variables can be tweaked to customi
 
 Example scenarios:
 
-::
+.. code-block:: sh
 
     (rally-venv)$ ls -1 ~/rally-venv/samples/tasks/scenarios/*
 
@@ -3190,7 +3188,7 @@ Each scenario can be configured using similar options.
 
 After creating a scenario, it can be run from the CLI:
 
-::
+.. code-block:: sh
 
     (rally-venv)$ rally task start <SCENARIO_FILE>.<JSON_OR_YAML>
 

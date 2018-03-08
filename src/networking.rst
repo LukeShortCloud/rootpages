@@ -123,7 +123,7 @@ NetDev settings:
 
 Static networking syntax:
 
-::
+.. code-block:: ini
 
     [Match]
     name=<NIC>
@@ -135,7 +135,7 @@ Static networking syntax:
 
 Static networking example:
 
-::
+.. code-block:: ini
 
     [Match]
     name=eth0
@@ -154,7 +154,7 @@ different file and will automatically be used by systemd-network.
 
 WiFi syntax:
 
-::
+.. code-block:: sh
 
     # wpa_passphrase <SSID> <PASSWORD> > /etc/wpa_supplicant/wpa_supplicant-<NIC>.conf
     # systemctl enable wpa_supplicant@<NIC>.conf
@@ -162,7 +162,7 @@ WiFi syntax:
 
 WiFi example:
 
-::
+.. code-block:: sh
 
     # wpa_passphrase Guest5G password123 > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
     # systemctl enable wpa_supplicant@wlan0.conf
@@ -183,14 +183,14 @@ converted into the ``br0`` bridge.
 
 Example:
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br br0
     # ovs-vsctl add-port br0 eth0
 
 Syntax:
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br <NEW_BRIDGE>
     # ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
@@ -202,7 +202,7 @@ use the physical interface ``eth0`` to create the virtual bridges
 
 Example:
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br br0
     # ovs-vsctl add-port br0 eth0
@@ -223,7 +223,7 @@ can be used to analyze specific ``tap`` traffic. [5]
 
 Example:
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br br0
     # ovs-vsctl add-port br0 eth0
@@ -233,7 +233,7 @@ Example:
 
 Syntax:
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-br <NEW_BRIDGE>
     # ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
@@ -251,9 +251,10 @@ remove the IP address configurations for a particular interface
 
 Static example:
 
+File: /etc/network/interfaces
+
 ::
 
-    # vim /etc/network/interfaces
     auto eth0
     iface eth0 inet static
         address 192.168.1.11
@@ -264,19 +265,20 @@ Static example:
         address 10.0.0.200
         netmask 255.255.0.0
 
-::
+.. code-block:: sh
 
     # ifup eth0
 
 DHCP example:
 
+File:  /etc/network/interfaces
+
 ::
 
-    # vim /etc/network/interfaces
     auto eth0
     iface eth0 inet dhcp
 
-::
+.. code-block:: sh
 
     # ifup eth0
 
@@ -386,14 +388,14 @@ In RHEL 7, static routes now use the ``iproute2`` syntax. A new
 
 Syntax:
 
-::
+.. code-block:: sh
 
     # vim /etc/sysconfig/network-scripts/route-<INTERFACE>
     <DESTINATION_NETWORK_CIDR> via <SOURCE_IP> dev <INTERFACE>
 
 Example:
 
-::
+.. code-block:: sh
 
     # vim /etc/sysconfig/network-scripts/route-eth0
     192.168.100.0/24 via 10.0.0.1 dev eth0
@@ -408,17 +410,19 @@ basic template. The physical network interface should reference a bridge
 interface. The bridge interface will then contain the IP addressing
 information.
 
+File:  ``ifcfg-<NIC>``
+
 ::
 
-    # vim ifcfg-<NIC>
     DEVICE="<NIC>"
     TYPE=Ethernet
     NM_CONTROLLED=no
     BRIDGE=<BRIDGE>
 
+File: ``ifcfg-<BRIDGE>``
+
 ::
 
-    # vim ifcfg-<BRIDGE>
     DEVICE="<BRIDGE>"
     TYPE=Bridge
     ONBOOT=yes
@@ -436,7 +440,7 @@ use an Open vSwitch bridge for OpenStack's software defined networking
 
 Open vSwitch bridge syntax (CLI):
 
-::
+.. code-block:: sh
 
     # ovs-vsctl add-port <OVS_BRIDGE> <NIC>
     # ovs-vsctl add-br <OVS_BRIDGE>
@@ -445,26 +449,29 @@ Open vSwitch bridge syntax (CLI):
 
 Open vSwitch bridge syntax (configuration file):
 
+File:  ``ifcfg-<NIC>``
+
 ::
 
-    # vim ifcfg-<NIC>
     DEVICE="<NIC>"
     TYPE="OVSPort"
     DEVICETYPE="ovs"
     OVS_BRIDGE="<OVS_BRIDGE>"
 
+File: ``ifcfg-<OVS_BRIDGE>``
+
 ::
 
-    # vim ifcfg-<OVS_BRIDGE>
     DEVICE="<OVS_BRIDGE>"
     TYPE="OVSBridge"
     DEVICETYPE="ovs"
 
 Open vSwitch bridge example (configuration file):
 
+File: ifcfg-eth1
+
 ::
 
-    # vim ifcfg-eth1
     DEVICE="eth1"
     TYPE="OVSPort"
     DEVICETYPE="ovs"
@@ -472,9 +479,10 @@ Open vSwitch bridge example (configuration file):
     BOOTPROTO="none"
     ONBOOT="yes"
 
+File:  ifcfg-br0-ovs
+
 ::
 
-    # vim ifcfg-br0-ovs
     DEVICE="br0-ovs"
     TYPE="OVSBridge"
     DEVICETYPE="ovs"

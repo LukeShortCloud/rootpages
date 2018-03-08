@@ -14,7 +14,7 @@ Configuration
 
 RHEL Install [1]:
 
-::
+.. code-block:: sh
 
     # vim /etc/yum.repos.d/mariadb.repo
     [mariadb]
@@ -40,7 +40,7 @@ work with the fast and scalable Cassandra server. [2]
 The Cassandra storage engine is missing from the official RHEL 7
 repositories but can be installed from the RHEL 6 repository. [4]
 
-::
+.. code-block:: sh
 
     # yum install http://yum.mariadb.org/10.1/centos6-amd64/rpms/MariaDB-10.1.18-centos6-x86_64-cassandra-engine.rpm
 
@@ -93,7 +93,7 @@ https://mariadb.com/downloads/maxscale.
 
 RHEL Install [6]:
 
-::
+.. code-block:: sh
 
     # yum install https://downloads.mariadb.com/MaxScale/2.0.1/rhel/7/x86_64/maxscale-2.0.1-1.rhel.7.x86_64.rpm
 
@@ -112,7 +112,7 @@ Listener options:
 
 Listener example:
 
-::
+.. code-block:: sh
 
     [listener]
     type=listener
@@ -147,7 +147,7 @@ Router options:
 
 Example:
 
-::
+.. code-block:: sh
 
     [Read Write Service]
     type=service
@@ -195,64 +195,70 @@ Configuration
 
 RHEL Install [9][10]:
 
-::
+.. code-block:: sh
 
     # yum install java-1.8.0-openjdk
-    # vim /etc/yum/repos.d/datastax.repo
+
+File: /etc/yum/repos.d/datastax.repo
+
+.. code-block:: ini
+
     [datastax]
     name = DataStax Repo for Apache Cassandra
     baseurl = http://rpm.datastax.com/community
     enabled = 1
     gpgcheck = 0
+
+.. code-block:: sh
+
     # yum install cassandra30
     # systemctl daemon-reload
 
-Configuration options: \* cluster\_name = The unique name for a cluster.
-\* (Default: Test Cluster) \* listen\_address = The IP address to listen
-on for clustering. \* (Default: localhost) \* listen\_interface = The
-network interface to listen on for clustering. \* (Default: eth0) \*
-rpc\_address = The IP address to listen on for client requests. \*
-(Default: localhost) \* rpc\_interface = The network interface to listen
-on for client requests. \* (Default: eth1) \* start\_rpc = Start the
-client service to allow incoming connections. \* (Default: false) \*
-disk\_optimization\_strategy = Specify the type of disk to optimize
-reads/writes for. \* ssd = SSDs. \* spinning = Spinning disk hard
-drives. \* (Default: ssd) \* disk\_failure\_policy = The action to take
-when a disk is missing or in a failed state. \* die = Kill off all
-processes. \* stop = Gracefully stop the service. \* best\_effort = Do
-not use the disk but attempt to respond to requests with any data
-available. \* ignore = Ignore any major I/O errors and provide failure
-responses to any requests. \* (Default: stop) \* endpoint\_snitch =
-Select a snitch interface for clustering. \* SimpleSnitch = Cluster
-based on proximity, but datacenter and rack location does not matter.
-Recommended for clusters in one region. \* GossipingPropertyFileSnitch =
-Cluster based on the datacenter and rack location. Recommended for a
-multidatacenter cluster. \* Ec2Snitch = Cluster based on Amazon EC2
-regions and compute availability zones. \* Ec2MultiRegionSnitch = Allows
-multiple Amazon EC2 regions to be used via public floating IPs. \*
-RackInferringSnitch = Similar to GossipingPropertyFileSnitch except that
-the datacenter is automatically determined by the 2nd octet of the IP
-and the rack is determined by the 3rd. \* GoogleCloudSnitch = Cluster
-based on the Google Cloud Platform's regions and compute availability
-zones. \* CloudstackSnitch = Integrate with the Apache Cloudstack. \*
-seed\_provider = The IP addresses of Cassandra servers in other
-datacenters to replicate to. At least one node should be a seed provider
-in every datacenter. Not all nodes should be seed providers due to that
-leading to performance issues. \* - class\_name:
-org.apache.cassandra.locator.SimpleSeedProvider \* parameters: \* -
-seeds: "``<IP_ADDRESS_1>``", "``<IP_ADDRESS_2>``" \* concurrent\_reads
-\* (Default: 32) \* (Recommended: 16 \* ``<COUNT_OF_DISKS>``) \*
-concurrent\_writes \* (Default: 32) \* (Recommended: 16 \*
-``<COUNT_OF_CPUS>``) \* concurrent\_counter\_writes \* (Default: 32) \*
-(Recommended: 16 \* ``<COUNT_OF_DISKS>``) \*
-concurrent\_batchlog\_writes \* (Default: 32) \* (Recommended: 16 \*
-``<COUNT_OF_CPUS>``) \* concurrent\_materialized\_view\_writes \*
-(Default: 32) \* (Recommended: Less than the concurrent reads/writes) \*
-incremental\_backups = Choose whether or not to use incremental backups.
-When taking snapshots, hardlinks will be used to refer back to old data
-for efficient backups. \* (Default: false) \* snapshot\_before\_compact
-= Choose whether or not to automatically take backups before running a
-compaction. \* (Default: false)
+Configuration options:
+
+-  cluster\_name = The unique name for a cluster. Default: Test Cluster.
+-  listen\_address = The IP address to listen on for clustering. Default: localhost.
+-  listen\_interface = The network interface to listen on for clustering. Default: eth0.
+-  rpc\_address = The IP address to listen on for client requests. Default: localhost.
+-  rpc\_interface = The network interface to listen on for client requests. Default: eth1.
+-  start\_rpc = Start the client service to allow incoming connections. Default: false.
+-  disk\_optimization\_strategy = Specify the type of disk to optimize reads/writes for. Default: ssd.
+
+   -  ssd = Solid state drivers.
+   -  spinning = Spinning disk hard drives.
+
+-  disk\_failure\_policy = The action to take when a disk is missing or in a failed state. Default: stop.
+
+   -  best\_effort = Do not use the disk but attempt to respond to requests with any data available.
+   -  die = Kill off all processes.
+   -  ignore = Ignore any major I/O errors and provide failure responses to any requests.
+   -  stop = Gracefully stop the service.
+     
+-  endpoint\_snitch = Select a snitch interface for clustering. 
+  
+   -  CloudstackSnitch = Integrate with the Apache Cloudstack.
+   -  Ec2Snitch = Cluster based on Amazon EC2 regions and compute availability zones.
+   -  Ec2MultiRegionSnitch = Allows multiple Amazon EC2 regions to be used via public floating IPs.
+   -  GoogleCloudSnitch = Cluster based on the Google Cloud Platform's regions and compute availability zones.
+   -  GossipingPropertyFileSnitch = Cluster based on the datacenter and rack location. Recommended for a multidatacenter cluster.
+   -  RackInferringSnitch = Similar to GossipingPropertyFileSnitch except that the datacenter is automatically determined by the 2nd octet of the IP and the rack is determined by the 3rd.
+   -  SimpleSnitch = Cluster based on proximity, but datacenter and rack location does not matter. Recommended for clusters in one region.
+
+-  seed\_provider = The IP addresses of Cassandra servers in other datacenters to replicate to. At least one node should be a seed provider in every datacenter. Not all nodes should be seed providers due to that leading to performance issues.
+
+   -  class\_name: org.apache.cassandra.locator.SimpleSeedProvider
+
+      -  parameters:
+
+        -  seeds: "``<IP_ADDRESS_1>``", "``<IP_ADDRESS_2>``" 
+          
+-  concurrent\_reads = Default: 32. Recommended: (16 \* ``<COUNT_OF_DISKS>``).
+-  concurrent\_writes = Default: 32. Recommended: (16 \* ``<COUNT_OF_CPU_CORES>``).
+-  concurrent\_counter\_writes = Default: 32. Recommended: 16 \* ``<COUNT_OF_DISKS>``).
+-  concurrent\_batchlog\_writes \* (Default: 32) \* Recommended: (16 \* ``<COUNT_OF_CPUS>``).
+-  concurrent\_materialized\_view\_writes = Default: 32. Recommended: Use less than the concurrent reads/writes.
+-  incremental\_backups = Choose whether or not to use incremental backups. When taking snapshots, hardlinks will be used to refer back to old data for efficient backups. Default: false.
+-  snapshot\_before\_compact = Choose whether or not to automatically take backups before running a compaction. Default: false.
 
 [11]
 
