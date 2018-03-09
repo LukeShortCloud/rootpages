@@ -142,7 +142,7 @@ automatically after the main process is complete.
 
 Syntax:
 
-.. code-bloc:: c
+.. code-block:: c
 
     <DATA_TYPE> <VARIABLE_NAME> = new <DATA_TYPE>;
 
