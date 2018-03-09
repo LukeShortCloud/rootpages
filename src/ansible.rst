@@ -911,14 +911,14 @@ Example:
 
 .. code-block:: yaml
 
-    - name: Installing Docker
+    - name: Installing docker
       block:
         - package:
             name: docker
             state: latest
       rescue:
         - debug:
-            msg: "Unable to properly install Docker. Cleaning up now."
+            msg: "Unable to properly install docker. Cleaning up now."
         - file:
             dest: /path/to/custom/docker/files
             state: absent
@@ -4017,9 +4017,12 @@ https://serversforhackers.com/running-ansible-2-programmatically.
 Containers
 ----------
 
+Ansible Container
+~~~~~~~~~~~~~~~~~
+
 The `official Ansible Container
 project <https://docs.ansible.com/ansible-container/>`__ aims to allow
-Playbooks to be deployed directly to Docker containers. This allows
+Playbooks to be deployed directly to docker containers. This allows
 Ansible to orchestrate both infrastructure and applications.
 
 Install Ansible Container into a Python virtual environment. This helps
@@ -4037,7 +4040,7 @@ manager. Source the "activate" file to use the new Python environment.
 -  Ansible Container directory structure:
 
    -  container.yml = An Ansible file that mirrors Docker Compose syntax
-      is used to define how to create the Docker container. Common
+      is used to define how to create the docker container. Common
       settings include the image to use, ports to open, commands to run,
       etc.
    -  ansible-requirements.txt = Python dependencies to install for
@@ -4076,7 +4079,7 @@ Common ``container.yml`` options:
 -  settings = Project configuration settings.
 
    -  conductor\_base = The container to run Ansible from. This should
-      mirror the development environment used for Ansible-Container.
+      mirror the development environment used for Ansible Container.
 
 Example:
 
@@ -4091,7 +4094,7 @@ Example:
       will use the name of the directory that the ``container.yml`` file
       is in.
 
--  services = This is where one or more Docker containers are defined. A
+-  services = This is where one or more docker containers are defined. A
    unique name should be provided to each different container. These
    names are used as the hosts in the Playbook file.
 
@@ -4109,7 +4112,7 @@ Example:
   services:
     mysql:
 
--  from = The Docker image to use for a service.
+-  from = The docker image to use for a service.
 
 Syntax:
 
@@ -4159,10 +4162,10 @@ Syntax:
 
 -  entrypoint = Specify a shell command to run before starting the main `command`. This allows for checks to ensure dependencies are running.
 -  depends_on = The services/containers that this container requires before starting. This helps to start services in a specific sequence.
--  volumes = Define all of the bind mounts from the hypervisor to the Docker container.
+-  volumes = Define all of the bind mounts from the hypervisor to the docker container.
 -  volumes\_from = Mount some or all all the same mounts that another container is using.
 
-The Docker container(s) can be created after the ``container.yml`` file
+The docker container(s) can be created after the ``container.yml`` file
 is completed to describe the container deployment.
 
 .. code-block:: sh
@@ -4607,15 +4610,15 @@ Deployment inventory options:
    -  https\_proxy = A HTTPS proxy to use.
    -  no\_proxy = Websites that should not be proxied.
 
--  Docker (build)
+-  docker (build)
 
    -  dockerhub\_base and dockerhub\_version = Comment out these
-      variables to build Docker images from scratch instead of
+      variables to build docker images from scratch instead of
       downloading them from Docker Hub.
    -  postgres\_data\_dir = The directory to store persistent PostgreSQL
       data. By default, this is stored in the temporary file system at
       ``/tmp/``.
-   -  host\_port = The local HTTP port that Docker should bind to for
+   -  host\_port = The local HTTP port that docker should bind to for
       the AWX dashboard.
    -  use\_container\_for\_build = Use a container to deploy the other
       container. This keeps dependencies installed for installation in
@@ -4624,7 +4627,7 @@ Deployment inventory options:
       project <https://github.com/ansible/awx-logos>`__ will need to be
       cloned in the directory that "awx" was also cloned into.
 
--  Docker (prebuilt)
+-  docker (prebuilt)
 
    -  dockerhub\_base = The Docker Hub repository to use.
    -  dockerhub\_version = The version of AWX containers to use.
@@ -4649,8 +4652,8 @@ Deployment inventory options:
 
 Install:
 
-By default, AWX will install Docker containers from Docker Hub. It is
-also possible to have the installer build Docker containers from scratch
+By default, AWX will install docker containers from Docker Hub. It is
+also possible to have the installer build docker containers from scratch
 an deploy them into a OpenShift cluster.
 
 .. code-block:: sh
@@ -4662,7 +4665,7 @@ an deploy them into a OpenShift cluster.
 After installation, the containers will be started. On a server, the
 containers are configured to automatically restart up on boot if the
 ``docker`` service is enabled. With workstations and other environments
-where Docker is not running on boot, the containers can still be started
+where docker is not running on boot, the containers can still be started
 and stopped manually.
 
 Manually start:
@@ -4677,20 +4680,42 @@ Manually stop:
 
     # for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; done
 
-Update:
+Update
+^^^^^^
 
-For updating a local installation of AWX that is using images from
-Docker Hub, update all of the containers and then re-run the
-installation Playbook.
+AWX is the unstable development version of Ansible Tower so updates are not guaranteed to work. Before doing an update, the PostgreSQL database should be backed up. This contains all of the information that is stored by AWX.
 
 .. code-block:: sh
 
-    # docker pull docker.io/ansible/awx_task:latest
-    # docker pull docker.io/ansible/awx_web:latest
-    # docker pull docker.io/rabbitmq:3
-    # docker pull docker.io/memcached:alpine
-    # docker pull docker.io/postgres:9.6
-    # ansible-playbook -i inventory install.yml
+    $ docker exec postgres pg_dump -U postgres -F t awx > ${postgres_data_dir}/awx_backup.sql
+
+If there are issues with the update, then restore the database.
+
+.. code-block:: sh
+
+    $ docker exec postgres sh -c "pg_restore -U awx -C -d awx /var/lib/postgresql/data/awx_backup.sql"
+
+Compare the latest "installer/inventory" file with the existing inventory file. Some settings may have changed that need to be updated.
+
+Update AWX by re-running the installer Playbook from the latest clone of the GitHub repository clone. The default installation settings for using Docker Hub will download the latest images.
+
+.. code-block:: sh
+
+    $ git clone https://github.com/ansible/awx
+    $ ansible-playbook -i inventory awx/installer/install.yml
+
+[69]
+
+Uninstall
+^^^^^^^^^
+
+Stop and delete the AWX docker containers.
+
+.. code-block:: sh
+
+    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; docker rm ${docker_container}; done
+
+The "postgres_data_dir" directory, as defined in the inventory file, will need to be manually deleted.
 
 Rundeck
 ~~~~~~~
@@ -4700,7 +4725,7 @@ Java, for automating the execution of commands and scripts via SSH.
 There is a community supported Ansible plugin for Rundeck that is
 currently only *alpha* quality. It supports using Ansible inventory as
 well as running modules and Playbooks. This can be tested out using a
-pre-built Docker image:
+pre-built docker image:
 
 .. code-block:: sh
 
@@ -4753,7 +4778,7 @@ Requirements:
 -  MongoDB 3.3
 
 The ``Makefile`` supports building packages for Debian and RHEL based
-distributions as well creating Docker containers.
+distributions as well creating docker containers.
 
 .. code-block:: sh
 
@@ -4833,3 +4858,4 @@ Bibliography
 66. "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017. Accessed September 26, 2017. https://github.com/Batix/rundeck-ansible-plugin
 67. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 26, 2017. https://github.com/pearsonappeng/tensor
 68. "Including and Importing." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/playbooks\_reuse\_includes.html
+69. "Specify a PGDATA directory to prevent container re-create issues #535." GitHub Ansible. February 22, 2018. Accessed March 9, 2018. https://github.com/ansible/awx/pull/535
