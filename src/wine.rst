@@ -135,6 +135,9 @@ then native DLLs.
 
 [5]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
+-------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

@@ -262,6 +262,9 @@ Configuration options:
 
 [11]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/databases.rst>`__
+------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

@@ -3248,6 +3248,9 @@ OpenStack can be tuned to use less load and run faster.
 
         -  This is generally configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
+-----------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

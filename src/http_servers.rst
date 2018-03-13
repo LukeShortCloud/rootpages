@@ -490,6 +490,9 @@ Full Verified Syntax:
 
 [13]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/http_servers.rst>`__
+---------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

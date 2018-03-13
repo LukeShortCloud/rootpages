@@ -687,6 +687,9 @@ fgetc example:
         fclose(file_to_read);
     }
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/c_and_c++.rst>`__
+------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

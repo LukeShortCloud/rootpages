@@ -563,6 +563,9 @@ Common bonding\_opts options:
 
 [15]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking.rst>`__
+-------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

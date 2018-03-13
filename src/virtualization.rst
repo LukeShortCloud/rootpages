@@ -829,6 +829,9 @@ Common GUIs:
 -  XenServer
 
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
+-----------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

@@ -105,6 +105,9 @@ IPVS is easily managed via the "ipvsadm" command.
 
        # ipvsadm {-C|--clear}
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/clustering.rst>`__
+-------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

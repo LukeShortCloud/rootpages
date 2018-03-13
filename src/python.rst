@@ -286,6 +286,9 @@ Example:
 
 [5]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
+---------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

@@ -223,6 +223,9 @@ Event Types:
 -  2097152=status
 -  4194304=uptime [3]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/monitoring.rst>`__
+-------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 

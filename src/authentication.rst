@@ -197,6 +197,9 @@ Enable and start the service.
 
 [5]
 
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/authentication.rst>`__
+-----------------------------------------------------------------------------------------
+
 Bibliography
 ------------
 
