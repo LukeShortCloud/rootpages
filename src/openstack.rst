@@ -3059,13 +3059,13 @@ Rally can now be used by activating the Python virtual environment.
 
     $ . ~/rally-venv/bin/activate
 
-Before the first use, finish the installation by creating the Rally SQLite database.
+Finish the installation by initializing a SQLite database for Rally. Alternatively, a MariaDB or PostgreSQL database connection can be configured in ``~/rally-venv/etc/rally/rally.conf``.
 
 .. code-block:: sh
 
     (rally-venv)$ rally db recreate
 
-If Rally is ever upgraded to the latest version, the database also needs to be upgraded.
+If Rally is ever upgraded to the latest version, the database schema also needs to be upgraded.
 
 .. code-block:: sh
 
@@ -3194,6 +3194,32 @@ After creating a scenario, it can be run from the CLI:
 
 [87]
 
+Reports
+^^^^^^^
+
+All tasks that Rally runs are permanently stored in the database. The same detailed report that is sent to the standard output can also be viewed at any time after tasks are done running.
+
+.. code-block:: sh
+
+    (rally-venv)$ rally task list
+    (rally-venv)$ rally task status <TASK_UUID>
+    (rally-venv)$ rally task detailed <TASK_UUID>
+
+Reports can be generated in a "html" or "json" format. Multiple tasks can also be added to a single report.
+
+.. code-block:: sh
+
+    (rally-venv)$ rally task report <TASK_UUID_1> <TASK_UUID_2> <TASK_UUID_3> --<FORMAT>
+
+The JUnit XML (a Java unit test library) format can also be used. This library is not installed by default.
+
+.. code-block:: sh
+
+    (rally-venv)$ pip install junit-xml
+    (rally-venv)$ rally task export <TASK_UUID> --type junit
+
+[94]
+
 Performance
 -----------
 
@@ -3318,3 +3344,4 @@ Bibliography
 91. "[Ironic] Enabling drivers." OpenStack Documentation. January 17, 2018. Accessed January 29, 2018. https://docs.openstack.org/ironic/pike/admin/drivers.html
 92. "VirtualBMC." TripleO Documentation. Accessed January 29, 2018.
 93. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
+94. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
