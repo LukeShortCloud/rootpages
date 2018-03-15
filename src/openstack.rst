@@ -1,14 +1,12 @@
-OpenStack Ocata
-===============
+OpenStack Queens
+================
 
 .. contents:: Table of Contents
 
 Introduction
 ------------
 
-This guide is aimed to help guide Cloud Administrators through
-deploying, managing, and upgrading OpenStack. Most topics mentioned in
-this guide can be applied to similar environments and/or versions.
+This guide is aimed to help guide Cloud Administrators through deploying, managing, and upgrading OpenStack.
 
 Versions
 ~~~~~~~~
@@ -41,13 +39,10 @@ Releases:
     -  EOL: 2018-02-26 [1]
     -  Goals:
 
-       1. Stability. This release included features that are mainly
-          related to reliability, scaling, and performance enhancements.
-          This came out 5 months after Newton, instead of the usual 6,
-          due to the minimal amount of major changes. [2]
-       2. Remove old OpenStack libraries that were built into some
-          services. Instead, services should rely on the proper
-          up-to-date dependencies provided by external packages. [3]
+       -  Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
+       -  Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages. [3]
+
+    - `New Features <https://www.openstack.org/news/view/302/openstack-ocata-strengthens-core-infrastructure-services-and-container-integration-with-15th-release-of-cloud-computing-software>`__
 
 16. Pike
 
@@ -55,28 +50,25 @@ Releases:
     -  EOL: 2018-09-03 [1]
     -  Goals:
 
-       1. Convert all of the OpenStack code to be compatible with Python
-          3. This is because Python 2 will become EOL in 2020.
-       2. Make all APIs into WSGI applications. This will allow web
-          servers to scale out and run faster with tuning compared to
-          running as a standalone Python daemon. [4]
+       -  Convert all of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
+       -  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
+
+    -  `New Features <https://www.openstack.org/news/view/340/openstack-pike-delivers-composable-infrastructure-services-and-improved-lifecycle-management>`__
 
 17. Queens
 
-    -  Currently in development. The expected release date is in
-       February or March of 2018. [1]
+    -  Release: 2018-02-28
+    -  EOL: 2019-02-25
     -  Goals:
 
-       -  Remove the need for the access control list "policy" files by
-          having default values defined in the source code.
-       -  Tempest will be split up into different projects for
-          maintaining individual service unit tests. This contrasts with
-          the old model that had all Tempest tests maintained in one
-          central repository. [5]
+       -  Remove the need for the access control list "policy" files by having default values defined in the source code.
+       -  Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
+
+    -  `New Features <https://www.openstack.org/news/view/371/openstack-queens-release-expands-support-for-gpus-and-containers-to-meet-edge-nfv-and-machine-learning-workload-demands>`__
 
 18. Rocky
 
-    -  On the roadmap.
+    -  Expected release: 2018-08-30 [1]
 
 Red Hat OpenStack Platform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -204,24 +196,32 @@ adopted):
 
 Other services:
 
--  Aodh = Telemetry alarming
+-  Aodh = Telemetry Alarming
 -  Barbican = Key Management
 -  CloudKitty = Billing
 -  Congress = Governance
 -  Designate = DNS
--  Freezer = Backup and recovery
+-  Freezer = Backup and Recovery
 -  Ironic = Bare-Metal Provisioning
 -  Karbor = Data protection
--  Magnum = Containers
--  Manila = Shared Filesystems
+-  Kuryr = Container plugin
+-  Magnum = Container Orchestration Engine Provisioning
+-  Manila = Shared File Systems
 -  Mistral = OpenStack Workflow
 -  Monasca = Monitoring
 -  Murano = Application Catalog
 -  Octavia = Load Balancing
--  Rally = Benchmarking
--  Sahara = Elastic Map Reduce
+-  Rally = Benchmark
+-  Sahara = Big Data Processing Framework Provisioning
+-  Senlin = Clustering
+-  Solum = Software Development Lifecycle Automation
 -  Searchlight = Indexing
+-  Tacker = NFV Orchestration
+-  Tricircle = Multi-Region Networking Automation
+-  TripleO = Deployment
 -  Trove = Database
+-  Vitrage = Root Cause Analysis
+-  Watcher = Optimization
 -  Zaqar = Messaging
 -  Zun = Containers
 
@@ -2607,9 +2607,7 @@ For the CLI utilities to work, the environment variables need to be set
 for the project and user. This way the commands can automatically
 authenticate.
 
--  Add the credentials to a text file This is generally ends with the
-   ".sh" extension to signify it's a shell file. A few default variables
-   are filled in below.
+-  Add the credentials to a text file. Use the ".sh" extension to signify it's a shell script. A few default variables are filled in below.
 -  Keystone v2.0
 
    .. code-block:: sh
@@ -3246,15 +3244,15 @@ OpenStack can be tuned to use less load and run faster.
 
     -  Use memcache.
 
-        -  This is generally configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
+        -  This is configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
 Bibliography
 ------------
 
-1. "OpenStack Releases." OpenStack Releases. October 4, 2017. Accessed October 4, 2017. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. March 15, 2018. Accessed March 15, 2018. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
@@ -3263,7 +3261,7 @@ Bibliography
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
-10. "Project Navigator." OpenStack. Accessed May 14, 2017. https://www.openstack.org/software/project-navigator/
+10. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
 11. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
