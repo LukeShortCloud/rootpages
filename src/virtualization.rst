@@ -540,6 +540,63 @@ Orchestration
 Virtual machine provisioning can be automated through the use of
 different tools.
 
+Anaconda
+~~~~~~~~
+
+Anaconda is an installer for the RHEL and Fedora operating systems.
+
+Kickstart File
+^^^^^^^^^^^^^^
+
+A Kickstart file defines all of the steps necessary to install the operating system.
+
+Common commands:
+
+*  **authconfig** = Configure authentication using options specified in the ``authconfig`` manual.
+*  autopart = Automatically create partitions.
+*  **bootloader** = Define how the bootloader should be installed.
+*  clearpart = Delete existing partitions.
+
+    *  --type <TYPE> = Using one of these partition schemes: partition (partition only, no formatting), plain (normal partitions that are not Btrfs or LVM), btrfs, lvm, or thinp (thin-provisioned logical volumes).
+
+*  **eula --accept** = Automatically accept the end-user license agreement (EULA).
+*  firewall = Configure the firewall.
+
+    *  --enable
+    *  --disable
+    *  --port = Specify the ports to open.
+
+*  %include = Include another file this Kickstart file.
+*  **install** = Start the installer.
+*  **keyboard** = Configure the keyboard layout.
+*  **lang** = The primary language to use.
+*  mount = Manually specify a partition to mount.
+*  network = Configure the network settings.
+*  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
+*  partition = Manually create partitions.
+*  raid = Create a software RAID.
+*  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
+*  **rootpw** = Change the root password.
+*  selinux = Change the SELinux settings.
+
+    *  --permissive
+    *  --enforcing
+    *  --disabled
+
+*  services = Manage systemd services.
+    *  --enabled=<SERVICE1>,<SERVICE2>,SERVICE3> = Enable these services.
+
+*  sshkey = Add a SSH key to a specified user.
+*  **timezone** = Configure the timezone.
+*  url = Do a network installation using the specified URL to the operating system's repository.
+*  user = Configure a new user.
+*  vnc = Configure a VNC for remote graphical installations.
+*  zerombr = Erase the partition table.
+
+[37][38]
+
+An example of a basic Kickstart file can be found here: https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file.
+
 Vagrant
 ~~~~~~~
 
@@ -871,3 +928,5 @@ Bibliography
 34. "PCI passthrough via OVMF." Arch Linux Wiki. February 13, 2018. Accessed February 26, 2018. https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
 35. "RYZEN GPU PASSTHROUGH SETUP GUIDE: FEDORA 26 + WINDOWS GAMING ON LINUX." Level One Techs. June 25, 2017. Accessed February 26, 2018. https://level1techs.com/article/ryzen-gpu-passthrough-setup-guide-fedora-26-windows-gaming-linux
 36. "IOMMU Groups – What You Need to Consider." Heiko's Blog. July 25, 2017. Accessed March 3, 2018. https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/
+37. "Kickstart Documentation." Pykickstart. Accessed March 15, 2018. http://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
+38. "Creating an automated CentOS 7 Install via Kickstart file." Marc Lopez Personal Blog. December 1, 2014. Accessed March 15, 2018. https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file
