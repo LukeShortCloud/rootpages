@@ -1,14 +1,12 @@
-OpenStack Ocata
-===============
+OpenStack Queens
+================
 
 .. contents:: Table of Contents
 
 Introduction
 ------------
 
-This guide is aimed to help guide Cloud Administrators through
-deploying, managing, and upgrading OpenStack. Most topics mentioned in
-this guide can be applied to similar environments and/or versions.
+This guide is aimed to help Cloud Administrators through deploying, managing, and upgrading OpenStack.
 
 Versions
 ~~~~~~~~
@@ -41,13 +39,10 @@ Releases:
     -  EOL: 2018-02-26 [1]
     -  Goals:
 
-       1. Stability. This release included features that are mainly
-          related to reliability, scaling, and performance enhancements.
-          This came out 5 months after Newton, instead of the usual 6,
-          due to the minimal amount of major changes. [2]
-       2. Remove old OpenStack libraries that were built into some
-          services. Instead, services should rely on the proper
-          up-to-date dependencies provided by external packages. [3]
+       -  Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
+       -  Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages. [3]
+
+    - `New Features <https://www.openstack.org/news/view/302/openstack-ocata-strengthens-core-infrastructure-services-and-container-integration-with-15th-release-of-cloud-computing-software>`__
 
 16. Pike
 
@@ -55,28 +50,25 @@ Releases:
     -  EOL: 2018-09-03 [1]
     -  Goals:
 
-       1. Convert all of the OpenStack code to be compatible with Python
-          3. This is because Python 2 will become EOL in 2020.
-       2. Make all APIs into WSGI applications. This will allow web
-          servers to scale out and run faster with tuning compared to
-          running as a standalone Python daemon. [4]
+       -  Convert all of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
+       -  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
+
+    -  `New Features <https://www.openstack.org/news/view/340/openstack-pike-delivers-composable-infrastructure-services-and-improved-lifecycle-management>`__
 
 17. Queens
 
-    -  Currently in development. The expected release date is in
-       February or March of 2018. [1]
+    -  Release: 2018-02-28
+    -  EOL: 2019-02-25
     -  Goals:
 
-       -  Remove the need for the access control list "policy" files by
-          having default values defined in the source code.
-       -  Tempest will be split up into different projects for
-          maintaining individual service unit tests. This contrasts with
-          the old model that had all Tempest tests maintained in one
-          central repository. [5]
+       -  Remove the need for the access control list "policy" files by having default values defined in the source code.
+       -  Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
+
+    -  `New Features <https://www.openstack.org/news/view/371/openstack-queens-release-expands-support-for-gpus-and-containers-to-meet-edge-nfv-and-machine-learning-workload-demands>`__
 
 18. Rocky
 
-    -  On the roadmap.
+    -  Expected release: 2018-08-30 [1]
 
 Red Hat OpenStack Platform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -204,24 +196,32 @@ adopted):
 
 Other services:
 
--  Aodh = Telemetry alarming
+-  Aodh = Telemetry Alarming
 -  Barbican = Key Management
 -  CloudKitty = Billing
 -  Congress = Governance
 -  Designate = DNS
--  Freezer = Backup and recovery
+-  Freezer = Backup and Recovery
 -  Ironic = Bare-Metal Provisioning
 -  Karbor = Data protection
--  Magnum = Containers
--  Manila = Shared Filesystems
+-  Kuryr = Container plugin
+-  Magnum = Container Orchestration Engine Provisioning
+-  Manila = Shared File Systems
 -  Mistral = OpenStack Workflow
 -  Monasca = Monitoring
 -  Murano = Application Catalog
 -  Octavia = Load Balancing
--  Rally = Benchmarking
--  Sahara = Elastic Map Reduce
+-  Rally = Benchmark
+-  Sahara = Big Data Processing Framework Provisioning
+-  Senlin = Clustering
+-  Solum = Software Development Lifecycle Automation
 -  Searchlight = Indexing
+-  Tacker = NFV Orchestration
+-  Tricircle = Multi-Region Networking Automation
+-  TripleO = Deployment
 -  Trove = Database
+-  Vitrage = Root Cause Analysis
+-  Watcher = Optimization
 -  Zaqar = Messaging
 -  Zun = Containers
 
@@ -235,7 +235,7 @@ OpenStack can be installed as an all-in-one (AIO) server or onto a cluster of se
 Packstack
 ~~~~~~~~~
 
-Supported operating system: RHEL 7, Fedora
+Supported operating system: RHEL/CentOS 7, Fedora
 
 Packstack is part of Red Hat's RDO project. It's purpose is for
 providing small and simple demonstrations of OpenStack. This tool does
@@ -250,14 +250,14 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm
+    # yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
     # subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 
 CentOS:
 
 .. code-block:: sh
 
-    # yum install centos-release-openstack-ocata
+    # yum install centos-release-openstack-queens
 
 Finally, install the Packstack utility.
 
@@ -408,48 +408,12 @@ Common options:
 Uninstall
 ^^^^^^^^^
 
-For uninstalling everything that is installed by Packstack, run this
-Bash script on all of the OpenStack nodes [14]. Use at your own risk.
-
-.. code:: bash
-
-    #!/bin/bash
-    # Warning! Dangerous step! Destroys VMs
-    for x in $(virsh list --all | grep instance- | awk '{print $2}') ; do
-        virsh destroy $x ;
-        virsh undefine $x ;
-    done ;
-
-    # Warning! Dangerous step! Removes lots of packages, including many
-    # which may be unrelated to RDO.
-    yum remove -y nrpe "*nagios*" puppet ntp ntp-perl ntpdate "*openstack*" \
-    "*nova*" "*keystone*" "*glance*" "*cinder*" "*swift*" \
-    mysql mysql-server httpd "*memcache*" scsi-target-utils \
-    iscsi-initiator-utils perl-DBI perl-DBD-MySQL ;
-
-    ps -ef | grep -i repli | grep swift | awk '{print $2}' | xargs kill ;
-
-    # Warning! Dangerous step! Deletes local application data
-    rm -rf /etc/nagios /etc/yum.repos.d/packstack_* /root/.my.cnf \
-    /var/lib/mysql/ /var/lib/glance /var/lib/nova /etc/nova /etc/swift \
-    /srv/node/device*/* /var/lib/cinder/ /etc/rsync.d/frag* \
-    /var/cache/swift /var/log/keystone ;
-
-    umount /srv/node/device* ;
-    killall -9 dnsmasq tgtd httpd ;
-    setenforce 1 ;
-    vgremove -f cinder-volumes ;
-    losetup -a | sed -e 's/:.*//g' | xargs losetup -d ;
-    find /etc/pki/tls -name "ssl_ps*" | xargs rm -rf ;
-    for x in $(df | grep "/lib/" | sed -e 's/.* //g') ; do
-        umount $x ;
-    done
+For uninstalling everything that is installed by Packstack, run `this Bash script <https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux\_OpenStack\_Platform/6/html/Deploying\_OpenStack\_Proof\_of\_Concept\_Environments/chap-Removing\_Packstack\_Deployments.html>`__ on all of the OpenStack nodes. Use at your own risk.
 
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
-Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42,
-SUSE Linux Enterprise 12
+Supported operating systems: RHEL/CentOS 7, Ubuntu 16.04, openSUSE Leap 42
 
 OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu
 inside of LXC containers that run the OpenStack services. This was
@@ -476,7 +440,7 @@ Install
 Minimum requirements:
 
 -  8 CPU cores
--  50GB storage
+-  50GB storage (80GB recommended)
 -  8GB RAM (16GB recommended)
 
 This quick installation guide covers how to install an all-in-one
@@ -490,7 +454,7 @@ Setup the OpenStack-Ansible project.
 
     # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
     # cd /opt/openstack-ansible/
-    # git checkout stable/ocata
+    # git checkout stable/queens
 
 There are two all-in-one scenarios that will run different Ansible
 Playbooks. The default is "aio" but this can be changed to the second
@@ -528,8 +492,7 @@ Extra Playbooks can be added by copying them from
 ``/etc/openstack_deploy/conf.d/``. The file extensions should be changed
 from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 
-Then OpenStack-Ansible project can now setup and deploy the LXC
-containers to run OpenStack.
+Then OpenStack-Ansible project can now setup and deploy the LXC containers along with the OpenStack services.
 
 .. code-block:: sh
 
@@ -546,77 +509,12 @@ OpenStack-Ansible creates. Running the ``scripts/run-playbooks.sh``
 script will not work again until the existing LXC containers and
 configurations have been removed. [16]
 
-Operations
-''''''''''
-
-A new node can be added at any time to an existing all-in-one
-deployment. Copy the configuration file for an all-in-one instance.
-
-.. code-block:: sh
-
-    # cd /opt/openstack-ansible/
-    # cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
-
-Add the new container to the list of inventory servers.
-
-.. code-block:: sh
-
-    # /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
-
-Update the repository server to include the new packages required.
-
-.. code-block:: sh
-
-    # cd playbooks/
-    # openstack-ansible repo-install.yml
-
-Deploy the new container and then run the Playbook.
-
-.. code-block:: sh
-
-    # openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
-    # openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
-
-[17]
-
 Uninstall
 '''''''''
 
-This Bash script can be used to clean up and uninstall most of the
+`This Bash script <https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
-way to uninstall OpenStack-Ansible is to reinstall the operating system. [18]
-
-.. code:: bash
-
-    #!/bin/bash
-    # # Move to the playbooks directory.
-    cd /opt/openstack-ansible/playbooks
-
-    # # Destroy all of the running containers.
-    openstack-ansible lxc-containers-destroy.yml
-
-    # # On the host stop all of the services that run locally and not
-    # #  within a container.
-    for i in \
-           $(ls /etc/init \
-             | grep -e "nova\|swift\|neutron\|cinder" \
-             | awk -F'.' '{print $1}'); do \
-        service $i stop; \
-      done
-
-    # # Uninstall the core services that were installed.
-    for i in $(pip freeze | grep -e "nova\|neutron\|keystone\|swift\|cinder"); do \
-        pip uninstall -y $i; done
-
-    # # Remove crusty directories.
-    rm -rf /openstack /etc/{neutron,nova,swift,cinder} \
-             /var/log/{neutron,nova,swift,cinder}
-
-    # # Remove the pip configuration files on the host
-    rm -rf /root/.pip
-
-    # # Remove the apt package manager proxy
-    rm /etc/apt/apt.conf.d/00apt-cacher-proxy
+way to uninstall OpenStack-Ansible is to reinstall the operating system. [16]
 
 Full
 ^^^^
@@ -640,23 +538,6 @@ It is also required to have 4 different network bridges.
    networks.
 -  ``br-vxlan`` = This should exist on the "network" and "compute"
    nodes. It is used for self-service networks.
-
-Download and install the latest stable OpenStack-Ansible suite from
-GitHub.
-
-.. code-block:: sh
-
-    # apt-get install git
-    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    # cd /opt/openstack-ansible/
-    # git checkout stable/ocata
-    # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
-
-Then copy over and modify the main configuration file.
-
-.. code-block:: sh
-
-    # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
 
 [19]
 
@@ -770,14 +651,10 @@ The valid service types are:
 -  magnum-infra = Magnum.
 -  sahra-infra = Sahara.
 
-[20]
+[19]
 
 Nova
 &&&&
-
-The default variables for Nova are listed at
-https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/.
-These can be overriden.
 
 Common variables:
 
@@ -863,13 +740,66 @@ File: /etc/openstack_deploy/openstack_user_config.yml
               volume_backend_name: rbd
               rbd_pool: <CINDER_CEPH_POOL>
               rbd_ceph_conf: /etc/ceph/ceph.conf
-              rbd_user: <CINDER_CEPH_USER>
+              rbd_user: <CINDER_CEPHX_USER>
 
 [22]
 
 Another real-world example of deploying and managing Ceph as part of
 OpenStack-Ansible can be found here:
 https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
+
+Install
+'''''''
+
+Download and install the latest stable OpenStack-Ansible suite from
+GitHub.
+
+.. code-block:: sh
+
+    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+    # cd /opt/openstack-ansible/
+    # git checkout stable/queens
+    # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
+
+Install Ansible and the related OpenStack Roles.
+
+.. code-block:: sh
+
+    # /opt/openstack-ansible/scripts/bootstrap-ansible.sh
+
+Generate random passwords for the services.
+
+.. code-block:: sh
+
+    # /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+
+- Configure OSA and verify that the configuration syntax is correct.
+
+.. code-block:: sh
+
+    # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
+    # vim /etc/openstack_deploy/openstack_user_config.yml
+    # openstack-ansible setup-infrastructure.yml --syntax-check
+
+-  Prepare the hosts.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-hosts.yml
+
+- Setup the LXC containers.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-infrastructure.yml
+
+-  Install the OpenStack services.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-openstack.yml
+
+[19]
 
 Operations
 ''''''''''
@@ -899,7 +829,7 @@ Verify that all of the correct services and endpoints exist.
     # openstack service list
     # openstack endpoint list
 
-[24]
+[27]
 
 Ansible Inventory
 &&&&&&&&&&&&&&&&&
@@ -939,7 +869,7 @@ for management and troubleshooting.
 
        # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
-[25]
+[28]
 
 Add a Infrastructure Node
 &&&&&&&&&&&&&&&&&&&&&&&&&
@@ -959,20 +889,21 @@ infrastructure node.
     # openstack-ansible setup-everything.yml --limit @/root/add_host.limit
     # openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
 
-[26]
+[27]
 
 Add a Compute Node
 &&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
-OpenStack-Ansible deployment Playbooks can be run again.
+OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use then the `` /etc/openstack_deploy/conf.d/ceilometer.yml`` configuration will also have to be updated.
 
 .. code-block:: sh
 
     # cd /opt/openstack-ansible/playbooks
-    # openstack-ansible setup-hosts.yml --limit <NEW_COMPUTE_HOST_NAME>
-    # openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit <NEW_COMPUTE_HOST_NAME>
+    # openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
+    # ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
+    # openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
     # openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
 
 [27]
@@ -982,7 +913,7 @@ Remove a Compute Node
 
 Stop the services on the compute container and then use the
 ``openstack-ansible-ops`` project's Playbook ``remote_compute_node.yml``
-to fully it. Be sure to also remove the host from the
+to fully it. The host must also be removed from the
 ``/etc/openstack_deploy/openstack_user_config.yml`` configuration when
 done.
 
@@ -997,7 +928,7 @@ done.
     # cd /opt/openstack-ansible-ops/ansible_tools/playbooks
     # openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
 
-[28]
+[27]
 
 Upgrades
 ''''''''
@@ -1006,7 +937,7 @@ Minor
 &&&&&
 
 This is for upgrading OpenStack from one minor version to another in the
-same major release. An example would be going from 15.0.0 to 15.1.1.
+same major release. An example would be going from 17.0.0 to 17.1.1.
 
 -  Change the OpenStack-Ansible version to a new minor tag release. If a
    branch for a OpenStack release name is being used already, pull the
@@ -1063,9 +994,8 @@ Major
 
 OpenStack-Ansible has scripts capable of fully upgrading OpenStack from
 one major release to the next. It is recommended to do a manual upgrade
-by following the official guide:
-https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html.
-Below outlines how to do this automatically. [30]
+by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/user/manual-upgrade.html>`__
+Below outlines how to do this automatically. [29]
 
 -  Move into the OpenStack-Ansible project.
 
@@ -1092,10 +1022,9 @@ TripleO
 
 Supported operating systems: RHEL 7, Fedora >= 22
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed
-in a small, usually all-in-one, environment. This server is then used to
-create and manage a full Overcloud cluster. Virtual machines or physical
-servers can be used. [31]
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
+
+In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. There is also experimental support for running the Undercloud services in containers. [97]
 
 Quick
 ^^^^^
@@ -1159,7 +1088,7 @@ variables to a YAML file and then add the arguments
 
 .. code-block:: sh
 
-    $ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
+    $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
 
 [33]
 
@@ -1191,6 +1120,7 @@ variables to a YAML file and then add the arguments
       automatically. If a Playbook is specified via ``-p``, then
       everything in that Playbook will run.
    -  ``-v`` = Show verbose output from the Ansible Playbooks.
+   -  ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [97]
 
 --------------
 
@@ -1198,31 +1128,31 @@ variables to a YAML file and then add the arguments
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Undercloud services.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Setup the Overcloud virtual machines.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Overcloud services.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Validate the installation.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 
 [37]
 
@@ -1245,8 +1175,8 @@ creating an Undercloud virtual machine.
 
       .. code-block:: sh
 
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
 
    -  Install the Undercloud environment deployment tools.
 
@@ -1407,6 +1337,13 @@ Overcloud
 
        $ openstack help overcloud deploy
 
+-  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
+
+   .. code-block:: sh
+
+     $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
+     $ openstack overcloud deploy <DEPLOY_OPTIONS> -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml
+
 -  Verify that the Overcloud was deployed.
 
    .. code-block:: sh
@@ -1441,7 +1378,6 @@ Add a Compute Node
 
     $ openstack baremetal configure boot
 
-
 -  Set the new node to the "managable" state. Then introspect the new node so Ironic can automatically determine it's resources and hardware information.
 
 .. code-block:: sh
@@ -1459,7 +1395,7 @@ Add a Compute Node
 
 .. code-block:: sh
 
-    $ openstack overcloud deploy --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
+    $ openstack overcloud deploy <DEPLOY_OPTIONS> --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
 
 [93]
 
@@ -1478,37 +1414,37 @@ configuration files.
 Database
 ^^^^^^^^
 
-Different database backends can be used by the API services on the
+Different database servers can be used by the API services on the
 controller nodes.
 
--  MariaDB/MySQL. Requires the "PyMySQL" Python library. Starting with
-   Liberty, this is preferred on Ubuntu over using "``mysql://``" as the
-   latest OpenStack libraries are written for PyMySQL connections (not
-   to be confused with "MySQL-python"). [41] RHEL still requires the use
-   of the legacy "``mysql://``" connector. [44]
+-  MariaDB/MySQL. The original "``mysql://``" connector can be used for the MySQL-Python library. Starting with Liberty, the newer PyMySQL library was added for Python 3 support. [41] CentOS first added the required ``python2-PyMySQL`` package to support it in the Pike release. [44][95]
 
    .. code-block:: ini
 
-       [ database ] connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
+       [database]
+       connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 
 -  PostgreSQL. Requires the "psycopg2" Python library. [42]
 
    .. code-block:: ini
 
-       [ database ] connection = postgresql://<USER>:<PASSWORD>@<POSTGRESQL_HOST>:<POSTGRESQL_PORT>/<DATABASE>
+       [database]
+       connection = postgresql://<USER>:<PASSWORD>@<POSTGRESQL_HOST>:<POSTGRESQL_PORT>/<DATABASE>
 
 -  SQLite.
 
    .. code-block:: ini
 
-       [ database ] connection = sqlite:///<DATABASE>.sqlite
+       [database]
+       connection = sqlite:///<DATABASE>.sqlite
 
 -  MongoDB is generally only used for Ceilometer when it is not using
    the Gnocchi back-end. [43]
 
    .. code-block:: ini
 
-       [ database ] mongodb://<USER>:<PASSWORD>@<MONGODB_HOST>:<MONGODB_PORT>/<DATABASE>
+       [database]
+       mongodb://<USER>:<PASSWORD>@<MONGODB_HOST>:<MONGODB_PORT>/<DATABASE>
 
 Messaging
 ^^^^^^^^^
@@ -1542,7 +1478,8 @@ use ``/``.
 
 .. code-block:: ini
 
-    [ DEFAULT ] transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
+    [DEFAULT]
+    transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 
 [45]
 
@@ -1556,27 +1493,28 @@ acting as a message storage back-end for all of the servers. [45][46]
 
 .. code-block:: ini
 
-    [ DEFAULT ] transport_url = "zmq+redis://<REDIS_HOST>:6379"
+    [DEFAULT]
+    transport_url = "zmq+redis://<REDIS_HOST>:6379"
 
 .. code-block:: ini
 
-    [ oslo_messaging_zmq ] rpc_zmq_bind_address = <IP>
-    [ oslo_messaging_zmq ] rpc_zmq_bind_matchmaker = redis
-    [ oslo_messaging_zmq ] rpc_zmq_host = <FQDN_OR_IP>
+    [oslo_messaging_zmq]
+    rpc_zmq_bind_address = <IP_ADDRESS>
+    rpc_zmq_host = <FQDN_OR_IP_ADDRESS>
 
-Alternatively, for high availability, use Redis Sentinel servers for the
-``transport_url``.
-
-.. code-block:: ini
-
-    [ DEFAULT ] transport_url = "zmq+redis://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
-
-For all-in-one deployments, the minimum requirement is to specify that
-ZeroMQ should be used.
+Alternatively, for high availability, use Redis Sentinel servers in ``transport_url``.
 
 .. code-block:: ini
 
-    [ DEFAULT ] transport_url = "zmq://"
+    [DEFAULT]
+    transport_url = "zmq+sentinel://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
+
+For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used. This will use the "MatchmakerDummy" driver that will send messages to itself.
+
+.. code-block:: ini
+
+    [DEFAULT]
+    transport_url = "zmq://"
 
 [47]
 
@@ -1586,24 +1524,39 @@ Ironic
 Drivers
 ^^^^^^^
 
-Ironic supports different ways of managing power cycling of managed nodes. The default enabled driver for this is IPMI. Other drivers may require additional dependencies to be installed.
+Ironic supports different ways of managing power cycling of managed nodes. The default enabled driver is IPMITool.
 
--  /etc/ironic/ironic.conf
+File: /etc/ironic/ironic.conf
 
-    -  [DEFAULT]
+.. code-block:: ini
 
-        -  enabled_drivers = <DRIVER1>, <DRIVER2>, DRIVER3>
+    [DEFAULT]
+    enabled_drivers = <DRIVER1>, <DRIVER2>, DRIVER3>
 
-Supported drivers:
+Supported Drivers:
 
--  iscsi_ilo = HPE ProLiant servers (iLO).
--  iscsi_pxe_oneview,agent_pxe_oneview = HP OneView.
--  pxe_ipmitool,agent_ipmitool = IPMI.
--  pxe_drac = DRAC.
--  pxe_irmc = FUJITSU PRIMERGY servers (iRMC).
--  pxe_iscsi_cimc,pxe_agent_cimc = Cisco UCS servers (C series only).
--  pxe_snmp = SNMP power racks.
--  pxe_ucs,agent_ucs = Cisco UCS servers (B and C series).
+-  CIMC: Cisco UCS servers (C series only).
+-  iDRAC.
+-  iLO: HPE ProLiant servers.
+-  HP OneView.
+-  IPMITool.
+-  iRMC: FUJITSU PRIMERGY servers.
+-  SNMP power racks.
+-  UCS: Cisco UCS servers (B and C series).
+
+Each driver has different dependencies and configurations as outlined `here <https://docs.openstack.org/ironic/queens/admin/drivers.html>`__.
+
+Unsupported `Ironic Staging Drivers <http://ironic-staging-drivers.readthedocs.io/>`__:
+
+- AMT
+- iBoot
+- Wake-On-Lan
+
+Unsupported Drivers:
+
+-  MSFT OCS
+-  SeaMicro
+-  VirtualBox
 
 [91]
 
@@ -1613,36 +1566,23 @@ Keystone
 API v3
 ^^^^^^
 
-In Newton, the Keystone v2.0 API has been completely deprecated. It will
-be removed entirely from OpenStack in the ``Queens`` release. [48] It is
-possible to run both v2.0 and v3 at the same time but it's desirable to
-move towards the v3 standard. If both have to be enabled, services
-should be configured to use v2.0 or else problems can occur with v3's
-domain scoping. For disabling v2.0 entirely, Keystone's API paste
-configuration needs to have these lines removed (or commented out) and
-then the web server should be restarted.
+In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the ``T`` release. [48] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
 
--  /etc/keystone/keystone-paste.ini
+File: /etc/keystone/keystone-paste.ini
 
-   -  [pipeline:public\_api]
+.. code-block:: ini
 
-      -  pipeline = cors sizelimit url\_normalize request\_id
-         admin\_token\_auth build\_auth\_context token\_auth json\_body
-         ec2\_extension public\_service
+    [pipeline:public_api]
+    pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service
 
-   -  [pipeline:admin\_api]
+    [pipeline:admin_api]
+    pipeline = cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service
 
-      -  pipeline = cors sizelimit url\_normalize request\_id
-         admin\_token\_auth build\_auth\_context token\_auth json\_body
-         ec2\_extension s3\_extension admin\_service
+    [composite:main]
+    /v2.0 = public_api
 
-   -  [composite:main]
-
-      -  /v2.0 = public\_api
-
-   -  [composite:admin]
-
-      -  /v2.0 = admin\_api
+    [composite:admin]
+    /v2.0 = admin_api
 
 [49]
 
@@ -1650,56 +1590,33 @@ Token Provider
 ^^^^^^^^^^^^^^
 
 The token provider is used to create and delete tokens for
-authentication. Different providers can be used as the backend.
+authentication. Different providers can be configured.
+
+File: /etc/keystone/keystone.conf
 
 Scenario #1 - UUID (default)
 
--  /etc/keystone/keystone.conf
+.. code-block:: ini
 
-   -  [token]
+    [token]
+    provider = uuid
 
-      -  provider = uuid
+Scenario #2 - Fernet (recommended)
 
-Scenario #2 - PKI
-
-PKI tokens have been removed since the Ocata release. [52]
-
--  /etc/keystone/keystone.conf
-
-   -  [token]
-
-      -  provider = pki
-
--  Create the certificates. A new directory "/etc/keystone/ssl/" will be
-   used to store these files.
-
-   .. code-block:: sh
-
-       # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
-
-Scenario #3 - Fernet (fastest token creation)
-
-A public and private key wil need to be created for Fernet and the
+This provides the fastest token creation and validation. A public and private key will need to be created for Fernet and the
 related Credential authentication.
 
--  /etc/keystone/keystone.conf
+.. code-block:: ini
 
-   -  [token]
+    [token]
+    provider = fernet
 
-      -  provider = fernet
+    [fernet_tokens]
+    key_repository = /etc/keystone/fernet-keys/
 
-   -  [fernet\_tokens]
-
-      -  key\_repository = /etc/keystone/fernet-keys/
-
-   -  [credential]
-
-      -  provider = fernet
-      -  key\_repository = /etc/keystone/credential-keys/
-
-   -  [token]
-
-      -  provider = fernet
+    [credential]
+    provider = fernet
+    key_repository = /etc/keystone/credential-keys/
 
 -  Create the required keys:
 
@@ -1717,93 +1634,90 @@ related Credential authentication.
        # chown keystone.keystone /etc/keystone/credential-keys/
        # keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
-[50][51][53]
+[50][51]
+
+Scenario #3 - PKI
+
+PKI tokens have been removed since the Ocata release. [52]
+
+.. code-block:: ini
+
+    [token]
+    provider = pki
+
+-  Create the certificates. A new directory "/etc/keystone/ssl/" will be used to store these files.
+
+   .. code-block:: sh
+
+       # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
 
 Nova
 ~~~~
 
--  /etc/nova/nova.conf
+File: /etc/nova/nova.conf
 
-   -  [libvirt]
+-  For the controller nodes, specify the connection database connection strings for both the "nova" and "nova_api" databases.
 
-      -  inject\_key = false
+.. code-block:: ini
 
-         -  Do not inject SSH keys via Nova. This should be handled by
-            the Nova's metadata service. This will either be
-            "openstack-nova-api" or "openstack-nova-metadata-api"
-            depending on your setup.
+    [api_database]
+    connection = <DB_PROVIDER>//<DB_USER>:<DB_PASS>@<DB_HOST>/nova_api
+    [database]
+    connection = <DB_PROVIDER>//<DB_USER>:<DB_PASS>@<DB_HOST>/nova
 
-   -  [DEFAULT]
+-  Enable support for the Nova API and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" will handle the metadata and not "openstack-nova-metadata-api."
 
-      -  enabled\_apis = osapi\_compute,metadata
+.. code-block:: ini
 
-         -  Enable support for the Nova API and Nova's metadata API. If
-            "metedata" is specified here, then the "openstack-nova-api"
-            handles the metadata and not "openstack-nova-metadata-api."
+    [DEFAULT]
+    enabled_apis = osapi_compute,metadata
 
-   -  [api\_database]
+-  Do not inject passwords, SSH keys, or partitions via Nova. This is recommended for Ceph storage back-ends. [60] This should be handled by the Nova's metadata service that will use cloud-init instead of Nova itself. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on the configuration.
 
-      -  connection =
-         connection=mysql://nova:password@10.1.1.1/nova\_api
+.. code-block:: ini
 
-   -  [database]
-
-      -  connection = mysql://nova:password@10.1.1.1/nova
-
-         -  For the controller nodes, specify the connection SQL
-            connection string. In this example it uses MySQL, the MySQL
-            user "nova" with a password called "password", it connects
-            to the IP address "10.1.1.1" and it is using the database
-            "nova."
+    [libvirt]
+    inject_password = False
+    inject_key = False
+    inject_partition = -2
 
 Hypervisors
 ^^^^^^^^^^^
 
 Nova supports a wide range of virtualization technologies. Full hardware
 virtualization, paravirtualization, or containers can be used. Even
-Windows' Hyper-V is supported. [54]
+Windows' Hyper-V is supported.
+
+File:
 
 Scenario #1 - KVM
 
--  /etc/nova/nova.conf
+.. code-block:: ini
 
-   -  [DEFAULT]
-
-      -  compute\_driver = libvirt.LibvirtDriver
-
-   -  [libvirt]
-
-      -  virt\_type = kvm
-
-[55]
+    [DEFAULT]
+    compute_driver = libvirt.LibvirtDriver
+    [libvirt]
+    virt_type = kvm
 
 Scenario #2 - Xen
 
--  /etc/nova/nova.conf
+.. code-block:: ini
 
-   -  [DEFAULT]
-
-      -  compute\_driver = libvirt.LibvirtDriver
-
-   -  [libvirt]
-
-      -  virt\_type = xen
-
-[56]
+    [DEFAULT]
+    compute_driver = libvirt.LibvirtDriver
+    [libvirt]
+    virt_type = xen
 
 Scenario #3 - LXC
 
--  /etc/nova/nova.conf
+.. code-block:: ini
 
-   -  [DEFAULT]
+    [DEFAULT]
+    compute_driver = libvirt.LibvirtDriver
+    [libvirt]
+    virt_type = lxc
 
-      -  compute\_driver = libvirt.LibvirtDriver
-
-   -  [libvirt]
-
-      -  virt\_type = lxc
-
-[57]
+[54]
 
 CPU Pinning
 ^^^^^^^^^^^
@@ -1840,15 +1754,16 @@ CPU Pinning
        # virsh nodeinfo | grep NUMA
        NUMA cell(s):        2
 
--  Append the two NUMA filters ``NUMATopologyFilter`` and
-   ``AggregateInstanceExtraSpecsFilter`` to the Nova
-   ``scheduler_default_filters``. [58]
+[57]
 
-   .. code-block:: sh
+-  Append the NUMA filter "NUMATopologyFilter" to the Nova ``scheduler_default_filters`` key.
 
-       # vim /etc/nova/nova.conf
-       [ DEFAULT ] scheduler_default_filters = RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImageProp
-       ertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,NUMATopologyFilter,AggregateInstanceExtraSpecsFilter
+File: /etc/nova/nova.conf
+
+   .. code-block:: ini
+
+       [DEFAULT]
+       scheduler_default_filters = <EXISTING_FILTERS>,NUMATopologyFilter
 
 -  Restart the Nova scheduler service on the controller node(s).
 
@@ -1870,33 +1785,40 @@ CPU Pinning
        # openstack host list | grep compute
        # openstack aggregate host add <AGGREGATE_ZONE> <COMPUTE_HOST>
 
--  Modify a flavor to provide dedicated CPU pinning.
+-  Modify a flavor to provide dedicated CPU pinning. There are three supported policies to use:
+
+    -  isolate = Use cores on the same physical processor. Do not allocate any threads.
+    -  prefer (default) = Cores and threads should be on the same physical processor. Fallback to using mixed cores and threads across different processors if there are not enough resources available.
+    -  require = Cores and threads must be on the same physical processor.
+
+       .. code-block:: sh
+
+           # openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=<POLICY>
+
+-  Alternatively, set the CPU pinning properties on an image.
 
    .. code-block:: sh
 
-       # openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=prefer
+       # openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=<POLICY>
 
--  Optionally, force images to only work with CPU pinned flavors. [59]
-
-   .. code-block:: sh
-
-       # openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=isolate
+[58]
 
 Ceph
 ^^^^
 
-Nova can be configured to use Ceph as the storage provider for the
-instance. This works with any QEMU based hypervisor.
+Nova can be configured to use Ceph as the storage provider for the instance. This works with any QEMU and Libvirt based hypervisor.
 
--  /etc/nova/nova.conf
+File: /etc/nova/nova.conf
 
-   -  [libvirt]
+.. code-block:: ini
 
-      -  images\_type = rbd
-      -  images\_rbd\_pool = ``<CEPH_VOLUME_POOL>``
-      -  images\_rbd\_ceph\_conf = /etc/ceph/ceph.conf
-      -  rbd\_user = ``<CEPHX_USER>``
-      -  rbd\_secret\_uuid = ``<LIBVIRT_SECRET_UUID>``
+    [libvirt]
+    images_type = rbd
+    images_rbd_pool = <CEPH_VOLUME_POOL>
+    images_rbd_ceph_conf = /etc/ceph/ceph.conf
+    rbd_user = <CEPHX_USER>
+    rbd_secret_uuid = <LIBVIRT_SECRET_UUID>
+    disk_cachemodes="network=writeback"
 
 [60]
 
@@ -1925,12 +1847,15 @@ AMD:
     # echo “options kvm_amd nested=1” >> /etc/modprobe.d/kvm_amd.conf
     # modprobe kvm_amd
 
--  /etc/nova/nova.conf
+-  Use a hypervisor technology that supports nested virtualization such as KVM.
 
-   -  [libvirt]
+File: /etc/nova/nova.conf
 
-      -  virt\_type = kvm
-      -  cpu\_mode = host-passthrough
+.. code-block:: ini
+
+    [libvirt]
+    virt_type = kvm
+    cpu_mode = host-passthrough
 
 [61]
 
@@ -1957,12 +1882,12 @@ Provider Networks
 Linux Bridge
 &&&&&&&&&&&&
 
-https://docs.openstack.org/neutron/pike/admin/deploy-lb-provider.html
+https://docs.openstack.org/neutron/queens/admin/deploy-lb-provider.html
 
 Open vSwitch
 &&&&&&&&&&&&
 
-https://docs.openstack.org/neutron/pike/admin/deploy-ovs-provider.html
+https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
 
 Self-Service Networks
 '''''''''''''''''''''
@@ -1970,7 +1895,7 @@ Self-Service Networks
 Linux Bridge
 &&&&&&&&&&&&
 
-https://docs.openstack.org/neutron/pike/admin/deploy-lb-selfservice.html
+https://docs.openstack.org/neutron/queens/admin/deploy-lb-selfservice.html
 
 Open vSwitch
 &&&&&&&&&&&&
@@ -1987,54 +1912,50 @@ referred to as ``br-provider``) for internal tagged traffic and
     # ovs-vsctl add-br br-ex
     # ovs-vsctl add-port br-ex <EXTERNAL_INTERFACE>
 
--  /etc/neutron/neutron.conf
+File: /etc/neutron/neutron.conf
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  core\_plugin = ml2
-      -  service\_plugins = router
-      -  allow\_overlapping\_ips = True
+    [DEFAULT]
+    core_plugin = ml2
+    service_plugins = router
+    allow_overlapping_ips = True
 
--  /etc/neutron/plugins/ml2/ml2\_conf.ini
+File: /etc/neutron/plugins/ml2/ml2\_conf.ini
 
-   -  [ml2]
+.. code-block:: ini
 
-      -  type\_drivers = flat,vlan,vxlan
-      -  tenant\_network\_types = vxlan
-      -  mechanism\_drivers = linuxbridge,l2population
-      -  ml2\_type\_vxlan = ``<START_NUMBER>``,\ ``<END_NUMBER>``
+    [ml2]
+    type_drivers = flat,vlan,vxlan
+    tenant_network_types = vxlan
+    mechanism_drivers = openvswitch,l2population
+    [ml2_type_vxlan]
+    vni_ranges = <START_NUMBER>,<END_NUMBER>
 
--  /etc/neutron/plugins/ml2/openvswitch\_agent.ini
+-  The ``<LABEL>`` can be any unique name. It is used as an alias for the interface name. The "local_ip" address should be accessible on the ``br-vlan`` interface.
 
-   -  [ovs]
+File: /etc/neutron/plugins/ml2/openvswitch\_agent.ini
 
-      -  bridge\_mappings = ``<LABEL>``:br-vlan
+.. code-block:: ini
 
-         -  The ``<LABEL>`` can be any unique name. It is used as an
-            alias for the interface name.
+    [ovs]
+    bridge_mappings = <LABEL>:br-vlan
+    local_ip = <IP_ADDRESS>
+    [agent]
+    tunnel_types = vxlan
+    l2_population = True
+    [securitygroup]
+    firewall_driver = iptables_hybrid
 
-      -  local\_ip = ``<IP_ADDRESS>``
+-  The "external_network_bridge" key should be left defined with no value.
 
-         -  This IP address should be accessible on the ``br-vlan``
-            interface.
+File: /etc/neutron/l3\_agent.ini
 
-   -  [agent]
+.. code-block:: ini
 
-      -  tunnel\_types = vxlan
-      -  l2\_population = True
-
-   -  [securitygroup]
-
-      -  firewall\_driver = iptables\_hybrid
-
--  /etc/neutron/l3\_agent.ini
-
-   -  [DEFAULT]
-
-      -  interface\_driver = openvswitch
-      -  external\_network\_bridge =
-
-         -  This value should be left defined but blank.
+    [DEFAULT]
+    interface_driver = openvswitch
+    external_network_bridge =
 
 [63]
 
@@ -2066,25 +1987,25 @@ DNS will not work. It is possible to either provide a default list of
 name servers or configure Neutron to refer to the relevant
 /etc/resolv.conf file on the server.
 
-Scenario #1 - Define default resolvers (recommended)
+File: /etc/neutron/dhcp\_agent.ini
 
--  /etc/neutron/dhcp\_agent.ini
+Scenario #1 - Define a list of default resolvers (recommended)
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  dnsmasq\_dns\_servers = 8.8.8.8,8.8.4.4
+    [DEFAULT]
+    dnsmasq_dns_servers = 8.8.8.8,8.8.4.4
 
 Scenario #2 - Leave resolvers to be configured by the subnet details
 
 -  Nothing needs to be configured. This is the default setting.
 
-Scenario #3 - Do not provide resolvers
+Scenario #3 - Do not provide resolvers, use the ones provided in the image
 
--  /etc/neutron/dhcp\_agent.ini
+.. code-block:: ini
 
-   -  [DEFAULT]
-
-      -  dnsmasq\_local\_resolv = True
+    [DEFAULT]
+    dnsmasq_local_resolv = True
 
 [65]
 
@@ -2098,59 +2019,63 @@ other post-boot tasks.
 
 Assuming authentication is already configured, set these options for the
 OpenStack environment. These are the basics needed before the metadata
-service can be used correctly. Then you can choose to use DHCP
+service can be used correctly. Then it can also be configured to use DHCP
 namespaces (layer 2) or router namespaces (layer 3) for
 delivering/receiving requests.
 
--  /etc/neutron/metadata\_agent.ini
+File: /etc/neutron/metadata\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  nova\_metadata\_ip = CONTROLLER\_IP
-      -  metadata\_proxy\_shared\_secret = ``<SECRET_KEY>``
+    [DEFAULT]
+    nova_metadata_ip = <CONTROLLER_IP>
+    metadata_proxy_shared_secret = <SECRET_KEY>
 
--  /etc/nova/nova.conf
+File: /etc/nova/nova.conf
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  enabled\_apis = osapi\_compute,metadata
-
-   -  [neutron]
-
-      -  service\_metadata\_proxy = True
-      -  metadata\_proxy\_shared\_secret = ``<SECRET_KEY>``
+    [DEFAULT]
+    enabled\_apis = osapi\_compute,metadata
+    [neutron]
+    service_metadata_proxy = True
+    metadata_proxy_shared_secret = <SECRET_KEY>
 
 Scenario #1 - DHCP Namespace (recommended for DVR)
 
--  /etc/neutron/dhcp\_agent.ini
+File: /etc/neutron/dhcp\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  force\_metadata = True
-      -  enable\_isolated\_metadata = True
-      -  enable\_metadata\_network = True
+    [DEFAULT]
+    force_metadata = True
+    enable_isolated_metadata = True
+    enable_metadata_network = True
 
--  /etc/neutron/l3\_agent.ini
+File: /etc/neutron/l3\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  enable\_metadata\_proxy = False
+    [DEFAULT]
+    enable_metadata_proxy = False
 
 Scenario #2 - Router Namespace
 
--  /etc/neutron/dhcp\_agent.ini
+File: /etc/neutron/dhcp\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  force\_metadata = False
-      -  enable\_isolated\_metadata = True
-      -  enable\_metadata\_network = False
+    [DEFAULT]
+    force_metadata = False
+    enable_isolated_metadata = True
+    enable_metadata_network = False
 
--  /etc/neutron/l3\_agent.ini
+File: /etc/neutron/l3\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  enable\_metadata\_proxy = True
+    [DEFAULT]
+    enable_metadata_proxy = True
 
 [66]
 
@@ -2161,60 +2086,53 @@ Load-Balancing-as-a-Service version 2 (LBaaS v2) has been stable since
 Liberty. It can be configured with either the HAProxy or Octavia
 back-end. LBaaS v1 has been removed since the Newton release.
 
--  /etc/neutron/neutron.conf
 
-   -  [DEFAULT]
+-  Append the LBaaSv2 service plugin.
 
-      -  service\_plugins = ``<EXISTING_PLUGINS>``,
-         neutron\_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+File: /etc/neutron/neutron.conf
 
-         -  Append the LBaaSv2 service plugin.
+.. code-block:: ini
 
--  /etc/neutron/lbaas\_agent.ini
+    [DEFAULT]
+    service_plugins = <EXISTING_PLUGINS>,neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
 
-   -  [DEFAULT]
+-  Specify the ``<INTERFACE_DRIVER>`` as either ``linuxbridge`` or ``openvswitch``.
 
-      -  interface\_driver =
-         neutron.agent.linux.interface.OVSInterfaceDriver
+File: /etc/neutron/lbaas\_agent.ini
 
-         -  This is for Neutron with the Open vSwitch backend only.
+.. code-block:: ini
 
-      -  interface\_driver =
-         neutron.agent.linux.interface.BridgeInterfaceDriver
+    [DEFAULT]
+    interface_driver = <INTERFACE_DRIVER>
 
-         -  This is for Neutron with the Linux Bridge backend only.
+Scenario #1 - HAProxy
 
-Scenario #1 - HAProxy (recommended for it's maturity)
+File: /etc/neutron/neutron\_lbaas.conf
 
--  /etc/neutron/neutron\_lbaas.conf
+.. code-block:: ini
 
-   -  [service\_providers]
+    [service_providers]
+    service_provider = LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 
-      -  service\_provider =
-         LOADBALANCERV2:Haproxy:neutron\_lbaas.drivers.haproxy.plugin\_driver.HaproxyOnHostPluginDriver:default
+-  Specify the HAProxy driver and the group that HAProxy runs as. In RHEL, it is ``haproxy``.
 
--  /etc/neutron/lbaas\_agent.ini
+File: /etc/neutron/lbaas\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  device\_driver =
-         neutron\_lbaas.drivers.haproxy.namespace\_driver.HaproxyNSDriver
-
-   -  [haproxy]
-
-      -  user\_group = haproxy
-
-         -  Specify the group that HAProxy runs as. In RHEL, it's
-            ``haproxy``.
+    [DEFAULT]
+    device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
+    [haproxy]
+    user_group = haproxy
 
 Scenario #2 - Octavia
 
--  /etc/neutron/neutron\_lbaas.conf
+File: /etc/neutron/neutron\_lbaas.conf
 
-   -  [service\_providers]
+.. code-block:: ini
 
-      -  service\_provider =
-         LOADBALANCERV2:Octavia:neutron\_lbaas.drivers.octavia.driver.OctaviaDriver:default
+    [service_providers]
+    service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
 
 [67]
 
@@ -2224,33 +2142,52 @@ Quality of Service
 The Quality of Service (QoS) plugin can be used to rate limit the amount
 of bandwidth that is allowed through a network port.
 
--  /etc/neutron/neutron.conf
+-  Append the QoS plugin to the list of service\_plugins.
 
-   -  [DEFAULT]
+File: /etc/neutron/neutron.conf
 
-      -  service\_plugins = neutron.services.qos.qos\_plugin.QoSPlugin
+.. code-block:: ini
 
-         -  Append the QoS plugin to the list of service\_plugins.
+    [DEFAULT]
+    service_plugins = <EXISTING_PLGUINS>,neutron.services.qos.qos_plugin.QoSPlugin
 
--  /etc/neutron/plugins/ml2/openvswitch\_agent.ini
+Layer 2 QoS
 
-   -  [ml2]
+-  Append the QoS driver to the modular layer 2 (ML2) extension drivers.
 
-      -  extension\_drivers = qos
+File: /etc/neutron/plugins/ml2/ml2_conf.ini
 
-         -  Append the QoS driver with the modular layer 2 plugin
-            provider. In this example it is added to Open vSwitch.
-            LinuxBridge and SR-IOV also support the quality of service
-            extension.
+.. code-block:: ini
 
--  /etc/neutron/plugins/ml2/ml2\_conf.ini
+    [ml2]
+    extension_drivers = qos
 
-   -  [agent]
+-  Also append the QoS extension directly to the modular layer 2 configuration. The three supported agents for QoS are: Linux Bridge, Open vSwitch, and SR-IOV.
 
-      -  extensions = qos
+File: /etc/neutron/plugins/ml2/<AGENT>\_agent.ini
 
-         -  Append the QoS extension to the modular layer 2
-            configuration.
+.. code-block:: ini
+
+    [agent]
+    extensions = <EXISTING_EXTENSIONS>,qos
+
+Layer 3 QoS
+
+-  Append the "fip_qos" extension in the neutron-l3-agent's configuration file.
+
+File: /etc/neutron/l3_agent.ini
+
+.. code-block:: ini
+
+    [agent]
+    extensions = <EXISTING_EXTENSIONS>,fip_qos
+
+-  For Open vSwitch only, this workaround is required to limit the bandwidth usage on routers.
+
+.. code-block:: ini
+
+    [DEFAULT]
+    ovs_use_veth = True
 
 [68]
 
@@ -2261,57 +2198,60 @@ Distributed virtual routing (DVR) is a concept that involves deploying
 routers to both the compute and network nodes to spread out resource
 usage. All layer 2 traffic will be equally spread out among the servers.
 Public floating IPs will still need to go through the SNAT process via
-the routers on the network nodes. This is only supported when the Open
+the routers on the controller or network nodes. This is only supported when the Open
 vSwitch agent is used. [69]
 
--  /etc/neutron/neutron.conf
+File: /etc/neutron/neutron.conf
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  router\_distributed = true
+    [DEFAULT]
+    router_distributed = True
 
--  /etc/neutron/l3\_agent.ini (compute)
+File (compute node):  /etc/neutron/l3\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  agent\_mode = dvr
+    [DEFAULT]
+    agent_mode = dvr
 
--  /etc/neutron/l3\_agent.ini (network or all-in-one)
+File (network node): /etc/neutron/l3\_agent.ini
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  agent\_mode = dvr\_snat
+    [DEFAULT]
+    agent_mode = dvr_snat
 
--  /etc/neutron/plugins/ml2/ml2\_conf.ini
+File: /etc/neutron/plugins/ml2/ml2\_conf.ini
 
-   -  [ml2]
+.. code-block:: ini
 
-      -  mechanism\_drivers = openvswitch, l2population
+    [ml2]
+    mechanism_drivers = openvswitch,l2population
 
--  /etc/neutron/plugins/ml2/openvswitch\_agent.ini
+File: /etc/neutron/plugins/ml2/openvswitch\_agent.ini
 
-   -  [agent]
+.. code-block:: ini
 
-      -  l2\_population = true
-
-   -  [agent]
-
-      -  enable\_distributed\_routing = true
+    [agent]
+    l2_population = True
+    enable_distributed_routing = True
 
 High Availability
 ^^^^^^^^^^^^^^^^^
 
-High availability (HA) in Neutron allows for routers to failover to
+High availability (HA) in Neutron allows for routers to fail-over to
 another duplicate router if one fails or is no longer present. All new
 routers will be highly available.
 
--  /etc/neutron/neutron.conf
+File: /etc/neutron/neutron.conf
 
-   -  [DEFAULT]
+.. code-block:: ini
 
-      -  l3\_ha = true
-      -  max\_l3\_agents\_per\_router = 2
-      -  allow\_automatic\_l3agent\_failover = true
+    [DEFAULT]
+    l3_ha = True
+    max_l3_agents_per_router = 2
+    allow_automatic_l3agent_failover = True
 
 [70]
 
@@ -2405,60 +2345,43 @@ The Cinder service provides block devices for instances.
 Ceph
 ^^^^
 
-Ceph has become the most popular backend to Cinder due to it's high
+Ceph has become the most popular back-end to Cinder due to it's high
 availability and scalability.
 
--  /etc/cinder/cinder.conf
+-  Create a new ``[ceph]`` section for the back-end configuration. The name of this new section must reflect what is set in "enabled_backends."
 
-   -  [DEFAULT]
+File: /etc/cinder/cinder.conf
 
-      -  enabled\_backends = ceph
+.. code-block:: ini
 
-         -  Use the ``[ceph]`` section for the backend configuration.
-            This new section can actually be named anything but the same
-            name must be used here.
+    [DEFAULT]
+    enabled_backends = ceph
+    volume_backend_name = volumes
+    rados_connect_timeout = -1
+    [ceph]
+    volume_driver = cinder.volume.drivers.rbd.RBDDriver
+    rbd_pool = <RBD_VOLUME_POOL>
+    rbd_ceph_conf = /etc/ceph/ceph.conf
+    # Ceph supports efficient thin provisioned snapshots when this is set to "False."
+    rbd_flatten_volume_from_snapshot = False
+    # Only clone an image up to 5 times before creating a new copy of the image.
+    rbd_max_clone_depth = 5
+    rbd_store_chunk_size = 4
+    # Do not timeout when trying to connect to RADOS.
+    rados_connect_timeout = -1
+    glance_api_version = 2
 
-      -  volume\_backend\_name = volumes
-      -  rados\_connect\_timeout = -1
+File: /etc/nova/nova.conf
 
-   -  [ceph]
+.. code-block:: ini
 
-      -  volume\_driver = cinder.volume.drivers.rbd.RBDDriver
-
-         -  Use Cinder's RBD Python library.
-
-      -  rbd\_pool = volumes
-
-         -  This is the RBD pool to use for volumes.
-
-      -  rbd\_ceph\_conf = /etc/ceph/ceph.conf
-      -  rbd\_flatten\_volume\_from\_snapshot = false
-
-         -  Ceph supports efficient thin provisioned snapshots.
-
-      -  rbd\_max\_clone\_depth = 5
-      -  rbd\_store\_chunk\_size = 4
-      -  rados\_connect\_timeout = -1
-      -  glance\_api\_version = 2
-
--  /etc/nova/nova.conf
-
-   -  [libvirt]
-
-      -  images\_type = rbd
-      -  images\_rbd\_pool = volumes
-      -  images\_rbd\_ceph\_conf = /etc/ceph/ceph.conf
-      -  rbd\_user = cinder
-      -  rbd\_secret\_uuid = ``<LIBVIRT_SECRET_UUID>``
-
-         -  This is the Libvirt secret UUID that allows for
-            authentication with Cephx. It is configured with the
-            ``virsh`` secret commands. Refer to the Root Page's
-            ``Virtualization`` guide for more information.
-
-            .. code-block:: sh
-
-                # virsh --help | grep secret
+    [libvirt]
+    images_type = rbd
+    images_rbd_pool = <RBD_VOLUME_POOL>
+    images_rbd_ceph_conf = /etc/ceph/ceph.conf
+    rbd_user = <CEPHX_USER>
+    # This is the Libvirt secret UUID used for Cephx authentication.
+    rbd_secret_uuid = <LIBVIRT_SECRET_UUID>
 
 [73]
 
@@ -2489,31 +2412,27 @@ Ceph
 
 Ceph can be used to store images.
 
--  /etc/glance/glance-api.conf
+File: /etc/glance/glance-api.conf
 
-   -  [DEFAULT]
+-  First configure "show_image_direct_url" to allow copy-on-write (CoW) operations for efficient usage of storage for instances. Instead of cloning the entire image, CoW will be used to store changes between the instance and the original image. This assumes that Cinder is also configured to use Ceph.
+-  The back-end Ceph IP addressing will be viewable by the public Glance API. For security purposes, ensure that Ceph is not publicly accessible.
 
-      -  show\_image\_direct\_url = True
+.. code-block:: ini
 
-         -  This will allow copy-on-write (CoW) operations for efficient
-            usage of storage for instances. Instead of cloning the
-            entire image, CoW will be used to store changes between the
-            instance and the original image. This assumes that Cinder is
-            also configured to use Ceph.
-         -  The back-end Ceph addressing will be viewable by the public
-            Glance API. It is important to make sure that Ceph is not
-            publicly accessible.
+    [DEFAULT]
+    show_image_direct_url = True
 
-   -  [glance\_store]
+.. code-block:: ini
 
-      -  stores = rbd
-      -  default\_store = rbd
-      -  rbd\_store\_pool = ``<RBD_POOL>``
-      -  rbd\_store\_user = ``<RBD_USER>``
-      -  rbd\_store\_ceph\_conf = /etc/ceph/ceph.conf
-      -  rbd\_store\_chunk\_size = 8
+    [glance_store]
+    stores = rbd
+    default_store = rbd
+    rbd_store_pool = <RBD_IMAGES_POOL>
+    rbd_store_user = <CEPHX_USER>
+    rbd_store_ceph_conf = /etc/ceph/ceph.conf
+    rbd_store_chunk_size = 8
 
-[75]
+[75][96]
 
 Neutron Troubleshooting
 -----------------------
@@ -2607,9 +2526,7 @@ For the CLI utilities to work, the environment variables need to be set
 for the project and user. This way the commands can automatically
 authenticate.
 
--  Add the credentials to a text file This is generally ends with the
-   ".sh" extension to signify it's a shell file. A few default variables
-   are filled in below.
+-  Add the credentials to a text file. Use the ".sh" extension to signify it's a shell script. A few default variables are filled in below.
 -  Keystone v2.0
 
    .. code-block:: sh
@@ -3230,7 +3147,6 @@ OpenStack can be tuned to use less load and run faster.
     -  Switch to Fernet keys.
 
         -  Creation of tokens is significantly faster because it does not rely on storing them in a database.
-        -  Refer to `Configurations - Keystone - Token Provider <#configurations---keystone---token-provider>`__.
 
 -  Neutron
 
@@ -3240,21 +3156,21 @@ OpenStack can be tuned to use less load and run faster.
 
 -  General
 
-    -  Utilize /etc/hosts.
+    -  Utilize local DNS.
 
-        -  Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
+        -  Ensure that all of the domain names in use are either available via a local recursive DNS server or on each server in the /etc/hosts file. This avoids a performance hit from external DNS lookups.
 
     -  Use memcache.
 
-        -  This is generally configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
+        -  This is configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
 Bibliography
 ------------
 
-1. "OpenStack Releases." OpenStack Releases. October 4, 2017. Accessed October 4, 2017. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. March 15, 2018. Accessed March 15, 2018. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
@@ -3263,28 +3179,19 @@ Bibliography
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
-10. "Project Navigator." OpenStack. Accessed May 14, 2017. https://www.openstack.org/software/project-navigator/
-11. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
+10. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
+11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
-14. "CHAPTER 5. REMOVING PACKSTACK DEPLOYMENTS." Red Hat Documentation. Accessed November 6, 2017. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux\_OpenStack\_Platform/6/html/Deploying\_OpenStack\_Proof\_of\_Concept\_Environments/chap-Removing\_Packstack\_Deployments.html
-15. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed August 25, 2017. https://github.com/openstack/openstack-ansible
-16. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-17. "Quick Start." OpenStack-Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-18. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-19. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
-20. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
-21. "Nova role for OpenStack-Ansible." OpenStack Documentation. April 7, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/
+15. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
+16. "[OpenStack-Ansible] Quick Start." OpenStack  Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html
+19. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+21. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 22. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 23. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
-24. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-25. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-26. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-27. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-28. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-29. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-30. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. April 21, 2017. Accessed April 23, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-31. "tripleo-quickstart." TripleO-Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
+27. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
+28. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
+29. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/index.html
 32. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 33. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 34. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
@@ -3296,38 +3203,34 @@ Bibliography
 40. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
 41. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
 42. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
-43. "Install and configure [Ceilometer] for Red Hat Enterprise Linux and CentOS." OpenStack Documentation. March 24, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-install-guide/telemetry/ocata/install-base-rdo.html
+43. "[Ceilometer] Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/ceilometer/queens/install/
 44. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
-45. "Message queue." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/environment-messaging.html
-46. "RPC messaging configurations." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/common-configurations/rpc.html
-47. "ZeroMQ Driver Deployment Guide." OpenStack Documentation. January 22, 2018. Accessed January 24, 2018. https://docs.openstack.org/oslo.messaging/latest/admin/zmq_driver.html
-48. "Newton Series Release Notes." OpenStack Documentation. Accessed February 18, 2017. http://docs.openstack.org/releasenotes/keystone/newton.html
+45. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
+46. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
+47. "ZeroMQ Driver Deployment Guide." OpenStack Documentation. March 1, 2018. Accessed March 15, 2018. https://docs.openstack.org/oslo.messaging/latest/admin/zmq_driver.html
+48. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 49. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
-50. "Installa and configure [Keystone on RDO]." OpenStack Documentation. October 11, 2017. Accessed January 24, 2018. https://docs.openstack.org/keystone/latest/install/keystone-install-rdo.html
+50. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
 51. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
 52. "Ocata Series [Keystone] Release Notes." OpenStack Documentation. Accessed April 3, 2017. https://docs.openstack.org/releasenotes/keystone/ocata.html
-53. "Install and configure [Keystone]." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/keystone-install.html
-54. "Hypervisors." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html
-55. "KVM." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-kvm.html
-56. "Xen." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-xen-libvirt.html
-57. "LXC (Linux containers)." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/compute/hypervisor-lxc.html
-58. "Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute." Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
-59. "OpenStack Administrator Guide SUSE OpenStack Cloud 7." SUSE Documentation. February 22, 2017. Accessed April 13, 2017. https://www.suse.com/documentation/suse-openstack-cloud-7/pdfdoc/book\_cloud\_admin/book\_cloud\_admin.pdf
-60. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+54. "Hypervisors." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html
+57. “Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute.” Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
+58. "CPU topologies." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/cpu-topologies.html
+60. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 18, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack
 61. "Nested Virtualization in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
-62. "[RDO Nova Installation] Overview." OpenStack Documentation. October 28, 2017. Accessed November 6, 2017. https://docs.openstack.org/nova/pike/install/overview.html
-63. "Open vSwitch: Self-service networks." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/deploy-ovs-selfservice.html
-64. "[Installing the] Networking service." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/install-guide-rdo/neutron.html
-65. "Name resolution for instances." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/config-dns-res.html
+62. "[Compute service] Overview." OpenStack Documentation. March 8, 2018. Accessed March 19, 2018. https://docs.openstack.org/nova/queens/install/overview.html
+63. "Open vSwitch: Self-service networks." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html
+64. "Neutron Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/install/index.html
+65. "DNS resolution for instances." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dns-res.html
 66. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
-67. "Load Balancer as a Service (LBaaS)." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. http://docs.openstack.org/draft/networking-guide/config-lbaas.html
-68. "Quality of Service (QoS)." OpenStack Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.openstack.org/draft/networking-guide/config-qos.html
+67. "Load Balancer as a Service (LBaaS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-lbaas.html
+68. "Quality of Service (QoS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-qos.html
 69. "Neutron/DVR/HowTo" OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
-70. "Distributed Virtual Routing with VRRP." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/networking-guide/config-dvr-ha-snat.html
+70. "Distributed Virtual Routing with VRRP." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html
 71. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 72. "[Glance] Basic Configuration." OpenStack Documentation. April 5, 2017. Accessed April 5, 2017. https://docs.openstack.org/developer/glance/configuring.html
 73. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack
-74. "Volume encryption supported by the key manager" Openstack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/ocata/config-reference/block-storage/volume-encryption.html
+74. "Volume encryption supported by the key manager." Openstack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html
 75. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 76. "Adding additional NAT rule on neutron-l3-agent." Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/
 77. "Networking in too much detail." RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/
@@ -3344,7 +3247,10 @@ Bibliography
 88. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html
 89. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
 90. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
-91. "[Ironic] Enabling drivers." OpenStack Documentation. January 17, 2018. Accessed January 29, 2018. https://docs.openstack.org/ironic/pike/admin/drivers.html
+91. "[Ironic] Enabling drivers." OpenStack Documentation. March 15, 2018. Accessed March 15, 2018. https://docs.openstack.org/ironic/queens/admin/drivers.html
 92. "VirtualBMC." TripleO Documentation. Accessed January 29, 2018.
 93. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
 94. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
+95. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86_64/openstack-pike/
+96. "External Ceph." OpenStack Docuemntation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
+97. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/undercloud.html
