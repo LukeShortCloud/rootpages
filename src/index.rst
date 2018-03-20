@@ -31,3 +31,5 @@ Welcome to Root Pages!
    virtualization
    wine
 
+`Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
+
