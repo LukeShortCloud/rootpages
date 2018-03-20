@@ -235,7 +235,7 @@ OpenStack can be installed as an all-in-one (AIO) server or onto a cluster of se
 Packstack
 ~~~~~~~~~
 
-Supported operating system: RHEL 7, Fedora
+Supported operating system: RHEL/CentOS 7, Fedora
 
 Packstack is part of Red Hat's RDO project. It's purpose is for
 providing small and simple demonstrations of OpenStack. This tool does
@@ -250,14 +250,14 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install https://repos.fedorapeople.org/repos/openstack/openstack-ocata/rdo-release-ocata-3.noarch.rpm
+    # yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
     # subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 
 CentOS:
 
 .. code-block:: sh
 
-    # yum install centos-release-openstack-ocata
+    # yum install centos-release-openstack-queens
 
 Finally, install the Packstack utility.
 
@@ -408,48 +408,12 @@ Common options:
 Uninstall
 ^^^^^^^^^
 
-For uninstalling everything that is installed by Packstack, run this
-Bash script on all of the OpenStack nodes [14]. Use at your own risk.
-
-.. code:: bash
-
-    #!/bin/bash
-    # Warning! Dangerous step! Destroys VMs
-    for x in $(virsh list --all | grep instance- | awk '{print $2}') ; do
-        virsh destroy $x ;
-        virsh undefine $x ;
-    done ;
-
-    # Warning! Dangerous step! Removes lots of packages, including many
-    # which may be unrelated to RDO.
-    yum remove -y nrpe "*nagios*" puppet ntp ntp-perl ntpdate "*openstack*" \
-    "*nova*" "*keystone*" "*glance*" "*cinder*" "*swift*" \
-    mysql mysql-server httpd "*memcache*" scsi-target-utils \
-    iscsi-initiator-utils perl-DBI perl-DBD-MySQL ;
-
-    ps -ef | grep -i repli | grep swift | awk '{print $2}' | xargs kill ;
-
-    # Warning! Dangerous step! Deletes local application data
-    rm -rf /etc/nagios /etc/yum.repos.d/packstack_* /root/.my.cnf \
-    /var/lib/mysql/ /var/lib/glance /var/lib/nova /etc/nova /etc/swift \
-    /srv/node/device*/* /var/lib/cinder/ /etc/rsync.d/frag* \
-    /var/cache/swift /var/log/keystone ;
-
-    umount /srv/node/device* ;
-    killall -9 dnsmasq tgtd httpd ;
-    setenforce 1 ;
-    vgremove -f cinder-volumes ;
-    losetup -a | sed -e 's/:.*//g' | xargs losetup -d ;
-    find /etc/pki/tls -name "ssl_ps*" | xargs rm -rf ;
-    for x in $(df | grep "/lib/" | sed -e 's/.* //g') ; do
-        umount $x ;
-    done
+For uninstalling everything that is installed by Packstack, run `this Bash script <https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux\_OpenStack\_Platform/6/html/Deploying\_OpenStack\_Proof\_of\_Concept\_Environments/chap-Removing\_Packstack\_Deployments.html>`__ on all of the OpenStack nodes. Use at your own risk.
 
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
-Supported operating systems: RHEL 7, Ubuntu 16.04, openSUSE Leap 42,
-SUSE Linux Enterprise 12
+Supported operating systems: RHEL/CentOS 7, Ubuntu 16.04, openSUSE Leap 42
 
 OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu
 inside of LXC containers that run the OpenStack services. This was
@@ -476,7 +440,7 @@ Install
 Minimum requirements:
 
 -  8 CPU cores
--  50GB storage
+-  50GB storage (80GB recommended)
 -  8GB RAM (16GB recommended)
 
 This quick installation guide covers how to install an all-in-one
@@ -490,7 +454,7 @@ Setup the OpenStack-Ansible project.
 
     # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
     # cd /opt/openstack-ansible/
-    # git checkout stable/ocata
+    # git checkout stable/queens
 
 There are two all-in-one scenarios that will run different Ansible
 Playbooks. The default is "aio" but this can be changed to the second
@@ -528,8 +492,7 @@ Extra Playbooks can be added by copying them from
 ``/etc/openstack_deploy/conf.d/``. The file extensions should be changed
 from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 
-Then OpenStack-Ansible project can now setup and deploy the LXC
-containers to run OpenStack.
+Then OpenStack-Ansible project can now setup and deploy the LXC containers along with the OpenStack services.
 
 .. code-block:: sh
 
@@ -546,77 +509,12 @@ OpenStack-Ansible creates. Running the ``scripts/run-playbooks.sh``
 script will not work again until the existing LXC containers and
 configurations have been removed. [16]
 
-Operations
-''''''''''
-
-A new node can be added at any time to an existing all-in-one
-deployment. Copy the configuration file for an all-in-one instance.
-
-.. code-block:: sh
-
-    # cd /opt/openstack-ansible/
-    # cp etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml.aio /etc/openstack_deploy/conf.d/<PLAYBOOK_INSTANCE_CONFIGURATION>.yml
-
-Add the new container to the list of inventory servers.
-
-.. code-block:: sh
-
-    # /opt/openstack-ansible/scripts/inventory-manage.py > /dev/null
-
-Update the repository server to include the new packages required.
-
-.. code-block:: sh
-
-    # cd playbooks/
-    # openstack-ansible repo-install.yml
-
-Deploy the new container and then run the Playbook.
-
-.. code-block:: sh
-
-    # openstack-ansible setup-everything.yml --limit <NEW_CONTAINER_NAME>
-    # openstack-ansible <PLAYBOOK> --limit <NEW_CONTAINER_NAME>
-
-[17]
-
 Uninstall
 '''''''''
 
-This Bash script can be used to clean up and uninstall most of the
+`This Bash script <https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
-way to uninstall OpenStack-Ansible is to reinstall the operating system. [18]
-
-.. code:: bash
-
-    #!/bin/bash
-    # # Move to the playbooks directory.
-    cd /opt/openstack-ansible/playbooks
-
-    # # Destroy all of the running containers.
-    openstack-ansible lxc-containers-destroy.yml
-
-    # # On the host stop all of the services that run locally and not
-    # #  within a container.
-    for i in \
-           $(ls /etc/init \
-             | grep -e "nova\|swift\|neutron\|cinder" \
-             | awk -F'.' '{print $1}'); do \
-        service $i stop; \
-      done
-
-    # # Uninstall the core services that were installed.
-    for i in $(pip freeze | grep -e "nova\|neutron\|keystone\|swift\|cinder"); do \
-        pip uninstall -y $i; done
-
-    # # Remove crusty directories.
-    rm -rf /openstack /etc/{neutron,nova,swift,cinder} \
-             /var/log/{neutron,nova,swift,cinder}
-
-    # # Remove the pip configuration files on the host
-    rm -rf /root/.pip
-
-    # # Remove the apt package manager proxy
-    rm /etc/apt/apt.conf.d/00apt-cacher-proxy
+way to uninstall OpenStack-Ansible is to reinstall the operating system. [16]
 
 Full
 ^^^^
@@ -640,23 +538,6 @@ It is also required to have 4 different network bridges.
    networks.
 -  ``br-vxlan`` = This should exist on the "network" and "compute"
    nodes. It is used for self-service networks.
-
-Download and install the latest stable OpenStack-Ansible suite from
-GitHub.
-
-.. code-block:: sh
-
-    # apt-get install git
-    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    # cd /opt/openstack-ansible/
-    # git checkout stable/ocata
-    # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
-
-Then copy over and modify the main configuration file.
-
-.. code-block:: sh
-
-    # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
 
 [19]
 
@@ -770,14 +651,10 @@ The valid service types are:
 -  magnum-infra = Magnum.
 -  sahra-infra = Sahara.
 
-[20]
+[19]
 
 Nova
 &&&&
-
-The default variables for Nova are listed at
-https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/.
-These can be overriden.
 
 Common variables:
 
@@ -871,6 +748,59 @@ Another real-world example of deploying and managing Ceph as part of
 OpenStack-Ansible can be found here:
 https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
 
+Install
+'''''''
+
+Download and install the latest stable OpenStack-Ansible suite from
+GitHub.
+
+.. code-block:: sh
+
+    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+    # cd /opt/openstack-ansible/
+    # git checkout stable/queens
+    # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
+
+Install Ansible and the related OpenStack Roles.
+
+.. code-block:: sh
+
+    # /opt/openstack-ansible/scripts/bootstrap-ansible.sh
+
+Generate random passwords for the services.
+
+.. code-block:: sh
+
+    # /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+
+- Configure OSA and verify that the configuration syntax is correct.
+
+.. code-block:: sh
+
+    # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
+    # vim /etc/openstack_deploy/openstack_user_config.yml
+    # openstack-ansible setup-infrastructure.yml --syntax-check
+
+-  Prepare the hosts.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-hosts.yml
+
+- Setup the LXC containers.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-infrastructure.yml
+
+-  Install the OpenStack services.
+
+.. code-block:: sh
+
+    # openstack-ansible setup-openstack.yml
+
+[19]
+
 Operations
 ''''''''''
 
@@ -899,7 +829,7 @@ Verify that all of the correct services and endpoints exist.
     # openstack service list
     # openstack endpoint list
 
-[24]
+[27]
 
 Ansible Inventory
 &&&&&&&&&&&&&&&&&
@@ -939,7 +869,7 @@ for management and troubleshooting.
 
        # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
-[25]
+[28]
 
 Add a Infrastructure Node
 &&&&&&&&&&&&&&&&&&&&&&&&&
@@ -959,20 +889,21 @@ infrastructure node.
     # openstack-ansible setup-everything.yml --limit @/root/add_host.limit
     # openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
 
-[26]
+[27]
 
 Add a Compute Node
 &&&&&&&&&&&&&&&&&&
 
 Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
-OpenStack-Ansible deployment Playbooks can be run again.
+OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use then the `` /etc/openstack_deploy/conf.d/ceilometer.yml`` configuration will also have to be updated.
 
 .. code-block:: sh
 
     # cd /opt/openstack-ansible/playbooks
-    # openstack-ansible setup-hosts.yml --limit <NEW_COMPUTE_HOST_NAME>
-    # openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit <NEW_COMPUTE_HOST_NAME>
+    # openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
+    # ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
+    # openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
     # openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
 
 [27]
@@ -982,7 +913,7 @@ Remove a Compute Node
 
 Stop the services on the compute container and then use the
 ``openstack-ansible-ops`` project's Playbook ``remote_compute_node.yml``
-to fully it. Be sure to also remove the host from the
+to fully it. The host must also be removed from the
 ``/etc/openstack_deploy/openstack_user_config.yml`` configuration when
 done.
 
@@ -997,7 +928,7 @@ done.
     # cd /opt/openstack-ansible-ops/ansible_tools/playbooks
     # openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
 
-[28]
+[27]
 
 Upgrades
 ''''''''
@@ -1006,7 +937,7 @@ Minor
 &&&&&
 
 This is for upgrading OpenStack from one minor version to another in the
-same major release. An example would be going from 15.0.0 to 15.1.1.
+same major release. An example would be going from 17.0.0 to 17.1.1.
 
 -  Change the OpenStack-Ansible version to a new minor tag release. If a
    branch for a OpenStack release name is being used already, pull the
@@ -1063,9 +994,8 @@ Major
 
 OpenStack-Ansible has scripts capable of fully upgrading OpenStack from
 one major release to the next. It is recommended to do a manual upgrade
-by following the official guide:
-https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/manual-upgrade.html.
-Below outlines how to do this automatically. [30]
+by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/user/manual-upgrade.html>`__
+Below outlines how to do this automatically. [29]
 
 -  Move into the OpenStack-Ansible project.
 
@@ -1092,10 +1022,9 @@ TripleO
 
 Supported operating systems: RHEL 7, Fedora >= 22
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed
-in a small, usually all-in-one, environment. This server is then used to
-create and manage a full Overcloud cluster. Virtual machines or physical
-servers can be used. [31]
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
+
+In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. There is also experimental support for running the Undercloud services in containers. [97]
 
 Quick
 ^^^^^
@@ -1159,7 +1088,7 @@ variables to a YAML file and then add the arguments
 
 .. code-block:: sh
 
-    $ bash quickstart.sh --release stable/ocata --tags all <REMOTE_HYPERVISOR_IP>
+    $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
 
 [33]
 
@@ -1191,6 +1120,7 @@ variables to a YAML file and then add the arguments
       automatically. If a Playbook is specified via ``-p``, then
       everything in that Playbook will run.
    -  ``-v`` = Show verbose output from the Ansible Playbooks.
+   -  ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [97]
 
 --------------
 
@@ -1198,31 +1128,31 @@ variables to a YAML file and then add the arguments
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Undercloud services.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Setup the Overcloud virtual machines.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
 
 -  Install the Overcloud services.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
 
 -  Validate the installation.
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --release stable/ocata --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 
 [37]
 
@@ -1245,8 +1175,8 @@ creating an Undercloud virtual machine.
 
       .. code-block:: sh
 
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-ocata.repo https://trunk.rdoproject.org/centos7-ocata/current/delorean.repo
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-ocata.repo https://trunk.rdoproject.org/centos7-ocata/delorean-deps.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
 
    -  Install the Undercloud environment deployment tools.
 
@@ -1407,6 +1337,13 @@ Overcloud
 
        $ openstack help overcloud deploy
 
+-  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
+
+   .. code-block:: sh
+
+     $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
+     $ openstack overcloud deploy <DEPLOY_OPTIONS> -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml
+
 -  Verify that the Overcloud was deployed.
 
    .. code-block:: sh
@@ -1458,7 +1395,7 @@ Add a Compute Node
 
 .. code-block:: sh
 
-    $ openstack overcloud deploy --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
+    $ openstack overcloud deploy <DEPLOY_OPTIONS> --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
 
 [93]
 
@@ -3210,7 +3147,6 @@ OpenStack can be tuned to use less load and run faster.
     -  Switch to Fernet keys.
 
         -  Creation of tokens is significantly faster because it does not rely on storing them in a database.
-        -  Refer to `Configurations - Keystone - Token Provider <#configurations---keystone---token-provider>`__.
 
 -  Neutron
 
@@ -3220,9 +3156,9 @@ OpenStack can be tuned to use less load and run faster.
 
 -  General
 
-    -  Utilize /etc/hosts.
+    -  Utilize local DNS.
 
-        -  Ensure that all of your domain names (including the public domains) are listed in the /etc/hosts. This avoids a performance hit from DNS lookups. Alternatively, consider setting up a recursive DNS server on the controller nodes.
+        -  Ensure that all of the domain names in use are either available via a local recursive DNS server or on each server in the /etc/hosts file. This avoids a performance hit from external DNS lookups.
 
     -  Use memcache.
 
@@ -3244,27 +3180,18 @@ Bibliography
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
 10. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
-11. "All-in-one quickstart: Proof of concept for single node." RDO Project. Accessed April 3, 2017. https://www.rdoproject.org/install/quickstart/
+11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
-14. "CHAPTER 5. REMOVING PACKSTACK DEPLOYMENTS." Red Hat Documentation. Accessed November 6, 2017. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux\_OpenStack\_Platform/6/html/Deploying\_OpenStack\_Proof\_of\_Concept\_Environments/chap-Removing\_Packstack\_Deployments.html
-15. "OpenStack-Ansible." GitHub. March 30, 2017. Accessed August 25, 2017. https://github.com/openstack/openstack-ansible
-16. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-17. "Quick Start." OpenStack-Ansible Developer Documentation. March 30, 2017. Accessed March 31, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-18. "Quick Start." OpenStack-Ansible Developer Documentation. March 29, 2017. Accessed March 30, 2017. http://docs.openstack.org/developer/openstack-ansible/developer-docs/quickstart-aio.html
-19. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
-20. "[OpenStack-Ansible Project Deploy Guide] Overview." OpenStack Documentation. April 3, 2017. Accessed April 3, 2017. https://docs.openstack.org/project-deploy-guide/openstack-ansible/ocata/overview.html
-21. "Nova role for OpenStack-Ansible." OpenStack Documentation. April 7, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-os\_nova/ocata/
+15. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
+16. "[OpenStack-Ansible] Quick Start." OpenStack  Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html
+19. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+21. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 22. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 23. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
-24. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-25. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-26. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-27. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-28. "[OpenStack-Ansible] Operations guide." OpenStack Documentation. March 29, 2017. Accessed March 30, 2017. https://docs.openstack.org/developer/openstack-ansible/draft-operations-guide/index.html
-29. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. May 31, 2017. Accessed May 31, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-30. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. April 21, 2017. Accessed April 23, 2017. https://docs.openstack.org/developer/openstack-ansible/ocata/upgrade-guide/index.html
-31. "tripleo-quickstart." TripleO-Quickstart GitHub. January 10, 2017. Accessed January 15, 2017. https://github.com/openstack/tripleo-quickstart
+27. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
+28. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
+29. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/index.html
 32. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 33. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 34. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
@@ -3291,7 +3218,7 @@ Bibliography
 58. "CPU topologies." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/cpu-topologies.html
 60. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 18, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack
 61. "Nested Virtualization in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
-62. "[RDO Nova Installation] Overview." OpenStack Documentation. October 28, 2017. Accessed November 6, 2017. https://docs.openstack.org/nova/pike/install/overview.html
+62. "[Compute service] Overview." OpenStack Documentation. March 8, 2018. Accessed March 19, 2018. https://docs.openstack.org/nova/queens/install/overview.html
 63. "Open vSwitch: Self-service networks." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html
 64. "Neutron Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/install/index.html
 65. "DNS resolution for instances." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dns-res.html
@@ -3326,3 +3253,4 @@ Bibliography
 94. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
 95. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86_64/openstack-pike/
 96. "External Ceph." OpenStack Docuemntation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
+97. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/undercloud.html
