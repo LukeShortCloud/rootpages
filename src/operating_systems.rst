@@ -16,8 +16,10 @@ Arch Linux is a 64-bit operating system whose motto is "Keep it Simple." There i
 - Package Manager:
     - Pacman (CLI)
 
-- Derivative:
-    - Antergos [2]
+- Popular derivatives [2]:
+    - Antergos
+    - ArchLabs
+    - Manjaro
 
 Debian
 ------
@@ -33,9 +35,10 @@ Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD
 
 [3]
 
-- Derivatives:
-    - Ubuntu
+- Popular derivatives [2]:
+    - elementary
     - Linux Mint
+    - Ubuntu
 
 Fedora
 ------
@@ -49,8 +52,10 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
     - dnf (CLI)
     - dnfdragora (GUI)
 
-- Derivatives:
-    - Red Hat Enterprise Linux (RHEL) / Community Enterprise Linux (CentOS)
+- Popular derivatives [2]:
+    - Community Enterprise Linux (CentOS)
+    - Red Hat Enterprise Linux (RHEL)
+    - Scientific Linux
 
 Gentoo
 ------
@@ -63,8 +68,10 @@ Gentoo is designed to be very configurable and optimized. Most packages need to 
 - Package Manager:
     - Portage (CLI)
 
-- Derivatives:
-    - Chromium OS [7]
+- Popular derivatives [2][7]:
+    - Calculate Linux
+    - Chromium OS
+    - Container Linux
 
 Mandriva
 --------
@@ -78,7 +85,7 @@ Mandriva, which was originally called Mandrake Linux, was a fork of the original
     - urpmi (CLI)
     - rpmdrake (GUI)
 
-- Derivatives:
+- Popular derivatives [2]:
     - Mageia
     - OpenMandriva
     - PCLinuxOS
@@ -97,7 +104,9 @@ openSUSE is a upstream community operating system that is sponsored by SUSE. It 
     - zypper (CLI)
     - YaST (GUI)
 
-- Derivative:
+- Popular derivatives [2][12]:
+    - FyreLinux
+    - GeckoLinux
     - SUSE Linux Enterprise Server (SLES)
 
 [10]
@@ -109,7 +118,7 @@ Bibliography
 ------------
 
 1. "Arch Linux." Arch Linux. November 8, 2017. Accessed January 2, 2018. https://www.archlinux.org/
-2. "About antergos." antergos. Accessed January 2, 2018. https://antergos.com/about/
+2. "DistroWatch." DistroWatch. Accessed March 20, 2018. https://distrowatch.com/
 3. "Chapter 8 - The Debian package management tools." The Debian GNU/Linux FAQ. Accessed January 2, 2018. https://www.debian.org/doc/manuals/debian-faq/ch-pkgtools.en.html
 4. "What is the relationship between Fedora and Red Hat Enterprise Linux?" Red Hat. Accessed January 2, 2018. https://www.redhat.com/en/technologies/linux-platforms/articles/relationship-between-fedora-and-rhel
 5. "About CentOS." CentOS. Accessed January 2, 2018. https://www.centos.org/about/
@@ -119,3 +128,4 @@ Bibliography
 9. "About Gentoo." Gentoo Linux. Accessed January 2, 2018. https://www.gentoo.org/get-started/about/
 10. "[openSUSE Wiki] Main Page." openSUSE Wiki. November 16, 2016. Accssed January 2, 2018. https://en.opensuse.org/Main_Page
 11. "About Debian." Debian. June 6, 2017. Accessed January 2, 2018. https://www.debian.org/intro/about
+12. "Derivatives." OpenSUSE Wiki. Accessed March 20, 2018. https://en.opensuse.org/Derivatives
