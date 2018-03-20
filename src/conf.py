@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Root Pages'
-copyright = '2018, Luke Short'
+copyright = '2018, Luke Short. Documents licensed under GPLv3'
 author = 'Luke Short'
 
 # The version info for the project you're documenting, acts as replacement for
