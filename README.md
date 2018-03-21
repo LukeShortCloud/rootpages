@@ -96,9 +96,12 @@ A few quick notes about technical documentation:
 Recommended text editors:
 
 * Graphical User Interface (GUI):
-    * [Atom](https://atom.io/) with the [rst-snippets plugin](https://atom.io/packages/rst-snippets).
+    * [Atom](https://atom.io/) with these plugins:
+        * [rst-preview-pandoc](https://atom.io/packages/rst-preview-pandoc). Hint: Open the rendered RST preview page with `CONTROL` + `SHIFT` + `e`.
+        * [rst-snippets](https://atom.io/packages/rst-snippets). Hint: Create a generic Markdown or RST table outline and then press `CONTROL` + `ALT` + `t` together and then `ENTER` to automatically reformat it correctly.
 * Command-Line Interface (CLI):
-    * [Vim](https://github.com/vim/vim) with the [vim-rst-tables plugin](https://github.com/nvie/vim-rst-tables).
+    * [Vim](https://github.com/vim/vim) with this plugin:
+        * [vim-rst-tables plugin](https://github.com/nvie/vim-rst-tables).
 
 RST header characters to use:
 
