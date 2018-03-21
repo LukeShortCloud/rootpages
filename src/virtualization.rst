@@ -184,6 +184,7 @@ Option #1 - Modprobe
 File: /etc/modprobe.d/nested_virtualization.conf
 
    ::
+
        options kvm-intel nested=1
 
    .. code-block:: sh
@@ -885,6 +886,83 @@ Common GUIs:
 -  virt-manager
 -  XenServer
 
+oVirt
+~~~~~
+
+Supported operating systems: RHEL/CentOS 7
+
+oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMWare ESXi and XenServer. It supports using network storage from NFS, Gluster, iSCSI, and other solutions.
+
+oVirt has three components [39]:
+
+-  oVirt Engine = The node that controls oVirt operations and monitoring.
+-  Hypervisor nodes = The nodes where the virtual machines run.
+-  Storage nodes = Where the operating system images and volumes of created virtual machines.
+
+Install
+^^^^^^^
+
+Quick
+'''''
+
+All-in-One (AIO)
+
+Minimum requirements:
+
+-  One 1Gb network interface
+-  Hardware virtualization
+-  60GB free disk space in /var/tmp/ or a custom directory
+-  Two fully qualified doman names (FQDNs) setup
+
+  -  One for the oVirt Engine (that is not in use) and one already set for the hypervisor
+
+Install the stable, development, or the master repository. [42]
+
+-  Stable:
+
+   .. code-block:: sh
+
+       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+
+-  Development:
+
+   .. code-block:: sh
+
+       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42-snapshot.rpm
+
+-  Master:
+
+   .. code-block:: sh
+
+       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+
+Install the oVirt Engine dependencies.
+
+.. code-block:: sh
+
+    # yum install ovirt-hosted-engine-setup ovirt-engine-appliance
+
+Setup NFS. The user "vdsm" needs full access to a NFS exported directory. The group "kvm" should have readable and executable permissions to run virtual machines from there. [41]
+
+.. code-block:: sh
+
+    # mkdir -p /exports/data
+    # chmod 0755 /exports/data
+    # vim /etc/exports
+    /exports/data      *(rw)
+    # systemctl restart nfs
+    # groupadd kvm -g 36
+    # useradd vdsm -u 36 -g 36
+    # chown -R vdsm:kvm /exports/data
+
+Run the manual Engine setup. This will prompt the end-user for different configuration options.
+
+.. code-block:: sh
+
+    # hosted-engine --deploy
+
+[40]
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
 -----------------------------------------------------------------------------------------
@@ -930,3 +1008,7 @@ Bibliography
 36. "IOMMU Groups – What You Need to Consider." Heiko's Blog. July 25, 2017. Accessed March 3, 2018. https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/
 37. "Kickstart Documentation." Pykickstart. Accessed March 15, 2018. http://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
 38. "Creating an automated CentOS 7 Install via Kickstart file." Marc Lopez Personal Blog. December 1, 2014. Accessed March 15, 2018. https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file
+39. "oVirt Architecture." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/architecture/architecture/
+40. "Deploying Self-Hosted Engine." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/
+41. "Storage." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/admin-guide/chap-Storage/
+42. "Install nightly snapshot." oVirt Documentation. Accessed March 21, 2018. https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/
