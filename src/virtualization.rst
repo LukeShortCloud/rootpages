@@ -19,15 +19,15 @@ Hardware virtualization speeds up and further isolates virtualized environments.
 Intel has three subtypes of virtualization:
 
 -  VT-x = Basic hardware virtualization and host separation support.
--  VT-d = I/O passthrough support.
--  VT-c = Improved network I/O passthrough support.
+-  VT-d = I/O pass-through support.
+-  VT-c = Improved network I/O pass-through support.
 
 [3]
 
 AMD has two subtypes of virtualization:
 
 -  AMD-V = Basic hardware virtualization and host separation support.
--  AMD-Vi = I/O passthrough support.
+-  AMD-Vi = I/O pass-through support.
 
 Check for Intel or AMD virtualization support:
 
@@ -55,6 +55,9 @@ for handling hardware virtualization in Linux since the 2.6.20 kernel.
 Performance Tuning
 ^^^^^^^^^^^^^^^^^^
 
+Processor
+'''''''''
+
 Configuration details for virtual machines can be modified to provide
 better performance. For processors, it is recommended to use the same
 CPU settings so that all of it's features are available to the guest.
@@ -72,6 +75,98 @@ libvirt:
 
     # virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
+
+Memory
+''''''
+
+Enable Huge Pages and disable Transparent Hugepages (THP) on the hypervisor for better memory performance in virtual machines.
+
+View current Huge Pages allocation. The total should be "0" if it is disabled. The default size is 2048 KB on Fedora.
+
+.. code-block:: sh
+
+    $ grep -i hugepages /proc/meminfo
+    AnonHugePages:         0 kB
+    ShmemHugePages:        0 kB
+    HugePages_Total:       0
+    HugePages_Free:        0
+    HugePages_Rsvd:        0
+    HugePages_Surp:        0
+    Hugepagesize:       2048 kB
+
+Calculate the optimal Huge Pages total based on the amount of RAM that will be allocated to virtual machines. For example, if 24GB of RAM will be allocated to virtual machines then the Huge Pages total should be set to ``12288``.
+
+::
+
+    <AMOUNT_OF_RAM_FOR_VMS_IN_KB> / <HUGEPAGES_SIZE> = <HUGEPAGES_TOTAL>
+
+Enable Huge Pages by setting the total in sysctl and then in the virtual machine.
+
+.. code-block:: sh
+
+    # vim /etc/sysctl.conf
+    vm.nr_hugepages = <HUGEPAGES_TOTAL>
+    # sysctl -p
+    # mkdir /hugepages
+    # vim /etc/fstab
+    hugetlbfs    /hugepages    hugetlbfs    defaults    0 0
+
+libvirt:
+
+.. code-block:: xml
+
+    <os>
+        <memoryBacking>
+            <hugepages/>
+        </memoryBacking>
+    <os/>
+
+Disable THP using GRUB.
+
+File: /etc/default/grub
+
+.. code-block:: sh
+
+    GRUB_CMDLINE_LINUX="<EXISTING_OPTIONS> transparent_hugepage=never"
+
+Rebuild the GRUB configuration.
+
+UEFI:
+
+.. code-block:: sh
+
+    $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+
+BIOS:
+
+.. code-block:: sh
+
+    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+Alternatively, THP can be manually disabled.
+
+.. code-block:: sh
+
+    # echo never > /sys/kernel/mm/transparent_hugepage/enabled
+    # echo never > /sys/kernel/mm/transparent_hugepage/defrag
+
+In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
+
+Increase the security limits in Fedora to allow the maximum valuable of RAM for a virtual machine that can be used with Huge Pages.
+
+File: /etc/security/limits.d/90-mem.conf
+
+.. code-block:: ini
+
+    soft memlock 8388608
+    hard memlock 8388608
+
+Reboot the server for the new settings to take affect.
+
+[43]
+
+Network
+'''''''
 
 The network driver that provides the best performance is "virtio." Some
 guests may not support this feature and require additional drivers.
@@ -116,14 +211,8 @@ libvirt:
           <model type='virtio'/>
         </interface>
 
-If possible, PCI passthrough provides the best performance as there is
-no virtualization overhead.
-
-QEMU:
-
-.. code-block:: sh
-
-    # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
+Storage
+'''''''
 
 Raw disk partitions have the greatest speeds with the "virtio" driver
 and cache disabled.
@@ -136,11 +225,9 @@ QEMU:
 
 libvirt:
 
-.. code-block:: sh
+.. code-block:: xml
 
-    # virsh edit <VIRTUAL_MACHINE>
     <disk type='...' device='disk'>
-      ...
       <target dev='<DEVICE_NAME>' bus='virtio'/>
     </disk>
 
@@ -152,6 +239,18 @@ preallocation or else there could be up to a x5 performance penalty. [8]
 .. code-block:: sh
 
     # qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
+
+PCI
+'''
+
+If possible, PCI pass-through provides the best performance as there is
+no virtualization overhead. The "GPU Pass-through" section expands upon this.
+
+QEMU:
+
+.. code-block:: sh
+
+    # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -228,9 +327,17 @@ File: /etc/default/grub
 
 -  Then rebuild the GRUB 2 configuration.
 
-   .. code-block:: sh
+  -  UEFI:
 
-       # grub-mkconfig -o /boot/grub/grub.cfg
+    .. code-block:: sh
+
+        $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+
+  -  BIOS:
+
+     .. code-block:: sh
+
+         $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 [9]
 
@@ -261,10 +368,10 @@ virtualization support.
 
 [11]
 
-GPU Passthrough
-^^^^^^^^^^^^^^^
+GPU Pass-through
+^^^^^^^^^^^^^^^^
 
-GPU passthrough provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU passthrough to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it's own IOMMU group. The QEMU settings for the guest should be configured to use "SeaBIOS" for older cards or "OVMF" for newer cards that support UEFI. [36]
+GPU pass-through provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU pass-through to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it's own IOMMU group. The QEMU settings for the guest should be configured to use "SeaBIOS" for older cards or "OVMF" for newer cards that support UEFI. [36]
 
 -  Enable IOMMU on the hypervisor via the bootloader's kernel options. This will provide a static ID to each hardware device. The "vfio-pci" kernel module also needs to start on boot.
 
@@ -282,11 +389,17 @@ AMD:
 
 -  For the GRUB bootloader, rebuild the configuration.
 
-Fedora:
+UEFI:
 
 .. code-block:: sh
 
-    # grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+    $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+
+BIOS:
+
+.. code-block:: sh
+
+    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 -  Find the IOMMU number for the graphics card. This should be the last alphanumeric set at the end of the line for the graphics card. The format should look similar to `XXXX:XXXX`. Add it to the options for the "vfio-pci" kernel module. This will bind a stub kernel driver to the device so that Linux does not use it.
 
@@ -1012,3 +1125,4 @@ Bibliography
 40. "Deploying Self-Hosted Engine." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/
 41. "Storage." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/admin-guide/chap-Storage/
 42. "Install nightly snapshot." oVirt Documentation. Accessed March 21, 2018. https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/
+43. "Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25." Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html
