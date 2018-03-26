@@ -666,46 +666,47 @@ A Kickstart file defines all of the steps necessary to install the operating sys
 
 Common commands:
 
-*  **authconfig** = Configure authentication using options specified in the ``authconfig`` manual.
-*  autopart = Automatically create partitions.
-*  **bootloader** = Define how the bootloader should be installed.
-*  clearpart = Delete existing partitions.
+-  **authconfig** = Configure authentication using options specified in the ``authconfig`` manual.
+-  autopart = Automatically create partitions.
+-  **bootloader** = Define how the bootloader should be installed.
+-  clearpart = Delete existing partitions.
 
-    *  --type <TYPE> = Using one of these partition schemes: partition (partition only, no formatting), plain (normal partitions that are not Btrfs or LVM), btrfs, lvm, or thinp (thin-provisioned logical volumes).
+    -  --type <TYPE> = Using one of these partition schemes: partition (partition only, no formatting), plain (normal partitions that are not Btrfs or LVM), btrfs, lvm, or thinp (thin-provisioned logical volumes).
 
-*  **eula --accept** = Automatically accept the end-user license agreement (EULA).
-*  firewall = Configure the firewall.
+-  **eula --accept** = Automatically accept the end-user license agreement (EULA).
+-  firewall = Configure the firewall.
 
-    *  --enable
-    *  --disable
-    *  --port = Specify the ports to open.
+    -  --enable
+    -  --disable
+    -  --port = Specify the ports to open.
 
-*  %include = Include another file this Kickstart file.
-*  **install** = Start the installer.
-*  **keyboard** = Configure the keyboard layout.
-*  **lang** = The primary language to use.
-*  mount = Manually specify a partition to mount.
-*  network = Configure the network settings.
-*  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
-*  partition = Manually create partitions.
-*  raid = Create a software RAID.
-*  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
-*  **rootpw** = Change the root password.
-*  selinux = Change the SELinux settings.
+-  %include = Include another file this Kickstart file.
+-  **install** = Start the installer.
+-  **keyboard** = Configure the keyboard layout.
+-  **lang** = The primary language to use.
+-  mount = Manually specify a partition to mount.
+-  network = Configure the network settings.
+-  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
+-  partition = Manually create partitions.
+-  raid = Create a software RAID.
+-  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
+-  **rootpw** = Change the root password.
+-  selinux = Change the SELinux settings.
 
-    *  --permissive
-    *  --enforcing
-    *  --disabled
+    -  --permissive
+    -  --enforcing
+    -  --disabled
 
-*  services = Manage systemd services.
-    *  --enabled=<SERVICE1>,<SERVICE2>,SERVICE3> = Enable these services.
+-  services = Manage systemd services.
 
-*  sshkey = Add a SSH key to a specified user.
-*  **timezone** = Configure the timezone.
-*  url = Do a network installation using the specified URL to the operating system's repository.
-*  user = Configure a new user.
-*  vnc = Configure a VNC for remote graphical installations.
-*  zerombr = Erase the partition table.
+    -  --enabled=<SERVICE1>,<SERVICE2>,SERVICE3> = Enable these services.
+
+-  sshkey = Add a SSH key to a specified user.
+-  **timezone** = Configure the timezone.
+-  url = Do a network installation using the specified URL to the operating system's repository.
+-  user = Configure a new user.
+-  vnc = Configure a VNC for remote graphical installations.
+-  zerombr = Erase the partition table.
 
 [37][38]
 
@@ -1004,7 +1005,7 @@ oVirt
 
 Supported operating systems: RHEL/CentOS 7
 
-oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMWare ESXi and XenServer. It supports using network storage from NFS, Gluster, iSCSI, and other solutions.
+oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMWare ESXi and XenServer. It is the open source upstream version of Red Hat Virtualization (RHV). It supports using network storage from NFS, Gluster, iSCSI, and other solutions.
 
 oVirt has three components [39]:
 
@@ -1075,7 +1076,47 @@ Run the manual Engine setup. This will prompt the end-user for different configu
 
     # hosted-engine --deploy
 
+Configure the Engine virtual machine to use static IP addressing. Enter in the address that is setup for the Engine's fully qualified domain name.
+
+::
+
+    How should the engine VM network be configured (DHCP, Static)[DHCP]? Static
+    Please enter the IP address to be used for the engine VM []: <ENGINE_IP_ADDRESS>
+    The engine VM will be configured to use <ENGINE_IP_ADDRESS>/24
+    Please provide a comma-separated list (max 3) of IP addresses of domain name servers for the engine VM
+    Engine VM DNS (leave it empty to skip) [127.0.0.1]: <OPTIONAL_DNS_SERVER>
+
+If no DNS server is being used to resolve domain names, configure oVirt to use local resolution on the hypervisor and oVirt Engine via ``/etc/hosts``.
+
+::
+
+    Add lines for the appliance itself and for this host to /etc/hosts on the engine VM?
+    Note: ensuring that this host could resolve the engine VM hostname is still up to you
+    (Yes, No)[No] Yes
+
+Define the oVirt Engine's hostname. This needs to already exist and be resolvable at least by ``/etc/hosts`` if the above option is set to ``Yes``.
+
+::
+
+    Please provide the FQDN for the engine you would like to use.
+    This needs to match the FQDN that you will use for the engine installation within the VM.
+    Note: This will be the FQDN of the VM you are now going to create,
+    it should not point to the base host or to any other existing machine.
+    Engine FQDN:  []: <OVIRT_ENGINE_HOSTNAME>
+
+Specify the NFS mount options. For avoiding DNS issues, the NFS server's IP address can be used instead of the hostname.
+
+::
+
+    Please specify the storage you would like to use (glusterfs, iscsi, fc, nfs)[nfs]: nfs
+    Please specify the nfs version you would like to use (auto, v3, v4, v4_1)[auto]: v4_1
+    Please specify the full shared storage connection path to use (example: host:/path): <NFS_HOSTNAME>:/exports/data
+
 [40]
+
+Once the installation is complete, log into the oVirt Engine web portal at ``https://<OVIRT_ENGINE_HOSTNAME>``. Use the admin@internal account with the password that was configured during the setup. Accessing the web portal using the IP address may not work and result in this error: ``"The redirection URI for client is not registered"``. The fully qualified domain name has to be used for the link. [44]
+
+If tasks, such as uploading an image, get stuck in the "Paused by System" state then the certificate authority (CA) needs to be imported into the end-user's web browser. Download it from the oVirt Engine by going to: ``https://<OVIRT_ENGINE_HOSTNAME>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA``.
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
 -----------------------------------------------------------------------------------------
@@ -1126,3 +1167,5 @@ Bibliography
 41. "Storage." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/admin-guide/chap-Storage/
 42. "Install nightly snapshot." oVirt Documentation. Accessed March 21, 2018. https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/
 43. "Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25." Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html
+44. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
+45. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
