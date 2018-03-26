@@ -241,6 +241,10 @@ Packstack is part of Red Hat's RDO project. It's purpose is for
 providing small and simple demonstrations of OpenStack. This tool does
 not handle any upgrades of the OpenStack services.
 
+Hardware requirements [35]:
+
+-  16GB RAM
+
 Install
 ^^^^^^^
 
@@ -1025,6 +1029,20 @@ Supported operating systems: RHEL 7, Fedora >= 22
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
 In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. There is also experimental support for running the Undercloud services in containers. [97]
+
+Hardware requirements [34]:
+
+-  Undercloud node:
+
+   -  4 CPU cores
+   -  16GB RAM
+   -  60GB storage
+
+-  Overcloud nodes:
+
+   -  4 CPU cores
+   -  8GB RAM
+   -  80GB storage
 
 Quick
 ^^^^^
@@ -3184,7 +3202,7 @@ Bibliography
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 15. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
-16. "[OpenStack-Ansible] Quick Start." OpenStack  Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html
+16. "[OpenStack-Ansible] Quickstart: AIO." OpenStack  Documentation. March 26, 2018. Accessed March 26, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
 19. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
 21. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 22. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
@@ -3194,7 +3212,7 @@ Bibliography
 29. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/index.html
 32. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
 33. "TripleO quickstart." RDO Project. Accessed August 16, 2017. https://www.rdoproject.org/tripleo/
-34. "[TripleO] Minimum System Requirements." TripleO Documentation. Accessed August 16, 2017. https://images.rdoproject.org/docs/baremetal/requirements.html
+34. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
 35. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
 36. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
 37. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
