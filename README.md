@@ -4,6 +4,7 @@ Root Pages is a collection of quick and easy-to-reference tutorials, examples, a
 
 All Root Pages are written in the reStructuredText (RST) markup language. Sphinx is used for building the documentation into ePub, HTML, PDF, and other common document formats.
 
+
 ## Website
 
 Root Pages is automatically published online to GitHub Pages via updates to the "gh-pages" branch. This branch only contains the HTML compiled website.
@@ -111,6 +112,21 @@ RST header characters to use:
 4. `^^^^^`
 5. `'''''`
 6. `&&&&&`
+
+
+### New Contributors
+
+There are a lot of [issues open on GitHub that have the label "new content."](https://github.com/ekultails/rootpages/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+content%22) These issues indicate that a new subject matter should be added into an existing document. These normally have at least one link to a source article that can be referenced or at least used as a starting point for further research.
+
+
+### Quarterly Updates
+
+Every three months, Root Pages is tagged as a new version. This is built and saved to the "gh-pages" branch that publishes it online via [GitHub Pages](https://pages.github.com/). The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
+
+
+### Special Notes
+
+The OpenStack notes go through a major rebase every third upstream OpenStack release. This is to align with the long-life release cycle for Red Hat's OpenStack Platform (RHOSP). The next rebase will be for the `T` release.
 
 
 ## Legal
