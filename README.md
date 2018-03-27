@@ -51,22 +51,22 @@ Sphinx will save newly generated documents into the "build/" directory by defaul
 
 ePub:
 ```
-$ make epub
+$ SPHINXBUILD="sphinx-build-3" make epub
 ```
 
 HTML:
 ```
-$ make html
+$ SPHINXBUILD="sphinx-build-3" make html
 ```
 
 PDF:
 ```
-$ make latexpdf
+$ SPHINXBUILD="sphinx-build-3" make latexpdf
 ```
 
 Text:
 ```
-$ make text
+$ SPHINXBUILD="sphinx-build-3" make text
 ```
 
 
@@ -77,7 +77,7 @@ The "sphinx-build" command is more flexible by being able to add additional comm
 Specify the format that the reStructuredText should be transformed and output into, and both the source and build directories.
 
 ```
-$ sphinx-build -b <OUTPUT_FORMAT> src/ build/
+$ sphinx-build-3 -b <OUTPUT_FORMAT> src/ build/
 ```
 
 
@@ -122,6 +122,14 @@ There are a lot of [issues open on GitHub that have the label "new content."](ht
 ### Quarterly Updates
 
 Every three months, Root Pages is tagged as a new version. This is built and saved to the "gh-pages" branch that publishes it online via [GitHub Pages](https://pages.github.com/). The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
+
+An Ansible Playbook was created to help automate the process of pushing updates to the "gh-pages" branch. It will set the repository up to be able to push out the lastest "master" branch as compiled HTML pages. A manual human review is required before committing and pushing the updates.
+
+```
+$ ansible-playbook gh_pages_update.yml
+$ cd /tmp/rootpages_gh_pages/
+$ git status
+```
 
 
 ### Special Notes
