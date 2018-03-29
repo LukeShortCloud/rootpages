@@ -1118,6 +1118,52 @@ Once the installation is complete, log into the oVirt Engine web portal at ``htt
 
 If tasks, such as uploading an image, get stuck in the "Paused by System" state then the certificate authority (CA) needs to be imported into the end-user's web browser. Download it from the oVirt Engine by going to: ``https://<OVIRT_ENGINE_HOSTNAME>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA``.
 
+Hooks
+^^^^^
+
+Hooks can be installed on the oVirt Engine to provide additional features. After they are installed, both the ``ovirt-engine`` and ``vdsmd`` services need to be restarted.
+
+oVirt Engine:
+
+.. code-block:: sh
+
+    $ sudo systemctl restart ovirt-engine
+
+Hypervisors:
+
+.. code-block:: sh
+
+    $ sudo systemctl restart vdsmd
+
+MAC Spoofing
+''''''''''''
+
+Allowing MAC spoofing on a virtual network interface card (vNIC) is required for some services such as Ironic from the OpenStack suite of software.
+
+Install the hook and define the required virtual machine property.
+
+.. code-block:: sh
+
+    $ sudo yum install -y vdsm-hook-macspoof
+    $ sudo engine-config -s "UserDefinedVMProperties=macspoof=(true|false)"
+
+This will add an option to virtual machines to allow MAC spoofing. By default, it will still not be allowed.
+
+[46]
+
+Nested Virtualization
+'''''''''''''''''''''
+
+Install the hook.
+
+.. code-block:: sh
+
+    $ sudo yum install vdsm-hook-nestedvt
+
+Nested virtualization also requires MAC spoofing to be enabled.
+
+[46]
+
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
 -----------------------------------------------------------------------------------------
 
@@ -1169,3 +1215,4 @@ Bibliography
 43. "Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25." Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html
 44. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
 45. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
+46. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
