@@ -675,12 +675,21 @@ and/or groups. The file that stores the variables should reflect the
 name of the host and/or group. Global variables can be found in the
 ``/etc/ansible/`` directory. [3]
 
-Inventory variable directories and files: \* host\_vars/ \* ``<HOST>`` =
-Variables for a host defined in the inventory file. \* group\_vars/ \*
-``<GROUP>``/ \* vars = Variables for this group. \* vault = Encrypted
-Ansible vault variables. [5] \* all = This file contains variables for
-all hosts. \* ungrouped = This file contains variables for all hosts
-that are not defined in any groups.
+Inventory variable directories and files:
+
+-  host\_vars/
+
+  -  ``<HOST>`` = Variables for a host defined in the inventory file.
+
+-  group\_vars/
+
+  -  ``<GROUP>``/
+
+    -  vars = Variables for this group.
+    -  vault = Encrypted Ansible Vault variables. [5]
+
+  -  all = This file contains variables for all hosts.
+  -  ungrouped = This file contains variables for all hosts that are not defined in any groups.
 
 It is assumed that the inventory variable files are in YAML format. Here
 is an example for a host variable file.
