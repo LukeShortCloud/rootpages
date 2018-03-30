@@ -90,8 +90,8 @@ Install the required packaging dependencies.
 
 .. code-block:: sh
 
-    # apt-get update
-    # apt-get install devscripts dh-make dpkg-dev
+    $ sudo apt-get update
+    $ sudo apt-get install devscripts dh-make dpkg-dev
 
 Create a working build directory, download the source code, and then run
 ``dh_make``.
@@ -207,7 +207,7 @@ with the ".repo" extension in this directory.
 
 .. code-block:: sh
 
-    # ls /etc/yum.repos.d/
+    $ sudo ls /etc/yum.repos.d/
 
 Here are some common options for repository files: \* [] = This should
 be the first part of a repository, with the name being inside the
@@ -265,12 +265,12 @@ place your RPMs in this directory. [1]
 
 .. code-block:: sh
 
-    # yum install createrepo
-    # mkdir -p /var/www/html/centos/7/x86_64/
+    $ sudo yum install createrepo
+    $ sudo mkdir -p /var/www/html/centos/7/x86_64/
 
 .. code-block:: sh
 
-    # createrepo /var/www/html/centos/7/x86_64/
+    $ sudo createrepo /var/www/html/centos/7/x86_64/
 
 The "createrepo" command will create 4 or 5 files. \* repomd.xml = An
 index for the other repository metadata files. \* primary.xml = Contains
@@ -287,7 +287,7 @@ repository cache needs to be updated again. [7]
 
 .. code-block:: sh
 
-    # createrepo --update /var/www/html/centos/7/x86_64/
+    $ sudo createrepo --update /var/www/html/centos/7/x86_64/
 
 Common Repositories
 ^^^^^^^^^^^^^^^^^^^
@@ -391,13 +391,13 @@ If you want to build the RPM, simply run:
 
 .. code-block:: sh
 
-    # rpmbuild -bb <SPECFILE>.spec
+    $ sudo rpmbuild -bb <SPECFILE>.spec
 
 In case you also want to build a source RPM (SRPM) run:
 
 .. code-block:: sh
 
-    # rpmbuild -ba <SPECFILE>.spec
+    $ sudo rpmbuild -ba <SPECFILE>.spec
 
 Sections:
 

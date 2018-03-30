@@ -109,7 +109,7 @@ View all of the loaded modules:
 
 .. code-block:: sh
 
-    # lsmod
+    $ sudo lsmod
 
 Custom modules can be compiled for a specific kernel and copied in their
 respective driver directory. A few common drivers types are "iscsi",
@@ -123,20 +123,20 @@ After copying over the necessary \*.ko file(s) for custom modules, load
 
 .. code-block:: sh
 
-    # depmod <MODULE>
+    $ sudo depmod <MODULE>
 
 If there are a large number of new modules, it is possible to make sure
 all module dependencies are installed.
 
 .. code-block:: sh
 
-    # depmod --all
+    $ sudo depmod --all
 
 Modules can be temporarily loaded:
 
 .. code-block:: sh
 
-    # modprobe <MODULE>
+    $ sudo modprobe <MODULE>
 
 Or permanently add the module to a file with the extension ".conf" in
 the modules load directory.
@@ -147,11 +147,11 @@ Modules can be deactivated by running one of these two commands:
 
 .. code-block:: sh
 
-    # rmmod <MODULE>
+    $ sudo rmmod <MODULE>
 
 .. code-block:: sh
 
-    # modprobe -r <MODULE>
+    $ sudo modprobe -r <MODULE>
 
 Modules can also be blocked from starting on boot:
 
@@ -194,7 +194,7 @@ scheduling settings are:
 
 .. code-block:: sh
 
-    # sysctl -a | grep "sched_"
+    $ sudo sysctl -a | grep "sched_"
     kernel.sched_autogroup_enabled = 0
     kernel.sched_cfs_bandwidth_slice_us = 5000
     kernel.sched_child_runs_first = 0
@@ -238,16 +238,16 @@ Temporarily change the scheduler to one of the three options:
 
 .. code-block:: sh
 
-    # echo {deadline|cfg|noop} > /sys/block/<DEVICE>/queue/scheduler
+    $ sudo echo {deadline|cfg|noop} > /sys/block/<DEVICE>/queue/scheduler
 
 Permanently change the scheduler by appending the existing
 GRUB\_CMDLINE\_LINUX kernel arguments:
 
 .. code-block:: sh
 
-    # vim /etc/default/grub
+    $ sudo vim /etc/default/grub
     GRUB_CMDLINE_LINUX="elevator={deadline|cfg|noop}"
-    # grub-mkconfig -o /boot/grub/grub.cfg
+    $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 [7]
 
@@ -292,7 +292,7 @@ Create a new initramfs.
 
 .. code-block:: sh
 
-    # mkinitcpio
+    $ sudo mkinitcpio
 
 [10]
 

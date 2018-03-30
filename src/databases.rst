@@ -16,13 +16,13 @@ RHEL Install [1]:
 
 .. code-block:: sh
 
-    # vim /etc/yum.repos.d/mariadb.repo
+    $ sudo vim /etc/yum.repos.d/mariadb.repo
     [mariadb]
     name = MariaDB
     baseurl = http://yum.mariadb.org/10.1/centos7-amd64
     gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck=1
-    # yum install MariaDB-server MariaDB-client
+    $ sudo yum install MariaDB-server MariaDB-client
 
 Table Engines
 ^^^^^^^^^^^^^
@@ -42,13 +42,13 @@ repositories but can be installed from the RHEL 6 repository. [4]
 
 .. code-block:: sh
 
-    # yum install http://yum.mariadb.org/10.1/centos6-amd64/rpms/MariaDB-10.1.18-centos6-x86_64-cassandra-engine.rpm
+    $ sudo yum install http://yum.mariadb.org/10.1/centos6-amd64/rpms/MariaDB-10.1.18-centos6-x86_64-cassandra-engine.rpm
 
 -  As the root MariaDB user, load the Cassandra library.
 
    ::
 
-       # mysql
+       $ sudo mysql
        > install soname 'ha_cassandra.so';
 
 -  Configure the default Cassandra rpc/client IP to connect to.
@@ -95,7 +95,7 @@ RHEL Install [6]:
 
 .. code-block:: sh
 
-    # yum install https://downloads.mariadb.com/MaxScale/2.0.1/rhel/7/x86_64/maxscale-2.0.1-1.rhel.7.x86_64.rpm
+    $ sudo yum install https://downloads.mariadb.com/MaxScale/2.0.1/rhel/7/x86_64/maxscale-2.0.1-1.rhel.7.x86_64.rpm
 
 MaxScale requires the configuration of a listener that is associated
 with a router that serves requests to/from a list of servers.
@@ -197,7 +197,7 @@ RHEL Install [9][10]:
 
 .. code-block:: sh
 
-    # yum install java-1.8.0-openjdk
+    $ sudo yum install java-1.8.0-openjdk
 
 File: /etc/yum/repos.d/datastax.repo
 
@@ -211,8 +211,8 @@ File: /etc/yum/repos.d/datastax.repo
 
 .. code-block:: sh
 
-    # yum install cassandra30
-    # systemctl daemon-reload
+    $ sudo yum install cassandra30
+    $ sudo systemctl daemon-reload
 
 Configuration options:
 

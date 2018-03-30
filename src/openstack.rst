@@ -254,20 +254,20 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
-    # subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
+    $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
+    $ sudo subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 
 CentOS:
 
 .. code-block:: sh
 
-    # yum install centos-release-openstack-queens
+    $ sudo yum install centos-release-openstack-queens
 
 Finally, install the Packstack utility.
 
 .. code-block:: sh
 
-    # yum -y install openstack-packstack
+    $ sudo yum -y install openstack-packstack
 
 There are two network scenarios that Packstack can deploy. The default
 is to have an isolated network (1). Floating IPs will not be able to
@@ -284,16 +284,16 @@ By default, the network will be entirely isolated. [11]
 
 .. code-block:: sh
 
-    # packstack --gen-answer-file <FILE>
-    # packstack --answer-file <FILE>
+    $ sudo packstack --gen-answer-file <FILE>
+    $ sudo packstack --answer-file <FILE>
 
 Packstack logs are stored in /var/tmp/packstack/. The administrator and
 demo user credentials will be saved to the user's home directory.
 
 .. code-block:: sh
 
-    # source ~/keystonerc_admin
-    # source ~/keystonerc_demo
+    $ source ~/keystonerc_admin
+    $ source ~/keystonerc_demo
 
 Although the network will not be exposed by default, it can still be
 configured later. The primary interface to the lab's network, typically
@@ -338,7 +338,7 @@ below and replace "eth0" with the public interface name.
 
 .. code-block:: sh
 
-    # packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
+    $ sudo packstack --allinone --provision-demo=n --os-neutron-ovs-bridge-mappings=extnet:br-ex --os-neutron-ovs-bridge-interfaces=br-ex:eth0 --os-neutron-ml2-type-drivers=vxlan,flat
 
 Alternatively, use these configuration options in the answer file.
 
@@ -351,7 +351,7 @@ Alternatively, use these configuration options in the answer file.
 
 .. code-block:: sh
 
-    # packstack --answer-file <ANSWER_FILE>
+    $ sudo packstack --answer-file <ANSWER_FILE>
 
 After the installation is finished, create the necessary network in
 Neutron as the admin user. In this example, the network will
@@ -360,9 +360,9 @@ automatically allocate IP addresses between 192.168.1.201 and
 
 .. code-block:: sh
 
-    # . keystonerc_admin
-    # neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
-    # neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
+    $ . keystonerc_admin
+    $ neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
+    $ neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
 
 The "external\_network" can now be associated with a router in user
 accounts.
@@ -390,7 +390,7 @@ Common options:
 
    ::
 
-       # for cert in selfcert ssl_dashboard ssl_vnc; do openssl req -x509 -sha256 -newkey rsa:2048 -keyout /etc/pki/tls/private/${cert}.key -out /etc/pki/tls/certs/${cert}.crt -days 365 -nodes; done
+       $ for cert in selfcert ssl_dashboard ssl_vnc; do sudo openssl req -x509 -sha256 -newkey rsa:2048 -keyout /etc/pki/tls/private/${cert}.key -out /etc/pki/tls/certs/${cert}.crt -days 365 -nodes; done
 
    -  CONFIG\_SSL\_CACERT\_FILE=/etc/pki/tls/certs/selfcert.crt
    -  CONFIG\_SSL\_CACERT\_KEY\_FILE=/etc/pki/tls/private/selfkey.key
@@ -456,9 +456,9 @@ Setup the OpenStack-Ansible project.
 
 .. code-block:: sh
 
-    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    # cd /opt/openstack-ansible/
-    # git checkout stable/queens
+    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+    $ cd /opt/openstack-ansible/
+    $ sudo git checkout stable/queens
 
 There are two all-in-one scenarios that will run different Ansible
 Playbooks. The default is "aio" but this can be changed to the second
@@ -466,7 +466,7 @@ scenario by setting the ``SCENARIO`` shell variable to "ceph."
 Alternatively, the roles to run can be manually modified in
 ``/opt/openstack-ansible/tests/bootstrap-aio.yml`` Playbook.
 
-``# export SCENARIO="ceph"``
+``$ export SCENARIO="ceph"``
 
 -  aio
 
@@ -500,12 +500,12 @@ Then OpenStack-Ansible project can now setup and deploy the LXC containers along
 
 .. code-block:: sh
 
-    # scripts/bootstrap-ansible.sh
-    # scripts/bootstrap-aio.sh
-    # cd /opt/openstack-ansible/playbooks
-    # openstack-ansible setup-hosts.yml
-    # openstack-ansible setup-infrastructure.yml
-    # openstack-ansible setup-openstack.yml
+    $ sudo scripts/bootstrap-ansible.sh
+    $ sudo scripts/bootstrap-aio.sh
+    $ cd /opt/openstack-ansible/playbooks
+    $ sudo openstack-ansible setup-hosts.yml
+    $ sudo openstack-ansible setup-infrastructure.yml
+    $ sudo openstack-ansible setup-openstack.yml
 
 If the installation fails, it is recommended to reinstall the operating
 system to completely clear out all of the custom configurations that
@@ -760,48 +760,48 @@ GitHub.
 
 .. code-block:: sh
 
-    # git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    # cd /opt/openstack-ansible/
-    # git checkout stable/queens
-    # cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
+    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+    $ cd /opt/openstack-ansible/
+    $ sudo git checkout stable/queens
+    $ sudo cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
 
 Install Ansible and the related OpenStack Roles.
 
 .. code-block:: sh
 
-    # /opt/openstack-ansible/scripts/bootstrap-ansible.sh
+    $ sudo /opt/openstack-ansible/scripts/bootstrap-ansible.sh
 
 Generate random passwords for the services.
 
 .. code-block:: sh
 
-    # /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+    $ sudo /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
 - Configure OSA and verify that the configuration syntax is correct.
 
 .. code-block:: sh
 
-    # cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
-    # vim /etc/openstack_deploy/openstack_user_config.yml
-    # openstack-ansible setup-infrastructure.yml --syntax-check
+    $ sudo cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
+    $ sudo vim /etc/openstack_deploy/openstack_user_config.yml
+    $ sudo openstack-ansible setup-infrastructure.yml --syntax-check
 
 -  Prepare the hosts.
 
 .. code-block:: sh
 
-    # openstack-ansible setup-hosts.yml
+    $ sudo openstack-ansible setup-hosts.yml
 
 - Setup the LXC containers.
 
 .. code-block:: sh
 
-    # openstack-ansible setup-infrastructure.yml
+    $ sudo openstack-ansible setup-infrastructure.yml
 
 -  Install the OpenStack services.
 
 .. code-block:: sh
 
-    # openstack-ansible setup-openstack.yml
+    $ sudo openstack-ansible setup-openstack.yml
 
 [16]
 
@@ -816,22 +816,22 @@ primary container to use is the ``utility`` container.
 
 .. code-block:: sh
 
-    # lxc-ls -1 | grep utility
-    # lxc-attach -n <UTILITY_CONTAINER_NAME>
+    $ sudo lxc-ls -1 | grep utility
+    $ sudo lxc-attach -n <UTILITY_CONTAINER_NAME>
 
 The file ``/root/openrc`` should exist on the container with the
 administrator credentials. Source this file to use them.
 
 .. code-block:: sh
 
-    # source /root/openrc
+    $ source /root/openrc
 
 Verify that all of the correct services and endpoints exist.
 
 .. code-block:: sh
 
-    # openstack service list
-    # openstack endpoint list
+    $ openstack service list
+    $ openstack endpoint list
 
 [20]
 
@@ -847,31 +847,31 @@ for management and troubleshooting.
 
    .. code-block:: sh
 
-       # cd /opt/openstack-ansible/
+       $ cd /opt/openstack-ansible/
 
 -  Show all of the groups and the hosts that are a part of it.
 
    .. code-block:: sh
 
-       # ./scripts/inventory-manage.py -G
+       $ sudo ./scripts/inventory-manage.py -G
 
 -  Show all of the hosts and the groups they are a part of.
 
    .. code-block:: sh
 
-       # ./scripts/inventory-manage.py -g
+       $ sudo ./scripts/inventory-manage.py -g
 
 -  List hosts that a Playbook will run against.
 
    .. code-block:: sh
 
-       # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
+       $ sudo openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
 
 -  List all the Ansible tasks that will be executed on a group or host.
 
    .. code-block:: sh
 
-       # openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
+       $ sudo openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
 [21]
 
@@ -887,11 +887,11 @@ infrastructure node.
 
 .. code-block:: sh
 
-    # cd /opt/openstack-ansible/playbooks
-    # /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py > /dev/null
-    # /opt/openstack-ansible/scripts/inventory-manage.py -l |awk '/<NEW_INFRA_HOST>/ {print $2}' | sort -u | tee /root/add_host.limit
-    # openstack-ansible setup-everything.yml --limit @/root/add_host.limit
-    # openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
+    $ cd /opt/openstack-ansible/playbooks
+    $ sudo /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py > /dev/null
+    $ sudo /opt/openstack-ansible/scripts/inventory-manage.py -l |awk '/<NEW_INFRA_HOST>/ {print $2}' | sort -u | tee /root/add_host.limit
+    $ sudo openstack-ansible setup-everything.yml --limit @/root/add_host.limit
+    $ sudo openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
 
 [20]
 
@@ -904,11 +904,11 @@ OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use
 
 .. code-block:: sh
 
-    # cd /opt/openstack-ansible/playbooks
-    # openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
-    # ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
-    # openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
-    # openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
+    $ cd /opt/openstack-ansible/playbooks
+    $ sudo openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
+    $ sudo ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
+    $ sudo openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
+    $ sudo openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
 
 [20]
 
@@ -923,14 +923,14 @@ done.
 
 .. code-block:: sh
 
-    # lxc-ls -1 | grep compute
-    # lxc-attach -n <COMPUTE_CONTAINER_TO_REMOVE>
-    # stop nova-compute
-    # stop neutron-linuxbridge-agent
-    # exit
-    # git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
-    # cd /opt/openstack-ansible-ops/ansible_tools/playbooks
-    # openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
+    $ sudo lxc-ls -1 | grep compute
+    $ sudo lxc-attach -n <COMPUTE_CONTAINER_TO_REMOVE>
+    $ sudo stop nova-compute
+    $ sudo stop neutron-linuxbridge-agent
+    $ exit
+    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
+    $ cd /opt/openstack-ansible-ops/ansible_tools/playbooks
+    $ sudo openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
 
 [20]
 
@@ -949,9 +949,9 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 
    .. code-block:: sh
 
-       # cd /opt/openstack-ansible/
-       # git fetch --all
-       # git checkout <TAG>
+       $ cd /opt/openstack-ansible/
+       $ sudo git fetch --all
+       $ sudo git checkout <TAG>
 
 -  Update:
 
@@ -959,11 +959,11 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 
       .. code-block:: sh
 
-          # ./scripts/bootstrap-ansible.sh
-          # cd ./playbooks/
-          # openstack-ansible setup-hosts.yml
-          # openstack-ansible -e rabbitmq_upgrade=true setup-infrastructure.yml
-          # openstack-ansible setup-openstack.yml
+          $ sudo ./scripts/bootstrap-ansible.sh
+          $ cd ./playbooks/
+          $ sudo openstack-ansible setup-hosts.yml
+          $ sudo openstack-ansible -e rabbitmq_upgrade=true setup-infrastructure.yml
+          $ sudo openstack-ansible setup-openstack.yml
 
    -  **Specific services.**
 
@@ -971,25 +971,25 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 
          .. code-block:: sh
 
-             # cd ./playbooks/
-             # openstack-ansible repo-install.yml
+             $ cd ./playbooks/
+             $ sudo openstack-ansible repo-install.yml
 
       -  A single service can be upgraded now.
 
          .. code-block:: sh
 
-             # openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
+             $ sudo openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
 
       -  Some services, such as MariaDB and RabbitMQ, require special
          variables to be set to force an upgrade.
 
          .. code-block:: sh
 
-             # openstack-ansible galera-install.yml -e 'galera_upgrade=true'
+             $ sudo openstack-ansible galera-install.yml -e 'galera_upgrade=true'
 
          .. code-block:: sh
 
-             # openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
+             $ sudo openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
 
 [22]
 
@@ -1005,21 +1005,21 @@ Below outlines how to do this automatically. [22]
 
    .. code-block:: sh
 
-       # cd /opt/openstack-ansible
+       $ cd /opt/openstack-ansible
 
 -  View the available OpenStack releases and choose which one to use.
 
    .. code-block:: sh
 
-       # git branch -a
-       # git tag
-       # git checkout <BRANCH_OR_TAG>
+       $ sudo git branch -a
+       $ sudo git tag
+       $ sudo git checkout <BRANCH_OR_TAG>
 
 -  Run the upgrade script.
 
    .. code-block:: sh
 
-       # ./scripts/run-upgrade.sh
+       $ sudo ./scripts/run-upgrade.sh
 
 TripleO
 ~~~~~~~
@@ -1233,18 +1233,18 @@ creating an Undercloud virtual machine.
 
       .. code-block:: sh
 
-          # useradd stack
-          # passwd stack
-          # echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack
-          # chmod 0440 /etc/sudoers.d/stack
-          # su - stack
+          $ sudo useradd stack
+          $ sudo passwd stack
+          $ sudo echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack
+          $ sudo chmod 0440 /etc/sudoers.d/stack
+          $ sudo su - stack
 
    -  Install the RDO Trunk repositories.
    -  Install TripleO.
 
       .. code-block:: sh
 
-          # yum install python-tripleoclient
+          $ sudo yum install python-tripleoclient
 
    -  Copy the sample configuration to use as a base template.
 
@@ -1487,8 +1487,8 @@ must be created with full privileges.
 
 .. code-block:: sh
 
-    # rabbitmqctl add_user <RABBIT_USER> <RABBIT_PASSWORD>
-    # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+    $ sudo rabbitmqctl add_user <RABBIT_USER> <RABBIT_PASSWORD>
+    $ sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
 In the configuration file for every service, set the transport\_url
 options for RabbitMQ. A virtual host is not required. By default it will
@@ -1640,17 +1640,17 @@ related Credential authentication.
 
    .. code-block:: sh
 
-       # mkdir /etc/keystone/fernet-keys/
-       # chmod 750 /etc/keystone/fernet-keys/
-       # chown keystone.keystone /etc/keystone/fernet-keys/
-       # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+       $ sudo mkdir /etc/keystone/fernet-keys/
+       $ sudo chmod 750 /etc/keystone/fernet-keys/
+       $ sudo chown keystone.keystone /etc/keystone/fernet-keys/
+       $ sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 
    .. code-block:: sh
 
-       # mkdir /etc/keystone/credential-keys/
-       # chmod 750 /etc/keystone/credential-keys/
-       # chown keystone.keystone /etc/keystone/credential-keys/
-       # keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+       $ sudo mkdir /etc/keystone/credential-keys/
+       $ sudo chmod 750 /etc/keystone/credential-keys/
+       $ sudo chown keystone.keystone /etc/keystone/credential-keys/
+       $ sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
 [40][41]
 
@@ -1667,7 +1667,7 @@ PKI tokens have been removed since the Ocata release. [42]
 
    .. code-block:: sh
 
-       # keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
+       $ sudo keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
 
 Nova
 ~~~~
@@ -1747,14 +1747,14 @@ CPU Pinning
 
    .. code-block:: sh
 
-       # lscpu | grep NUMA
+       $ sudo lscpu | grep NUMA
        NUMA node(s):          2
        NUMA node0 CPU(s):     0-9,20-29
        NUMA node1 CPU(s):     10-19,30-39
 
    .. code-block:: sh
 
-       # numactl --hardware
+       $ sudo numactl --hardware
        available: 2 nodes (0-1)
        node 0 cpus: 0 1 2 3 4 5 6 7 8 9 20 21 22 23 24 25 26 27 28 29
        node 0 size: 49046 MB
@@ -1769,7 +1769,7 @@ CPU Pinning
 
    .. code-block:: sh
 
-       # virsh nodeinfo | grep NUMA
+       $ sudo virsh nodeinfo | grep NUMA
        NUMA cell(s):        2
 
 [44]
@@ -1787,21 +1787,21 @@ File: /etc/nova/nova.conf
 
    .. code-block:: sh
 
-       # systemctl restart openstack-nova-scheduler
+       $ sudo systemctl restart openstack-nova-scheduler
 
 -  Set the aggregate/availability zone to allow pinning.
 
    .. code-block:: sh
 
-       # openstack aggregate create <AGGREGATE_ZONE>
-       # openstack aggregate set --property pinned=true <AGGREGATE_ZONE>
+       $ openstack aggregate create <AGGREGATE_ZONE>
+       $ openstack aggregate set --property pinned=true <AGGREGATE_ZONE>
 
 -  Add the compute hosts to the new aggregate zone.
 
    .. code-block:: sh
 
-       # openstack host list | grep compute
-       # openstack aggregate host add <AGGREGATE_ZONE> <COMPUTE_HOST>
+       $ openstack host list | grep compute
+       $ openstack aggregate host add <AGGREGATE_ZONE> <COMPUTE_HOST>
 
 -  Modify a flavor to provide dedicated CPU pinning. There are three supported policies to use:
 
@@ -1811,13 +1811,13 @@ File: /etc/nova/nova.conf
 
        .. code-block:: sh
 
-           # openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=<POLICY>
+           $ openstack flavor set <FLAVOR_ID> --property hw:cpu_policy=dedicated --property hw:cpu_thread_policy=<POLICY>
 
 -  Alternatively, set the CPU pinning properties on an image.
 
    .. code-block:: sh
 
-       # openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=<POLICY>
+       $ openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=<POLICY>
 
 [45]
 
@@ -1853,17 +1853,17 @@ Intel:
 
 .. code-block:: sh
 
-    # rmmod kvm_intel
-    # echo “options kvm_intel nested=1” >> /etc/modprobe.d/kvm_inet.conf
-    # modprobe kvm_intel
+    $ sudo rmmod kvm_intel
+    $ echo “options kvm_intel nested=1” | sudo tee -a /etc/modprobe.d/kvm_intel.conf
+    $ sudo modprobe kvm_intel
 
 AMD:
 
 .. code-block:: sh
 
-    # rmmod kvm_amd
-    # echo “options kvm_amd nested=1” >> /etc/modprobe.d/kvm_amd.conf
-    # modprobe kvm_amd
+    $ sudo rmmod kvm_amd
+    $ echo “options kvm_amd nested=1” | sudo tee -a /etc/modprobe.d/kvm_amd.conf
+    $ sudo modprobe kvm_amd
 
 -  Use a hypervisor technology that supports nested virtualization such as KVM.
 
@@ -1925,10 +1925,10 @@ referred to as ``br-provider``) for internal tagged traffic and
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br br-vlan
-    # ovs-vsctl add-port br-vlan <VLAN_INTERFACE>
-    # ovs-vsctl add-br br-ex
-    # ovs-vsctl add-port br-ex <EXTERNAL_INTERFACE>
+    $ sudo ovs-vsctl add-br br-vlan
+    $ sudo ovs-vsctl add-port br-vlan <VLAN_INTERFACE>
+    $ sudo ovs-vsctl add-br br-ex
+    $ sudo ovs-vsctl add-port br-ex <EXTERNAL_INTERFACE>
 
 File: /etc/neutron/neutron.conf
 
@@ -1982,18 +1982,18 @@ required Neutron services.
 
 .. code-block:: sh
 
-    # systemctl restart openstack-nova-api
-    # systemctl enable neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
-    # systemctl start neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+    $ sudo systemctl restart openstack-nova-api
+    $ sudo systemctl enable neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+    $ sudo systemctl start neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
 
 Finally, on the compute nodes, restart the compute service and then
 start the Open vSwitch agent.
 
 .. code-block:: sh
 
-    # systemctl restart openstack-nova-compute
-    # systemctl enable neutron-openvswitch-agent
-    # systemctl start neutron-openvswitch-agent
+    $ sudo systemctl restart openstack-nova-compute
+    $ sudo systemctl enable neutron-openvswitch-agent
+    $ sudo systemctl start neutron-openvswitch-agent
 
 [50]
 
@@ -2315,10 +2315,10 @@ the Glance and Cinder service.
 
 .. code-block:: sh
 
-    # ceph osd pool create glance <PG_NUM> <PGP_NUM>
-    # ceph osd pool create cinder <PG_NUM> <PGP_NUM>
-    # ceph auth get-or-create client.cinder mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=volumes'
-    # ceph auth get-or-create client.glance mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=images'
+    $ sudo ceph osd pool create glance <PG_NUM> <PGP_NUM>
+    $ sudo ceph osd pool create cinder <PG_NUM> <PGP_NUM>
+    $ sudo ceph auth get-or-create client.cinder mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=volumes'
+    $ sudo ceph auth get-or-create client.glance mon 'allow r' osd 'allow class-read object_prefix rbd_children, allow rwx pool=images'
 
 If Cephx is turned on to utilize authentication, then a client keyring
 file should be created on the controller and compute nodes. This will
@@ -2340,9 +2340,9 @@ share these settings.
 
 .. code-block:: sh
 
-    # for openstack_service in "cinder glance nova"; do usermod -a -G ceph ${openstack_service}; done
-    # chmod -R 640 /etc/ceph/
-    # chown -R ceph.ceph /etc/ceph/
+    $ sudo for openstack_service in "cinder glance nova"; do usermod -a -G ceph ${openstack_service}; done
+    $ sudo chmod -R 640 /etc/ceph/
+    $ sudo chown -R ceph.ceph /etc/ceph/
 
 For the services to work, the relevant Python libraries for accessing
 Ceph need to be installed. These can be installed by the operating
@@ -2382,12 +2382,12 @@ File: /etc/cinder/cinder.conf
     volume_driver = cinder.volume.drivers.rbd.RBDDriver
     rbd_pool = <RBD_VOLUME_POOL>
     rbd_ceph_conf = /etc/ceph/ceph.conf
-    # Ceph supports efficient thin provisioned snapshots when this is set to "False."
+    #Ceph supports efficient thin provisioned snapshots when this is set to "False."
     rbd_flatten_volume_from_snapshot = False
-    # Only clone an image up to 5 times before creating a new copy of the image.
+    #Only clone an image up to 5 times before creating a new copy of the image.
     rbd_max_clone_depth = 5
     rbd_store_chunk_size = 4
-    # Do not timeout when trying to connect to RADOS.
+    #Do not timeout when trying to connect to RADOS.
     rados_connect_timeout = -1
     glance_api_version = 2
 
@@ -2400,7 +2400,7 @@ File: /etc/nova/nova.conf
     images_rbd_pool = <RBD_VOLUME_POOL>
     images_rbd_ceph_conf = /etc/ceph/ceph.conf
     rbd_user = <CEPHX_USER>
-    # This is the Libvirt secret UUID used for Cephx authentication.
+    #This is the Libvirt secret UUID used for Cephx authentication.
     rbd_secret_uuid = <LIBVIRT_SECRET_UUID>
 
 [57]
@@ -2477,17 +2477,17 @@ with the /32 CIDR, not the CIDR that represents it's true subnet mask.
 
 .. code-block:: sh
 
-    # ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-OUTPUT -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
-    # ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-PREROUTING -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
-    # ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-float-snat -s <LOCAL_IP>/32 -j SNAT --to-source <FLOATING_IP>
-    # ip netns exec snat-<ROUTER_ID> ip address add <FLOATING_IP>/32 brd <FLOATING_IP> dev qg-b2e3c286-b2
+    $ sudo ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-OUTPUT -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
+    $ sudo ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-PREROUTING -d <FLOATING_IP>/32 -j DNAT --to-destination <LOCAL_IP>
+    $ sudo ip netns exec snat-<ROUTER_ID> iptables -t nat -A neutron-l3-agent-float-snat -s <LOCAL_IP>/32 -j SNAT --to-source <FLOATING_IP>
+    $ sudo ip netns exec snat-<ROUTER_ID> ip address add <FLOATING_IP>/32 brd <FLOATING_IP> dev qg-b2e3c286-b2
 
 With no floating IPs allocated, the iptables NAT table in the SNAT
 namespace should look similar to this.
 
 .. code-block:: sh
 
-    # ip netns exec snat-<ROUTER_ID> iptables -t nat -S
+    $ sudo ip netns exec snat-<ROUTER_ID> iptables -t nat -S
     -P PREROUTING ACCEPT
     -P INPUT ACCEPT
     -P OUTPUT ACCEPT
@@ -2551,7 +2551,7 @@ authenticate.
 
    .. code-block:: sh
 
-       # unset any variables used
+       #unset any variables used
        unset OS_PROJECT_ID
        unset OS_PROJECT_NAME
        unset OS_PROJECT_DOMAIN_ID
@@ -2562,7 +2562,7 @@ authenticate.
        unset OS_USER_DOMAIN_NAME
        unset OS_REGION_ID
        unset OS_REGION_NAME
-       # fill in the project, user, and endpoint details
+       #fill in the project, user, and endpoint details
        export PROJECT_ID=
        export PROJECT_NAME=
        export OS_USERNAME=
@@ -2575,7 +2575,7 @@ authenticate.
 
    .. code-block:: sh
 
-       # unset any variables used
+       #unset any variables used
        unset OS_PROJECT_ID
        unset OS_PROJECT_NAME
        unset OS_PROJECT_DOMAIN_ID
@@ -2586,7 +2586,7 @@ authenticate.
        unset OS_USER_DOMAIN_NAME
        unset OS_REGION_ID
        unset OS_REGION_NAME
-       # fill in the project, user, and endpoint details
+       #fill in the project, user, and endpoint details
        export OS_PROJECT_ID=
        export OS_PROJECT_NAME=
        export OS_PROJECT_DOMAIN_NAME="default"

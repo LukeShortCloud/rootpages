@@ -18,7 +18,7 @@ scheme on the first 512 bytes as GPT was not supported until GRUB 2.
 
 .. code-block:: sh
 
-    # grub-install --root-directory=/ /dev/<DEVICE>
+    $ sudo grub-install --root-directory=/ /dev/<DEVICE>
 
 A basic boot menu must be configured to specify the boot partition, the
 kernel to use, the root partition to mount, and the initrd/initramfs to
@@ -92,15 +92,15 @@ end-user upon boot.
 
 .. code-block:: sh
 
-    # grub-install /dev/sdX
-    # grub-mkconfig -o /boot/grub/grub.cfg
+    $ sudo grub-install /dev/sdX
+    $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 If any changes are made to GRUB's settings and/or it's various scripts,
 run this command to update the changes. [3]
 
 .. code-block:: sh
 
-    # update-grub
+    $ sudo update-grub
 
 Common "grub-install" options: \* compress = Compress GRUB-related
 files. Valid options are: \* no (default), xz, gz, lzo \* --modules =
@@ -137,7 +137,7 @@ specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7
 
 .. code-block:: sh
 
-    # grep ^menuentry /boot/grub2/grub.cfg
+    $ sudo grep ^menuentry /boot/grub2/grub.cfg
     menuentry 'CentOS Linux (3.10.0-327.18.2.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.18.2.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
     menuentry 'CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.13.1.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
 
@@ -213,14 +213,15 @@ boot partition. [6]
 
 .. code-block:: sh
 
-    # mount /dev/sda2 /mnt
-    # mount /dev/sda1 /mnt/boot
-    # mount --bind /dev /mnt/dev
-    # mount --bind /run /mnt/run
-    # mount --bind /sys /mnt/sys
-    # chroot /mnt
-    # /bin/bash
-    # export PATH="$PATH:/sbin:/bin"
+    $ sudo mount /dev/sda2 /mnt
+    $ sudo mount /dev/sda1 /mnt/boot
+    $ sudo mount --bind /dev /mnt/dev
+    $ sudo mount -t proc proc /mnt/proc
+    $ sudo mount --bind /run /mnt/run
+    $ sudo mount -t sysfs sys /mnt/sys
+    $ chroot /mnt
+    $ /bin/bash
+    $ export PATH="$PATH:/sbin:/bin"
 
 If you need to recover GRUB from a chroot that is based on a LVM on the
 host node, make sure that LVM tools are installed on the guest. This way
@@ -230,13 +231,13 @@ Debian:
 
 .. code-block:: sh
 
-    # apt-get install lvm2
+    $ sudo apt-get install lvm2
 
 Fedora:
 
 .. code-block:: sh
 
-    # yum install lvm2
+    $ sudo yum install lvm2
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
 --------------------------------------------------------------------------------------

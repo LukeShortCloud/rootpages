@@ -33,13 +33,13 @@ requests to/from the public interface eth0.
 
 .. code-block:: sh
 
-    # iptables -F
-    # iptables -t nat -F
-    # iptables -P INPUT ACCEPT
-    # iptables -P OUTPUT ACCEPT
-    # iptables -P FORWARD ACCEPT
-    # iptables -A FORWARD -i eth1 -s 10.0.0.0/255.255.255.0 -j ACCEPT
-    # iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    $ sudo iptables -F
+    $ sudo iptables -t nat -F
+    $ sudo iptables -P INPUT ACCEPT
+    $ sudo iptables -P OUTPUT ACCEPT
+    $ sudo iptables -P FORWARD ACCEPT
+    $ sudo iptables -A FORWARD -i eth1 -s 10.0.0.0/255.255.255.0 -j ACCEPT
+    $ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 IPVS is easily managed via the "ipvsadm" command.
 
@@ -47,13 +47,13 @@ IPVS is easily managed via the "ipvsadm" command.
 
    ::
 
-       # ipvsadm -l
+       $ sudo ipvsadm -l
 
 -  View more verbose information about current connections. [3]
 
    ::
 
-       # ipvsadm -l -n --stats
+       $ sudo ipvsadm -l -n --stats
 
 -  Define the public IP address of the IPVS server (ex., 192.168.1.10),
    port (ex., :80 for HTTP), and then the type of load balancing (ex.,
@@ -61,11 +61,11 @@ IPVS is easily managed via the "ipvsadm" command.
 
    ::
 
-       # ipvsadm -A -t <BALANCERIP>:<PORT> -s <SCHEDULER>
+       $ sudo ipvsadm -A -t <BALANCERIP>:<PORT> -s <SCHEDULER>
 
    ::
 
-       # ipvsadm -A -t 192.168.1.10:80 -s rr
+       $ sudo ipvsadm -A -t 192.168.1.10:80 -s rr
 
    -  Types of clustering schedulers for "-s":
 
@@ -80,12 +80,12 @@ IPVS is easily managed via the "ipvsadm" command.
 
    ::
 
-       # ipvsadm -a -t <BALANCERIP>:<PORT> -r <DESTINATIONIP> -m
+       $ sudo ipvsadm -a -t <BALANCERIP>:<PORT> -r <DESTINATIONIP> -m
 
    ::
 
-       # ipvsadm -a -t 192.168.1.10:80 -r 10.0.0.11 -m
-       # ipvsadm -a -t 192.168.1.10:80 -r 10.0.0.12 -m
+       $ sudo ipvsadm -a -t 192.168.1.10:80 -r 10.0.0.11 -m
+       $ sudo ipvsadm -a -t 192.168.1.10:80 -r 10.0.0.12 -m
 
 -  The configuration rules are automatically saved, but they can viewed
    in standard output. These rules can then be migrated or restored to
@@ -93,17 +93,17 @@ IPVS is easily managed via the "ipvsadm" command.
 
    ::
 
-       # ipvsadm {-S|--save}
+       $ sudo ipvsadm {-S|--save}
 
    ::
 
-       # ipvsadm {-R|--restore}
+       $ sudo ipvsadm {-R|--restore}
 
 -  The entire configuration can be cleared at any time. [2]
 
    ::
 
-       # ipvsadm {-C|--clear}
+       $ sudo ipvsadm {-C|--clear}
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/clustering.rst>`__
 -------------------------------------------------------------------------------------

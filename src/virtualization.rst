@@ -33,17 +33,17 @@ Check for Intel or AMD virtualization support:
 
 .. code-block:: sh
 
-    $ grep vmx /proc/cpuinfo # Intel
+    $ grep vmx /proc/cpuinfo #Intel
 
 .. code-block:: sh
 
-    $ grep svm /proc/cpuinfo # AMD
+    $ grep svm /proc/cpuinfo #AMD
 
 Verify the exact subtype of virtualization:
 
 .. code-block:: sh
 
-    $ lscpu | grep ^Virtualization # Intel or AMD
+    $ lscpu | grep ^Virtualization #Intel or AMD
 
 KVM
 ~~~
@@ -67,13 +67,13 @@ QEMU:
 
 .. code-block:: sh
 
-    # qemu -cpu host ...
+    $ sudo qemu -cpu host ...
 
 libvirt:
 
 .. code-block:: sh
 
-    # virsh edit <VIRTUAL_MACHINE>
+    $ sudo virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
 
 Memory
@@ -104,11 +104,11 @@ Enable Huge Pages by setting the total in sysctl and then in the virtual machine
 
 .. code-block:: sh
 
-    # vim /etc/sysctl.conf
+    $ sudo vim /etc/sysctl.conf
     vm.nr_hugepages = <HUGEPAGES_TOTAL>
-    # sysctl -p
-    # mkdir /hugepages
-    # vim /etc/fstab
+    $ sudo sysctl -p
+    $ sudo mkdir /hugepages
+    $ sudo vim /etc/fstab
     hugetlbfs    /hugepages    hugetlbfs    defaults    0 0
 
 libvirt:
@@ -147,8 +147,8 @@ Alternatively, THP can be manually disabled.
 
 .. code-block:: sh
 
-    # echo never > /sys/kernel/mm/transparent_hugepage/enabled
-    # echo never > /sys/kernel/mm/transparent_hugepage/defrag
+    $ sudo echo never > /sys/kernel/mm/transparent_hugepage/enabled
+    $ sudo echo never > /sys/kernel/mm/transparent_hugepage/defrag
 
 In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
 
@@ -175,13 +175,13 @@ QEMU:
 
 .. code-block:: sh
 
-    # qemu -net nic,model=virtio ...
+    $ sudo qemu -net nic,model=virtio ...
 
 libvirt:
 
 .. code-block:: sh
 
-    # virsh edit <VIRTUAL_MACHINE>
+    $ sudo virsh edit <VIRTUAL_MACHINE>
     <interface type='network'>
       ...
       <model type='virtio' />
@@ -204,7 +204,7 @@ libvirt:
 
 .. code-block:: sh
 
-    # virsh edit <VIRTUAL_MACHINE>
+    $ sudo virsh edit <VIRTUAL_MACHINE>
         <interface type='bridge'>
     ...
           <source bridge='<BRDIGE_DEVICE>'/>
@@ -221,7 +221,7 @@ QEMU:
 
 .. code-block:: sh
 
-    # qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
+    $ sudo qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
 
 libvirt:
 
@@ -238,7 +238,7 @@ preallocation or else there could be up to a x5 performance penalty. [8]
 
 .. code-block:: sh
 
-    # qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
+    $ sudo qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
 
 PCI
 '''
@@ -250,7 +250,7 @@ QEMU:
 
 .. code-block:: sh
 
-    # qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
+    $ sudo qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -288,8 +288,8 @@ File: /etc/modprobe.d/nested_virtualization.conf
 
    .. code-block:: sh
 
-       # modprobe -r kvm-intel
-       # modprobe kvm-intel
+       $ sudo modprobe -r kvm-intel
+       $ sudo modprobe kvm-intel
 
 -  AMD
 
@@ -301,8 +301,8 @@ File: /etc/modprobe.d/nested_virtualization.conf
 
    .. code-block:: sh
 
-       # modprobe -r kvm-amd
-       # modprobe kvm-amd
+       $ sudo modprobe -r kvm-amd
+       $ sudo modprobe kvm-amd
 
 Option #2 - GRUB2
 
@@ -346,7 +346,7 @@ be "host-passthrough."
 
 .. code-block:: sh
 
-    # virsh edit <VIRTUAL_MACHINE>
+    $ sudo virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
 
 [10]
@@ -357,14 +357,14 @@ information.
 
 .. code-block:: sh
 
-    # virsh capabilities
+    $ sudo virsh capabilities
 
 Finally verify that, in the virtual machine, it has full hardware
 virtualization support.
 
 .. code-block:: sh
 
-    # virt-host-validate
+    $ sudo virt-host-validate
 
 [11]
 
@@ -405,8 +405,8 @@ BIOS:
 
 .. code-block:: sh
 
-    # lspci -k -nn -v | less
-    # vim /etc/modprobe.d/vfio.conf
+    $ sudo lspci -k -nn -v | less
+    $ sudo vim /etc/modprobe.d/vfio.conf
     options vfio-pci ids=XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ
 
 -  Rebuild the initramfs to include the VFIO related drivers.
@@ -428,7 +428,7 @@ Libvirt:
 
 .. code-block:: sh
 
-    # virsh edit <VIRTUAL_MACHINE>
+    $ sudo virsh edit <VIRTUAL_MACHINE>
     <features>
         <hyperv>
             <vendor_id state='on' value='123456abcdef'/>
@@ -511,15 +511,15 @@ packet size (MTU) issues. There are a few work-a-rounds.
 
    .. code-block:: sh
 
-       # vim /etc/sysconfig/docker
+       $ sudo vim /etc/sysconfig/docker
        OPTIONS='--selinux-enabled --log-driver=journald --mtu 1400'
-       # systemctl restart docker
+       $ sudo systemctl restart docker
 
    OR
 
    .. code-block:: sh
 
-       # vim /usr/lib/systemd/system/docker.service
+       $ sudo vim /usr/lib/systemd/system/docker.service
        ExecStart=/usr/bin/docker-current daemon \
              --exec-opt native.cgroupdriver=systemd --mtu 1400 \
              $OPTIONS \
@@ -528,15 +528,15 @@ packet size (MTU) issues. There are a few work-a-rounds.
              $ADD_REGISTRY \
              $BLOCK_REGISTRY \
              $INSECURE_REGISTRY
-       # systemctl daemon-reload
-       # systemctl restart docker
+       $ sudo systemctl daemon-reload
+       $ sudo systemctl restart docker
 
 2. Forward all packets between the docker link through the physical
    link.
 
    .. code-block:: sh
 
-       # iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+       $ sudo iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
 [17]
 
@@ -552,8 +552,8 @@ restart the docker service for it to be properly recreated.
 
 .. code-block:: sh
 
-    # ip link delete docker0
-    # systemctl restart docker
+    $ sudo ip link delete docker0
+    $ sudo systemctl restart docker
 
 [18]
 
@@ -567,7 +567,7 @@ Debian install [19]:
 
 .. code-block:: sh
 
-    # apt-get install lxc
+    $ sudo apt-get install lxc
 
 RHEL install [20] requires the Extra Packages for Enterprise Linux (EPEL)
 repository:
@@ -576,15 +576,15 @@ repository:
 
    .. code-block:: sh
 
-       # yum install epel-release
-       # yum install lxc lxc-templates libvirt
+       $ sudo yum install epel-release
+       $ sudo yum install lxc lxc-templates libvirt
 
 On RHEL family systems the ``lxcbr0`` interface is not created or used.
 Alternatively, the libvirt interface ``virbr0`` should be used.
 
 .. code-block:: sh
 
-    # vim /etc/lxc/default.conf
+    $ sudo vim /etc/lxc/default.conf
     lxc.network.link = virbr0
 
 The required services need to be started before LXC containers will be
@@ -592,8 +592,8 @@ able to run.
 
 .. code-block:: sh
 
-    # systemctl start libvirtd
-    # systemctl start lxc
+    $ sudo systemctl start libvirtd
+    $ sudo systemctl start lxc
 
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
@@ -784,7 +784,7 @@ block.
 .. code-block:: ruby
 
     Vagrant.configure("2") do |config|
-        # Define VM settings here.
+        #Define VM settings here.
     end
 
 Define the virtual machine template to use. This will be downloaded, by
@@ -1036,45 +1036,45 @@ Install the stable, development, or the master repository. [42]
 
    .. code-block:: sh
 
-       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+       $ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
 
 -  Development:
 
    .. code-block:: sh
 
-       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
-       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42-snapshot.rpm
+       $ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+       $ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42-snapshot.rpm
 
 -  Master:
 
    .. code-block:: sh
 
-       # yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+       $ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
 
 Install the oVirt Engine dependencies.
 
 .. code-block:: sh
 
-    # yum install ovirt-hosted-engine-setup ovirt-engine-appliance
+    $ sudo yum install ovirt-hosted-engine-setup ovirt-engine-appliance
 
 Setup NFS. The user "vdsm" needs full access to a NFS exported directory. The group "kvm" should have readable and executable permissions to run virtual machines from there. [41]
 
 .. code-block:: sh
 
-    # mkdir -p /exports/data
-    # chmod 0755 /exports/data
-    # vim /etc/exports
+    $ sudo mkdir -p /exports/data
+    $ sudo chmod 0755 /exports/data
+    $ sudo vim /etc/exports
     /exports/data      *(rw)
-    # systemctl restart nfs
-    # groupadd kvm -g 36
-    # useradd vdsm -u 36 -g 36
-    # chown -R vdsm:kvm /exports/data
+    $ sudo systemctl restart nfs
+    $ sudo groupadd kvm -g 36
+    $ sudo useradd vdsm -u 36 -g 36
+    $ sudo chown -R vdsm:kvm /exports/data
 
 Run the manual Engine setup. This will prompt the end-user for different configuration options.
 
 .. code-block:: sh
 
-    # hosted-engine --deploy
+    $ sudo hosted-engine --deploy
 
 Configure the Engine virtual machine to use static IP addressing. Enter in the address that is setup for the Engine's fully qualified domain name.
 

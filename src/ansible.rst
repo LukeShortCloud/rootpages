@@ -43,35 +43,35 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install epel-release
-    # yum install ansible
+    $ sudo yum install epel-release
+    $ sudo yum install ansible
 
 Debian:
 
 .. code-block:: sh
 
-    # apt-get install software-properties-common
-    # apt-add-repository ppa:ansible/ansible
-    # apt-get update
-    # apt-get install ansible
+    $ sudo apt-get install software-properties-common
+    $ sudo apt-add-repository ppa:ansible/ansible
+    $ sudo apt-get update
+    $ sudo apt-get install ansible
 
 Source code:
 
 .. code-block:: sh
 
-    # git clone git://github.com/ansible/ansible.git
-    # cd ansible/
-    # git branch -a | grep stable
-    # git checkout remotes/origin/stable-2.4
-    # git submodule update --init --recursive
-    # source ./hacking/env-setup
+    $ git clone git://github.com/ansible/ansible.git
+    $ cd ./ansible/
+    $ git branch -a | grep stable
+    $ git checkout remotes/origin/stable-2.4
+    $ git submodule update --init --recursive
+    $ source ./hacking/env-setup
 
 Updating source code installations:
 
 .. code-block:: sh
 
-    # git pull --rebase
-    # git submodule update --init --recursive
+    $ git pull --rebase
+    $ git submodule update --init --recursive
 
 [18]
 
@@ -352,7 +352,7 @@ Examples:
    .. code-block:: html
 
        <html>
-       <body>My domain name is {{ domain }}</body>
+           <body>My domain name is {{ domain }}</body>
        </html>
 
 Performance Tuning
@@ -474,9 +474,7 @@ Variables are created for a host and/or group using the tag ":vars".
 Then any custom variable can be defined and associated with a string. A
 host specifically can also have it's variables defined on the same line
 as it's Ansible inventory variables. [3] A few examples are listed
-below. These can also be defined in separate files as explained in
-`Configuration - Inventory -
-Variables <#configuration---inventory---variables>`__.
+below. These can also be defined in separate files as explained in the "Variables" chapter.
 
 Example:
 
@@ -3947,85 +3945,7 @@ Example:
 Python API
 ----------
 
-Ansible is written in Python so it can be used programmatically to run
-Playbooks. This does not provide a thread-safe interface and is subject
-to change depending on the needs of the actual Ansible utilities. It is
-recommended to use a RESTful API from a dashboard for other languages or
-more advanced tasks. Below is an example from the official documentation
-of using the Python library for Ansible 2 [34]:
-
-.. code-block:: python
-
-    #!/usr/bin/env python
-
-    import json
-    from collections import namedtuple
-    from ansible.parsing.dataloader import DataLoader
-    from ansible.vars.manager import VariableManager
-    from ansible.inventory.manager import InventoryManager
-    from ansible.playbook.play import Play
-    from ansible.executor.task_queue_manager import TaskQueueManager
-    from ansible.plugins.callback import CallbackBase
-
-    class ResultCallback(CallbackBase):
-        """A sample callback plugin used for performing an action as results come in
-
-        If you want to collect all results into a single object for processing at
-        the end of the execution, look into utilizing the ``json`` callback plugin
-        or writing your own custom callback plugin
-        """
-        def v2_runner_on_ok(self, result, **kwargs):
-            """Print a json representation of the result
-
-            This method could store the result in an instance attribute for retrieval later
-            """
-            host = result._host
-            print(json.dumps({host.name: result._result}, indent=4))
-
-    Options = namedtuple('Options', ['connection', 'module_path', 'forks', 'become', 'become_method', 'become_user', 'check', 'diff'])
-    # initialize needed objects
-    loader = DataLoader()
-    options = Options(connection='local', module_path='/path/to/mymodules', forks=100, become=None, become_method=None, become_user=None, check=False,
-                      diff=False)
-    passwords = dict(vault_pass='secret')
-
-    # Instantiate our ResultCallback for handling results as they come in
-    results_callback = ResultCallback()
-
-    # create inventory and pass to var manager
-    inventory = InventoryManager(loader=loader, sources=['localhost'])
-    variable_manager = VariableManager(loader=loader, inventory=inventory)
-
-    # create play with tasks
-    play_source =  dict(
-            name = "Ansible Play",
-            hosts = 'localhost',
-            gather_facts = 'no',
-            tasks = [
-                dict(action=dict(module='shell', args='ls'), register='shell_out'),
-                dict(action=dict(module='debug', args=dict(msg='{{shell_out.stdout}}')))
-             ]
-        )
-    play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
-
-    # actually run it
-    tqm = None
-    try:
-        tqm = TaskQueueManager(
-                  inventory=inventory,
-                  variable_manager=variable_manager,
-                  loader=loader,
-                  options=options,
-                  passwords=passwords,
-                  stdout_callback=results_callback,  # Use our custom callback instead of the ``default`` callback plugin
-              )
-        result = tqm.run(play)
-    finally:
-        if tqm is not None:
-            tqm.cleanup()
-
-An unofficial example can also be found at
-https://serversforhackers.com/running-ansible-2-programmatically.
+Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard such as the official AWX project. Using the direct Python libraries for Ansible is not recommended. [34]
 
 Containers
 ----------
@@ -4313,14 +4233,14 @@ should be installed.
 
 .. code-block:: sh
 
-    # yum -y install epel-release
+    $ sudo yum -y install epel-release
 
 Then install Ansible Tower using the setup shell script. This will run
 an Ansible Playbook to install Tower.
 
 .. code-block:: sh
 
-    $ ./setup.sh
+    $ sudo ./setup.sh
 
 When the installation is complete, Ansible Tower can be accessed by a
 web browser. If no SSL certificate was defined, then a self-signed SSL
@@ -4414,7 +4334,7 @@ their account. This setting can be modified in the ``settings.py`` file.
 
 .. code-block:: sh
 
-    # vim /etc/tower/conf.d/settings.py
+    $ sudo vim /etc/tower/conf.d/settings.py
     AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
 
 Security
@@ -4685,13 +4605,13 @@ Manually start:
 
 .. code-block:: sh
 
-    # for docker_container in postgres rabbitmq memcached awx_web awx_task; do docker start ${docker_container}; done
+    $ for docker_container in postgres rabbitmq memcached awx_web awx_task; do sudo docker start ${docker_container}; done
 
 Manually stop:
 
 .. code-block:: sh
 
-    # for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; done
+    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do sudo docker stop ${docker_container}; done
 
 Update
 ^^^^^^
@@ -4742,8 +4662,8 @@ pre-built docker image:
 
 .. code-block:: sh
 
-    # docker pull batix/rundeck-ansible
-    # docker run -d --name rundeck-test -p 127.0.0.1:4440:4440 -e RDECK_ADMIN_PASS=password -v `pwd`:/data batix/rundeck-ansible
+    $ sudo docker pull batix/rundeck-ansible
+    $ sudo docker run -d --name rundeck-test -p 127.0.0.1:4440:4440 -e RDECK_ADMIN_PASS=password -v `pwd`:/data batix/rundeck-ansible
 
 Log into the dashboard at ``http://127.0.0.1:4440`` and use the username
 "admin" and the password that was set by the ``RDECK_ADMIN_PASS``
@@ -4769,8 +4689,8 @@ Installation:
 
 .. code-block:: sh
 
-    # curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 > /usr/bin/semaphore
-    # /usr/bin/semaphore -setup
+    $ sudo curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 > /usr/bin/semaphore
+    $ sudo /usr/bin/semaphore -setup
 
 Semaphore will now be available at ``http://<SEMAPHORE_HOST>:3000``.
 
@@ -4846,7 +4766,7 @@ Bibliography
 31. "Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_checkmode.html
 32. "Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common\_return\_values.html
 33. "Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro\_windows.html
-34. "Ansible Python API." Ansible Documentation. September 19, 2017. Accessed September 20, 2017. http://docs.ansible.com/ansible/devel/dev\_guide/developing\_api.html
+34. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
 35. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 36. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
 37. "Ansible Tower Installation and Reference Guide." Ansible Documentation. February 20, 2018. Accessed March 2, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html

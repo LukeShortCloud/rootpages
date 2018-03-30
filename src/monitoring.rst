@@ -20,14 +20,14 @@ RHEL
 
 .. code-block:: sh
 
-    # yum install epel-release
-    # yum install monit
+    $ sudo yum install epel-release
+    $ sudo yum install monit
 
 Ubuntu
 
 .. code-block:: sh
 
-    # apt-get install monit
+    $ sudo apt-get install monit
 
 Depending on your system, the main configuration file is one of these
 two below. The default settings can be used. The configurations are not

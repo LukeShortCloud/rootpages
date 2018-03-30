@@ -85,8 +85,8 @@ Known limitations:
       defragmentation. Then the disk space usage should be accurate to
       df's output.
 
-      -  ``# btrfs balance start /``
-      -  ``# btrfs defragment -r /``
+      -  ``$ sudo btrfs balance start /``
+      -  ``$ sudo btrfs defragment -r /``
 
 [7]
 
@@ -167,26 +167,26 @@ Syntax:
 
 .. code-block:: sh
 
-    # mdadm --create --level=<LEVEL> --raid-devices=<NUMBER_OF_DISKS> /dev/md<DEVICE_NUMBER_TO_CREATE> /dev/sd<PARTITION1> /dev/sd<PARTITION2>
+    $ sudo mdadm --create --level=<LEVEL> --raid-devices=<NUMBER_OF_DISKS> /dev/md<DEVICE_NUMBER_TO_CREATE> /dev/sd<PARTITION1> /dev/sd<PARTITION2>
 
 Example:
 
 .. code-block:: sh
 
-    # mdadm --create --level=10 --raid-devices=4 /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1
+    $ sudo mdadm --create --level=10 --raid-devices=4 /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1
 
 Then to automatically create the partition layout file run this:
 
 .. code-block:: sh
 
-    # echo 'DEVICE partitions' > /etc/mdadm.conf
-    # mdadm --detail --scan >> /etc/mdadm.conf
+    $ sudo echo 'DEVICE partitions' > /etc/mdadm.conf
+    $ sudo mdadm --detail --scan >> /etc/mdadm.conf
 
 Finally, you can initialize the RAID.
 
 .. code-block:: sh
 
-    # mdadm --assemble --scan
+    $ sudo mdadm --assemble --scan
 
 [11]
 
@@ -244,8 +244,8 @@ have the "nfs\_t" file context for SELinux to work properly.
 
 .. code-block:: sh
 
-    # semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
-    # restorecon -R "/path/to/dir"
+    $ sudo semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
+    $ sudo restorecon -R "/path/to/dir"
 
 SMB
 ~~~
@@ -293,8 +293,8 @@ Verify the Samba configuration.
 
 .. code-block:: sh
 
-    # testparm
-    # smbclient //localhost/<SHARE_NAME> -U <SMB_USER1>%<SMB_USER1_PASS>
+    $ sudo testparm
+    $ sudo smbclient //localhost/<SHARE_NAME> -U <SMB_USER1>%<SMB_USER1_PASS>
 
 The Linux user for accessing the SMB share will need to be created and
 have their password added to the Samba configuration. These are stored
@@ -303,8 +303,8 @@ running:
 
 .. code-block:: sh
 
-    # useradd <SMB_USER1>
-    # smbpasswd -a <SMB_USER1>
+    $ sudo useradd <SMB_USER1>
+    $ sudo smbpasswd -a <SMB_USER1>
 
 On Red Hat Enterprise Linux systems, the exported directory will need to
 have the "samba\_share\_t" file context for SELinux to work properly.
@@ -312,8 +312,8 @@ have the "samba\_share\_t" file context for SELinux to work properly.
 
 .. code-block:: sh
 
-    # semanage fcontext -a -t samba_share_t "/path/to/dir{/.*)?"
-    # restorecon -R "/path/to/dir"
+    $ sudo semanage fcontext -a -t samba_share_t "/path/to/dir{/.*)?"
+    $ sudo restorecon -R "/path/to/dir"
 
 iSCSI
 ~~~~~
@@ -343,7 +343,7 @@ Syntax:
 
 .. code-block:: sh
 
-    # systemctl enable target && systemctl start target
+    $ sudo systemctl enable target && systemctl start target
 
 -  Create a storage device. This is typically either a block device or a
    file.
@@ -352,7 +352,7 @@ Block syntax:
 
 .. code-block:: sh
 
-       # targetcli
+       $ sudo targetcli
        > cd /backstores/block/
        > create iscsidisk1 dev=/dev/sd<DISK>
 
@@ -360,7 +360,7 @@ File syntax:
 
 .. code-block:: sh
 
-       # targetcli
+       $ sudo targetcli
        > cd /backstore/fileio/
        > create iscsidisk1 /<PATH_TO_DISK>.img <SIZE_IN_MB>M
 
@@ -484,14 +484,14 @@ Syntax:
 
 .. code-block:: sh
 
-    # vim /etc/iscsi/initiatorname.iscsi
+    $ sudo vim /etc/iscsi/initiatorname.iscsi
     InitiatorName=<IQN>:<ACL>
 
 Example:
 
 .. code-block:: sh
 
-    # vim /etc/iscsi/initiatorname.iscsi
+    $ sudo vim /etc/iscsi/initiatorname.iscsi
     InitiatorName=iqn.2016-01.com.example.server:client
 
 -  Start and enable the iSCSI initiator to load on bootup.
@@ -500,7 +500,7 @@ Syntax:
 
 .. code-block:: sh
 
-    # systemctl start iscsi && systemctl enable iscsi
+    $ sudo systemctl start iscsi && systemctl enable iscsi
 
 -  Once started, the iSCSI device should be able to be attached.
 
@@ -508,13 +508,13 @@ Syntax:
 
 .. code-block:: sh
 
-    # iscsiadm --mode node --targetname <IQN>:<TARGET> --portal <iSCSI_SERVER_IP> --login
+    $ sudo iscsiadm --mode node --targetname <IQN>:<TARGET> --portal <iSCSI_SERVER_IP> --login
 
 Example:
 
 .. code-block:: sh
 
-    # iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login
+    $ sudo iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal 10.0.0.1 --login
 
 -  Verify that a new "iscsi" device exists.
 
@@ -522,7 +522,7 @@ Syntax:
 
 .. code-block:: sh
 
-    # lsblk --scsi
+    $ sudo lsblk --scsi
 
 [16]
 
@@ -563,23 +563,23 @@ Cluster map:
 -  Monitor map = The cluster fsid (uuid), position, name, address and
    port of each monitor server.
 
-   -  ``# ceph mon dump``
+   -  ``$ sudo ceph mon dump``
 
 -  OSD map = The cluster fsid, available pools, PG numbers, and OSDs
    current status.
 
-   -  ``# ceph osd dump``
+   -  ``$ sudo ceph osd dump``
 
 -  PG map = PG version, PG ID, ratios, and data usage statistics.
 
-   -  ``# ceph pg dump``
+   -  ``$ sudo ceph pg dump``
 
 -  `CRUSH map <#network---ceph---crush-map>`__ = Storage devices,
    physical locations, and rules for storing objects. It is recommended
    to tweak this for production clusters.
 -  MDS map
 
-   -  ``# ceph fs dump``
+   -  ``$ sudo ceph fs dump``
 
 When the end-user asks for a file, that name is combined with it's PG ID
 and then CRUSH hashes it to find the exact location of it on all of the
@@ -636,8 +636,8 @@ File:  /etc/ceph/ceph.conf
 
 .. code-block:: sh
 
-    # ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
-    # ceph osd pool set <POOL> pgp_num <OPTIMAL_PG_NUMBER>
+    $ sudo ceph osd pool set <POOL> pg_num <OPTIMAL_PG_NUMBER>
+    $ sudo ceph osd pool set <POOL> pgp_num <OPTIMAL_PG_NUMBER>
 
 Cache pools can be configured used to cache files onto faster drives.
 When a file is continually being read, it will be copied to the faster
@@ -681,26 +681,26 @@ separated from the OSD storage nodes.
 
    .. code-block:: sh
 
-       # ceph-deploy new <SERVER1>
+       $ sudo ceph-deploy new <SERVER1>
 
 -  Install the latest LTS release for production environments on the
    specified servers. SSH access is required.
 
    .. code-block:: sh
 
-       # ceph-deploy install --release jewel <SERVER1> <SERVER2> <SERVER3>
+       $ sudo ceph-deploy install --release jewel <SERVER1> <SERVER2> <SERVER3>
 
 -  Initialize the first monitor.
 
    .. code-block:: sh
 
-       # ceph-deploy mon create-inital <SERVER1>
+       $ sudo ceph-deploy mon create-inital <SERVER1>
 
 -  Install the monitor service on the other nodes.
 
    .. code-block:: sh
 
-       # ceph-deploy mon create <SERVER2> <SERVER3>
+       $ sudo ceph-deploy mon create <SERVER2> <SERVER3>
 
 -  List the available hard drives from all of the servers. It is
    recommended to have a fully dedicated drive, not a partition, for
@@ -708,14 +708,14 @@ separated from the OSD storage nodes.
 
    .. code-block:: sh
 
-       # ceph-deploy disk list <SERVER1> <SERVER2> <SERVER3>
+       $ sudo ceph-deploy disk list <SERVER1> <SERVER2> <SERVER3>
 
 -  Carefully select the drives to use. Then use the "disk zap" arguments
    to zero out the drive before use.
 
    .. code-block:: sh
 
-       # ceph-deploy disk zap <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
+       $ sudo ceph-deploy disk zap <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 
 -  Prepare and deploy the OSD service for the specified drives. The
    default file system is XFS, but Btrfs is much feature-rich with
@@ -723,13 +723,13 @@ separated from the OSD storage nodes.
 
    .. code-block:: sh
 
-       # ceph-deploy osd create --fs-type btrfs <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
+       $ sudo ceph-deploy osd create --fs-type btrfs <SERVER1>:<DRIVE> <SERVER2>:<DRIVE> <SERVER3>:<DRIVE>
 
 -  Verify it's working.
 
    .. code-block:: sh
 
-       # ceph status
+       $ sudo ceph status
 
 [22]
 
@@ -740,8 +740,8 @@ The ceph-ansible project is used to help deploy and automate updates.
 
 .. code-block:: sh
 
-    # git clone https://github.com/ceph/ceph-ansible/
-    # cd ceph-ansible/
+    $ sudo git clone https://github.com/ceph/ceph-ansible/
+    $ sudo cd ceph-ansible/
 
 Configure the Ansible inventory hosts file. This should contain the SSH
 connection details to access the relevant servers.
@@ -779,11 +779,11 @@ Copy the sample configurations and modify the variables.
 
 .. code-block:: sh
 
-    # cp site.yml.sample site.yml
-    # cd group_vars/
-    # cp all.yml.sample all.yml
-    # cp mons.yml.sample mons.yml
-    # cp osds.yml.sample osds.yml
+    $ sudo cp site.yml.sample site.yml
+    $ sudo cd group_vars/
+    $ sudo cp all.yml.sample all.yml
+    $ sudo cp mons.yml.sample mons.yml
+    $ sudo cp osds.yml.sample osds.yml
 
 Common variables:
 
@@ -862,7 +862,7 @@ Finally, run the Playbook to deploy the Ceph cluster.
 
 .. code-block:: sh
 
-    # ansible-playbook -i production site.yml
+    $ sudo ansible-playbook -i production site.yml
 
 [23]
 
@@ -889,11 +889,11 @@ be loaded.
 
 .. code-block:: sh
 
-    # ceph osd getcrushmap -o <NEW_COMPILED_FILE>
-    # crushtool -d <NEW_COMPILED_FILE> -o <NEW_DECOMPILED_FILE>
-    # vim <NEW_DECOMPILED_FILE>`
-    # crushtool -c <NEW_DECOMPILED_FILE> -o <UPDATED_COMPILED_FILE>
-    # ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>
+    $ sudo ceph osd getcrushmap -o <NEW_COMPILED_FILE>
+    $ sudo crushtool -d <NEW_COMPILED_FILE> -o <NEW_DECOMPILED_FILE>
+    $ sudo vim <NEW_DECOMPILED_FILE>`
+    $ sudo crushtool -c <NEW_DECOMPILED_FILE> -o <UPDATED_COMPILED_FILE>
+    $ sudo ceph osd setcrushmap -i <UPDATED_COMPILED_FILE>
 
 Devices
 '''''''
@@ -1028,7 +1028,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # ceph health detail
+          $ sudo ceph health detail
           HEALTH_ERR 1 pgs inconsistent; 1 scrub errors
           pg 1.28 is active+clean+inconsistent, acting [8,11,20]
           1 scrub errors
@@ -1039,13 +1039,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # ceph pg repar <PLACEMENT_GROUP>
+          $ sudo ceph pg repar <PLACEMENT_GROUP>
 
    -  Example:
 
       .. code-block:: sh
 
-          # ceph pg repair 1.28
+          $ sudo ceph pg repair 1.28
 
 -  Find the error:
 
@@ -1053,13 +1053,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # grep ERR /var/log/ceph/ceph-osd.<OSD_NUMBER>.log
+          $ sudo grep ERR /var/log/ceph/ceph-osd.<OSD_NUMBER>.log
 
    -  Example:
 
       .. code-block:: sh
 
-          # grep ERR /var/log/ceph/ceph-osd.11.log
+          $ sudo grep ERR /var/log/ceph/ceph-osd.11.log
           2017-01-12 22:27:52.626252 7f5b511e8700 -1 log_channel(cluster) log [ERR] : 1.27 shard 12: soid 1:e4c200f7:::rbd_data.a1e002238e1f29.000000000000136d:head candidate had a read error
 
 -  Find the bad file.
@@ -1068,13 +1068,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # find /var/lib/ceph/osd/ceph-<OSD_NUMBER>/current/<PLACEMENT_GROUP>_head/ -name '*<OBJECT_ID>*' -ls
+          $ sudo find /var/lib/ceph/osd/ceph-<OSD_NUMBER>/current/<PLACEMENT_GROUP>_head/ -name '*<OBJECT_ID>*' -ls
 
    -  Example:
 
       .. code-block:: sh
 
-          # find /var/lib/ceph/osd/ceph-11/current/1.28_head/ -name "*a1e002238e1f29.000000000000136d*"
+          $ sudo find /var/lib/ceph/osd/ceph-11/current/1.28_head/ -name "*a1e002238e1f29.000000000000136d*"
           /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\udata.b3e012238e1f29.000000000000136d__head_EF004327__1
 
 -  Stop the OSD.
@@ -1083,13 +1083,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # systemctl stop ceph-osd@<OSD_NUMBER>.service
+          $ sudo systemctl stop ceph-osd@<OSD_NUMBER>.service
 
    -  Example:
 
       .. code-block:: sh
 
-          # systemctl stop ceph-osd@11.service
+          $ sudo systemctl stop ceph-osd@11.service
 
 -  Flush the journal to save the current files cached in memory.
 
@@ -1097,13 +1097,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # ceph-osd -i <OSD_NUMBER> --flush-journal
+          $ sudo ceph-osd -i <OSD_NUMBER> --flush-journal
 
    -  Example:
 
       .. code-block:: sh
 
-          # ceph-osd -i 11 --flush-journal
+          $ sudo ceph-osd -i 11 --flush-journal
 
 -  Move the bad object out of it's current directory in the OSD.
 
@@ -1111,7 +1111,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # mv /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\\udata.b3e012238e1f29.000000000000136d__head_EF004327__1 /root/ceph_osd_backups/
+          $ sudo mv /var/lib/ceph/osd/ceph-11/current/1.28_head/DIR_7/DIR_2/DIR_3/rbd\\udata.b3e012238e1f29.000000000000136d__head_EF004327__1 /root/ceph_osd_backups/
 
 -  Restart the OSD.
 
@@ -1119,13 +1119,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # systemctl restart ceph-osd@<OSD_NUMBER>.service
+          $ sudo systemctl restart ceph-osd@<OSD_NUMBER>.service
 
    -  Example:
 
       .. code-block:: sh
 
-          # systemctl restart ceph-osd@11.service
+          $ sudo systemctl restart ceph-osd@11.service
 
 -  Run another placement group repair.
 
@@ -1133,13 +1133,13 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          # ceph pg repar <PLACEMENT_GROUP>
+          $ sudo ceph pg repar <PLACEMENT_GROUP>
 
    -  Example:
 
       .. code-block:: sh
 
-          # ceph pg repair 1.28
+          $ sudo ceph pg repair 1.28
 
 [25]
 
@@ -1184,19 +1184,19 @@ Ceph's RADOS block devices (RBDs) as their main disk.
 
    .. code-block:: sh
 
-       # virsh secret-define --file ceph-secret.xml
+       $ sudo virsh secret-define --file ceph-secret.xml
 
 -  Verify that the secret was created.
 
    .. code-block:: sh
 
-       # virsh secret-list
+       $ sudo virsh secret-list
 
 -  Set the secret to the Ceph client's key. [26]
 
    .. code-block:: sh
 
-       # virsh secret-set-value --secret <GENERATED_UUID> --base64 $(ceph auth get-key client.<USER>)
+       $ sudo virsh secret-set-value --secret <GENERATED_UUID> --base64 $(ceph auth get-key client.<USER>)
 
 -  Finally, the secret needs to be referenced as type "ceph" with either
    the "usage" (description) or "uuid" or the secret element that has

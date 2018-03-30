@@ -39,7 +39,7 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install krb5-server krb5-workstation
+    $ sudo yum install krb5-server krb5-workstation
 
 Modify the example Kerberos configuration files and replace the domain
 "example.com" with a different domain. This domain needs to be
@@ -102,20 +102,20 @@ the database will be saved to ``/var/kerberos/krb5kdc/principal``.
 
 .. code-block:: sh
 
-    # kdb5_util create -s
+    $ sudo kdb5_util create -s
 
 Start and enable the Kerberos service to start on boot.
 
 .. code-block:: sh
 
-    # systemctl start krb5kdc
-    # systemctl enable krb5kdc
+    $ sudo systemctl start krb5kdc
+    $ sudo systemctl enable krb5kdc
 
 Create an administrator account.
 
 .. code-block:: sh
 
-    # kadmin.local -q "addprinc root/admin"
+    $ sudo kadmin.local -q "addprinc root/admin"
 
 Optionally start the remote "kadmin" administrator service.
 Alternatively, the ``kadmin.local`` command be used exclusively for
@@ -123,13 +123,13 @@ manage Kerberos from the local system.
 
 .. code-block:: sh
 
-    # systemctl start kadmin
+    $ sudo systemctl start kadmin
 
 Log into the administrator account to manage accounts.
 
 .. code-block:: sh
 
-    # kadmin
+    $ sudo kadmin
 
 It is also recommended to use a NTP service to keep time synchronized to
 prevent authentication issues due to time drift.
@@ -145,7 +145,7 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install krb5-workstation
+    $ sudo  yum install krb5-workstation
 
 The client should have the same domain and realm settings configured
 that the server does. The easiest way to ensure this is to copy the
@@ -180,20 +180,20 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install compat-openldap openldap openldap-clients openldap-servers
+    $ sudo yum install compat-openldap openldap openldap-clients openldap-servers
 
 For using a RDMS, install the required dependency:
 
 .. code-block:: sh
 
-    # yum install openldap-servers-sql
+    $ sudo yum install openldap-servers-sql
 
 Enable and start the service.
 
 .. code-block:: sh
 
-    # systemctl enable slapd
-    # systemctl start slapd
+    $ sudo systemctl enable slapd
+    $ sudo systemctl start slapd
 
 [5]
 

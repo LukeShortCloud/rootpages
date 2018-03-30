@@ -67,11 +67,11 @@ Verify that the configuration is correct with one of these commands:
 
 .. code-block:: sh
 
-    # apachectl configtest
+    $ sudo apachectl configtest
 
 .. code-block:: sh
 
-    # httpd -t
+    $ sudo httpd -t
 
 Virtual Hosts
 ~~~~~~~~~~~~~
@@ -195,14 +195,14 @@ Create an Apache user.
 
 .. code-block:: sh
 
-    # htpasswd -c /etc/httpd/conf.d/passwd <USER1>
+    $ sudo htpasswd -c /etc/httpd/conf.d/passwd <USER1>
 
 Another user can be appended to this file by omitting the "-c" create
 option.
 
 .. code-block:: sh
 
-    # htpasswd /etc/httpd/conf.d/passwd <USER2>
+    $ sudo htpasswd /etc/httpd/conf.d/passwd <USER2>
 
 A new file can be created to assign multiple users to a group.
 
@@ -288,7 +288,7 @@ anonymous user ("other") access category.
 
 .. code-block:: sh
 
-    # chmod -R o+rx /path/to/custom/cgi-bin/
+    $ sudo chmod -R o+rx /path/to/custom/cgi-bin/
 
 [7]
 
@@ -306,27 +306,27 @@ Install the troubleshooting utilities:
 
 .. code-block:: sh
 
-    # yum install setroubleshoot
+    $ sudo yum install setroubleshoot
 
 View the current Apache ports allowed by SELinux:
 
 .. code-block:: sh
 
-    # semanage port -l | grep ^http_port_t
+    $ sudo semanage port -l | grep ^http_port_t
     http_port_t                    tcp      80, 81, 443, 488, 8008, 8009, 8443, 9000
 
 Add a new allowed TCP port:
 
 .. code-block:: sh
 
-    # semanage port -a -t http_port_t -p tcp <PORT_NUMBER>
+    $ sudo semanage port -a -t http_port_t -p tcp <PORT_NUMBER>
 
 Lookup the Apache SELinux file context permissions. It should be
 "httpd\_sys\_content\_t."
 
 .. code-block:: sh
 
-    # ls -lahZ /var/www/html/
+    $ ls -lahZ /var/www/html/
     drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 .
     drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 ..
 
@@ -335,8 +335,8 @@ semanage tool and then apply the permissions by running restorecon:
 
 .. code-block:: sh
 
-    # semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
-    # restorecon -Rv /path/to/custom/dir
+    $ sudo semanage fcontext -a -t httpd_sys_content_t "/path/to/custom/dir(/.*)?"
+    $ sudo restorecon -Rv /path/to/custom/dir
 
 [8]
 

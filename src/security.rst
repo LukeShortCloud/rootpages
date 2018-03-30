@@ -37,13 +37,13 @@ Example (numbers):
 
 .. code-block:: sh
 
-    # chmod 775
+    $ chmod 775
 
 Example (letters):
 
 .. code-block:: sh
 
-    # chmod g+w,o+x
+    $ chmod g+w,o+x
 
 [1]
 
@@ -71,13 +71,13 @@ RHEL:
 
 .. code-block:: sh
 
-    # yum install krb5-server krb5-workstation pam_krb5
+    $ sudo yum install krb5-server krb5-workstation pam_krb5
 
 Debian:
 
 .. code-block:: sh
 
-    # apt-get install krb5-kdc krb5-admin-server libpam-krb5
+    $ sudo apt-get install krb5-kdc krb5-admin-server libpam-krb5
 
 The principal database needs to be generated. First replace
 "EXAMPLE.COM" with the domain to be used. For this example, the realm
@@ -110,7 +110,7 @@ database and associated files for the realm "ROOTPAGES.TLD."
 
 .. code-block:: sh
 
-    # kdb5_util create -s -r ROOTPAGES.TLD
+    $ sudo kdb5_util create -s -r ROOTPAGES.TLD
 
 Uncomment all of the lines in /etc/krb5.conf and then replace all
 references to "example.com" and EXAMPLE.COM" with the server's domain
@@ -148,28 +148,31 @@ Start the KDC service.
 
 .. code-block:: sh
 
-    # systemctl start krb5kdc
+    $ sudo systemctl start krb5kdc
 
 Optionally, the admin authentication service can be started to allow
 remote management.
 
 .. code-block:: sh
 
-    # systemctl start kadmin
+    $ sudo systemctl start kadmin
 
 Now define the root user and KDC host as allowed principals.
 
 .. code-block:: sh
 
-    # kadmin.local -p root/admin
+    $ sudo kadmin.local -p root/admin
+
+::
+
     kadmin: addprinc root/admin
     kdamin: addprinc -randkey host/kdc.rootpages.tld
 
 Additional Kerberos users can also be created.
 
-.. code-block:: sh
+::
 
-    kadmin: addprinc cloud-user
+    kadmin: addprinc <USER>
 
 Allow Kerberos authentication via SSH.
 
@@ -190,20 +193,20 @@ File: /etc/ssh/ssh_config
 
 .. code-block:: sh
 
-    # systemctl reload sshd
+    $ sudo systemctl reload sshd
 
 Allow remote authentication through this KDC.
 
 .. code-block:: sh
 
-    # authconfig --enablekrb5 --update
+    $ sudo authconfig --enablekrb5 --update
 
 Verify that the authentication works.
 
 .. code-block:: sh
 
-    # su - cloud-user
-    $ kinit cloud-user
+    $ sudo su - <USER>
+    $ kinit <USER>
     $ klist
 
 [2][4]

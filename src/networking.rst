@@ -156,17 +156,17 @@ WiFi syntax:
 
 .. code-block:: sh
 
-    # wpa_passphrase <SSID> <PASSWORD> > /etc/wpa_supplicant/wpa_supplicant-<NIC>.conf
-    # systemctl enable wpa_supplicant@<NIC>.conf
-    # systemctl start wpa_supplicant@<NIC>.conf
+    $ sudo wpa_passphrase <SSID> <PASSWORD> > /etc/wpa_supplicant/wpa_supplicant-<NIC>.conf
+    $ sudo systemctl enable wpa_supplicant@<NIC>.conf
+    $ sudo systemctl start wpa_supplicant@<NIC>.conf
 
 WiFi example:
 
 .. code-block:: sh
 
-    # wpa_passphrase Guest5G password123 > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-    # systemctl enable wpa_supplicant@wlan0.conf
-    # systemctl start wpa_supplicant@wlan0.conf
+    $ sudo wpa_passphrase Guest5G password123 > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+    $ sudo systemctl enable wpa_supplicant@wlan0.conf
+    $ sudo systemctl start wpa_supplicant@wlan0.conf
 
 [4]
 
@@ -185,15 +185,15 @@ Example:
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br br0
-    # ovs-vsctl add-port br0 eth0
+    $ sudo ovs-vsctl add-br br0
+    $ sudo ovs-vsctl add-port br0 eth0
 
 Syntax:
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br <NEW_BRIDGE>
-    # ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
+    $ sudo ovs-vsctl add-br <NEW_BRIDGE>
+    $ sudo ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
 
 It is possible to create multiple bridges from one physical interface.
 This official example from the Open vSwitch documentation shows how to
@@ -204,12 +204,12 @@ Example:
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br br0
-    # ovs-vsctl add-port br0 eth0
-    # ovs-vsctl add-port br0 tap0
-    # ovs-vsctl add-br br1
-    # ovs-vsctl add-port br1 tap1
-    # ovs-vsctl \
+    $ sudo ovs-vsctl add-br br0
+    $ sudo ovs-vsctl add-port br0 eth0
+    $ sudo ovs-vsctl add-port br0 tap0
+    $ sudo ovs-vsctl add-br br1
+    $ sudo ovs-vsctl add-port br1 tap1
+    $ sudo ovs-vsctl \
            -- add-port br0 patch0 \
            -- set interface patch0 type=patch options:peer=patch1 \
            -- add-port br1 patch1 \
@@ -225,19 +225,19 @@ Example:
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br br0
-    # ovs-vsctl add-port br0 eth0
-    # ovs-vsctl add-port br0 tap0
-    # ovs-vsctl add-port br0 tap1
-    # ovs-vsctl add-port br0 tap2
+    $ sudo ovs-vsctl add-br br0
+    $ sudo ovs-vsctl add-port br0 eth0
+    $ sudo ovs-vsctl add-port br0 tap0
+    $ sudo ovs-vsctl add-port br0 tap1
+    $ sudo ovs-vsctl add-port br0 tap2
 
 Syntax:
 
 .. code-block:: sh
 
-    # ovs-vsctl add-br <NEW_BRIDGE>
-    # ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
-    # ovs-vsctl add-port <NEW_BRIDGE> <NEW_TAP_INTERFACE>
+    $ sudo ovs-vsctl add-br <NEW_BRIDGE>
+    $ sudo ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
+    $ sudo ovs-vsctl add-port <NEW_BRIDGE> <NEW_TAP_INTERFACE>
 
 Operating System Specific
 -------------------------
@@ -267,7 +267,7 @@ File: /etc/network/interfaces
 
 .. code-block:: sh
 
-    # ifup eth0
+    $ sudo ifup eth0
 
 DHCP example:
 
@@ -280,7 +280,7 @@ File:  /etc/network/interfaces
 
 .. code-block:: sh
 
-    # ifup eth0
+    $ sudo ifup eth0
 
 Common:
 
@@ -390,14 +390,14 @@ Syntax:
 
 .. code-block:: sh
 
-    # vim /etc/sysconfig/network-scripts/route-<INTERFACE>
+    $ sudo vim /etc/sysconfig/network-scripts/route-<INTERFACE>
     <DESTINATION_NETWORK_CIDR> via <SOURCE_IP> dev <INTERFACE>
 
 Example:
 
 .. code-block:: sh
 
-    # vim /etc/sysconfig/network-scripts/route-eth0
+    $ sudo vim /etc/sysconfig/network-scripts/route-eth0
     192.168.100.0/24 via 10.0.0.1 dev eth0
 
 [9][10]
@@ -442,8 +442,8 @@ Open vSwitch bridge syntax (CLI):
 
 .. code-block:: sh
 
-    # ovs-vsctl add-port <OVS_BRIDGE> <NIC>
-    # ovs-vsctl add-br <OVS_BRIDGE>
+    $ sudo ovs-vsctl add-port <OVS_BRIDGE> <NIC>
+    $ sudo ovs-vsctl add-br <OVS_BRIDGE>
 
 [12]
 
