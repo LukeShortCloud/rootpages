@@ -200,7 +200,11 @@ The Network File System (NFS) aims to universally provide a way to
 remotely mount directories between servers. All subdirectories from a
 shared directory will also be available.
 
-NFS Ports: \* 111 TCP/UDP \* 2049 TCP/UDP \* 4045 TCP/UDP
+NFS ports:
+
+-  111 TCP/UDP
+-  2049 TCP/UDP
+-  4045 TCP/UDP
 
 On the server, the /etc/exports file is used to manage NFS exports. Here
 a directory can be specified to be shared via NFS to a specific IP

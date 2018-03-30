@@ -44,12 +44,19 @@ two:
 
 [1]
 
-Global configuration options: \* SET DAEMON ``<SECONDs>`` \* Specify the
-cycle time in seconds. After this many seconds, each service in the
-configuration will be polled. \* SET ALERT ``<EMAIL>@<ADDRESS>`` \* Send
-all alerts to this e-mail address. \* SET MAILSERVER ``<HOSTNAME>``
-[``<PORT>``] [USERNAME ``<USERNAME>``] [PASSWORD ``<PASSWORD>``] \*
-Define the mail server to use. This is typically localhost.
+Global configuration options:
+
+-  SET DAEMON ``<SECONDs>``
+
+    -  Specify the cycle time in seconds. After this many seconds, each service in the configuration will be polled.
+
+-  SET ALERT ``<EMAIL>@<ADDRESS>``
+
+    -  Send all alerts to this e-mail address.
+
+-  SET MAILSERVER ``<HOSTNAME>`` [``<PORT>``] [USERNAME ``<USERNAME>``] [PASSWORD ``<PASSWORD>``]
+
+    -  Define the mail server to use. This is typically localhost.
 
 An example of a basic Nginx template is provided below. If the PID is
 not found, then monit will continue to attempt to start it until the new

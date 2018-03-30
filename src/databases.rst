@@ -255,10 +255,10 @@ Configuration options:
 -  concurrent\_reads = Default: 32. Recommended: (16 \* ``<COUNT_OF_DISKS>``).
 -  concurrent\_writes = Default: 32. Recommended: (16 \* ``<COUNT_OF_CPU_CORES>``).
 -  concurrent\_counter\_writes = Default: 32. Recommended: 16 \* ``<COUNT_OF_DISKS>``).
--  concurrent\_batchlog\_writes \* (Default: 32) \* Recommended: (16 \* ``<COUNT_OF_CPUS>``).
+-  concurrent\_batchlog\_writes = Default: 32. Recommended: (16 \* ``<COUNT_OF_CPUS>``).
 -  concurrent\_materialized\_view\_writes = Default: 32. Recommended: Use less than the concurrent reads/writes.
--  incremental\_backups = Choose whether or not to use incremental backups. When taking snapshots, hardlinks will be used to refer back to old data for efficient backups. Default: false.
--  snapshot\_before\_compact = Choose whether or not to automatically take backups before running a compaction. Default: false.
+-  incremental\_backups = Default: false. Choose whether or not to use incremental backups. When taking snapshots, hardlinks will be used to refer back to old data for efficient backups.
+-  snapshot\_before\_compact = Default: false. Choose whether or not to automatically take backups before running a compaction.
 
 [11]
 

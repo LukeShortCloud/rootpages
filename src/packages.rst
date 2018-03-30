@@ -209,24 +209,20 @@ with the ".repo" extension in this directory.
 
     $ sudo ls /etc/yum.repos.d/
 
-Here are some common options for repository files: \* [] = This should
-be the first part of a repository, with the name being inside the
-brackets. \* name = This should be similar to the name from the
-brackets. However, this friendly name can be different and is usually
-ignored. \* baseurl = The location of the repository. Valid location
-types include "http://", "ftp://", and "file://" for using the local
-file system. \* mirrorlist = Instead of a baseurl, a link to a list of
-repository mirrors can be given. \* enabled = Enable or disable a
-repository with a "1" or "0". The default is value is "1". [5] \*
-gpgcheck = Force a GPG encryption check against signed packages. Enable
-or disable with a "1" or "0". \* gpgkey = Specify the path to the GPG
-key.
+Common options for repository files:
 
-Variables for repository files: \* $releasever = The RHEL release
-version. This is typically the major operating system versioning number
-such as "5" or "6". \* $basearch = The CPU architecture. For most modern
-PCs this is typically either automatically filled in as "x86\_64" for
-64-bit operating systems or "i386" for 32-bit. [6]
+-  [] = This should be the first part of a repository, with the name being inside the brackets.
+-  name = This should be similar to the name from the brackets. However, this friendly name can be different and is usually ignored.
+-  baseurl = The location of the repository. Valid location types include "http://", "ftp://", and "file://" for using the local file system.
+-  mirrorlist = Instead of a baseurl, a link to a list of repository mirrors can be given.
+-  enabled = Enable or disable a repository with a "1" or "0". The default is value is "1". [5]
+-  gpgcheck = Force a GPG encryption check against signed packages. Enable or disable with a "1" or "0".
+-  gpgkey = Specify the path to the GPG key.
+
+Variables for repository files:
+
+-  ``$releasever`` = The RHEL release version. This is typically the major operating system versioning number such as "6" or "7".
+-  ``$basearch`` = The CPU architecture. For most modern PCs this is typically either automatically filled in as "x86\_64" for 64-bit operating systems or "i386" for 32-bit. [6]
 
 At the bare minimum, a repository file needs to include a name and a
 baseurl.
@@ -253,41 +249,35 @@ using a mirrorlist.
 Creating a Repository
 ^^^^^^^^^^^^^^^^^^^^^
 
-Any directory can be used as a repository to host RPMs. The standard
-naming convention used for RHEL based operating systems is
-"centos/:math:`releasever/`\ basearch/" where $releasever is the release
-version and $basearch is the CPU architecture. However, any directory
-can be used.
+Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is ``el/$releasever/$basearch/`` where ``$releasever`` is the release version and ``$basearch`` is the CPU architecture. However, any directory can be used.
 
 In this example, a default Apache web server will have the repository
-access via the URL "http://localhost/centos/7/x86\_64/." Be sure to
+access via the URL "http://localhost/el/7/x86\_64/." Be sure to
 place your RPMs in this directory. [1]
 
 .. code-block:: sh
 
     $ sudo yum install createrepo
-    $ sudo mkdir -p /var/www/html/centos/7/x86_64/
+    $ sudo mkdir -p /var/www/html/el/7/x86_64/
 
 .. code-block:: sh
 
-    $ sudo createrepo /var/www/html/centos/7/x86_64/
+    $ sudo createrepo /var/www/html/el/7/x86_64/
 
-The "createrepo" command will create 4 or 5 files. \* repomd.xml = An
-index for the other repository metadata files. \* primary.xml = Contains
-metadata for all packages including the name, version, architecture,
-file sizes, checksums, dependencies, etc. \* filelists.xml = Contains
-the full listing of every directory and file. \* other.xml = Holds a
-changelog of all the packages. \* groups.xml = If a repository has a
-"group" that should install multiple packages, the group is specified
-here. By default, this file is not created when running "createrepo"
-without any arguments. [8]
+The "createrepo" command will create 4 or 5 files.
+
+-  repomd.xml = Anindex for the other repository metadata files.
+-  primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc.
+-  filelists.xml = Contains the full listing of every directory and file.
+-  other.xml = Holds a changelog of all the packages.
+-  groups.xml = If a repository has a "group" that should install multiple packages, the group is specified here. By default, this file is not created when running "createrepo"without any arguments. [8]
 
 If new packages are added and/or signed via a GPG key then the
 repository cache needs to be updated again. [7]
 
 .. code-block:: sh
 
-    $ sudo createrepo --update /var/www/html/centos/7/x86_64/
+    $ sudo createrepo --update /var/www/html/el/7/x86_64/
 
 Common Repositories
 ^^^^^^^^^^^^^^^^^^^

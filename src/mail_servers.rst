@@ -9,13 +9,21 @@ e-mail and send outgoing e-mail.
 Postfix
 -------
 
-Configuration options: \* myhostname = The hostname of the mail server.
-\* Default: If a fully qualified domain name (FQDN) is configured on the
-Unix machine then Postfix will use that. \* mynetworks = Define the
-networks that are allowed to send e-mails. \* Default: 127.0.0.0/8 \*
-mydestination = Define allowed destinations for e-mails. \* Default:
-:math:`myhostname localhost.`\ mydomain localhost \* relayhost = Define
-the server to forward mail to. [1]
+Configuration options:
+
+-  myhostname = The hostname of the mail server.
+
+    -  Default: If a fully qualified domain name (FQDN) is configured on the Unix machine then Postfix will use that.
+
+-  mynetworks = Define the networks that are allowed to send e-mails.
+
+    -  Default: 127.0.0.0/8
+
+-  mydestination = Define allowed destinations for e-mails.
+
+    -  Default: ``$myhostname localhost.$mydomain localhost``
+
+-  relayhost = Define the server to forward mail to. [1]
 
 Null Client Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~

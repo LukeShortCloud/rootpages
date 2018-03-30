@@ -2907,12 +2907,7 @@ validate the functionality of OpenStack. This software is a rolling
 release aimed towards verifying the latest OpenStack release in
 development but it should also work for older versions as well.
 
-The sample configuration file "/etc/tempest/tempest.conf.sample" should
-be copied to "/etc/tempest/tempest.conf" and then modified. If it is not
-available then the latest configuration file can be downloaded from one
-of these sources: \*
-http://docs.openstack.org/developer/tempest/sampleconf.html \*
-http://docs.openstack.org/developer/tempest/\_static/tempest.conf.sample
+The sample configuration file "/etc/tempest/tempest.conf.sample" should be copied to "/etc/tempest/tempest.conf" and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources: https://docs.openstack.org/tempest/latest/sampleconf.html and https://docs.openstack.org/tempest/latest/_static/tempest.conf.sample.
 
 -  Provide credentials to a user with the "admin" role.
 

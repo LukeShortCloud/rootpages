@@ -102,15 +102,16 @@ run this command to update the changes. [3]
 
     $ sudo update-grub
 
-Common "grub-install" options: \* compress = Compress GRUB-related
-files. Valid options are: \* no (default), xz, gz, lzo \* --modules =
-List kernel modules that are required for boot. Depending on the
-end-user's setup, "lvm", "raid" (for mdadm), and/or "encrypt" (for LUKS)
-may be required. \* --force = Install despite any warnings. \* --recheck
-= Remove the original /boot/grub/device.map file (if it exists) and then
-review the current mapping of partitions. \* --boot-directory = The
-directory that the "grub/" folder should exist in. This is typically
-"/boot". [4]
+Common "grub-install" options:
+
+-  compress = Compress GRUB-related files. Valid options are:
+
+    -  no (default), xz, gz, lzo
+
+-  --modules = List kernel modules that are required for boot. Depending on the end-user's setup, "lvm", "raid" (for mdadm), and/or "encrypt" (for LUKS) may be required.
+-  --force = Install despite any warnings.
+-  --recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions.
+-  --boot-directory = The directory that the "grub/" folder should exist in. This is typically "/boot". [4]
 
 Configuration
 ~~~~~~~~~~~~~
@@ -127,13 +128,15 @@ Important files:
 | /boot/grub/grub.cfg | This is automatically generated using the settings from /etc/default/grub and the scripts in /etc/grub.d/ . Manual changes may get overwritten. |
 +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Common Options: \* /etc/default/grub \* GRUB\_DEFAULT = The default menu
-entry to autoboot into. \* saved = Boot from the last option selected.
-This is cached in the /boot/grub/grubenv file. \* Alternatively, this
-can either be the number of the "menuentry" section, in order from top
-to bottom, starting at 0. \* Or the menu entry title can be explicitly
-specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7
-(Core)."
+Common options:
+
+-  /etc/default/grub
+
+    -   GRUB\_DEFAULT = The default menu entry to autoboot into.
+
+        -  saved = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.
+        -  Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at 0.
+        -  Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7 (Core)."
 
 .. code-block:: sh
 

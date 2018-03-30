@@ -58,8 +58,14 @@ server provides remote users with a "ticket" to use after they log in.
 This ticket is used to validate authentication with various services
 including FTP, SSH, NFS, etc. [2]
 
-Ports: \* 88 TCP/UDP \* 464 TCP/UDP \* 749 TCP/UDP \* 6620 TCP/UDP \*
-6621 TCP/UDP \* 6623 TCP/UDP [3]
+Ports:
+
+-  88 TCP/UDP
+-  464 TCP/UDP
+-  749 TCP/UDP
+-  6620 TCP/UDP
+-  6621 TCP/UDP
+-  6623 TCP/UDP [3]
 
 Configuration
 ^^^^^^^^^^^^^
