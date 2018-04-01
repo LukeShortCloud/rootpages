@@ -76,7 +76,7 @@ Gentoo is designed to be very configurable and optimized. Most packages need to 
 Mandriva
 --------
 
-Mandriva, which was originally called Mandrake Linux, was a fork of the original Red Hat Linux 5.1 in 1998. After it's start, Mandriva no longer shares code with Fedora or RHEL and is it's own operating system. The last release came out in 2011. Several derivaties still keep the Mandriva operating system alive. The Mageia project is the closest spiritual successor to the original Mandriva project.
+Mandriva, which was originally called Mandrake Linux, was a fork of the original Red Hat Linux 5.1 in 1998. After it's start, Mandriva no longer shares code with Fedora or RHEL and is it's own operating system. The last release came out in 2011. Several derivatives still keep the Mandriva operating system alive. The Mageia project is the closest spiritual successor to the original Mandriva project.
 
 - Package Format:
     - rpm
@@ -126,6 +126,6 @@ Bibliography
 7. "Chromium OS SDK Creation." The Chromium Projects. Accessed January 1, 2018. https://www.chromium.org/chromium-os/build/sdk-creation
 8. "Mandriva Linux is dead, but these 3 forked distros carry on its legacy." PCWorld. June 4, 2015. Accessed January 1, 2018. https://www.pcworld.com/article/2930369/mandriva-linux-is-dead-but-these-3-forked-distros-carry-on-its-legacy.html
 9. "About Gentoo." Gentoo Linux. Accessed January 2, 2018. https://www.gentoo.org/get-started/about/
-10. "[openSUSE Wiki] Main Page." openSUSE Wiki. November 16, 2016. Accssed January 2, 2018. https://en.opensuse.org/Main_Page
+10. "[openSUSE Wiki] Main Page." openSUSE Wiki. November 16, 2016. Accessed January 2, 2018. https://en.opensuse.org/Main_Page
 11. "About Debian." Debian. June 6, 2017. Accessed January 2, 2018. https://www.debian.org/intro/about
 12. "Derivatives." OpenSUSE Wiki. Accessed March 20, 2018. https://en.opensuse.org/Derivatives

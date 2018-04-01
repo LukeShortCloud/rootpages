@@ -415,7 +415,7 @@ Example:
         o- 0.0.0.0:3260
 
 -  Create a LUN.
-  
+
 Syntax:
 
 .. code-block:: sh
@@ -445,7 +445,7 @@ Example:
 
 -  Optionally, add a username and password.
 
-  
+
 Syntax:
 
 .. code-block:: sh
@@ -1043,7 +1043,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          $ sudo ceph pg repar <PLACEMENT_GROUP>
+          $ sudo ceph pg repair <PLACEMENT_GROUP>
 
    -  Example:
 
@@ -1137,7 +1137,7 @@ object exists on the 8, 11, and 20 OSD drives.
 
       .. code-block:: sh
 
-          $ sudo ceph pg repar <PLACEMENT_GROUP>
+          $ sudo ceph pg repair <PLACEMENT_GROUP>
 
    -  Example:
 
@@ -1252,7 +1252,7 @@ Bibliography
 17. Karan Singh *Learning Ceph* (Birmingham, UK: Packet Publishing, 2015)
 18. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
 19. "CACHE POOL." Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/jewel/dev/cache-pool/
-20. "CEPHX CONFIG REFERENCE." Ceph Docmentation. Accessed January 28, 2017. http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
+20. "CEPHX CONFIG REFERENCE." Ceph Documentation. Accessed January 28, 2017. http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 21. "INTRO TO CEPH." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/jewel/start/intro/
 22. "Ceph Deployment." Ceph Jewel Documentation. Accessed January 14, 2017. http://docs.ceph.com/docs/jewel/rados/deployment/
 23. "ceph-ansible Wiki." ceph-ansible GitHub. February 29, 2016. Accessed January 15, 2017. https://github.com/ceph/ceph-ansible/wiki

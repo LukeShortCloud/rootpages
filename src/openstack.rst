@@ -1102,7 +1102,7 @@ variables to a YAML file and then add the arguments
 
 -  Run the quickstart script to install TripleO. Use "127.0.0.2" for the
    localhost IP address if TripleO will be installed on the same system
-   that the quickstart commmand is running on.
+   that the quickstart command is running on.
 
 .. code-block:: sh
 
@@ -1396,7 +1396,7 @@ Add a Compute Node
 
     $ openstack baremetal configure boot
 
--  Set the new node to the "managable" state. Then introspect the new node so Ironic can automatically determine it's resources and hardware information.
+-  Set the new node to the "manageable" state. Then introspect the new node so Ironic can automatically determine it's resources and hardware information.
 
 .. code-block:: sh
 
@@ -3264,5 +3264,5 @@ Bibliography
 77. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/html/director\_installation\_and\_usage/sect-scaling\_the\_overcloud
 78. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
 79. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86\_64/openstack-pike/
-80. "External Ceph." OpenStack Docuemntation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
+80. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
 81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers\_deployment/undercloud.html

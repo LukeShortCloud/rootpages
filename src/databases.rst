@@ -132,7 +132,7 @@ Router options:
    -  schemarouter = Shard databases. Requests to a particular database
       will be routed to a specific server.
    -  binlogrouter = Copy binary logs from servers other servers. If a
-      backend server fails, MaxScale will replace it and serve read
+      back-end server fails, MaxScale will replace it and serve read
       requests from the available binary log.
 
 -  router\_options
@@ -233,9 +233,9 @@ Configuration options:
    -  die = Kill off all processes.
    -  ignore = Ignore any major I/O errors and provide failure responses to any requests.
    -  stop = Gracefully stop the service.
-     
--  endpoint\_snitch = Select a snitch interface for clustering. 
-  
+
+-  endpoint\_snitch = Select a snitch interface for clustering.
+
    -  CloudstackSnitch = Integrate with the Apache Cloudstack.
    -  Ec2Snitch = Cluster based on Amazon EC2 regions and compute availability zones.
    -  Ec2MultiRegionSnitch = Allows multiple Amazon EC2 regions to be used via public floating IPs.
@@ -250,8 +250,8 @@ Configuration options:
 
       -  parameters:
 
-        -  seeds: "``<IP_ADDRESS_1>``", "``<IP_ADDRESS_2>``" 
-          
+        -  seeds: "``<IP_ADDRESS_1>``", "``<IP_ADDRESS_2>``"
+
 -  concurrent\_reads = Default: 32. Recommended: (16 \* ``<COUNT_OF_DISKS>``).
 -  concurrent\_writes = Default: 32. Recommended: (16 \* ``<COUNT_OF_CPU_CORES>``).
 -  concurrent\_counter\_writes = Default: 32. Recommended: 16 \* ``<COUNT_OF_DISKS>``).

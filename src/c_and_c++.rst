@@ -470,7 +470,7 @@ Syntax:
 
 .. code-block:: c
 
-    for ( <INITIALIZE>; <COMPAIRISON>; <INCREMENT>) {
+    for ( <INITIALIZE>; <COMPARISON>; <INCREMENT>) {
         // <DO_SOMETHING>
     }
 

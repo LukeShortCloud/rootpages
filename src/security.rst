@@ -9,7 +9,7 @@ Permissions
 User, Group, and Other
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Normal Linux flie permissions are grouped into three categories: owner,
+Normal Linux file permissions are grouped into three categories: owner,
 group, and other users access. Permissions can be defined for what the
 user, group, or anyone else can do to the file. This can be defined with
 letters or numbers.

@@ -24,8 +24,8 @@ PowerDNS
 --------
 
 The pdns service can be both an authoritative and recursive DNS server.
-It supports a large number of backends that can be used for it's
-authoritative server. [1] A few of the most popular backends are "bind"
+It supports a large number of back-ends that can be used for it's
+authoritative server. [1] A few of the most popular back-ends are "bind"
 (BIND) due to it's large usage in the Linux community and "gmysql"
 (MySQL) due to it's scalability.
 
@@ -42,7 +42,7 @@ SOA options:
    This value should normally mirror one of the NS records used for the
    zone (if applicable).
 -  email = The administrator's e-mail.
--  serial = 0 for automatic serial creation (default). Not all backends
+-  serial = 0 for automatic serial creation (default). Not all back-ends
    support automatic serials, such as bind. gmysql supports it. If using
    automatic serial numbers, place the number here. If any records are
    updated, the serial should also be updated.
@@ -64,9 +64,9 @@ accessed via a web browser.
 gmysql
 ~~~~~~
 
-The generic MySQL backend (gmysql) was created to allow any MySQL server
+The generic MySQL back-end (gmysql) was created to allow any MySQL server
 to store and serve records. [2] This is not to be confused with using
-the MyDNS backend. [1]
+the MyDNS back-end. [1]
 
 This is the recommend InnoDB table schema to use. [2]
 

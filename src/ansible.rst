@@ -3406,7 +3406,7 @@ Dependencies
 
 Roles can define dependencies to other roles hosted remotely. By
 default, the Ansible Galaxy repository is used to pull roles from.
-Ansible Galaxy in itself uses GitHub.com as it's backend. Dependencies
+Ansible Galaxy in itself uses GitHub.com as it's back-end. Dependencies
 can be defined in ``requirements.yml`` or inside the role at
 ``meta/main.yml``.
 
@@ -4169,7 +4169,7 @@ Ansible Tower supports clustering. This requires that the PostgreSQL
 service is configured on a dedicated server that is not running Ansible
 Tower. The Playbook that installs Tower can install PostgreSQL or use
 credentials to an existing server. The PostgreSQL user for Ansible Tower
-also requires ``CREATEDB`` access during the intial installation to
+also requires ``CREATEDB`` access during the initial installation to
 setup the necessary database and tables.
 
 -  Installing PostgreSQL:
@@ -4264,7 +4264,7 @@ Logs are stored in ``/var/log/tower/``. The main log file is
 
 Ports:
 
--  80/tcp = Unecyrpted Ansible Tower dashboard web traffic.
+-  80/tcp = Unencyrpted Ansible Tower dashboard web traffic.
 -  443/tcp = SSL encrypted Ansible Tower dashboard web traffic.
 -  5432/tcp = PostgreSQL relational database server.
 
@@ -4345,7 +4345,7 @@ Authentication
 
 User authentication, by default, will store encrypted user information
 into the PostgreSQL database. Instead of using this, Tower can be
-configured to use an external authentication serverice by going into
+configured to use an external authentication service by going into
 ``Settings > CONFIGURE TOWER``. The available options are:
 
 -  Social

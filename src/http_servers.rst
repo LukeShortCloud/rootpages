@@ -93,7 +93,7 @@ Options:
 -  DocumentRoot = The directory where the domain loads its files from.
 -  DirectoryIndex = The main file that is loaded up in a directory, if
    found. Default: "index.html" or "index.htm."
--  LogLevel, ErroLog, and CustomLog = Refer to the `Apache
+-  LogLevel, ErrorLog, and CustomLog = Refer to the `Apache
    Configuration <#apache---configuration>`__ section.
 
 Example:

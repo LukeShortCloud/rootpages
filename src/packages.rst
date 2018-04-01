@@ -266,7 +266,7 @@ place your RPMs in this directory. [1]
 
 The "createrepo" command will create 4 or 5 files.
 
--  repomd.xml = Anindex for the other repository metadata files.
+-  repomd.xml = An index for the other repository metadata files.
 -  primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc.
 -  filelists.xml = Contains the full listing of every directory and file.
 -  other.xml = Holds a changelog of all the packages.
@@ -424,7 +424,7 @@ Directories
 '''''''''''
 
 During the creation of an RPM there are a few important directories that
-can and will be refereneced.
+can and will be referenced.
 
 -  %{topdir} = The directory that the RPM related files should be
    located. By default this is set to ``%{getenv:HOME}/rpmbuild``.
@@ -448,7 +448,7 @@ Users and Groups
 
 Creating a user or group can be done one of two ways.
 
--  Dynamically = Let the system deciede what user identification number
+-  Dynamically = Let the system decide what user identification number
    (UID) and group ID (GID) to use.
 -  Static = Specify a specific UID or GID number to use. This is useful
    for keeping permissions identical on multiple platforms.
@@ -489,7 +489,7 @@ Static:
 Patches
 ^^^^^^^
 
-Some applications may require patches to work properly. Pathces should
+Some applications may require patches to work properly. Patches should
 be stored in the ``SOURCES`` directories. At the beginning of the spec
 file, where the name and version information is defined, patch file
 names can also be defined.
@@ -520,7 +520,7 @@ A patched file can be created using the ``diff`` command.
 
     $ diff -u <ORIGINAL_FILE> <PATCHED_FILE> > <PATCH_NAME>.patch
 
-If multiple files in a directory have been patched, a more comphrensive
+If multiple files in a directory have been patched, a more comprehensive
 patch file can be made.
 
 .. code-block:: sh

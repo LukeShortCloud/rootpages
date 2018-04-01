@@ -31,7 +31,7 @@ Examples:
 
 .. code-block:: sh
 
-    $ export WINEPREFIX="/home/windowsguy/wine_prefix"
+    $ export WINEPREFIX="/home/user/wine_prefix"
     $ winecfg
 
 .. code-block:: sh

@@ -216,7 +216,7 @@ Example:
            -- set interface patch1 type=patch options:peer=patch0
 
 Open vSwitch uses virtual ``tap`` interfaces to connect virtual machines
-to a bridge instead of providing striaght access to a bridge device.
+to a bridge instead of providing straight access to a bridge device.
 This makes it easier to manage interfaces for many virtual machines and
 it helps to isolate and track down traffic. Tools such as ``tcpdump``
 can be used to analyze specific ``tap`` traffic. [5]
