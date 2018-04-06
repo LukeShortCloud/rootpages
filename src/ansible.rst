@@ -4613,16 +4613,24 @@ Manually stop:
 
     $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do sudo docker stop ${docker_container}; done
 
-Update
-^^^^^^
+Upgrades
+^^^^^^^^
 
-AWX is the unstable development version of Ansible Tower so updates are not guaranteed to work. Before doing an update, the PostgreSQL database should be backed up. This contains all of the information that is stored by AWX.
+AWX is the unstable development version of Ansible Tower. **Major version upgrades are not supported** (for example, going from 1.0.4 to 1.0.5). [60] Work is being done in the `tower-cli <https://github.com/ansible/tower-cli>`__ project to allow backing up and restoring configurations in AWX. Once that work is done, it will be the most reliable way to attempt an upgrade. [61] It is still possible to attempt updating the service containers.
+
+Take note of the AWX version. This can be seen through the dashboard or API. If AWX was installed using the GitHub source code and Docker Compose, the version can be found from the Git description.
+
+.. code-block:: sh
+
+    $ git describe --long --first-parent | cut -d- -f1,2
+
+Before doing an upgrade, the PostgreSQL database should be backed up. This contains all of the information that is stored by AWX.
 
 .. code-block:: sh
 
     $ docker exec postgres pg_dump -U postgres -F t awx > ${postgres_data_dir}/awx_backup.sql
 
-If there are issues with the update, then restore the database.
+If there are issues with the update, then revert the docker images to their original versions and restore the database.
 
 .. code-block:: sh
 
@@ -4792,3 +4800,5 @@ Bibliography
 57. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 26, 2017. https://github.com/pearsonappeng/tensor
 58. "Including and Importing." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/playbooks\_reuse\_includes.html
 59. "Specify a PGDATA directory to prevent container re-create issues #535." GitHub Ansible. February 22, 2018. Accessed March 9, 2018. https://github.com/ansible/awx/pull/535
+60. "1.0.4 - 1.0.5 upgrade killed my workers & errors db upgrade Key (username)=(admin) already exists. #1707." GitHub AWX. March 30, 2018. Accessed April 6, 2018. https://github.com/ansible/awx/issues/1707
+61. "Feature to download & upload data in Tower #197." GitHub tower-cli. February 28, 2018. Accessed April 6, 2018. https://github.com/ansible/tower-cli/issues/197
