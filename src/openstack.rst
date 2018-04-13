@@ -1104,9 +1104,9 @@ variables to a YAML file and then add the arguments
    localhost IP address if TripleO will be installed on the same system
    that the quickstart command is running on.
 
-.. code-block:: sh
+   .. code-block:: sh
 
-    $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
+       $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
 
 [23]
 
@@ -2551,7 +2551,7 @@ authenticate.
 
    .. code-block:: sh
 
-       #unset any variables used
+       # Unset any variables that may already be sourced.
        unset OS_PROJECT_ID
        unset OS_PROJECT_NAME
        unset OS_PROJECT_DOMAIN_ID
@@ -2562,20 +2562,24 @@ authenticate.
        unset OS_USER_DOMAIN_NAME
        unset OS_REGION_ID
        unset OS_REGION_NAME
-       #fill in the project, user, and endpoint details
+       # These values need to be filled in.
        export PROJECT_ID=
        export PROJECT_NAME=
        export OS_USERNAME=
        export OS_PASSWORD=
        export OS_REGION_NAME="RegionOne"
-       export OS_AUTH_URL="http://controller1:5000/v2.0"
+       export OS_AUTH_URL="http://<CONTROLLER>:5000/v2.0"
        export OS_AUTH_VERSION="2.0"
+       # For compatibility, some services expect this
+       # variable to be used for defining the API version
+       # instead.
+       export OS_IDENTITY_API_VERSION="${OS_AUTH_VERSION}"
 
 -  Keystone v3
 
    .. code-block:: sh
 
-       #unset any variables used
+       # Unset any variables that may already be sourced.
        unset OS_PROJECT_ID
        unset OS_PROJECT_NAME
        unset OS_PROJECT_DOMAIN_ID
@@ -2586,7 +2590,7 @@ authenticate.
        unset OS_USER_DOMAIN_NAME
        unset OS_REGION_ID
        unset OS_REGION_NAME
-       #fill in the project, user, and endpoint details
+       # These values need to be filled in.
        export OS_PROJECT_ID=
        export OS_PROJECT_NAME=
        export OS_PROJECT_DOMAIN_NAME="default"
@@ -2595,8 +2599,12 @@ authenticate.
        export OS_PASSWORD=
        export OS_USER_DOMAIN_NAME="default"
        export OS_REGION_NAME="RegionOne"
-       export OS_AUTH_URL="http://controller1:5000/v3"
+       export OS_AUTH_URL="http://<CONTROLLER>:5000/v3"
        export OS_AUTH_VERSION="3"
+       # For compatibility, some services expect this
+       # variable to be used for defining the API version
+       # instead.
+       export OS_IDENTITY_API_VERSION="${OS_AUTH_VERSION}"
 
 -  Source the credential file to load it into the shell environment:
 
@@ -2975,21 +2983,16 @@ Rally is the benchmark-as-a-service (BaaS) that tests the OpenStack APIs for bot
 Installation
 ^^^^^^^^^^^^
 
-Install Rally on RHEL. A specific GitHub branch or tag can be specified. Otherwise, the default "master" branch will be used. A target virtual environment directory can also be specified to isolate the installation.
+Install Rally 0.11 on RHEL using a Python virtual environment.
 
 RHEL:
 
 .. code-block:: sh
 
-    $ curl -L -o ~/install_rally.sh https://raw.githubusercontent.com/openstack/rally/0.10.1/install_rally.sh
     $ sudo yum install gcc gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
-    $ bash ~/install_rally.sh --branch 0.10.1 --target ~/rally-venv
-
-Rally can now be used by activating the Python virtual environment.
-
-.. code-block:: sh
-
+    $ virtualenv ~/rally-venv
     $ . ~/rally-venv/bin/activate
+    (rally-venv)$ pip install rally\<0.12
 
 Finish the installation by initializing a SQLite database for Rally. Alternatively, a MariaDB or PostgreSQL database connection can be configured in ``~/rally-venv/etc/rally/rally.conf``.
 
