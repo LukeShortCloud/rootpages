@@ -25,12 +25,7 @@ The official documentation can be found here:
 Editions
 ~~~~~~~~
 
-There are two editions of Ansible available. There is the upstream
-Ansible community project that gets frequent updates and there is also
-Red Hat Ansible Engine, which is an enterprise solution. Ansible Engine
-is designed to provide a downstream version that is more stable, secure,
-and reliable. Support is provided that includes covers Core modules,
-priority bug and feature updates, documentation, and more. [42]
+There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. [42]
 
 Installation
 ------------
@@ -43,7 +38,6 @@ RHEL:
 
 .. code-block:: sh
 
-    $ sudo yum install epel-release
     $ sudo yum install ansible
 
 Debian:
@@ -72,6 +66,12 @@ Updating source code installations:
 
     $ git pull --rebase
     $ git submodule update --init --recursive
+
+Ansible RPMs are available from:
+
+-  The "extras" repository on (RHEL and Fedora)
+-  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL and Fedora)
+-  The Ansible Engine repository rhel-7-server-ansible-2.5-rpms (RHEL)
 
 [18]
 
@@ -4821,7 +4821,7 @@ Bibliography
 15. "Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks\_async.html
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
-18. "Ansible Installation." Ansible Documentation. October 10, 2016. Accessed October 16, 2016. http://docs.ansible.com/ansible/intro\_installation.html
+18. "Installation Guide." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/installation_guide/intro\_installation.html
 19. "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
