@@ -2413,6 +2413,27 @@ Example #3:
 
     mysql_user: name=maxscale host="10.0.0.%" priv="*.*:REPLICATION CLIENT,SELECT" password=supersecure123 state=present
 
+Raw
+^^^
+
+The ``raw`` module runs commands directly through SSH. Unlike the ``shell`` module, Ansible does not have any Python wrappers around this. This makes it possible to run commands on remote systems that do not have Python installed. [6]
+
+Options:
+
+-  executable = The absolute path to an executable shell.
+
+Syntax:
+
+.. code-block:: yaml
+
+    raw:
+
+Example:
+
+.. code-block:: yaml
+
+    raw: echo "Hello world!"
+
 Stat
 ^^^^
 
@@ -4814,7 +4835,7 @@ Bibliography
 3. "Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro\_inventory.html
 4. "Variables." Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks\_variables.html
 5. "Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks\_best\_practices.html
-6. "Commands Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
+6. "Commands modules." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
 8. "Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
 9. "Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks\_prompts.html
