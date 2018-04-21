@@ -3,4 +3,5 @@ html/
 build/
 builddir/
 locale/
+locales/
 *.retry
