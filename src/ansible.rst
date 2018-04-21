@@ -1153,6 +1153,47 @@ Example:
 
 [45]
 
+
+No Log
+^^^^^^
+
+The ``no_log`` module can be used to disable logging for a single task or an entire Playbook. This is helpful for not logging sensitive information that may be exposed by one or more tasks. [64]
+
+Task syntax:
+
+.. code-block:: yaml
+
+    - <OTHER_MODULE>:
+      no_log: True
+
+Playbook syntax:
+
+.. code-block:: yaml
+
+    - hosts: <HOSTS>
+      nog_log: True
+
+Example:
+
+.. code-block:: yaml
+
+    - name: Authenticating against the API
+      uri:
+        metod: POST
+        url: http://example.org/v1/auth
+        body: "{{ auth_body }}"
+      register: auth_response
+      no_log: True
+
+    - name: Running a task with the API
+      uri:
+        method: POST
+        url: http://example.org/v1/ip/create
+        headers:
+          Token: "{{ auth_response.ansible_facts.token }}"
+        body: "{{ ip_create_body }}"
+      no_log: True
+
 Pause
 ^^^^^
 
@@ -4893,3 +4934,4 @@ Bibliography
 61. "Feature to download & upload data in Tower #197." GitHub tower-cli. February 28, 2018. Accessed April 6, 2018. https://github.com/ansible/tower-cli/issues/197
 62. "Lookup Plugins." Ansible Documention. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
 63. "Release and maintenance." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/2.5/reference_appendices/release_and_maintenance.html
+64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
