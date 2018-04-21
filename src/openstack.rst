@@ -1030,13 +1030,14 @@ TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a sm
 
 In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. There is also experimental support for running the Undercloud services in containers. [81]
 
-Hardware requirements [24]:
+Minimum hardware requirements [24]:
 
 -  Undercloud node:
 
    -  4 CPU cores
-   -  16GB RAM
+   -  8GB RAM (16GB recommended)
    -  60GB storage
+   -  2 network interface cards (NICs) [82]
 
 -  Overcloud nodes:
 
@@ -1047,16 +1048,13 @@ Hardware requirements [24]:
 Quick
 ^^^^^
 
-The "TripleO-Quickstart" project was created to use Ansible to automate
+The "TripleO Quickstart" project was created to use Ansible to automate
 deploying TripleO as fast and easily as possible. [23]
 
 Install
 '''''''
 
-TripleO-Quickstart recommends a minimum of 32GB RAM and 120GB of disk
-space when deploying with the default settings. [25] This deployment has
-to use a baremetal hypervisor. Deploying TripleO within a virtual
-machine that uses nested virtualization is not supported. [26]
+TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [25] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [26]
 
 -  Download the tripleo-quickstart script or clone the entire repository
    from GitHub.
@@ -1115,9 +1113,9 @@ variables to a YAML file and then add the arguments
 -  Common quickstart.sh options:
 
    -  ``--clean`` = Remove previously created files from the working
-      directory on the start of TripleO-Quickstart.
+      directory on the start of TripleO Quickstart.
    -  ``--no-clone`` = Use the current working directory for
-      TripleO-Quickstart. This should only be if the entire repository
+      TripleO Quickstart. This should only be if the entire repository
       has been cloned.
    -  ``--nodes config/nodes/<CONFIGURATION>.yml`` = Specify the
       configuration that determines how many Overcloud nodes should be
@@ -1129,7 +1127,7 @@ variables to a YAML file and then add the arguments
       the development version and "stable/``<RELEASE_NAME>``" for the
       stable version.
    -  ``--retain-inventory`` = Use the existing inventory. This is
-      useful for managing an existing TripleO-Quickstart infrastructure.
+      useful for managing an existing TripleO Quickstart infrastructure.
    -  ``--teardown {all|nodes|none|virthost}`` = Delete everything
       related to TripleO (all), only the virtual machines (nodes),
       nothing (none), or the virtual machines and settings on the
@@ -1183,9 +1181,7 @@ Install
 Undercloud
 &&&&&&&&&&
 
-The Undercloud can be installed onto a bare metal server or a virtual
-machine. Follow the "hypervisor" section to assist with automatically
-creating an Undercloud virtual machine.
+The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [82]
 
 -  **Hypervisor** (optional)
 
@@ -1208,7 +1204,7 @@ creating an Undercloud virtual machine.
 
           $ instack–virt–setup
 
-   -  Alternatively, use the TripleO-Quickstart project to deploy the
+   -  Alternatively, use the TripleO Quickstart project to deploy the
       Undercloud virtual machine. Leave the overcloud\_nodes variable
       blank to only deploy the Undercloud. Otherwise, provide a number
       of virtual machines that should be created for use in the
@@ -1219,7 +1215,7 @@ creating an Undercloud virtual machine.
           $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
           $ bash quickstart.sh --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
 
-   -  Log into the virtual machine once TripleO-Quickstart has completed
+   -  Log into the virtual machine once TripleO Quickstart has completed
       setting up the environment.
 
       .. code-block:: sh
@@ -1235,9 +1231,9 @@ creating an Undercloud virtual machine.
 
           $ sudo useradd stack
           $ sudo passwd stack
-          $ sudo echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack
+          $ echo "stack ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/stack
           $ sudo chmod 0440 /etc/sudoers.d/stack
-          $ sudo su - stack
+          $ su - stack
 
    -  Install the RDO Trunk repositories.
    -  Install TripleO.
@@ -1246,7 +1242,7 @@ creating an Undercloud virtual machine.
 
           $ sudo yum install python-tripleoclient
 
-   -  Copy the sample configuration to use as a base template.
+   -  Copy the sample configuration to use as a base template. Optionally configure it.
 
       .. code-block:: sh
 
@@ -1254,30 +1250,19 @@ creating an Undercloud virtual machine.
 
    -  Common Undercloud configuration options:
 
-      -  enable\_\* = Enable or disable non-essential OpenStack services
-         on the Undercloud.
-      -  dhcp\_{start\|end} = The range of IP addresses to temporarily
-         use for provisioning Overcloud nodes. This range is a limiting
-         factor in how many nodes can be provisioned at once.
-      -  local\_interface = The network interface to use for
-         provisioning new Overcloud nodes. This will be configured as an
-         Open vSwitch bridge.
+      -  enable\_\* = Enable or disable non-essential OpenStack services on the Undercloud.
+      -  **dhcp\_{start\|end}** = The range of IP addresses to temporarily use for provisioning Overcloud nodes. This range is a limiting factor in how many nodes can be provisioned at once.
+      -  **local\_interface** = The network interface to use for provisioning new Overcloud nodes. This will be configured as an Open vSwitch bridge. Default: eth1.
+      -  **local\_ip** = The local IP address of the Undercloud node to be used for using DHCP for providing IP addresses for Overcloud nodes during PXE booting. This should not be a public IP address.
+      -  **inspection\_iprange** = The IP range to use for Ironic's introspection of the Overcloud nodes. This range needs to unique from the DHCP start/end range.
       -  local\_mtu = The MTU size to use for the local interface.
-      -  network\_cidr = The CIDR range of IP addresses to temporarily
-         use for provisioning.
-      -  masquerade\_network = The network CIDR that will be used for
-         masquerading external network connections.
-      -  network\_gateway = The default gateway to use for external
-         connectivity to the Internet during provisioning.
-      -  undercloud\_admin\_vip = The IP address to listen on for admin
-         API endpoints.
-      -  undercloud\_hostname = The fully qualified hostname to use for
-         the Undercloud.
-      -  undercloud\_public\_vip = The IP address to listen on for
-         public API endpoints.
+      -  **cidr** (**network_cidr** in Newton) = The CIDR range of IP addresses to use for the Overcloud nodes.
+      -  masquerade\_network = The network CIDR that will be used for masquerading external network connections.
+      -  **gateway** (**network\_gateway** in Newton) = The default gateway to use for external connectivity to the Internet during provisioning. Use the "local\_ip" when masquerading is used.
+      -  undercloud\_admin\_vip = The IP address to listen on for admin API endpoints.
+      -  undercloud\_hostname = The fully qualified hostname to use for the Undercloud.
+      -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
 
-   -  At the very least the "local\_ip" and "local\_interface" variables
-      need to be defined in the "DEFAULT" section.
    -  Deploy an all-in-one Undercloud on the virtual machine.
 
       .. code-block:: sh
@@ -3269,3 +3254,4 @@ Bibliography
 79. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86\_64/openstack-pike/
 80. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
 81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers\_deployment/undercloud.html
+82. "[TripleO Quickstart] Networking." Tripleo Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html

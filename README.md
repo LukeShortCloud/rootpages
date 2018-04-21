@@ -113,6 +113,8 @@ RST header characters to use:
 5. `'''''`
 6. `&&&&&`
 
+Any arguments or options that are required for a command or configuration are marked in **bold**.
+
 
 ### New Contributors
 
