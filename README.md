@@ -81,6 +81,30 @@ $ sphinx-build-3 -b <OUTPUT_FORMAT> src/ build/
 ```
 
 
+## Usage - Translations
+
+Root Pages can also be translated into a different language.
+
+* Convert the documents' text into the gettext `*.pot` format.
+
+```
+$ make gettext
+```
+
+* Compile the `*.pot` files into the `*.po` format.
+
+```
+$ sphinx-intl update -p build/gettext -l <LOCALE>
+```
+
+* Translate the `*.po` files using the [Google Translator Toolkit](http://translate.google.com/toolkit/list?hl=en#translations/active) or another utility.
+* Build the translated documentations.
+
+```
+$ make -e SPHINXOPTS="-D language='<LOCALE>'" html
+```
+
+
 ## Contributing
 
 Root Pages is a rolling release. As new information is committed, it is shortly pushed into master after a quick review for technical writing standards and correct citation usage.
