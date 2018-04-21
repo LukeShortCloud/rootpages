@@ -17,10 +17,15 @@ control node that runs on Linux, using Python. A remote connection to
 WinRM (via HTTPS, by default) is made and then modules are executed
 remotely using PowerShell commands. [33]
 
-The official documentation can be found here:
+Starting with Ansible 2.4, it has a 1 year life cycle. The first 4 months of the release get general bug and security updates, the next 4 months get general bug and security updates, and the last 4 months only get major bug and security updates. [63]
 
--  Latest stable: http://docs.ansible.com/ansible/latest/index.html
--  Development: http://docs.ansible.com/ansible/devel/index.html
+Official documentation:
+
+-  `Stable <https://docs.ansible.com/ansible/latest/>`__
+-  `Development <https://docs.ansible.com/ansible/devel/>`__
+-  `2.5 <https://docs.ansible.com/ansible/2.5/>`__
+-  `2.4 <https://docs.ansible.com/ansible/2.4/>`__
+
 
 Editions
 ~~~~~~~~
@@ -4866,3 +4871,4 @@ Bibliography
 60. "1.0.4 - 1.0.5 upgrade killed my workers & errors db upgrade Key (username)=(admin) already exists. #1707." GitHub AWX. March 30, 2018. Accessed April 6, 2018. https://github.com/ansible/awx/issues/1707
 61. "Feature to download & upload data in Tower #197." GitHub tower-cli. February 28, 2018. Accessed April 6, 2018. https://github.com/ansible/tower-cli/issues/197
 62. "Lookup Plugins." Ansible Documention. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
+63. "Release and maintenance." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/2.5/reference_appendices/release_and_maintenance.html
