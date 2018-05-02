@@ -2104,15 +2104,7 @@ Example:
 Copy, File, Synchronize, and Template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``copy``, ``file``, ``synchronize``, and ``template`` modules
-provide ways for creating and modifying various files. The ``file``
-module is used to handle file creation/modification on the remote host.
-``template``\ s are to be used when a file contains variables that will
-be rendered out by Jinja2. ``copy`` is used for copying files and
-folders either from the role or on the remote host. ``synchronize`` is
-used as a wrapper around rsync to provide a more robust copy
-functionality. Most of the options and usage are the same between these
-four modules.
+The ``copy``, ``file``, ``synchronize``, and ``template`` modules provide ways for creating and modifying various files. The ``file`` module is used to handle file creation/modification on the remote host. ``template``\ s are to be used when a file contains variables that will be rendered out by Jinja2. ``copy`` is used for copying files from the Ansible control node or on the managed host. ``synchronize`` is used as a wrapper around rsync to provide a more robust copy functionality. This module is the only module that can recursive copy a directory and all of it's contents on a remote host to another folder on that same host. Most of the options and usage are the same between these four modules.
 
 Syntax:
 
@@ -2184,14 +2176,27 @@ Synchronize options:
    default is ``no``.
 -  rsync\_opts = Provide additional ``rsync`` command line arguments.
 
-Example:
-
--  Copy a template from roles/\ ``<ROLE>``/templates/ and set the
-   permissions for the file.
+Synchronize example:
 
 .. code-block:: yaml
 
-    template: src=example.conf.j2 dst=/etc/example/example.conf mode=0644 owner=root group=nobody
+    - name: Copying the contents from one directory to another on the managed host only
+      synchronize:
+        src: /path/to/src/
+        dest: /path/to/dest/
+      delegate_to: "{{ inventory_hostname }}"
+
+Template example:
+
+.. code-block:: yaml
+
+    - name: Copying a template from the role's "templates" directory to the managed hosts
+      template:
+        src: example.conf.j2
+        dst: /etc/example/example.conf
+        mode: 0644
+        owner: root
+        group: nobody
 
 [46]
 
