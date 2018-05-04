@@ -531,7 +531,7 @@ Common inventory options:
    install of Python 2 can be used instead. [3]
 -  ansible\_vault\_password\_file = Specify the file to read the Vault
    password from. [21]
--  ansible\_become = Set to "true" or "yes" to become a different user
+-  ansible\_become = Set to "True" or "yes" to become a different user
    than the ansible\_user once logged in.
 
    -  ansible\_become\_method = Pick a method for switching users. Valid
@@ -545,7 +545,7 @@ Examples:
 .. code-block:: ini
 
     localhost ansible_connection=local
-    dns1 ansible_host=192.168.1.53 ansible_port=2222 ansible_become=true ansible_become_user=root ansible_become_method=sudo
+    dns1 ansible_host=192.168.1.53 ansible_port=2222 ansible_become=True ansible_become_user=root ansible_become_method=sudo
     dns2 ansible_host=192.168.1.54
     /home/user/ubuntu1604 ansible_connection=chroot
 
@@ -888,9 +888,9 @@ Example:
 
 .. code-block:: yaml
 
-     - command: bash /usr/local/bin/example.sh
-        async: 15
-        poll: 5
+    - command: bash /usr/local/bin/example.sh
+      async: 15
+      poll: 5
 
 Block
 ^^^^^
@@ -971,7 +971,8 @@ Examples:
 .. code-block:: yaml
 
      - name: Continue if this fails when check_mode is enabled
-        stat: path=/etc/neutron/neutron.conf
+        stat:
+          path: /etc/neutron/neutron.conf
         register: neutron_conf
         ignore_errors: "{{ ansible_check_mode }}"
 
@@ -1100,20 +1101,28 @@ Example (handlers/main.yml):
 
     handlers:
       - name: restart nginx
-        service: name=nginx state=restarted
+        service:
+          name: nginx
+          state: restarted
         listen: "restart stack"
       - name: restart php-fpm
-        service: name=php-fpm state=restarted
+        service:
+          name: php-fpm
+          state: restarted
         listen: "restart stack"
       - name: restart mariadb
-        service: name=mariadb state=restarted
+        service:
+          name: mariadb
+          state: restarted
         listen: "restart stack"
 
 Example (tasks/main.yml):
 
 .. code-block:: yaml
 
-    - template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    - template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
       notify: restart stack
 
 [2]
@@ -1293,7 +1302,9 @@ Example:
     - hosts: web
       tasks:
         - name: Installing Nginx
-          package: name=nginx state=present
+          package:
+            name: nginx
+            state: present
           serial: 50%
 
 Strategy
@@ -1355,7 +1366,9 @@ Example:
 
     ---
     # File: webserver.yaml
-     - package: name=nginx state=latest
+     - package:
+         name: nginx
+         state: latest
        tags:
         - yum
         - rpm
@@ -1449,14 +1462,16 @@ in programming languages. It is usually the last line to a sub-task. [11]
 
 .. code-block:: yaml
 
-     - package: name=httpd state=latest
-        when: ansible_os_family == "CentOS"
+    - package:
+        name: httpd
+        state: latest
+      when: ansible_os_family == "CentOS"
 
 "Or" example:
 
 .. code-block:: yaml
 
-    when: ansible_os_family == "CentOS" or when: ansible_os_family == "Debian"
+    when: (ansible_os_family == "CentOS") or (ansible_os_family == "Debian")
 
 "And" example:
 
@@ -1481,14 +1496,14 @@ Syntax:
 
 .. code-block:: yaml
 
-    any_errors_fatal: true
+    any_errors_fatal: True
 
 Example:
 
 .. code-block:: yaml
 
     - hosts: nfs_servers
-      any_errors_fatal: true
+      any_errors_fatal: True
       roles:
        - nfs
 
@@ -1558,7 +1573,9 @@ Example:
 .. code-block:: sh
 
     - name: Even though this will fail, the Playbook will keep running.
-      package: name=does-not-exist state=present
+      package:
+        name: does-not-exist
+        state: present
       ignore_errors: yes
 
 Includes
@@ -1662,6 +1679,10 @@ Syntax:
 .. code-block:: yaml
 
     - include_tasks: <TASK_FILE>.yml
+      vars:
+        <KEY1>: <VALUE1>
+        <KEY2>: <VALUE2>
+        <KEY3>: <VALUE3>
 
 [49]
 
@@ -1724,7 +1745,8 @@ Examples:
 .. code-block:: yaml
 
     - hosts: all
-      include_vars: file=monitor_vars.yml
+      include_vars:
+        file: monitor_vars.yml
       roles:
        - nagios
 
@@ -1819,7 +1841,10 @@ Example:
 .. code-block:: yaml
 
     - name: Copy over the first Nova configuration that is found
-      copy: src={{ item }} dest=/etc/nova/ remote_src=true
+      copy:
+        src: "{{ item }}"
+        dest: "/etc/nova/"
+        remote_src: True
       with_first_found:
        - "/root/nova.conf"
        - "/etc/nova_backup/nova.conf"
@@ -1846,9 +1871,15 @@ Example:
     - name: Setting the OpenStack client packages variable
       set_fact:
         openstack_client_packages:
-          - "[ 'python2-cinderclient', 'python2-glanceclient', python2-keystoneclient', 'python2-novaclient', 'python2-neutronclient' ]"
+          - python2-cinderclient
+          - python2-glanceclient
+          - python2-keystoneclient
+          - python2-novaclient
+          - python2-neutronclient
 
-    - package: name={{ item }} state=present
+    - package:
+        name: "{{ item }}"
+        state: present
       with_flattened:
        - "{{ openstack_client_packages }}"
        - python2-heatclient
@@ -1870,7 +1901,11 @@ Example:
     - name: Setting the OpenStack client packages variable
       set_fact:
         openstack_client_packages:
-          - "[ 'python2-cinderclient', 'python2-glanceclient', python2-keystoneclient', 'python2-novaclient', 'python2-neutronclient' ]"
+          - python2-cinderclient
+          - python2-glanceclient
+          - python2-keystoneclient
+          - python2-novaclient
+          - python2-neutronclient
 
     - name: Installing dependencies
       package:
@@ -1911,7 +1946,10 @@ List example:
 
 .. code-block:: yaml
 
-    - service: name={{ item }} state=started enabled=true
+    - service:
+        name: "{{ item }}"
+        state: started
+        enabled: True
       with_items:
        - nginx
        - php-fpm
@@ -1921,7 +1959,12 @@ Dictionary example:
 
 .. code-block:: yaml
 
-    - user: name={{ item.name }} group={{ item.group }} password={{ item.2 }} state=present
+    - name: Creating new users
+      user:
+        name: "{{ item.name }}"
+        group: "{{ item.group }}"
+        password: "{{ item.2 }}"
+        state: present
       with_items:
        - { name: "bob", group: "colab", passwd: "123456" }
        - { name: "sam", group: "colab", passwd: "654321" }
@@ -2004,7 +2047,7 @@ Variable return values [32]:
 -  backup\_file = String. If a module creates a backup file, this is
    that file's name.
 -  changed = Boolean. If something was changed after the module runs,
-   this would be set to "true."
+   this would be set to "True."
 -  failed = Boolean. Shows if the module failed.
 -  invocation = Dictionary. This describes the module used to run the
    operation as well as all of the arguments.
@@ -2029,16 +2072,22 @@ Examples:
 
 .. code-block:: yaml
 
-     - command: echo Hello World
-        register: hello
-     - debug: msg="We heard you"
-        when: "'Hello World' in hello.stdout"
+    - command: echo Hello World
+      register: hello
+
+    - debug:
+        msg: "We heard you"
+      when: "'Hello World' in hello.stdout"
 
 .. code-block:: yaml
 
-    - copy: src=example.conf dest=/etc/example.conf
+    - copy:
+        src: example.conf
+        dest: /etc/example.conf
       register: copy_example
-    - debug: msg="Copying example.conf failed."
+
+    - debug:
+        msg: "Copying example.conf failed."
       when: copy_example|failed
 
 [12]
@@ -2145,7 +2194,7 @@ Copy, file, and template options:
 
 Copy options:
 
-remote\_src = If set to ``true``, the source file will be found on the
+remote\_src = If set to ``True``, the source file will be found on the
 server Ansible is running tasks on (not the local machine). The default
 is ``false``.
 
@@ -2193,7 +2242,7 @@ Template example:
     - name: Copying a template from the role's "templates" directory to the managed hosts
       template:
         src: example.conf.j2
-        dst: /etc/example/example.conf
+        dest: /etc/example/example.conf
         mode: 0644
         owner: root
         group: nobody
@@ -2246,13 +2295,20 @@ Example #1:
 
 .. code-block:: yaml
 
-    cron: job="/usr/bin/wall This actually works" minute="*/1" user=ubuntu
+    cron:
+      job: "/usr/bin/wall This actually works"
+      minute: "*/1"
+      user: redhat
 
 Example #2:
 
 .. code-block:: yaml
 
-    cron: job="/usr/bin/yum -y update" weekday=0 hour=6 backup=yes
+    cron:
+      job: "/usr/bin/yum -y update"
+      weekday: 0
+      hour: 6
+      backup: yes
 
 [55]
 
@@ -2397,7 +2453,11 @@ Example:
 
    .. code-block:: yaml
 
-       service: name=httpd state=restarted sleep=3
+    - name: Restarting the Apache service and waiting 3 seconds for it to fully start
+      service:
+        name: httpd
+        state: restarted
+        sleep: 3
 
 MySQL Database and User
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -2445,19 +2505,32 @@ Example #1:
 
 .. code-block:: yaml
 
-    mysql_db: name=toorsdb state=present config_file=/secrets/.my.cnf
+    mysql_db:
+      name: toorsdb
+      state: present
+      config_file: /secrets/.my.cnf
 
 Example #2:
 
 .. code-block:: yaml
 
-    mysql_user: name=toor login_user=root login_password=supersecret priv=somedb.*:ALL state=present
+    mysql_user:
+      name: toor
+      login_user: root
+      login_password: "{{ vault_encrypted_password }}"
+      priv: "somedb.*:ALL"
+      state: present
 
 Example #3:
 
 .. code-block:: yaml
 
-    mysql_user: name=maxscale host="10.0.0.%" priv="*.*:REPLICATION CLIENT,SELECT" password=supersecure123 state=present
+    mysql_user:
+      name: maxscale
+      host: "10.0.0.%"
+      priv: "*.*:REPLICATION CLIENT,SELECT"
+      password: "{{ maxscale_vault_encrypted_password }}"
+      state: present
 
 Raw
 ^^^
@@ -2492,17 +2565,23 @@ Syntax:
 
 .. code-block:: yaml
 
-    stat: path=<FILE>
+    stat:
+      path: <FILE_PATH>
     register: <STAT_VARIABLE>
 
 Example:
 
 .. code-block:: yaml
 
-    - stat: path=/root/.ssh/id_rsa
+    - stat:
+        path: /root/.ssh/id_rsa
       register: id_rsa
 
-    - file: path=/root/.ssh/id_rsa mode=0600 owner=root group=root
+    - file:
+        path: /root/.ssh/id_rsa
+        mode: 0600
+        owner: root
+        group: root
       when: id_rsa.stat.mode is not "0600"
 
 Common options:
@@ -2680,11 +2759,12 @@ Common options:
 
 Example:
 
--  Update the MariaDB package.
-
 .. code-block:: yaml
 
-    package: name=mariadb state=latest
+    - name: Updating MariaDB
+      package:
+        name: mariadb
+        state: latest
 
 [47]
 
@@ -2744,12 +2824,15 @@ Common options:
 
 Example:
 
--  Install the "wget" package with the EPEL repository enabled and
-   disable GPG validation checks.
-
 .. code-block:: yaml
 
-    yum: name=wget state=installed enablerepo=epel disable_gpg_check=yes
+
+    - name: Installing Ansible from EPEL and disabling GPG check as an example
+      yum:
+        name: ansible
+        state: installed
+        enablerepo: epel
+        disable_gpg_check: yes
 
 Yum repository syntax:
 
@@ -2783,11 +2866,15 @@ Common options:
 
 Example:
 
--  Install the RepoForge Yum repository.
 
 .. code-block:: yaml
 
-    yum_repository: name=repoforge baseurl=http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/ enabled=no description="Third-party RepoForge packages"
+    - name: Adding the RepoForge repository to /etc/yum.repos.d/
+      yum_repository:
+        name: repoforge
+        baseurl: http://apt.sw.be/redhat/el7/en/x86_64/rpmforge/
+        enabled: no
+        description: "Third-party RepoForge packages (previously RPMForge)"
 
 [47]
 
@@ -3032,7 +3119,10 @@ Example:
 
 .. code-block:: yaml
 
-    win_chocolatey: name="libreoffice" state="upgrade" version="5.4.0"
+    win_chocolatey:
+      name: "libreoffice-fresh"
+      state: "upgrade"
+      version: "6.0.3"
 
 [48]
 
@@ -3189,7 +3279,12 @@ Example:
 
 .. code-block:: yaml
 
-    win_updates: category_names=['CriticalUpdates'] state=searched log_path="c:\tmp\win_updates_log.txt"
+    - name: Installing only the critical Windows updates
+      win_updates:
+        category_names:
+          - CriticalUpdates
+        state: searched
+        log_path: "c:\tmp\win_updates_log.txt"
 
 [48]
 
@@ -3721,30 +3816,35 @@ Variables can be defined as a list or nested lists.
 
 Syntax:
 
-::
-
-    <VARIABLE>: [ '<ITEM1>', '<ITEM2>', '<ITEM3>' ]
-
-::
+.. code-block:: yaml
 
     <VARIABLE>:
-     - [ [ '<ITEMA>', '<ITEMB>' ] ]
-     - [ [ '<ITEM1>', '<ITEM2>' ] ]
+      - <ITEM1>
+      - <ITEM2>
+      - <ITEM3>
+
+.. code-block:: yaml
+
+    <VARIABLE>:
+      - ['<ITEMA>', '<ITEMB>']
+      - ['<ITEM1>', '<ITEM2>']
 
 Examples:
 
-::
+.. code-block:: yaml
 
-    colors: [ 'blue', 'red', 'green' ]
+    colors:
+      - blue
+      - red
+      - green
 
-::
+.. code-block:: yaml
 
     cars:
-     - [ 'sports', 'sedan' ]
-     - [ 'suv', 'pickup' ]
+     - ['sports', 'sedan']
+     - ['suv', 'pickup']
 
-Lists can be called by their array position, starting at "0."
-Alternatively they can be called by the subvariable name.
+Lists can be called by their array position, starting at "0." Alternatively they can be called by the subvariable name.
 
 Syntax:
 
@@ -3768,7 +3868,8 @@ Example:
 
 .. code-block:: yaml
 
-     - debug: msg="Contact {{ item.name }} at {{ item.contact.phone }}"
+     - debug:
+         msg: "Contact {{ item.name }} at {{ item.contact.phone }}"
        with_items:
         - {{ members }}
 
