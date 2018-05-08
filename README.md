@@ -51,22 +51,22 @@ Sphinx will save newly generated documents into the "build/" directory by defaul
 
 ePub:
 ```
-$ SPHINXBUILD="sphinx-build-3" make epub
+$ make epub
 ```
 
 HTML:
 ```
-$ SPHINXBUILD="sphinx-build-3" make html
+$ make html
 ```
 
 PDF:
 ```
-$ SPHINXBUILD="sphinx-build-3" make latexpdf
+$ make latexpdf
 ```
 
 Text:
 ```
-$ SPHINXBUILD="sphinx-build-3" make text
+$ make text
 ```
 
 
