@@ -830,6 +830,8 @@ https://github.com/ansible/ansible/tree/devel/contrib/inventory.
 Modules
 -------
 
+A list of all of the latest Ansible modules is provided `here <http://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html>`__.
+
 Main Modules
 ~~~~~~~~~~~~
 
