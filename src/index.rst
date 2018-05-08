@@ -22,7 +22,8 @@ Welcome to Root Pages!
    linux
    mail_servers
    monitoring
-   networking
+   networking_software
+   networking_hardware
    openstack
    operating_systems
    packages

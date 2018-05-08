@@ -1,5 +1,5 @@
-Networking
-==========
+Networking (Software)
+=====================
 
 .. contents:: Table of Contents
 
@@ -563,8 +563,8 @@ Common bonding\_opts options:
 
 [15]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking.rst>`__
--------------------------------------------------------------------------------------
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking_software.rst>`__
+----------------------------------------------------------------------------------------------
 
 Bibliography
 ------------
