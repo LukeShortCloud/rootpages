@@ -89,23 +89,17 @@ becoming familiar with C and C++.
 Data Types
 ----------
 
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| Data              | Description                                                                                                    | Default `short` Size in Bits |
-+===================+================================================================================================================+==============================+
-| bool              | Boolean. A value of "true" or "false."                                                                         | 1                            |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| int               | Integer. A whole number.                                                                                       | 16                           |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| float             | Float. A decimal number.                                                                                       | 32                           |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| double            | Double. A longer and more precise number. This is due to allowing double the amount of bits than `float` does. | 64                           |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| char              | Character. A single character.                                                                                 | 8                            |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| char \*           | String. A collection of one or more characters at a pointer address.                                           |                              |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
-| std::string (C++) | String (from the "std" namespace). A collection containing one or more characters.                             | 16                           |
-+-------------------+----------------------------------------------------------------------------------------------------------------+------------------------------+
+.. csv-table::
+   :header: Data Type, Description, "Default ``short`` Size (Bits)"
+   :widths: 20, 20, 20
+
+   "bool", "Boolean. A value of ``true`` or ``false``.", 1
+   "int", "Integer. A whole number.", 16
+   "float", "Float. A decimal number.", 32
+   "double", "Double. A longer and more precise number. This is due to allowing double the amount of bits than ``float`` does.", 64
+   "char", "Character. A single character.", 8
+   "char \*", "String. A collection of one or more characters at a pointer address.", "N/A"
+   "std::string (C++)", String (from the "std" namespace). A collection containing one or more characters., 16
 
 Integers can be "signed" or "unsigned." An "unsigned" digit can be a
 negative number.
@@ -352,33 +346,26 @@ Operators
 Conditional statements require comparison operators. If the outcome of
 the operator is true then the conditional will execute.
 
-+-----------------------+----------------------------+
-| Comparison Operator   | Description                |
-+=======================+============================+
-| ==                    | Equal                      |
-+-----------------------+----------------------------+
-| !=                    | Not Equal                  |
-+-----------------------+----------------------------+
-| <                     | Less than                  |
-+-----------------------+----------------------------+
-| >                     | Greater than               |
-+-----------------------+----------------------------+
-| <=                    | Less than or Equal to      |
-+-----------------------+----------------------------+
-| >=                    | Greater than or Equal to   |
-+-----------------------+----------------------------+
+.. csv-table::
+   :header: Comparison Operator, Description
+   :widths: 20, 20
+
+   "==", Equal
+   "!=", Not equal
+   "<", Greater than
+   ">", less than
+   "<=", Less than or equal to
+   ">=", Greater than or equal to
 
 Using logical operators allows for multiple statements to be compared.
 
-+--------------------+----------------------------------------+
-| Logical Operator   | Description                            |
-+====================+========================================+
-| !                  | The statement must be false.           |
-+--------------------+----------------------------------------+
-| &&                 | Both statements must be true.          |
-+--------------------+----------------------------------------+
-| \|\|               | At least one statement must be true.   |
-+--------------------+----------------------------------------+
+.. csv-table::
+   :header: Logical Operator, Description
+   :widths: 20, 20
+
+   "!", The statement must be false.
+   "&&", The statement must be true.
+   "||", At least one statement must be true.
 
 [13]
 
@@ -561,17 +548,14 @@ Text from a terminal can either be displayed (standard output) and/or
 saved as a variable (standard input). C++ can even use C standard
 input/output functions since they are compatible.
 
-+----------+----------+------------+
-| Name     | Type     | Language   |
-+==========+==========+============+
-| printf   | Output   | C          |
-+----------+----------+------------+
-| cout     | Output   | C++        |
-+----------+----------+------------+
-| scanf    | Input    | C          |
-+----------+----------+------------+
-| cin      | Input    | C++        |
-+----------+----------+------------+
+.. csv-table::
+   :header: Name, Type, Language
+   :widths: 20, 20, 20
+
+   printf, Output, C
+   cout, Output, C++
+   scanf, Input, C
+   cin, Input, C++
 
 Syntax:
 

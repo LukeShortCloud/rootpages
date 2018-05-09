@@ -38,35 +38,22 @@ Examples:
 
     $ WINEPATH="c:/program_dir" wine setup.exe
 
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| Name             | Description                                                                                                                                                                                       | Default               |
-+==================+===================================================================================================================================================================================================+=======================+
-| WINEPREFIX       | A directory where Wine should create and use an isolated Windows environment.                                                                                                                     | `$HOME/.wine`         |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINESERVER       | The "wineserver" binary to use.                                                                                                                                                                   | `/usr/bin/wineserver` |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINELOADER       | The "wine" binary to use for launching new Windows processes.                                                                                                                                     | `/usr/bin/wine`       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINEDEBUG        | The debug options to use for logging.                                                                                                                                                             |                       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINEDLLPATH      | The directory to load builtin Wine DLLs.                                                                                                                                                          | `/usr/lib64/wine`     |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINEDLLOVERRIDES | A list Wine DLLs that should be overridden. If a DLL fails to load it will attempt to load another DLL (if applicable). By default, all operating system DLLs will only use Wine's built-in DLLs. |                       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINEPATH         | Additional paths to append to the Windows PATH variable.                                                                                                                                          |                       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINEARCH         | The Windows architecture to use. Valid options are "win32" or "win64."                                                                                                                            | `win64`               |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| DISPLAY          | The X11 display to run Windows programs in.                                                                                                                                                       |                       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| AUDIODEV         | The audio device to use.                                                                                                                                                                          | `/dev/dsp`            |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| MIXERDEV         | The device to use for mixer controls.                                                                                                                                                             | `/dev/mixer`          |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| MIDIDEV          | The MIDI sequencer device to use.                                                                                                                                                                 | `/dev/sequencer`      |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
-| WINE             | This variable is only used for Winetricks. The full path to the Wine binary to use.                                                                                                               | `/usr/bin/wine`       |
-+------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------+
+.. csv-table::
+   :header: Name, Default, Description
+   :widths: 20, 20, 20
+
+   WINEPREFIX, ``$HOME/.wine``, A directory where Wine should create and use an isolated Windows environment.
+   WINESERVER, ``/usr/bin/wineserver``, The "wineserver" binary to use.
+   WINELOADER, ``/usr/bin/wine``, The "wine" binary to use for launching new Windows processes.
+   WINEDEBUG, "", The debug options to use for logging.
+   WINEDLLPATH, ``/usr/lib64/wine``, The directory to load builtin Wine DLLs.
+   WINEDLLOVERRIDES, "", "A list of Wine DLLs that should be overridden. If a DLL fails to load it will attempt to load another DLL (if applicable). By default, all operating system DLLs will only use Wine's built-in DLLs."
+   WINEPATH, "", Additional paths to append to the Windows PATH variable
+   WINEARCH, ``win64``, The Windows architecture to use. Valid options are "win32" or "win64."
+   DISPLAY, "", The X11 display to run Windows programs in.
+   AUDIODEV, ``/dev/dsp``, The audio device to use.
+   MIXERDEV, ``/dev/mixer``, The device to use for mixer controls.
+   WINE, ``/usr/bin/wine``, This variable is only used for Winetricks. The full path to the Wine binary to use.
 
 [4]
 

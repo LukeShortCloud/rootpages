@@ -17,81 +17,46 @@ Programs use system calls to interact with the kernel to do tasks.
 
 Common system calls:
 
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| Call        | Type                 | Description                                                                                                       |
-+=============+======================+===================================================================================================================+
-| accept      | Network              | Accept an incoming network connection.                                                                            |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| bind        | Network              | Associate a network socket to a specific IP address.                                                              |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| chdir       | Process              | Change to a different working directory.                                                                          |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| chmod       | File                 | Change the mode permissions.                                                                                      |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| chown       | File                 | Change the owner permissions.                                                                                     |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| chroot      | Process              | Change the working root directory.                                                                                |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| close       | File                 | Close a file.                                                                                                     |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| connect     | Network              | Make an external network connection.                                                                              |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| exec        | Process              | Execute/start a program.                                                                                          |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| exit        | Process              | End a process.                                                                                                    |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| fork        | Process              | Spawn a new process.                                                                                              |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| getgid      | Process              | Find the group ID.                                                                                                |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| getuid      | Process              | Find the user ID.                                                                                                 |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| kill        | Process              | Send a signal to a process.                                                                                       |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| link        | File                 | Create a shortcut that mirrors an existing inode (a hard link).                                                   |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| mkdir       | File                 | Create a directory.                                                                                               |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| mknod       | File                 | Create a file.                                                                                                    |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| mount       | File                 | Mount a file system onto a directory.                                                                             |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| nice        | Process              | Modify the priority of a process.                                                                                 |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| open        | File                 | Open a file.                                                                                                      |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| pause       | Process              | Temporarily stop a process from running until a signal is given to continue.                                      |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| pipe        | Process              | Stream output data from one process to another.                                                                   |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| read        | File                 | Read data..                                                                                                       |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| setgid      | Process              | Change a process' group ID.                                                                                       |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| setpriority | Process              | Change a process' kernel scheduling priority.                                                                     |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| setuid      | Process              | Change a process' user ID.                                                                                        |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| socket      | File/Network/Process | Create a socket that can listen for requests. This can be a UNIX file socket, network port, or a special process. |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| symlink     | File                 | Create a shortcut that redirects to another file (a symbolic link).                                               |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| sync        | File                 | Flush data from memory to the disk.                                                                               |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| stat        | File                 | View a file's metadata.                                                                                           |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| time        | Process              | A count of seconds since 1970-01-01.                                                                              |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| ulimit      | Process              | View and modify user process limits                                                                               |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| unlink      | File                 | Delete a directory.                                                                                               |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| umask       | File                 | View and modify the default permissions of files and directories.                                                 |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| wait        | Process              | Wait for a child process to end.                                                                                  |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
-| write       | File                 | Write data.                                                                                                       |
-+-------------+----------------------+-------------------------------------------------------------------------------------------------------------------+
+.. csv-table::
+   :header: Call, Type, Description
+   :widths: 20, 20, 20
+
+   accept, Network, Accept an incoming network connection.
+   bind, Network, Associate a network socket to a specific IP address.
+   chdir, Process, Change to a different working directory.
+   chmod, File, Change the mode permissions.
+   chown, File, Change the owner permissions.
+   chroot, Process, Change the working root directory.
+   close, File, Close a file.
+   connect, Network, Make an external network connection.
+   exec, Process, "Execute/start a program."
+   exit, Process, End a process.
+   fork, Process, Spawn a new process.
+   getgid, Process, Find the group ID.
+   getuid, Process, Find the user ID.
+   kill, Process, Send a signal to a process.
+   link, File, "Create a shortcut that mirrors an existing inode (a hard link)."
+   mkdir, File, Create a directory.
+   mknod, File, Create a file (node).
+   mount, File, Mount a file system onto a directory.
+   nice, Process, Modify the priority of a process.
+   open, File, Open a file.
+   pause, Process, Temporarily stop a process from running until a signal is given to continue.
+   pipe, Process, Stream output data from one process to another. 
+   read, File, Read data from a file.
+   setgid, Process, "Change a process' group ID."
+   setpriority, Process, "Change a process' kernel scheduling priority."
+   setuid, Process, "Change a process' user ID."
+   socket, "File/Network/Process", "Create a socket that can listen for requests. This can be a UNIX file socket, network port, or a special process."
+   symlink, File, "Create a shortcut that redirects to another file (a symbolic link)."
+   sync, File, Flush data from memory to the disk.
+   stat, File, "View a file's metadata."
+   time, Process, "A count of seconds since 1970-01-01."
+   ulimit, Process, View and modify user process limits.
+   unlink, File, Delete a directory.
+   umask, File, View and modify the default permissions of files and directories.
+   wait, Process,  Wait for a child process to end.
+   write, File, Write data to a file.
 
 [2]
 

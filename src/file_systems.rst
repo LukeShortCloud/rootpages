@@ -12,27 +12,19 @@ being read and written to. Every file system has a limit to the number
 of inodes (files and directories) it can handle. The inode limit can be
 calculated by using the equation: ``2^<BIT_SIZE> - 1``.
 
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| Name (mount type) | OS      | Notes                                                                        | File Size Limit                  | Partition Size Limit             | Bits |
-+===================+=========+==============================================================================+==================================+==================================+======+
-| Fat16 (vfat)      | DOS     | No journaling.                                                               | 2GiB                             | 2GiB                             | 16   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| Fat32 (vfat)      | DOS     | No journaling.                                                               | 4GiB                             | 8TiB                             | 32   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| NTFS (ntfs-3g)    | Windows | Journaling, encyption, compression.                                          | 2TiB                             | 256TiB                           | 32   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| ext4 [2]          | Linux   | Journaling, less fragmentation, better performance.                          | 16TiB                            | 1EiB                             | 32   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| XFS               | Linux   | Journaling, online resizing (but cannot shrink), and online defragmentation. | 8EiB (theoretically up to 16EiB) | 8EiB (theoretically up to 16EiB) | 64   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| Btrfs [3]         | Linux   | Journaling, copy-on-write (CoW), compression, snapshots, and RAID.           | 8EiB (theoretically up to 16EiB) | 8EiB (theoretically up to 16EiB) | 64   |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| tmpfs             | Linux   | RAM and swap.                                                                |                                  |                                  |      |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| ramfs             | Linux   | RAM (no swap).                                                               |                                  |                                  |      |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
-| swap              | Linux   | A temporary storage file system to use when RAM is unavailable.              |                                  |                                  |      |
-+-------------------+---------+------------------------------------------------------------------------------+----------------------------------+----------------------------------+------+
+.. csv-table::
+   :header: "Name (mount type)", OS, Description, File Size Limit, Partition Size Limit, Bits
+   :widths: 20, 20, 20, 20, 20, 20
+
+   "Fat16 (vfat)", "DOS", "No journaling.", "2GiB", "2GiB", "16"
+   "Fat32 (vfat)", "DOS", "No journaling.", "4GiB", "8TiB", "32"
+   "NTFS (ntfs-3g)", "Windows NT", "Journaling, encyption, compression.", "2TiB", "256TiB", "32"
+   "ext4 [2]", "Linux", "Journaling, less fragmentation, better performance.", "16TiB", "1EiB", "32"
+   "XFS", "Linux", "Journaling, online resizing (but cannot shrink), and online defragmentation.", "8EiB (theoretically up to 16EiB)", "8EiB (theoretically up to 16EiB)", "64"
+   "Btrfs [3]", "Linux", "Journaling, copy-on-write (CoW), compression, snapshots, and RAID.", "8EiB (theoretically up to 16EiB)", "8EiB (theoretically up to 16EiB)", 64
+   "tmpfs", "Linux", "RAM and swap", "", "", ""
+   "ramfs", "Linux", "RAM (no swap).", "", "", ""
+   "swap", "Linux", "A temporary storage file system to use when RAM is unavailable.", "", "", ""
 
 [1]
 
@@ -140,19 +132,15 @@ idea of a RAID is to get either increased performance and/or an
 automatic backup from using multiple disks together. It utilizes these
 drives to create 1 logical drive.
 
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
-| Level | Minimum Drives | Benefits                                                                       | Drawbacks                                                                                                                  | Speed | Increased Storage | Redundancy |
-+=======+================+================================================================================+============================================================================================================================+=======+===================+============+
-| 0     | 2              | I/O operations are equally spread to each disk.                                | No redundancy.                                                                                                             | X     | X                 |            |
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
-| 1     | 2              | If one drive fails, a second drive will have an exact copy of all of the data. | Slower write speeds.                                                                                                       |       |                   | X          |
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
-| 5     | 3              | This can recover from a failed drive without any affect on performance.        | Drive recovery takes a long time and will not work if more than on drive fails. Rebuilding or restoring takes a long time. | X     | X                 | X          |
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
-| 6     | 4              | This is an enhanced RAID 5 that can survive up to 2 drive failures.            | Refer to RAID 5 drawbacks.                                                                                                 | X     | X                 | X          |
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
-| 10    | 4              | This uses both RAID 1 and 0 together.                                          | Requires more physical drives. Rebuilding or restoring a RAID 10 will require downtime.                                    | X     | X                 | X          |
-+-------+----------------+--------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+-------+-------------------+------------+
+.. csv-table::
+   :header: RAID Level, Minimum Drivers, Speed, Redundancy, Increated Storage, Description
+   :widths: 20, 20, 20, 20, 20, 20
+
+   0, 2, Yes, No, Yes, "I/O operations are equally spread to each disk."
+   1, 2, No, Yes, No, "If one drive fails, a second drive will have an exact copy of all of the data. Slower write speeds."
+   5, 3, Yes, Yes, Yes, "This can recover from a failed drive without any affect on performance. Drive recovery takes a long time and will not work if more than on drive fails."
+   6, 4, Yes, Yes, Yes, "This is an enhanced RAID 5 that can survive up to 2 drive failures."
+   10, 4, Yes, Yes, Yes, "This uses both RAID 1 and 0 together. Requires more physical drives. Rebuilding or restoring a RAID 10 will require downtime."
 
 [10]
 

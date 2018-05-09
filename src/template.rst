@@ -32,6 +32,8 @@ Common options [2]:
 Header 3
 ~~~~~~~~
 
+RST grid table:
+
 +----------+----------+----------+
 | Column 1 | Column 2 | Column 3 |
 +==========+==========+==========+
@@ -41,6 +43,16 @@ Header 3
 +----------+----------+----------+
 | ghi      | 789      | C3       |
 +----------+----------+----------+
+
+RST comma separated value (CSV) table:
+
+.. csv-table::
+   :header: Name, Description, Enabled
+   :widths: 20, 20
+
+   Example, "There is a comma , in this sentence.", True
+   Another Example, 123456, False
+   Example #3, This is a long setence with no commas., True
 
 Header 4
 ^^^^^^^^

@@ -80,25 +80,19 @@ Python automatically guesses what data type a variable should be used
 when it is defined. The datatype a variable is using can be found using
 the ``type()`` function.
 
-+----------+------------+----------------------------------------------------------------------------------+
-| Function | Name       | Description                                                                      |
-+==========+============+==================================================================================+
-| chr      | character  | One alphanumeric character.                                                      |
-+----------+------------+----------------------------------------------------------------------------------+
-| str      | string     | One or more characters.                                                          |
-+----------+------------+----------------------------------------------------------------------------------+
-| int      | integer    | A whole number.                                                                  |
-+----------+------------+----------------------------------------------------------------------------------+
-| float    | float      | A decimal number.                                                                |
-+----------+------------+----------------------------------------------------------------------------------+
-| boolean  | boolean    | a true or false value; this can be a “1” or “0”, or it can be “True” or “False." |
-+----------+------------+----------------------------------------------------------------------------------+
-| list     | list       | A list of multiple variables that is similar to an array.                        |
-+----------+------------+----------------------------------------------------------------------------------+
-| dict     | dictionary | An array of arrays.                                                              |
-+----------+------------+----------------------------------------------------------------------------------+
-| tuple    | tuple      | A read-only list that cannot be modified.                                        |
-+----------+------------+----------------------------------------------------------------------------------+
+.. csv-table::
+   :header: Function, Name, Description
+   :widths: 20, 20, 20
+
+   chr, Character, One alphanumeric character.
+   str, String, One or more characters.
+   int, Integer, A whole number.
+   float, Float, A decimal number.
+   bool, Boolean, "A true or false value. This can be a ``1`` or ``0``, or it can be ``True`` or ``False``."
+   list, List, An array of values of any data type. This is more flexbile than an array.
+   tuple, Tuple, "A read-only list that cannot be modified."
+   arr, Array, A collection of values that have the same data type. This is more memory efficent than a list.
+   dict, Dictionary, "An array of arrays (nested arrays)."
 
 Variables defined outside of a function are global variables. Although
 this practice is discouraged, these can be referenced using the
@@ -147,47 +141,38 @@ Conditionals
 Control and Operators
 ~~~~~~~~~~~~~~~~~~~~~
 
-+---------------------+---------------------------+
-| Comparison Operator | Description               |
-+=====================+===========================+
-| ==                  | Equal to.                 |
-+---------------------+---------------------------+
-| !=                  | Not equal to.             |
-+---------------------+---------------------------+
-| >                   | Greater than.             |
-+---------------------+---------------------------+
-| <                   | Lesser than.              |
-+---------------------+---------------------------+
-| \>=                 | Greater than or equal to. |
-+---------------------+---------------------------+
-| <=                  | Lesser than or equal to.  |
-+---------------------+---------------------------+
+.. csv-table::
+   :header: Comparison Operator, Description
+   :widths: 20, 20
 
-+-------------------+----------------------------------------------------------------+
-| Identity Operator | Description                                                    |
-+===================+================================================================+
-| is                | Compares two memory addresses to see if they are the same.     |
-+-------------------+----------------------------------------------------------------+
-| is not            | Compares two memory addresses to see if they are not the same. |
-+-------------------+----------------------------------------------------------------+
+   "==", Equal to.
+   "!=", Not equal to.
+   ">", Greater than.
+   "<", Less than.
+   ">=", Greater than or equal to.
+   "<=", Lesser than or equal to.
 
-+------------------+------------------------------------+
-| Logical Operator | Description                        |
-+==================+====================================+
-| and              | All booleans must be true.         |
-+------------------+------------------------------------+
-| or               | At least one boolean must be true. |
-+------------------+------------------------------------+
-| not              | No booleans can be true.           |
-+------------------+------------------------------------+
+.. csv-table::
+   :header: Identity Operator, Description
+   :widths: 20, 20
 
-+---------------------+------------------------------------------------------------------------------------------+
-| Membership Operator | Description                                                                              |
-+=====================+==========================================================================================+
-| in                  | The first variable needs to exist as at least a substring or key in the second variable. |
-+---------------------+------------------------------------------------------------------------------------------+
-| not in              | The first variable must not be in the second variable.                                   |
-+---------------------+------------------------------------------------------------------------------------------+
+   is, Compares two memory addresses to see if they are the same.
+   is not, Compares two memory addresses to see if they are not the same.
+
+.. csv-table::
+   :header: Logical Operator, Description
+   :widths: 20, 20
+
+   and, All booleans must be true.
+   or, At least one boolean must be true.
+   not, No booleans can be true.
+
+.. csv-table::
+   :header: Membership Operator, Descriptoin
+   :widths: 20, 20
+
+   in, The first variable needs to exist as at least a substring or key in the second variable.
+   not in, The first variable must not be in the second variable.
 
 [3]
 

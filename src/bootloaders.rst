@@ -118,15 +118,13 @@ Configuration
 
 Important files:
 
-+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| FILE                | DESCRIPTION                                                                                                                                     |
-+=====================+=================================================================================================================================================+
-| /etc/default/grub   | GRUB default settings.                                                                                                                          |
-+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| /etc/grub.d/        | A folder with various scripts that make up the grub.cfg. Scripts prefixed with lower numbers are executed first.                                |
-+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| /boot/grub/grub.cfg | This is automatically generated using the settings from /etc/default/grub and the scripts in /etc/grub.d/ . Manual changes may get overwritten. |
-+---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+.. csv-table::
+   :header: File, Description
+   :widths: 20, 20
+
+   "/etc/default/grub", "Default GRUB settings."
+   "/etc/grub.d/", "A folder with various scripts that make up the grub.cfg. Scripts prefixed with lower numbers are executed first."
+   "/boot/grub/grub.cfg", "This is automatically generated using the settings from /etc/default/grub and the scripts in /etc/grub.d/ . Manual changes may get overwritten."
 
 Common options:
 
