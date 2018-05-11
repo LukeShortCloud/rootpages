@@ -48,7 +48,7 @@ RST comma separated value (CSV) table:
 
 .. csv-table::
    :header: Name, Description, Enabled
-   :widths: 20, 20
+   :widths: 20, 20, 20
 
    Example, "There is a comma , in this sentence.", True
    Another Example, 123456, False
