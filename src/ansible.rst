@@ -987,11 +987,17 @@ Syntax:
 
     check_mode: no
 
-Example:
+Examples:
 
 .. code-block:: yaml
 
-    - name: Install the EPEL repository
+    - name: Updating the operating system
+      yum:
+        name: "*"
+        state: latest
+      check_mode: no
+
+    - name: Installing the EPEL repository
       yum:
         name: epel-release
         state: latest
