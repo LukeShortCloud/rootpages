@@ -57,14 +57,13 @@ Common mount options:
    turn on TRIM support.
 -  discard = Enables TRIM support. [5]
 
-Btrfs RAIDs
+RAIDs
+^^^^^
+
+In the latest Linux kernels, all Btrfs software RAID types (0, 1, 5, 6, and 10) are supported. [6]
+
+Limitations
 ^^^^^^^^^^^
-
-In the latest Linux kernels, all RAID types (0, 1, 5, 6, and 10) are
-supported. [6]
-
-Btrfs Limitations
-^^^^^^^^^^^^^^^^^
 
 Known limitations:
 
@@ -75,12 +74,12 @@ Known limitations:
 
    -  For freeing up space, run a block-level and then a file-level
       defragmentation. Then the disk space usage should be accurate to
-      df's output.
+      df's output. [7]
 
       -  ``$ sudo btrfs balance start /``
       -  ``$ sudo btrfs defragment -r /``
 
-[7]
+-  The ``btrfs-convert`` command used for converting an Ext3 or Ext4 filesystems to Btrfs was rewritten in btrfs-progs 4.6. Older versions of this may not work reliably. [29]
 
 ext4
 ~~~~
@@ -144,8 +143,8 @@ drives to create 1 logical drive.
 
 [10]
 
-RAIDs - mdadm
-~~~~~~~~~~~~~
+mdadm
+~~~~~
 
 Most software RAIDs in Linux are handled by the "mdadm" utility and the
 "md\_mod" kernel module. Creating a new RAID requires specifying the
@@ -1249,3 +1248,4 @@ Bibliography
 26. "USING LIBVIRT WITH CEPH RBD." Ceph Documentation. Accessed January 27, 2017. http://docs.ceph.com/docs/master/rbd/libvirt/
 27. "Secret XML." libvirt. Accessed January 27, 2017. https://libvirt.org/formatsecret.html
 28. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/
+29. "Btrfs." Fedora Project Wiki. March 9, 2017. Accessed May 11, 2018. https://fedoraproject.org/wiki/Btrfs
