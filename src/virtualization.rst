@@ -214,14 +214,13 @@ libvirt:
 Storage
 '''''''
 
-Raw disk partitions have the greatest speeds with the "virtio" driver
-and cache disabled.
+Raw disk partitions have the greatest speeds with the "virtio" driver, cache disabled, and the I/O mode set to "native." If a sparsely allocated storage device is used for the virtual machine (such as a thin-provisioned QCOW2 image) then the I/O mode of "threads" is preferred. This is because with "native" some writes may be temporarily blocked as the sparsely allocated storage needs to first grow before committing the write. [47]
 
 QEMU:
 
 .. code-block:: sh
 
-    $ sudo qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,if=virtio ...
+    $ sudo qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,aio=threads,if=virtio ...
 
 libvirt:
 
@@ -1216,3 +1215,4 @@ Bibliography
 44. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
 45. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
 46. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
+47. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
