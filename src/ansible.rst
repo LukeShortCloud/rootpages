@@ -4784,6 +4784,7 @@ Deployment inventory options:
    -  http\_proxy = A HTTP proxy to use.
    -  https\_proxy = A HTTPS proxy to use.
    -  no\_proxy = Websites that should not be proxied.
+   -  project\_data\_dir = A directory to share between the containers that stores local project playbooks.
 
 -  docker (build)
 
@@ -4813,12 +4814,11 @@ Deployment inventory options:
 
 Install:
 
-By default, AWX will install docker containers from Docker Hub. It is
-also possible to have the installer build docker containers from scratch
-an deploy them into a OpenShift cluster.
+By default, AWX will install docker containers from Docker Hub. It is also possible to have the installer build docker containers from scratch and deploy them into a OpenShift cluster.
 
 .. code-block:: sh
 
+    $ sudo systemctl start docker
     $ git clone https://github.com/ansible/awx.git
     $ cd ./awx/installer/
     $ sudo ansible-playbook -i inventory install.yml
