@@ -482,16 +482,17 @@ possible to use separate kernels with this approach.
 docker
 ^^^^^^
 
-The docker software (with a lowercase "d") was created by the Docker
-company to manage and create containers using the LXC kernel module on
-Linux.
+The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.
 
-A command is run to start a daemon in the container. As long as that
-process is still running in the foreground, the container will remain
-active. Some processes may spawn in the background. A workaround for
-this is to append ``&& tail -f /dev/null`` to the command. If the daemon
-successfully starts, then a never-ending task can be run instead (such
-as viewing the never ending file of /dev/null). [16]
+A command is ran to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append ``&& tail -f /dev/null`` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [16]
+
+By default, only the "root" user has access to manage docker containers. Users assigned to a "docker" group will have the necessary privileges. However, they will then have administrator access to the system. If the "docker" group is newly created then the daemon needs to be restarted for the change to load up. The docker user may also have to run the ``newgrp docker`` command to reload their groups. [48]
+
+.. code-block:: sh
+
+    $ sudo groupadd docker
+    $ sudo usermod -a -G docker <USER>
+    $ sudo systemctl restart docker
 
 Networking
 ''''''''''
@@ -1216,3 +1217,4 @@ Bibliography
 45. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
 46. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
 47. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
+48. "Getting started with Docker." Fedora Developer Portal. Accessed May 16, 2018. https://developer.fedoraproject.org/tools/docker/docker-installation.html
