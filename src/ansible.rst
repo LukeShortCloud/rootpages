@@ -4776,9 +4776,7 @@ Deployment inventory options:
 
    -  default\_admin\_user = The administrator account's username.
    -  default\_admin\_password = The administrator account's password.
-   -  awx\_secret\_key = A string that is used as a private key kept on
-      all of the AWX nodes for encrypting and decrypting information
-      that goes to/from the PostgreSQL database.
+   -  secret\_key = A string that is used as a private key kept on all of the AWX nodes for encrypting and decrypting information that goes to/from the PostgreSQL database.
    -  pg\_username = The PostgreSQL username to use.
    -  pg\_password = The PostgreSQL password to use.
    -  pg\_database = The PostgreSQL database name.
@@ -4789,20 +4787,11 @@ Deployment inventory options:
 
 -  docker (build)
 
-   -  dockerhub\_base and dockerhub\_version = Comment out these
-      variables to build docker images from scratch instead of
-      downloading them from Docker Hub.
-   -  postgres\_data\_dir = The directory to store persistent PostgreSQL
-      data. By default, this is stored in the temporary file system at
-      ``/tmp/``.
-   -  host\_port = The local HTTP port that docker should bind to for
-      the AWX dashboard.
-   -  use\_container\_for\_build = Use a container to deploy the other
-      container. This keeps dependencies installed for installation in
-      the container instead of the local system.
-   -  awx\_official = Use the official AWX logos. The `awx-logos GitHub
-      project <https://github.com/ansible/awx-logos>`__ will need to be
-      cloned in the directory that "awx" was also cloned into.
+   -  dockerhub\_base and dockerhub\_version = Comment out these variables to build docker images from scratch instead of downloading them from Docker Hub.
+   -  postgres\_data\_dir = The directory to store persistent PostgreSQL data. By default, this is stored in the temporary file system at ``/tmp/``.
+   -  host\_port = The local HTTP port that docker should bind to for the AWX dashboard.
+   -  use\_container\_for\_build = Use a container to deploy the other container. This keeps dependencies installed for installation in the container instead of the local system.
+   -  awx\_official = Use the official AWX logos. The `awx-logos GitHub project <https://github.com/ansible/awx-logos>`__ will need to be cloned in the directory that "awx" was also cloned into.
 
 -  docker (prebuilt)
 
@@ -4818,14 +4807,9 @@ Deployment inventory options:
    -  openshift\_password = The password used to connect to OpenShift.
    -  docker\_registry = The Docker Registry to connect to.
    -  docker\_registry\_repository = The Docker Repository to use.
-   -  docker\_registry\_username = The username to login into the Docker
-      Registry.
-   -  docker\_registry\_password = The password to login into the Docker
-      Registry.
-   -  awx\_openshift\_project = The name of the project to create and
-      use in OpenShift.
-   -  awx\_node\_port = The HTTP port to use inside of the AWX pod for
-      accessing the dashboard.
+   -  docker\_registry\_username = The username to login into the Docker Registry.
+   -  docker\_registry\_password = The password to login into the Docker Registry.
+   -  openshift\_project = The name of the project to create and use in OpenShift.
 
 Install:
 
