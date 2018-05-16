@@ -4844,9 +4844,9 @@ Manually stop:
 Upgrades
 ^^^^^^^^
 
-AWX is the unstable development version of Ansible Tower. **Major version upgrades are not supported** (for example, going from 1.0.4 to 1.0.5). [60] Work is being done in the `tower-cli <https://github.com/ansible/tower-cli>`__ project to allow backing up and restoring configurations in AWX. Once that work is done, it will be the most reliable way to attempt an upgrade. [61] It is still possible to attempt updating the service containers.
+AWX is the unstable development version of Ansible Tower. Rolling upgrades are not supported. [60] The recommended way to upgrade is to use the `tower-cli <https://github.com/ansible/tower-cli>`__ command to backup and restore the AWX data. This method can also be used to migrate from AWX to Ansible Tower or vice versa. [61]
 
-Take note of the AWX version. This can be seen through the dashboard or API. If AWX was installed using the GitHub source code and Docker Compose, the version can be found from the Git description.
+Take note of the AWX version. This can be seen through the dashboard (use the "About" button) or API (perform a GET on ``/api/v2/ping``). If AWX was installed using the GitHub source code and Docker Compose, the version can be found from the Git description. This shows how many commits the "devel" branch is ahead of the last tagged release.
 
 .. code-block:: sh
 
@@ -4864,16 +4864,37 @@ If there are issues with the update, then revert the docker images to their orig
 
     $ docker exec postgres sh -c "pg_restore -U awx -C -d awx /var/lib/postgresql/data/awx_backup.sql"
 
+Configure ``tower-cli`` with admin credentials to the existing AWX deployment. These settings are saved to ``$HOME/.tower_cli.cfg``.
+
+.. code-block:: sh
+
+    $ tower-cli config host http://<HOSTNAME>
+    $ tower-cli config username <USERNAME>
+    $ tower-cli config password <PASSOWRD>
+    $ tower-cli config verify_ssl False
+
+Backup the AWX data. This will include all of the information except for logs, credential secrets, authentication settings, and AWX settings. [65]
+
+.. code-block:: sh
+
+    $ tower-cli receive --all > awx_data_backup.json
+
+Delete the old containers. Refer to the ``Uninstall`` section for more details.
+
 Compare the latest "installer/inventory" file with the existing inventory file. Some settings may have changed that need to be updated.
 
-Update AWX by re-running the installer Playbook from the latest clone of the GitHub repository clone. The default installation settings for using Docker Hub will download the latest images.
+Reinstall AWX using the installer.yml playbook from the latest clone of the GitHub repository. The default installation settings for using Docker Hub will download the latest images. [59]
 
 .. code-block:: sh
 
     $ git clone https://github.com/ansible/awx
-    $ ansible-playbook -i inventory awx/installer/install.yml
+    $ sudo ansible-playbook -i inventory awx/installer/install.yml
 
-[59]
+Restore the data. [65]
+
+.. code-block:: sh
+
+    $ tower-cli send awx_data_backup.json
 
 Uninstall
 ^^^^^^^^^
@@ -4882,7 +4903,7 @@ Stop and delete the AWX docker containers.
 
 .. code-block:: sh
 
-    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; docker rm ${docker_container}; done
+    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; docker rm -f ${docker_container}; done
 
 The "postgres_data_dir" directory, as defined in the inventory file, will need to be manually deleted.
 
@@ -5033,3 +5054,4 @@ Bibliography
 62. "Lookup Plugins." Ansible Documention. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
 63. "Release and maintenance." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/2.5/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
+65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
