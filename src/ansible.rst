@@ -104,7 +104,7 @@ Configuration files:
 
 Common settings:
 
--  [default]
+-  [defaults]
 
    -  ansible\_managed = String. The phrase that will be assigned to the
       ``{{ ansible_managed }}`` variable. This should generally reside
@@ -3285,7 +3285,7 @@ Syntax:
 
 Example:
 
-.. code-block:: yaml
+::
 
     - name: Installing only the critical Windows updates
       win_updates:
@@ -4363,37 +4363,29 @@ statistics.
 Ansible Tower 3
 ~~~~~~~~~~~~~~~
 
-Ansible Tower is the official dashboard maintained by Red Hat. The
-program requires PostgreSQL, Python, and RabbitMQ. A free trial of it
-can be used to manage up to 10 servers for testing purposes only. A
-license can be bought to use Tower for managing more servers and to
-provide support.
+Ansible Tower is the official dashboard maintained by Red Hat. The program is built using Python and uses RabbitMQ for clustering and PostgreSQL for storing it's data. PostgreSQL is used for the database back-end because it is one of the few relational databases that supports storing and accessing JSON formatted data.
 
-Ansible Tower 3.1 Requirements:
+Ansible Tower 3.1 requirements and support:
 
--  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
+-  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, or Ubuntu 16.04
 
    -  Support for RHEL 6 was dropped in 3.1.0
 
 -  Ansible >= 2.1
 -  PostgreSQL 9.4
+-  Release date: 2017-02-28
+-  End-of-life (EOL): 2018-10-02 [66]
 
-Ansible Tower 3.2 Requirements:
+Ansible Tower 3.2 (~= AWX 1.0.0) requirements and support:
 
--  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, and Ubuntu 16.04
+-  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, or Ubuntu 16.04
 -  Ansible >= 2.3
 -  Access to some inventory sources, including Azure, requires >= 2.4.
 -  PostgreSQL 9.6
+-  Release date: 2017-10-02
+-  End-of-life (EOL): 2019-04-02 [66]
 
-Tower can be downloaded from http://releases.ansible.com/ansible-tower/.
-The "setup" package only contains Ansible Tower. The "setup-bundle" has
-all of the dependencies for offline installation on RHEL servers. At
-least a free trial license will be required to use the software which
-can be obtained from the `Ansible Tower license
-page <https://www.ansible.com/license>`__.
-
-Once downloaded, it can be installed. This will at least setup a Nginx
-server and a virtual host for serving Ansible Tower via HTTP.
+Tower can be downloaded from http://releases.ansible.com/ansible-tower/. The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for an offline installation on RHEL servers. At least a free trial of Tower can be used to manage up to 10 servers for testing purposes only. A license can be bought from Red Hat to use Tower for managing more servers and to provide customer support. A license can be obtained from the `Ansible Tower license page <https://www.ansible.com/license>`__.
 
 .. code-block:: sh
 
@@ -4401,20 +4393,13 @@ server and a virtual host for serving Ansible Tower via HTTP.
     $ tar -x -z -v -f ansible-tower-setup-latest.tar.gz
     $ cd ./ansible-tower-setup-3.*/
 
-At a bare minimum for 1 node Ansible Tower installation, the passwords
-to use for the various services need to be defined in the ``inventory``
-file.
+At a bare minimum for 1 node Ansible Tower installation, the passwords to use for the various services need to be defined in the ``inventory`` file or a separate variables file that is encrypted using Ansible Vault.
 
 -  admin\_password
 -  pg\_password
 -  rabbitmq\_password
 
-Ansible Tower supports clustering. This requires that the PostgreSQL
-service is configured on a dedicated server that is not running Ansible
-Tower. The Playbook that installs Tower can install PostgreSQL or use
-credentials to an existing server. The PostgreSQL user for Ansible Tower
-also requires ``CREATEDB`` access during the initial installation to
-setup the necessary database and tables.
+Ansible Tower supports clustering. This requires that the PostgreSQL service is configured on a dedicated server that is not running Ansible Tower. The Playbook that installs Tower can install PostgreSQL or use credentials to an existing server. The PostgreSQL user for Ansible Tower also requires ``CREATEDB`` access during the initial installation to setup the necessary database and tables.
 
 -  Installing PostgreSQL:
 
@@ -4470,14 +4455,6 @@ setup the necessary database and tables.
     ## are used in the inventory file. Otherwise this should
     ## be "False"
     rabbitmq_use_long_name="True"
-
-The "ansible" package needs to be available in a package repository. On
-RHEL systems, the Extra Packages for Enterprise Linux (EPEL) repository
-should be installed.
-
-.. code-block:: sh
-
-    $ sudo yum -y install epel-release
 
 Then install Ansible Tower using the setup shell script. This will run
 an Ansible Playbook to install Tower.
@@ -5055,3 +5032,4 @@ Bibliography
 63. "Release and maintenance." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/2.5/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
+66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. March 27, 2018. Accessed May 22, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
