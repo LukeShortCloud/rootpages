@@ -1074,28 +1074,28 @@ Example:
 Handlers and Notify
 ^^^^^^^^^^^^^^^^^^^
 
-The ``notify`` function will run a handler defined in the
-``handlers/main.yml`` file within a role if the state of the module it's
-tied to changes. Optionally, a "listen" directive can be given to
-multiple handlers. This will allow them all to be executed at once (in
-the order that they were defined). Handlers cannot have the same name,
-only the same listen name. This is useful for checking if a
-configuration file changed and, if it did, then restart the service.
+The ``notify`` function will run a handler which is typically defined in the ``handlers/main.yml`` file within a role. It will only run if the the state of the module it's tied to changes. By default the handler will listen on a "name" if it is specified. Otherwise, a explicit "listen" directive can be given to multiple handlers. This will allow them all to be executed at once (in the order that they were defined). Handlers cannot have the same name, only the same listen name. This is useful for checking if a configuration file changed and, if it did, then restart the service.
 
-Handlers only execute when a Playbook successfully completes. For
-executing handlers sooner, refer to the "meta" main module's
-documentation.
+Handlers only execute when a Playbook successfully completes. For executing handlers sooner, refer to the "meta" main module's documentation.
 
-Syntax (handlers/main.yml):
+Syntax #1 (Playbook handler):
 
 .. code-block:: yaml
 
     handlers:
-      - name: <HANDLER_NAME>
+      - name: <TASK_DESCRIPTION>
         <MODULE>: <ARGS>
         listen: <LISTEN_HANDLER_NAME>
 
-Syntax (tasks/main.yml):
+Syntax #2 (Role handler file = handlers/main.yml):
+
+.. code-block:: yaml
+
+    - name: <TASK_DESCRIPTION>
+      <MODULE>: <ARGS>
+      listen: <LISTEN_HANDLER_NAME>
+
+Syntax (Tasks):
 
 .. code-block:: yaml
 
@@ -1103,7 +1103,7 @@ Syntax (tasks/main.yml):
       notify:
         - <HANDLER_NAME>
 
-Example (handlers/main.yml):
+Example #1 (Playbook handler):
 
 .. code-block:: yaml
 
@@ -1124,7 +1124,27 @@ Example (handlers/main.yml):
           state: restarted
         listen: "restart stack"
 
-Example (tasks/main.yml):
+Example #2 (Role handler file):
+
+.. code-block:: yaml
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      listen: "restart stack"
+    - name: restart php-fpm
+      service:
+        name: php-fpm
+        state: restarted
+      listen: "restart stack"
+    - name: restart mariadb
+      service:
+        name: mariadb
+        state: restarted
+      listen: "restart stack"
+
+Example (Tasks):
 
 .. code-block:: yaml
 
