@@ -6,16 +6,9 @@ Ansible
 Introduction
 ------------
 
-Ansible is a simple utility for automating system administration tasks
-via SSH for UNIX-like operating systems. The only requirements are a SSH
-connection from a control node to a managed node and Python on both
-nodes. Ansible uses YAML syntax and does not require any knowledge of
-programming. [1]
+Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
 
-There is also support for Windows modules. Ansible is executed on a
-control node that runs on Linux, using Python. A remote connection to
-WinRM (via HTTPS, by default) is made and then modules are executed
-remotely using PowerShell commands. [33]
+There is also support for Windows modules. Ansible is executed on a control node that runs on Linux, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed remotely using PowerShell commands. [31]
 
 Starting with Ansible 2.4, it has a 1 year life cycle. The first 4 months of the release get general bug and security updates, the next 4 months get general bug and security updates, and the last 4 months only get major bug and security updates. [63]
 
@@ -30,7 +23,7 @@ Official documentation:
 Editions
 ~~~~~~~~
 
-There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. [42]
+There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. [40]
 
 Installation
 ------------
@@ -80,9 +73,7 @@ Ansible RPMs are available from:
 
 [18]
 
-For managing Windows servers, the "winrm" Python library is required on
-the Ansible control node. The remote Windows servers need PowerShell >=
-3.0 installed and WinRM enabled. [33]
+For managing Windows servers, the "winrm" Python library is required on the Ansible control node. The remote Windows servers need PowerShell >= 3.0 installed and WinRM enabled. [31]
 
 Configuration
 -------------
@@ -187,7 +178,7 @@ Common settings:
    -  ansible\_ssh\_executable = String. Default: ssh (found in the
       $PATH environment variable). The path to the ``ssh`` binary.
 
-[29]
+[27]
 
 Python 3
 ~~~~~~~~
@@ -373,13 +364,13 @@ modules and Playbooks.
       -  forks = The number of parallel processes that are spun up for
          remote connections. The default is 5. This should be increased
          to a larger number to handle . The recommended number is
-         ``forks = (processor_cores * 5)``. [35]
+         ``forks = (processor_cores * 5)``. [33]
       -  pipelining = Enable pipelining to bundle commands together that
          do not require a file transfer. This is disabled by default
          because most sudo users are enforced to use the ``requiretty``
-         sudo option that pipelining is incompatible with. [28]
+         sudo option that pipelining is incompatible with. [26]
       -  gathering = Set this to "explicit" to only gather the necessary
-         facts when/if they are required by the Playbook. [29]
+         facts when/if they are required by the Playbook. [27]
 
 Fact caching will help to cache host information. By only gathering the
 setup facts information once, this helps to speed up execution time if
@@ -979,7 +970,7 @@ Examples:
         ignore_errors: "{{ ansible_check_mode }}"
 
 In Ansible 2.2, the ``check_mode`` module can be forced to run during a
-check mode. [31]
+check mode. [29]
 
 Syntax:
 
@@ -1358,7 +1349,7 @@ Example (site.yml):
       roles:
         - gitlab
 
-[38]
+[36]
 
 Tags
 ^^^^
@@ -2023,7 +2014,7 @@ Prompts
 
 Prompts can be used to assign a user's input as a variable. [9] Note
 that this module is not compatible with Ansible Tower and that a Survey
-should be created within Tower instead. [40]
+should be created within Tower instead. [38]
 
 Common options:
 
@@ -2070,7 +2061,7 @@ Register
 
 The output of modules and commands can be saved to a variable.
 
-Variable return values [32]:
+Variable return values [30]:
 
 -  backup\_file = String. If a module creates a backup file, this is
    that file's name.
@@ -3204,7 +3195,7 @@ narrow it down.
 
     > Get-WindowsFeature -Name <PART_OF_A_NAME>*
 
-[39]
+[37]
 
 MSI
 '''
@@ -3623,7 +3614,7 @@ Galaxy
 
 Ansible Galaxy provides a way to easily manage remote Ansible Galaxy
 roles from https://galaxy.ansible.com/ and other software configuration
-management (SCM) sources. [27]
+management (SCM) sources. [25]
 
 .. code-block:: sh
 
@@ -3723,7 +3714,7 @@ Git with SSH example (useful for GitLab):
       version: 1.2.0
       scm: git
 
-[27]
+[25]
 
 Community Roles
 ^^^^^^^^^^^^^^^
@@ -3808,7 +3799,7 @@ Example:
             vlan: True
             bootproto: static
 
-[30]
+[28]
 
 Jinja2
 ------
@@ -4209,167 +4200,7 @@ Example:
 Python API
 ----------
 
-Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard such as the official AWX project. Using the direct Python libraries for Ansible is not recommended. [34]
-
-Containers
-----------
-
-Ansible Container
-~~~~~~~~~~~~~~~~~
-
-The `official Ansible Container
-project <https://docs.ansible.com/ansible-container/>`__ aims to allow
-Playbooks to be deployed directly to docker containers. This allows
-Ansible to orchestrate both infrastructure and applications.
-
-Install Ansible Container into a Python virtual environment. This helps
-to separate Python packages provided by the operating system's package
-manager. Source the "activate" file to use the new Python environment.
-[24]
-
-.. code-block:: sh
-
-    $ virtualenv ansible-container
-    $ source ansible-container/bin/activate
-    $ pip install -U pip setuptools
-    $ pip install ansible-container[docker,openshift]
-
--  Ansible Container directory structure:
-
-   -  container.yml = An Ansible file that mirrors Docker Compose syntax
-      is used to define how to create the docker container. Common
-      settings include the image to use, ports to open, commands to run,
-      etc.
-   -  ansible-requirements.txt = Python dependencies to install for
-      Ansible.
-   -  requirements.yml = Ansible dependencies to install from Ansible
-      Galaxy.
-   -  ansible.cfg = Ansible configuration for the container.
-
-Example ``container.yml``:
-
-.. code-block:: yaml
-
-    version: "2"
-    services:
-      web:
-        from: "centos:7"
-        ports:
-          - "80:80"
-        command: ["/usr/bin/dumb-init", "/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
-        dev_overrides:
-          environment:
-            - "DEBUG=1"
-
-All of the Docker Compose options as specified at
-https://docs.docker.com/compose/compose-file/.
-
-Common ``container.yml`` options:
-
--  version = The version of Docker Compose to use. Valid options are
-   ``1`` or ``2`` since Ansible Container 0.3.0.
-
-   .. code-block:: yaml
-
-       version: '2'
-
--  settings = Project configuration settings.
-
-   -  conductor\_base = The container to run Ansible from. This should
-      mirror the development environment used for Ansible Container.
-
-Example:
-
-      .. code-block:: yaml
-
-          settings:
-            conductor_base: centos:7
-
-   -  deployment\_output\_path = The directory mounted for placing the
-      generated Ansible Playbook(s). Default: ``./ansible-deployment``.
-   -  project\_name = The name of the Ansible project. By default, this
-      will use the name of the directory that the ``container.yml`` file
-      is in.
-
--  services = This is where one or more docker containers are defined. A
-   unique name should be provided to each different container. These
-   names are used as the hosts in the Playbook file.
-
-Syntax:
-
- .. code-block:: yaml
-
-   services:
-     <GROUP_OR_HOST>:
-
-Example:
-
-.. code-block:: yaml
-
-  services:
-    mysql:
-
--  from = The docker image to use for a service.
-
-Syntax:
-
-.. code-block:: yaml
-
-  from: "<IMAGE>:<VERSION>"
-
-Example:
-
-.. code-block:: yaml
-
-  from: "ubuntu:xenial"
-
--  roles = A list of Ansible roles to run on the container.
--  ports = The hypervisor port to bind to and the container port to
-      forward traffic to/from.
-
-Syntax:
-
-
-.. code-block:: yaml
-
-  ports: <DOCKER_PORT>:<HYPERVISOR_PORT>
-
-Example:
-
-
-.. code-block:: yaml
-
-  ports: "4444:443"
-
-
--  expose = Similar to `ports` but the port forwarding is only done on the hypervisor's localhost address.
--  links = Directly connect container networks for container-to-container traffic.
--  command = Specify a shell command, providing all of the arguments separated via a list. This is the default command run to start the container. If this command stops then the container will be stopped.
-
-Syntax:
-
-
-.. code-block:: yaml
-
-   command:
-     - <COMMAND>
-     - <ARGUMENT_1>
-     - <ARGUMENT_2>
-     - <ARGUMENT_3>
-
--  entrypoint = Specify a shell command to run before starting the main `command`. This allows for checks to ensure dependencies are running.
--  depends_on = The services/containers that this container requires before starting. This helps to start services in a specific sequence.
--  volumes = Define all of the bind mounts from the hypervisor to the docker container.
--  volumes\_from = Mount some or all all the same mounts that another container is using.
-
-The docker container(s) can be created after the ``container.yml`` file
-is completed to describe the container deployment.
-
-.. code-block:: sh
-
-    $ ansible-container build
-
-[25]
+Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard such as the official AWX project. Using the direct Python libraries for Ansible is not recommended. [32]
 
 Dashboards
 ----------
@@ -4512,7 +4343,7 @@ Cluster ports:
 -  15672/tcp = RabbitMQ dashboard.
 -  25672/tcp = External RabbitMQ port (Erlang communication between clustered nodes).
 
-[35][37]
+[33][35]
 
 GUI
 ^^^
@@ -4673,7 +4504,7 @@ SSL
 '''
 
 By default, Tower creates a self-signed SSL certificate to secure web
-traffic. [37] Most web browsers will mark this as an untrusted
+traffic. [35] Most web browsers will mark this as an untrusted
 connection. For using a different SSL that is trusted, the contents of
 these two files need to be replaced on each Tower node:
 
@@ -4781,13 +4612,13 @@ Version 2 of the API provides these endpoints:
         "workflow_job_nodes": "/api/v2/workflow_job_nodes/"
     }
 
-[36]
+[34]
 
 AWX
 ~~~
 
 AWX is the upstream and open source version of Ansible Tower released by
-Red Hat to the public on September 7, 2017. [41] The source code for the
+Red Hat to the public on September 7, 2017. [39] The source code for the
 project can be found in the
 `ansible/awx <https://github.com/ansible/awx>`__ repository on GitHub.
 
@@ -4979,7 +4810,7 @@ Installation:
 
 Semaphore will now be available at ``http://<SEMAPHORE_HOST>:3000``.
 
-[26]
+[24]
 
 Tensor
 ~~~~~~
@@ -5041,25 +4872,24 @@ Bibliography
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
 22. "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
 23. "Glossary." Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro\_installation.html
-24. "Ansible Container README." Ansible GitHub. October, 2016. Accessed November 19, 2016. https://github.com/ansible/ansible-container
-25. "Ansible Container." Ansible Documentation. June 3, 2017. Accessed June 3, 2017. http://docs.ansible.com/ansible-container/
-26. "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
-27. "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
-28. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
-29. "Configuration file." Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro\_configuration.html
-30. "network\_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network\_interface
-31. "Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_checkmode.html
-32. "Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common\_return\_values.html
-33. "Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro\_windows.html
-34. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
-35. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
-36. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
-37. "Ansible Tower Installation and Reference Guide." Ansible Documentation. February 20, 2018. Accessed March 2, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
-38. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
-39. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
-40. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
-41. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
-42. "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
+24. "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
+25. "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
+26. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
+27. "Configuration file." Ansible Documentation. April 17, 2017. Accessed April 20, 2017. http://docs.ansible.com/ansible/intro\_configuration.html
+28. "network\_interface." MartinVerges GitHub. January 24, 2017. Accessed April 4, 2017. https://github.com/MartinVerges/ansible.network\_interface
+29. "Check Mode ("Dry Run")." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_checkmode.html
+30. "Return Values." Ansible Documentation. April 17, 2017. Accessed April 18, 2017. http://docs.ansible.com/ansible/common\_return\_values.html
+31. "Windows Support." Ansible Documentation. August 4, 2017. Accessed August 10, 2017. http://docs.ansible.com/ansible/latest/intro\_windows.html
+32. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
+33. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
+34. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
+35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. February 20, 2018. Accessed March 2, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
+36. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
+37. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
+38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
+39. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
+40. "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
+
 43. "Ansible Python 3 Support." Ansible Documentation. September 12, 2017. Accessed September 14, 2017. http://docs.ansible.com/ansible/latest/python\_3\_support.html
 44. "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
 45. "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
