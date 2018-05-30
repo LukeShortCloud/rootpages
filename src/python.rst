@@ -271,6 +271,48 @@ Example:
 
 [5]
 
+Object Oriented Programming
+---------------------------
+
+Object oriented programming (OOP) is the concept of creating reusable methods inside of a class. One or more objects can be created from a class.
+
+Class syntax:
+
+::
+
+    class <ClassName>():
+
+Classes can optionally have a "``__init__``" method that is always ran when a new object is created from the class. This is useful for setting up variables and running other initalization methods if required.
+
+Class initalization syntax:
+
+::
+
+    class <ClassName>():
+
+        def __init__(self, <VARIABLE1>, <VARIABLE2>):
+            self.<VARIABLE1> = <VARIABLE1>
+            self.<VARIABLE2> = <VARIABLE2>
+
+Every method has to be defined to require at least the "self" variable which contains all of the local object variables.
+
+Method syntax:
+
+.. code-block:: python
+
+        def <method_name>(self):
+
+Using a class, multiple objects can be created and their methods called.
+
+Object invocation syntax:
+
+.. code-block:: python
+
+    <object1> = <ClassName>
+    <object1>.<method_name>()
+    <object2> = <ClassName>
+    <object2>.<method_name>()
+
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
 ---------------------------------------------------------------------------------
 
