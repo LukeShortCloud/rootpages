@@ -4476,17 +4476,13 @@ Ansible Tower supports clustering. This requires that the PostgreSQL service is 
     ## be "False"
     rabbitmq_use_long_name="True"
 
-Then install Ansible Tower using the setup shell script. This will run
-an Ansible Playbook to install Tower.
+Then install Ansible Tower using the setup shell script. This will run an Ansible Playbook to install Tower.
 
 .. code-block:: sh
 
-    $ sudo ./setup.sh
+    $ ./setup.sh
 
-When the installation is complete, Ansible Tower can be accessed by a
-web browser. If no SSL certificate was defined, then a self-signed SSL
-certificate will be used to encrypt the connection. The default username
-is "admin" and the password is defined in the ``inventory`` file.
+When the installation is complete, Ansible Tower can be accessed by a web browser. If no SSL certificate was defined, then a self-signed SSL certificate will be used to encrypt the connection. The default username is "admin" and the password is defined in the ``inventory`` file.
 
 ::
 
@@ -4511,10 +4507,10 @@ Ports:
 
 Cluster ports:
 
--  4369/tcp = Discovering other Ansible Tower nodes.
+-  4369/tcp = Discovering other Ansible Tower nodes (Erlang service: epmd).
 -  5672/tcp = Local RabbitMQ port.
--  25672/tcp = External RabbitMQ port.
 -  15672/tcp = RabbitMQ dashboard.
+-  25672/tcp = External RabbitMQ port (Erlang communication between clustered nodes).
 
 [35][37]
 
@@ -4577,6 +4573,41 @@ their account. This setting can be modified in the ``settings.py`` file.
 
     $ sudo vim /etc/tower/conf.d/settings.py
     AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
+
+Recovery
+^^^^^^^^
+
+Ansible Tower provides an official automated solution to backup and restorations of existing Tower clusters.
+
+Backup:
+
+.. code-block:: sh
+
+    ./setup.sh -b
+
+A backup creates a tar archive that is gzip compressed. A symlink is created from the latest backup to the link named "``tower-backup-latest.tar.gz``."
+
+Syntax - Restore:
+
+.. code-block:: sh
+
+    ./setup.sh -r
+
+Syntax - Restore a specific backup file:
+
+.. code-block:: sh
+
+    ./setup.sh -r -e "restore_backup_file=<BACKUP_FILE>"
+
+Example - Restore with a specific backup file:
+
+.. code-block:: sh
+
+    ./setup.sh -r -e "restore_backup_file=/backups/tower/tower-backup-2018-01-15-12:43:21.tar.gz"
+
+[67]
+
+The PostgreSQL database service can natively be configured for streaming replication feature. This is not supported by Red Hat. This replicates all data from the master node to a slave node. If the master node fails, a system administrator can manually set the slave node to be the new master. [68] `A community supported Ansible role <https://github.com/samdoran/ansible-role-postgresql-replication>`__ can be used to help automate the setup and usage of this.
 
 Security
 ^^^^^^^^
@@ -5053,3 +5084,5 @@ Bibliography
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
 66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. March 27, 2018. Accessed May 22, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
+67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
+68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
