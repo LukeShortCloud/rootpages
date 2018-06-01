@@ -32,5 +32,11 @@ Welcome to Root Pages!
    virtualization
    wine
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Linux Commands Table of Contents:
+
+   linux_commands/virtualization.rst
+
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
 
