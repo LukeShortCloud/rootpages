@@ -81,7 +81,7 @@ $ sphinx-build-3 -b <OUTPUT_FORMAT> src/ build/
 ```
 
 
-## Usage - Translations
+## Translations
 
 Root Pages can also be translated into a different language.
 
@@ -122,10 +122,9 @@ Recommended text editors:
 
 * Graphical User Interface (GUI):
     * [Atom](https://atom.io/) with these optional plugins:
-        * [sphinx-preview](https://atom.io/packages/sphinx-preview) (recommended). Hint: Open the rendered HTML preview page by pressing `CONTROL` + `ALT` + `o` together.
+        * [sphinx-preview](https://atom.io/packages/sphinx-preview). Hint: Open the rendered HTML preview page by pressing `CONTROL` + `ALT` + `o` together.
             * This requires the "brower-plus" plugin and that the current user have access to manage docker containers.
             * The ``docker`` container platform should be installed. The user running ``atom`` also needs privileges to manage docker containers.
-        * [rst-preview-pandoc](https://atom.io/packages/rst-preview-pandoc). Hint: Open the rendered HTML preview page with `CONTROL` + `SHIFT` + `e`.
         * [rst-snippets](https://atom.io/packages/rst-snippets). Hint: Create a generic Markdown or RST table outline and then press `CONTROL` + `ALT` + `t` together and then `ENTER` to automatically reformat it correctly.
 * Command-Line Interface (CLI):
     * [Vim](https://github.com/vim/vim) with this plugin:
