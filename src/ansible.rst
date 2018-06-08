@@ -661,8 +661,78 @@ Example:
 
 [5][22]
 
+Vault Encryption
+~~~~~~~~~~~~~~~~
+
+Any file in a Playbook can be encrypted. This is useful for storing
+sensitive username and passwords securely. A password is used to open
+these files after encryption. All encrypted files in a Playbook should
+use the same password.
+
+Vault Usage:
+
+-  Create a new encrypted file.
+
+   .. code-block:: sh
+
+       $ ansible-vault create <FILE>.yml
+
+-  Encrypt an existing plaintext file.
+
+   .. code-block:: sh
+
+       $ ansible-vault encrypt <FILE>.yml
+
+-  Viewing the contents of the file.
+
+   .. code-block:: sh
+
+       $ ansible-vault view <FILE>.yml
+
+-  Edit the encrypted file.
+
+   .. code-block:: sh
+
+       $ ansible-vault edit <FILE>.yml
+
+-  Change the password.
+
+   .. code-block:: sh
+
+       $ ansible-vault rekey <FILE>.yml
+
+-  Decrypt to plaintext.
+
+   .. code-block:: sh
+
+       $ ansible-vault decrypt <FILE>.yml
+
+Playbook Usage:
+
+-  Run a Playbook, prompting the user for the Vault password.
+
+   .. code-block:: sh
+
+       $ ansible-playbook --ask-vault-pass <PLAYBOOK>.yml
+
+-  Run the Playbook, reading the file for the vault password.
+
+   .. code-block:: sh
+
+       $ ansible-playbook --vault-password-file <PATH_TO_VAULT_PASSWORD_FILE> <PLAYBOOK>.yml
+
+[21]
+
+Dynamic
+~~~~~~~
+
+Dynamic inventory can be used to automatically obtain information about
+hosts from various infrastructure platforms and tools. Community
+provided scripts be be found here:
+https://github.com/ansible/ansible/tree/devel/contrib/inventory.
+
 Variables
-~~~~~~~~~
+---------
 
 Variables that Playbooks will use can be defined for specific hosts
 and/or groups. The file that stores the variables should reflect the
@@ -748,75 +818,25 @@ locations get overridden by anything above them.
 
 [5]
 
-Vault Encryption
-~~~~~~~~~~~~~~~~
+Magic Variables
+~~~~~~~~~~~~~~~
 
-Any file in a Playbook can be encrypted. This is useful for storing
-sensitive username and passwords securely. A password is used to open
-these files after encryption. All encrypted files in a Playbook should
-use the same password.
+Magic variables are variables that Ansible creates and manages outside of user-defined variables. Most of these exist with every playbook run.
 
-Vault Usage:
+-  ansible_check_mode = If the playbook is ran with ``--check`` mode to see if tasks will make any modifications.
+-  ansible_play_batch = The current hosts that are running, limited to only the hosts running from the ``serial`` size.
+-  ansible_play_hosts = The list of all of the (non-failed) hosts that the playbook ``hosts`` is set to use.
+-  ansible_inventory_sources = A list of all of the inventory files that are loaded.
+-  ansible_limit = The string of hosts defined by ``--limit`` that the playbook is currently limited to.
+-  ansible_run_tags = A list of tags that are defined by ``--tags`` that the playbook is running.
+-  ansible_forks = The number of forks that are set.
+-  ansible_skip_tags = A list of tags that are defined by ``--skip-tags`` that the playbook is skipping.
+-  hostvars = Access variables from another host. Example: ``hostvars['web01']['ansible_hostname']``.
+-  inventory_hostname = The hostname of the current host that is being used.
+-  groups = A list of all hosts and groups from the inventories that are loaded.
+-  group_names = A list of all of the groups that the current host is a part of.
 
--  Create a new encrypted file.
-
-   .. code-block:: sh
-
-       $ ansible-vault create <FILE>.yml
-
--  Encrypt an existing plaintext file.
-
-   .. code-block:: sh
-
-       $ ansible-vault encrypt <FILE>.yml
-
--  Viewing the contents of the file.
-
-   .. code-block:: sh
-
-       $ ansible-vault view <FILE>.yml
-
--  Edit the encrypted file.
-
-   .. code-block:: sh
-
-       $ ansible-vault edit <FILE>.yml
-
--  Change the password.
-
-   .. code-block:: sh
-
-       $ ansible-vault rekey <FILE>.yml
-
--  Decrypt to plaintext.
-
-   .. code-block:: sh
-
-       $ ansible-vault decrypt <FILE>.yml
-
-Playbook Usage:
-
--  Run a Playbook, prompting the user for the Vault password.
-
-   .. code-block:: sh
-
-       $ ansible-playbook --ask-vault-pass <PLAYBOOK>.yml
-
--  Run the Playbook, reading the file for the vault password.
-
-   .. code-block:: sh
-
-       $ ansible-playbook --vault-password-file <PATH_TO_VAULT_PASSWORD_FILE> <PLAYBOOK>.yml
-
-[21]
-
-Dynamic
-~~~~~~~
-
-Dynamic inventory can be used to automatically obtain information about
-hosts from various infrastructure platforms and tools. Community
-provided scripts be be found here:
-https://github.com/ansible/ansible/tree/devel/contrib/inventory.
+[4][69]
 
 Modules
 -------
@@ -4852,7 +4872,7 @@ Bibliography
 1. "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
 2. "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks\_intro.html
 3. "Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro\_inventory.html
-4. "Variables." Ansible Documentation. June 1, 2017. Accessed June 17, 2017. http://docs.ansible.com/ansible/playbooks\_variables.html
+4. "Variables." Ansible Documentation. May 31, 2018. Accessed June 7, 2018. http://docs.ansible.com/ansible/latest/user_guide/playbooks\_variables.html
 5. "Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks\_best\_practices.html
 6. "Commands modules." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
@@ -4916,3 +4936,4 @@ Bibliography
 66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. March 27, 2018. Accessed May 22, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
+69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
