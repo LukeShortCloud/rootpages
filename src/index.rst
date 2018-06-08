@@ -36,6 +36,7 @@ Welcome to Root Pages!
    :maxdepth: 1
    :caption: Linux Commands Table of Contents:
 
+   linux_commands/configuration_management.rst
    linux_commands/virtualization.rst
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
