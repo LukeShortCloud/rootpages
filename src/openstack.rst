@@ -1196,7 +1196,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
       .. code-block:: sh
 
-          $ sudo yum install 'https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)'
+          $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
           $ sudo tripleo-repos -b queens current
 
    -  Install the Undercloud environment deployment tools.
@@ -1295,8 +1295,18 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 Overcloud
 &&&&&&&&&
 
--  Download the prebuilt Overcloud image files from
-   https://images.rdoproject.org/
+-  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
+
+   .. code-block:: sh
+
+     $ mkdir images
+     $ cd images
+     $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/ironic-python-agent.tar
+     $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/overcloud-full.tar
+     $ tar -v -x -f ironic-python-agent.tar
+     $ tar -v -x -f overcloud-full.tar
+
+-  These files are extracted from the tar archives:
 
    -  ironic-python-agent.initramfs
    -  ironic-python-agent.kernel
@@ -1308,44 +1318,88 @@ Overcloud
 
    .. code-block:: sh
 
-       $ openstack overcloud image upload
+       $ openstack overcloud image upload --image-path /home/stack/images/
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75]
-
-    -  Virtual lab environment notes:
-
-        -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
-        -  Alternatively, VirtualBMC can be used to emulate IPMI with Libvirt. [76]
-
-.. code-block:: sh
-
-  $ sudo yum install -y python-virtualbmc
-  $ vbmc add <VM_NAME> --port <IPMI_PORT> --username admin --password password
-  $ vbmc start <VM_NAME>
-  $ echo "Verifying that IPMI now works."
-  $ ipmitool -I lanplus -U admin -P password -H 127.0.0.1 -p <IPMI_PORT> power on
-
--  Import the configuration that defines the Overcloud infrastructure
-   and have it introspected so it can be deployed:
+-  For using containers, the RDO DockerHub repository and containers must also be configured.
 
    .. code-block:: sh
 
-       $ openstack overcloud node import --introspect --provide instackenv.json
+     $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
 
-   -  Alternatively, automatically discover the available servers by
-      scanning IPMI devices via a CIDR range and using different IPMI
-      logins.
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75]
 
-      .. code-block:: sh
+   -  Virtual lab environment:
 
-          $ openstack overcloud node discover --range <CIDR> \
-          --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+      -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
+
+      -  Import the nodes.
+
+         .. code-block:: sh
+
+             $ openstack overcloud node import ~/instackenv.json
+             Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
+             Waiting for messages on queue 'tripleo' with no timeout.
+             2 node(s) successfully moved to the "manageable" state.
+             Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
+             Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+             $ openstack baremetal node list
+             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+             | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+             | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
+             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
+             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+
+      -  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines.
+
+         .. code-block:: sh
+
+             $ openstack overcloud node introspect --all-manageable --provide
+
+         .. code-block:: sh
+
+            $ openstack baremetal node list
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power on    | manageable         | False       |
+            | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power on    | manageable         | False       |
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+
+      -  When the "Power State" becomes "power off" and the "Provisioning State" becomes "available" then manually shutdown the virtual machines.
+
+   -  Physical environment:
+
+      -  Import the configuration that defines the Overcloud infrastructure
+         and have it introspected so it can be deployed:
+
+         .. code-block:: sh
+
+             $ openstack overcloud node import --introspect --provide instackenv.json
+
+         -  Alternatively, automatically discover the available servers by
+            scanning IPMI devices via a CIDR range and using different IPMI
+            logins.
+
+            .. code-block:: sh
+
+                $ openstack overcloud node discover --range <CIDR> \
+                --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+
+-  If the profile and/or boot option were not specified in the insackenv.json file then configure it now. Verify that the profiles have been applied.
+
+   .. code-block:: sh
+   
+       $ openstack baremetal node set --property capabilities='profile:control,boot_option:local' c1456e44-5245-4a4d-b551-3c6d6217dac4
+       $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' 9a277de3-02be-4022-ad26-ec4e66d97bd1
+       $ openstack overcloud profiles list --all
 
 -  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30]
 
    .. code-block:: sh
 
        $ openstack help overcloud deploy
+       $ openstack overcloud deploy --templates --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES> --control-flavor control --compute-flavor compute
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
