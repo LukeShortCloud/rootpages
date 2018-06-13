@@ -15,14 +15,8 @@ ReactOS and the Wine project. [2]
 Both projects are clean-room reversed engineered to prevent legal
 issues. [3]
 
-User
-----
-
-This user guide is aimed at explaining how to use Wine, and related
-tools, to run Windows programs on Linux.
-
 Environment Variables
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Environment variables can be set by using the "export" Linux shell
 command or specifying the variables before a Wine command.
@@ -121,6 +115,16 @@ The override can set to only run native, native then builtin, or builtin
 then native DLLs.
 
 [5]
+
+Frameworks
+----------
+
+Various different frameworks exist for helping to install Windows applications on UNIX-like systems. These normally use a combination of Wine, winetricks, and scripts to modify settings and configuraitons for specific Windows applications to work.
+
+-  `Lutris <https://lutris.net/>`__ = An open source gaming platform that helps with installing emulators and Windows applications. It uses JSON and YAML structures to define how to install applications using Python helper functions.
+-  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses Python helper functions inside of BASH scripts to define how to install an application.
+-  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = Uses a JSON structure to define dependencies and uses Java helper functions to assist with installating applications.
+-  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
 -------------------------------------------------------------------------------
