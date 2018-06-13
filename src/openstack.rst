@@ -1295,6 +1295,8 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 Overcloud
 &&&&&&&&&
 
+**Image Preperation**
+
 -  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
 
    .. code-block:: sh
@@ -1326,35 +1328,71 @@ Overcloud
 
      $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
 
+**Introspection**
+
 -  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75]
 
    -  Virtual lab environment:
 
       -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
 
+      -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface. Source: https://github.com/homeski/vagrant-openstack/tree/master/osp10
+
+         .. code-block:: sh
+
+             $ sudo virsh detach-interface ${VM_NAME} network --persistent --mac $(sudo virsh dumpxml ${VM_NAME} | grep -B4 vagrant-libvirt | grep mac | cut -d "'" -f2)
+
       -  Import the nodes.
 
-         .. code-block:: sh
+         -  Newton:
 
-             $ openstack overcloud node import ~/instackenv.json
-             Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
-             Waiting for messages on queue 'tripleo' with no timeout.
-             2 node(s) successfully moved to the "manageable" state.
-             Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
-             Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
-             $ openstack baremetal node list
-             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-             | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
-             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-             | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
-             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
-             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            .. code-block:: sh
 
-      -  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines.
+                $ openstack baremetal import --json instackenv.json
 
-         .. code-block:: sh
+         -  Queens [85]:
 
-             $ openstack overcloud node introspect --all-manageable --provide
+            .. code-block:: sh
+
+                $ openstack overcloud node import instackenv.json
+                Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
+                Waiting for messages on queue 'tripleo' with no timeout.
+                2 node(s) successfully moved to the "manageable" state.
+                Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
+                Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+                $ openstack baremetal node list
+                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+                | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+                | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
+                | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
+                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+
+      -  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
+
+         -  Newton:
+
+            .. code-block:: sh
+
+                $ openstack baremetal introspection bulk start
+
+         -  Queens [85]:
+
+            .. code-block:: sh
+
+                $ openstack overcloud node introspect --all-manageable --provide
+
+            .. code-block:: sh
+
+               $ openstack baremetal node list
+               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+               | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+               | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power on    | manageable         | False       |
+               | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power on    | manageable         | False       |
+               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+
+      -  When the "Power State" becomes "power off" and the "Provisioning State" becomes "available" then manually shutdown the virtual machines.
 
          .. code-block:: sh
 
@@ -1362,20 +1400,19 @@ Overcloud
             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
             | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-            | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power on    | manageable         | False       |
-            | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power on    | manageable         | False       |
+            | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power off   | available          | False       |
+            | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power off   | available          | False       |
             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-
-      -  When the "Power State" becomes "power off" and the "Provisioning State" becomes "available" then manually shutdown the virtual machines.
 
    -  Physical environment:
 
-      -  Import the configuration that defines the Overcloud infrastructure
-         and have it introspected so it can be deployed:
+      -  Import the configuration that defines the Overcloud infrastructure and have it introspected so it can be deployed.
 
-         .. code-block:: sh
+         -  Queens [85]:
 
-             $ openstack overcloud node import --introspect --provide instackenv.json
+            .. code-block:: sh
+
+                $ openstack overcloud node import --introspect --provide instackenv.json
 
          -  Alternatively, automatically discover the available servers by
             scanning IPMI devices via a CIDR range and using different IPMI
@@ -1383,8 +1420,29 @@ Overcloud
 
             .. code-block:: sh
 
-                $ openstack overcloud node discover --range <CIDR> \
-                --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+                $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+
+-  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86]
+
+   .. code-block:: sh
+
+       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> control
+       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> compute
+
+-  Configure the kernel and initramfs that the baremetal nodes should boot from.
+
+   -  Newton:
+
+      .. code-block:: sh
+
+          $ openstack baremetal configure boot
+
+   -  Queens (optional) [85]:
+
+      .. code-block:: sh
+
+          $ openstack baremetal node list
+          $ openstack overcloud node configure <NODE_ID>
 
 -  If the profile and/or boot option were not specified in the insackenv.json file then configure it now. Verify that the profiles have been applied.
 
@@ -1393,22 +1451,58 @@ Overcloud
        $ openstack baremetal node set --property capabilities='profile:control,boot_option:local' c1456e44-5245-4a4d-b551-3c6d6217dac4
        $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' 9a277de3-02be-4022-ad26-ec4e66d97bd1
        $ openstack overcloud profiles list --all
+       +--------------------------------------+-----------+-----------------+-----------------+-------------------+-------+
+       | Node UUID                            | Node Name | Provision State | Current Profile | Possible Profiles | Error |
+       +--------------------------------------+-----------+-----------------+-----------------+-------------------+-------+
+       | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | available       | control         |                   |       |
+       | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | available       | compute         |                   |       |
+       +--------------------------------------+-----------+-----------------+-----------------+-------------------+-------
+
+**Deployment**
 
 -  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30]
 
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES> --control-flavor control --compute-flavor compute
+       $ openstack overcloud deploy --templates --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
    .. code-block:: sh
 
      $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
-     $ openstack overcloud deploy <DEPLOY_OPTIONS> -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml
+     $ openstack overcloud deploy --templates -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
 
--  Verify that the Overcloud was deployed.
+   -  Virtual lab environment:
+
+      -  When the "Provisioning State" becomes "wait call-back" then manually start the virtual machines. The relevant Overcloud image will be copied to the local drive(s).
+
+         .. code-block:: sh
+
+             $ openstack baremetal node list
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+             | UUID                                 | Name      | Instance UUID                        | Power State | Provisioning State | Maintenance |
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+             | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | 16a09779-b324-4d83-bc7d-3d24d2f4aa5d | power on    | wait call-back     | False       |
+             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | wait call-back     | False       |
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+
+      -  After that is complete, the virtual machines will power off. Ironic will report that the "Power State" is now "power on" and the Provisioning State" is now "active." Manually start the virtual machines now.
+
+         .. code-block:: sh
+
+             $ openstack baremetal node list
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+             | UUID                                 | Name      | Instance UUID                        | Power State | Provisioning State | Maintenance |
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+             | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | 16a09779-b324-4d83-bc7d-3d24d2f4aa5d | power on    | active             | False       |
+             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | active             | False       |
+             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+
+-  The rest of the deploy will continue and can take a few hours to complete.
+
+-  Verify that the Overcloud was deployed successfully.
 
    .. code-block:: sh
 
@@ -1421,7 +1515,7 @@ Overcloud
 
        $ source ~/overcloudrc
 
-[29]
+[29][84]
 
 Operations
 ''''''''''
@@ -3317,3 +3411,6 @@ Bibliography
 81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers\_deployment/undercloud.html
 82. "[TripleO Quickstart] Networking." TripleO Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html
 83. "Repository Enablement." OpenStack TripleO Documentation. May 5, 2018. Accessed May 7, 2018. https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/repositories.html
+84. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
+85. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
+86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
