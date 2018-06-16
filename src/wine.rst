@@ -122,9 +122,21 @@ Frameworks
 Various different frameworks exist for helping to install Windows applications on UNIX-like systems. These normally use a combination of Wine, winetricks, and scripts to modify settings and configuraitons for specific Windows applications to work.
 
 -  `Lutris <https://lutris.net/>`__ = An open source gaming platform that helps with installing emulators and Windows applications. It uses JSON and YAML structures to define how to install applications using Python helper functions.
--  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses Python helper functions inside of BASH scripts to define how to install an application.
+-  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4)
 -  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = Uses a JSON structure to define dependencies and uses Java helper functions to assist with installating applications.
 -  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
+
+PlayOnLinux 4
+~~~~~~~~~~~~~
+
+PlayOnLinux (PoL) uses Python helper functions inside of BASH scripts to define how to install an application. Windows applicaitons are installed into their own separate Wine prefixes so dependencies from one application does not interfere with those from another. All of the data that PoL handles is stored in ``$HOME/.PlayOnLinux/``.
+
+Important directories:
+
+* ``wine/linux-{amd64|x86}/<WINE_VERSION>/`` = Different versions of Wine are stored here.
+* ``wineprefix/`` = Isolated Wine prefixes for each game are stored here.
+
+`Versions of Wine from Lutris <https://lutris.net/files/runners/>`__ can be downloaded and extracted into the ``wine/linux-<ARCHITECTURE>/`` directory. These will become available for use in PlayOnLinux. Lutris builds stable, development, staging, and custom patched versions of Wine. [6]
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
 -------------------------------------------------------------------------------
@@ -137,3 +149,4 @@ Bibliography
 3. "Clean Room Guidelines." WineHQ. February 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Clean\_Room\_Guidelines
 4. "Wine User's Guide." WineHQ. September 15, 2017. Accessed October 29, 2017. https://wiki.winehq.org/Wine\_User%27s\_Guide
 5. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Debug\_Channels
+6. "Lutris Wine Versions." PlayOnLinux Forum. April 3, 2018. Accessed June 16, 2018. https://www.playonlinux.com/en/topic-15838-Lutris\_Wine\_Versions.html
