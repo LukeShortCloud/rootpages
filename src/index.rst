@@ -37,6 +37,7 @@ Welcome to Root Pages!
    :caption: Linux Commands Table of Contents:
 
    linux_commands/configuration_management.rst
+   linux_commands/software_code_management.rst
    linux_commands/virtualization.rst
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
