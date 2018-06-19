@@ -4474,14 +4474,11 @@ Security
 Authentication
 ''''''''''''''
 
-User authentication, by default, will store encrypted user information
-into the PostgreSQL database. Instead of using this, Tower can be
-configured to use an external authentication service by going into
-``Settings > CONFIGURE TOWER``. The available options are:
+User authentication, by default, will store encrypted user information into the PostgreSQL database. Instead of using this, Tower can be configured to use an external authentication service by going into ``Settings > CONFIGURE TOWER``. The enterprise authentication back-ends are not supported on trial or self-supported licenses.
 
 -  Social
 
-   -  GitHub
+   -  GitHub OAuth2
 
       -  GitHub [Users]
       -  GitHub Org[anization]
@@ -4927,7 +4924,7 @@ Bibliography
 49. "Creating Reusable Playbooks." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/playbooks\_reuse.html
 50. "Ansible Tower Quick Setup Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/quickstart/index.html
 51. "Ansible Tower User Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/index.html
-52. "Ansible Tower Administration Guide." Ansible Documentation. September 18, 2017. Accessed September 25, 2017. http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
+52. "Ansible Tower Administration Guide." Ansible Documentation. Accessed June 19, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
 53. "Blocks." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/playbooks\_blocks.html
 54. "Net Tools Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_net\_tools\_modules.html
 55. "System Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
