@@ -15,6 +15,7 @@ Welcome to Root Pages!
    bootloaders
    c_and_c++
    databases
+   devops
    clustering
    dns_servers
    file_systems
