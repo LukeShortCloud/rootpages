@@ -67,7 +67,7 @@ Updating source code installations:
 
 Ansible RPMs are available from:
 
--  The "extras" repository on (RHEL and Fedora)
+-  The "extras" repository (Fedora)
 -  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL and Fedora)
 -  The Ansible Engine repository rhel-7-server-ansible-2.5-rpms (RHEL)
 
