@@ -624,7 +624,7 @@ Install (Fedora):
 
 .. code-block:: sh
 
-    $ OPENSHIFT_VER=1.13.1
+    $ OPENSHIFT_VER=1.19.0
     $ wget https://github.com/minishift/minishift/releases/download/v${OPENSHIFT_VER}/minishift-${OPENSHIFT_VER}-linux-amd64.tgz
     $ tar -v -x -f minishift-${OPENSHIFT_VER}-linux-amd64.tgz
     $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
