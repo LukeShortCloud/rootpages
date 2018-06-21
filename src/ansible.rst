@@ -2233,9 +2233,8 @@ Copy, file, and template options:
 
 Copy options:
 
-remote\_src = If set to ``True``, the source file will be found on the
-server Ansible is running tasks on (not the local machine). The default
-is ``false``.
+-  content = Instead of providing a ``src`` file to copy, write the ``contents`` string to the file.
+-  remote\_src = If set to ``True``, the source file will be found on the server Ansible is running tasks on (not the local machine). The default is ``false``.
 
 File options:
 
