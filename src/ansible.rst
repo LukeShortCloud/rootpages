@@ -6,7 +6,7 @@ Ansible
 Introduction
 ------------
 
-Ansible is a simple utility for automating system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
+Ansible is a simple utility for automating configuration management and system administration tasks via SSH for UNIX-like operating systems. The only requirements are a SSH connection from a control node to a managed node and Python on both nodes. Ansible uses YAML syntax and does not require any knowledge of programming. [1]
 
 There is also support for Windows modules. Ansible is executed on a control node that runs on Linux, using Python. A remote connection to WinRM (via HTTPS, by default) is made and then modules are executed remotely using PowerShell commands. [31]
 
