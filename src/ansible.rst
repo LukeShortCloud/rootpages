@@ -1,5 +1,5 @@
-Ansible
-=======
+Ansible 2.6
+===========
 
 .. contents:: Table of Contents
 
