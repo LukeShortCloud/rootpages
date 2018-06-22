@@ -28,15 +28,13 @@ There are two editions of Ansible available. There is the upstream Ansible commu
 Installation
 ------------
 
-The Ansible community edition 2.4 requires Python 2.6, 2.7, or >= 3.5 on
-both the control and managed nodes. [1] Python 3 support is still in
-development but should be stable within the next few releases. [19]
+The Ansible community edition 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. [1] Python 3 support is stable and fully supported since the Ansible 2.5 release. [43]
 
-RHEL:
+Fedora:
 
 .. code-block:: sh
 
-    $ sudo yum install ansible
+    $ sudo dnf install ansible-python3
 
 Debian:
 
@@ -65,10 +63,10 @@ Updating source code installations:
     $ git pull --rebase
     $ git submodule update --init --recursive
 
-Ansible RPMs are available from:
+Ansible RPMs for Fedora bsaed operating systems are available from:
 
 -  The "extras" repository (Fedora)
--  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL and Fedora)
+-  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL/CentOS and Fedora)
 -  The Ansible Engine repository rhel-7-server-ansible-2.5-rpms (RHEL)
 
 [18]
@@ -4704,7 +4702,7 @@ Bibliography
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
 18. "Installation Guide." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/installation_guide/intro\_installation.html
-19. "Ansible 2.2.0 RC1 is ready for testing." Ansible Development Group. October 3, 2016. Accessed October 16, 2016. https://groups.google.com/forum/#!searchin/ansible-devel/python$203$20support%7Csort:relevance/ansible-devel/Ca07JSmyxIQ/YjFfbb8TAAAJ
+
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
 22. "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
@@ -4727,7 +4725,7 @@ Bibliography
 39. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
 40. "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
 
-43. "Ansible Python 3 Support." Ansible Documentation. September 12, 2017. Accessed September 14, 2017. http://docs.ansible.com/ansible/latest/python\_3\_support.html
+43. "Ansible Python 3 Support." Ansible Documentation. June 14, 2018. Accessed June 22, 2018. http://docs.ansible.com/ansible/latest/python\_3\_support.html
 44. "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
 45. "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
 46. "Files Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_files\_modules.html
