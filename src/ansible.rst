@@ -1794,52 +1794,17 @@ Examples:
 Loops
 ^^^^^
 
-Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is "``with_items``. All loops from Ansible <= 2.4 have been replaced by the "``loop``" keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Users will now have to use Jinja filters to sort through their variables. The logic and code all loops are located in the directory ``lib/ansible/plugins/lookup/``.
+Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is "``with_items``. All loops from Ansible <= 2.4 have been replaced by the "``loop``" keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Users will now have to use Jinja filters to sort through their variables. The logic and code all loops are located in the directory ``lib/ansible/plugins/lookup/``. Alternatively, all modules in Ansible >= 2.6 support passing a list variable as an argument value.
 
 Ansible >= 2.5 loops:
 
 -  `Loop <http://docs.ansible.com/ansible/2.5/user_guide/playbooks_loops.html#standard-loops>`__
 -  `Until <http://docs.ansible.com/ansible/2.5/user_guide/playbooks_loops.html#do-until-loops>`__
 
-Ansible <= 2.4 loops:
-
--  `Until <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#do-until-loops>`__
--  `WithDict[ionary] <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-hashes>`__
--  `With First
-   Found <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#finding-first-matched-files>`__
--  `With
-   Flattened <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#flattening-a-list>`__
--  `With
-   File <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-files>`__
--  `With
-   Fileglob <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#id4>`__
--  `With
-   Filetree <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-filetrees>`__
--  `With Indexed
-   Items <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-a-list-with-an-index>`__
--  `With
-   INI <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#using-ini-file-with-a-loop>`__
--  `With Inventory
-   Hostnames <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-the-inventory>`__
--  `With
-   Items <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#standard-loops>`__
--  `With
-   Lines <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#iterating-over-the-results-of-a-program-execution>`__
--  `With
-   Nested <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#nested-loops>`__
--  `With Random
-   Choice <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#random-choices>`__
--  `With
-   Sequence <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-integer-sequences>`__
--  `With
-   Subelements <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-subelements>`__
--  `With
-   Together <http://docs.ansible.com/ansible/2.4/playbooks_loops.html#looping-over-parallel-sets-of-data>`__
-
 Loop
 ''''
 
-Ansible 2.5 introduced a simpler keyword for loops called "loop" instead of the more complex name "with_items". This new loop directly replaces "with_list" and is used in substitution of all of the older ``with_*`` loops. This change was to put emphasis on the end-user to do the parsing of their variables with Jinja filters and lookups such as how Ansible <= 2.4 handles it in the back-end. This helps to make the code more readable.
+Ansible 2.5 introduced a simpler keyword for loops called "loop" instead of the more complex name "with_items". This new loop directly replaces "with_list" and is used in substitution of all of the older ``with_*`` loops. This change was to put emphasis on the end-user to do the parsing of their variables with Jinja filters and lookups such as how Ansible <= 2.4 handles it in the back-end. This helps to make the code more understandable.
 
 Syntax:
 
@@ -1860,169 +1825,17 @@ View the available Ansible Jinja lookups [62]:
     $ ansible-doc -t lookup -l
     $ ansible-doc -t lookup <JINJA_LOOKUP>
 
-With First Found
-''''''''''''''''
+Ansible provides a special ``lookup`` wrapper that works easier and with less user-provided options for loops. This Jinja function is ``query``.
 
-Multiple file locations can be checked to see what file exists. The
-first file found in a given list will be returned to the task. [10]
-
-Syntax:
-
-.. code-block:: yaml
-
-    with_first_round:
-      - <FILE1>
-      - <FILE2>
-      - <FILE3>
-
-Example:
-
-.. code-block:: yaml
-
-    - name: Copy over the first Nova configuration that is found
-      copy:
-        src: "{{ item }}"
-        dest: "/etc/nova/"
-        remote_src: True
-      with_first_found:
-       - "/root/nova.conf"
-       - "/etc/nova_backup/nova.conf"
-
-Flattened
-'''''''''
-
-Lists and dictionaries can be converted into one long string. This
-allows a task to run once with all of the arguments. This is especially
-useful for installing multiple packages at once. [10]
-
-Loop syntax:
-
-.. code-block:: yaml
-
-    with_flattened:
-       - <LIST_OR_DICT>
-       - <LIST_OR_DICT>
-
-Example:
-
-.. code-block:: yaml
-
-    - name: Setting the OpenStack client packages variable
-      set_fact:
-        openstack_client_packages:
-          - python2-cinderclient
-          - python2-glanceclient
-          - python2-keystoneclient
-          - python2-novaclient
-          - python2-neutronclient
-
-    - package:
-        name: "{{ item }}"
-        state: present
-      with_flattened:
-       - "{{ openstack_client_packages }}"
-       - python2-heatclient
-       - [ 'python2-manilaclient', 'python2-troveclient' ]
-
-In Ansible 2.5, this can be accomplished with the "flattened" lookup.
-
-Syntax:
-
-.. code-block:: yaml
-
-    "{{ lookup('flattened', <VARIABLE1>, <VARIABLE2>, <VARIABLE3>) }}"
-
-Example:
-
-.. code-block:: yaml
-
-
-    - name: Setting the OpenStack client packages variable
-      set_fact:
-        openstack_client_packages:
-          - python2-cinderclient
-          - python2-glanceclient
-          - python2-keystoneclient
-          - python2-novaclient
-          - python2-neutronclient
-
-    - name: Installing dependencies
-      package:
-        name: "{{ lookup('flattened', openstack_client_packages, ['python2-manilaclient', 'python2-troveclient'], 'python2-heatclient') }}"
-        state: present
-
-With Items
-''''''''''
-
-A task can be re-used with items in a list and/or dictionary. [10]
-
-Loop syntax:
-
-.. code-block:: yaml
-
-    with_items:
-      - <ITEM1>
-      - <ITEM2>
-      - <ITEM3>
-
-List variable syntax:
+Query syntax:
 
 ::
 
-    {{ item }}
-
-Dictionary variable syntax:
+    {{ query('<LOOKUP>', '<VARIABLE1>') }}
 
 ::
 
-    {{ item.<INDEX_STARTING_AT_0> }}
-
-::
-
-    {{ item.<KEY> }}
-
-List example:
-
-.. code-block:: yaml
-
-    - service:
-        name: "{{ item }}"
-        state: started
-        enabled: True
-      with_items:
-       - nginx
-       - php-fpm
-       - mysql
-
-Dictionary example:
-
-.. code-block:: yaml
-
-    - name: Creating new users
-      user:
-        name: "{{ item.name }}"
-        group: "{{ item.group }}"
-        password: "{{ item.2 }}"
-        state: present
-      with_items:
-       - { name: "bob", group: "colab", passwd: "123456" }
-       - { name: "sam", group: "colab", passwd: "654321" }
-
-With Pipe
-'''''''''
-
-Ansible <= 2.4 syntax:
-
-.. code-block:: yaml
-
-    with_pipe:
-      - "<COMMAND_TO_RUN>"
-
-Ansible 2.5 syntax:
-
-.. code-block:: yaml
-
-    loop: "{{ lookup('pipe', '<COMMAND_TO_RUN>').split() }}"
+    {{ query('<LOOKUP>', ['<VARIABLE1>', '<VARIABLE2>']) }}
 
 Variables
 ^^^^^^^^^
