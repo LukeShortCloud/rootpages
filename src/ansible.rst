@@ -404,10 +404,7 @@ Redis:
    -  [defaults]
 
       -  fact\_caching = redis
-
-         -  As of Ansible 2.3, there is still no way of defining a
-            custom IP and/or port of a Redis server. It is assumed to be
-            running on localhost with the default port.
+      -  fact\_caching\_connection = ``<HOST>:<PORT>``
 
 [4]
 
