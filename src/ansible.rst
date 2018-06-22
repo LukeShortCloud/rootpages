@@ -1077,6 +1077,16 @@ Example:
        - common
        - haproxy
 
+Common facts:
+
+-  ansible\_os\_family = The main distribution that the operating system is forked from. A full list of the mappings can be found in the ``OS_FAMILY_MAP`` variable `here <https://github.com/ansible/ansible/blob/stable-2.6/lib/ansible/module_utils/facts/system/distribution.py#L413>`__.
+
+   -  Archlinux = Archlinux, Antergos, Manjaro
+   -  Darwin = macOS
+   -  Debian = Debian, Ubuntu, Linux Mint, etc.
+   -  RedHat = RHEL, CentOS, Fedora, etc.
+   -  Windows = Windows, Windows Server, etc.
+
 Handlers and Notify
 ^^^^^^^^^^^^^^^^^^^
 
