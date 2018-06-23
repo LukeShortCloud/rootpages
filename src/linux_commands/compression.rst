@@ -1,0 +1,213 @@
+Compression
+===========
+
+.. contents:: Table of Contents
+
+bzip
+----
+
+bzip2
+~~~~~
+
+Package: bzip2
+
+Files with the ".bz2" extension are compressed.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-v", "verbosely display output", ""		
+
+cpio
+----
+
+cpio
+~~~~
+
+Package: cpio
+
+``cpio`` means copy input/output. This format is used for RPMs.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-id", "extract files AND directories", "rpm2cpio httpd.rpm | cpio -id"
+
+dtrx
+----
+
+dtrx
+~~~~
+
+Do the right extract (dtrx) is a universal compression utility for all formats. By default it runs in an interactive mode.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-m", "extract metadata from '.rpms', '.deb', or '.gem' packages", ""
+
+gzip
+----
+
+gzip
+~~~~
+
+Package: gzip
+
+Files with the ".gz" extension use gzip compression
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-d", "decompress a file", ""
+   "-r", "recursively compress files", ""
+   "-v", "verbosely display output", ""
+
+pigz
+~~~~
+
+``pigz`` provides automatic multi-threaded compression and decompression for ``gzip``. See ``gzip`` for possible arguments.
+
+rar
+---
+
+rar
+~~~
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-v", "verbosely display output", ""
+
+unrar
+~~~~~
+
+star
+----
+
+This archive tool provides the ability to retain special ACL permissions.
+
+star
+~~~~
+
+Package: star
+
+``star`` provides extra capabilities to ``tar`` that allow for properly storing various types of attributes.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-x", "extract", ""
+   "-v", "verbosely", ""
+   "-f=", "provide the full file path to the '.star' archive", ""
+   "-xattr", "preserve extended attributes such as SELinux permissions", ""
+
+tar
+---
+
+tar
+~~~
+
+Package: tar
+
+Files with the ".tar" extension are archived (not compressed).
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+   
+   "-x", "extracts a tar file", "tar -zcvf /home /root/home_backup.tar.gz"
+   "-k", "do not delete existing files", ""
+   "-c", "create a tar file", ""
+   "-f", "use archive file", ""
+   "-t", "lists files inside a tar file", ""
+   "-T", "specify a file of directory/file names to tar", ""
+   "-v", "verbosely display output", ""
+   "-z", "compresses the archive using gzip to make a .tar.gz file", ""
+   "-J", "uses xz compression", ""
+   "-C", "specify the directory to extract to", ""
+   "--selinux", "keep SELinux permissions", ""
+   "--acls", "keep ACLs", ""
+   "--xattrs", "keep extended attributes", ""
+
+xz
+--
+
+xz
+~~
+
+Package: xz
+
+Best for compressing text files (saves the most space).
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-z OR --compress", "compress files", ""
+   "-d OR --decompress", "decompress files", ""
+   "--threads 0", "use the number of hyperthreads available from the CPU for faster processing", ""
+   "-0", "fast compression, takes less time", ""
+   "-9", "high compression, takes longer"
+
+zip
+---
+
+jar
+~~~
+
+Package: java-openjdk
+
+Jar files are Java applications that are compressed using ``zip``.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "cf", "create a Jar archive", ""
+   "xf", "extract a Jar archive", ""
+
+zip
+~~~
+
+Packag: zip
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-v", "verbosely display output", ""
+   "-r", "recursively; for directories", "zip -r myarchivename /root/"
+
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/compression.rst>`__
+------------------------------------------------------------------------------------------------------
+
+Bibliography
+------------
+
+-  cpio
+
+   -  http://www.nextstep4it.com/linux-cpio-command-examples/
+
+-  dtrx
+
+   -  https://brettcsmith.org/2007/dtrx/
+
+-  pigz
+
+   -  http://features.cpanel.net/responses/faster-backups-using-pigz
+   -  http://www.zlib.net/pigz/pigz.pdf
+
+-  xz
+
+   -  http://manpages.ubuntu.com/manpages/lucid/man1/xz.1.html
+
+-  zip
+
+   -  http://linux.about.com/od/commands/a/blcmdl1_zipx.htm
