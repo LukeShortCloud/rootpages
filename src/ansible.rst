@@ -63,7 +63,7 @@ Updating source code installations:
     $ git pull --rebase
     $ git submodule update --init --recursive
 
-Ansible RPMs for Fedora bsaed operating systems are available from:
+Ansible RPMs for Fedora based operating systems are available from:
 
 -  The "extras" repository (Fedora)
 -  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL/CentOS and Fedora)
@@ -4053,7 +4053,7 @@ Ansible Tower 3
 
 Ansible Tower is the official dashboard maintained by Red Hat. The program is built using Python and uses RabbitMQ for clustering and PostgreSQL for storing it's data. PostgreSQL is used for the database back-end because it is one of the few relational databases that supports storing and accessing JSON formatted data.
 
-Ansible Tower 3.1 requirements and support:
+Ansible Tower 3.1.0 requirements and support:
 
 -  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, or Ubuntu 16.04
 
@@ -4064,11 +4064,13 @@ Ansible Tower 3.1 requirements and support:
 -  Release date: 2017-02-28
 -  End-of-life (EOL): 2018-10-02 [66]
 
-Ansible Tower 3.2 (~= AWX 1.0.0) requirements and support:
+Ansible Tower 3.2.0 (AWX 1.0.0) requirements and support:
 
--  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, or Ubuntu 16.04
+-  RHEL 7, Ubuntu 14.04, or Ubuntu 16.04
 -  Ansible >= 2.3
--  Access to some inventory sources, including Azure, requires >= 2.4.
+
+   -  Access to some inventory sources, including Azure, requires >= 2.4.
+
 -  PostgreSQL 9.6
 -  Release date: 2017-10-02
 -  End-of-life (EOL): 2019-04-02 [66]
