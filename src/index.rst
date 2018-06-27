@@ -38,6 +38,7 @@ Welcome to Root Pages!
 
    linux_commands/compression.rst
    linux_commands/configuration_management.rst
+   linux_commands/security.rst
    linux_commands/software_code_management.rst
    linux_commands/text_editors.rst
    linux_commands/virtualization.rst
