@@ -102,7 +102,12 @@ RST header characters to use:
 
 ### License
 
-Root Pages, and all of it's content, is provided under the GPLv3. All information should be free information. Knowledge is power and everyone deserves to learn and grow to their fullest potential.
+Root Pages, and all of it's content, is provided under the GNU Free Documentation License (FDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 licence are also applied to this project.
+
+Files:
+
+* LICENSE
+* DISCLAIMER
 
 
 ### Plagiarism
