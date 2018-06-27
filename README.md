@@ -159,6 +159,10 @@ $ cd /tmp/rootpages_gh_pages/
 $ git status
 ```
 
+### Yearly Updates
+
+Every year the bibliography sections need to be reorganized to be in numerical order. These can get out-of-sync due to the removable of unused sources.
+
 
 ### Special Notes
 
