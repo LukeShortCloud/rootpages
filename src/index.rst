@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Root Pages!
-======================================
+======================
 
 .. toctree::
    :maxdepth: 1
@@ -36,12 +36,7 @@ Welcome to Root Pages!
    :maxdepth: 1
    :caption: Linux Commands Table of Contents:
 
-   linux_commands/compression.rst
-   linux_commands/configuration_management.rst
-   linux_commands/security.rst
-   linux_commands/software_code_management.rst
-   linux_commands/text_editors.rst
-   linux_commands/virtualization.rst
+   linux_commands/index.rst
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
 
