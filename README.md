@@ -89,9 +89,14 @@ $ bash build.sh
 ## Legal
 
 
-### License - GPLv3
+### License
 
-Root Pages and all of its content is provided under the GPLv3. Why? We believe that all information should be free information. Knowledge is power and we strongly believe that everyone deserves to learn and grow to their fullest potentional.
+Root Pages, and all of it's content, is provided under the GNU Free Documentation License (FDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 licence are also applied to this project.
+
+Files:
+
+* LICENSE
+* DISCLAIMER
 
 
 ### Plagerism
