@@ -82,7 +82,7 @@ Download the latest commits from a remote git repository.
    :widths: 20, 20, 20
 
    "origin", "download all of the different branch information", ""
-   "origin <BRANCH>", "download a specific branch, "origin master"
+   "origin <BRANCH>", "download a specific branch", "origin master"
 
 git add
 ~~~~~~~
@@ -144,7 +144,7 @@ git tag
    :widths: 20, 20, 20
 
    "", "show tags", ""
-   "<TAG>, "create a special tag branch; useful for saving specific versions of a software", ""
+   "<TAG>", "create a special tag branch; useful for saving specific versions of a software", ""
 
 git checkout
 ~~~~~~~~~~~~
