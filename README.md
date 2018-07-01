@@ -176,7 +176,7 @@ The OpenStack notes go through a major rebase every third upstream OpenStack rel
 
 ### License
 
-Root Pages, and all of it's content, is provided under the GNU Free Documentation License (FDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 licence are also applied to this project.
+Root Pages, and all of it's content, is provided under the GNU Free Documentation License (GFDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 licence are also applied to this project.
 
 Files:
 
