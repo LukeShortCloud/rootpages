@@ -161,7 +161,9 @@ $ git status
 
 ### Yearly Updates
 
-Every year the bibliography sections need to be reorganized to be in numerical order. These can get out-of-sync due to the removable of unused sources.
+The bibliography sections need to be reorganized to be in numerical order. These can get out-of-sync due to the removable of unused sources.
+
+The copyright year in `src/conf.py` needs to be updated.
 
 
 ### Special Notes
