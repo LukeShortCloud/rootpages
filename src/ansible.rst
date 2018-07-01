@@ -4244,49 +4244,6 @@ their account. This setting can be modified in the ``settings.py`` file.
     $ sudo vim /etc/tower/conf.d/settings.py
     AUTH_TOKEN_EXPIRATION = <SECONDS_BEFORE_TIMEOUT>
 
-Recovery
-^^^^^^^^
-
-Ansible Tower provides an official automated solution to backups and restorations of existing Tower clusters.
-
-Backup:
-
-.. code-block:: sh
-
-    ./setup.sh -b
-
-A backup creates a tar archive that is gzip compressed. A symlink is created from the latest backup to the link named "``tower-backup-latest.tar.gz``."
-
-Syntax - Restore:
-
-.. code-block:: sh
-
-    ./setup.sh -r
-
-Syntax - Restore a specific backup file:
-
-.. code-block:: sh
-
-    ./setup.sh -r -e "restore_backup_file=<BACKUP_FILE>"
-
-Example - Restore with a specific backup file:
-
-.. code-block:: sh
-
-    ./setup.sh -r -e "restore_backup_file=/backups/tower/tower-backup-2018-01-15-12:43:21.tar.gz"
-
-[67]
-
-The PostgreSQL database service can natively be configured for streaming replication feature. This is not supported by Red Hat. This replicates all data from the master node to a slave node. If the master node fails, a system administrator can manually set the slave node to be the new master. [68] `A community supported Ansible role <https://github.com/samdoran/ansible-role-postgresql-replication>`__ can be used to help automate the setup and usage of this.
-
-Individual Ansible Tower nodes can also be safely removed from the cluster by using the ``awx-manage`` CLI utility. [70]
-
-.. code-block:: sh
-
-    $ sudo ansible-tower-service stop
-    $ sudo awx-manage deprovision_instance -—hostname=<HOST>
-    $ sudo awx-manage unregister_queue --queuename=<HOST>
-
 Security
 ^^^^^^^^
 
@@ -4315,12 +4272,10 @@ User authentication, by default, will store encrypted user information into the 
 
 [52]
 
-ACLs
+RBAC
 ''''
 
-Every user in Tower is associated with at least one organization. The
-level of access the user has to that organizations resources is defined
-by one of the different access control lists (ACLs).
+A key part of Ansible Tower is the role-based access control (RBAC) that is provides. Every user in Tower is associated with at least one organization. The level of access the user has to that organizations resources is defined by one of the different access control lists (ACLs).
 
 Hierarchy [1]:
 
@@ -4335,10 +4290,9 @@ Hierarchy [1]:
          always associated with an Organization. An ACL is set for what
          resources the user is allowed to use.
 
-User types / ACLs:
+Organizational User types:
 
--  System Administrator = Has full access to all organizations and the
-   Tower installation.
+-  System Administrator = Has full access to all organizations and the Tower installation.
 -  System Auditor = Has read-only access to an organization.
 -  Normal User = Has read and write access to an organization.
 
@@ -4457,6 +4411,66 @@ Version 2 of the API provides these endpoints:
     }
 
 [34]
+
+Recovery
+^^^^^^^^
+
+Ansible Tower provides an official automated solution to backups and restorations of existing Tower clusters.
+
+Backup:
+
+.. code-block:: sh
+
+    ./setup.sh -b
+
+A backup creates a tar archive that is gzip compressed. A symlink is created from the latest backup to the link named "``tower-backup-latest.tar.gz``."
+
+Syntax - Restore:
+
+.. code-block:: sh
+
+    ./setup.sh -r
+
+Syntax - Restore a specific backup file:
+
+.. code-block:: sh
+
+    ./setup.sh -r -e "restore_backup_file=<BACKUP_FILE>"
+
+Example - Restore with a specific backup file:
+
+.. code-block:: sh
+
+    ./setup.sh -r -e "restore_backup_file=/backups/tower/tower-backup-2018-01-15-12:43:21.tar.gz"
+
+[67]
+
+The PostgreSQL database service can natively be configured for streaming replication feature. This is not supported by Red Hat. This replicates all data from the master node to a slave node. If the master node fails, a system administrator can manually set the slave node to be the new master. [68] `A community supported Ansible role <https://github.com/samdoran/ansible-role-postgresql-replication>`__ can be used to help automate the setup and usage of this.
+
+Individual Ansible Tower nodes can also be safely removed from the cluster by using the ``awx-manage`` CLI utility. [70]
+
+.. code-block:: sh
+
+    $ sudo ansible-tower-service stop
+    $ sudo awx-manage deprovision_instance -—hostname=<HOST>
+    $ sudo awx-manage unregister_queue --queuename=<HOST>
+
+Updates
+^^^^^^^
+
+Before updating, it is recommended to take a full backup.
+
+.. code-block:: sh
+
+    $ ./setup.sh -b
+
+Minor updates (for example, from 3.2.0 to 3.2.5) for Ansible Tower require using the `latest setup archive <https://releases.ansible.com/ansible-tower/setup/>`__. Extract the archive, copy over the "inventory" file used for the original installation, and re-run the installer.
+
+.. code-block:: sh
+
+    $ ./setup.sh
+
+Major upgrades require first updating to the latest minor version. Then sequentially upgrade to the next available major version. This will provide the highest chance of a successful upgrade. For example, to upgrade from 3.0.2 to 3.2.5 the process would be ``3.0.2 --> 3.0.4 --> 3.1.7 --> 3.2.5``.
 
 AWX
 ~~~
