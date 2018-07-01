@@ -48,7 +48,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Root Pages'
-copyright = '2018, Luke Short. Documents licensed under FDLv1.3'
+# This will render out a sentence that starts with "Copyright None, Copyleft 2018"
+copyright = 'None, Copyleft 2018, Luke Short. Documents licensed under FDLv1.3'
 author = 'Luke Short'
 
 # The version info for the project you're documenting, acts as replacement for
