@@ -4067,13 +4067,15 @@ Ansible Tower 3.1.0 requirements and support:
 Ansible Tower 3.2.0 (AWX 1.0.0) requirements and support:
 
 -  RHEL 7, Ubuntu 14.04, or Ubuntu 16.04
--  Ansible >= 2.3
+-  Ansible >= 2.2
 
    -  Access to some inventory sources, including Azure, requires >= 2.4.
 
 -  PostgreSQL 9.6
 -  Release date: 2017-10-02
 -  End-of-life (EOL): 2019-04-02 [66]
+
+[35]
 
 Tower can be downloaded from http://releases.ansible.com/ansible-tower/. The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for an offline installation on RHEL servers. At least a free trial of Tower can be used to manage up to 10 servers for testing purposes only. A license can be bought from Red Hat to use Tower for managing more servers and to provide customer support. A license can be obtained from the `Ansible Tower license page <https://www.ansible.com/license>`__.
 
@@ -4741,7 +4743,7 @@ Bibliography
 32. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
 33. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 34. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
-35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. February 20, 2018. Accessed March 2, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
+35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed July 6, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
 36. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
 37. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
