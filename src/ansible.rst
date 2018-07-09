@@ -4533,7 +4533,7 @@ Deployment inventory options:
 
 Install:
 
-By default, AWX will install docker containers from Docker Hub. It is also possible to have the installer build docker containers from scratch and deploy them into a OpenShift cluster.
+By default, AWX will install docker containers from Docker Hub. The published versions available for the ``dockerhub_version`` variable can be found here: https://hub.docker.com/r/ansible/awx_web/tags/. It is also possible to have the installer build docker containers from the source code. These containers can optionally be deployed onto a Kubernetes or OpenShift cluster.
 
 .. code-block:: sh
 
