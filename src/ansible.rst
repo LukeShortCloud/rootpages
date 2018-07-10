@@ -4034,6 +4034,23 @@ Example:
 
 [20]
 
+Plugins
+-------
+
+Ansible supports a variety of custom plugins that can be used.
+
+-  Action = Ran before a module is executed.
+-  Cache = Temporarily store facts in a specific location.
+-  Callback = Run custom functions based on the current events of a playbook.
+-  Connection = Manage connections to remote hosts and are used for every task.
+-  Filter = Data manipulation for Jinja content.
+-  Lookup = Specify how to lookup specific information using a custom Jinja function.
+-  Shell = The format that commands should use for different remote shells.
+-  Strategy = Handle how tasks are executed on remote hosts and in what order.
+-  Vars = Add in new hosts and variables. In most cases, dynamic inventory scripts are preferred over plugins.
+
+[41]
+
 Python API
 ----------
 
@@ -4449,7 +4466,7 @@ Example - Restore with a specific backup file:
 
 The PostgreSQL database service can natively be configured for streaming replication feature. This is not supported by Red Hat. This replicates all data from the master node to a slave node. If the master node fails, a system administrator can manually set the slave node to be the new master. [68] `A community supported Ansible role <https://github.com/samdoran/ansible-role-postgresql-replication>`__ can be used to help automate the setup and usage of this.
 
-Individual Ansible Tower nodes can also be safely removed from the cluster by using the ``awx-manage`` CLI utility. [70]
+Individual Ansible Tower nodes can also be safely removed from the cluster by using the ``awx-manage`` CLI utility. [42]
 
 .. code-block:: sh
 
@@ -4749,7 +4766,8 @@ Bibliography
 38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
 39. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
 40. "Red Hat Ansible Engine." Ansible. Accessed September 12, 2017. https://www.ansible.com/ansible-engine
-
+41. "HOW TO EXTEND ANSIBLE THROUGH PLUGINS." January 5, 2017. Ansible Blog. Accessed July 10, 2018. https://www.ansible.com/blog/how-to-extend-ansible-through-plugins
+42. "Clustering." Ansible Tower Documentation. Accessed June 7, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html
 43. "Ansible Python 3 Support." Ansible Documentation. June 14, 2018. Accessed June 22, 2018. http://docs.ansible.com/ansible/latest/python\_3\_support.html
 44. "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
 45. "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
@@ -4777,4 +4795,3 @@ Bibliography
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
-70. "Clustering." Ansible Tower Documentation. Accessed June 7, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html
