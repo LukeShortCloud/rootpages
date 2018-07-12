@@ -128,7 +128,7 @@ Releases:
 -  **RHOSP 10 LL (Newton)**
 
    -  Release: 2016-12-15
-   -  EOL: 2021-12-16
+   -  EOL: 2021-12-15
 
 -  RHOSP 11 (Ocata)
 
@@ -140,12 +140,17 @@ Releases:
    -  Release: 2017-12-13
    -  EOL: 2018-12-13
 
+-  **RHOSP 13 LL (Queens)**
+
+   -  Release: 2018-06-27
+   -  EOL: 2023-06-27
+
 [6]
 
 RHOSP 10 supports these 4 hypervisors [9]:
 
 -  Kernel-based Virtual Machine (QEMU with KVM acceleration)
--  Red Hat Enterprise Virtualization (RHEV)
+-  Red Hat Virtualization (RHV)
 -  Microsoft Hyper-V
 -  VMWare ESX and ESXi
 
@@ -3333,7 +3338,7 @@ Bibliography
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. January 24, 2018. https://access.redhat.com/support/policy/updates/openstack/platform
+6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed July 12, 2018. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
