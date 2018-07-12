@@ -51,6 +51,44 @@ Common SCMs:
 -  Mercury (hg)
 -  Subversion (svn)
 
+
+Git
+~~~
+
+Developers can use these resources to learn how to properly use git: https://try.github.io/
+
+GitHub
+^^^^^^
+
+GitHub was the first public git service and it is where the official code for the ``git`` program itself is stored and managed. GitHub Enterprise is a paid and supported solution for running private GitHub servers. https://github.com/
+
+GitPrep
+^^^^^^^
+
+GitPrep is an open source portable git server written in Perl.
+
+`Installation Guide <https://github.com/yuki-kimoto/gitprep/blob/master/README.md>`__
+
+Gitea
+^^^^^
+
+Gitea is an open source community supported fork of the Gogs git server written in Go. It supports a variety of different database and cache back-ends. [1]
+
+Databases:
+
+-  MSSQL
+-  MySQL
+-  PostgreSQL
+-  SQLite3
+
+Caches:
+
+-  Memcache
+-  Memory
+-  Redis
+
+`Installation Guide <https://docs.gitea.io/en-us/install-from-binary/>`__
+
 Object Oriented Programming
 ---------------------------
 
@@ -79,3 +117,5 @@ CI/CD pipelines provide an automated workflow for deploying software updates. Wh
 
 Bibliography
 ------------
+
+1. "Configuration Cheat Sheet." Gitea Documentaiton. Accessed July 10, 2018. https://docs.gitea.io/en-us/config-cheat-sheet/
