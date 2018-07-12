@@ -370,11 +370,7 @@ modules and Playbooks.
       -  gathering = Set this to "explicit" to only gather the necessary
          facts when/if they are required by the Playbook. [27]
 
-Fact caching will help to cache host information. By only gathering the
-setup facts information once, this helps to speed up execution time if
-Ansible will need to run Playbooks on hosts multiple times. The
-supported types of fact caching are currently memory (none), file
-(json), and Redis.
+Fact caching will temporarily save information gathered about hosts. By only gathering the setup/host fact once, this helps to speed up execution time if playbooks will need to be ran multiple times. The supported types of fact caching are currently memory (none), jsonfile, memcached, mongodb, pickle, redis, and yaml. [19]
 
 All:
 
@@ -4744,7 +4740,7 @@ Bibliography
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
 18. "Installation Guide." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/installation_guide/intro\_installation.html
-
+19. "Cache Plugins." Ansible Documentation. July 5, 2018. Accessed July 12, 2018. https://docs.ansible.com/ansible/latest/plugins/cache.html
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
 22. "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
