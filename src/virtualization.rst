@@ -604,14 +604,14 @@ Container Management Platforms
 OpenShift
 ^^^^^^^^^
 
-OpenShift is a Red hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+OpenShift is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
 
 MiniShift
 '''''''''
 
 MiniShift is an easy to use all-in-one installation for testing out OpenShift.
 
-Install (Fedora):
+**Install (Fedora):**
 
 -  Install Libvirt and KVM and add non-privileged MiniShift users to the "libvirt" group.
 
@@ -634,7 +634,7 @@ Install (Fedora):
 
 [31][32]
 
-Install (RHEL):
+**Install (RHEL):**
 
 Enable the Red Hat Developer Tools repository first. Then MiniShift can be installed.
 
