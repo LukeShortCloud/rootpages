@@ -932,8 +932,7 @@ Upgrades
 Minor
 &&&&&
 
-This is for upgrading OpenStack from one minor version to another in the
-same major release. An example would be going from 17.0.0 to 17.1.1.
+This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 17.0.0 to 17.0.6.
 
 -  Change the OpenStack-Ansible version to a new minor tag release. If a
    branch for a OpenStack release name is being used already, pull the
@@ -943,6 +942,7 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 
        $ cd /opt/openstack-ansible/
        $ sudo git fetch --all
+       $ sudo git tag
        $ sudo git checkout <TAG>
 
 -  Update:
@@ -988,10 +988,7 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 Major
 &&&&&
 
-OpenStack-Ansible has scripts capable of fully upgrading OpenStack from
-one major release to the next. It is recommended to do a manual upgrade
-by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/user/manual-upgrade.html>`__
-Below outlines how to do this automatically. [22]
+OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html>`__. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [22]
 
 -  Move into the OpenStack-Ansible project.
 
@@ -1003,6 +1000,7 @@ Below outlines how to do this automatically. [22]
 
    .. code-block:: sh
 
+       $ sudo git fetch --all
        $ sudo git branch -a
        $ sudo git tag
        $ sudo git checkout <BRANCH_OR_TAG>
@@ -3372,7 +3370,7 @@ Bibliography
 19. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
 20. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
 21. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
-22. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/index.html
+22. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html/
 23. "TripleO quickstart." RDO Project. Accessed March 26, 2018. https://www.rdoproject.org/tripleo/
 24. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
 25. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
