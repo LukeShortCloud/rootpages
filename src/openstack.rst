@@ -465,41 +465,19 @@ Setup the OpenStack-Ansible project.
     $ cd /opt/openstack-ansible/
     $ sudo git checkout stable/queens
 
-There are two all-in-one scenarios that will run different Ansible
-Playbooks. The default is "aio" but this can be changed to the second
-scenario by setting the ``SCENARIO`` shell variable to "ceph."
-Alternatively, the roles to run can be manually modified in
-``/opt/openstack-ansible/tests/bootstrap-aio.yml`` Playbook.
+There are many all-in-one scenarios that will run different Ansible playbooks. The default is "aio_lxc" which deploys the major OpenStack services to LXC containers. This can be changed to a different scenario by setting the ``SCENARIO`` shell variable to something else. Alternatively, the playbooks to run can be manually modified from the variable file ``/opt/openstack-ansible/tests/vars/bootstrap-aio-vars.yml``. Additional playbooks can be added by copying them from ``/opt/openstack-ansible/etc/openstack_deploy/conf.d/`` to ``/etc/openstack_deploy/conf.d/``. The file extensions should be changed from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 
-``$ export SCENARIO="ceph"``
+``$ export SCENARIO="aio_basekit"``
 
--  aio
+Scenarios:
 
-   -  cinder.yml.aio
-   -  designate.yml.aio
-   -  glance.yml.aio
-   -  heat.yml.aio
-   -  horizon.yml.aio
-   -  keystone.yml.aio
-   -  neutron.yml.aio
-   -  nova.yml.aio
-   -  swift.yml.aio
-
--  ceph:
-
-   -  ceph.yml.aio
-   -  cinder.yml.aio
-   -  glance.yml.aio
-   -  heat.yml.aio
-   -  horizon.yml.aio
-   -  keystone.yml.aio
-   -  neutron.yml.aio
-   -  nova.yml.aio
-
-Extra Playbooks can be added by copying them from
-``/opt/openstack-ansible/etc/openstack_deploy/conf.d/`` to
-``/etc/openstack_deploy/conf.d/``. The file extensions should be changed
-from ``.yml.aio`` to ``.yml`` to be correctly parsed.
+-  aio_basekit
+-  aio_lxc (Default)
+-  aio_metal
+-  ceph
+-  octavia
+-  tacker
+-  translations
 
 Then OpenStack-Ansible project can now setup and deploy the LXC containers along with the OpenStack services.
 
@@ -516,12 +494,21 @@ If the installation fails, it is recommended to reinstall the operating
 system to completely clear out all of the custom configurations that
 OpenStack-Ansible creates. Running the ``scripts/run-playbooks.sh``
 script will not work again until the existing LXC containers and
-configurations have been removed. [15]
+configurations have been removed.
+
+After a reboot, the three-node MariaDB Galera cluster needs to be restarted properly by running the Galera installation playbook again.
+
+.. code-block:: sh
+
+   $ cd /opt/openstack-ansible/playbooks
+   $ sudo openstack-ansible -e galera_ignore_cluster_state=true galera-install.yml
+
+[15]
 
 Uninstall
 '''''''''
 
-`This Bash script <https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
+`This Bash script <https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
 way to uninstall OpenStack-Ansible is to reinstall the operating system. [15]
 
@@ -534,18 +521,18 @@ Minimum requirements:
 -  2 compute nodes
 -  1 log node
 
-It is also required to have 4 different network bridges.
+It is also required to have at least 3 different network bridges.
 
--  ``br-mgmt`` = All the nodes should have this network. This is the
+-  **br-mgmt** = All the nodes should have this network. This is the
    management network where all nodes can be accessed and managed by.
--  ``br-storage`` = This is the only optional interface. It is
+-  br-storage = This is the only optional interface. It is
    recommended to use this to separate the "storage" nodes traffic. This
    should exist on the "storage" (when using bare-metal) and "compute"
    nodes.
--  ``br-vlan`` = This should exist on the "network" (when using
+-  **br-vlan** = This should exist on the "network" (when using
    bare-metal) and "compute" nodes. It is used for self-service
    networks.
--  ``br-vxlan`` = This should exist on the "network" and "compute"
+-  **br-vxlan** = This should exist on the "network" and "compute"
    nodes. It is used for self-service networks.
 
 [16]
@@ -3378,7 +3365,7 @@ Bibliography
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
 14. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
-15. "[OpenStack-Ansible] Quickstart: AIO." OpenStack  Documentation. March 26, 2018. Accessed March 26, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
+15. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
 16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
 17. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 18. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
