@@ -258,22 +258,20 @@ KVM supports nested virtualization. This allows a virtual machine full
 access to the processor to run another virtual machine in itself. This
 is disabled by default.
 
-Verify that the computer's processor supports nested KVM virtualization.
+Verify that the computer's processor supports nested hardware virtualization.
 [11]
 
 -  Intel:
 
    .. code-block:: sh
 
-       $ cat /sys/module/kvm_intel/parameters/nested
-       Y
+       $ grep -m 1 vmx /proc/cpuinfo
 
 -  AMD:
 
    .. code-block:: sh
 
-       $ cat /sys/module/kvm_amd/parameters/nested
-       Y
+       $ grep -m 1 svm /proc/cpuinfo
 
 Option #1 - Modprobe
 
@@ -364,6 +362,22 @@ virtualization support.
 .. code-block:: sh
 
     $ sudo virt-host-validate
+
+OR
+
+-  Intel:
+
+   .. code-block:: sh
+
+       $ cat /sys/module/kvm_intel/parameters/nested
+       Y
+
+-  AMD:
+
+   .. code-block:: sh
+
+       $ cat /sys/module/kvm_amd/parameters/nested
+       Y
 
 [11]
 
