@@ -1465,6 +1465,21 @@ Overcloud
 
 **Deployment**
 
+-  Configure the networking Heat templates that define the physical and virtual network interface settings.
+
+   -  Newton:
+
+      -  Pick a network configuration from ``/usr/share/openstack-tripleo-heat-templates/environments/`` and modify it to fit the deployment environment. Templates include:
+
+         -  bond-with-vlans
+         -  multiple-nics
+         -  single-nic-linux-bridge-vlans
+         -  single-nic-vlans
+
+   -  Queens:
+
+      -  Modify the ``/usr/share/openstack-tripleo-heat-templates/network_data.yaml`` variables file and then render the Jinja template using this script: ``/usr/share/openstack-tripleo-heat-templates/tools/process-templates.py``. More information about this process can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+
 -  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30]
 
    .. code-block:: sh
