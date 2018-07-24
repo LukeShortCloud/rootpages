@@ -1336,7 +1336,7 @@ Overcloud
 
 **Introspection**
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [89] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [37] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
 
    -  All
 
@@ -1707,41 +1707,6 @@ use ``/``.
     transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 
 [35]
-
-Scenario #2 - ZeroMQ
-
-This provides the best performance and stability. Scalability becomes a
-concern only when getting into hundreds of nodes. Instead of relying on
-a messaging queue, OpenStack services talk directly to each other using
-the ZeroMQ library. Redis is required to be running and installed for
-acting as a message storage back-end for all of the servers. [35][36]
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq+redis://<REDIS_HOST>:6379"
-
-.. code-block:: ini
-
-    [oslo_messaging_zmq]
-    rpc_zmq_bind_address = <IP_ADDRESS>
-    rpc_zmq_host = <FQDN_OR_IP_ADDRESS>
-
-Alternatively, for high availability, use Redis Sentinel servers in ``transport_url``.
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq+sentinel://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
-
-For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used. This will use the "MatchmakerDummy" driver that will send messages to itself.
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq://"
-
-[37]
 
 Ironic
 ~~~~~~
@@ -3431,7 +3396,7 @@ Bibliography
 34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
 36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "ZeroMQ Driver Deployment Guide." OpenStack Documentation. March 1, 2018. Accessed March 15, 2018. https://docs.openstack.org/oslo.messaging/latest/admin/zmq\_driver.html
+37. "Baremetal Environment." TripleO OpenStack Documentation. July 24, 2018. Accessed July 24, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
 38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
@@ -3483,4 +3448,3 @@ Bibliography
 86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
 87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
 88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
-89. "Baremetal Environment." TripleO OpenStack Documentation. July 24, 2018. Accessed July 24, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
