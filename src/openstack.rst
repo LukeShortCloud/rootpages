@@ -1336,7 +1336,53 @@ Overcloud
 
 **Introspection**
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75]
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [89] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
+
+   -  All
+
+      -  name = The name of the node.
+      -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "fake_pxe".
+
+   -  IPMI
+
+      -  pm_user = The PM user to use.
+      -  pm_password = The PM password to use.
+      -  pm_addr = The PM IP address to use.
+
+   -  Fake PXE
+
+      -  arch = The processor architecture. The standard is "x86_64".
+      -  cpu = The number of processor cores.
+      -  mac = A list of MAC addresses that should be managed by Ironic.
+      -  memory = The amount of RAM, in MiB.
+      -  disk = The amount of disk space, in GiB.
+
+   -  Example instackenv.json:
+
+      .. code-block:: json
+
+          {
+              "nodes": [
+                  {
+                      "node": "control01",
+                      "pm_type": "fake_pxe",
+                      "mac": [
+                          "AA:BB:CC:DD:EE:FF"
+                      ],
+                      "arch": "x86_64",
+                      "cpu": "12",
+                      "memory": "32768",
+                      "disk": "256"
+                  },
+                  {
+                      "node": "compute01",
+                      "pm_type": "pxe_ipmitool",
+                      "pm_user": "IPMIUSER",
+                      "pm_password": "password123",
+                      "pm_addr": "10.10.10.11"
+                  }
+              ]
+          }
 
    -  Virtual lab environment:
 
@@ -1348,33 +1394,33 @@ Overcloud
 
              $ sudo virsh detach-interface ${VM_NAME} network --persistent --mac $(sudo virsh dumpxml ${VM_NAME} | grep -B4 vagrant-libvirt | grep mac | cut -d "'" -f2)
 
-      -  Import the nodes.
+-  Import the nodes.
 
-         -  Newton:
+   -  Newton:
 
-            .. code-block:: sh
+      .. code-block:: sh
 
-                $ openstack baremetal import --json instackenv.json
+          $ openstack baremetal import --json instackenv.json
 
-         -  Queens [85]:
+   -  Queens [85]:
 
-            .. code-block:: sh
+      .. code-block:: sh
 
-                $ openstack overcloud node import instackenv.json
-                Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
-                Waiting for messages on queue 'tripleo' with no timeout.
-                2 node(s) successfully moved to the "manageable" state.
-                Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
-                Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
-                $ openstack baremetal node list
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-                | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-                | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
-                | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          $ openstack overcloud node import instackenv.json
+          Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
+          Waiting for messages on queue 'tripleo' with no timeout.
+          2 node(s) successfully moved to the "manageable" state.
+          Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
+          Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+          $ openstack baremetal node list
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
+          | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
-      -  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
+-  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
 
          -  Newton:
 
@@ -3437,3 +3483,4 @@ Bibliography
 86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
 87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
 88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
+89. "Baremetal Environment." TripleO OpenStack Documentation. July 24, 2018. Accessed July 24, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
