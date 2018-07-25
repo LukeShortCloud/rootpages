@@ -418,12 +418,10 @@ For uninstalling everything that is installed by Packstack, run `this Bash scrip
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
-Supported operating systems: RHEL/CentOS 7, Ubuntu 16.04, openSUSE Leap 42
+Supported operating systems: Ubuntu 16.04
+Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
 
-OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu
-inside of LXC containers that run the OpenStack services. This was
-created by RackSpace as an official tool for deploying and managing
-production environments.
+OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 It offers key features that include:
 
@@ -434,7 +432,7 @@ It offers key features that include:
 -  OpenStack package repository caching.
 -  Automated upgrades.
 
-[14]
+[16]
 
 Quick
 ^^^^^
@@ -1032,7 +1030,7 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
 TripleO
 ~~~~~~~
 
-Supported operating systems: RHEL 7, Fedora >= 22
+Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
@@ -3391,9 +3389,9 @@ Bibliography
 11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
-14. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
+
 15. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
-16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
 17. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 18. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 19. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
