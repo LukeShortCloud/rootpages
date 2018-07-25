@@ -1380,7 +1380,7 @@ Overcloud
           {
               "nodes": [
                   {
-                      "node": "control01",
+                      "name": "control01",
                       "pm_type": "fake_pxe",
                       "mac": [
                           "AA:BB:CC:DD:EE:FF"
@@ -1391,7 +1391,7 @@ Overcloud
                       "disk": "256"
                   },
                   {
-                      "node": "compute01",
+                      "name": "compute01",
                       "pm_type": "pxe_ipmitool",
                       "pm_user": "IPMIUSER",
                       "pm_password": "password123",
