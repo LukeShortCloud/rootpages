@@ -358,21 +358,17 @@ Alternatively, use these configuration options in the answer file.
 
     $ sudo packstack --answer-file <ANSWER_FILE>
 
-After the installation is finished, create the necessary network in
-Neutron as the admin user. In this example, the network will
-automatically allocate IP addresses between 192.168.1.201 and
-192.168.1.254. The IP 192.168.1.1 is the router / default gateway.
+After the installation is finished, create the necessary network in Neutron as the admin user. In this example, the network will automatically allocate IP addresses between 192.168.1.201 and 192.168.1.254. The IP 192.168.1.1 is both the physical router and default gateway.
 
 .. code-block:: sh
 
     $ . keystonerc_admin
-    $ neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
-    $ neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
+    $ openstack network create --share --provider-physical-network physical_network --provider-network-type flat --router external external_network
+    $ openstack subnet create --subnet-range 192.168.1.0/24 --gateway 192.168.1.1 --network external_network --allocation-pool start=192.168.1.201,end=192.168.1.254 --no-dhcp public_subnet
 
-The "external\_network" can now be associated with a router in user
-accounts.
+The "external\_network" can now be associated with a router in user accounts.
 
-[12]
+[12][90]
 
 Answer File
 '''''''''''
@@ -529,11 +525,8 @@ It is also required to have at least 3 different network bridges.
    recommended to use this to separate the "storage" nodes traffic. This
    should exist on the "storage" (when using bare-metal) and "compute"
    nodes.
--  **br-vlan** = This should exist on the "network" (when using
-   bare-metal) and "compute" nodes. It is used for self-service
-   networks.
--  **br-vxlan** = This should exist on the "network" and "compute"
-   nodes. It is used for self-service networks.
+-  **br-vlan** = This should exist on the "network" (when using bare-metal) and "compute" nodes. It is used for external provider networks.
+-  **br-vxlan** = This should exist on the "network" and "compute" nodes. It is used for private self-service networks.
 
 [16]
 
@@ -649,13 +642,38 @@ The valid service types are:
 
 [16]
 
+Neutron
+&&&&&&&
+
+The ``br-vlan`` interface should provide access to the Internet. This is normally configured to use a VLAN. However, it can also be configured to use flat networking using the example configurations below. The "eth11" interface will be used to attach the ``br-vlan`` bridge onto with no VLAN tagging. [89]
+
+.. code-block:: yaml
+
+    provider_networks:
+      - network:
+        container_bridge: "br-vlan"
+        container_type: "veth"
+        container_interface: "eth11"
+        type: "flat"
+        net_name: "flat"
+        group_binds:
+          - neutron_linuxbridge_agent
+
+After deployment, the external Neutron network and subnet can be created. [90]
+
+.. code-block:: sh
+
+    $ . /root/openrc
+    $ openstack network create --share --provider-physical-network physical_network --provider-network-type flat --router external external_network
+    $ openstack subnet create --subnet-range 192.168.1.0/24 --gateway 192.168.1.1 --network external_network --allocation-pool start=192.168.1.201,end=192.168.1.254 --no-dhcp public_subnet
+
 Nova
 &&&&
 
 Common variables:
 
 -  nova\_virt\_type = The virtualization technology to use for deploying
-   instances with OpenStack. By default, OpenStack-Ansible will guess
+   instances with OpenStack. By default, OpenStack-Ansible will guess`
    what should be used based on what is installed on the hypervisor.
    Valid options are: ``qemu``, ``kvm``, ``lxd``, ``ironic``, or
    ``powervm``.
@@ -3448,3 +3466,5 @@ Bibliography
 86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
 87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
 88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
+89. "Deploying and customizing OpenStack Mitaka with openstack-ansible." cunninghamshane. August 19, 2016. Accessed July 25, 2018. https://cunninghamshane.com/deploying-and-customizing-openstack-mitaka-with-openstack-ansible/
+90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
