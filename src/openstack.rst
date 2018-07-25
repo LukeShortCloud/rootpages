@@ -1492,12 +1492,11 @@ Overcloud
 
                 $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
--  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86]
+-  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86] Commonly custom "control" and "compute" flavors will need to be created.
 
    .. code-block:: sh
 
-       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> control
-       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> compute
+       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> --property "capabilities:profile"="<FLAVOR_NAME>" <FLAVOR_NAME>
 
 -  Configure the kernel and initramfs that the baremetal nodes should boot from.
 
@@ -1543,21 +1542,35 @@ Overcloud
 
    -  Queens:
 
-      -  Modify the ``/usr/share/openstack-tripleo-heat-templates/network_data.yaml`` variables file and then render the Jinja template using this script: ``/usr/share/openstack-tripleo-heat-templates/tools/process-templates.py``. More information about this process can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+      -  Scenario #1 - Default templates:
 
--  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30]
+         .. code-block:: sh
+
+             $ mkdir /home/stack/templates/
+             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o /home/stack/templates/
+
+      -  Scenario #2 - Variables can be customized via the "roles_data.yml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+
+         .. code-block:: sh
+
+             $ mkdir /home/stack/templates/
+             $ cp /usr/share/openstack-tripleo-heat-templates/roles_data.yaml /home/stack/templates/roles_data_custom.yaml
+             $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
+             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
+
+-  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30] Lab environments may need to use a simple network configuration such as ``-e ~/templates/environments/net-single-nic-with-vlans.yaml -e ~/templates/environments/network-environment.yaml``.
 
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
+       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
    .. code-block:: sh
 
      $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
-     $ openstack overcloud deploy --templates -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
+     $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
 
    -  Virtual lab environment:
 
