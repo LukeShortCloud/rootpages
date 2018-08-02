@@ -258,22 +258,20 @@ KVM supports nested virtualization. This allows a virtual machine full
 access to the processor to run another virtual machine in itself. This
 is disabled by default.
 
-Verify that the computer's processor supports nested KVM virtualization.
+Verify that the computer's processor supports nested hardware virtualization.
 [11]
 
 -  Intel:
 
    .. code-block:: sh
 
-       $ cat /sys/module/kvm_intel/parameters/nested
-       Y
+       $ grep -m 1 vmx /proc/cpuinfo
 
 -  AMD:
 
    .. code-block:: sh
 
-       $ cat /sys/module/kvm_amd/parameters/nested
-       Y
+       $ grep -m 1 svm /proc/cpuinfo
 
 Option #1 - Modprobe
 
@@ -364,6 +362,22 @@ virtualization support.
 .. code-block:: sh
 
     $ sudo virt-host-validate
+
+OR
+
+-  Intel:
+
+   .. code-block:: sh
+
+       $ cat /sys/module/kvm_intel/parameters/nested
+       Y
+
+-  AMD:
+
+   .. code-block:: sh
+
+       $ cat /sys/module/kvm_amd/parameters/nested
+       Y
 
 [11]
 
@@ -604,14 +618,14 @@ Container Management Platforms
 OpenShift
 ^^^^^^^^^
 
-OpenShift is a Red hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+OpenShift is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
 
 MiniShift
 '''''''''
 
 MiniShift is an easy to use all-in-one installation for testing out OpenShift.
 
-Install (Fedora):
+**Install (Fedora):**
 
 -  Install Libvirt and KVM and add non-privileged MiniShift users to the "libvirt" group.
 
@@ -634,7 +648,7 @@ Install (Fedora):
 
 [31][32]
 
-Install (RHEL):
+**Install (RHEL):**
 
 Enable the Red Hat Developer Tools repository first. Then MiniShift can be installed.
 

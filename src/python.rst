@@ -92,7 +92,7 @@ the ``type()`` function.
    list, List, An array of values of any data type. This is more flexbile than an array.
    tuple, Tuple, "A read-only list that cannot be modified."
    arr, Array, A collection of values that have the same data type. This is more memory efficent than a list.
-   dict, Dictionary, "An array of arrays (nested arrays)."
+   dict, Dictionary, "A list of nested variables of any data type."
 
 Variables defined outside of a function are global variables. Although
 this practice is discouraged, these can be referenced using the

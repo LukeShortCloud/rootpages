@@ -358,21 +358,17 @@ Alternatively, use these configuration options in the answer file.
 
     $ sudo packstack --answer-file <ANSWER_FILE>
 
-After the installation is finished, create the necessary network in
-Neutron as the admin user. In this example, the network will
-automatically allocate IP addresses between 192.168.1.201 and
-192.168.1.254. The IP 192.168.1.1 is the router / default gateway.
+After the installation is finished, create the necessary network in Neutron as the admin user. In this example, the network will automatically allocate IP addresses between 192.168.1.201 and 192.168.1.254. The IP 192.168.1.1 is both the physical router and default gateway.
 
 .. code-block:: sh
 
     $ . keystonerc_admin
-    $ neutron net-create external_network --provider:network_type flat --provider:physical_network extnet --router:external
-    $ neutron subnet-create --name public_subnet --enable_dhcp=False --allocation-pool=start=192.168.1.201,end=192.168.1.254 --gateway=192.168.1.1 external_network 192.168.1.0/24
+    $ openstack network create --share --provider-physical-network physical_network --provider-network-type flat --router external external_network
+    $ openstack subnet create --subnet-range 192.168.1.0/24 --gateway 192.168.1.1 --network external_network --allocation-pool start=192.168.1.201,end=192.168.1.254 --no-dhcp public_subnet
 
-The "external\_network" can now be associated with a router in user
-accounts.
+The "external\_network" can now be associated with a router in user accounts.
 
-[12]
+[12][90]
 
 Answer File
 '''''''''''
@@ -422,12 +418,10 @@ For uninstalling everything that is installed by Packstack, run `this Bash scrip
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
-Supported operating systems: RHEL/CentOS 7, Ubuntu 16.04, openSUSE Leap 42
+Supported operating systems: Ubuntu 16.04
+Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
 
-OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu
-inside of LXC containers that run the OpenStack services. This was
-created by RackSpace as an official tool for deploying and managing
-production environments.
+OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 It offers key features that include:
 
@@ -438,7 +432,9 @@ It offers key features that include:
 -  OpenStack package repository caching.
 -  Automated upgrades.
 
-[14]
+[16]
+
+SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [14]
 
 Quick
 ^^^^^
@@ -465,41 +461,19 @@ Setup the OpenStack-Ansible project.
     $ cd /opt/openstack-ansible/
     $ sudo git checkout stable/queens
 
-There are two all-in-one scenarios that will run different Ansible
-Playbooks. The default is "aio" but this can be changed to the second
-scenario by setting the ``SCENARIO`` shell variable to "ceph."
-Alternatively, the roles to run can be manually modified in
-``/opt/openstack-ansible/tests/bootstrap-aio.yml`` Playbook.
+There are many all-in-one scenarios that will run different Ansible playbooks. The default is "aio_lxc" which deploys the major OpenStack services to LXC containers. This can be changed to a different scenario by setting the ``SCENARIO`` shell variable to something else. Alternatively, the playbooks to run can be manually modified from the variable file ``/opt/openstack-ansible/tests/vars/bootstrap-aio-vars.yml``. Additional playbooks can be added by copying them from ``/opt/openstack-ansible/etc/openstack_deploy/conf.d/`` to ``/etc/openstack_deploy/conf.d/``. The file extensions should be changed from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 
-``$ export SCENARIO="ceph"``
+``$ export SCENARIO="aio_basekit"``
 
--  aio
+Scenarios:
 
-   -  cinder.yml.aio
-   -  designate.yml.aio
-   -  glance.yml.aio
-   -  heat.yml.aio
-   -  horizon.yml.aio
-   -  keystone.yml.aio
-   -  neutron.yml.aio
-   -  nova.yml.aio
-   -  swift.yml.aio
-
--  ceph:
-
-   -  ceph.yml.aio
-   -  cinder.yml.aio
-   -  glance.yml.aio
-   -  heat.yml.aio
-   -  horizon.yml.aio
-   -  keystone.yml.aio
-   -  neutron.yml.aio
-   -  nova.yml.aio
-
-Extra Playbooks can be added by copying them from
-``/opt/openstack-ansible/etc/openstack_deploy/conf.d/`` to
-``/etc/openstack_deploy/conf.d/``. The file extensions should be changed
-from ``.yml.aio`` to ``.yml`` to be correctly parsed.
+-  aio_basekit
+-  aio_lxc (Default)
+-  aio_metal
+-  ceph
+-  octavia
+-  tacker
+-  translations
 
 Then OpenStack-Ansible project can now setup and deploy the LXC containers along with the OpenStack services.
 
@@ -516,12 +490,21 @@ If the installation fails, it is recommended to reinstall the operating
 system to completely clear out all of the custom configurations that
 OpenStack-Ansible creates. Running the ``scripts/run-playbooks.sh``
 script will not work again until the existing LXC containers and
-configurations have been removed. [15]
+configurations have been removed.
+
+After a reboot, the three-node MariaDB Galera cluster needs to be restarted properly by running the Galera installation playbook again.
+
+.. code-block:: sh
+
+   $ cd /opt/openstack-ansible/playbooks
+   $ sudo openstack-ansible -e galera_ignore_cluster_state=true galera-install.yml
+
+[15]
 
 Uninstall
 '''''''''
 
-`This Bash script <https://docs.openstack.org/openstack-ansible/queens/contributor/quickstart-aio.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
+`This Bash script <https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
 way to uninstall OpenStack-Ansible is to reinstall the operating system. [15]
 
@@ -534,19 +517,16 @@ Minimum requirements:
 -  2 compute nodes
 -  1 log node
 
-It is also required to have 4 different network bridges.
+It is also required to have at least 3 different network bridges.
 
--  ``br-mgmt`` = All the nodes should have this network. This is the
+-  **br-mgmt** = All the nodes should have this network. This is the
    management network where all nodes can be accessed and managed by.
--  ``br-storage`` = This is the only optional interface. It is
+-  br-storage = This is the only optional interface. It is
    recommended to use this to separate the "storage" nodes traffic. This
    should exist on the "storage" (when using bare-metal) and "compute"
    nodes.
--  ``br-vlan`` = This should exist on the "network" (when using
-   bare-metal) and "compute" nodes. It is used for self-service
-   networks.
--  ``br-vxlan`` = This should exist on the "network" and "compute"
-   nodes. It is used for self-service networks.
+-  **br-vlan** = This should exist on the "network" (when using bare-metal) and "compute" nodes. It is used for external provider networks.
+-  **br-vxlan** = This should exist on the "network" and "compute" nodes. It is used for private self-service networks.
 
 [16]
 
@@ -662,13 +642,38 @@ The valid service types are:
 
 [16]
 
+Neutron
+&&&&&&&
+
+The ``br-vlan`` interface should provide access to the Internet. This is normally configured to use a VLAN. However, it can also be configured to use flat networking using the example configurations below. The "eth11" interface will be used to attach the ``br-vlan`` bridge onto with no VLAN tagging. [89]
+
+.. code-block:: yaml
+
+    provider_networks:
+      - network:
+        container_bridge: "br-vlan"
+        container_type: "veth"
+        container_interface: "eth11"
+        type: "flat"
+        net_name: "flat"
+        group_binds:
+          - neutron_linuxbridge_agent
+
+After deployment, the external Neutron network and subnet can be created. [90]
+
+.. code-block:: sh
+
+    $ . /root/openrc
+    $ openstack network create --share --provider-physical-network physical_network --provider-network-type flat --router external external_network
+    $ openstack subnet create --subnet-range 192.168.1.0/24 --gateway 192.168.1.1 --network external_network --allocation-pool start=192.168.1.201,end=192.168.1.254 --no-dhcp public_subnet
+
 Nova
 &&&&
 
 Common variables:
 
 -  nova\_virt\_type = The virtualization technology to use for deploying
-   instances with OpenStack. By default, OpenStack-Ansible will guess
+   instances with OpenStack. By default, OpenStack-Ansible will guess`
    what should be used based on what is installed on the hypervisor.
    Valid options are: ``qemu``, ``kvm``, ``lxd``, ``ironic``, or
    ``powervm``.
@@ -945,8 +950,7 @@ Upgrades
 Minor
 &&&&&
 
-This is for upgrading OpenStack from one minor version to another in the
-same major release. An example would be going from 17.0.0 to 17.1.1.
+This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 17.0.0 to 17.0.6.
 
 -  Change the OpenStack-Ansible version to a new minor tag release. If a
    branch for a OpenStack release name is being used already, pull the
@@ -956,6 +960,7 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 
        $ cd /opt/openstack-ansible/
        $ sudo git fetch --all
+       $ sudo git tag
        $ sudo git checkout <TAG>
 
 -  Update:
@@ -1001,10 +1006,7 @@ same major release. An example would be going from 17.0.0 to 17.1.1.
 Major
 &&&&&
 
-OpenStack-Ansible has scripts capable of fully upgrading OpenStack from
-one major release to the next. It is recommended to do a manual upgrade
-by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/user/manual-upgrade.html>`__
-Below outlines how to do this automatically. [22]
+OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html>`__. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [22]
 
 -  Move into the OpenStack-Ansible project.
 
@@ -1016,6 +1018,7 @@ Below outlines how to do this automatically. [22]
 
    .. code-block:: sh
 
+       $ sudo git fetch --all
        $ sudo git branch -a
        $ sudo git tag
        $ sudo git checkout <BRANCH_OR_TAG>
@@ -1029,7 +1032,7 @@ Below outlines how to do this automatically. [22]
 TripleO
 ~~~~~~~
 
-Supported operating systems: RHEL 7, Fedora >= 22
+Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
@@ -1190,19 +1193,35 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
 -  **Hypervisor** (optional)
 
-   -  Install the RDO Trunk / Delorean repositories.
+   -  Install the necessary repositories.
 
-      .. code-block:: sh
+      -  TripleO
 
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
+         -  Install the RDO Trunk / Delorean repositories.
 
-   -  Install the latest Tripleo repository manager. This will allow newer minor versions of OpenStack packages to be installed in the future. [83]
+            .. code-block:: sh
 
-      .. code-block:: sh
+                $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
+                $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
 
-          $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
-          $ sudo tripleo-repos -b queens current
+         -  Install the latest Tripleo repository manager. This will allow newer minor versions of OpenStack packages to be installed in the future. [83]
+
+            .. code-block:: sh
+
+                $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
+                $ sudo tripleo-repos -b queens current
+
+      -  RHOSP 10 [87]:
+
+         .. code-block:: sh
+
+             $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-2-tools-rpms --enable=rhel-7-server-rhceph-2-mon-rpms --enable=rhel-7-server-rhceph-2-osd-rpms --enable=rhel-7-server-openstack-10-rpms
+
+      -  RHOSP 13 [88]:
+
+         .. code-block:: sh
+
+             $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-3-tools-rpms --enable=rhel-7-server-rhceph-3-mon-rpms --enable=rhel-7-server-rhceph-3-osd-rpms --enable=rhel-7-server-openstack-13-rpms
 
    -  Optionally use the TripleO Quickstart project to automatically deploy the Undercloud virtual machine. Leave the overcloud\_nodes variable blank to only deploy the Undercloud. Otherwise, provide a number of virtual machines that should be created for use in the Overcloud.
 
@@ -1319,7 +1338,53 @@ Overcloud
 
 **Introspection**
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud as `outlined here <https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html#instackenv>`__. By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75]
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [37] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
+
+   -  All
+
+      -  name = The name of the node.
+      -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "fake_pxe".
+
+   -  IPMI
+
+      -  pm_user = The PM user to use.
+      -  pm_password = The PM password to use.
+      -  pm_addr = The PM IP address to use.
+
+   -  Fake PXE
+
+      -  arch = The processor architecture. The standard is "x86_64".
+      -  cpu = The number of processor cores.
+      -  mac = A list of MAC addresses that should be managed by Ironic.
+      -  memory = The amount of RAM, in MiB.
+      -  disk = The amount of disk space, in GiB.
+
+   -  Example instackenv.json:
+
+      .. code-block:: json
+
+          {
+              "nodes": [
+                  {
+                      "name": "control01",
+                      "pm_type": "fake_pxe",
+                      "mac": [
+                          "AA:BB:CC:DD:EE:FF"
+                      ],
+                      "arch": "x86_64",
+                      "cpu": "12",
+                      "memory": "32768",
+                      "disk": "256"
+                  },
+                  {
+                      "name": "compute01",
+                      "pm_type": "pxe_ipmitool",
+                      "pm_user": "IPMIUSER",
+                      "pm_password": "password123",
+                      "pm_addr": "10.10.10.11"
+                  }
+              ]
+          }
 
    -  Virtual lab environment:
 
@@ -1331,33 +1396,33 @@ Overcloud
 
              $ sudo virsh detach-interface ${VM_NAME} network --persistent --mac $(sudo virsh dumpxml ${VM_NAME} | grep -B4 vagrant-libvirt | grep mac | cut -d "'" -f2)
 
-      -  Import the nodes.
+-  Import the nodes.
 
-         -  Newton:
+   -  Newton:
 
-            .. code-block:: sh
+      .. code-block:: sh
 
-                $ openstack baremetal import --json instackenv.json
+          $ openstack baremetal import --json instackenv.json
 
-         -  Queens [85]:
+   -  Queens [85]:
 
-            .. code-block:: sh
+      .. code-block:: sh
 
-                $ openstack overcloud node import instackenv.json
-                Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
-                Waiting for messages on queue 'tripleo' with no timeout.
-                2 node(s) successfully moved to the "manageable" state.
-                Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
-                Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
-                $ openstack baremetal node list
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-                | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-                | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
-                | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
-                +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          $ openstack overcloud node import instackenv.json
+          Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
+          Waiting for messages on queue 'tripleo' with no timeout.
+          2 node(s) successfully moved to the "manageable" state.
+          Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
+          Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+          $ openstack baremetal node list
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+          | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | None        | manageable         | False       |
+          | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
+          +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
-      -  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
+-  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
 
          -  Newton:
 
@@ -1411,12 +1476,11 @@ Overcloud
 
                 $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
--  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86]
+-  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86] Commonly custom "control" and "compute" flavors will need to be created.
 
    .. code-block:: sh
 
-       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> control
-       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> compute
+       $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> --property "capabilities:profile"="<FLAVOR_NAME>" <FLAVOR_NAME>
 
 -  Configure the kernel and initramfs that the baremetal nodes should boot from.
 
@@ -1449,19 +1513,48 @@ Overcloud
 
 **Deployment**
 
--  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30]
+-  Configure the networking Heat templates that define the physical and virtual network interface settings.
+
+   -  Newton:
+
+      -  Pick a network configuration from ``/usr/share/openstack-tripleo-heat-templates/environments/`` and modify it to fit the deployment environment. Templates include:
+
+         -  bond-with-vlans
+         -  multiple-nics
+         -  single-nic-linux-bridge-vlans
+         -  single-nic-vlans
+
+   -  Queens:
+
+      -  Scenario #1 - Default templates:
+
+         .. code-block:: sh
+
+             $ mkdir /home/stack/templates/
+             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o /home/stack/templates/
+
+      -  Scenario #2 - Variables can be customized via the "roles_data.yml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+
+         .. code-block:: sh
+
+             $ mkdir /home/stack/templates/
+             $ cp /usr/share/openstack-tripleo-heat-templates/roles_data.yaml /home/stack/templates/roles_data_custom.yaml
+             $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
+             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
+
+-  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30] Lab environments may need to use a simple network configuration such as ``-e ~/templates/environments/net-single-nic-with-vlans.yaml -e ~/templates/environments/network-environment.yaml``.
 
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
+       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
    .. code-block:: sh
 
      $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
-     $ openstack overcloud deploy --templates -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
+     $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
 
    -  Virtual lab environment:
 
@@ -1629,41 +1722,6 @@ use ``/``.
     transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 
 [35]
-
-Scenario #2 - ZeroMQ
-
-This provides the best performance and stability. Scalability becomes a
-concern only when getting into hundreds of nodes. Instead of relying on
-a messaging queue, OpenStack services talk directly to each other using
-the ZeroMQ library. Redis is required to be running and installed for
-acting as a message storage back-end for all of the servers. [35][36]
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq+redis://<REDIS_HOST>:6379"
-
-.. code-block:: ini
-
-    [oslo_messaging_zmq]
-    rpc_zmq_bind_address = <IP_ADDRESS>
-    rpc_zmq_host = <FQDN_OR_IP_ADDRESS>
-
-Alternatively, for high availability, use Redis Sentinel servers in ``transport_url``.
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq+sentinel://<REDIS_SENTINEL_HOST1>:26379,<REDI_SENTINEL_HOST2>:26379"
-
-For all-in-one deployments, the minimum requirement is to specify that ZeroMQ should be used. This will use the "MatchmakerDummy" driver that will send messages to itself.
-
-.. code-block:: ini
-
-    [DEFAULT]
-    transport_url = "zmq://"
-
-[37]
 
 Ironic
 ~~~~~~
@@ -3330,15 +3388,15 @@ Bibliography
 11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
 13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
-14. "OpenStack-Ansible." GitHub. March 2, 2018. Accessed March 19, 2018. https://github.com/openstack/openstack-ansible
-15. "[OpenStack-Ansible] Quickstart: AIO." OpenStack  Documentation. March 26, 2018. Accessed March 26, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
-16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+14. "Hosts role should set SELinux into permissive mode." openstack-ansible Launchpad Bugs. January 27, 2017. Accessed July 25, 2018. https://bugs.launchpad.net/openstack-ansible/+bug/1657517
+15. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
+16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
 17. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os\_nova/queens/
 18. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 19. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph\_client/configure-ceph.html
 20. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
 21. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
-22. "[OpenStack-Ansible] Upgrade Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/index.html
+22. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html/
 23. "TripleO quickstart." RDO Project. Accessed March 26, 2018. https://www.rdoproject.org/tripleo/
 24. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
 25. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
@@ -3353,7 +3411,7 @@ Bibliography
 34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
 36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "ZeroMQ Driver Deployment Guide." OpenStack Documentation. March 1, 2018. Accessed March 15, 2018. https://docs.openstack.org/oslo.messaging/latest/admin/zmq\_driver.html
+37. "Baremetal Environment." TripleO OpenStack Documentation. July 24, 2018. Accessed July 24, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
 38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
@@ -3403,3 +3461,7 @@ Bibliography
 84. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
 85. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
 86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
+87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
+88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
+89. "Deploying and customizing OpenStack Mitaka with openstack-ansible." cunninghamshane. August 19, 2016. Accessed July 25, 2018. https://cunninghamshane.com/deploying-and-customizing-openstack-mitaka-with-openstack-ansible/
+90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
