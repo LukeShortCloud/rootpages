@@ -1204,23 +1204,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
           $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
           $ sudo tripleo-repos -b queens current
 
-   -  Install the Undercloud environment deployment tools.
-
-      .. code-block:: sh
-
-          $ sudo yum install instack-undercloud
-
-   -  Deploy a new virtual machine to be used for the Undercloud.
-
-      .. code-block:: sh
-
-          $ instack–virt–setup
-
-   -  Alternatively, use the TripleO Quickstart project to deploy the
-      Undercloud virtual machine. Leave the overcloud\_nodes variable
-      blank to only deploy the Undercloud. Otherwise, provide a number
-      of virtual machines that should be created for use in the
-      Overcloud.
+   -  Optionally use the TripleO Quickstart project to automatically deploy the Undercloud virtual machine. Leave the overcloud\_nodes variable blank to only deploy the Undercloud. Otherwise, provide a number of virtual machines that should be created for use in the Overcloud.
 
       .. code-block:: sh
 
@@ -1452,7 +1436,7 @@ Overcloud
 -  If the profile and/or boot option were not specified in the insackenv.json file then configure it now. Verify that the profiles have been applied.
 
    .. code-block:: sh
-   
+
        $ openstack baremetal node set --property capabilities='profile:control,boot_option:local' c1456e44-5245-4a4d-b551-3c6d6217dac4
        $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' 9a277de3-02be-4022-ad26-ec4e66d97bd1
        $ openstack overcloud profiles list --all
