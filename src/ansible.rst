@@ -4052,6 +4052,92 @@ Python API
 
 Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard such as the official AWX project. Using the direct Python libraries for Ansible is not recommended. [32]
 
+Testing
+-------
+
+Molecule
+~~~~~~~~
+
+Molecule is a tesitng framework designed specifically for Ansible. It assists with running syntax and other validation checks.
+
+Checks done by ``molecule test`` (in order of execution):
+
+-  lint = Run ``ansible-lint`` on the role.
+-  destroy = Destroy any existing virtual machines using the ``destroy.yml`` playbook.
+-  dependency = Install any necessary role dependencies from Ansible Galaxy.
+-  syntax = Check the YAML syntax.
+-  create = Create the virtual machine using the ``create.yml`` playbook.
+-  prepare = Run post-provisioning tasks to setup the virtual machine before testing the role using the ``prepare.yml`` playbook.
+-  converge = Test the role by running the ``molecule/default/playbook.yml`` playbook.
+-  idempotence = Verify that tasks are only changed when they need to be.
+-  side_effect
+-  verify
+-  destroy = Destroy the virtual machine.
+
+Supported virtualization drivers and their provisioners:
+
+-  azure
+-  delegated
+-  docker
+-  ec2
+-  gce
+-  lxc
+-  lxd
+-  openstack
+-  vagrant
+
+   -  libvirt
+   -  parallels (macOS)
+   -  virtualbox (default)
+   -  vmware
+
+Create a new role with Molecule and a specific virtualization driver. This will create the directory ``<ROLE>/molecule/default/`` that will store all of the Molecule settings and playbooks used for testing.
+
+.. code-block:: sh
+
+   $ molecule init role --role-name <ROLE> --driver-name <DRIVER>
+
+Molecule can be configured by the ``molecule.yml`` file. By default, it will use the Vagrant driver with VirtualBox as the hypervisor software for testing.
+
+.. code-block:: yaml
+
+   ---
+   driver:
+     name: <DRIVER>
+     provider:
+       name: <PROVIDER>
+
+Specific tests handled by the ``molecule test`` command can be turned off in the ``molecule.yml`` file.
+
+.. code-block:: yaml
+
+   ---
+   dependency:
+     name: galaxy
+     enabled: False
+   lint:
+     name: yamllint
+     enabled: False
+   provisioner:
+     name: ansible
+     enabled: False
+   verifier:
+     name: testinfra
+     enabled: False
+
+The main playbook test is executed with the ``molecule converge`` command. It will run through these steps in order:
+
+-  dependency
+-  create
+-  prepare
+-  converge
+
+Additional playbook arguments can be provided by stopping the current arguments for Molecule with ``--``. For example, ``molecule converge -- -vvv --skip-tags git``.
+
+The virtual environment can be accessed with ``molecule login`` and deleted with ``molecule destroy``.
+
+[70]
+
 Dashboards
 ----------
 
@@ -4791,3 +4877,4 @@ Bibliography
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
+70. "Molecule." Molecule documentation. Accessed August 3, 2018. https://molecule.readthedocs.io/en/latest/
