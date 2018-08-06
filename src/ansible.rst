@@ -16,6 +16,7 @@ Official documentation:
 
 -  `Stable <https://docs.ansible.com/ansible/latest/>`__
 -  `Development <https://docs.ansible.com/ansible/devel/>`__
+-  `2.6 <https://docs.ansible.com/ansible/2.6/>`__
 -  `2.5 <https://docs.ansible.com/ansible/2.5/>`__
 -  `2.4 <https://docs.ansible.com/ansible/2.4/>`__
 
