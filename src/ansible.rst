@@ -3462,13 +3462,14 @@ management (SCM) sources. [25]
 
     $ ansible-galaxy install --roles-path <PATH> <USER_NAME>.<ROLE_NAME>
 
-For a Role to work with Ansible Galaxy, it is required to have the
+For a role to work with Ansible Galaxy, it is required to have the
 ``meta/main.yml`` file. This will define supported Ansible versions and
-systems, dependencies on other Roles, the license, and other useful
+systems, dependencies on other roles, the license, and other useful
 information. [58]
 
 .. code-block:: yaml
 
+    ---
     galaxy_info:
       author:
       description:
@@ -3476,13 +3477,69 @@ information. [58]
       license:
       min_ansible_version:
       platforms:
-       - name: <OS_NAME>
-      versions:
-       - <OS_VERSION>
-      categories:
-      dependencies:
-        - { role: <ROLE_NAME> }
-        - { role: <ROLE_NAME>, <VARIABLE>: <VALUE> }
+        - name: <OS_NAME_1>
+          versions:
+            - <OS_VERSION>
+        - name: <OS_NAME_2>
+          versions:
+            - all
+      galaxy_tags:
+        - <TAG_1>
+        - <TAG_2>:
+    dependencies:
+      - <USER_NAME>.<ROLE_NAME>
+
+At least one tag should be one of the popular Ansible Galaxy categories [71]:
+
+-  cloud
+-  database
+-  development
+-  monitoring
+-  networking
+-  packaging
+-  security
+-  system
+-  web
+
+Below is an example of defining support for all Linux operating systems that are listed in Galaxy:
+
+.. code-block:: yaml
+
+    platforms:
+      - name: Alpine
+        versions:
+          - all
+      - name: ArchLinux
+        versions:
+          - all
+      - name: Debian
+        versions:
+          - all
+      - name: Devuan
+        versions:
+          - all
+      - name: EL
+        versions:
+          - all
+      - name: Fedora
+        versions:
+          - all
+      - name: GenericLinux
+        versions:
+          - all
+      - name: opensuse
+        versions:
+          - all
+      - name: SLES
+        versions:
+          - all
+      - name: Ubuntu
+        versions:
+          - all
+      - name: Void Linux
+        versions:
+          - all
+
 
 Dependencies
 ^^^^^^^^^^^^
@@ -3553,9 +3610,9 @@ Git with SSH example (useful for GitLab):
 Community Roles
 ^^^^^^^^^^^^^^^
 
-Unofficial community Roles can be used within Playbooks. Most of these
+Unofficial community roles can be used within Playbooks. Most of these
 can be found on `Ansible Galaxy <https://galaxy.ansible.com/>`__ or
-`GitHub <https://github.com/>`__. This section covers some useful Roles.
+`GitHub <https://github.com/>`__. This section covers some useful roles for system administrators.
 
 Network Interface
 '''''''''''''''''
@@ -4879,3 +4936,4 @@ Bibliography
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
 70. "Molecule." Molecule documentation. Accessed August 3, 2018. https://molecule.readthedocs.io/en/latest/
+71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
