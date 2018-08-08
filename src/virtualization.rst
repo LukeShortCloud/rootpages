@@ -100,7 +100,7 @@ Calculate the optimal Huge Pages total based on the amount of RAM that will be a
 
     <AMOUNT_OF_RAM_FOR_VMS_IN_KB> / <HUGEPAGES_SIZE> = <HUGEPAGES_TOTAL>
 
-Enable Huge Pages by setting the total in sysctl and then in the virtual machine.
+Enable Huge Pages by setting the total in sysctl.
 
 .. code-block:: sh
 
@@ -110,6 +110,8 @@ Enable Huge Pages by setting the total in sysctl and then in the virtual machine
     $ sudo mkdir /hugepages
     $ sudo vim /etc/fstab
     hugetlbfs    /hugepages    hugetlbfs    defaults    0 0
+
+Huge Pages must be configured to be used by the virtualization software. The hypervisor isolates and reserves the Huge Pages RAM and will otherwise make the memory unusable by other resources.
 
 libvirt:
 
@@ -143,7 +145,7 @@ BIOS:
 
     $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
-Alternatively, THP can be manually disabled.
+Alternatively, THP can be manually disabled. Note that if the GRUB method is used, it will set "enabled" to "never" on boot which means "defrag" does not need to be set to "never" since it is not in use. This manual method should be used on systems that will not be rebooted.
 
 .. code-block:: sh
 
@@ -152,16 +154,28 @@ Alternatively, THP can be manually disabled.
 
 In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
 
-Increase the security limits in Fedora to allow the maximum valuable of RAM for a virtual machine that can be used with Huge Pages.
+Increase the security limits in Fedora to allow the maximum valuable of RAM (in kilobytes) for a virtual machine that can be used with Huge Pages.
 
 File: /etc/security/limits.d/90-mem.conf
 
-.. code-block:: ini
+::
 
-    soft memlock 8388608
-    hard memlock 8388608
+    soft memlock 25165824
+    hard memlock 25165824
 
-Reboot the server for the new settings to take affect.
+Reboot the server and verify that the new settings have taken affect.
+
+.. code-block:: sh
+
+    $ grep -i huge /proc/meminfo
+    AnonHugePages:         0 kB
+    ShmemHugePages:        0 kB
+    HugePages_Total:    8192
+    HugePages_Free:        0
+    HugePages_Rsvd:        0
+    HugePages_Surp:        0
+    Hugepagesize:       2048 kB
+    Hugetlb:        16777216 kB
 
 [43]
 
