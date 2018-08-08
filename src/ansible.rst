@@ -3318,9 +3318,7 @@ Example:
 Module Development
 ~~~~~~~~~~~~~~~~~~
 
-Official Ansible module development documentation:
-
--  http://docs.ansible.com/ansible/latest/dev\_guide/index.html
+Official Ansible module development documentation can be found `here <http://docs.ansible.com/ansible/latest/dev\_guide/index.html>`__.
 
 All of the helper libraries for Ansible can be found in
 `lib/ansible/modules\_utils/ <https://github.com/ansible/ansible/tree/devel/lib/ansible/module_utils>`__.
@@ -3347,92 +3345,75 @@ this.
 These are all of the various settings that can be defined and used
 AnsibleModule object.
 
-**``AnsibleModule`` initialization:**
+-  ``AnsibleModule`` **initialization:**
 
--  argument\_spec = A dictionary of arguments that can be provided by a
-   user using this module. Each argument can have it's own settings.
+   -  argument\_spec = A dictionary of arguments that can be provided by a user using this module. Each argument can have it's own settings.
 
-   -  ``<ARGUMENT_NAME>`` = A unique argument name should be given. This
-      will contain a dictionary of additional settings for this
-      argument.
+      -  ``<ARGUMENT_NAME>`` = A unique argument name should be given. This
+         will contain a dictionary of additional settings for this
+         argument.
 
-      -  aliases = A list of other names that can be used to reference
-         this same argument.
-      -  choices = A list of explicit valid choices for this argument.
-         This is primarily used for documentation.
-      -  required = True or False. If this argument is required for the
-         module to work.
-      -  default = A default value to provide if the user does not
-         specify one.
-      -  type = The type of value that should be provided. This can be
-         any valid Python variable type. Common types include:
+         -  aliases = A list of other names that can be used to reference
+            this same argument.
+         -  choices = A list of explicit valid choices for this argument.
+            This is primarily used for documentation.
+         -  required = True or False. If this argument is required for the
+            module to work.
+         -  default = A default value to provide if the user does not
+            specify one.
+         -  type = The type of value that should be provided. This can be
+            any valid Python variable type. Common types include:
 
-         -  bool = Boolean.
-         -  float = Float, a decimal number.
-         -  int = Integer, a whole number.
-         -  list
-         -  path = A path to a file or directory.
-         -  string
+            -  bool = Boolean.
+            -  float = Float, a decimal number.
+            -  int = Integer, a whole number.
+            -  list
+            -  path = A path to a file or directory.
+            -  string
 
--  required\_one\_of = A list of arguments where at least one is
-   required for the module to work.
--  mutually\_exclusive = A list of arguments that cannot be used
-   together.
--  supports\_check\_mode = Specify if this module supports Ansible's
-   "check mode" where it can check to see if this module will change
-   anything without modifying the system. This sets the
-   ``module.check_mode`` boolean.
+   -  required\_one\_of = A list of arguments where at least one is required for the module to work.
+   -  mutually\_exclusive = A list of arguments that cannot be used together.
+   -  supports\_check\_mode = Specify if this module supports Ansible's "check mode" where it can check to see if this module will change anything without modifying the system. This sets the ``module.check_mode`` boolean.
 
-**``module`` common object methods:**
+-  ``module`` **common object methods:**
 
--  \_deprecation = A dictionary of information for a deprecation
-   message.
+   -  \_deprecation = A dictionary of information for a deprecation message.
 
-   -  msg = The deprecation string.
-   -  version = The version this was / will be deprecated in.
+      -  msg = The deprecation string.
+      -  version = The version this was / will be deprecated in.
 
--  \_warnings = A list of warnings to provide the end user.
--  append\_to\_file = Append text to a file.
--  atomic\_move = Copy a source file to a destination. The new
-   destination file will use the same file attributes as the original
-   destination file.
--  debug = Debug a variable's value.
--  digest\_from\_file = Return a checksum of a file.
--  exit\_json = A dictionary of return data when the module finishes
-   successfully.
+   -  \_warnings = A list of warnings to provide the end user.
+   -  append\_to\_file = Append text to a file.
+   -  atomic\_move = Copy a source file to a destination. The new destination file will use the same file attributes as the original destination file.
+   -  debug = Debug a variable's value.
+   -  digest\_from\_file = Return a checksum of a file.
+   -  exit\_json = A dictionary of return data when the module finishes successfully.
 
-   -  *kwargs* = Any variables can be passed to this method and will be
-      returned in the error message. Common variable names and values to
-      pass include:
+      -  *kwargs* = Any variables can be passed to this method and will be returned in the error message. Common variable names and values to pass include:
 
-      -  changed = A boolean stating if anything has changed.
-      -  changes = A dictionary of items that were changed.
-      -  results = A dictionary of results that should be returned to
-         the end user.
+         -  changed = A boolean stating if anything has changed.
+         -  changes = A dictionary of items that were changed.
+         -  results = A dictionary of results that should be returned to the end user.
 
--  fail\_json = A dictionary for when the module fails.
+   -  fail\_json = A dictionary for when the module fails.
 
-   -  msg = A string of a failure message.
-   -  *kwargs* = Any other variables can be passed to this method and
-      will be returned in the error message.
+      -  msg = A string of a failure message.
+      -  *kwargs* = Any other variables can be passed to this method and will be returned in the error message.
 
--  from\_json = Convert JSON data into a dictionary.
--  get\_bin\_path = Find the path of a binary on the managed system.
--  jsonify = Convert a variable into JSON format.
--  run\_command = Run a command on the managed system. This method will
-   return the return code, the standard output, and the standard error
-   from the process. Example:
+   -  from\_json = Convert JSON data into a dictionary.
+   -  get\_bin\_path = Find the path of a binary on the managed system.
+   -  jsonify = Convert a variable into JSON format.
+   -  run\_command = Run a command on the managed system. This method will return the return code, the standard output, and the standard error from the process. Example:
 
 .. code-block:: python
 
     cmd = "echo Hello world"
     rc, out, err = module.run_command(cmd)
 
-**``module`` common object variables:**
+-  ``module`` **common object variables:**
 
--  check\_mode = Boolean. Determines if check\_mode is supported based
-   on what ``module.supports_check_mode`` value is set to.
--  params = Dictionary. All of the module argument variables.
+   -  check\_mode = Boolean. Determines if check\_mode is supported based  on what ``module.supports_check_mode`` value is set to.
+   -  params = Dictionary. All of the module argument variables.
 
 [44]
 
