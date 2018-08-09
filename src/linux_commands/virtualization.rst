@@ -93,6 +93,25 @@ Create and manage OpenShift clusters.
    "cluster up --public-hostname <IP>", "specify the IP to bind to for OpenShift Origin", ""
    "cluster down", "remove OpenShift Origin", ""
 
+oVirt
+-----
+
+hosted-engine
+~~~~~~~~~~~~~
+
+This manages the oVirt Engine virtual machine.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "--help", "Show the available arguments.", ""
+   "<ARGUMENT> --help", "Show additional help information about a specific argument.", ""
+   "--console", "Attach to the text console of the virtual machine for troubleshooting.", ""
+   "--vm-start", "Start the virtual machine.", ""
+   "--vm-status", "View the status of the virtual machine.", ""
+   "--vm-{shutdown|poweroff}", "Gracefully shutdown the virtual machine or force it to be powered off immediately.", ""
+
 QEMU
 ----
 
