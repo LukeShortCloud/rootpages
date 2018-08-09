@@ -418,8 +418,8 @@ For uninstalling everything that is installed by Packstack, run `this Bash scrip
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
-Supported operating systems: Ubuntu 16.04
-Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
+-  Supported operating systems: Ubuntu 16.04
+-  Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
 
 OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
@@ -433,6 +433,12 @@ It offers key features that include:
 -  Automated upgrades.
 
 [16]
+
+The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack-ansible>`__ has three different versions that can be used for deployments or upgrades.
+
+-  ``stable/<OPENSTACK_RELEASE_NAME>`` = A branch for a specific release of OpenStack. All of the latest updates are committed here. Example: "stable/queens".
+-  ``<OPENSTACK_RELEASE_NUMBER_MAJOR>.<OSA_MINOR>.<OSA_PATCH>`` = A tag of a specific OpenStack-Ansible release. The major version number is the same number that correlates to the OpenStack release. The minor and patch versions represent OpenStack-Ansible updates to the code. Example: "17.0.2" is the OpenStack Queens release and is the second OpenStack-Ansible update.
+-  ``<OPENSTACK-RELEASE>-eol`` =  A tag of an end-of-life release. Upstream versions of OpenStack no longer recieve any support after a year. This contains the last code for that release. Example: "newton-eol".
 
 SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [14]
 
