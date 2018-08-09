@@ -507,6 +507,25 @@ After a reboot, the three-node MariaDB Galera cluster needs to be restarted prop
 
 [15]
 
+OpenStack-Ansible will create a default "public" and "private" networks. These are both on isolated networks that are only on the hypervisor. These networks can be removed by deleting these resources in the order below.
+
+.. code-block:: sh
+
+    $ openstack router unset --external-gateway router
+    $ openstack router remove subnet router private-subnet
+    $ openstack router delete router
+    $ openstack network delete public
+    $ openstack network delete private
+
+The all-in-one environment does not have the ability to create networks on the external network. On a more complete lab deployment of OpenStack-Ansible (not an all-in-one), this is normally accomplished by creating a flat provider network.
+
+.. code-block:: sh
+
+    $ openstack network create --share --provider-network-type flat --provider-physical-network flat external_network
+    $ openstack subnet create --subnet-range 192.168.1.0/24 --allocation-pool start=192.168.1.201,end=192.168.1.254 --dns-nameserver 192.168.1.1 --gateway 192.168.1.1 --no-dhcp --network external_network external_subnet
+
+[91]
+
 Uninstall
 '''''''''
 
@@ -3471,3 +3490,4 @@ Bibliography
 88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
 89. "Deploying and customizing OpenStack Mitaka with openstack-ansible." cunninghamshane. August 19, 2016. Accessed July 25, 2018. https://cunninghamshane.com/deploying-and-customizing-openstack-mitaka-with-openstack-ansible/
 90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
+91. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
