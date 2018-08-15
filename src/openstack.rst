@@ -2731,17 +2731,39 @@ guides but most of these guidelines should still apply to manual
 deployment upgrades. The entire steps include to:
 
 -  Backup configuration files and databases.
--  Review the release notes of the OpenStack services that will be
+-  Review the `release notes <https://releases.openstack.org/>`__ of the OpenStack services that will be
    upgraded. These will contain details of deprecations and new
-   configuration changes. https://releases.openstack.org/
--  Update configuration files. Sample configurations can be found at
-   ``http://docs.openstack.org/<RELEASE>/config-reference/``.
+   configuration changes.
+-  Update configuration files. Sample configuration options can be found at
+   ``https://docs.openstack.org/<RELEASE>/configuration/``.
 -  If not already, consider using an automation tool such as Ansible to
    deploy new service configurations.
 -  Remove the old package repository for OpenStack.
 -  Add the new package repository for OpenStack.
--  Update all of the packages.
--  Restart the services. ``openstack-service restart``
+-  Update all of the packages on the controller node first.
+-  Update the database schemas. [92]
+
+.. code-block:: sh
+
+    $ sudo keystone-manage token_flush
+    $ su -s /bin/sh -c "keystone-manage db_sync" keystone
+    $ su -s /bin/sh -c "glance-manage db_sync" glance
+    $ su -s /bin/sh -c "cinder-manage db sync" cinder
+    $ su -s /bin/sh -c "heat-manage db_sync" heat
+    $ su -s /bin/sh -c "nova-manage db sync" nova
+    $ su -s /bin/sh -c "nova-manage api_db sync" nova
+    $ ceilometer-dbsync
+    $ aodh-dbsync
+    $ gnocchi-upgrade
+    $ su -s /bin/sh -c "sahara-db-manage upgrade heads" sahara
+    $ su -s /bin/sh -c "neutron-db-manage upgrade heads" neutron
+
+-  Restart the services on the controller nodes. ``$ sudo openstack-service restart``
+-  View the logs for any problems.
+
+   -  Services on the controller nodes support messages/requests from the current version and the previous version so everything should still continue to work properly.
+
+-  Update the packages and restart the services on the other nodes.
 
 [62]
 
@@ -3491,3 +3513,4 @@ Bibliography
 89. "Deploying and customizing OpenStack Mitaka with openstack-ansible." cunninghamshane. August 19, 2016. Accessed July 25, 2018. https://cunninghamshane.com/deploying-and-customizing-openstack-mitaka-with-openstack-ansible/
 90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
 91. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
+92. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
