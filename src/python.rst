@@ -271,6 +271,26 @@ Example:
 
 [5]
 
+
+Libraries
+---------
+
+Logging
+~~~~~~~
+
+``import logging``
+
+-  logging.debug() = Verbose information for developers.
+-  logging.info() = General information about the program's activity.
+-  logging.warning() = Notification of an unexpected event that did not affect the program currently.
+-  logging.error() = One more functions failed to execute properly.
+-  logging.critical() = A fatal issue has occurred that will cause the program to crash.
+-  logging.exception() = Python encountered a fatal error.
+
+Logging levels can be configured using ``logging.basicConfig(level=<LEVEL>)``. It can also output to a file instead of standard output/error by using ``logging.basicConfig(filename="<FILE_NAME>")``.
+
+[6]
+
 Object Oriented Programming
 ---------------------------
 
@@ -323,4 +343,5 @@ Bibliography
 2. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
 3. "Python Operators." Programiz. Accessed January 29, 2018. https://www.programiz.com/python-programming/operators
 4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
-5. "Compound statements." Python Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
+5. "Compound statements." Python 3 Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
+6. "Logging HOWTO." Python 3 Documentation. Accessed August 15, 2018. https://docs.python.org/3/howto/logging.html
