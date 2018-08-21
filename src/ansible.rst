@@ -53,7 +53,7 @@ Source code:
     $ git clone git://github.com/ansible/ansible.git
     $ cd ./ansible/
     $ git branch -a | grep stable
-    $ git checkout remotes/origin/stable-2.4
+    $ git checkout remotes/origin/stable-2.6
     $ git submodule update --init --recursive
     $ source ./hacking/env-setup
 
@@ -68,7 +68,7 @@ Ansible RPMs for Fedora based operating systems are available from:
 
 -  The "extras" repository (Fedora)
 -  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL/CentOS and Fedora)
--  The Ansible Engine repository rhel-7-server-ansible-2.5-rpms (RHEL)
+-  The Ansible Engine repository rhel-7-server-ansible-2.6-rpms (RHEL)
 
 [18]
 
@@ -4864,7 +4864,7 @@ Bibliography
 15. "Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks\_async.html
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
-18. "Installation Guide." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/installation_guide/intro\_installation.html
+18. "Installation Guide." Ansible Documentation. August 17, 2018. Accessed August 21, 2018. https://docs.ansible.com/ansible/latest/installation_guide/intro\_installation.html
 19. "Cache Plugins." Ansible Documentation. July 5, 2018. Accessed July 12, 2018. https://docs.ansible.com/ansible/latest/plugins/cache.html
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
