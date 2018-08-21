@@ -507,7 +507,7 @@ After a reboot, the three-node MariaDB Galera cluster needs to be restarted prop
 
 [15]
 
-OpenStack-Ansible will create a default "public" and "private" networks. These are both on isolated networks that are only on the hypervisor. These networks can be removed by deleting these resources in the order below.
+OpenStack-Ansible will create a default "public" and "private" networks for the "demo" project. These are both on isolated networks that are only on the hypervisor. These networks can be removed by deleting these resources in the order below.
 
 .. code-block:: sh
 
@@ -517,12 +517,14 @@ OpenStack-Ansible will create a default "public" and "private" networks. These a
     $ openstack network delete public
     $ openstack network delete private
 
-The all-in-one environment does not have the ability to create networks on the external network. On a more complete lab deployment of OpenStack-Ansible (not an all-in-one), this is normally accomplished by creating a flat provider network.
+The all-in-one environment does not have the ability to create networks on the external network. On a more complete lab deployment of OpenStack-Ansible (not an all-in-one), this is normally accomplished by creating a flat provider network. Example:
 
 .. code-block:: sh
 
-    $ openstack network create --share --provider-network-type flat --provider-physical-network flat external_network
+    $ openstack router create router_public
+    $ openstack network create --share --provider-network-type flat --provider-physical-network flat --external external_network
     $ openstack subnet create --subnet-range 192.168.1.0/24 --allocation-pool start=192.168.1.201,end=192.168.1.254 --dns-nameserver 192.168.1.1 --gateway 192.168.1.1 --no-dhcp --network external_network external_subnet
+    $ openstack router set router_public --external-gateway external_network
 
 [91]
 
