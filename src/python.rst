@@ -3,6 +3,8 @@ Python 3
 
 .. contents:: Table of Contents
 
+These notes target Python >= 3.6 and should also mostly apply to older versions of Python.
+
 PEP
 ---
 
@@ -275,22 +277,113 @@ Example:
 Libraries
 ---------
 
+(Native)
+~~~~~~~~
+
+These are methods that are natively available in a default installation of Python.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "help()", "Shows human friendly help information about a library.", "help(math)"
+   "dir()", "Show all of the available functions from a library or object.", ""
+   "print()", "Shows a string to standard output.", "print('Hello world')"
+   "input()", "Read standard input from a terminal", ""
+   "type()", "Find what data type a variable is.", ""
+   "int()", "Convert to an integer.", "int('4')"
+   "str()", "Convert to a string", "str(1)"
+   "list()", "Convert characters into a list.", "list('hello')"
+   "tuple()", "Convert to a tuple", "tuple(my_list_var)"
+   "len()", "Return the length of a string or list", ""
+
+[7]
+
+(Strings)
+^^^^^^^^^
+
+These are methods that can be used on string objects.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "upper()", "Convert all characters into upper-case (capitalized)", ""
+   "lower()", "Convert all characters to be lower-case.", ""
+   "len()", "Return the number of characters in the string.", ""
+   "count()", "Return the number of times a character or string appears in a string.", ""
+   "split()", "Split a string into a list based on a specific character or string.", ""
+   "replace(<STRING1>, <STRING2>)", "Replace all occurrences of one string with another.", ""
+   "index()", "Return the index of a specific character.", ""
+   "remove(<INDEX>)", "Remove an item from the list at the specified index.", ""
+
+[8]
+
+(Lists)
+^^^^^^^
+
+There are methods that can be used on list objects.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "len()", "Return the number of items in a list.", ""
+   "count()", "Return the number of times an item appears in a list.", ""
+   "sort()", "Sort the items in a list used the sorted() function.", ""
+   "reverse()", "Reverse the order of items in a list.", ""
+   "append()", "Append an item to a list.", ""
+   "index()", "Return the index of a specific item.", ""
+   "insert()", "Insert an item into a list at a specific index.", ""
+   "pop()", "Return an item from a specific position (the last position is default) and remove it from the list.", ""
+   "clear()", "Clear out all values from the list to make it empty.", ""
+   "join()", "Convert a list into a single string.", "','.join(list_variable)"
+
+[9]
+
+(Dictionaries)
+^^^^^^^^^^^^^^
+
+There are methods that can be used on key-value store dictionary objects.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "len(<DICT>)", "The native len() library will return the number of keys in a dictionary.", "len(car_models)"
+   "get(<KEY>)", "Return the value of a specified key.", ""
+   "<DICT>[<KEY>] = <VALUE>", "Change the given value at the specified key.", "lightsabers[luke][color] = 'green'"
+   "del <DICT>[<KEY>]", "Remove a key.", "del furniture_brands['comfyplus']"
+   "keys()", "Return all of the keys.", ""
+   "values()", Return all of the values.", ""
+   "pop(<KEY>)", "Return a key-value pair from a specific position (the last position is default) and remove it from the list.", ""
+   "clear()", "Clear out all values from the dictionary to make it empty.", ""
+
+[10]
+
 Logging
 ~~~~~~~
 
 ``import logging``
 
--  logging.debug() = Verbose information for developers.
--  logging.info() = General information about the program's activity.
--  logging.warning() = Notification of an unexpected event that did not affect the program currently.
--  logging.error() = One more functions failed to execute properly.
--  logging.critical() = A fatal issue has occurred that will cause the program to crash.
--  logging.exception() = Python encountered a fatal error.
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
 
-Logging levels can be configured using ``logging.basicConfig(level=<LEVEL>)``. It can also output to a file instead of standard output/error by using ``logging.basicConfig(filename="<FILE_NAME>")``.
+   "input()", "", ""
+   "debug()", "Verbose information for developers.", ""
+   "info()", "General information about the program's activity.", ""
+   "warning()", "Notification of an unexpected event that did not affect the program currently.", ""
+   "error()", "One more functions failed to execute properly.", ""
+   "critical()", "A fatal issue has occurred that will cause the program to crash.", ""
+   "exception()", "Python encountered a fatal error.", ""
+   "basicConfig(level=<LEVEL>)", "Set the logging level.", ""
+   "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input.", ""
+   "FileHandler()", "The file to log to.", ""
+   "setLevel()", "Log to a file instead of standard output or input.", "logging.setLevel(logging.INFO)"
 
 [6]
-
+ 
 Object Oriented Programming
 ---------------------------
 
@@ -345,3 +438,7 @@ Bibliography
 4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
 5. "Compound statements." Python 3 Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
 6. "Logging HOWTO." Python 3 Documentation. Accessed August 15, 2018. https://docs.python.org/3/howto/logging.html
+7. "Built-in Functions." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/functions.html
+8. "string - Common string operations." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/string.html
+9. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/tutorial/datastructures.html
+10. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/stdtypes.html
