@@ -11,10 +11,12 @@ PEP
 Python Enhancement Proposals (PEPs) are guidelines to improve Python
 itself and developer's code. Each PEP is assigned a specific number. [1]
 
-Style Guide for Python Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Style Guide for Python Code (PEP 8)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PEP 8 is the "Style Guide for Python Code."
+-  Each line in the code should not be longer than 80 characters.
+
+   -  If it is, then keep it at 72 characters and wrap it down to the next line.
 
 -  Class names should:
 
@@ -44,7 +46,9 @@ PEP 8 is the "Style Guide for Python Code."
 -  Variables names should:
 
    -  Have the first letter be lowercase.
-   -  Contain no underscores "``_``."
+   -  Constant variable names, whose value will never change, should be all uppercase.
+   -  Use underscores ``_`` to separate words.
+   -  Not start with underscores.
 
       -  Unless they are private variables, then it needs to start with
          two underscores.
@@ -58,12 +62,12 @@ PEP 8 is the "Style Guide for Python Code."
 
 Example:
 
-::
+.. code-block:: python
 
     if (phoneNumber == 999):
         
-        if (callerID is “Frank”):
-            print(“Hello Frank.”)
+        if (callerID == "Frank"):
+            print("Hello Frank.")
         else:
             print("Hello everyone else.")
     
@@ -71,6 +75,7 @@ Example:
 
 -  Comments should:
 
+   -  Start with a ``#`` and a space after that.
    -  Be full sentences.
 
 [2]
@@ -433,7 +438,7 @@ Bibliography
 ------------
 
 1. "PEP 0 -- Index of Python Enhancement Proposals (PEPs)." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/
-2. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide. Accessed November 15, 2017. https://www.python.org/dev/peps/pep-0008/
+2. "PEP 8 -- Style Guide for Python Code." Python's Developer's Guide. Accessed August 26, 2018. https://www.python.org/dev/peps/pep-0008/
 3. "Python Operators." Programiz. Accessed January 29, 2018. https://www.programiz.com/python-programming/operators
 4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
 5. "Compound statements." Python 3 Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
