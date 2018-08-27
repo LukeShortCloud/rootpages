@@ -4164,6 +4164,20 @@ Specific tests handled by the ``molecule test`` command can be turned off in the
      name: testinfra
      enabled: False
 
+docker containers will require a "command" is provided to start and keep it running. By default, an infinite while loop with a sleep command is executed using Bash for maximum portability. [72]
+
+Example command:
+
+.. code-block:: yaml
+
+   platforms:
+     - name: centos_7
+       image: centos:7
+       command: bash -c 'while true; do sleep 1; done'
+     - name: ubuntu_1804
+       image: ubuntu:18.04
+       command: sleep infinity
+
 The main playbook test is executed with the ``molecule converge`` command. It will run through these steps in order:
 
 -  dependency
@@ -4171,9 +4185,27 @@ The main playbook test is executed with the ``molecule converge`` command. It wi
 -  prepare
 -  converge
 
-Additional playbook arguments can be provided by stopping the current arguments for Molecule with ``--``. For example, ``molecule converge -- -vvv --skip-tags git``.
+Additional playbook arguments can be provided by stopping the current arguments for Molecule with ``--``.
 
-The virtual environment can be accessed with ``molecule login`` and deleted with ``molecule destroy``.
+Example:
+
+.. code-block:: sh
+
+   $ molecule converge -- -vvv --become-user=vagrant
+
+Specific tasks in a role can be disabled by setting the "molecule-notest" or "notest" tag.
+
+During the creation and deletion of the infrastructure to test with, Ansible is set to disable logging to hide sensitive information about the environment. If any issues are encountered, the environment variable ``MOLECULE_DEBUG=true`` can be set to re-enable logging information about the tasks.
+
+The virtual environment instance can be accessed with ``molecule login``. If more than one environment is created, use the ``--host`` argument to specify which one to enter.
+
+Example:
+
+.. code-block:: sh
+
+   $ molecule login --host <HOST2>
+
+Delete instances with ``molecule destroy``.
 
 [70]
 
@@ -4918,3 +4950,4 @@ Bibliography
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
 70. "Molecule." Molecule documentation. Accessed August 3, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
+72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
