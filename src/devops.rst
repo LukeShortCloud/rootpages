@@ -112,7 +112,7 @@ Common OOP Languages:
 Unit Testing
 ------------
 
-Each function/method in a program should have a test written for it. Whenever any part of a program's code is modified, all of these unit tests should be ran to confirm that they continue to work as intended.
+Every function or method in a program needs a related test. Each unit test should be written at the same time as the function itself is. Whenever any part of a program's code is modified, all of these unit tests should be ran to confirm that each part of the program continues to work as intended.
 
 Continuous Integration and Continuous Deployment
 ------------------------------------------------
