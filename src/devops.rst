@@ -62,6 +62,14 @@ GitHub
 
 GitHub was the first public git service and it is where the official code for the ``git`` program itself is stored and managed. GitHub Enterprise is a paid and supported solution for running private GitHub servers. https://github.com/
 
+Patches can accessed by going to:
+
+``https://github.com/<USER>/<PROJECT>/commit/<COMMIT_SHA>.patch``
+
+Raw non-binary text files can be accessed by going to:
+
+``https://raw.githubusercontent.com/<USER>/<PROJECT>/<COMMIT_SHA>/<PATH_TO_FILE>``
+
 GitPrep
 ^^^^^^^
 
