@@ -17,7 +17,17 @@ SCRUM
 Technical Design Document
 --------------------------
 
-A technical design document (TDD) verbosely explains exactly how a program will work (in present tense) and why the program is needed. All functions and APIs are explained including the expected input and output.
+A technical design document (TDD) verbosely explains exactly how a program will work (in the present tense) and why the program is needed and precisely how it will be created. This also helps to define unit tests. The TDD should describe:
+
+-  The purpose of the program.
+-  Use cases. Examples of how the program will be consumed by end-users.
+-  Technologies. The software and hardware technologies that the program will be using. These include the programming language, libraries, and the environment it will run on.
+-  Functions and APIs. The expected inputs and outputs.
+-  If applicable, the user interface (UI). How it should look and the expected inputs and outputs.a
+-  Milestones. The expected functionality and state of a specific version of the program and how long it should take to develop. Eventually the time estimates should be updated to reflect how much time it did take for development. These milestones could be alpha, beta, and stable milestones.
+-  Revisions. The revision history for the TDD. The document should only be updated after a milestone is reached or, if necessary, after a sprint. All changes to the document should be noted.
+
+[2]
 
 Integrated Development Environments
 -----------------------------------
@@ -127,3 +137,4 @@ Bibliography
 ------------
 
 1. "Configuration Cheat Sheet." Gitea Documentaiton. Accessed July 10, 2018. https://docs.gitea.io/en-us/config-cheat-sheet/
+2. "Why Writing Software Design Documents Matters." Toptal. Accessed September 3, 2018. https://www.toptal.com/freelance/why-design-documents-matter
