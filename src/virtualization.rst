@@ -287,6 +287,13 @@ Verify that the computer's processor supports nested hardware virtualization.
 
        $ grep -m 1 svm /proc/cpuinfo
 
+Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processer and storage. [49] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [50]
+
+.. code-block:: sh
+
+    $ dmesg | grep x2apic
+    [    0.062174] x2apic enabled
+
 Option #1 - Modprobe
 
 -  Intel
@@ -296,6 +303,7 @@ File: /etc/modprobe.d/nested_virtualization.conf
    ::
 
        options kvm-intel nested=1
+       options kvm-intel enable_apicv=1
 
    .. code-block:: sh
 
@@ -309,6 +317,7 @@ File: /etc/modprobe.d/nested_virtualization.conf
    ::
 
        options kvm-amd nested=1
+       options kvm-amd enable_apicv=1
 
    .. code-block:: sh
 
@@ -1246,3 +1255,5 @@ Bibliography
 46. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
 47. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
 48. "Getting started with Docker." Fedora Developer Portal. Accessed May 16, 2018. https://developer.fedoraproject.org/tools/docker/docker-installation.html
+49. "APIC Virtualization Performance Testing and Iozone." Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone
+50. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
