@@ -4845,33 +4845,7 @@ Semaphore will now be available at ``http://<SEMAPHORE_HOST>:3000``.
 Tensor
 ~~~~~~
 
-Tensor is a open source dashboard and API for both Ansible and
-Terraform, written in Go by Pearson. Most of the public facing
-documentation on it's GitHub page is either incomplete or missing.
-
-Requirements:
-
--  Ansible 2
--  Git
--  Go
--  MongoDB 3.3
-
-The ``Makefile`` supports building packages for Debian and RHEL based
-distributions as well creating docker containers.
-
-.. code-block:: sh
-
-    $ make deb
-
-.. code-block:: sh
-
-    $ make rpm
-
-.. code-block:: sh
-
-    $ make docker
-
-[57]
+Tensor is an open source dashboard and API for infrastructure management using both Ansible and Terraform. It is written in Go and created by Pearson. The public facing documentation is incomplete and missing. Tensor is no longer supported since June of 2017. [57]
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/ansible.rst>`__
 ----------------------------------------------------------------------------------
@@ -4935,7 +4909,7 @@ Bibliography
 54. "Net Tools Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_net\_tools\_modules.html
 55. "System Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
 56. "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017. Accessed September 26, 2017. https://github.com/Batix/rundeck-ansible-plugin
-57. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 26, 2017. https://github.com/pearsonappeng/tensor
+57. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 6, 2018. https://github.com/pearsonappeng/tensor
 58. "Including and Importing." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/playbooks\_reuse\_includes.html
 59. "Specify a PGDATA directory to prevent container re-create issues #535." GitHub Ansible. February 22, 2018. Accessed March 9, 2018. https://github.com/ansible/awx/pull/535
 60. "1.0.4 - 1.0.5 upgrade killed my workers & errors db upgrade Key (username)=(admin) already exists. #1707." GitHub AWX. March 30, 2018. Accessed April 6, 2018. https://github.com/ansible/awx/issues/1707
