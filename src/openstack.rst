@@ -1538,6 +1538,13 @@ Overcloud
        | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | available       | compute         |                   |       |
        +--------------------------------------+-----------+-----------------+-----------------+-------------------+-------
 
+-  Set a DNS nameserver.
+
+   .. code-block:: sh
+
+      $ openstack subnet list
+      $ openstack subnet set --dns-nameserver 8.8.8.8 <SUBNET_ID>
+
 **Deployment**
 
 -  Configure the networking Heat templates that define the physical and virtual network interface settings.
@@ -1557,10 +1564,11 @@ Overcloud
 
          .. code-block:: sh
 
+             $ cd /usr/share/openstack-tripleo-heat-templates/
              $ mkdir /home/stack/templates/
              $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o /home/stack/templates/
 
-      -  Scenario #2 - Variables can be customized via the "roles_data.yml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+      -  Scenario #2 - Variables can be customized via the "roles_data.yaml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
 
          .. code-block:: sh
 
@@ -1574,14 +1582,14 @@ Overcloud
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
+       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
    .. code-block:: sh
 
      $ openstack overcloud container image prepare --namespace docker.io/tripleomaster --tag current-tripleo --tag-from-label rdo_version --output-env-file ~/docker_registry.yaml
-     $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_date_custom.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml -e ~/docker_registry.yaml -e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
+     $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml -e ~/templates/environments/docker.yaml -e ~/docker_registry.yaml -e ~/templates/environments/docker-ha.yaml <OTHER_DEPLOY_OPTIONS>
 
    -  Virtual lab environment:
 
@@ -1596,6 +1604,25 @@ Overcloud
              | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | 16a09779-b324-4d83-bc7d-3d24d2f4aa5d | power on    | wait call-back     | False       |
              | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | wait call-back     | False       |
              +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+             $ openstack server list
+             +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+             | ID                                   | Name                    | Status | Networks               | Image          | Flavor  |
+             +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | overcloud-novacompute-0 | BUILD  | ctlplane=192.168.24.35 | overcloud-full | compute |
+             | c1456e44-5245-4a4d-b551-3c6d6217dac4 | overcloud-controller-0  | BUILD  | ctlplane=192.168.24.34 | overcloud-full | control |
+             +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+
+      -  The nodes will then be in the "Provisioning State" of "deploying". The servers will have the "Status" of "BUILD".
+
+         .. code-block:: sh
+
+            $ openstack baremetal node list
+            +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+            | UUID                                 | Name      | Instance UUID                        | Power State | Provisioning State | Maintenance |
+            +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
+            | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | 16a09779-b324-4d83-bc7d-3d24d2f4aa5d | power on    | deploying          | False       |
+            | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | deploying          | False       |
+            +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
 
       -  After that is complete, the virtual machines will power off. Ironic will report that the "Power State" is now "power on" and the Provisioning State" is now "active." Manually start the virtual machines now.
 
@@ -1611,18 +1638,34 @@ Overcloud
 
 -  The rest of the deploy will continue and can take a few hours to complete.
 
--  Verify that the Overcloud was deployed successfully.
+-  Verify that the Overcloud was deployed successfully. If it was not, then troubleshoot any stack resources that failed.
 
    .. code-block:: sh
 
        $ openstack stack list
+       $ openstack stack failures list <OVERCLOUD_STACK_ID>
        $ openstack stack show <OVERCLOUD_STACK_ID>
+       $ openstack stack resource list <OVERCLOUD_STACK_ID>
+       $ openstack stack resource show <OVERCLOUD_STACK_ID> <RESOURCE_NAME>
 
 -  Source the Overcloud credentials to manage it.
 
    .. code-block:: sh
 
        $ source ~/overcloudrc
+
+-  The nodes can be managed via SSH using the "heat-admin" user.
+
+   .. code-block:: sh
+
+      $ openstack server list
+      +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+      | ID                                   | Name                    | Status | Networks               | Image          | Flavor  |
+      +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+      | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | overcloud-novacompute-0 | ACTIVE | ctlplane=192.168.24.35 | overcloud-full | compute |
+      | c1456e44-5245-4a4d-b551-3c6d6217dac4 | overcloud-controller-0  | ACTIVE | ctlplane=192.168.24.34 | overcloud-full | control |
+      +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
+      $ ssh -l heat-admin 192.168.24.34
 
 [29][84]
 
@@ -1637,7 +1680,7 @@ Add a Compute Node
 .. code-block:: sh
 
     $ source ~/stackrc
-    $ openstack baremetal import --json instackenv.json
+    $ openstack baremetal import --json ~/instackenv.json
 
 -  Automatically configure it to use the existing kernel and ramdisk for PXE booting.
 
