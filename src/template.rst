@@ -53,6 +53,7 @@ RST comma separated value (CSV) table:
    Example, "There is a comma , in this sentence.", True
    Another Example, 123456, False
    Example #3, This is a long setence with no commas., True
+   Ex, "This has working ""quotes"", Value
 
 Header 4
 ^^^^^^^^
