@@ -5,6 +5,7 @@
    clustering.rst
    compression.rst
    configuration_management.rst
+   phones.rst
    security.rst
    software_code_management.rst
    text_editors.rst
