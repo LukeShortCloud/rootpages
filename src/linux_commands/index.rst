@@ -2,6 +2,7 @@
    :maxdepth: 1
    :caption: Linux Commands Table of Contents:
 
+   clustering.rst
    compression.rst
    configuration_management.rst
    security.rst
