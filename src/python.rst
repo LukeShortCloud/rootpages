@@ -278,6 +278,81 @@ Example:
 
 [5]
 
+Functions and Methods
+---------------------
+
+Functions group related usable code into a block. Everything in a function needs to be at least 4 spaces intended to the right.
+
+Example:
+
+.. code-block:: python
+
+   def function():
+       print("Hello world")
+
+Functions can take arguments to use. The order that the variables are set in the funciton definition have to match when supplying a function these variables. Otherwise, the original variable name can be used to specify variables in a different order by using the syntax ``function(<ORIGINAL_VARIABLE_NAME>=<VALUE>)``. Arguments can also have default values at the function definition.
+
+Example:
+
+.. code-block:: python
+
+   def function(day_of_month=1, phrase="Today is the %d day of the month."):
+       print(phrase % day_of_month)
+
+   phrase_to_use = "The best day of the month is on the %d."
+   function(5, phrase_to_use)
+   function(phrase="This overrides the default value and ignores positional assignment.\nDay: %d", day_of_month=14)
+
+Functions in Python are assumed to return ``None`` unless it is explicitly set to something else. It is recommended to set functions to at least return a boolean of ``True`` or ``False`` depending on the success or failure of the function. When the function is finished running, it always returns a value that can be assigned or used. In Python, the return value can be any data type.
+
+Example:
+
+.. code-block:: python
+
+   def calc_area(length, width):
+       area = length * width
+       return area
+
+[11]
+
+In object-oriented programming, functions with a class are called "methods". A class can optionally have a ``__init__`` function that initializes an object by running setup tasks. Every method must accept the argument ``self``. This refers to values that are specific to an individual object (and not the generic class).
+
+Example:
+
+.. code-block:: python
+
+   class Example:
+
+       def __init__(self, name):
+           self.name = name
+
+       def function(self):
+           print(self.name)
+
+   example = Example("Bob")
+   example.function()
+
+Static methods in a class should be explicitly defined to showcase that it has no usage of ``self``.
+
+Example:
+
+.. code-block:: python
+
+   @staticmethod
+   def function():
+       print("Hello world")
+
+Class methods should be explicitly defined to showcase that it has no usage of ``self``. However, these methods still require using variables and methods present in a class by using ``cls``.
+
+Example:
+
+.. code-block:: python
+
+   @classmethod
+   def function(cls):
+       print("The default building height is %d meters." % cls.building_height)
+
+[12]
 
 Libraries
 ---------
@@ -447,3 +522,5 @@ Bibliography
 8. "string - Common string operations." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/string.html
 9. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/tutorial/datastructures.html
 10. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/stdtypes.html
+11. "A Beginner's Python Tutorial/Functions." Wikibooks. February 8, 2018. Accessed September 11, 2018. https://en.wikibooks.org/wiki/A_Beginner's_Python_Tutorial/Functions
+12. "Difference between @staticmethod and @classmethod in Python." Python Central. February 2, 2013. Accessed September 11, 2018. https://www.pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/
