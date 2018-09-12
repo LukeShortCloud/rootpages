@@ -129,6 +129,100 @@ Continuous Integration and Continuous Deployment
 
 CI/CD pipelines provide an automated workflow for deploying software updates. When updates to source code through a SCM are processed, unit tests are ran, and if they successed then the updated code gets published to the production environment. Applications such as Jenkins and GitLab provide CI/CD functionality.
 
+CI
+~~
+
+Travis CI
+^^^^^^^^^
+
+Travis CI is a free continous integration service for open source git projects.
+
+Travis supports Ubuntu and macOS virtual machine environments for testing code. Other operatings system can be used via defining how to setup and use docker containers. [3]
+
+The ``.travis.yml`` file in the root directory of a git project defines the environment to test on, how to set it up, and how to run tests. All of the configuration options can be found `here <https://docs.travis-ci.com/user/customizing-the-build/>`__. Example configurations for different languages can be found `here <https://docs.travis-ci.com/user/language-specific/>`__.
+
+Specify the language environment to use.
+
+.. code-block:: yaml
+
+   language: <PROGRAM_LANGUAGE>
+   <PROGRAM>_LANGUAGE>:
+     - "<VERSION1>"
+     - "<VERSION2>"
+
+Python example:
+
+.. code-block:: yaml
+
+   language: python
+   python:
+     - "2.7"
+     - "3.6"
+     - "3.7-dev"
+
+Install dependencies before running tests.
+
+.. code-block:: yaml
+
+   sudo: required
+   dist: <UBUNTU_DISTRO>
+   before_install:
+     - sudo apt-get update
+     - sudo apt-get install -y <PACKAGE1> <PACKAGE2>
+
+Describe how to install the application. Python example:
+
+.. code-block:: yaml
+
+   install:
+     - pip install -r requirements.txt
+     - pip install .
+
+If the program does not need to be installed, this step can be skipped.
+
+.. code-block:: yaml
+
+   install: true
+
+Define the test script to run. Example:
+
+.. code-block:: yaml
+
+   script:
+     - ./tests.py
+
+By default, commits on any branch (except gh-pages) will be tested. This can be configured to only track specific branches or exclude specific branches.
+
+.. code-block:: yaml
+
+   branches:
+     only:
+     - <BRANCH1>
+     - <BRANCH2>
+
+.. code-block:: yaml
+
+   branches:
+     except:
+     - <BRANCH1>
+     - <BRANCH2>
+
+The order that tasks are executed in from a Travis CI file:
+
+-  apt addons
+-  cache components
+-  **before_install**
+-  **install**
+-  **before_script**
+-  **script**
+-  before_cache
+-  **after_success**, **after_failure**
+-  before_deploy
+-  deploy
+-  after_deploy
+-  **after_script**
+
+[4]
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/devops.rst>`__
 ----------------------------------------------------------------------------------
@@ -138,3 +232,5 @@ Bibliography
 
 1. "Configuration Cheat Sheet." Gitea Documentaiton. Accessed July 10, 2018. https://docs.gitea.io/en-us/config-cheat-sheet/
 2. "Why Writing Software Design Documents Matters." Toptal. Accessed September 3, 2018. https://www.toptal.com/freelance/why-design-documents-matter
+3. "Build Environment Overview." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/reference/overview/
+4. "Customizing the Build." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/customizing-the-build/
