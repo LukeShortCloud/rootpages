@@ -14,9 +14,9 @@ Welcome to Root Pages!
    authentication
    bootloaders
    c_and_c++
+   clustering
    databases
    devops
-   clustering
    dns_servers
    file_systems
    http_servers
