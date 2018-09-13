@@ -80,6 +80,57 @@ Example:
 
 [2]
 
+Comments
+--------
+
+Comments are recommended in the code to help explain what is happening and being processed. They should be above the line of code it applies to and be in-line with it. There should be a single space between the "#" comment symbol and the sentence following it. All comments should be full and complete sentences.
+
+.. code-block:: yaml
+
+   # This will tell the end-user hello.
+   print("Hello")
+
+All files, classes, methods, and functions should have a docstring. These are multi-line comments explaining their purpose. For functions and methods, it should also describe the arguments and returns it expects. If the function raises any exceptions, those should also be explained. [13]
+
+Syntax:
+
+.. code-block:: yaml
+
+   """<DESCRIPTION>
+
+   Args:
+       <VARIABLE1> (<TYPE>): <DESCRIPTION>
+       <VARIABLE2> (<TYPE>): <DESCRIPTION>
+
+   Retruns:
+       <VARIABLE1> (<TYPE>): <DESCRIPTION>
+       <VARIABLE2> (<TYPE>): <DESCRIPTION>
+
+   Raises:
+       <EXCEPTION_TYPE1>: <DESCRIPTION>
+       <EXCEPTION_TYPE2>: <DESCRIPTION>
+   """
+
+Example:
+
+.. code-block:: yaml
+
+   def calc_average(numbers):
+       """Calculates an average from a list of numbers.
+
+       Args:
+          numbers (arr, int): An array or list of integers to average.
+
+       Returns:
+           average (int): The average of the numbers.
+       """
+       total = 0
+
+       for number in numbers:
+           total += number
+
+       return total / len(numbers)
+
 Data Types
 ----------
 
@@ -115,6 +166,26 @@ Example:
     def say_hello():
         global var
         print(var)
+
+There are a few ways to handle long strings.
+
+.. code-block:: python
+
+   ("This sentence is"
+    " actually just one line.")
+
+.. code-block:: python
+
+   "This is also one " + \
+   "line."
+
+.. code-block:: python
+
+   """This sentence spands
+   many
+   many
+   many
+   lines."""
 
 Dictionaries
 ~~~~~~~~~~~~
@@ -231,7 +302,7 @@ Syntax:
     elif <COMPARISON_STATEMENT_2>:
         # Execute if this statement is True.
     else:
-        # If not other matches are found, execute this.
+        # If no other matches are found, execute this.
 
 Example:
 
@@ -524,3 +595,4 @@ Bibliography
 10. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/stdtypes.html
 11. "A Beginner's Python Tutorial/Functions." Wikibooks. February 8, 2018. Accessed September 11, 2018. https://en.wikibooks.org/wiki/A_Beginner's_Python_Tutorial/Functions
 12. "Difference between @staticmethod and @classmethod in Python." Python Central. February 2, 2013. Accessed September 11, 2018. https://www.pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/
+13. "Google Python Style Guide." June 16, 2018. Accessed September 12, 2018. https://github.com/google/styleguide/blob/gh-pages/pyguide.md
