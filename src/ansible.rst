@@ -1,5 +1,5 @@
-Ansible 2.6
-===========
+Ansible
+=======
 
 .. contents:: Table of Contents
 
@@ -16,6 +16,7 @@ Official documentation:
 
 -  `Stable <https://docs.ansible.com/ansible/latest/>`__
 -  `Development <https://docs.ansible.com/ansible/devel/>`__
+-  `2.7 <https://docs.ansible.com/ansible/2.7/>`__
 -  `2.6 <https://docs.ansible.com/ansible/2.6/>`__
 -  `2.5 <https://docs.ansible.com/ansible/2.5/>`__
 -  `2.4 <https://docs.ansible.com/ansible/2.4/>`__
@@ -24,12 +25,12 @@ Official documentation:
 Editions
 ~~~~~~~~
 
-There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. [40]
+There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. Both use the same binary code with the only difference being support. [40]
 
 Installation
 ------------
 
-The Ansible community edition 2.4 requires Python 2.6, 2.7, or >= 3.5 on both the control and managed nodes. [1] Python 3 support is stable and fully supported since the Ansible 2.5 release. [43]
+Ansible 2.7 requires Python 2.7 or >= 3.5 on both the control and managed nodes. [74] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
 
 Fedora:
 
@@ -53,7 +54,7 @@ Source code:
     $ git clone git://github.com/ansible/ansible.git
     $ cd ./ansible/
     $ git branch -a | grep stable
-    $ git checkout remotes/origin/stable-2.6
+    $ git checkout remotes/origin/stable-2.7
     $ git submodule update --init --recursive
     $ source ./hacking/env-setup
 
@@ -67,8 +68,8 @@ Updating source code installations:
 Ansible RPMs for Fedora based operating systems are available from:
 
 -  The "extras" repository (Fedora)
--  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL/CentOS and Fedora)
--  The Ansible Engine repository rhel-7-server-ansible-2.6-rpms (RHEL)
+-  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL, CentOS, and Fedora)
+-  The Ansible Engine repository "rhel-7-server-ansible-2.7-rpms" (RHEL)
 
 [18]
 
@@ -194,8 +195,7 @@ Example:
     $ /usr/bin/python3 /usr/bin/ansible -e "ansible_python_interpreter=/usr/bin/python3" -m setup localhost
 
 Documentation on how to create Ansible modules for Python 3 with
-backwards compatibility with Python 2 can be found here:
-http://docs.ansible.com/ansible/latest/dev\_guide/developing\_python3.html
+backwards compatibility with Python 2 can be found `here <https://docs.ansible.com/ansible/devel/dev_guide/developing_python_3.html>`__.
 
 [43]
 
@@ -2591,6 +2591,8 @@ Almost every popular package manager is supported. This can
 generically be handled by the "package" module or the specific module
 for the operating system's package manager.
 
+In Ansible >= 2.7, package modules can accept a list for the "name" argument. This avoids the need to use a loop. [73]
+
 Syntax:
 
 .. code-block:: yaml
@@ -4875,7 +4877,7 @@ Bibliography
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
 22. "Organizing Group Vars Files in Ansible." toja.io sysadmin, devops and videotapes. Accessed November 6, 2016. http://toja.io/using-host-and-group-vars-files-in-ansible/
-23. "Glossary." Ansible Documentation. October 31, 2016. Accessed November 12, 2016. http://docs.ansible.com/ansible/intro\_installation.html
+23. "Glossary." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html
 24. "Semaphore Installation." GitHub - ansible-semaphore/semaphore. June 1, 2017. Accessed August 14, 2017. https://github.com/ansible-semaphore/semaphore/wiki/Installation
 25. "Ansible Galaxy." Ansible Documentation. March 31, 2017. Accessed April 4, 2017. http://docs.ansible.com/ansible/galaxy.html
 26. "ANSIBLE PERFORMANCE TUNING (FOR FUN AND PROFIT)." Ansible Blog. July 10, 2014. Accessed January 25, 2017. https://www.ansible.com/blog/ansible-performance-tuning
@@ -4925,3 +4927,5 @@ Bibliography
 70. "Molecule." Molecule documentation. Accessed August 3, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
+73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
+74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
