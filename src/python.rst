@@ -349,6 +349,52 @@ Example:
 
 [5]
 
+Files
+------
+
+Files are commonly opened in read "r", write "w" (truncate the file and then open it for writing), read and write "+", or append "a" mode. Binary files can be opened by also using "b". [7]
+
+Example binary read:
+
+.. code-block:: python
+
+   file_object = open("<FILE_PATH>", "rb")
+   file_content = file_object.read()
+   file_object.close()
+
+Example text write:
+
+.. code-block:: python
+
+   message = ["Hello there!", "We welcome you to the community!", "Sincerely, Staff"]
+   file_object = open("/app/letters/welcome.txt", "w")
+
+   for line in message:
+       file_content.write(line)
+
+   file_object.close()
+
+Python also supports a consolidated ``with`` loop that automatically closes the file.
+
+.. code-block:: python
+
+   with open("<FILE_PATH>", "r") as file_object:
+       file_content = file_object.read()
+
+Text files with more than one line will contain newline characters. On UNIX-like systems this is ``\n`` and on Windows it is ``\r\n``. These can be removed using ``rstrip()``.
+
+Example:
+
+.. code-block:: python
+
+   # Remove newlines characters for...
+   # Windows
+   line = line.rstrip('\r\n')
+   # Linux
+   line = line.rstrip('\n')
+
+Common libraries for handling files include fileinput, io, shutil, and os.
+
 Functions and Methods
 ---------------------
 
@@ -427,6 +473,24 @@ Example:
 
 Libraries
 ---------
+
+Libraries are a collection of code that help automate similar tasks. These can be imported to help out with developing a program.
+
+.. code-block:: python
+
+   import <LIBRARY>
+
+If possible, only the relevant classes or functions that will be used should be imported.
+
+.. code-block:: python
+
+   from <LIBRARY>, import <CLASS1>, <CLASS2>
+
+Libraries can even be imported with new names. This can avoid conflicts with anything that has the same name or to help with compatibility in some cases.
+
+.. code-block:: python
+
+   import lib123 as lib_123
 
 (Native)
 ~~~~~~~~
@@ -512,10 +576,90 @@ There are methods that can be used on key-value store dictionary objects.
 
 [10]
 
-Logging
-~~~~~~~
+(Files)
+^^^^^^^
 
-``import logging``
+File objects.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "open()", "Create a file object.", ""
+   "read()", "Read and return the entire file.", ""
+   "readlines()", "Read and return lines from a file, one at a time.", ""
+   "write()", "Write to a file object.", ""
+   "close()", "Close a file object.", ""
+
+[17]
+
+fileinput
+~~~~~~~~~
+
+Read one or more files and perform special operations.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "close()", "Close a fileinput object.", ""
+   "filelineno()", "Return the current line number of the file", ""
+   "input(files=<LIST_OF_FILES)", "Read a list of files as a single object.", ""
+   "input(backup=True)", "Create a backup of the original file as ""<FILE_NAME>.bak""", ""
+   "input(inplace=True)", "Do not modify the original file until it the file object is closed. A copy of the original file is used.", ""
+   "input(openhook=fileinput.hook_compressed)", "Decompress and read gz and bz2 files.", ""
+
+[14]
+
+shutil
+~~~~~~
+
+Complex operations on files.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file.", ""
+   "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata.", ""
+   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata.", ""
+   "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object.", ""
+   "copytree(<SRC>, <DEST>)", "Copy files from one directory to another.", ""
+   "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents.", ""
+   "get_archive_formats()", "View the available archive formats based on the libraries installed.", ""
+   "make_archive()", "Make a bztar, gztar, tar, xztar, or zip archive.", ""
+   "move(<SRC>, <DEST>)", "Move or rename a file.", ""
+   "rmtree(<DEST>)", "Recursively delete all files in a directory.", ""
+   "which(<CMD>)", "Return the default command found from the shell $PATH variable.", ""
+
+[15]
+
+os
+~~
+
+Operating system utilities.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "listdir(<DEST>)", "Return a list of files in a directory.", ""
+   "makedirs(<LIST_OF_DIRS>)", "Recursively create a directory and sub-directories.", ""
+   "mknod(<DEST>, mode=<PERMISSIONS>)", "Create a file.", ""
+   "path.exists(<DEST>)", "Verify if a node exists.", ""
+   "path.isdir(<DEST>)", "Verify if a node is a directory.", ""
+   "path.isfile(<DEST>)", "Verify if a node is a file.", ""
+   "path.islink(<DEST>)", "Verify if a node is a link.", ""
+   "path.ismount(<DEST>)", "Verify if a node is a mount.", ""
+   "realpath(<DEST>)", "Return the full path to a file, including links.", ""
+   "remove(<DEST>)", "Delete a file.", ""
+   "rmdr(<DEST>)", "Delete a directory.", ""
+   "uname()", "Return the kernel information", ""
+
+[16]
+
+logging
+~~~~~~~
 
 .. csv-table::
    :header: Method, Description, Example
@@ -589,10 +733,14 @@ Bibliography
 4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
 5. "Compound statements." Python 3 Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
 6. "Logging HOWTO." Python 3 Documentation. Accessed August 15, 2018. https://docs.python.org/3/howto/logging.html
-7. "Built-in Functions." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/functions.html
+7. "Built-in Functions." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/functions.html
 8. "string - Common string operations." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/string.html
 9. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/tutorial/datastructures.html
 10. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/stdtypes.html
 11. "A Beginner's Python Tutorial/Functions." Wikibooks. February 8, 2018. Accessed September 11, 2018. https://en.wikibooks.org/wiki/A_Beginner's_Python_Tutorial/Functions
 12. "Difference between @staticmethod and @classmethod in Python." Python Central. February 2, 2013. Accessed September 11, 2018. https://www.pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/
 13. "Google Python Style Guide." June 16, 2018. Accessed September 12, 2018. https://github.com/google/styleguide/blob/gh-pages/pyguide.md
+14. "fileinput - Iterate over lines from multiple input streams." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/fileinput.html
+15. "shutil - High-level file operations." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/shutil.html
+16. "os -Miscellaneous operating system interfaces." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/os.html
+17. "Input and Output." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/tutorial/inputoutput.html
