@@ -4223,9 +4223,9 @@ statistics.
 Ansible Tower 3
 ~~~~~~~~~~~~~~~
 
-Ansible Tower is the official dashboard maintained by Red Hat. The program is built using Python and uses RabbitMQ for clustering and PostgreSQL for storing it's data. PostgreSQL is used for the database back-end because it is one of the few relational databases that supports storing and accessing JSON formatted data.
+Ansible Tower is the official dashboard maintained by Red Hat. The program is built using Python and uses RabbitMQ for clustering and PostgreSQL for storing it's data. PostgreSQL is used for the database back-end because it is one of the few relational databases that support storing and accessing JSON formatted data. [52] Tower 3.3.0 was the first release to support installing services as docker containers on OpenShift. [75]
 
-Ansible Tower 3.1.0 requirements and support:
+Ansible Tower 3.1 requirements and support:
 
 -  Red Hat Enterprise Linux (RHEL) 7, Ubuntu 14.04, or Ubuntu 16.04
 
@@ -4236,9 +4236,9 @@ Ansible Tower 3.1.0 requirements and support:
 -  Release date: 2017-02-28
 -  End-of-life (EOL): 2018-10-02 [66]
 
-Ansible Tower 3.2.0 (AWX 1.0.0) requirements and support:
+Ansible Tower 3.2 requirements and support:
 
--  RHEL 7, Ubuntu 14.04, or Ubuntu 16.04
+-  RHEL >= 7.2, Ubuntu 14.04, or Ubuntu 16.04
 -  Ansible >= 2.2
 
    -  Access to some inventory sources, including Azure, requires >= 2.4.
@@ -4246,6 +4246,14 @@ Ansible Tower 3.2.0 (AWX 1.0.0) requirements and support:
 -  PostgreSQL 9.6
 -  Release date: 2017-10-02
 -  End-of-life (EOL): 2019-04-02 [66]
+
+Ansible Tower 3.3 requirements and support:
+
+-  RHEL >= 7.4 or Ubuntu 16.04
+-  PostgreSQL 9.6
+-  Ansible >= 2.2
+-  Release date: 2018-09-12
+-  End-of-life (EOL): 2020-03-12 [66]
 
 [35]
 
@@ -4489,54 +4497,7 @@ API
 Ansible Tower has a strong focus on automating Ansible even more by
 providing an API interface. Programs can interact with this by making
 HTTP GET and PUT requests. All of the available endpoints can be viewed
-by going to:
-
-``https://<ANSIBLE_TOWER_HOST>/api/v1/``
-
-Version 1 of the API provides these endpoints:
-
-.. code-block:: json
-
-    {
-        "authtoken": "/api/v1/authtoken/",
-        "ping": "/api/v1/ping/",
-        "config": "/api/v1/config/",
-        "settings": "/api/v1/settings/",
-        "me": "/api/v1/me/",
-        "dashboard": "/api/v1/dashboard/",
-        "organizations": "/api/v1/organizations/",
-        "users": "/api/v1/users/",
-        "projects": "/api/v1/projects/",
-        "project_updates": "/api/v1/project_updates/",
-        "teams": "/api/v1/teams/",
-        "credentials": "/api/v1/credentials/",
-        "inventory": "/api/v1/inventories/",
-        "inventory_scripts": "/api/v1/inventory_scripts/",
-        "inventory_sources": "/api/v1/inventory_sources/",
-        "inventory_updates": "/api/v1/inventory_updates/",
-        "groups": "/api/v1/groups/",
-        "hosts": "/api/v1/hosts/",
-        "job_templates": "/api/v1/job_templates/",
-        "jobs": "/api/v1/jobs/",
-        "job_events": "/api/v1/job_events/",
-        "ad_hoc_commands": "/api/v1/ad_hoc_commands/",
-        "system_job_templates": "/api/v1/system_job_templates/",
-        "system_jobs": "/api/v1/system_jobs/",
-        "schedules": "/api/v1/schedules/",
-        "roles": "/api/v1/roles/",
-        "notification_templates": "/api/v1/notification_templates/",
-        "notifications": "/api/v1/notifications/",
-        "labels": "/api/v1/labels/",
-        "unified_job_templates": "/api/v1/unified_job_templates/",
-        "unified_jobs": "/api/v1/unified_jobs/",
-        "activity_stream": "/api/v1/activity_stream/",
-        "workflow_job_templates": "/api/v1/workflow_job_templates/",
-        "workflow_jobs": "/api/v1/workflow_jobs/",
-        "workflow_job_template_nodes": "/api/v1/workflow_job_template_nodes/",
-        "workflow_job_nodes": "/api/v1/workflow_job_nodes/"
-    }
-
-``https://<ANSIBLE_TOWER_HOST>/api/v2/``
+by going to: ``https://<ANSIBLE_TOWER_HOST>/api/v2/``.
 
 Version 2 of the API provides these endpoints:
 
@@ -4644,7 +4605,7 @@ Minor updates (for example, from 3.2.0 to 3.2.5) for Ansible Tower require using
 
     $ ./setup.sh
 
-Major upgrades require first updating to the latest minor version. Then sequentially upgrade to the next available major version. This will provide the highest chance of a successful upgrade. For example, to upgrade from 3.0.2 to 3.2.5 the process would be ``3.0.2 --> 3.0.4 --> 3.1.7 --> 3.2.5``.
+Major upgrades require first updating to the latest minor version. Then sequentially upgrade to the next available major version. This will provide the highest chance of a successful upgrade. For example, to upgrade from 3.0.2 to 3.3.0 the process would be ``3.0.2 --> 3.0.4 --> 3.1.8 --> 3.2.6 --> 3.3.0``.
 
 AWX
 ~~~
@@ -4889,7 +4850,7 @@ Bibliography
 32. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
 33. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 34. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
-35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed July 6, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
+35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed September 14, 2018. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
 36. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
 37. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
@@ -4920,7 +4881,7 @@ Bibliography
 63. "Release and maintenance." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/2.5/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
-66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. March 27, 2018. Accessed May 22, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
+66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. September 12, 2018. Accessed September 14, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
@@ -4929,3 +4890,4 @@ Bibliography
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
 74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
+75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
