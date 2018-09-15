@@ -193,25 +193,29 @@ Dictionaries
 Dictionaries are a variable that provides a key-value store. It can be
 used as a nested array of variables.
 
-Example replacing a key:
+Example of defining and looping over a dictionary:
 
 .. code-block:: python
 
-    dictionary = {'stub_host': '123'}
+   consoles = {'funbox': {'release_year': 2005}, 'funstation': {'release_year': 2006}}
+
+   for console in consoles:
+      print("The %s was released in %d." % (console, consoles[console]['release_year']))
+
+   print(consoles)
+
+Example replacing a key and value:
+
+.. code-block:: python
+
+    dictionary = {'stub_host': 123}
+    # Replace a key.
     dictionary['hello_world'] = dictionary.pop('stub_host')
+    # Replace a value.
+    dictionary['hello_world'] = 456
     print(dictionary)
 
-JSON libraries:
-
--  json.load = Load a JSON dictionary from a file.
--  json.loads = Load a JSON dictionary from a string.
--  json.dump = Load JSON as a string from a file.
--  json.dumps = Convert a JSON dictionary into a string.
-
-YAML libraries:
-
--  yaml.load = Load a YAML dictionary from a string.
--  yaml.dump = Convert a YAML dictionary into a string.
+Common libraries for handling dictionaries include json and yaml.
 
 Conditionals
 ------------
@@ -376,10 +380,17 @@ Example text write:
 
 Python also supports a consolidated ``with`` loop that automatically closes the file.
 
+Examples:
+
 .. code-block:: python
 
    with open("<FILE_PATH>", "r") as file_object:
        file_content = file_object.read()
+
+.. code-block:: python
+
+   with open("/var/lib/app/config.json", "r") as app_config_file:
+       app_config = json.load(app_config_file)
 
 Text files with more than one line will contain newline characters. On UNIX-like systems this is ``\n`` and on Windows it is ``\r\n``. These can be removed using ``rstrip()``.
 
@@ -492,7 +503,7 @@ Libraries can even be imported with new names. This can avoid conflicts with any
 
    import lib123 as lib_123
 
-(Native)
+Built-in
 ~~~~~~~~
 
 These are methods that are natively available in a default installation of Python.
@@ -572,6 +583,7 @@ There are methods that can be used on key-value store dictionary objects.
    "keys()", "Return all of the keys.", ""
    "values()", Return all of the values.", ""
    "pop(<KEY>)", "Return a key-value pair from a specific position (the last position is default) and remove it from the list.", ""
+   "items()", "Return a tuple of each key-value pair.", ""
    "clear()", "Clear out all values from the dictionary to make it empty.", ""
 
 [10]
@@ -678,7 +690,40 @@ logging
    "setLevel()", "Log to a file instead of standard output or input.", "logging.setLevel(logging.INFO)"
 
 [6]
- 
+
+json
+~~~~
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "load(<FILE>)", "Load a JSON dictionary from a file.", ""
+   "loads(<STR>)", "Load a JSON dictionary from a string.", ""
+   "dump(<STR>)", "Load JSON as a string from a file.", ""
+   "dumps(<DICT>,  indent=4)", "Convert a JSON dictionary into a string and indent it to make it human readable.", ""
+
+[18]
+
+External
+~~~~~~~~
+
+External libraries are not available on a default Python installation and must be installed via a package manager such as ``pip``.
+
+yaml
+^^^^
+
+Package: PyYAML
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "load(<STR>)", "Load a YAML dictionary from a string.", ""
+   "dump(<DICT>)", "Convert a YAML dictionary into a string.", ""
+
+[19]
+
 Object Oriented Programming
 ---------------------------
 
@@ -744,3 +789,5 @@ Bibliography
 15. "shutil - High-level file operations." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/shutil.html
 16. "os -Miscellaneous operating system interfaces." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/os.html
 17. "Input and Output." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/tutorial/inputoutput.html
+18. "json - JSON encoder and decoder." Python 3 Documentation. Accessed September 15, 2018. https://docs.python.org/3/library/json.html
+19. "PyYAML Documentation." PyYAML. Accessed September 15, 2018. https://pyyaml.org/wiki/PyYAMLDocumentation
