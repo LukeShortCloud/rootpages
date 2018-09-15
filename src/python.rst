@@ -525,10 +525,8 @@ These are methods that are natively available in a default installation of Pytho
 
 [7]
 
-(Strings)
-^^^^^^^^^
-
-These are methods that can be used on string objects.
+(String Objects)
+^^^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -545,10 +543,8 @@ These are methods that can be used on string objects.
 
 [8]
 
-(Lists)
-^^^^^^^
-
-There are methods that can be used on list objects.
+(List Objects)
+^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -567,10 +563,8 @@ There are methods that can be used on list objects.
 
 [9]
 
-(Dictionaries)
-^^^^^^^^^^^^^^
-
-There are methods that can be used on key-value store dictionary objects.
+(Dictionary Objects)
+^^^^^^^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -588,10 +582,8 @@ There are methods that can be used on key-value store dictionary objects.
 
 [10]
 
-(Files)
-^^^^^^^
-
-File objects.
+(File Objects)
+^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -606,7 +598,7 @@ File objects.
 [17]
 
 fileinput
-~~~~~~~~~
+^^^^^^^^^
 
 Read one or more files and perform special operations.
 
@@ -623,31 +615,43 @@ Read one or more files and perform special operations.
 
 [14]
 
-shutil
-~~~~~~
-
-Complex operations on files.
+json
+^^^^
 
 .. csv-table::
    :header: Method, Description, Example
    :widths: 20, 20, 20
 
-   "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file.", ""
-   "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata.", ""
-   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata.", ""
-   "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object.", ""
-   "copytree(<SRC>, <DEST>)", "Copy files from one directory to another.", ""
-   "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents.", ""
-   "get_archive_formats()", "View the available archive formats based on the libraries installed.", ""
-   "make_archive()", "Make a bztar, gztar, tar, xztar, or zip archive.", ""
-   "move(<SRC>, <DEST>)", "Move or rename a file.", ""
-   "rmtree(<DEST>)", "Recursively delete all files in a directory.", ""
-   "which(<CMD>)", "Return the default command found from the shell $PATH variable.", ""
+   "load(<FILE>)", "Load a JSON dictionary from a file.", ""
+   "loads(<STR>)", "Load a JSON dictionary from a string.", ""
+   "dump(<STR>)", "Load JSON as a string from a file.", ""
+   "dumps(<DICT>,  indent=4)", "Convert a JSON dictionary into a string and indent it to make it human readable.", ""
 
-[15]
+[18]
+
+logging
+^^^^^^^
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "input()", "", ""
+   "debug()", "Verbose information for developers.", ""
+   "info()", "General information about the program's activity.", ""
+   "warning()", "Notification of an unexpected event that did not affect the program currently.", ""
+   "error()", "One more functions failed to execute properly.", ""
+   "critical()", "A fatal issue has occurred that will cause the program to crash.", ""
+   "exception()", "Python encountered a fatal error.", ""
+   "basicConfig(level=<LEVEL>)", "Set the logging level.", ""
+   "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input.", ""
+   "FileHandler()", "The file to log to.", ""
+   "setLevel()", "Log to a file instead of standard output or input.", "logging.setLevel(logging.INFO)"
+
+[6]
 
 os
-~~
+^^
 
 Operating system utilities.
 
@@ -670,40 +674,28 @@ Operating system utilities.
 
 [16]
 
-logging
-~~~~~~~
+shutil
+^^^^^^
+
+Complex operations on files.
 
 .. csv-table::
    :header: Method, Description, Example
    :widths: 20, 20, 20
 
-   "input()", "", ""
-   "debug()", "Verbose information for developers.", ""
-   "info()", "General information about the program's activity.", ""
-   "warning()", "Notification of an unexpected event that did not affect the program currently.", ""
-   "error()", "One more functions failed to execute properly.", ""
-   "critical()", "A fatal issue has occurred that will cause the program to crash.", ""
-   "exception()", "Python encountered a fatal error.", ""
-   "basicConfig(level=<LEVEL>)", "Set the logging level.", ""
-   "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input.", ""
-   "FileHandler()", "The file to log to.", ""
-   "setLevel()", "Log to a file instead of standard output or input.", "logging.setLevel(logging.INFO)"
+   "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file.", ""
+   "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata.", ""
+   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata.", ""
+   "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object.", ""
+   "copytree(<SRC>, <DEST>)", "Copy files from one directory to another.", ""
+   "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents.", ""
+   "get_archive_formats()", "View the available archive formats based on the libraries installed.", ""
+   "make_archive()", "Make a bztar, gztar, tar, xztar, or zip archive.", ""
+   "move(<SRC>, <DEST>)", "Move or rename a file.", ""
+   "rmtree(<DEST>)", "Recursively delete all files in a directory.", ""
+   "which(<CMD>)", "Return the default command found from the shell $PATH variable.", ""
 
-[6]
-
-json
-~~~~
-
-.. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
-
-   "load(<FILE>)", "Load a JSON dictionary from a file.", ""
-   "loads(<STR>)", "Load a JSON dictionary from a string.", ""
-   "dump(<STR>)", "Load JSON as a string from a file.", ""
-   "dumps(<DICT>,  indent=4)", "Convert a JSON dictionary into a string and indent it to make it human readable.", ""
-
-[18]
+[15]
 
 External
 ~~~~~~~~
