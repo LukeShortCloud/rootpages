@@ -783,7 +783,21 @@ plugin from the command line.
 
     $ vagrant plugin install vagrant-<HYPERVISOR>
 
-Deploy VMs using a Vagrant file:
+Vagrantfiles can be downloaded from `here <https://app.vagrantup.com/boxes/search>`__ based on the virtual machine box name.
+
+Syntax:
+
+.. code-block:: sh
+
+    $ vagrant init <PROJECT>/<VM_NAME>
+
+Example:
+
+.. code-block:: sh
+
+    $ vagrant init centos/7
+
+Deploy VMs using a Vagrantfile:
 
 .. code-block:: sh
 
