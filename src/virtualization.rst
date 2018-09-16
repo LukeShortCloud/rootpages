@@ -251,7 +251,7 @@ preallocation or else there could be up to a x5 performance penalty. [8]
 
 .. code-block:: sh
 
-    $ sudo qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
+    $ qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
 
 PCI
 '''
