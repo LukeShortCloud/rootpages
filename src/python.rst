@@ -702,6 +702,24 @@ External
 
 External libraries are not available on a default Python installation and must be installed via a package manager such as ``pip``.
 
+six.moves
+^^^^^^^^^
+
+Package: six
+
+Functions from Python 3 backported for compatibility with both Python 2 and 3.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "input()", "Capture standard input from an end-user.", ""
+   "map(<FUNCTION>, <LIST>)", "Execute a function on all items in a list.", ""
+   "reduce(<FUNCTION>, <LIST>)", "Execute a function on all items in a list and retun the cumulative sum.", ""
+   "SimpleHTTPServer()", "Create a simple HTTP server.", ""
+
+[20]
+
 yaml
 ^^^^
 
@@ -783,3 +801,4 @@ Bibliography
 17. "Input and Output." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/tutorial/inputoutput.html
 18. "json - JSON encoder and decoder." Python 3 Documentation. Accessed September 15, 2018. https://docs.python.org/3/library/json.html
 19. "PyYAML Documentation." PyYAML. Accessed September 15, 2018. https://pyyaml.org/wiki/PyYAMLDocumentation
+20. "Six: Python 2 and 3 Compatibility Library." Python Hosted. Accessed September 15, 2018 https://pythonhosted.org/six/
