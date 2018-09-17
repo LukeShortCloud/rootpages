@@ -1,5 +1,7 @@
 # Root Pages
 
+[![Build Status](https://travis-ci.org/ekultails/rootpages.svg?branch=master)](https://travis-ci.org/ekultails/rootpages)
+
 Root Pages is a collection of quick and easy-to-reference tutorials, examples, and guides primarily for Linux and other UNIX-like systems. The main goal of this project is to provide a more general purpose alternative to the "info" documents for System Administrators, Engineers, and Architects. Each page is a full guide to each topic. This makes it easy to navigate and search for content.
 
 All Root Pages are written in the reStructuredText (RST) markup language. Sphinx is used for building the documentation into ePub, HTML, PDF, and other common document formats.
