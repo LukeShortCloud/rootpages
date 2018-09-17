@@ -6,13 +6,11 @@ Root Pages is a collection of quick and easy-to-reference tutorials, examples, a
 
 All Root Pages are written in the reStructuredText (RST) markup language. Sphinx is used for building the documentation into ePub, HTML, PDF, and other common document formats.
 
-
 ## Website
 
-Root Pages is automatically published online to GitHub Pages via updates to the "gh-pages" branch. This branch only contains the HTML compiled website.
+The latest updates to Root Pages are automatically published online using [Travis CI](https://travis-ci.org/) and [GitHub Pages](https://pages.github.com/). The website code is stored in the "gh-pages" branch.
 
 https://ekultails.github.io/rootpages/
-
 
 ## Install
 
@@ -42,14 +40,11 @@ openSUSE:
 $ sudo zypper install python3-Sphinx
 ```
 
-
 ## Usage
 
 Sphinx will save newly generated documents into the "build/" directory by default.
 
-
 ### Usage - Automatic
-
 
 ePub:
 ```
@@ -71,7 +66,6 @@ Text:
 $ make text
 ```
 
-
 ### Usage - Manual
 
 The "sphinx-build" command is more flexible by being able to add additional command-line arguments to it. It also does not require the "make" system package to be able to process and execute the Makefile.
@@ -79,9 +73,8 @@ The "sphinx-build" command is more flexible by being able to add additional comm
 Specify the format that the reStructuredText should be transformed and output into, and both the source and build directories.
 
 ```
-$ sphinx-build-3 -b <OUTPUT_FORMAT> src/ build/
+$ sphinx-build -b <OUTPUT_FORMAT> src/ build/
 ```
-
 
 ## Translations
 
@@ -105,7 +98,6 @@ $ sphinx-intl update -p build/gettext -l <LOCALE>
 ```
 $ make -e SPHINXOPTS="-D language='<LOCALE>'" html
 ```
-
 
 ## Contributing
 
@@ -143,23 +135,13 @@ RST header characters to use:
 
 Any arguments or options that are required for a command or configuration are marked in **bold**.
 
-
 ### New Contributors
 
 There are a lot of [issues open on GitHub that have the label "new content."](https://github.com/ekultails/rootpages/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+content%22) These issues indicate that a new subject matter should be added into an existing document. These normally have at least one link to a source article that can be referenced or at least used as a starting point for further research.
 
-
 ### Quarterly Updates
 
-Every three months, Root Pages is tagged as a new version. This is built and saved to the "gh-pages" branch that publishes it online via [GitHub Pages](https://pages.github.com/). The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
-
-An Ansible Playbook was created to help automate the process of pushing updates to the "gh-pages" branch. It will set the repository up to be able to push out the lastest "master" branch as compiled HTML pages. A manual human review is required before committing and pushing the updates.
-
-```
-$ ansible-playbook gh_pages_update.yml
-$ cd /tmp/rootpages_gh_pages/
-$ git status
-```
+Every three months, Root Pages is tagged as a milestone release. The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
 
 ### Yearly Updates
 
@@ -167,14 +149,11 @@ The bibliography sections need to be reorganized to be in numerical order. These
 
 The copyright year in `src/conf.py` needs to be updated.
 
-
 ### Special Notes
 
 The OpenStack notes go through a major rebase every third upstream OpenStack release. This is to align with the long-life release cycle for Red Hat's OpenStack Platform (RHOSP). The next rebase will be for the `T` release.
 
-
 ## Legal
-
 
 ### License
 
@@ -184,7 +163,6 @@ Files:
 
 * LICENSE
 * DISCLAIMER
-
 
 ### Plagiarism
 

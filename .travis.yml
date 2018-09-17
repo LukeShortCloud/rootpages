@@ -11,7 +11,7 @@ install:
 script:
   - make html
 after_success:
-  - rm -rf ./src ./roles Makefile ./*.md ./*.yml
+  - rm -rf ./src ./roles Makefile ./*.md
   - mv ./build/html/* ./
   - rm -rf ./build
   - touch .nojekyll

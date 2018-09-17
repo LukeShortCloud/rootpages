@@ -1,4 +1,0 @@
----
-- hosts: localhost
-  roles:
-    - gh_pages_update
