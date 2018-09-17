@@ -17,7 +17,7 @@ after_success:
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: SUPERSECRET
+  github-token: $SUPERSECRET
   keep-history: true
   on:
     branch: master
