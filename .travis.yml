@@ -1,0 +1,23 @@
+---
+language: python
+python:
+  - "3.6"
+sudo: required
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install make
+install:
+  - pip install Sphinx sphinx-rtd-theme
+script:
+  - make html
+after_success:
+  - rm -rf ./src ./roles Makefile ./*.md ./*.yml
+  - mv ./build/html/* ./
+  - rm -rf ./build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: SUPERSECRET
+  keep-history: true
+  on:
+    branch: master
