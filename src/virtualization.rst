@@ -52,6 +52,17 @@ The "Kernel-based Virtual Machine (KVM)" is the default kernel module
 for handling hardware virtualization in Linux since the 2.6.20 kernel.
 [4] It is used to accelerate the QEMU hypervisor. [5]
 
+Fedora installation:
+
+-  Install KVM and Libvirt. Add non-privileged users to the "libvirt" group to be able to manage virtual machines through ``qemu:///system``. By default, users can only manage them through ``qemu:///session`` which has limited configuration options.
+
+.. code-block:: sh
+
+    $ sudo dnf -y install qemu-kvm libvirt
+    $ sudo systemctl enable --now libvirt
+    $ sudo groupadd libvirt
+    $ sudo usermod -a -G libvirt $USER
+
 Performance Tuning
 ^^^^^^^^^^^^^^^^^^
 
@@ -641,39 +652,35 @@ Container Management Platforms
 OpenShift
 ^^^^^^^^^
 
-OpenShift is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
 
-MiniShift
+The Origin Kubernetes Distribution (okd), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [52]
+
+Minishift
 '''''''''
 
-MiniShift is an easy to use all-in-one installation for testing out OpenShift.
+Minishift is an easy to use all-in-one installation for testing out OpenShift.
 
 **Install (Fedora):**
 
--  Install Libvirt and KVM and add non-privileged MiniShift users to the "libvirt" group.
+-  Download the latest release of Minishift from `here <https://github.com/minishift/minishift/releases>`__.
 
 .. code-block:: sh
 
-    $ sudo dnf -y install qemu-kvm libvirt
-    $ sudo usermod -a -G libvirt $USER
-
--  Download the latest release of MiniShift from: https://github.com/minishift/minishift/releases
-
-.. code-block:: sh
-
-    $ OPENSHIFT_VER=1.19.0
-    $ wget https://github.com/minishift/minishift/releases/download/v${OPENSHIFT_VER}/minishift-${OPENSHIFT_VER}-linux-amd64.tgz
-    $ tar -v -x -f minishift-${OPENSHIFT_VER}-linux-amd64.tgz
+    $ MINISHIFT_VER=1.24.0
+    $ wget https://github.com/minishift/minishift/releases/download/v${MINISHIFT_VER}/minishift-${MINISHIFT_VER}-linux-amd64.tgz
+    $ tar -v -x -f minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm -o /usr/local/bin/docker-machine-driver-kvm
     $ sudo chmod 0755 /usr/local/bin/docker-machine-driver-kvm
-    $ cd ./minishift-${OPENSHIFT_VER}-linux-amd64/
-    $ ./minishift start
+    $ cd ./minishift-${MINISHIFT_VER}-linux-amd64/
+    $ ./minishift openshift version list
+    $ ./minishift start --openshift-version <VERSION>
 
 [31][32]
 
 **Install (RHEL):**
 
-Enable the Red Hat Developer Tools repository first. Then MiniShift can be installed.
+Enable the Red Hat Developer Tools repository first. Then Minishift can be installed.
 
 .. code-block:: sh
 
@@ -681,9 +688,50 @@ Enable the Red Hat Developer Tools repository first. Then MiniShift can be insta
     $ sudo yum install cdk-minishift
     $ minishift setup-cdk --force --default-vm-driver="kvm"
     $ sudo ln -s ~/.minishift/cache/oc/v3.*/linux/oc /usr/bin/oc
-    $ minishift start
+    $ minishift openshift version list
+    $ minishift start --openshift-version <VERSION>
 
 [33]
+
+Kubernetes
+^^^^^^^^^^
+
+Kubernetes provides an API and graphical user interface for the orchestration and scaling of docker containers. It was originally created by Google as part of their Google Kubernetes Engine cloud platform.
+
+Minikube
+''''''''
+
+Minikube is an easy to use all-in-one installation for testing out Kubernetes
+
+Download the latest Minikube release from `here <https://github.com/kubernetes/minikube/releases>`__.
+
+.. code-block:: sh
+
+   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v0.28.2/minikube-linux-amd64 -o /usr/local/bin/minikube
+   $ sudo chmod +x /usr/local/bin/minikube
+
+Install the the KVM2 virtualization driver.
+
+.. code-block:: sh
+
+   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v0.28.2/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
+   $ sudo chmod +x /usr/local/bin/docker-machine-driver-kvm2
+
+Deploy Kubernetes using the specified version.
+
+.. code-block:: sh
+
+   $ minikube get-k8s-versions
+   $ minikube start --vm-driver kvm2 --kubernetes-version <VERSION>
+
+Install kubectl for managing Kubernetes.
+
+.. code-block:: sh
+
+   $ sudo curl -L https://storage.googleapis.com/kubernetes-release/release/<VERSION>/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
+   $ sudo chomd +x /usr/local/bin/kubectl
+
+[51]
 
 Orchestration
 -------------
@@ -1271,3 +1319,5 @@ Bibliography
 48. "Getting started with Docker." Fedora Developer Portal. Accessed May 16, 2018. https://developer.fedoraproject.org/tools/docker/docker-installation.html
 49. "APIC Virtualization Performance Testing and Iozone." Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone
 50. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
+51. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
+52. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
