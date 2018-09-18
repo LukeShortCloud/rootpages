@@ -4615,6 +4615,11 @@ Red Hat to the public on September 7, 2017. [39] The source code for the
 project can be found in the
 `ansible/awx <https://github.com/ansible/awx>`__ repository on GitHub.
 
+Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [76]
+
+-  AWX 1.0.8 = Ansible Tower 3.3.0
+-  AWX 1.0.0 = Ansible Tower 3.2.0
+
 Install
 ^^^^^^^
 
@@ -4891,3 +4896,4 @@ Bibliography
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
 74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
+76. "AWX Project." Ansible GitHub. September 18, 2018. Accessed September 18, 2018. https://github.com/ansible/awx
