@@ -697,10 +697,74 @@ Complex operations on files.
 
 [15]
 
+urllib.parse
+^^^^^^^^^^^^
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "quote(<STRING>)", "Replace special characters with escaped versions that are parsable by HTML.", ""
+
+urllib.request
+^^^^^^^^^^^^^^
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "urlretrieve(<URL>, <FILE>)", "Download a file from an URL.", ""
+   "Request(url=<URL>, data=PARAMETERS, method=<HTTP_METHOD>)", "Create a Request object to define settings for a HTTP request.", ""
+   "urlopen(<urllib.request.Request object>)", "Establish a HTTP request connection to the remote server.", ""
+   "read().decode()", "Return the resulting text from the request.", ""
+
+[22]
+
+(urllib.request.Request Object)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "add_header(<KEY>, <VALUE>)", "Add a header to a request.", "<OBJECT>.add_header(""Content-type"", ""application/json"")"
+
+[22]
+
 External
 ~~~~~~~~
 
 External libraries are not available on a default Python installation and must be installed via a package manager such as ``pip``.
+
+requests
+^^^^^^^^
+
+Package: requests
+
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "get(<URL>)", "Do a GET request on a URL.", ""
+   "get(headers=<HEADERS_DICT>)", "Provide a dictionary for custom headers.", ""
+   "get(auth=(<USER>, <PASS>))", "Provide basic HTTP authentication to the request.", ""
+   "get(params=<PARAMETERS>)", "Provide arguments to the GET request.", ""
+
+[21]
+
+(requests Object)
+^^^^^^^^^^^^^^^^^
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   "status_code", "The HTTP status code of the request.", ""
+   "content()", "Return the resulting text output from the request.", ""
+   "json()", "Return the resulting dictionary of data from the request.", ""
+
+[21]
 
 six.moves
 ^^^^^^^^^
@@ -802,3 +866,5 @@ Bibliography
 18. "json - JSON encoder and decoder." Python 3 Documentation. Accessed September 15, 2018. https://docs.python.org/3/library/json.html
 19. "PyYAML Documentation." PyYAML. Accessed September 15, 2018. https://pyyaml.org/wiki/PyYAMLDocumentation
 20. "Six: Python 2 and 3 Compatibility Library." Python Hosted. Accessed September 15, 2018 https://pythonhosted.org/six/
+21. "Requests: HTTP for Humans." Requests Documentation. Accessed September 17, 2018. http://docs.python-requests.org/en/master/
+22. "urllib.request - Extensible library for opening URLs." Python 3 Documentation. Accessed September 17, 2018. https://docs.python.org/3/library/urllib.request.html#module-urllib.request
