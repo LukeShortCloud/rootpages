@@ -51,7 +51,7 @@ Source code:
 
 .. code-block:: sh
 
-    $ git clone git://github.com/ansible/ansible.git
+    $ git clone https://github.com/ansible/ansible.git
     $ cd ./ansible/
     $ git branch -a | grep stable
     $ git checkout remotes/origin/stable-2.7
