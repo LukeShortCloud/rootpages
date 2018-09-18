@@ -353,6 +353,46 @@ Example:
 
 [5]
 
+Standard Input and Output
+-------------------------
+
+Strings can be displayed to standard output.
+
+.. code-block:: python
+
+   print("Hello world")
+
+Substitutions can be done using "%s" for strings and "%d" for number data types. Alternatively, this can be done with the ``format()`` string method.
+
+.. code-block:: python
+
+   print("There are %d %s." % (3, "apples"))
+   print("There are {} {}.".format(3, "apples"))
+   print("There are {a} {b}.".format(b="apples", a=3))
+
+Parts of a string can be printed by specifying an index range to use.
+
+.. code-block:: python
+
+   print("Hello world!"[0:5])
+   print("Hello world!"[6:])
+   print("Hello world!"[-1])
+
+::
+
+   Hello
+   world!
+   !
+
+[23]
+
+Standard input can be gathered from the end-user to be used inside a program.
+
+.. code-block:: python
+
+   stdin = input("Enter a value here:\n")
+   print("You entered: %s" % stdin)
+
 Files
 ------
 
@@ -540,6 +580,7 @@ These are methods that are natively available in a default installation of Pytho
    "replace(<STRING1>, <STRING2>)", "Replace all occurrences of one string with another.", ""
    "index()", "Return the index of a specific character.", ""
    "remove(<INDEX>)", "Remove an item from the list at the specified index.", ""
+   "format()", "Replace {} placeholders in a string with items from a list (and convert them into strings).", ""
 
 [8]
 
@@ -868,3 +909,4 @@ Bibliography
 20. "Six: Python 2 and 3 Compatibility Library." Python Hosted. Accessed September 15, 2018 https://pythonhosted.org/six/
 21. "Requests: HTTP for Humans." Requests Documentation. Accessed September 17, 2018. http://docs.python-requests.org/en/master/
 22. "urllib.request - Extensible library for opening URLs." Python 3 Documentation. Accessed September 17, 2018. https://docs.python.org/3/library/urllib.request.html#module-urllib.request
+23. "PEP 3101 -- Advanced String Formatting." September 14, 2008. Accessed September 17, 2018. https://www.python.org/dev/peps/pep-3101/
