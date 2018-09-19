@@ -947,7 +947,7 @@ Class syntax:
 
     class <ClassName>():
 
-Classes can optionally have a "``__init__``" method that is always ran when a new object is created from the class. This is useful for setting up variables and running other initalization methods if required.
+Classes can optionally have an ``__init__`` method that is always ran when a new object is created from the class. This is useful for setting up variables and running other initalization methods if required.
 
 Class initalization syntax:
 
@@ -959,7 +959,7 @@ Class initalization syntax:
             self.<VARIABLE1> = <VARIABLE1>
             self.<VARIABLE2> = <VARIABLE2>
 
-Every method has to be defined to require at least the "self" variable which contains all of the local object variables.
+Every method has to be defined to require at least the ``self`` variable which contains all of the local object variables.
 
 Method syntax:
 
@@ -977,6 +977,49 @@ Object invocation syntax:
     <object1>.<method_name>()
     <object2> = <ClassName>
     <object2>.<method_name>()
+
+Unit Testing
+------------
+
+Unit tests test the functionality of different components of a program and common use cases associated with it. They are used to help programmers find and locate unexpected issues and bugs with their programs. When new features are added to a program, existing unit tests should continue to succeed. New unit tests should also be created for those new features.
+
+This is a template of how a unit test class should be defined in Python. The class must utilize ``unittest.TestCase`` to handle tests. The ``setUp()`` method is used instead of ``__init__()`` for initializing a test object. The ``tearDown()`` method is always executed after every test. Test method names created by the developer must start with ``test_`` or else they will not be executed. Returns from the methods are ignored. The unit tests suite only checks to see if ``assert`` methods have succeeded or failed. When the tests are complete, a status report of the tests will be printed to the standard output.
+
+.. code-block:: python
+
+   import unittest
+   
+   
+   class UnitTestClassName(unittest.TestCase):
+   
+       def setUp(self):
+           # Prepare tests
+   
+       def test_unit_test_case(self):
+           # Create a test
+   
+       def tearDown(self):
+           # Cleanup
+   
+   if __name__ == '__main__':
+       unittest.main()
+
+Each test should have ``assert`` checks to verify that what is expected is being returned. The descriptions of each ``assert`` check can be found `here <https://docs.python.org/3/library/unittest.html#assert-methods>`__. If any of these methods return False, the test will be reported as failed.
+
+-  assertEqual
+-  assertNotEqual
+-  assertTrue
+-  assertFalse
+-  assertIs
+-  assertIsNot
+-  assertIsNone
+-  assertIsNotNone
+-  assertIn
+-  assertNotIn
+-  assertIsInstance
+-  assertNotIsInstance
+
+[26]
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
 ---------------------------------------------------------------------------------
@@ -1008,4 +1051,5 @@ Bibliography
 22. "urllib.request - Extensible library for opening URLs." Python 3 Documentation. Accessed September 17, 2018. https://docs.python.org/3/library/urllib.request.html#module-urllib.request
 23. "PEP 3101 -- Advanced String Formatting." September 14, 2008. Accessed September 17, 2018. https://www.python.org/dev/peps/pep-3101/
 24. "Python Exceptions: An Introduction." Real Python. April 30, 2018. Accessed September 18, 2018. https://realpython.com/python-exceptions/
-25. "Built-in Exceptions." Python Documentation. Accessed September 18, 2018. https://docs.python.org/3/library/exceptions.html
+25. "Built-in Exceptions." Python 3 Documentation. Accessed September 18, 2018. https://docs.python.org/3/library/exceptions.html
+26. "unittest - Unit testing framework. Python 3 Documentation. Accessed September 19, 2018. https://docs.python.org/3/library/unittest.html
