@@ -87,8 +87,11 @@ Comments are recommended in the code to help explain what is happening and being
 
 .. code-block:: yaml
 
-   # This will tell the end-user hello.
    print("Hello")
+
+::
+
+   Hello
 
 All files, classes, methods, and functions should have a docstring. These are multi-line comments explaining their purpose. For functions and methods, it should also describe the arguments and returns it expects. If the function raises any exceptions, those should also be explained. [13]
 
@@ -167,6 +170,10 @@ Example:
         global var
         print(var)
 
+::
+
+   Hello world
+
 There are a few ways to handle long strings.
 
 .. code-block:: python
@@ -204,6 +211,11 @@ Example of defining and looping over a dictionary:
 
    print(consoles)
 
+::
+
+   The funbox was released in 2005.
+   The funstation was released in 2006.
+
 Example replacing a key and value:
 
 .. code-block:: python
@@ -214,6 +226,10 @@ Example replacing a key and value:
     # Replace a value.
     dictionary['hello_world'] = 456
     print(dictionary)
+
+::
+
+   {'hello_world': 456}
 
 Common libraries for handling dictionaries include json and yaml.
 
@@ -288,7 +304,14 @@ Example:
     for car in cars:
         print("Consider buying a %s." % car)
     else:
-        print("This FOR loop is now completed.")
+        print("This FOR loop is now complete.")
+
+::
+
+   Consider buying a sedan.
+   Consider buying a truck.
+   Consider buying a van.
+   This FOR loop is now complete.
 
 [5]
 
@@ -323,6 +346,10 @@ Example:
     else:
         print("You need %d loafs of bread." % bread_required)
 
+::
+
+   You need a baker's dozen loafs of bread.
+
 [5]
 
 While
@@ -345,11 +372,18 @@ Example:
 
     x = 0
 
-    while x < 10:
+    while x < 3:
         x += 1
         print("Looping...")
     else:
-        print("This WHILE loop is now completed.")
+        print("This WHILE loop is now complete.")
+
+::
+
+   Looping...
+   Looping...
+   Looping...
+   This WHILE loop is now complete.
 
 [5]
 
@@ -369,6 +403,12 @@ Substitutions can be done using "%s" for strings and "%d" for number data types.
    print("There are %d %s." % (3, "apples"))
    print("There are {} {}.".format(3, "apples"))
    print("There are {a} {b}.".format(b="apples", a=3))
+
+::
+
+   There are 3 apples.
+   There are 3 apples.
+   There are 3 apples.
 
 Parts of a string can be printed by specifying an index range to use.
 
@@ -390,8 +430,14 @@ Standard input can be gathered from the end-user to be used inside a program.
 
 .. code-block:: python
 
-   stdin = input("Enter a value here:\n")
-   print("You entered: %s" % stdin)
+   stdin = input("What is your favorite color?\n")
+   print("%s is such a great color!" % stdin)
+
+::
+
+   What is your favorite color?
+   Blue
+   Blue is such a great color!
 
 Files
 ------
