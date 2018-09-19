@@ -885,6 +885,57 @@ Package: PyYAML
 
 [19]
 
+Exceptions
+----------
+
+Exceptions are raised when an error is encountered. Instead of a program exiting, the end-user can capture the error and try to deal with the issue. The code in the "try" block is executed until an exception is encountered. Then the "except" block will be executed if an exception is found.
+
+.. code-block:: python
+
+   try:
+       # try block
+   except:
+       # except block
+
+Situations for specific exceptions can be defined.
+
+.. code-block:: python
+
+   try:
+       # try block
+   except <EXCEPTION_TYPE> as <VARIABLE>:
+       # except block
+
+The "else" block can be used to always run code if there is no exception. The "finally" block will always be executed.
+
+.. code-block:: python
+
+   try:
+       # try block
+   except:
+       # except block
+   else:
+       # else block
+   finally:
+       # finally block
+
+[24]
+
+Common exceptions:
+
+-  Exception = Any generic Python related exception.
+-  ImportError = Library import exception.
+-  LookupError = An issue looking up a key or value.
+-  NameError = An undefined variable.
+-  NotImplementedError = A user-defined exception stating that functionality has not been created yet.
+-  OSError = Operating system error exception, including I/O.
+-  SyntaxError = An exception related to the way the code is written. Normally this is related to missing imported libraries.
+-  TypeError = Wrong data type exception.
+
+The full diagram of each exception category can be found here `here <https://docs.python.org/3/library/exceptions.html#exception-hierarchy>`__.
+
+[25]
+
 Object Oriented Programming
 ---------------------------
 
@@ -956,3 +1007,5 @@ Bibliography
 21. "Requests: HTTP for Humans." Requests Documentation. Accessed September 17, 2018. http://docs.python-requests.org/en/master/
 22. "urllib.request - Extensible library for opening URLs." Python 3 Documentation. Accessed September 17, 2018. https://docs.python.org/3/library/urllib.request.html#module-urllib.request
 23. "PEP 3101 -- Advanced String Formatting." September 14, 2008. Accessed September 17, 2018. https://www.python.org/dev/peps/pep-3101/
+24. "Python Exceptions: An Introduction." Real Python. April 30, 2018. Accessed September 18, 2018. https://realpython.com/python-exceptions/
+25. "Built-in Exceptions." Python Documentation. Accessed September 18, 2018. https://docs.python.org/3/library/exceptions.html
