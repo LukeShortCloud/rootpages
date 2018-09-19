@@ -3429,9 +3429,7 @@ to use multiple roles.
 Galaxy
 ~~~~~~
 
-Ansible Galaxy provides a way to easily manage remote Ansible Galaxy
-roles from https://galaxy.ansible.com/ and other software configuration
-management (SCM) sources. [25]
+Ansible Galaxy is used to manage playbook and role dependencies. Roles can be downloaded from the `Ansible Galaxy community <https://galaxy.ansible.com/>`__ or from source control management (SCM) systems such as GitHub. [25] The latest beta version of Galaxy can be found `here <https://galaxy-qa.ansible.com/>`__. The ``ansible-galaxy`` command is installed by default with Ansible.
 
 .. code-block:: sh
 
