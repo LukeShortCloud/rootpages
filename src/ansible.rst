@@ -1796,7 +1796,7 @@ Examples:
 Loops
 ^^^^^
 
-Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is "``with_items``. All loops from Ansible <= 2.4 have been replaced by the "``loop``" keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Users will now have to use Jinja filters to sort through their variables. The logic and code all loops are located in the directory ``lib/ansible/plugins/lookup/``. Alternatively, all modules in Ansible >= 2.6 support passing a list variable as an argument value.
+Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is ``with_items``. All loops from Ansible <= 2.4 have been replaced by the ``loop`` keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Users will now have to use Jinja filters to sort through their variables. The logic and code all loops are located in the directory ``lib/ansible/plugins/lookup/``. Package modules in Ansible >= 2.7 support passing a list variable as an argument value.
 
 Ansible >= 2.5 loops:
 
@@ -1806,7 +1806,7 @@ Ansible >= 2.5 loops:
 Loop
 ''''
 
-Ansible 2.5 introduced a simpler keyword for loops called "loop" instead of the more complex name "with_items". This new loop directly replaces "with_list" and is used in substitution of all of the older ``with_*`` loops. This change was to put emphasis on the end-user to do the parsing of their variables with Jinja filters and lookups such as how Ansible <= 2.4 handles it in the back-end. This helps to make the code more understandable.
+Ansible 2.5 introduced a simpler keyword for loops called ``loop`` instead of the more complex name ``with_items``. This new loop directly replaces ``with_list`` and is used in substitution of all of the older ``with_`` prefixed loops. This change was to put emphasis on the end-user to do the parsing of variables with Jinja filters and lookups such as how Ansible <= 2.4 handles it in the back-end. This helps to make the code more understandable.
 
 Syntax:
 
@@ -1827,7 +1827,7 @@ View the available Ansible Jinja lookups [62]:
     $ ansible-doc -t lookup -l
     $ ansible-doc -t lookup <JINJA_LOOKUP>
 
-Ansible provides a special ``lookup`` wrapper that works easier and with less user-provided options for loops. This Jinja function is ``query``.
+Ansible provides a special Jinja ``lookup`` wrapper called ``query`` that will return lists instead of a comma separated string.
 
 Query syntax:
 
