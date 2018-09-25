@@ -224,7 +224,7 @@ Installation utility for virtual machines.
    "--name", "create guest vm name", ""
    "--memory", "allocate RAM", ""
    "--vcpus", "allocate CPUs", ""
-   "--disk [specify the partition to use for the vm", ""
+   "--disk", "specify the partition to use for the vm", ""
    "--disk path=<PATH>,bus=virtio,cache=none", "use a disc and utilize the faster VirtIO drivers", ""
    "--network=bridge:<BRIDGE_DEVICE>,model=virtio", "use a network bridge with the faster VirtIO drivers", ""
    "--location", "network location of the tree file for the OS installation information", ""
@@ -232,6 +232,9 @@ Installation utility for virtual machines.
    "--graphics {vnc,listen=<ADDRESS>,port=<PORT>,password=<PASS>}", "use VNC to install the OS via a GUI; other specific options can also be defined such as to listen on all IPs with the 0.0.0.0 wildcard", ""
    "--import", "do not install the OS; use an existing pre-installed OS image or disk", ""
    "--livecd", "skip the installation and always boot from the disk", ""
+   "--initrd-inject <FILE>", "add a file to the initrd/initramfs", ""
+   "--extra-args=""<ARGS>""", "pass additional Linux kernel /proc/cmdline options", ""
+   "--initrd-inject ks.cfg --extra-args=""ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8""", "install the VM using a kickstart file", ""
 
 virt-resize
 ~~~~~~~~~~~
