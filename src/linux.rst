@@ -10,6 +10,15 @@ architectures. "Linux" is sometimes used to generally describe the many
 operating systems that use the Linux kernel. [1] In the context of this
 Root Pages guide, the focus is on the actual kernel.
 
+Each kernel new kernel in development normally goes through 7 to 9 weeks of release candidates before it is marked as stable. [12] At some point after the Linux git repository has added more than 2 million git objects, the major version number is increased. [13] The latest kernels can be found `here <https://www.kernel.org/>`__.
+
+The types of Linux kernel releases include:
+
+-  mainline = The latest development release that is working towards a stable release.
+-  stable = The current stable release.
+-  longterm = Long-term supported kernels are older versions that primarily only recieve bug fixes.
+-  linux-next = Daily unstable development releases from the "master" git branch.
+
 System Calls
 ------------
 
@@ -292,3 +301,5 @@ Bibliography
 9. "ramfs, rootfs and initramfs." The Linux Kernel Documentation. May 29, 2015. Accessed November 19, 2016. https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
 10. "mkinitcpio." The Arch Linux Wiki. November 13, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/mkinitcpio
 11. "Dracut." The Linux Kernel Archives. October, 2013. Accessed November 19, 2016. https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html
+12. "Which Linux Kernel Version Is 'Stable'?" Linux.com. February 3, 2018. Accessed September 25, 2018. https://www.linux.com/blog/learn/2018/2/which-linux-kernel-version-stable
+13. "Linux Kernel 5.0 to Be Released When We Hit 6M Git Objects, Says Linus Torvalds." Softpedia News. October 9, 2016. Accessed September 25, 2018. https://news.softpedia.com/news/linux-kernel-5-0-to-be-released-when-we-hit-6m-git-objects-says-linus-torvalds-509108.shtml
