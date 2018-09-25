@@ -4,6 +4,7 @@
 
    compression.rst
    configuration_management.rst
+   package_managers.rst
    security.rst
    software_code_management.rst
    text_editors.rst
