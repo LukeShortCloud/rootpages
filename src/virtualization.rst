@@ -758,6 +758,12 @@ Common commands:
 
     -  --type <TYPE> = Using one of these partition schemes: partition (partition only, no formatting), plain (normal partitions that are not Btrfs or LVM), btrfs, lvm, or thinp (thin-provisioned logical volumes).
 
+-  {cmdline|graphical|text} = The display mode for the installer.
+
+   -  cmdline = Non-interactive text installer.
+   -  graphical = The graphical installer will be displayed.
+   -  text = An interactive text installer that will prompt for missing options.
+
 -  **eula --accept** = Automatically accept the end-user license agreement (EULA).
 -  firewall = Configure the firewall.
 
