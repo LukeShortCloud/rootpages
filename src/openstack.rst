@@ -11,7 +11,22 @@ This guide is aimed to help Cloud Administrators through deploying, managing, an
 Versions
 ~~~~~~~~
 
-Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as ``15.X.X``. A new release comes out after about 6 months of development. After a release, phase 1 of support provides bug fixes for 6 months. Then phase 2 starts for the next 6-12 months that will only provide major bug fixes. Phase 3 only provides security patches for the now end-of-life (EOL) release. Each release is typically supported for 1 year before becoming EOL. [69]
+Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as ``15.X.X``. A new feature release comes out after about 6 months of development. Every major release adheres to a maintenance cycle.
+
+Maintenance Phases <= Newton
+
+-  Phase 1 = 6 months of stability and security fixes.
+-  Phase 2 = 6 months of major stability and security fixes.
+-  Phase 3 = 6 months of major security fixes.
+
+Maintenance Phases >= Ocata
+
+-  Maintained = 18 months of stability and security fixes and official releases from the OpenStack Foundation.
+-  Extended Maintenance (em) = Stability and security fixes by community contributors. There are no tagged minor releases. The code will be treated as a rolling minor release.
+-  Unmaintained = 6 months of no community contributions.
+-  EOL = The last version of that OpenStack release to be archived.
+
+[69]
 
 Releases:
 
@@ -36,7 +51,7 @@ Releases:
 15. Ocata
 
     -  Release: 2017-02-22
-    -  EOL: 2018-02-26 [1]
+    -  EOL: TBD [1]
     -  Goals:
 
        -  Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
@@ -47,10 +62,10 @@ Releases:
 16. Pike
 
     -  Release: 2017-08-30
-    -  EOL: 2018-09-03 [1]
+    -  EOL: TBD [1]
     -  Goals:
 
-       -  Convert all of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
+       -  Convert most of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
        -  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
 
     -  `New Features <https://www.openstack.org/news/view/340/openstack-pike-delivers-composable-infrastructure-services-and-improved-lifecycle-management>`__
@@ -58,17 +73,35 @@ Releases:
 17. Queens
 
     -  Release: 2018-02-28
-    -  EOL: 2019-02-25
+    -  EOL: TBD [1]
     -  Goals:
 
        -  Remove the need for the access control list "policy" files by having default values defined in the source code.
        -  Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
 
     -  `New Features <https://www.openstack.org/news/view/371/openstack-queens-release-expands-support-for-gpus-and-containers-to-meet-edge-nfv-and-machine-learning-workload-demands>`__
+    -  `Release Highlights <https://releases.openstack.org/queens/highlights.html>`__
 
 18. Rocky
 
-    -  Expected release: 2018-08-30 [1]
+    -  Release: 2018-08-30
+    -  EOL: TBD [1]
+    -  Goals:
+
+       -  Make configuraiton options mutable. This avoids having to restart services whenever the configuraiton is updated.
+       -  Remove deprecated mox tests to further push towards full Python 3 support. [93]
+
+    -  `New Features <https://superuser.openstack.org/articles/what-you-need-to-know-about-the-openstack-rocky-release/>`__
+    -  `Release Highlights <https://releases.openstack.org/rocky/highlights.html>`__
+
+19. Stein
+
+    -  Expected release: 2019-04-10
+    -  EOL: TBD [1]
+    -  Goals:
+
+       -  Use Python 3 by default. Python 2.7 will only be tested using unit tests.
+       -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues. [95]
 
 Red Hat OpenStack Platform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -147,12 +180,14 @@ Releases:
 
 [6]
 
-RHOSP 10 supports these 4 hypervisors [9]:
+RHOSP supports running a virtualized Undercloud on these platforms [9]:
 
 -  Kernel-based Virtual Machine (QEMU with KVM acceleration)
 -  Red Hat Virtualization (RHV)
 -  Microsoft Hyper-V
 -  VMWare ESX and ESXi
+
+RHOSP only supports using libvirt with KVM as the compute hypervisor's virtualization technology. [94]
 
 The version of RHOSP in use can be found on the Undercloud by viewing
 the "/etc/rhosp-release" file.
@@ -1063,7 +1098,7 @@ Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
-In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. There is also experimental support for running the Undercloud services in containers. [81]
+In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. Experimental support for also running the Undercloud services in containers was added in Queens and became the default configuration for Rocky. [81]
 
 Minimum hardware requirements [24]:
 
@@ -3437,7 +3472,7 @@ The JUnit XML (a Java unit test library) format can also be used. This library i
 Performance
 -----------
 
-OpenStack can be tuned to use less load and run faster.
+OpenStack can be tuned to use less processing power and run faster.
 
 -  KeyStone
 
@@ -3467,7 +3502,7 @@ OpenStack can be tuned to use less load and run faster.
 Bibliography
 ------------
 
-1. "OpenStack Releases." OpenStack Releases. March 15, 2018. Accessed March 15, 2018. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. September 26, 2018. Accessed September 26, 2018. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
@@ -3475,7 +3510,7 @@ Bibliography
 6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed July 12, 2018. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
-9. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. November 23, 2017. Accessed December 22, 2017. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/10/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-10-Director\_Installation\_and\_Usage-en-US.pdf
+9. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/13/pdf/director\_installation\_and\_usage/Red\_Hat\_OpenStack\_Platform-13-Director\_Installation\_and\_Usage-en-US.pdf
 10. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
 11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
 12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
@@ -3535,7 +3570,7 @@ Bibliography
 66. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template\_guide/hot\_spec.html
 67. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 68. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
-69. "Stable branches." OpenStack Documentation. December 12, 2017. Accessed January 24, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
+69. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
 70. "[Rally] Installation and upgrades." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/install\_and\_upgrade/index.html
 71. "[Rally] Quick start." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/quick\_start/index.html
 72. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick\_start/tutorial/step\_3\_benchmarking\_with\_existing\_users.html
@@ -3547,7 +3582,7 @@ Bibliography
 78. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
 79. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86\_64/openstack-pike/
 80. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
-81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed March 19, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers\_deployment/undercloud.html
+81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed September 26, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers\_deployment/undercloud.html
 82. "[TripleO Quickstart] Networking." TripleO Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html
 83. "Repository Enablement." OpenStack TripleO Documentation. May 5, 2018. Accessed May 7, 2018. https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/repositories.html
 84. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
@@ -3559,3 +3594,6 @@ Bibliography
 90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
 91. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
 92. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
+93. "Rocky [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
+94. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/13/pdf/release\_notes/Red\_Hat\_OpenStack\_Platform-13-Release\_Notes-en-US.pdf
+93. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
