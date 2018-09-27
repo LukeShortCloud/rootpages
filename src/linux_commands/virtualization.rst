@@ -222,10 +222,13 @@ Installation utility for virtual machines.
 
    "", "", "virt-install --connect=qemu:///system --network=bridge:br0,model=virtio --extra-args='ks=console=tty0 console=ttyS0,115200' --name=centos7 --disk /var/lib/libvirt/images/centos7.qcow2,bus=virtio,cache=none,io=native --ram 2048 --vcpus=2 --check-cpu --location=http://mirror.centos.org/centos/7/os/x86_64/ --graphics vnc,listen=0.0.0.0,port=5999,password=<PASSWORD> [do a network install of CentOS 7 via a VNC connection]"
    "--name", "create guest vm name", ""
-   "--memory", "allocate RAM", ""
+   "--memory", "specify the amount of RAM to allocate, in MBs, and options to use", ""
+   "--memorybacking hugepages=on", "enable Huge Pages allocation", ""
    "--vcpus", "allocate CPUs", ""
+   "--cpu", "the CPU model and options to use", "--cpu core2duo"
+   "--cpu host-passthrough", "passthrough the CPU settings from the hypervisor", ""
    "--disk", "specify the partition to use for the vm", ""
-   "--disk path=<PATH>,bus=virtio,cache=none", "use a disc and utilize the faster VirtIO drivers", ""
+   "--disk path=<PATH>,bus=virtio,cache=none", "use a disk and utilize the faster VirtIO drivers", ""
    "--network=bridge:<BRIDGE_DEVICE>,model=virtio", "use a network bridge with the faster VirtIO drivers", ""
    "--location", "network location of the tree file for the OS installation information", ""
    "--nographics", "install via a CLI console", ""
@@ -234,7 +237,7 @@ Installation utility for virtual machines.
    "--livecd", "skip the installation and always boot from the disk", ""
    "--initrd-inject <FILE>", "add a file to the initrd/initramfs", ""
    "--extra-args=""<ARGS>""", "pass additional Linux kernel /proc/cmdline options", ""
-   "--initrd-inject ks.cfg --extra-args=""ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8""", "install the VM using a kickstart file", ""
+   "--initrd-inject <KICKSTART_FILE> --extra-args=""ks=file:/<KICKSTART_FILE>""", "install the VM using a kickstart file", ""
 
 virt-resize
 ~~~~~~~~~~~
