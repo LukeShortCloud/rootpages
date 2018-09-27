@@ -160,8 +160,8 @@ Alternatively, THP can be manually disabled. Note that if the GRUB method is use
 
 .. code-block:: sh
 
-    $ sudo echo never > /sys/kernel/mm/transparent_hugepage/enabled
-    $ sudo echo never > /sys/kernel/mm/transparent_hugepage/defrag
+    $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+    $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
 
 In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
 
