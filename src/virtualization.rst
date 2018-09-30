@@ -128,11 +128,11 @@ libvirt:
 
 .. code-block:: xml
 
-    <os>
+    <domain type='kvm'>
         <memoryBacking>
             <hugepages/>
         </memoryBacking>
-    <os/>
+    </domain>
 
 Disable THP using GRUB.
 
