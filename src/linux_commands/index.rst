@@ -4,6 +4,7 @@
 
    compression.rst
    configuration_management.rst
+   openstack.rst
    package_managers.rst
    permissions.rst
    security.rst
