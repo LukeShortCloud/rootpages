@@ -156,7 +156,7 @@ Releases:
 -  RHOSP 9 (Mitaka)
 
    -  Release: 2016-08-24
-   -  EOL: 2017-08-24
+   -  EOL: 2019-08-24
 
 -  **RHOSP 10 LL (Newton)**
 
@@ -436,9 +436,9 @@ Common options:
    -  CONFIG\_HORIZON\_SSL\_KEY=/etc/pki/tls/private/ssl\_dashboard.key
    -  CONFIG\_HORIZON\_SSL\_CACERT=/etc/pki/tls/certs/selfcert.crt
 
--  ``CONFIG_<SERVICE>_INSTALL`` = Install a specific OpenStack service.
--  ``CONFIG_<NODE>_HOST`` = The host to setup the relevant services on.
--  ``CONFIG_<NODE>_HOSTS`` = A list of hosts to setup the relevant
+-  CONFIG_<SERVICE>_INSTALL = Install a specific OpenStack service.
+-  CONFIG_<NODE>_HOST = The host to setup the relevant services on.
+-  CONFIG_<NODE>_HOSTS = A list of hosts to setup the relevant
    services on. This currently only exists for "COMPUTE" and "NETWORK."
    New hosts can be added and Packstack re-run to have them added to the
    OpenStack cluster.
@@ -823,6 +823,28 @@ File: /etc/openstack_deploy/openstack_user_config.yml
 Another real-world example of deploying and managing Ceph as part of
 OpenStack-Ansible can be found here:
 https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
+
+TripleO Queens configuration:
+
+.. code-block:: yaml
+
+   parameter_defaults:
+     NovaEnableRbdBackend: true
+     CinderEnableRbdBackend: true
+     CinderBackupBackend: ceph
+     GlanceBackend: rbd
+     GnocchiBackend: rbd
+     NovaRbdPoolName: vms
+     CinderRbdPoolName: volumes
+     CinderBackupRbdPoolName: backups
+     GlanceRbdPoolName: images
+     GnocchiRbdPoolName: metrics
+     CephClientUserName: openstack
+     CephClusterFSID: '<CLUSTER_FILE_SYSTEM_ID>'
+     CephClientKey: '<CEPHX_USER_KEY>'
+     CephExternalMonHost: '<CEPH_MONITOR_1>, <CEPH_MONITOR_2>, <CEPH_MONITOR_3>'
+
+[98]
 
 Install
 '''''''
@@ -1559,7 +1581,7 @@ Overcloud
           $ openstack baremetal node list
           $ openstack overcloud node configure <NODE_ID>
 
--  If the profile and/or boot option were not specified in the insackenv.json file then configure it now. Verify that the profiles have been applied.
+-  If the profile and/or boot option were not specified in the instackenv.json file then configure it now. Verify that the profiles have been applied.
 
    .. code-block:: sh
 
@@ -1683,7 +1705,7 @@ Overcloud
        $ openstack stack resource list <OVERCLOUD_STACK_ID>
        $ openstack stack resource show <OVERCLOUD_STACK_ID> <RESOURCE_NAME>
 
--  Source the Overcloud credentials to manage it.
+-  Source the Overcloud admin credentials to manage it.
 
    .. code-block:: sh
 
@@ -1703,6 +1725,20 @@ Overcloud
       $ ssh -l heat-admin 192.168.24.34
 
 [29][84]
+
+-  Passwords for the Overcloud services can be found by running:
+
+   -  TripleO Newton:
+
+      .. code-block:: sh
+
+         $ mistral environment-get overcloud
+
+   -  TripleO Queens:
+
+      .. code-block:: sh
+
+         $ openstack object save overcloud plan-environment.yaml
 
 Operations
 ''''''''''
@@ -1762,7 +1798,7 @@ Database
 Different database servers can be used by the API services on the
 controller nodes.
 
--  MariaDB/MySQL. The original "``mysql://``" connector can be used for the MySQL-Python library. Starting with Liberty, the newer PyMySQL library was added for Python 3 support. [31] CentOS first added the required ``python2-PyMySQL`` package to support it in the Pike release. [34][79]
+-  MariaDB/MySQL. The original ``mysql://`` connector can be used for the "MySQL-Python" library. Starting with Liberty, the newer "PyMySQL" library was added for Python 3 support. [31] RDO first added the required ``python2-PyMySQL`` package in the Pike release. [34][79]
 
    .. code-block:: ini
 
@@ -1836,12 +1872,35 @@ Drivers
 
 Ironic supports different ways of managing power cycling of managed nodes. The default enabled driver is IPMITool.
 
+OpenStack Newton configuration:
+
 File: /etc/ironic/ironic.conf
 
 .. code-block:: ini
 
     [DEFAULT]
-    enabled_drivers = <DRIVER1>, <DRIVER2>, DRIVER3>
+    enabled_drivers = <DRIVER>
+
+OpenStack Queens configuration:
+
+.. code-block:: ini
+
+    [DEFAULT]
+    enabled_hardware_types = <HARDWARE_DRIVER_TYPE>
+    enabled_power_interfaces = <POWER_INTERFACE>
+    enabled_management_interfaces = <MANAGEMENT_INTERFACE>
+
+TripleO Queens configuration [96]:
+
+.. code-block:: yaml
+
+   parameter_defaults:
+     IronicEnabledHardwareTypes:
+       - <HARDWARE_DRIVER_TYPE>
+     IronicEnabledPowerInterfaces:
+       - <POWER_INTERFACE>
+     IronicEnabledManagementInterfaces:
+       - <MANAGEMENT_INTERFACE>
 
 Supported Drivers:
 
@@ -1945,6 +2004,30 @@ related Credential authentication.
        $ sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
 [40][41]
+
+TripleO Queens configuration [97]:
+
+Create the Fernet keys and save them to Swift
+
+.. code-block:: sh
+
+   $ source ~/stackrc
+   $ sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+   $ sudo tar -zcf keystone-fernet-keys.tar.gz /etc/keystone/fernet-keys
+   $ upload-swift-artifacts -f keystone-fernet-keys.tar.gz --environment ~/templates/deployment-artifacts.yaml
+
+Verify that the object was saved to Swift and that the necessary environment template was generated.
+
+   $ swift list overcloud-artifacts Keystone-fernet-keys.tar.gz
+   $ cat ~/templates/deployment-artifacts.yaml
+
+Append the token provider setting to the "parameter_defaults" section in the "deployment-artifacts.yaml" file. Then use this file for the Overcloud deployment.
+
+.. code-block:: yaml
+
+   parameter_defaults:
+     controllerExtraConfig:
+       keystone::token_provider: "fernet"
 
 Scenario #3 - PKI
 
@@ -2548,6 +2631,13 @@ File: /etc/neutron/plugins/ml2/openvswitch\_agent.ini
     enable_distributed_routing = True
 
 [56]
+
+TripleO configuration [96]:
+
+.. code-block:: yaml
+
+   parameter_defaults:
+     NeutronEnableDVR: true
 
 High Availability
 ^^^^^^^^^^^^^^^^^
@@ -3596,4 +3686,7 @@ Bibliography
 92. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
 93. "Rocky [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
 94. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red\_hat\_openstack\_platform/13/pdf/release\_notes/Red\_Hat\_OpenStack\_Platform-13-Release\_Notes-en-US.pdf
-93. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
+95. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
+96. "Feature Configuraiton." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
+97. "Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform." Sweeping Information. December 12, 2017. Accessed September 27, 2018. https://hk.saowen.com/a/d108272fc7f3a3edaaa5d48200444b7ec08af46e5d8898311ad68286da265538
+98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
