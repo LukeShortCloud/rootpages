@@ -1,0 +1,215 @@
+Hardware
+========
+
+.. contents:: Table of Contents
+
+See also: Administrative, Drives, Virtualization
+
+North Bridge
+------------
+
+dmidecode
+~~~~~~~~~
+
+View information about the motherboard and BIOS.
+
+lspci
+~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-m", "lists PCI hardware", ""
+
+lscpu
+~~~~~
+
+Display information about the current system's processors.
+
+lsusb
+~~~~~
+
+Display attached USB devices.
+
+sensors-detect
+~~~~~~~~~~~~~~
+
+Package: lm_sensors
+
+Automatically find sensors on your motherboard. This generates a configuration file to be used with the "sensors" command.
+
+sensors
+~~~~~~~
+
+Displays the current temperature of your devices.
+
+stress
+~~~~~~
+
+Package: stress
+
+A utility for stress testing the processor, RAM, and/or storage.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-c, --cpu", "spawn CPU workers", ""
+   "-i, --io", "spawn I/O workers in RAM and HDDs", ""
+   "-m,--vm", "spawns RAM workers", ""
+   "--vm-bytes", "specify bytes to write to RAM", ""
+   "-d, --hdd", "spawn I/O workers on the actual drive", ""
+   "-t", "timeout time", ""
+   "-v", "verbose", ""
+
+stress-ng
+~~~~~~~~~
+
+Package: stress-ng
+
+An updated "next generation" stress utility.
+
+netio
+~~~~~
+
+Stress test utility for networks.
+
+Audio
+-----
+
+alsamixer
+~~~~~~~~~
+
+Package: alsa-utils
+
+A CLI utiliy for volume control of the speakers.
+
+speaker-test
+~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-c 2", "test audio output on stero speakers", ""
+   "-D hw:0,0", "test a specific device; you can get this information from /proc/asound/pcm; replace ""0,0""", ""
+
+Graphics
+--------
+
+intel-gpu-tools
+~~~~~~~~~~~~~~~
+
+Monitor utility for Intel integrated graphics.
+
+nvidia-smi
+~~~~~~~~~~
+
+Monitor utility for Nvidia cards. This only works with the proprietary "nvidia" driver.
+
+aticonfig
+~~~~~~~~~
+
+Monitor utility for AMD cards. This only works with the proprietary "fglrx" driver.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-odgc -odgt", "", ""
+
+radeontop
+~~~~~~~~~
+
+Monitor utility for AMD cards. This works with both the "fglrx" and open-source "radeon" driver.
+
+xrandr
+~~~~~~
+
+Configure different display settings.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "--output <DISPLAY> --primary", "change the primary monitor", ""
+
+glxinfo
+~~~~~~~
+
+Displays information about the GPU driver and related libraries.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "", "find the maximum supported OpenGL version", "glxinfo | grep ""OpenGL version"""
+
+IPMI
+----
+
+ipmitool
+~~~~~~~~
+
+Package: OpenIPMI-tools
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> {chassis|power} status", "remotely connect to IPMI to check the status of a particular component", ""
+   "-A MD5", "use MD5 encryption for authentication", ""
+   "user list 1", "show all users", ""
+   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> user set password 2 <NEWPASS>", "reset password for a user", ""
+
+ipmitool lan
+~~~~~~~~~~~~
+
+Manage the network connection for the IPMI device.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "print 1", "display the network settings", ""
+   "set 1 ipsrc {static|dhcp}", "change the network mode", ""
+   "set 1 ipaddr", "set the IP address", "set 1 ipaddr 192.168.1.101"
+   "set 1 netmask", "set the subnet mask", "set 1 netmask 255.255.255.0"
+
+ipmicfg
+^^^^^^^
+
+Configure IPMI.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-raw 0x30 0x70 0x0c 0", "view the LAN mode (dedicated, shared, or failover)", ""
+   "-raw 0x30 0x70 0x0c 1 0", "set the LAN mode to dedicated", ""
+   "-raw 0x30 0x70 0x0c 1 1", "set the LAN mode to shared", ""
+   "-raw 0x30 0x70 0x0c 1 2", "set the LAN mode to failover", ""
+
+lUpdate
+^^^^^^^
+
+IPMI firmware update utility.
+
+.. csv-table::
+   :header: Usage, Explanation, Example
+   :widths: 20, 20, 20
+
+   "-i kcs -f", "update IPMI's firmware", ""
+
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__
+--------------------------------------------------------------------------------------------------
+
+Bibliography
+------------
+
+-  IPMI
+
+   -  impitool lan
+
+      -  http://www.openfusion.net/linux/ipmi_on_centos
