@@ -811,7 +811,7 @@ deployment. It uses a single file called "Vagrantfile" to describe the
 virtual machines to create. By default, Vagrant will use VirtualBox as
 the hypervisor but other technologies can be used.
 
--  Officially supported hypervisors [21]:
+-  Officially supported hypervisor providers [21]:
 
    -  docker
    -  hyperv
@@ -819,7 +819,7 @@ the hypervisor but other technologies can be used.
    -  vmware\_desktop
    -  vmware\_fusion
 
--  Unofficial hypervisors [22]:
+-  Unofficial hypervisor providers [22]:
 
    -  aws
    -  azure
@@ -912,6 +912,38 @@ Example:
     end
 
 [23]
+
+Resource Allocation
+'''''''''''''''''''
+
+Defining the amount of resources a virtual machine has access to is different for each back-end provider. The default primary disk space is normally 40GB.
+
+.. code-block:: ruby
+
+   config.vm.provider "<PROVIDER>" do |vm_provider|
+     vm_provider.<KEY> = <VALUE>
+   end
+
+Common options:
+
+-  vcpus (integer) = The number of CPU cores to allocate.
+-  memory (integer) = The size of RAM, in MB, to allocate.
+
+Provider specific options:
+
+-  libvirt [25]
+
+   -  cpu_mode (string) = The CPU mode to use.
+   -  volume_cache (string) = The disk cache mode to use.
+   -  storage (dictionary of strings) = Create additional disks.
+
+-  virtualbox
+
+   -  gui (boolean) = Launch the VirtualBox GUI console.
+   -  linked_clone (boolean) = Use a thin provisioned virtual machine image.
+   -  customize (list of strings) = Run custom commands after the virtual machine has been created.
+
+[53]
 
 Networks
 ''''''''
@@ -1299,7 +1331,7 @@ Bibliography
 22. "Available Vagrant Plugins." mitchell/vagrant GitHub. November 9, 2016. Accessed May 8, 2017. https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
 23. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/boxes.html
 24. "[Vagrant] Networking." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/networking/
-25. "Vagrant Libvirt Provider [README]." vagrant-libvirt GitHub. May 8, 2017. Accessed June 17, 2017. https://github.com/vagrant-libvirt/vagrant-libvirt
+25. "Vagrant Libvirt Provider [README]." vagrant-libvirt GitHub. May 8, 2017. Accessed October 2, 2018. https://github.com/vagrant-libvirt/vagrant-libvirt
 26. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
 27. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
 28. "Vagrantfile." Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html
@@ -1327,3 +1359,4 @@ Bibliography
 50. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
 51. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
 52. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
+53. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
