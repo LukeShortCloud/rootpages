@@ -816,8 +816,10 @@ Magic Variables
 Magic variables are variables that Ansible creates and manages outside of user-defined variables. Most of these exist with every playbook run.
 
 -  ansible_check_mode = If the playbook is ran with ``--check`` mode to see if tasks will make any modifications.
+-  ansible_user_dir = The $HOME directory for the user that is being accessed on the managed node.
 -  ansible_play_batch = The current hosts that are running, limited to only the hosts running from the ``serial`` size.
 -  ansible_play_hosts = The list of all of the (non-failed) hosts that the playbook ``hosts`` is set to use.
+-  ansible_playbook_python = The Python executable used to run Ansible on the control node.
 -  ansible_inventory_sources = A list of all of the inventory files that are loaded.
 -  ansible_limit = The string of hosts defined by ``--limit`` that the playbook is currently limited to.
 -  ansible_run_tags = A list of tags that are defined by ``--tags`` that the playbook is running.
@@ -827,6 +829,8 @@ Magic variables are variables that Ansible creates and manages outside of user-d
 -  inventory_hostname = The hostname of the current host that is being used.
 -  groups = A list of all hosts and groups from the inventories that are loaded.
 -  group_names = A list of all of the groups that the current host is a part of.
+-  playbook_dir = The full path to the directory where the current playbook is located.
+-  role_path = The full path to the current role in use.
 
 [4][69]
 
@@ -4822,7 +4826,7 @@ Bibliography
 1. "An Ansible Tutorial." Servers for Hackers. August 26, 2014. Accessed June 24, 2016. https://serversforhackers.com/an-ansible-tutorial
 2. "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks\_intro.html
 3. "Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro\_inventory.html
-4. "Variables." Ansible Documentation. May 31, 2018. Accessed June 7, 2018. http://docs.ansible.com/ansible/latest/user_guide/playbooks\_variables.html
+4. "Variables." Ansible Documentation. October 2, 2018. Accessed October 2, 2018. http://docs.ansible.com/ansible/latest/user_guide/playbooks\_variables.html
 5. "Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks\_best\_practices.html
 6. "Commands modules." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
