@@ -169,6 +169,13 @@ Package: libvirt-client
    "snapshot-create-as <VM_NAME> <SNAPSHOT_NAME>", "create a snapshot of the virtual machine", ""
    "snapshot-list", "view all of the available snapshots", ""
    "snapshot-revert --domain <VM> <SNAPSHOT_NAME>", "revert a VM image to a snapshot", ""
+   "net-list", "list the active libvirt networks", ""
+   "net-list --all", "show all of the defined libvirt networks", ""
+   "net-define", "add a new libvirt network configuration based on an XML file", ""
+   "net-start", "start a libvirt network", ""
+   "net-destroy", "forcefully stop a libvirt network", ""
+   "net-autostart", "enable the libvirt network to be started when the libvirtd service is also started", ""
+   "net-undefine", "remove the configure for the libvirt network", ""
 
 virt-customize
 ~~~~~~~~~~~~~~
