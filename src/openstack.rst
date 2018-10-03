@@ -1,5 +1,5 @@
-OpenStack Queens
-================
+OpenStack
+=========
 
 .. contents:: Table of Contents
 
@@ -1275,7 +1275,40 @@ Undercloud
 
 The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [82]
 
--  **Hypervisor** (optional)
+-  **Undercloud (Automatic)**
+
+   -  RDO provides pre-made Undercloud images.
+
+       -  <= Queens:
+
+           .. code-block:: sh
+
+              $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/undercloud.qcow2
+
+       -  >= Rocky:
+
+           .. code-block:: sh
+
+              $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/undercloud.qcow2
+
+   -  TripleO Quickstart can build an Undercloud image.
+
+      -  Leave the overcloud\_nodes variable blank to only deploy the Undercloud. Otherwise, provide a number of virtual machines that should be created for use in the Overcloud.
+
+      .. code-block:: sh
+
+          $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+          $ bash quickstart.sh --release trunk/queens --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
+
+   -  Log into the virtual machine once TripleO Quickstart has completed
+      setting up the environment.
+
+      .. code-block:: sh
+
+          $ ssh -F ~/.quickstart/ssh.config.ansible undercloud
+
+
+-  **Undercloud (Manual)**
 
    -  Install the necessary repositories.
 
@@ -1306,23 +1339,6 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
          .. code-block:: sh
 
              $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-3-tools-rpms --enable=rhel-7-server-rhceph-3-mon-rpms --enable=rhel-7-server-rhceph-3-osd-rpms --enable=rhel-7-server-openstack-13-rpms
-
-   -  Optionally use the TripleO Quickstart project to automatically deploy the Undercloud virtual machine. Leave the overcloud\_nodes variable blank to only deploy the Undercloud. Otherwise, provide a number of virtual machines that should be created for use in the Overcloud.
-
-      .. code-block:: sh
-
-          $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
-          $ bash quickstart.sh --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
-
-   -  Log into the virtual machine once TripleO Quickstart has completed
-      setting up the environment.
-
-      .. code-block:: sh
-
-          $ ssh -F ~/.quickstart/ssh.config.ansible undercloud
-
--  **Undercloud**
-
    -  It is recommended to create a user named "stack" with sudo
       privileges to manage the Undercloud.
 
@@ -1391,14 +1407,27 @@ Overcloud
 
 -  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
 
-   .. code-block:: sh
+   -  <= Queens
 
-     $ mkdir images
-     $ cd images
-     $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/ironic-python-agent.tar
-     $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/overcloud-full.tar
-     $ tar -v -x -f ironic-python-agent.tar
-     $ tar -v -x -f overcloud-full.tar
+      .. code-block:: sh
+
+        $ mkdir images
+        $ cd images
+        $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/ironic-python-agent.tar
+        $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/overcloud-full.tar
+        $ tar -v -x -f ironic-python-agent.tar
+        $ tar -v -x -f overcloud-full.tar
+
+   -  >= Rocky
+
+      .. code-block:: sh
+
+        $ mkdir images
+        $ cd images
+        $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/ironic-python-agent.tar
+        $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/overcloud-full.tar
+        $ tar -v -x -f ironic-python-agent.tar
+        $ tar -v -x -f overcloud-full.tar
 
 -  These files are extracted from the tar archives:
 
@@ -1739,6 +1768,12 @@ Overcloud
       .. code-block:: sh
 
          $ openstack object save overcloud plan-environment.yaml
+
+-  In >= Rocky (or in Queens, if configured), the Ansible files used for the configuration management can be downloaded. Those files can then be imported into an external source such as Ansible Tower or AWX. The ``tripleo-ansible-inventory`` script is used to generate a dynamic inventory file for Ansible that contains the Overcloud hosts. [99]
+
+    .. code-block:: sh
+
+       $ openstack overcloud config download
 
 Operations
 ''''''''''
@@ -3690,3 +3725,4 @@ Bibliography
 96. "Feature Configuraiton." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
 97. "Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform." Sweeping Information. December 12, 2017. Accessed September 27, 2018. https://hk.saowen.com/a/d108272fc7f3a3edaaa5d48200444b7ec08af46e5d8898311ad68286da265538
 98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
+99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/

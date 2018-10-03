@@ -149,10 +149,6 @@ The bibliography sections need to be reorganized to be in numerical order. These
 
 The copyright year in `src/conf.py` needs to be updated.
 
-### Special Notes
-
-The OpenStack notes go through a major rebase every third upstream OpenStack release. This is to align with the long-life release cycle for Red Hat's OpenStack Platform (RHOSP). The next rebase will be for the `T` release.
-
 ## Legal
 
 ### License
