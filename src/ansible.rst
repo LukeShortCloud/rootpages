@@ -818,6 +818,7 @@ Magic Variables
 Magic variables are variables that Ansible creates and manages outside of user-defined variables. Most of these exist with every playbook run.
 
 -  ansible_check_mode = If the playbook is ran with ``--check`` mode to see if tasks will make any modifications.
+-  ansible_diff_mode = If the playbook is ran with ``--diff`` mode to see what modifications were made.
 -  ansible_user_dir = The $HOME directory for the user that is being accessed on the managed node.
 -  ansible_play_batch = The current hosts that are running, limited to only the hosts running from the ``serial`` size.
 -  ansible_play_hosts = The list of all of the (non-failed) hosts that the playbook ``hosts`` is set to use.
@@ -827,14 +828,19 @@ Magic variables are variables that Ansible creates and manages outside of user-d
 -  ansible_run_tags = A list of tags that are defined by ``--tags`` that the playbook is running.
 -  ansible_forks = The number of forks that are set.
 -  ansible_skip_tags = A list of tags that are defined by ``--skip-tags`` that the playbook is skipping.
+-  ansible_verbosity = The level of verbosity set for the playbook execution.
 -  hostvars = Access variables from another host. Example: ``hostvars['web01']['ansible_hostname']``.
+-  inventory_dir = The directory that contains the inventory file(s).
+-  inventory_file = The full path to the primary "inventory" file that is loaded.
 -  inventory_hostname = The hostname of the current host that is being used.
+-  inventory_hostname_short = The subdomain of the current host's domain that is being used.
 -  groups = A list of all hosts and groups from the inventories that are loaded.
 -  group_names = A list of all of the groups that the current host is a part of.
 -  playbook_dir = The full path to the directory where the current playbook is located.
+-  role_name = The name of the current role in use.
 -  role_path = The full path to the current role in use.
 
-[4][69]
+[4][44][69]
 
 Modules
 -------
@@ -4868,7 +4874,7 @@ Bibliography
 41. "HOW TO EXTEND ANSIBLE THROUGH PLUGINS." January 5, 2017. Ansible Blog. Accessed July 10, 2018. https://www.ansible.com/blog/how-to-extend-ansible-through-plugins
 42. "Clustering." Ansible Tower Documentation. Accessed June 7, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/clustering.html
 43. "Ansible Python 3 Support." Ansible Documentation. June 14, 2018. Accessed June 22, 2018. http://docs.ansible.com/ansible/latest/python\_3\_support.html
-44. "Ansible [README.md]." Ansible GitHub. September 14, 2017. Accessed September 18, 2017. https://github.com/ansible/ansible
+44. "ansible." Ansible GitHub. October 4, 2018. Accessed October 4, 2018. https://github.com/ansible/ansible
 45. "Utilities Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_utilities\_modules.html
 46. "Files Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_files\_modules.html
 47. "Packaging Modules." Ansible Documentation. September 18, 2017. Accessed September 21, 2017. http://docs.ansible.com/ansible/latest/list\_of\_packaging\_modules.html
