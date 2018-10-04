@@ -8,7 +8,7 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Table of Contents
+   :caption: Linux Administration
 
    ansible
    authentication
@@ -30,6 +30,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Linux Commands
+
+   linux_commands/index.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: Networking
 
    networking/index.rst
@@ -39,12 +45,6 @@ Welcome to Root Pages!
    :caption: Programming
 
    programming/index.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Linux Commands
-
-   linux_commands/index.rst
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
 
