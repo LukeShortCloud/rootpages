@@ -8,15 +8,13 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Table of Contents:
+   :caption: Table of Contents
 
    ansible
    authentication
    bootloaders
-   c_and_c++
    clustering
    databases
-   devops
    dns_servers
    file_systems
    http_servers
@@ -28,14 +26,19 @@ Welcome to Root Pages!
    openstack
    operating_systems
    packages
-   python
    security
    virtualization
    wine
 
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Commands Table of Contents:
+   :caption: Programming
+
+   programming/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Linux Commands
 
    linux_commands/index.rst
 

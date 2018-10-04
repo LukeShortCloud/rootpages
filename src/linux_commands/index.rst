@@ -1,6 +1,6 @@
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Commands Table of Contents:
+   :caption: Linux Commands
 
    compression.rst
    configuration_management.rst

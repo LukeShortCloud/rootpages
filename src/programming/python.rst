@@ -1021,8 +1021,8 @@ Each test should have ``assert`` checks to verify that what is expected is being
 
 [26]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
----------------------------------------------------------------------------------
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
+---------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

@@ -224,8 +224,8 @@ The order that tasks are executed in from a Travis CI file:
 
 [4]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/devops.rst>`__
-----------------------------------------------------------------------------------
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
+---------------------------------------------------------------------------------------------
 
 Bibliography
 ------------
