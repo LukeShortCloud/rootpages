@@ -554,9 +554,9 @@ Syntax:
     ├── production
     ├── staging
     ├── group_vars
-    │   ├── <GROUP>
+    │   └── <GROUP>
     ├── host_vars
-    │   ├── <HOST>
+    │   └── <HOST>
 
 .. code-block:: sh
 
@@ -575,13 +575,13 @@ Example:
     ├── group_vars
     │   ├── web
     │   ├── db
-    │   ├── all
+    │   └── all
     ├── host_vars
     │   ├── web1
     │   ├── web2
     │   ├── db1
     │   ├── db2
-    │   ├── db3
+    │   └── db3
 
 Scenario #2 - Use Different Variables
 
@@ -589,7 +589,7 @@ In more complex scenarios, the inventory and variables will be different
 in production and staging. This requires further separation. Instead of
 using a "production" or "staging" inventory file, they can be split into
 directories. These directories contain their own group and host
-variables.
+variables. The production example also shows how to separate plain-text and Vault encrypted variables.
 
 Syntax:
 
@@ -597,18 +597,22 @@ Syntax:
 
     ├── production
     │   ├── group_vars
-    │   │   ├── <GROUP>
+    │   │   └── <GROUP>
+    │   │       ├── vars
+    │   │       └── vault
     │   ├── host_vars
-    │   │   ├── <HOST>
+    │   │   └── <HOST>
+    │   │       ├── vars
+    │   │       └── vault
     │   └── inventory
 
 ::
 
     ├── staging
     │   ├── group_vars
-    │   │   ├── <GROUP>
+    │   │   └── <GROUP>
     │   ├── host_vars
-    │   │   ├── <HOST>
+    │   │   └── <HOST>
     │   └── inventory
 
 .. code-block:: sh
@@ -627,13 +631,13 @@ Example:
     │   ├── group_vars
     │   │   ├── web
     │   │   ├── db
-    │   │   ├── all
+    │   │   └── all
     │   ├── host_vars
     │   │   ├── web1
     │   │   ├── web2
     │   │   ├── db1
     │   │   ├── db2
-    │   │   ├── db3
+    │   │   └── db3
     │   └── inventory
 
 ::
@@ -642,13 +646,13 @@ Example:
     │   ├── group_vars
     │   │   ├── web
     │   │   ├── db
-    │   │   ├── all
+    │   │   └── all
     │   ├── host_vars
     │   │   ├── web1
     │   │   ├── web2
     │   │   ├── db1
     │   │   ├── db2
-    │   │   ├── db3
+    │   │   └── db3
     │   └── inventory
 
 [5][22]
