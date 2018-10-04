@@ -613,8 +613,8 @@ Unblock a legitimate IP address:
 
 [16]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking_software.rst>`__
-----------------------------------------------------------------------------------------------
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking/networking_software.rst>`__
+---------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

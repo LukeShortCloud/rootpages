@@ -19,8 +19,8 @@ The Graphical Network Simulator 3 (GNS3) is a free and open source software for 
 
 The `GNS3 Marketplace <https://www.gns3.com/marketplace/appliances>`__ provides many templates that mirror configurations and hardware that production devices use.
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking_hardware.rst>`__
-----------------------------------------------------------------------------------------------
+`Errata <https://github.com/ekultails/rootpages/commits/master/src/networking/networking_hardware.rst>`__
+----------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

@@ -21,14 +21,18 @@ Welcome to Root Pages!
    linux
    mail_servers
    monitoring
-   networking_software
-   networking_hardware
    openstack
    operating_systems
    packages
    security
    virtualization
    wine
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Networking
+
+   networking/index.rst
 
 .. toctree::
    :maxdepth: 1
