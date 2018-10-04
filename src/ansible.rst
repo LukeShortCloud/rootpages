@@ -19,8 +19,6 @@ Official documentation:
 -  `2.7 <https://docs.ansible.com/ansible/2.7/>`__
 -  `2.6 <https://docs.ansible.com/ansible/2.6/>`__
 -  `2.5 <https://docs.ansible.com/ansible/2.5/>`__
--  `2.4 <https://docs.ansible.com/ansible/2.4/>`__
-
 
 Editions
 ~~~~~~~~
