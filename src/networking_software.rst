@@ -554,8 +554,8 @@ Common bonding\_opts options:
    -  {4\|802.3ad} = All of the network devices use the same speed and
       duplex configuration to follow the 802.3ad bonding standard. This
       requires that the network interfaces are also connected to a
-      switch that supports IEEE 802.3ad Dynamic link aggregation. That
-      switch must be configured to use it for it's own switch ports.
+      switch that supports the IEEE 802.3ad Link Aggregation Control Protocol (LACP) standard. The
+      switch must have LACP enabled on the relevant ports.
    -  {5\|balance-tlb} = Adaptive transmit load balancing. Load balance
       outgoing requests based on the slave usage.
    -  {6\|balance-alb} = Adaptive load balancing. Load balance incoming
