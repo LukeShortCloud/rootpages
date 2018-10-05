@@ -605,6 +605,17 @@ restart the docker service for it to be properly recreated.
 
 [18]
 
+Java
+''''
+
+Java <= 9, by default, will try to allocate a large amount of memory for the runtime and garbage collection. This can lead to resource exhaustion of RAM on a hypervisor. The maximum memory allocation should be specified to Java applications using ``-Xmx<SIZE_IN_MB>m``. [54] This is no longer an issue in Java >= 10 as it is now aware of when it is being containerized. [55]
+
+Example Java <=9 usage in a docker compose file that utilizes an environment variable:
+
+::
+
+   CMD java -XX:+PrintFlagsFinal $JAVA_OPTS -jar app.jar
+
 LXC
 ^^^
 
@@ -1360,3 +1371,5 @@ Bibliography
 51. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
 52. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
 53. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
+54. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
+55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
