@@ -1663,12 +1663,21 @@ Overcloud
              $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
              $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
 
+-  Configure the number of controller and compute nodes that should be deployed in a YAML Heat template.
+
+   .. code-block:: yaml
+
+      ---
+      paremeter_defaults:
+        ControllerCount: <NUMBER_OF_CONTROLLER_NODES>
+        ComputeCount: <NUMBER_OF_COMPUTE_NODES>
+
 -  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from `/usr/share/openstack-tripleo-heat-templates/environments/`. [30] Lab environments may need to use a simple network configuration such as ``-e ~/templates/environments/net-single-nic-with-vlans.yaml -e ~/templates/environments/network-environment.yaml``.
 
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml --control-flavor control --compute-flavor compute --control-scale <NUMBER_OF_CONTROL_NODES> --compute-scale <NUMBER_OF_COMPUTE_NODES>
+       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml --control-flavor control --compute-flavor compute
 
 -  Optionally for container support, configure the upstream RDO Docker Hub repository to download containers from. Then reference the docker, docker-ha, and docker_registry templates. The "environments/puppet-pacemaker.yaml" template should also be removed to avoid conflicts.
 
@@ -1807,13 +1816,83 @@ Add a Compute Node
 
     $ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' <NODE_UUID>
 
+-  Update the compute node scale using a Heat template.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     ComputeCount: <NEW_COMPUTE_COUNT>
+
 -  Redeploy the Overcloud while specifying the number of compute nodes that should exist in total after it is complete. The `ComputeCount` parameter in the Heat templates should also be increased to reflect it's new value.
 
 .. code-block:: sh
 
-    $ openstack overcloud deploy <DEPLOY_OPTIONS> --templates --compute-scale <NEW_TOTAL_NUMBER_OF_ALL_COMPUTE_NODES>
+    $ openstack overcloud deploy --templates ~/templates <DEPLOYMENT_OPTIONS>
 
 [77]
+
+Configurations
+^^^^^^^^^^^^^^
+
+These are configurations specific to Overcloud deployments using TripleO. Custom settings are defined using a YAML Heat template.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     <KEY>: <VALUE>
+
+Networks
+''''''''
+
+There are 5 different types of networks in a standard TripleO deployment:
+
+-  Internal
+-  Storage
+-  StorageMgmt
+-  Tenant
+-  External = The external network that can access the Internet. This is used for external API and Horizon dashboard access.
+
+Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
+
+::
+
+   <NETWORK_TYPE>NetCidr: <CIDR>
+   <NETWORK_TYPE>AllocationPools: [{"start": "<START_IP>", "end": "<LAST_IP>"}]
+   <NETWORK_TYPE>NetworkVlanID: <VLAN_ID>
+
+Configure these settings to match the IP address that the Undercloud is configured to use for provisioning.
+
+::
+
+   ControlPlaneSubnetCidr: '24'
+   ControlPlaneDefaultRoute: <UNDERCLOUD_IP>
+   EC2MetadataIp: <UNDERCLOUD_IP>
+
+Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers.
+
+::
+
+   ExternalInterfaceDefaultRoute: <PUBLIC_DEFAULT_GATEWAY_ADDRESS>
+   DnsServers: ["8.8.8.8", "8.8.4.4"]
+   NtpServer: ["pool.ntp.org"]
+
+Define the allowed network tag/tunnel types that Neutron networks use. The Neutron tunnel type is used for internal tranmissions between the compute and network nodes. By default, the Neutron network bridge will be attached to ``br-int`` if left blank. This will configure a provider network. Otherwise, ``br-ex`` should be specified for self-service networks.
+
+::
+
+   NeutronNetworkType: "vxlan,gre,vlan,flat"
+   NeutronTunnelTypes: "vxlan"
+   NeutronExternalNetworkBridge: "''"
+
+Configure bonding interface options, if applicable. Below is an example for LACP.
+
+::
+
+   bonding_options: "mode=802.3ad lacp_rate=slow updelay=1000 miimon=100"
+
+[100]
 
 Configurations
 --------------
@@ -3726,3 +3805,4 @@ Bibliography
 97. "Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform." Sweeping Information. December 12, 2017. Accessed September 27, 2018. https://hk.saowen.com/a/d108272fc7f3a3edaaa5d48200444b7ec08af46e5d8898311ad68286da265538
 98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
 99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
+100. "Configuring Network Isolation." TripleO Documentation. October 4, 2018. Accessed October 5, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
