@@ -3173,7 +3173,7 @@ All Heat templates must began with defining the version of OpenStack is
 was designed for (using the release date as the version) and enclose all
 resources in a "resources" dictionary. The version indicates that all
 features up until that specific release are used. This is for backwards
-compatibility reasons.
+compatibility reasons. Since the Newton release, the release name can be used instead of a date for the version.
 
 .. code-block:: yaml
 
@@ -3184,15 +3184,16 @@ compatibility reasons.
 
 Valid Heat template versions include [65]:
 
--  2018-03-02 (Queens)
--  2017-09-01 (Pike)
--  2017-02-24 (Ocata)
--  2016-10-14 (Newton)
--  2016-04-08 (Mitaka)
--  2015-10-15 (Liberty)
--  2015-04-30 (Kilo)
--  2014-10-16 (Juno)
--  2013-05-23 (Icehouse)
+-  ``2018-08-31`` or ``rocky``
+-  ``2018-03-02`` or ``queens``
+-  ``2017-09-01`` or ``pike``
+-  ``2017-02-24`` or ``ocata``
+-  ``2016-10-14`` or ``newton``
+-  ``2016-04-08`` (Mitaka)
+-  ``2015-10-15`` (Liberty)
+-  ``2015-04-30`` (Kilo)
+-  ``2014-10-16`` (Juno)
+-  ``2013-05-23`` (Icehouse)
 
 This section will go over examples of the more common modules. Each
 resource must be nested under the single "resources" section.
@@ -3770,7 +3771,7 @@ Bibliography
 62. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
 63. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
 64. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
-65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. November 17, 2017. Accessed November 17, 2017. https://docs.openstack.org/heat/latest/template\_guide/hot\_spec.html
+65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. October 4, 2018. Accessed October 5, 2018. https://docs.openstack.org/heat/latest/template\_guide/hot\_spec.html
 66. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template\_guide/hot\_spec.html
 67. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 68. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
