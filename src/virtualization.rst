@@ -663,12 +663,15 @@ Container Management Platforms
 OpenShift
 ^^^^^^^^^
 
-The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
 
-The Origin Kubernetes Distribution (okd), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [52]
+The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [52]
+
+Quick
+'''''
 
 Minishift
-'''''''''
+&&&&&&&&&
 
 Minishift is an easy to use all-in-one installation for testing out OpenShift.
 
@@ -704,13 +707,62 @@ Enable the Red Hat Developer Tools repository first. Then Minishift can be insta
 
 [33]
 
+Full
+''''
+
+OpenShift Ansible
+&&&&&&&&&&&&&&&&&
+
+The OpenShift Ansible project is an official collection of Ansible playbooks to manage the installation and life-cycle of OpenShift.
+
+.. code-block:: sh
+
+   $ git clone https://github.com/openshift/openshift-ansible.git
+   $ cd openshift-ansible
+   $ git checkout release-3.10
+
+Settings for the deployment are defined in a single inventory file. Examples can be found in the ``inventory`` directory. ``[OSEv3:children]`` is a group of groups that should contain all of the hosts.
+
+Inventory file variables:
+
+-  ``openshift_deployment_type`` = ``origin`` for the upstream OKD on CentOS or ``openshift-enterprise`` for the downstream OCP on Red Hat CoreOS.
+-  ``openshift_release`` = The OpenShift release to use. Example: ``v3.10``.
+-  ``openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]`` = Enable htpasswd authentication.
+-  ``openshift_master_htpasswd_users={'<USER1>': '<HTPASSWD_HASH>', '<USER2>': '<HTPASSWD_HASH>'}`` = Configure OpenShift users. Create a password for the user by running ``htpasswd -nb <USER> <PASSWORD>``.
+-  ``openshift_disable_check=memory_availability,disk_availability`` = Disable certain checks for a minimal lab deployment.
+-  ``openshift_master_cluster_hostname`` = The private internal hostname.
+-  ``openshift_master_cluster_public_hostname`` = The public internal hostname.
+
+[56]
+
+The container registry is ephemeral so after a reboot the data will be wiped. All of the storage inventory configuration options and settings can be found `here <https://docs.openshift.com/container-platform/3.10/install/configuring_inventory_file.html#advanced-install-registry>`__. For lab environments using NFS, unsupported options will need to be enabled using ``openshift_enable_unsupported_configurations=True``. The ``nfs`` group will also need to be created and added to the ``OSEv3:children`` group of groups.
+
+Install Openshift.
+
+.. code-block:: sh
+
+   $ sudo yum -y ansible pyOpenSSL python-cryptography python-lxml
+   $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/prerequisites.yml
+   $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/deploy_cluster.yml
+
+Persistent container application storage can also be configured after installation by using one of the configurations from `here <https://docs.openshift.com/container-platform/3.10/install_config/persistent_storage/index.html>`__.
+
+Uninstall OpenShift services from nodes by specifying them in the inventory and using the uninstall playbook.
+
+.. code-block:: sh
+
+   $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/adhoc/uninstall.yml
+
 Kubernetes
 ^^^^^^^^^^
 
 Kubernetes provides an API and graphical user interface for the orchestration and scaling of docker containers. It was originally created by Google as part of their Google Kubernetes Engine cloud platform.
 
+Quick
+'''''
+
 Minikube
-''''''''
+&&&&&&&&
 
 Minikube is an easy to use all-in-one installation for testing out Kubernetes
 
@@ -1373,3 +1425,4 @@ Bibliography
 53. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
 54. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
 55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
+56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed October 14, 2018. https://docs.openshift.com/container-platform/3.10/install_config/index.html
