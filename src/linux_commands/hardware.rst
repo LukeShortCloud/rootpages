@@ -17,10 +17,10 @@ lspci
 ~~~~~
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-m", "lists PCI hardware", ""
+   "-m", "lists PCI hardware"
 
 lscpu
 ~~~~~
@@ -52,16 +52,16 @@ Package: stress
 A utility for stress testing the processor, RAM, and/or storage.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-c, --cpu", "spawn CPU workers", ""
-   "-i, --io", "spawn I/O workers in RAM and HDDs", ""
-   "-m,--vm", "spawns RAM workers", ""
-   "--vm-bytes", "specify bytes to write to RAM", ""
-   "-d, --hdd", "spawn I/O workers on the actual drive", ""
-   "-t", "timeout time", ""
-   "-v", "verbose", ""
+   "-c, --cpu", "spawn CPU workers"
+   "-i, --io", "spawn I/O workers in RAM and storage devices"
+   "-m,--vm", "spawns RAM workers"
+   "--vm-bytes", "specify bytes to write to RAM"
+   "-d, --hdd", "spawn I/O workers on the actual drive"
+   "-t", "timeout time"
+   "-v", "verbose"
 
 stress-ng
 ~~~~~~~~~
@@ -89,11 +89,17 @@ speaker-test
 ~~~~~~~~~~~~
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-c 2", "test audio output on stero speakers", ""
-   "-D hw:0,0", "test a specific device; you can get this information from /proc/asound/pcm; replace ""0,0""", ""
+   "-c 2", "test audio output on stero speakers"
+   "-D hw:<DEVICE>", "test a specific audio device; you can get this information from /proc/asound/pcm"
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "-D hw:0,0", "test the 0,0 speakers"
 
 Graphics
 --------
@@ -114,10 +120,10 @@ aticonfig
 Monitor utility for AMD cards. This only works with the proprietary "fglrx" driver.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-odgc -odgt", "", ""
+   "-odgc -odgt", ""
 
 radeontop
 ~~~~~~~~~
@@ -130,10 +136,10 @@ xrandr
 Configure different display settings.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "--output <DISPLAY> --primary", "change the primary monitor", ""
+   "--output <DISPLAY> --primary", "change the primary monitor"
 
 glxinfo
 ~~~~~~~
@@ -141,10 +147,10 @@ glxinfo
 Displays information about the GPU driver and related libraries.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Example, Explanation
+   :widths: 20, 20
 
-   "", "find the maximum supported OpenGL version", "glxinfo | grep ""OpenGL version"""
+   "glxinfo | grep ""OpenGL version""", "find the maximum supported OpenGL version"
 
 IPMI
 ----
@@ -155,13 +161,13 @@ ipmitool
 Package: OpenIPMI-tools
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> {chassis|power} status", "remotely connect to IPMI to check the status of a particular component", ""
-   "-A MD5", "use MD5 encryption for authentication", ""
-   "user list 1", "show all users", ""
-   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> user set password 2 <NEWPASS>", "reset password for a user", ""
+   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> {chassis|power} status", "remotely connect to IPMI to check the status of a particular component"
+   "-A MD5", "use MD5 encryption for authentication"
+   "user list 1", "show all users"
+   "-I lanplus -H <IPADDR> -U <USER> -P <PASSWORD> user set password 2 <NEWPASS>", "reset password for a user"
 
 ipmitool lan
 ~~~~~~~~~~~~
@@ -169,13 +175,21 @@ ipmitool lan
 Manage the network connection for the IPMI device.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "print 1", "display the network settings", ""
-   "set 1 ipsrc {static|dhcp}", "change the network mode", ""
-   "set 1 ipaddr", "set the IP address", "set 1 ipaddr 192.168.1.101"
-   "set 1 netmask", "set the subnet mask", "set 1 netmask 255.255.255.0"
+   "print 1", "display the network settings"
+   "set 1 ipsrc {static|dhcp}", "change the network mode"
+   "set 1 ipaddr", "set the IP address"
+   "set 1 netmask", "set the subnet mask"
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "set 1 ipsrc static", "use static IP addressing"
+   "set 1 ipaddr 192.168.1.101", "set the IP address"
+   "set 1 netmask 255.255.255.0", "set the subnet mask"
 
 ipmicfg
 ^^^^^^^
@@ -183,13 +197,13 @@ ipmicfg
 Configure IPMI.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-raw 0x30 0x70 0x0c 0", "view the LAN mode (dedicated, shared, or failover)", ""
-   "-raw 0x30 0x70 0x0c 1 0", "set the LAN mode to dedicated", ""
-   "-raw 0x30 0x70 0x0c 1 1", "set the LAN mode to shared", ""
-   "-raw 0x30 0x70 0x0c 1 2", "set the LAN mode to failover", ""
+   "-raw 0x30 0x70 0x0c 0", "view the LAN mode (dedicated, shared, or failover)"
+   "-raw 0x30 0x70 0x0c 1 0", "set the LAN mode to dedicated"
+   "-raw 0x30 0x70 0x0c 1 1", "set the LAN mode to shared"
+   "-raw 0x30 0x70 0x0c 1 2", "set the LAN mode to failover"
 
 lUpdate
 ^^^^^^^
@@ -197,10 +211,10 @@ lUpdate
 IPMI firmware update utility.
 
 .. csv-table::
-   :header: Usage, Explanation, Example
-   :widths: 20, 20, 20
+   :header: Usage, Explanation
+   :widths: 20, 20
 
-   "-i kcs -f", "update IPMI's firmware", ""
+   "-i kcs -f", "update IPMI's firmware"
 
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__
 --------------------------------------------------------------------------------------------------
