@@ -23,7 +23,7 @@ A technical design document (TDD) verbosely explains exactly how a program will 
 -  Use cases. Examples of how the program will be consumed by end-users.
 -  Technologies. The software and hardware technologies that the program will be using. These include the programming language, libraries, and the environment it will run on.
 -  Functions and APIs. The expected inputs and outputs.
--  If applicable, the user interface (UI). How it should look and the expected inputs and outputs.a
+-  If applicable, the user interface (UI). How it should look and the expected inputs and outputs.
 -  Milestones. The expected functionality and state of a specific version of the program and how long it should take to develop. Eventually the time estimates should be updated to reflect how much time it did take for development. These milestones could be alpha, beta, and stable milestones.
 -  Revisions. The revision history for the TDD. The document should only be updated after a milestone is reached or, if necessary, after a sprint. All changes to the document should be noted.
 
@@ -79,6 +79,10 @@ Patches can accessed by going to:
 Raw non-binary text files can be accessed by going to:
 
 ``https://raw.githubusercontent.com/<USER>/<PROJECT>/<COMMIT_SHA>/<PATH_TO_FILE>``
+
+View commits from a specific author:
+
+``https://github.com/openstack/openstack-ansible/commits?author=<USER>``
 
 GitPrep
 ^^^^^^^
