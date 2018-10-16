@@ -61,9 +61,8 @@ Common SCMs:
 -  Mercury (hg)
 -  Subversion (svn)
 
-
-Git
-~~~
+Git Services
+~~~~~~~~~~~~
 
 Developers can use these resources to learn how to properly use git: https://try.github.io/
 
@@ -110,6 +109,108 @@ Caches:
 -  Redis
 
 `Installation Guide <https://docs.gitea.io/en-us/install-from-binary/>`__
+
+Git Workflow
+~~~~~~~~~~~~
+
+The "master" or "devel" branch is normally the primary and latest development branch. New features should be developed in a different branch. Once the feature is complete, it can be merged into the primary branch. It is recommended to create a pull/merge request (PR) with the Git service dashboard. This way other team members can review the changes before they are merged. All code should also be tested via a continuous integration (CI) pipeline and optionally deployed using continuous deployment (CD).
+
+Users that only have read access to a git repository can fork it. This creates a copy of the repository for a user for development purposes. Feature branches can be worked on in the fork before being submitted to be merged into the original repository. [5]
+
+Common git procedures:
+
+-  Create a new local git project.
+
+    .. code-block:: sh
+
+       $ git init
+
+-  Download an existing git project from GitHub.
+
+    .. code-block:: sh
+
+       $ git clone https://github.com/<USER>/<PROJECT>.git
+
+-  View existing tags and branches.
+
+    .. code-block:: sh
+
+       $ git fetch --all
+       $ git tag
+       $ git branch -a
+
+-  Switch to an existing branch, tag, or commit.
+
+    .. code-block:: sh
+
+       $ git checkout <BRANCH_TAG_OR_COMMIT>
+
+-  Create a new branch and switch to it.
+
+    .. code-block:: sh
+
+       $ git checkout -b <NEW_BRANCH>
+
+-  Save changes to a branch locally and push them to the remote origin server.
+
+    .. code-block:: sh
+
+       $ git add <FILE1> <FILE2> <FILE3>
+       $ git commit -m "<DESCRIPTION_MESSAGE_OF_CHANGES>"
+       $ git push origin <BRANCH>
+
+-  View the git history.
+
+    .. code-block:: sh
+
+       $ git log
+
+-  Merge a branch.
+
+    .. code-block:: sh
+
+       $ git checkout master
+       $ git merge <FEATURE_BRANCH>
+       $ git push origin master
+
+-  Tag version releases.
+
+    .. code-block:: sh
+
+       $ git tag 0.9.1
+       $ git push origin 0.9.1
+
+-  Tags generally should not be deleted. However, if a tag was created by mistake or needs to be cleaned up for any other reason it can be removed from the local and remote git repository.
+
+    .. code-block:: sh
+
+       $ git tag --delete <TAG>
+       $ git push --delete origin <TAG>
+
+-  After a feature branch has been merged in, it can be deleted.
+
+    .. code-block:: sh
+
+       $ git branch --delete <BRANCH>
+       $ git push origin --delete <BRANCH>
+
+-  When managing a fork, the "upstream" branch should be configured to track changes from the original repository. This can now be referenced instead of "origin".
+
+    .. code-block:: sh
+
+       $ git remote add upstream https://github.com/<USER>/<PROJECT>.git
+       $ git remote -v
+       $ git fetch upstream
+       $ git branch -a
+       $ git checkout upstream/<UPSTREAM_BRANCH>
+
+-  Delete all uncommitted local changes.
+
+    .. code-block:: sh
+
+       $ git reset --hard
+
+[6]
 
 Object Oriented Programming
 ---------------------------
@@ -238,3 +339,5 @@ Bibliography
 2. "Why Writing Software Design Documents Matters." Toptal. Accessed September 3, 2018. https://www.toptal.com/freelance/why-design-documents-matter
 3. "Build Environment Overview." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/reference/overview/
 4. "Customizing the Build." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/customizing-the-build/
+5. "Comparing Workflows. Atlassian Git Tutorial. Accessed October 15, 2018. https://www.atlassian.com/git/tutorials/comparing-workflows
+6. "git - the simple guide." rogerdudler GitHub Pages. Accessed October 15, 2018. http://rogerdudler.github.io/git-guide/
