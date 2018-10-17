@@ -118,10 +118,10 @@ Manage packages from local and remote sources.
    "build-dep", "install build dependencies for a package; this requires a source repository to be enabled"
 
 .. csv-table::
-   :header: Usage, Explanation
+   :header: Example, Explanation
    :widths: 20, 20
 
-   "apt-get -y -q install make", "automatically install the ""make"" package"
+   "-y -q install make", "automatically install the ""make"" package"
 
 apt-cache
 ~~~~~~~~~~

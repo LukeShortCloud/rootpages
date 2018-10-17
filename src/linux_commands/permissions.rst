@@ -294,8 +294,8 @@ Change file attributes.
 
    "+a", "makes the file appendable only"
    "+C", "disables copy-on-write (CoW) on a file, if CoW is available on the file system"
-   "'+i", "makes files immutables; it cannot be modified or deleted"
-   "'+u", "makes a file undeletable"
+   "+i", "makes files immutables; it cannot be modified or deleted"
+   "+u", "makes a file undeletable"
    "-R", "recursively through multiple files"
    "-V", "output is verbose"
 
