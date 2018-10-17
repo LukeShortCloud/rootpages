@@ -93,6 +93,13 @@ Create and manage OpenShift clusters.
    "cluster up --public-hostname <IP>", "specify the IP to bind to for OpenShift Origin"
    "cluster down", "remove OpenShift Origin"
 
+podman
+~~~~~~
+
+Package: podman
+
+The libpodman library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capatibilities to launch standalone Kubernetes pods.
+
 oVirt
 -----
 
