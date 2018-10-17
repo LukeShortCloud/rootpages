@@ -1808,7 +1808,7 @@ Examples:
 Loops
 ^^^^^
 
-Loops can be used to iterate through lists and/or dictionaries. The most commonly used loop is ``with_items``. All loops from Ansible <= 2.4 have been replaced by the ``loop`` keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Users will now have to use Jinja filters to sort through their variables. The logic and code all loops are located in the directory ``lib/ansible/plugins/lookup/``. Package modules in Ansible >= 2.7 support passing a list variable as an argument value.
+Loops can be used to iterate through lists and/or dictionaries. All ``with_`` loops from Ansible <= 2.4 have been replaced by the ``loop`` keyword in Ansible 2.5. The older loops are currently planned to be removed in the Ansible 2.9 release. Jinja filters are now required to explicitly be defined for creating a customized list of data to loop through. Use `this migration guide <https://docs.ansible.com/ansible/2.7/user_guide/playbooks_loops.html#migrating-from-with-x-to-loop>`__ for examples on how to use the logic of old ``with_`` loops using the new syntax. Package modules in Ansible >= 2.7 support passing a list variable as an argument value.
 
 Ansible >= 2.5 loops:
 
@@ -1851,15 +1851,51 @@ Query syntax:
 
     {{ query('<LOOKUP>', ['<VARIABLE1>', '<VARIABLE2>']) }}
 
+Loop Control
+''''''''''''
+
+Loops can be configured to behave differently for more control over how it is used.
+
+Options:
+
+-  index_var = The variable name for the current index that the loop is iterating on.
+-  label = Only use a specific key from a dictionary when the entire dictionary is not required to be processed.
+-  loop_var = The variable name for the current item in the loop. This is useful for nested loops. Default: ``item``.
+-  pause = The number of seconds to pause before moving onto the next item.
+
+Example:
+
+.. code-block:: yaml
+
+   - name: Show loop control syntax
+     debug:
+       msg: "{{ current.message }}. Current index: {{ index }}"
+     loop:
+       - message: Hello world
+         settings:
+           api: v3
+           url: https://example.tld/
+       - message: Goodbye world
+         settings:
+           api: v2.1
+           url: https://example.tld/
+     loop_control:
+       index_var: index
+       label: "{{ current.message }}"
+       loop_var: current
+       pause: 5
+
+[10]
+
 Variables
 ^^^^^^^^^
 
 These are modules relating to defining new variables.
 
-Prompts
-'''''''
+Vars Prompt
+'''''''''''
 
-Prompts can be used to assign a user's input as a variable. [9] Note
+A prompt can be used to assign a user's standard input as a variable. [9] Note
 that this module is not compatible with Ansible Tower and that a Survey
 should be created within Tower instead. [38]
 
@@ -4836,7 +4872,7 @@ Bibliography
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
 8. "Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
 9. "Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks\_prompts.html
-10. "Loops." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_loops.html
+10. "Loops." Ansible Documentation. October 15, 2018. Accessed October 16, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_loops.html
 11. "Conditionals." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_conditionals.html
 12. "Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks\_error\_handling.html
 13. "Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
