@@ -1894,6 +1894,24 @@ Configure bonding interface options, if applicable. Below is an example for LACP
 
 [100]
 
+Pacakges
+''''''''
+
+By default, TripleO will not install packages. The standard Overcloud image from RDO already has all of the OpenStack packages installed. When using a custom image or not using Ironic for deploying Overcloud nodes, packages can be configured to be installed.
+
+::
+
+   EnablePackageInstall: true
+
+A different repository for Overcloud service containers can be configured (>= Pike).
+
+::
+
+    DockerNamespace: registry.example.tld/rocky
+    DockerNamespaceIsRegistry: true
+    DockerInsecureRegistryAddress: registry.example.tld
+    DockerNamespaceIsInsecureRegistry: true
+
 Configurations
 --------------
 
