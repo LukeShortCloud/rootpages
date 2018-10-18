@@ -1363,7 +1363,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
           $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 
-   -  Common Undercloud configuration options:
+   -  Common Undercloud configuration options. If using an automated power management driver with Ironic, the IP address for the Undercloud's provisioning NIC must use the same network and broadcast domain. [37]
 
       -  enable\_\* = Enable or disable non-essential OpenStack services on the Undercloud.
       -  **dhcp\_{start\|end}** = The range of IP addresses to temporarily use for provisioning Overcloud nodes. This range is a limiting factor in how many nodes can be provisioned at once.
@@ -1846,13 +1846,16 @@ These are configurations specific to Overcloud deployments using TripleO. Custom
 Networks
 ''''''''
 
-There are 5 different types of networks in a standard TripleO deployment:
+There are 6 different types of networks in a standard TripleO deployment:
 
--  Internal
--  Storage
--  StorageMgmt
--  Tenant
--  External = The external network that can access the Internet. This is used for external API and Horizon dashboard access.
+-  External = The external network that can access the Internet. This is used for the Horizon dashboard, public API endpoints, and floating IP addresses. Default VLAN: 10
+-  Internal = Default VLAN: 20.
+-  Storage = Default VLAN: 30.
+-  StorageMgmt = Default VLAN: 40
+-  Tenant = Default VLAN: 50
+-  Management = Default VLAN: 60.
+
+The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network. [100]
 
 Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
 
@@ -3761,7 +3764,7 @@ Bibliography
 34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
 36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "Baremetal Environment." TripleO OpenStack Documentation. July 24, 2018. Accessed July 24, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
+37. "Baremetal Environment." TripleO OpenStack Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
 38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
@@ -3824,4 +3827,4 @@ Bibliography
 97. "Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform." Sweeping Information. December 12, 2017. Accessed September 27, 2018. https://hk.saowen.com/a/d108272fc7f3a3edaaa5d48200444b7ec08af46e5d8898311ad68286da265538
 98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
 99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
-100. "Configuring Network Isolation." TripleO Documentation. October 4, 2018. Accessed October 5, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
+100. "Configuring Network Isolation." TripleO Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
