@@ -197,10 +197,10 @@ backwards compatibility with Python 2 can be found `here <https://docs.ansible.c
 
 [43]
 
-Command Usage
--------------
+Commands Usage
+--------------
 
-Refer to Root Page's "Linux Commands" guide in the "Deployment" section.
+See: `Linux Commands - Configuration Management - Ansible <linux_commands/configuration_management.html#ansible>`__.
 
 Playbooks
 ---------
