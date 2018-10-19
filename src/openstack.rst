@@ -1918,14 +1918,55 @@ A different repository for Overcloud service containers can be configured (>= Pi
 Configurations
 --------------
 
-This section will focus on important settings for each service's
-configuration files.
+This section focuses on the configuration files and their settings for each OpenStack service.
+
+TripleO
+~~~~~~~
+
+Configuration options for services can be defined using ExtraConfig.
+
+-  ExtraConfig = Apply to all nodes.
+-  ComputeExtraConfig
+-  ControllerExtraConfig
+-  BlockStorageExtraConfig
+-  ObjectStorageExtraConfig
+-  CephStorageExtraConfig
+
+Puppet manifests define the default variables that are set. These also show what Puppet dictionary variables are used for each configuration. All of the service manifests can be found here: ``/usr/share/openstack-puppet/modules/$OPENSTACK_SERVICE/manifests/``.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     <EXTRACONFIG_SERVICE>ExtraConfig:
+        # The primary manifest handles at least the primary configuraiton file.
+        <OPENSTACK_SERVICE>::<MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
+        # Some OpenStack services use more than one configuration file which could be handled
+        # by nested manifests.
+        <OPENSTACK_SERVICE>::<MANIFEST>::<MANIFEST_SUB_DIRECTORY>::<SUB_MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
+
+Settings that are not handled by the Puppet modules can be overriden manually. The dictionary name for each configuration file is defined in mainfests/config.pp in the ``<OPENSTACK_SERVICE>::config`` class.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     <EXTRACONFIG_SERVICE>ExtraConfig:
+        <OPENSTACK_SERVICE>::config::<PUPPET_DICTIONARY>:
+            # Configure a value in the [DEFAULT] section.
+            'DEFAULT/<KEY>':
+              value: <VALUE>
+        <OPENSTACK_SERVICE>::config::<PUPPET_DICTIONARY>:
+            # Configure a value in a different section.
+            '<SECTION>/<KEY>':
+              value: <VALUE>
+
+[101]
 
 Common
 ~~~~~~
 
-These are general configuration options that apply to most OpenStack
-configuration files.
+These are the generic INI configuration options for setting up different OpenStack services.
 
 Database
 ^^^^^^^^
@@ -3828,3 +3869,4 @@ Bibliography
 98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
 99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
 100. "Configuring Network Isolation." TripleO Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
+101. "Modifying default node configuration." TripleO Documentation. October 17, 2018. Accessed October 18, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/node_config.html
