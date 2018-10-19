@@ -329,6 +329,46 @@ The order that tasks are executed in from a Travis CI file:
 
 [4]
 
+CD
+~~
+
+Fedora Copr
+^^^^^^^^^^^
+
+Fedora Copr is a build system that builds RPMs for RPM based operating systems such as Fedora, Mageia, and openSUSE. Only the latest RPMs are kept. Older versions are deleted after 14 days. The ``copr-cli`` utility can be used to help add continuous delievery to a CI/CD pipeline. [7]
+
+Generate an API token from `here <https://copr.fedoraproject.org/api/>`__. Use the credentials provided to create a new configuration at ``~/.config/copr``. For CD, this file should be encrypted with a tool such as ``travis encrpt-file`` and stored in the SCM repository.
+
+.. code-block:: ini
+
+   [copr-cli]
+   username = <USER>
+   login = <COPR_PROVIDED_LOGIN>
+   token = <COPR_PROVIDED_TOKEN>
+   copr_url = https://copr.fedoraproject.org
+
+Create a new Copr project.
+
+.. code-block:: sh
+
+   $ copr-cli create --chroot <OPERATING_SYSTEM_1> --chroot <OPERATING_SYSTEM_2> --chroot <OPERATING_SYSTEM_3> <NEW_PROJECT_NAME>
+
+Upload a source RPM to be built. This should be part of the CD process.
+
+.. code-block:: sh
+
+   $ copr-cli build <PROJECT_NAME> <PATH_OR_URL_TO_SRPM>
+
+Optionally enable the Copr repository using DNF.
+
+.. code-block:: sh
+
+   $ sudo dnf install dnf-plugins-core
+   $ sudo dnf copr enable <COPR_USER>/<PROJECT_NAME>
+   $ sudo dnf install <PROJECT_RPM>
+
+[8]
+
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
 ---------------------------------------------------------------------------------------------
 
@@ -341,3 +381,5 @@ Bibliography
 4. "Customizing the Build." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/customizing-the-build/
 5. "Comparing Workflows. Atlassian Git Tutorial. Accessed October 15, 2018. https://www.atlassian.com/git/tutorials/comparing-workflows
 6. "git - the simple guide." rogerdudler GitHub Pages. Accessed October 15, 2018. http://rogerdudler.github.io/git-guide/
+7. "User Documentation." COPR documentation. Accessed October 19, 2018. https://docs.pagure.org/copr.copr/user_documentation.html
+8. "Copr command line interface." Fedora Developer Portal. Accessed October 19, 2018. https://developer.fedoraproject.org/deployment/copr/copr-cli.html
