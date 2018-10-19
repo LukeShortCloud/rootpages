@@ -38,6 +38,7 @@ vim (Interactive)
    ":set nu", ""
    ":set nonumber", "turn off line numbers"
    ":set nonu", ""
+   ":<NUMBER>", "go to the specified line number"
    ":split", "split vim into two horizontal screens"
    ":vsplit", "split vim into two vertical screens"
    ":recover", "reload the edited file from an old '.swp' file (from a VIM crash)"
