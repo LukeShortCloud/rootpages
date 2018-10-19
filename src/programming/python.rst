@@ -611,8 +611,8 @@ These are methods that are natively available in a default installation of Pytho
 
 [7]
 
-(String Objects)
-^^^^^^^^^^^^^^^^
+(String Object)
+^^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -630,8 +630,8 @@ These are methods that are natively available in a default installation of Pytho
 
 [8]
 
-(List Objects)
-^^^^^^^^^^^^^^
+(List Object)
+^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -650,8 +650,8 @@ These are methods that are natively available in a default installation of Pytho
 
 [9]
 
-(Dictionary Objects)
-^^^^^^^^^^^^^^^^^^^^
+(Dictionary Object)
+^^^^^^^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -669,8 +669,8 @@ These are methods that are natively available in a default installation of Pytho
 
 [10]
 
-(File Objects)
-^^^^^^^^^^^^^^
+(File Object)
+^^^^^^^^^^^^^
 
 .. csv-table::
    :header: Method, Description, Example
@@ -783,6 +783,46 @@ Complex operations on files.
    "which(<CMD>)", "Return the default command found from the shell $PATH variable.", ""
 
 [15]
+
+subprocess
+^^^^^^^^^^
+
+``subprocess`` handles the execution of shell commands on the file system. ``Popen()`` is the most versatile way to execute and manage commands. ``run()`` was introduced in Python 3.5 to provide a simple way to execute commands. ``*call()`` provides basic legacy functions for managing command execution as separate methods.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   run(<CMD_STR>), "a combination of call, check_call, and check_output (added in Python 3.5)"
+   call(<CMD_LIST>), "run a command, wait for it to complete and return the return code"
+   check_call(), "run a command, wait until it is done, then return 0 or (if there was an error) raise an error exception"
+   check_output(), similar to check_call except it will return the standard output
+   Popen(<CMD_LIST>, shell=True), "execute a command, track it s progress, optionally save the stdin/stdout/stderr, and save the return code"
+   "Popen(<CMD_LIST>, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)", run a command and capture the standard output and error as well as allow standard input to be sent to it
+
+[27]
+
+(subprocess.Popen Object)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In Python >= 3.0, stdandard input/output/error is returned as bytes instead of strings. Use ``decode()`` to convert the bytes into a string.
+
+.. csv-table::
+   :header: Method, Description, Example
+   :widths: 20, 20, 20
+
+   communicate(), return a tuple of the standard output and standard error as bytes
+   stdout(), return the standard output as bytes
+   stderr(), return the standard error as bytes
+   communicate(input=<STR>), send standard input to a command
+   poll(), check if the process is still running
+   wait(timeout=<INT>), wait until the process is finished and then return the return code and optionally timeout after a specified number of seconds
+   returncode, get the return code of a completed command
+   pid(), return the process ID
+   terminate(), send SIGTERM to the process (gracefully stop it)
+   kill(), send SIGKILL to the process (forcefully stop it)
+
+[27]
 
 urllib.parse
 ^^^^^^^^^^^^
@@ -1053,3 +1093,4 @@ Bibliography
 24. "Python Exceptions: An Introduction." Real Python. April 30, 2018. Accessed September 18, 2018. https://realpython.com/python-exceptions/
 25. "Built-in Exceptions." Python 3 Documentation. Accessed September 18, 2018. https://docs.python.org/3/library/exceptions.html
 26. "unittest - Unit testing framework. Python 3 Documentation. Accessed September 19, 2018. https://docs.python.org/3/library/unittest.html
+27. "subprocess - Subprocess management." Python 3 Documentation. Accessed October 19, 2018. https://docs.python.org/3/library/subprocess.html#older-high-level-api
