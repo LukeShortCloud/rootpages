@@ -842,6 +842,11 @@ Common commands:
 -  network = Configure the network settings.
 -  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
 -  partition = Manually create partitions.
+
+   -  UEFI devices need a dedicated partition for storing the EFI information. [57]
+
+      -  part /boot/efi --fstype vfat --size=256 --ondisk=sda
+
 -  raid = Create a software RAID.
 -  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
 -  **rootpw** = Change the root password.
@@ -1426,3 +1431,4 @@ Bibliography
 54. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
 55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
 56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed October 14, 2018. https://docs.openshift.com/container-platform/3.10/install_config/index.html
+57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
