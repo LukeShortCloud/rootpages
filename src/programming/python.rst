@@ -595,19 +595,30 @@ Built-in
 These are methods that are natively available in a default installation of Python.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "help()", "Shows human friendly help information about a library.", "help(math)"
-   "dir()", "Show all of the available functions from a library or object.", ""
-   "print()", "Shows a string to standard output.", "print('Hello world')"
-   "input()", "Read standard input from a terminal", ""
-   "type()", "Find what data type a variable is.", ""
-   "int()", "Convert to an integer.", "int('4')"
-   "str()", "Convert to a string", "str(1)"
-   "list()", "Convert characters into a list.", "list('hello')"
-   "tuple()", "Convert to a tuple", "tuple(my_list_var)"
-   "len()", "Return the length of a string or list", ""
+   "help()", "Shows human friendly help information about a library."
+   "dir()", "Show all of the available functions from a library or object."
+   "print()", "Shows a string to standard output."
+   "input()", "Read standard input from a terminal."
+   "type()", "Find what data type a variable is."
+   "int()", "Convert to an integer."
+   "str()", "Convert to a string."
+   "list()", "Convert characters into a list."
+   "tuple()", "Convert to a tuple."
+   "len()", "Return the length of a string or list"
+
+.. csv-table::
+   :header: Example, Description
+   :widths: 20, 20
+
+   "help(math)", Show help information for the math library.
+   "print('Hello world')", Display Hello World to the screen.
+   "int('4')", Convert the string 4 into an integer.
+   "str(1)", Convert the integer 1 into a string.
+   "list('hello')", "Create a list of each character in the string hello (h, e, l, l, o)."
+   "tuple(my_list_var)", Create an immutable list (tuple) from an existing list.
 
 [7]
 
@@ -615,18 +626,18 @@ These are methods that are natively available in a default installation of Pytho
 ^^^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "upper()", "Convert all characters into upper-case (capitalized)", ""
-   "lower()", "Convert all characters to be lower-case.", ""
-   "len()", "Return the number of characters in the string.", ""
-   "count()", "Return the number of times a character or string appears in a string.", ""
-   "split()", "Split a string into a list based on a specific character or string.", ""
-   "replace(<STRING1>, <STRING2>)", "Replace all occurrences of one string with another.", ""
-   "index()", "Return the index of a specific character.", ""
-   "remove(<INDEX>)", "Remove an item from the list at the specified index.", ""
-   "format()", "Replace {} placeholders in a string with items from a list (and convert them into strings).", ""
+   "upper()", "Convert all characters into upper-case (capitalized)"
+   "lower()", "Convert all characters to be lower-case."
+   "len()", "Return the number of characters in the string."
+   "count()", "Return the number of times a character or string appears in a string."
+   "split()", "Split a string into a list based on a specific character or string."
+   "replace(<STRING1>, <STRING2>)", "Replace all occurrences of one string with another."
+   "index()", "Return the index of a specific character."
+   "remove(<INDEX>)", "Remove an item from the list at the specified index."
+   "format()", "Replace {} placeholders in a string with items from a list (and convert them into strings)."
 
 [8]
 
@@ -634,19 +645,25 @@ These are methods that are natively available in a default installation of Pytho
 ^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "len()", "Return the number of items in a list.", ""
-   "count()", "Return the number of times an item appears in a list.", ""
-   "sort()", "Sort the items in a list used the sorted() function.", ""
-   "reverse()", "Reverse the order of items in a list.", ""
-   "append()", "Append an item to a list.", ""
-   "index()", "Return the index of a specific item.", ""
-   "insert()", "Insert an item into a list at a specific index.", ""
-   "pop()", "Return an item from a specific position (the last position is default) and remove it from the list.", ""
-   "clear()", "Clear out all values from the list to make it empty.", ""
-   "join()", "Convert a list into a single string.", "','.join(list_variable)"
+   "len()", "Return the number of items in a list."
+   "count()", "Return the number of times an item appears in a list."
+   "sort()", "Sort the items in a list used the sorted() function."
+   "reverse()", "Reverse the order of items in a list."
+   "append()", "Append an item to a list."
+   "index()", "Return the index of a specific item."
+   "insert()", "Insert an item into a list at a specific index."
+   "pop()", "Return an item from a specific position (the last position is default) and remove it from the list."
+   "clear()", "Clear out all values from the list to make it empty."
+   "join()", "Convert a list into a single string."
+
+.. csv-table::
+   :header: Example, Description
+   :widths: 20, 20
+
+   "','.join([""car"", ""truck""])", "Create the string ""car,truck"" from the list."
 
 [9]
 
@@ -654,18 +671,26 @@ These are methods that are natively available in a default installation of Pytho
 ^^^^^^^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "len(<DICT>)", "The native len() library will return the number of keys in a dictionary.", "len(car_models)"
-   "get(<KEY>)", "Return the value of a specified key.", ""
-   "<DICT>[<KEY>] = <VALUE>", "Change the given value at the specified key.", "lightsabers[luke][color] = 'green'"
-   "del <DICT>[<KEY>]", "Remove a key.", "del furniture_brands['comfyplus']"
-   "keys()", "Return all of the keys.", ""
-   "values()", Return all of the values.", ""
-   "pop(<KEY>)", "Return a key-value pair from a specific position (the last position is default) and remove it from the list.", ""
-   "items()", "Return a tuple of each key-value pair.", ""
-   "clear()", "Clear out all values from the dictionary to make it empty.", ""
+   "len(<DICT>)", "The native len() library will return the number of keys in a dictionary."
+   "get(<KEY>)", "Return the value of a specified key."
+   "<DICT>[<KEY>] = <VALUE>", "Change the given value at the specified key."
+   "del <DICT>[<KEY>]", "Remove a key."
+   "keys()", "Return all of the keys."
+   "values()", Return all of the values."
+   "pop(<KEY>)", "Return a key-value pair from a specific position (the last position is default) and remove it from the list."
+   "items()", "Return a tuple of each key-value pair."
+   "clear()", "Clear out all values from the dictionary to make it empty."
+
+.. csv-table::
+   :header: Example, Description
+   :widths: 20, 20
+
+   "len(car_models)", Return the number of items in the car_models list.
+   "lightsabers[luke][color] = 'green'", Change the value of the nested variable "color" to "green".
+   "del furniture_brands['comfyplus']", Delete the key comfyplus (and it s value) from the dictionary furniture_brands.
 
 [10]
 
@@ -673,14 +698,14 @@ These are methods that are natively available in a default installation of Pytho
 ^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "open()", "Create a file object.", ""
-   "read()", "Read and return the entire file.", ""
-   "readlines()", "Read and return lines from a file, one at a time.", ""
-   "write()", "Write to a file object.", ""
-   "close()", "Close a file object.", ""
+   "open()", "Create a file object."
+   "read()", "Read and return the entire file."
+   "readlines()", "Read and return lines from a file, one at a time."
+   "write()", "Write to a file object."
+   "close()", "Close a file object."
 
 [17]
 
@@ -690,15 +715,15 @@ fileinput
 Read one or more files and perform special operations.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "close()", "Close a fileinput object.", ""
-   "filelineno()", "Return the current line number of the file", ""
-   "input(files=<LIST_OF_FILES)", "Read a list of files as a single object.", ""
-   "input(backup=True)", "Create a backup of the original file as ""<FILE_NAME>.bak""", ""
-   "input(inplace=True)", "Do not modify the original file until it the file object is closed. A copy of the original file is used.", ""
-   "input(openhook=fileinput.hook_compressed)", "Decompress and read gz and bz2 files.", ""
+   "close()", "Close a fileinput object."
+   "filelineno()", "Return the current line number of the file"
+   "input(files=<LIST_OF_FILES>)", "Read a list of files as a single object."
+   "input(backup=True)", "Create a backup of the original file as ""<FILE_NAME>.bak"""
+   "input(inplace=True)", "Do not modify the original file until it the file object is closed. A copy of the original file is used."
+   "input(openhook=fileinput.hook_compressed)", "Decompress and read gz and bz2 files."
 
 [14]
 
@@ -706,13 +731,13 @@ json
 ^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "load(<FILE>)", "Load a JSON dictionary from a file.", ""
-   "loads(<STR>)", "Load a JSON dictionary from a string.", ""
-   "dump(<STR>)", "Load JSON as a string from a file.", ""
-   "dumps(<DICT>,  indent=4)", "Convert a JSON dictionary into a string and indent it to make it human readable.", ""
+   "load(<FILE>)", "Load a JSON dictionary from a file."
+   "loads(<STR>)", "Load a JSON dictionary from a string."
+   "dump(<STR>)", "Load JSON as a string from a file."
+   "dumps(<DICT>,  indent=4)", "Convert a JSON dictionary into a string and indent it to make it human readable."
 
 [18]
 
@@ -720,20 +745,26 @@ logging
 ^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "input()", "", ""
-   "debug()", "Verbose information for developers.", ""
-   "info()", "General information about the program's activity.", ""
-   "warning()", "Notification of an unexpected event that did not affect the program currently.", ""
-   "error()", "One more functions failed to execute properly.", ""
-   "critical()", "A fatal issue has occurred that will cause the program to crash.", ""
-   "exception()", "Python encountered a fatal error.", ""
-   "basicConfig(level=<LEVEL>)", "Set the logging level.", ""
-   "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input.", ""
-   "FileHandler()", "The file to log to.", ""
-   "setLevel()", "Log to a file instead of standard output or input.", "logging.setLevel(logging.INFO)"
+   "input()", ""
+   "debug()", "Verbose information for developers."
+   "info()", "General information about the program's activity."
+   "warning()", "Notification of an unexpected event that did not affect the program currently."
+   "error()", "One more functions failed to execute properly."
+   "critical()", "A fatal issue has occurred that will cause the program to crash."
+   "exception()", "Python encountered a fatal error."
+   "basicConfig(level=<LEVEL>)", "Set the logging level."
+   "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input."
+   "FileHandler()", "The file to log to."
+   "setLevel()", "Log to a file instead of standard output or input."
+
+.. csv-table::
+   :header: Example, Description
+   :widths: 20, 20
+
+   "logging.setLevel(logging.INFO)", Set the logging mode to INFO.
 
 [6]
 
@@ -743,21 +774,21 @@ os
 Operating system utilities.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "listdir(<DEST>)", "Return a list of files in a directory.", ""
-   "makedirs(<LIST_OF_DIRS>)", "Recursively create a directory and sub-directories.", ""
-   "mknod(<DEST>, mode=<PERMISSIONS>)", "Create a file.", ""
-   "path.exists(<DEST>)", "Verify if a node exists.", ""
-   "path.isdir(<DEST>)", "Verify if a node is a directory.", ""
-   "path.isfile(<DEST>)", "Verify if a node is a file.", ""
-   "path.islink(<DEST>)", "Verify if a node is a link.", ""
-   "path.ismount(<DEST>)", "Verify if a node is a mount.", ""
-   "realpath(<DEST>)", "Return the full path to a file, including links.", ""
-   "remove(<DEST>)", "Delete a file.", ""
-   "rmdr(<DEST>)", "Delete a directory.", ""
-   "uname()", "Return the kernel information", ""
+   "listdir(<DEST>)", "Return a list of files in a directory."
+   "makedirs(<LIST_OF_DIRS>)", "Recursively create a directory and sub-directories."
+   "mknod(<DEST>, mode=<PERMISSIONS>)", "Create a file."
+   "path.exists(<DEST>)", "Verify if a node exists."
+   "path.isdir(<DEST>)", "Verify if a node is a directory."
+   "path.isfile(<DEST>)", "Verify if a node is a file."
+   "path.islink(<DEST>)", "Verify if a node is a link."
+   "path.ismount(<DEST>)", "Verify if a node is a mount."
+   "realpath(<DEST>)", "Return the full path to a file, including links."
+   "remove(<DEST>)", "Delete a file."
+   "rmdr(<DEST>)", "Delete a directory."
+   "uname()", "Return the kernel information"
 
 [16]
 
@@ -767,20 +798,20 @@ shutil
 Complex operations on files.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file.", ""
-   "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata.", ""
-   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata.", ""
-   "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object.", ""
-   "copytree(<SRC>, <DEST>)", "Copy files from one directory to another.", ""
-   "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents.", ""
-   "get_archive_formats()", "View the available archive formats based on the libraries installed.", ""
-   "make_archive()", "Make a bztar, gztar, tar, xztar, or zip archive.", ""
-   "move(<SRC>, <DEST>)", "Move or rename a file.", ""
-   "rmtree(<DEST>)", "Recursively delete all files in a directory.", ""
-   "which(<CMD>)", "Return the default command found from the shell $PATH variable.", ""
+   "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file."
+   "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata."
+   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata."
+   "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object."
+   "copytree(<SRC>, <DEST>)", "Copy files from one directory to another."
+   "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents."
+   "get_archive_formats()", "View the available archive formats based on the libraries installed."
+   "make_archive()", "Make a bztar, gztar, tar, xztar, or zip archive."
+   "move(<SRC>, <DEST>)", "Move or rename a file."
+   "rmtree(<DEST>)", "Recursively delete all files in a directory."
+   "which(<CMD>)", "Return the default command found from the shell $PATH variable."
 
 [15]
 
@@ -790,15 +821,15 @@ subprocess
 ``subprocess`` handles the execution of shell commands on the file system. ``Popen()`` is the most versatile way to execute and manage commands. ``run()`` was introduced in Python 3.5 to provide a simple way to execute commands. ``*call()`` provides basic legacy functions for managing command execution as separate methods.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   run(<CMD_STR>), "a combination of call, check_call, and check_output (added in Python 3.5)"
-   call(<CMD_LIST>), "run a command, wait for it to complete and return the return code"
-   check_call(), "run a command, wait until it is done, then return 0 or (if there was an error) raise an error exception"
-   check_output(), similar to check_call except it will return the standard output
-   Popen(<CMD_LIST>, shell=True), "execute a command, track it s progress, optionally save the stdin/stdout/stderr, and save the return code"
-   "Popen(<CMD_LIST>, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)", run a command and capture the standard output and error as well as allow standard input to be sent to it
+   run(<CMD_STR>), "A combination of call, check_call, and check_output (added in Python 3.5)."
+   call(<CMD_LIST>), "Run a command, wait for it to complete and return the return code."
+   check_call(), "Run a command, wait until it is done, then return 0 or (if there was an error) raise an error exception."
+   check_output(), Similar to check_call except it will return the standard output.
+   "Popen(<CMD_LIST>, shell=True)", "Execute a command, track it s progress, optionally save the stdin/stdout/stderr, and save the return code."
+   "Popen(<CMD_LIST>, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)", Run a command and capture the standard output and error as well as allow standard input to be sent to it.
 
 [27]
 
@@ -808,8 +839,8 @@ subprocess
 In Python >= 3.0, stdandard input/output/error is returned as bytes instead of strings. Use ``decode()`` to convert the bytes into a string.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
    communicate(), return a tuple of the standard output and standard error as bytes
    stdout(), return the standard output as bytes
@@ -828,22 +859,22 @@ urllib.parse
 ^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "quote(<STRING>)", "Replace special characters with escaped versions that are parsable by HTML.", ""
+   "quote(<STRING>)", "Replace special characters with escaped versions that are parsable by HTML."
 
 urllib.request
 ^^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "urlretrieve(<URL>, <FILE>)", "Download a file from an URL.", ""
-   "Request(url=<URL>, data=PARAMETERS, method=<HTTP_METHOD>)", "Create a Request object to define settings for a HTTP request.", ""
-   "urlopen(<urllib.request.Request object>)", "Establish a HTTP request connection to the remote server.", ""
-   "read().decode()", "Return the resulting text from the request.", ""
+   "urlretrieve(<URL>, <FILE>)", "Download a file from an URL."
+   "Request(url=<URL>, data=PARAMETERS, method=<HTTP_METHOD>)", "Create a Request object to define settings for a HTTP request."
+   "urlopen(<urllib.request.Request object>)", "Establish a HTTP request connection to the remote server."
+   "read().decode()", "Return the resulting text from the request."
 
 [22]
 
@@ -851,10 +882,16 @@ urllib.request
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "add_header(<KEY>, <VALUE>)", "Add a header to a request.", "<OBJECT>.add_header(""Content-type"", ""application/json"")"
+   "ADD_HEADER(<KEY>, <VALUE>)", "Add a header to a request."
+
+.. csv-table::
+   :header: Example, Description
+   :widths: 20, 20
+
+   "<OBJECT>.ADD_HEADER(""CONTENT-TYPE"", ""APPLICATION/JSON"")", Set the application type to JSON.
 
 [22]
 
@@ -870,13 +907,13 @@ Package: requests
 
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "get(<URL>)", "Do a GET request on a URL.", ""
-   "get(headers=<HEADERS_DICT>)", "Provide a dictionary for custom headers.", ""
-   "get(auth=(<USER>, <PASS>))", "Provide basic HTTP authentication to the request.", ""
-   "get(params=<PARAMETERS>)", "Provide arguments to the GET request.", ""
+   "get(<URL>)", "Do a GET request on a URL."
+   "get(headers=<HEADERS_DICT>)", "Provide a dictionary for custom headers."
+   "get(auth=(<USER>, <PASS>))", "Provide basic HTTP authentication to the request."
+   "get(params=<PARAMETERS>)", "Provide arguments to the GET request."
 
 [21]
 
@@ -884,12 +921,12 @@ Package: requests
 ^^^^^^^^^^^^^^^^^
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "status_code", "The HTTP status code of the request.", ""
-   "content()", "Return the resulting text output from the request.", ""
-   "json()", "Return the resulting dictionary of data from the request.", ""
+   "status_code", "The HTTP status code of the request."
+   "content()", "Return the resulting text output from the request."
+   "json()", "Return the resulting dictionary of data from the request."
 
 [21]
 
@@ -901,13 +938,13 @@ Package: six
 Functions from Python 3 backported for compatibility with both Python 2 and 3.
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "input()", "Capture standard input from an end-user.", ""
-   "map(<FUNCTION>, <LIST>)", "Execute a function on all items in a list.", ""
-   "reduce(<FUNCTION>, <LIST>)", "Execute a function on all items in a list and retun the cumulative sum.", ""
-   "SimpleHTTPServer()", "Create a simple HTTP server.", ""
+   "input()", "Capture standard input from an end-user."
+   "map(<FUNCTION>, <LIST>)", "Execute a function on all items in a list."
+   "reduce(<FUNCTION>, <LIST>)", "Execute a function on all items in a list and retun the cumulative sum."
+   "SimpleHTTPServer()", "Create a simple HTTP server."
 
 [20]
 
@@ -917,11 +954,11 @@ yaml
 Package: PyYAML
 
 .. csv-table::
-   :header: Method, Description, Example
-   :widths: 20, 20, 20
+   :header: Method, Description
+   :widths: 20, 20
 
-   "load(<STR>)", "Load a YAML dictionary from a string.", ""
-   "dump(<DICT>)", "Convert a YAML dictionary into a string.", ""
+   "load(<STR>)", "Load a YAML dictionary from a string."
+   "dump(<DICT>)", "Convert a YAML dictionary into a string."
 
 [19]
 
