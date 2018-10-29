@@ -677,18 +677,21 @@ Minishift is an easy to use all-in-one installation for testing out OpenShift.
 
 **Install (Fedora):**
 
--  Download the latest release of Minishift from `here <https://github.com/minishift/minishift/releases>`__.
+-  Download the latest release of Minishift from `here <https://github.com/minishift/minishift/releases>`__ and the latest release of OC from `here <https://github.com/openshift/origin/releases>`__.
 
 .. code-block:: sh
 
-    $ MINISHIFT_VER=1.24.0
+    $ MINISHIFT_VER=1.26.1
     $ wget https://github.com/minishift/minishift/releases/download/v${MINISHIFT_VER}/minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ tar -v -x -f minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm -o /usr/local/bin/docker-machine-driver-kvm
     $ sudo chmod 0755 /usr/local/bin/docker-machine-driver-kvm
+    $ wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
+    $ tar -v -x -f openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz$
+    $ sudo cp openshift-origin-client-tools-v3.11.0*/oc /usr/local/bin/
     $ cd ./minishift-${MINISHIFT_VER}-linux-amd64/
     $ ./minishift openshift version list
-    $ ./minishift start --openshift-version <VERSION>
+    $ ./minishift start --openshift-version v3.11.0
 
 [31][32]
 
@@ -703,9 +706,20 @@ Enable the Red Hat Developer Tools repository first. Then Minishift can be insta
     $ minishift setup-cdk --force --default-vm-driver="kvm"
     $ sudo ln -s ~/.minishift/cache/oc/v3.*/linux/oc /usr/bin/oc
     $ minishift openshift version list
-    $ minishift start --openshift-version <VERSION>
+    $ minishift start --openshift-version v3.11.0
 
 [33]
+
+For installing newer versions of Minishift, the old environment must be wiped first.
+
+.. code-block:: sh
+
+   $ minishift stop
+   $ minishift delete
+   $ rm -rf ~/.kube ~/.minishift
+   $ sudo rm -f $(which oc)
+
+[58]
 
 Full
 ''''
@@ -1432,3 +1446,4 @@ Bibliography
 55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
 56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed October 14, 2018. https://docs.openshift.com/container-platform/3.10/install_config/index.html
 57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
+58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
