@@ -1350,12 +1350,17 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
           $ sudo chmod 0440 /etc/sudoers.d/stack
           $ su - stack
 
-   -  Install the RDO Trunk repositories.
    -  Install TripleO.
 
       .. code-block:: sh
 
-          $ sudo yum install python-tripleoclient
+          $ sudo yum install python-tripleoclient openstack-tripleo-common openstack-tripleo-heat-templates
+
+   -  Update the operating system and reboot the server.
+
+      .. code-block:: sh
+
+         $ sudo yum update && sudo reboot
 
    -  Copy the sample configuration to use as a base template. Optionally configure it.
 
@@ -1377,6 +1382,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
       -  undercloud\_admin\_vip = The IP address to listen on for admin API endpoints.
       -  undercloud\_hostname = The fully qualified hostname to use for the Undercloud.
       -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
+      -  enabled_hardware_types (**enabled\_drivers** in Newton) = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management" (Queens) or "fake_pxe" (Newton) to this list.
 
    -  Deploy an all-in-one Undercloud on the virtual machine.
 
