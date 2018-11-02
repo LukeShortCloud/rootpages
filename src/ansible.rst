@@ -1812,8 +1812,8 @@ Loops can be used to iterate through lists and/or dictionaries. All ``with_`` lo
 
 Ansible >= 2.5 loops:
 
--  `Loop <http://docs.ansible.com/ansible/2.5/user_guide/playbooks_loops.html#standard-loops>`__
--  `Until <http://docs.ansible.com/ansible/2.5/user_guide/playbooks_loops.html#do-until-loops>`__
+-  `Loop <http://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#standard-loops>`__
+-  `Until <https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#do-until-loops>`__
 
 Loop
 ''''
@@ -1884,6 +1884,30 @@ Example:
        label: "{{ current.message }}"
        loop_var: current
        pause: 5
+
+[10]
+
+Until Loops
+'''''''''''
+
+Do-Until loops can be used to continuely run a check and verify it's completion.
+
+-  **until** = The logic of the ``until`` loop. The typical use case is to check the output of a registered variable or do a Jinja lookup. When the condition is not met, the module runs again. When the condition is met, the module finishes and moves onto the next task.
+-  retries = The number of times to retry the loop until marking the task as failed. Default: 3.
+-  delay = The delay, in seconds, before starting the next retry. Default: 5.
+
+Example:
+
+.. code-block:: yaml
+
+   - name: Generate random numbers until 5 is found
+     shell: echo $(($RANDOM % 10 + 1))
+     register: random_number
+     until: '"5" in random_number.stdout'
+     retries: 30
+     delay: 1
+
+The registered variable will have a special "attempts" key that will contain the number of retries that the ``until`` loop went through.
 
 [10]
 
@@ -4872,7 +4896,7 @@ Bibliography
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
 8. "Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
 9. "Prompts." Ansible Documentation. August 05, 2016. Accessed August 13, 2016. http://docs.ansible.com/ansible/playbooks\_prompts.html
-10. "Loops." Ansible Documentation. October 15, 2018. Accessed October 16, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_loops.html
+10. "Loops." Ansible Documentation. October 26, 2018. Accessed October 30, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_loops.html
 11. "Conditionals." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_conditionals.html
 12. "Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks\_error\_handling.html
 13. "Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
