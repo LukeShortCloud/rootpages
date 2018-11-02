@@ -4771,7 +4771,12 @@ Manually stop:
 Upgrades
 ^^^^^^^^
 
-AWX is the unstable development version of Ansible Tower. Rolling upgrades are not supported. [60] The recommended way to upgrade is to use the `tower-cli <https://github.com/ansible/tower-cli>`__ command to backup and restore the AWX data. This method can also be used to migrate from AWX to Ansible Tower or vice versa. [61]
+AWX is the development version of Ansible Tower. Rolling upgrades are not supported on the AWX 1.Y.Z releases. [60] Starting with AWX 2.0.0, it supports automatic upgrade migrations between tags published on GitHub and Docker Hub.
+
+Manual Upgrade
+''''''''''''''
+
+The `tower-cli <https://github.com/ansible/tower-cli>`__ command can be used to backup and restore the AWX data. This method can also be used to migrate from AWX to Ansible Tower or vice versa. [61]
 
 Take note of the AWX version. This can be seen through the dashboard (use the "About" button) or API (perform a GET on ``/api/v2/ping``). If AWX was installed using the source code from GitHub and Docker Compose, the version can also be found from the ``VERSION`` file.
 
