@@ -218,12 +218,3 @@ IPMI firmware update utility.
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__
 ---------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  IPMI
-
-   -  impitool lan
-
-      -  http://www.openfusion.net/linux/ipmi_on_centos

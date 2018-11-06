@@ -88,19 +88,3 @@ vim (Interactive)
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/text_editors.rst>`__
 -------------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  Vim
-
-      -  Vim (Interactive)
-
-         -  http://www.vim.org/
-         -  http://vim.wikia.com/wiki/Copy,_cut_and_paste
-         -  http://vim.wikia.com/wiki/Undo_and_Redo
-         -  http://xmodulo.com/useful-vim-commands.html
-         -  http://stackoverflow.com/questions/105721/how-to-move-to-end-of-line-in-vim
-         -  http://vim.wikia.com/wiki/Jumping_to_previously_visited_locations
-         -  http://vim.wikia.com/wiki/See_the_tabs_in_your_file
-         -  http://vim.wikia.com/wiki/List_changes_to_the_current_file

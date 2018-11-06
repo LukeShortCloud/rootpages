@@ -109,7 +109,8 @@ A few quick notes about technical documentation:
 
 * Everything should be written in the third-person narrative.
 * Sentences should be easy-to-read and quick to the point.
-* Chicago style citation to sources is REQUIRED.
+* Chicago style citation to sources are required for all pages except for linux_commands.
+    * Linux Commands are assumed to reference the official manual and information pages provided by the software.
     * If assistance is required with the syntax of new citations, check out [Citation Machine](http://www.citationmachine.net/chicago).
 
 Recommended text editors:

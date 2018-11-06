@@ -181,16 +181,3 @@ Allow non-root accounts to temporarily run privileged commands.
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/security.rst>`__
 ---------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  Local System
-
-   -  Audit
-     
-      -  http://www.cyberciti.biz/tips/linux-audit-files-to-see-who-made-changes-to-a-file.html
-
--  Kerberos
-
-   -  https://linux.die.net/man/1/kdestroy

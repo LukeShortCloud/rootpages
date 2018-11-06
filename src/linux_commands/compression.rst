@@ -205,27 +205,3 @@ Packag: zip
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/compression.rst>`__
 -------------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  cpio
-
-   -  http://www.nextstep4it.com/linux-cpio-command-examples/
-
--  dtrx
-
-   -  https://brettcsmith.org/2007/dtrx/
-
--  pigz
-
-   -  http://features.cpanel.net/responses/faster-backups-using-pigz
-   -  http://www.zlib.net/pigz/pigz.pdf
-
--  xz
-
-   -  http://manpages.ubuntu.com/manpages/lucid/man1/xz.1.html
-
--  zip
-
-   -  http://linux.about.com/od/commands/a/blcmdl1_zipx.htm

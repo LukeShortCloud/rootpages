@@ -169,23 +169,3 @@ A CLI for interfacing with the Ansible Tower API.
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/configuration_management.rst>`__
 -------------------------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
-References:
-
--  Ansible
-  
-   -  ansible
-   
-      -  http://docs.ansible.com/ansible/intro_installation.html#installation
-      -  http://docs.ansible.com/ansible/intro_getting_started.html
-   
-   -  ansible-playbook
-   
-      -  http://docs.ansible.com/ansible/playbooks_checkmode.html
-   
-   -  ansible-galaxy
-   
-      -  http://docs.ansible.com/ansible/galaxy.html
