@@ -1098,6 +1098,77 @@ Each test should have ``assert`` checks to verify that what is expected is being
 
 [26]
 
+PyPI Packaging
+--------------
+
+The Python Package Index (PyPI) provides a central location to upload Python packages that can be installed via ``pip``.
+
+A ``__init__.py`` file needs to be created with at least the package name in the format ``name = "PACKAGE_NAME"``. This marks the directory as a Python package.
+
+The ``setup.py`` file defines attributes for a package and how it will be installed.
+
+-  author = The author's full name.
+-  author_email = The author's e-mail address.
+-  classifers = A list of custom classifers used by PyPI as defined `here <https://pypi.org/classifiers/>`__.
+
+   -  ``"Programming Language :: Python :: 3 :: Only"`` = This package only supports Python 3.
+   -  ``"Topic :: Documentation"`` = This package provides documentation focused functions.
+
+-  description = A short description of the purpose of the package.
+-  install_requires = A list of dependencies to install from PyPI.
+-  name = The package name.
+-  license = The license that the software is using.
+-  long_description = A long description of the purpose of the package.
+-  packages = A list of sub-packages bundled in this package. These can be dynamically found by using ``setuptools.find_packages()``.
+-  scripts = A list of exectuable scripts that will be installed to the ``bin/`` directory.
+-  url = The URL to the main website for the package.
+-  version = The semantic package version.
+
+.. code-block:: python
+
+  #!/usr/bin/env python3
+
+   import setuptools
+
+   setuptools.setup(
+       name="hello_world",
+       version="1.2.3",
+       author="Bob Smith"
+   )
+
+[28]
+
+The recommended PyPI publishing utility is ``twine``. User credentials will need to be stored in ``~/.pypirc``.
+
+.. code-block:: ini
+
+   [distutils]
+   # Enabled PyPI repository locations to manage.
+   index-servers=
+       testpypi
+       pypi
+
+   # The official PyPI test environment. Use this to test package updates before pushing to production.
+   [testpypi]
+   repository = https://test.pypi.org/legacy/
+   username = <USER>
+   password = <PASS>
+
+   # The official PyPI production environment.
+   [pypi]
+   repository = https://upload.pypi.org/legacy/
+   username = <USER>
+   password = <PASS>
+
+Build the source package tarball and then upload it to PyPI.
+
+.. code-block:: shell
+
+   $ python setup.py sdist
+   $ twine upload -r pypi dist/<PACKAGE_TARBALL>
+
+[29]
+
 `Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
 ---------------------------------------------------------------------------------------------
 
@@ -1131,3 +1202,5 @@ Bibliography
 25. "Built-in Exceptions." Python 3 Documentation. Accessed September 18, 2018. https://docs.python.org/3/library/exceptions.html
 26. "unittest - Unit testing framework. Python 3 Documentation. Accessed September 19, 2018. https://docs.python.org/3/library/unittest.html
 27. "subprocess - Subprocess management." Python 3 Documentation. Accessed October 19, 2018. https://docs.python.org/3/library/subprocess.html#older-high-level-api
+28. "Packaging Python Projects." Python Packaging User Guide. October 2, 2018. Accessed October 6, 2018. https://packaging.python.org/tutorials/packaging-projects/
+29. "Migrating to PyPI.org." Python Packaging User Guide. October 2, 2018. Accessed October 6, 2018. https://packaging.python.org/guides/migrating-to-pypi-org/
