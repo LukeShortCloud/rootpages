@@ -64,8 +64,8 @@ network to the 10.0.0.1 server.
 
 [2][3]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/mail_servers.rst>`__
----------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/mail_servers.rst>`__
+----------------------------------------------------------------------------------------
 
 Bibliography
 ------------

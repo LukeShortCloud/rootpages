@@ -1214,8 +1214,8 @@ includes repair utilities, including fsck. For clients, it is
 recommended to use a Linux kernel in the 4 series, or newer, to have the
 latest features and bug fixes for the file system. [28]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst>`__
----------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst>`__
+----------------------------------------------------------------------------------------
 
 Bibliography
 ------------

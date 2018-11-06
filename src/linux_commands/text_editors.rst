@@ -86,8 +86,8 @@ vim (Interactive)
    ":ab hello Hello, how are you?", "set ""hello"" as an alias"
    "\di.", "delete all text on a line until it reaches a period"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/text_editors.rst>`__
-------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/text_editors.rst>`__
+-------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

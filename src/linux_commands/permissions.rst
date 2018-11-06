@@ -422,8 +422,8 @@ setsebool
 
    "-P httpd_use_nfs on", "allow Apache to utilize NFS mounts for serving HTTP content"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/permissions.rst>`__
------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/permissions.rst>`__
+------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

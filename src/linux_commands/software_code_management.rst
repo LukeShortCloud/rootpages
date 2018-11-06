@@ -232,8 +232,8 @@ Display the history of commits.
    "", "show the commit history of the current branch"
    "-p", "show the commit history of only a specific file or directory"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/software_configuration_management.rst>`__
----------------------------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/software_configuration_management.rst>`__
+----------------------------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

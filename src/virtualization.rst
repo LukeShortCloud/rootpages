@@ -1383,8 +1383,8 @@ Nested virtualization also requires MAC spoofing to be enabled.
 
 [46]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
+------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

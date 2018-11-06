@@ -217,8 +217,8 @@ Verify that the authentication works.
 
 [2][4]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/security.rst>`__
------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/security.rst>`__
+------------------------------------------------------------------------------------
 
 Bibliography
 ------------

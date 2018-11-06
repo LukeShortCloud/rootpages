@@ -216,8 +216,8 @@ IPMI firmware update utility.
 
    "-i kcs -f", "update IPMI's firmware"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__
---------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__
+---------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

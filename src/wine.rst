@@ -138,8 +138,8 @@ Important directories:
 
 `Versions of Wine from Lutris <https://lutris.net/files/runners/>`__ can be downloaded and extracted into the ``wine/linux-<ARCHITECTURE>/`` directory. These will become available for use in PlayOnLinux. Lutris builds stable, development, staging, and custom patched versions of Wine. [6]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
--------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
+--------------------------------------------------------------------------------
 
 Bibliography
 ------------

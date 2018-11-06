@@ -369,8 +369,8 @@ Optionally enable the Copr repository using DNF.
 
 [8]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
----------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
+----------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

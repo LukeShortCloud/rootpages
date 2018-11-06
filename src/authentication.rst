@@ -244,8 +244,8 @@ How to create users and groups in Windows Active Directory:
 -  Users: https://docs.microsoft.com/en-us/previous-versions/commerce-server/aa545262(v=cs.70)
 -  Groups: https://docs.microsoft.com/en-us/previous-versions/commerce-server/aa545347%28v%3dcs.70%29
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/authentication.rst>`__
------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/authentication.rst>`__
+------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

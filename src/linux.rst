@@ -284,8 +284,8 @@ File: /etc/dracut.conf
 
 [11]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux.rst>`__
---------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux.rst>`__
+---------------------------------------------------------------------------------
 
 Bibliography
 ------------

@@ -63,8 +63,8 @@ Header 5
 Header 6
 &&&&&&&&
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/template.rst>`__
------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/template.rst>`__
+------------------------------------------------------------------------------------
 
 Bibliography
 ------------

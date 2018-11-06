@@ -57,8 +57,8 @@ Switch to a free TTY. This is normally done in Linux by pressing ``CTRL`` + ``AL
 
 [4]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/graphics.rst>`__
------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/graphics.rst>`__
+------------------------------------------------------------------------------------
 
 Bibliography
 ------------

@@ -167,8 +167,8 @@ A CLI for interfacing with the Ansible Tower API.
    "--monitor", "show Job output"
    "job_template callback", "provision a Template to the local server"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/configuration_management.rst>`__
-------------------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/configuration_management.rst>`__
+-------------------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

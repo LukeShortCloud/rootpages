@@ -240,8 +240,8 @@ Fedora:
 
     $ sudo yum install lvm2
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
---------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
+---------------------------------------------------------------------------------------
 
 Bibliography
 ------------

@@ -1169,8 +1169,8 @@ Build the source package tarball and then upload it to PyPI.
 
 [29]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
----------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
+----------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

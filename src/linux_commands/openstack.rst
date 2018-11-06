@@ -414,8 +414,8 @@ Create dynamic inventory for Ansible to manage the Undercloud and Overcloud infr
 
    "--list", "list the entire inventory"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/openstack.rst>`__
-----------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/openstack.rst>`__
+-----------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

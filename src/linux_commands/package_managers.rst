@@ -746,8 +746,8 @@ GNU C++ compiler.
 
    "-std=c++{98|03|11|14|17}", "compile using a ANSI C++ standard, based on the year it was released"
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/package_managers.rst>`__
------------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/package_managers.rst>`__
+------------------------------------------------------------------------------------------------------------
 
 Bibliography
 ------------

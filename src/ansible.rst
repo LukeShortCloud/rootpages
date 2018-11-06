@@ -4886,8 +4886,8 @@ Tensor
 
 Tensor is an open source dashboard and API for infrastructure management using both Ansible and Terraform. It is written in Go and created by Pearson. The public facing documentation is incomplete and missing. Tensor is no longer supported since June of 2017. [57]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/ansible.rst>`__
-----------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/ansible.rst>`__
+-----------------------------------------------------------------------------------
 
 Bibliography
 ------------

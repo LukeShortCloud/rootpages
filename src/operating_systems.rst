@@ -111,8 +111,8 @@ openSUSE is a upstream community operating system that is sponsored by SUSE. It 
 
 [10]
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/operating_systems.rst>`__
---------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/operating_systems.rst>`__
+---------------------------------------------------------------------------------------------
 
 Bibliography
 ------------
