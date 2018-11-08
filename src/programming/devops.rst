@@ -224,15 +224,15 @@ Common OOP Languages:
 -  PHP
 -  Python
 
-Unit Testing
-------------
+Testing
+-------
 
-Every function or method in a program needs a related test. Each unit test should be written at the same time as the function itself is. Whenever any part of a program's code is modified, all of these unit tests should be ran to confirm that each part of the program continues to work as intended.
+All code should have unit and integration tests. Unit tests will run a test against each individual method to ensure they are all working as intended by returning the correct results. Integration tests will run multiple methods to ensure most, if not all, use-cases of a program continue to work. If any of the tests fail, then either a bug was introduced by new code or the tests need to be updated.
 
 Continuous Integration and Continuous Deployment
 ------------------------------------------------
 
-CI/CD pipelines provide an automated workflow for deploying software updates. When updates to source code through a SCM are processed, unit tests are ran, and if they successed then the updated code gets published to the production environment. Applications such as Jenkins and GitLab provide CI/CD functionality.
+CI/CD pipelines provide an automated workflow for deploying software updates. When updates to source code through a SCM are processed, tests are ran, and if they successed then the updated code gets published to the production environment. Applications such as Jenkins and GitLab provide CI/CD functionality.
 
 CI
 ~~
