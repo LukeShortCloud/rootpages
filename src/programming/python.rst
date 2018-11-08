@@ -1024,7 +1024,13 @@ Class syntax:
 
     class <ClassName>():
 
-Classes can optionally have an ``__init__`` method that is always ran when a new object is created from the class. This is useful for setting up variables and running other initalization methods if required.
+Classes have a few reserved and optional methods that can be used.
+
+-  ``def __new__(cls)`` = A static method that can override metadata and attributes of the class before it is initialized.
+-  ``def __init__(self)`` = A method that runs after ``__new__`` that initializes an object. It is commonly used to at least set variable values. This phase is fully executed before the object is first returned.
+-  ``def __del__(self)`` = A method that runs when an object is being cleaned up or closed. Exceptions are ignored during this phase and the program will continue to exit if one is encountered.
+
+[30]
 
 Class initalization syntax:
 
@@ -1036,13 +1042,22 @@ Class initalization syntax:
             self.<VARIABLE1> = <VARIABLE1>
             self.<VARIABLE2> = <VARIABLE2>
 
-Every method has to be defined to require at least the ``self`` variable which contains all of the local object variables.
+Methods are assumed to be passed the ``self`` variable to work with data from the object itself. If the method is generic in nature is can be marked as a static method as to not require ``self``. Class objects can be passed using ``cls`` if other class variables or methods need to be executed.
 
-Method syntax:
+Method examples:
 
 .. code-block:: python
 
-        def <method_name>(self):
+        def get_name_from_object(self):
+            print("The object name is {}.".format(self.name))
+
+        @classmethod
+        def get_name_from_class(cls):
+            print("The default class name is {}.".format(cls.name))
+
+        @staticmethod
+        def simple_math():
+            return 2+2
 
 Using a class, multiple objects can be created and their methods called.
 
@@ -1055,12 +1070,32 @@ Object invocation syntax:
     <object2> = <ClassName>
     <object2>.<method_name>()
 
-Unit Testing
-------------
+Inheritance
+~~~~~~~~~~~
 
-Unit tests test the functionality of different components of a program and common use cases associated with it. They are used to help programmers find and locate unexpected issues and bugs with their programs. When new features are added to a program, existing unit tests should continue to succeed. New unit tests should also be created for those new features.
+A class can be created from one or more existing classes by passing them as arguments to the new class. This will inheirt variables and methods from those classes. This is useful if a new class will use similar methods from an existing class and also needs additional functionality added.
 
-This is a template of how a unit test class should be defined in Python. The class must utilize ``unittest.TestCase`` to handle tests. The ``setUp()`` method is used instead of ``__init__()`` for initializing a test object. The ``tearDown()`` method is always executed after every test. Test method names created by the developer must start with ``test_`` or else they will not be executed. Returns from the methods are ignored. The unit tests suite only checks to see if ``assert`` methods have succeeded or failed. When the tests are complete, a status report of the tests will be printed to the standard output.
+::
+
+   class <NEW_CLASS>(<CLASS1>, <CLASS2>, <CLASS3>):
+
+Methods can be set to be private for each class by setting by setting ``__<METHOD> = <METHOD>``. This will result in ``_<CLASS1>__<METHOD>`` and ``_<CLASS2>__<METHOD>`` methods being created for the class and it's inherited classes.
+
+.. code-block:: python
+
+    def get_name(self):
+        return self.name
+
+   __get_name = get_name
+
+[31]
+
+Testing
+-------
+
+The ``unittest`` library can be used to run unit and integration tests. Below is a template of how a test class should be defined in Python. The class must utilize ``unittest.TestCase`` to handle tests. The ``setUp()`` method is used instead of ``__init__()`` for initializing a test object. The ``tearDown()`` method is always executed after every test. Test method names created by the developer must start with ``test_`` or else they will not be executed. Returns from the methods are ignored. The unit tests suite only checks to see if ``assert`` methods have succeeded or failed. When the tests are complete, a status report of the tests will be printed to the standard output.
+
+Example:
 
 .. code-block:: python
 
@@ -1072,8 +1107,11 @@ This is a template of how a unit test class should be defined in Python. The cla
        def setUp(self):
            # Prepare tests
    
-       def test_unit_test_case(self):
+       def test_method_name_here(self):
            # Create a test
+
+       def test_integration_test_case(self):
+           # Create another test
    
        def tearDown(self):
            # Cleanup
@@ -1204,3 +1242,5 @@ Bibliography
 27. "subprocess - Subprocess management." Python 3 Documentation. Accessed October 19, 2018. https://docs.python.org/3/library/subprocess.html#older-high-level-api
 28. "Packaging Python Projects." Python Packaging User Guide. October 2, 2018. Accessed October 6, 2018. https://packaging.python.org/tutorials/packaging-projects/
 29. "Migrating to PyPI.org." Python Packaging User Guide. October 2, 2018. Accessed October 6, 2018. https://packaging.python.org/guides/migrating-to-pypi-org/
+30. "Data model." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/reference/datamodel.html
+31. "Classes." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/tutorial/classes.html
