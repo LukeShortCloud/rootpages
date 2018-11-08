@@ -112,6 +112,7 @@ Use Ansible to manage file encryption for playbooks.
    :widths: 20, 20
 
    "create", "create a new encrypted file"
+   encrypt_string, encrypt a string instead of a file
    "view", "open an encrypted file as read-only"
    "edit", "open an encrypted file to write"
    "--ask-vault-pass", "display a prompt to get the password from stdin"
@@ -134,6 +135,26 @@ The awx-manage command was formerly known as tower-manage. It is used to show an
    "inventory_import --source=<FILE> --inventory-name=<EXISTING_INVENTORY>", "import a inventory file to an existing Tower inventory"
    "list_instances", "show all Ansible Tower hosts"
    "dbshell", "connect to the PostgreSQL server and open a interactive shell"
+
+molecule
+~~~~~~~~
+
+Package: python3-molecule
+
+A testing framework for Ansible that uses virtual test environments.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   init role -r, create a new role with support for Molecule
+   test, "create the test environments, run tests, and then destroy the environment"
+   test -s, run a full test on a specific scenario
+   test --all, run a full test on all of the scenarios in the molecule/ directory
+   create, create the environment
+   destroy, delete the environment
+   converge, create the environment and run all of the tests
+   login, log into the environment
 
 setup.sh
 ~~~~~~~~
