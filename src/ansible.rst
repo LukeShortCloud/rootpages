@@ -4220,7 +4220,7 @@ Molecule is a tesitng framework designed specifically for Ansible. It assists wi
 
 Checks done by ``molecule test`` (in order of execution):
 
--  lint = Run ``ansible-lint`` on the role.
+-  lint = Run ``ansible-lint`` and ``yamllint`` on the role.
 -  destroy = Destroy any existing virtual machines using the ``destroy.yml`` playbook.
 -  dependency = Install any necessary role dependencies from Ansible Galaxy.
 -  syntax = Check the YAML syntax.
@@ -4235,7 +4235,7 @@ Checks done by ``molecule test`` (in order of execution):
 Supported virtualization drivers and their provisioners:
 
 -  azure
--  delegated
+-  delegated = Manually create and use a new driver.
 -  docker
 -  ec2
 -  gce
@@ -4282,6 +4282,25 @@ Specific tests handled by the ``molecule test`` command can be turned off in the
    verifier:
      name: testinfra
      enabled: False
+
+The order of tests can be changed using the ``scenario.test_sequence`` list. They can also be disabled by being commented out.
+
+.. code-block:: yaml
+
+   scenario:
+     name: default
+     test_sequence:
+       - lint
+       - destroy
+       - dependency
+       - syntax
+       - create
+       - prepare
+       - converge
+       - idempotence
+       - side_effect
+       - verify
+       - destroy
 
 docker containers will require a "command" is provided to start and keep it running. By default, an infinite while loop with a sleep command is executed using Bash for maximum portability. [72]
 
@@ -5008,7 +5027,7 @@ Bibliography
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
-70. "Molecule." Molecule documentation. Accessed August 3, 2018. https://molecule.readthedocs.io/en/latest/
+70. "Molecule." Molecule documentation. Accessed November 8, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
