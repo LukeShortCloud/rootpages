@@ -4158,6 +4158,53 @@ Ansible supports a variety of custom plugins that can be used.
 
 [41]
 
+Containers
+~~~~~~~~~~
+
+Containers can be manually built by using special container connections provided by Ansible.
+
+This example creates a container with Buildah, adds it to the inventory, and then runs another play to execute roles on it.
+
+.. code-block:: yaml
+
+   ---
+   - hosts: localhost
+     tasks:
+       - name: Create the container
+         command: "buildah from --name {{ container_name }} {{ container_os }}:{{ container_version_tag }}"
+
+       - name: Add the container to the inventory
+         add_host:
+           hostname: "{{ container_name }}"
+           ansible_connection: buildah
+
+   - hosts: "{{ container_name }}"
+     roles:
+       - "{{ role_name }}"
+
+This example for Ansible >= 2.7 shows how the new "apply" keyword can be used to delegate roles to specific hosts.
+
+.. code-block:: yaml
+
+   ---
+   - hosts: localhost
+     tasks:
+       - name: Create the container
+         command: "buildah from --name {{ container_name }} {{ container_os }}:{{ container_version_tag }}"
+
+       - name: Add the container to the inventory
+         add_host:
+           hostname: "{{ container_name }}"
+           ansible_connection: buildah
+
+       - name: Run a role in the container
+         include_role:
+           name: "{{ role_name }}"
+           apply:
+             delegate_to: "{{ container_name }}"
+
+There is also a community project called `ansible-blender <https://github.com/TomasTomecek/ansible-bender>`__ that seeks to be a spiritual successor to the now deprecated Ansible-Container project. It is used to build containers using Ansible playbooks. [77]
+
 Python API
 ----------
 
@@ -4968,3 +5015,4 @@ Bibliography
 74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
 76. "AWX Project." Ansible GitHub. September 18, 2018. Accessed September 18, 2018. https://github.com/ansible/awx
+77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
