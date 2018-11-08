@@ -8,6 +8,24 @@ See also: Administrative, Hardware, Networking, OpenStack
 Containers
 ----------
 
+buildah
+~~~~~~~
+
+Package: buildah
+
+A utility used to build new container images as non-privileged users.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   images, show local container images
+   containers, list all of the buildah containers
+   from --name <NAME> <OS>:<TAG>, create a new container from the specified image on Docker Hub
+   run <NAME> /bin/bash, open an interactive shell on the container
+   rm, remove a container
+   rmi, remove an image
+
 docker
 ~~~~~~
 
@@ -98,7 +116,7 @@ podman
 
 Package: podman
 
-The libpodman library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capatibilities to launch standalone Kubernetes pods.
+The libpod library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capatibilities to launch standalone Kubernetes pods.
 
 oVirt
 -----
