@@ -25,14 +25,5 @@ fastboot
    "devices", "show connected Android devices in the boot or recovery mode", ""
    "flash recovery", "install a new recovery utility (such as TWRP)", ""
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/phones.rst>`__
-------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  Android
-
-   -  adb
-
-      -  http://lifehacker.com/the-most-useful-things-you-can-do-with-adb-and-fastboot-1590337225
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/phones.rst>`__
+-------------------------------------------------------------------------------------------------

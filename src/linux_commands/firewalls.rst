@@ -141,34 +141,5 @@ ufw
    "deny <PORT>", "deny all traffic to this port", ""
    "--dry-run", "do not make changes; only show what iptables rules will be made", ""
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/firewalls.rst>`__
----------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  iptables
-
-   -  iptables
-
-      -  https://help.ubuntu.com/lts/serverguide/firewall.html.en
-
-   -  iptables (examples)
-
-      -  http://www.revsys.com/writings/quicktips/nat.html
-
-   -  iptables-save
-
-      -  http://www.cyberciti.biz/faq/how-do-i-save-iptables-rules-or-settings/
-
--  Firewalld
-
-   -  firewalld
-
-      -  http://www.tejasbarot.com/2014/08/05/rhel-7-centos-7-how-to-get-started-with-firewalld/
-
--  Uncomplicated Firewall
-
-   -  ufw
-
-      -  https://help.ubuntu.com/lts/serverguide/firewall.html.en
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/firewalls.rst>`__
+----------------------------------------------------------------------------------------------------

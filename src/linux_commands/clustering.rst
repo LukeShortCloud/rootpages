@@ -27,15 +27,5 @@ ipvsadm
    "-R, --restore", "restore the configuration from a file", ""
    "-C", "clear the current configuration", ""
 
-`Errata <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/clustering.rst>`__
-----------------------------------------------------------------------------------------------------
-
-Bibliography
-------------
-
--  IPVS
-
-   -  ipvsadm
-
-      -  http://kaivanov.blogspot.com/2013/01/building-load-balancer-with-lvs-linux.html
-      -  https://www.server-world.info/en/note?os=CentOS_6&p=lvs
+`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/clustering.rst>`__
+-----------------------------------------------------------------------------------------------------
