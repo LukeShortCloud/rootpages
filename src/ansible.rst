@@ -210,6 +210,41 @@ self-contained file or a large project organized in a directory.
 Official examples can he found here at
 https://github.com/ansible/ansible-examples.
 
+Tasks
+~~~~~
+
+Tasks and roles defined in a playbook are executed in this specific order:
+
+-  pre_tasks
+-  roles
+-  tasks
+-  post_tasks
+
+Example:
+
+.. code-block:: yaml
+
+   ---
+   - name: Example of running tasks.
+     hosts: all
+
+     pre_tasks:
+       - debug:
+           msg: "Hello world from the pre task (before installing NGINX)."
+
+     roles:
+       - nginx
+
+     tasks:
+       - debug:
+           msg: "Hello world from the second task (after installing NGINX)."
+
+     post_tasks:
+       - debug:
+           msg: "Hello world from the third task (after the normal tasks)."
+
+[78]
+
 Directory Structure
 ~~~~~~~~~~~~~~~~~~~
 
@@ -5035,3 +5070,4 @@ Bibliography
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
 76. "AWX Project." Ansible GitHub. September 18, 2018. Accessed September 18, 2018. https://github.com/ansible/awx
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
+78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
