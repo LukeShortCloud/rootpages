@@ -1207,6 +1207,53 @@ Build the source package tarball and then upload it to PyPI.
 
 [29]
 
+Virtual Environments
+--------------------
+
+Python virtual environments create an isolated installation of Python and it's libraries. This allows applications to be installed separately from one another to avoid conflicts with their dependencies and versions. Some operating systems heavily depend on Python and specific versions of software so updating packages via ``pip`` globally can lead to system instability.
+
+In Python >= 3.3, the ``virtualenv`` library (sometimes also referred to as "venv") is part of the standard Python installation. It is used to create and manage these isolated environments.
+
+Create a new environment:
+
+.. code-block:: sh
+
+   $ python3 -m virtualenv --help
+   $ python3 -m virtualenv <PATH_TO_NEW_VIRTUAL_ENVIRONMENT>
+
+Create a new environment using a specific Python version/binary installed on the system.
+
+.. code-block:: sh
+
+   $ python3 -m virtualenv -p /usr/bin/python2.7 <PATH_TO_NEW_VIRTUAL_ENVIRONMENT>
+
+Create a new environment using symlinks to the original Python installation. New library installations will be overriden in the virtual environment. This is useful for operaitng systems that ship packages that are not available in PyPI such as ``python3-libselinux`` on Fedora.
+
+.. code-block:: sh
+
+   $ python3 -m virtualenv --system-site-packages <PATH_TO_NEW_VIRTUAL_ENVIRONMENT>
+
+Activate an environment to use configure the shell to load up the different Python library directories. Deactivate it to return to the normal system Python.
+
+.. code-block:: sh
+
+   $ . <PATH_TO_VIRTUAL_ENVIRONMENT>/bin/activate
+   (<VIRTUAL_ENVIRONMENT>)$ deactivate
+
+For older operating systems, it is recommended to first update the ``pip`` and ``setuptools`` packages to the latest version. This will allow new libraries to install correctly.
+
+.. code-block:: sh
+
+   (<VIRTUAL_ENVIRONMENT>)$ pip install --upgrade pip setuptools
+
+Commands can also be executed directly from the virtual environment without any activation.
+
+.. code-block:: sh
+
+   $ <PATH_TO_VIRTUAL_ENVIRONMENT>/bin/pip --version
+
+[32]
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
 ----------------------------------------------------------------------------------------------
 
@@ -1244,3 +1291,4 @@ Bibliography
 29. "Migrating to PyPI.org." Python Packaging User Guide. October 2, 2018. Accessed October 6, 2018. https://packaging.python.org/guides/migrating-to-pypi-org/
 30. "Data model." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/reference/datamodel.html
 31. "Classes." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/tutorial/classes.html
+32. "Installing packages using pip and virtualenv." Python Packaging User Guide. October 2, 2018. Accessed November 26, 2018. https://packaging.python.org/guides/installing-using-pip-and-virtualenv/

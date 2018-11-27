@@ -618,8 +618,8 @@ Python package manager.
    "TMPDIR=<DIR>", "set this as an environment variable) use a different directory, other than /tmp, for building Pip packages"
    "--user", "install or remove Python packages for the current user from ~/.local"
 
-virutalenv
-''''''''''
+virtualenv (python3 -m virtualenv)
+''''''''''''''''''''''''''''''''''
 
 Create and manage isolated Python environments.
 
