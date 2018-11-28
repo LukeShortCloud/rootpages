@@ -810,6 +810,55 @@ Install kubectl for managing Kubernetes.
 
 [51]
 
+kubeadm
+&&&&&&&
+
+Supported operating systems:
+
+-  Debian 9, Ubuntu >= 16.04
+-  RHEL/CentOS 7
+-  HypriotOS
+-  Container Linux
+
+The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling Swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with ``kubeadm``.
+
+.. code-block:: sh
+
+   $ sudo swapoff --all
+
+.. code-block:: sh
+
+   $ sudo modprobe br_netfilter
+   $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
+   $ sudo sysctl -p
+
+Kubernetes requires a network provider, Fannel by default, to create an overlay network for inter-communication between pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
+
+.. code-block:: sh
+
+   $ kubeadm init --pod-network-cidr <OVERLAY_NETWORK_CIDR>
+
+Create an authentication token.
+
+.. code-block:: sh
+
+   $ kubeadm token create
+   $ kubeadm token list
+
+Look-up the certificate authority hash.
+
+.. code-block:: sh
+
+   $ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+
+On the worker nodes, add them to the cluster by running:
+
+.. code-block:: sh
+
+   $ kubeadm join --token <TOKEN> <MASTER_IP_ADDRESS>:6443 --discovery-token-ca-cert-hash sha256:<hash>
+
+[59]
+
 Orchestration
 -------------
 
@@ -1447,3 +1496,4 @@ Bibliography
 56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed October 14, 2018. https://docs.openshift.com/container-platform/3.10/install_config/index.html
 57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
 58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
+59. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
