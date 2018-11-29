@@ -4263,8 +4263,8 @@ Checks done by ``molecule test`` (in order of execution):
 -  prepare = Run post-provisioning tasks to setup the virtual machine before testing the role using the ``prepare.yml`` playbook.
 -  converge = Test the role by running the ``molecule/default/playbook.yml`` playbook.
 -  idempotence = Verify that tasks are only changed when they need to be.
--  side_effect
--  verify
+-  side_effect = Run an optional side_effect playbook to test out more complex scenarios relating to this role (example, cluster recovery).
+-  verify = Run the verify test scripts from the ``molecule/default/tests/`` directory.
 -  destroy = Destroy the virtual machine.
 
 Supported virtualization drivers and their provisioners:
@@ -4280,7 +4280,7 @@ Supported virtualization drivers and their provisioners:
 -  vagrant
 
    -  libvirt
-   -  parallels (macOS)
+   -  parallels (macOS only)
    -  virtualbox (default)
    -  vmware
 
@@ -4318,12 +4318,31 @@ Specific tests handled by the ``molecule test`` command can be turned off in the
      name: testinfra
      enabled: False
 
-The order of tests can be changed using the ``scenario.test_sequence`` list. They can also be disabled by being commented out.
+The order of tests can be changed using the ``scenario.<STAGE>_sequence`` lists. Parts of the sequence can also be disabled by being commented out.
 
 .. code-block:: yaml
 
+   ---
    scenario:
      name: default
+     create_sequence:
+       - create
+       - prepare
+     check_sequence:
+       - destroy
+       - dependency
+       - create
+       - prepare
+       - converge
+       - check
+       - destroy
+     converge_sequence:
+       - dependency
+       - create
+       - prepare
+       - converge
+     destroy_sequence:
+       - destroy
      test_sequence:
        - lint
        - destroy
@@ -4364,7 +4383,7 @@ Example:
 
 .. code-block:: sh
 
-   $ molecule converge -- -vvv --become-user=vagrant
+   $ molecule converge -- -vvv --become --become-user=root
 
 Specific tasks in a role can be disabled by setting the "molecule-notest" or "notest" tag.
 
@@ -5062,7 +5081,7 @@ Bibliography
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
-70. "Molecule." Molecule documentation. Accessed November 8, 2018. https://molecule.readthedocs.io/en/latest/
+70. "Molecule." Molecule documentation. Accessed November 29, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
