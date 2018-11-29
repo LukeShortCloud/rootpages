@@ -749,15 +749,19 @@ logging
    :widths: 20, 20
 
    "input()", ""
-   "debug()", "Verbose information for developers."
-   "info()", "General information about the program's activity."
-   "warning()", "Notification of an unexpected event that did not affect the program currently."
-   "error()", "One more functions failed to execute properly."
-   "critical()", "A fatal issue has occurred that will cause the program to crash."
-   "exception()", "Python encountered a fatal error."
+   "debug()", ""
+   "info()", ""
+   "warning()", ""
+   "error()", ""
+   "critical()", ""
+   "exception()", "Use for additional exception logging within an ""except"" block."
+   "basicConfig()", "Create/start a new logger."
    "basicConfig(level=<LEVEL>)", "Set the logging level."
    "basicConfig(filename='<FILE_NAME>')", "Log to a file instead of standard output or input."
-   "FileHandler()", "The file to log to."
+   "basicConfig(handlers=<LIST_OF_HANDLERS>)", "Configure multiple logging handlers during initialization."
+   "FileHandler(<LOG_FILE>)", "The file logging handler."
+   "StreamHandler()", "The stderr logging handler. This is the default handler."
+   "TimedRotatingFileHandler()", "A logging handler that rotates the log file out for a new one over a specified amount of time."
    "setLevel()", "Log to a file instead of standard output or input."
 
 .. csv-table::
@@ -1012,6 +1016,68 @@ Common exceptions:
 The full diagram of each exception category can be found here `here <https://docs.python.org/3/library/exceptions.html#exception-hierarchy>`__.
 
 [25]
+
+Logging
+-------
+
+Logging provides a versatile way to keep track of what a program is doing and to assist developers with troubleshooting their code.
+
+The basic initialization of a new logger:
+
+.. code-block:: python
+
+   import logging
+   logging.basicConfig(level=logging.DEBUG)
+
+The valid logging levels are listed below. Each level will also display logs that are more severe than itself.
+
+-  DEBUG = Verbose information for the developers to troubleshoot a program.
+-  INFO = Basic information about what the program is currently doing.
+-  WARN = Warnings about unexpected behavior that do not affect the program from continuing to operate.
+-  ERROR = Part of the program has failed to complete properly.
+-  CRITICAL = A fatal issue that would result in a crash.
+
+This will create a FileHandler (file) logger.
+
+.. code-block:: python
+
+   import logging
+   logging.basicConfig(level=logging.DEBUG, filename="/tmp/program.log")
+
+This will create both a FileHandler (file) and StreamHandler (standard error) logger. Logs will be sent to both of the handlers at the same time.
+
+.. code-block:: python
+
+   import logging
+   logging.basicConfig(level=logging.DEBUG,
+                       handlers=[logging.FileHandler("/tmp/program.log"),
+                                 logging.StreamHandler()])
+
+Log messages should be throughout the entire program where ever they would be most useful to a developer or end-user.
+
+Syntax:
+
+::
+
+   logging.<LEVEL>("<MESSAGE>")
+
+Examples:
+
+.. code-block:: python
+
+   try:
+       connect_to_db_function(host, user, pass)
+   except:
+       logging.exception("The connection to the database was unable to be established!")
+
+.. code-block:: python
+
+   logging.info("Starting count to 100.")
+
+   for count in range(1,101):
+       logging.debug("Currently on {}".format(count))
+
+[33][34]
 
 Object Oriented Programming
 ---------------------------
@@ -1292,3 +1358,5 @@ Bibliography
 30. "Data model." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/reference/datamodel.html
 31. "Classes." Python 3 Documentation. November 8, 2018. Accessed November 8, 2018. https://docs.python.org/3/tutorial/classes.html
 32. "Installing packages using pip and virtualenv." Python Packaging User Guide. October 2, 2018. Accessed November 26, 2018. https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
+33. "logging — Logging facility for Python." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.html
+34. "logging.handlers — Logging handlers." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.handlers.html/
