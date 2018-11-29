@@ -3570,16 +3570,17 @@ Rally is the benchmark-as-a-service (BaaS) that tests the OpenStack APIs for bot
 Installation
 ^^^^^^^^^^^^
 
-Install Rally 0.11 on RHEL using a Python virtual environment.
+Install Rally 0.12 on RHEL using a Python virtual environment.
 
 RHEL:
 
 .. code-block:: sh
 
-    $ sudo yum install gcc gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
+    $ sudo yum install gcc git gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
     $ virtualenv ~/rally-venv
     $ . ~/rally-venv/bin/activate
-    (rally-venv)$ pip install rally\<0.12
+    (rally-venv)$ pip install -U pip setuptools
+    (rally-venv)$ pip install rally==0.12.*
 
 Finish the installation by initializing a SQLite database for Rally. Alternatively, a MariaDB or PostgreSQL database connection can be configured in ``~/rally-venv/etc/rally/rally.conf``.
 
@@ -3599,7 +3600,7 @@ If Rally is ever upgraded to the latest version, the database schema also needs 
 Registering
 ^^^^^^^^^^^
 
-Rally requires a configuration, that defines the OpenStack credentials to test with, is registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. The "admin" user is no longer required in Rally version >= 0.10.0. [73]
+Rally requires a deployment, that defines the OpenStack credentials to test with, to be registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. The "admin" user is no longer required in Rally version >= 0.10.0. [73]
 
 View registered deployments:
 
@@ -3608,7 +3609,27 @@ View registered deployments:
     (rally-venv)$ rally deployment list
     (rally-venv)$ rally deployment show <DEPLOYMENT_NAME>
 
-`1.` Automatic
+Switch to an existing registered deployment:
+
+.. code-block:: sh
+
+    (rally-venv)$ rally deployment use <DEPLOYMENT_NAME>
+
+The current OpenStack credentials for the deployment that is active are saved to ``~/.rally/openrc``.
+
+A deployment and it's resources and be removing by running:
+
+.. code-block:: sh
+
+   (rally-venv)$ rally deployment destroy <DEPLOYMENT_NAME>
+
+Alternatively, keep the configuraiton and only clean-up the OpenStack resources and existing test data.
+
+.. code-block:: sh
+
+   (rally-venv)$ rally deployment recreate <DEPLOYMENT_NAME>
+
+`1.` Automatic Registration
 
 The fastest way to create this configuration is by referencing the OpenStack credential's shell environment variables.
 
@@ -3617,7 +3638,7 @@ The fastest way to create this configuration is by referencing the OpenStack cre
     (rally-venv)$ . <OPENSTACK_RC_FILE>
     (rally-venv)$ rally deployment create --fromenv --name=existing
 
-`2.` Manual
+`2.` Manual Registration
 
 A JSON file can be created to define the OpenStack credentials that Rally will be using. Example files can be found at `~/rally-venv/samples/deployments/`.
 
@@ -3713,6 +3734,16 @@ After creating a scenario, it can be run from the CLI:
 .. code-block:: sh
 
     (rally-venv)$ rally task start <SCENARIO_FILE>.<JSON_OR_YAML>
+
+Additional variables can be passed via the command line.
+
+.. code-block:: sh
+
+    (rally-venv)$ rally task start --task-args "<JSON_ARGS>" <SCENARIO_FILE>.<JSON_OR_YAML>
+
+.. code-block:: sh
+
+    (rally-venv)$ rally task start --task-args-file <ARGS_FILE>.<JSON_OR_YAML> <SCENARIO_FILE>.<JSON_OR_YAML>
 
 [71]
 
