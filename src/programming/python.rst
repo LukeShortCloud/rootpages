@@ -233,6 +233,90 @@ Example replacing a key and value:
 
 Common libraries for handling dictionaries include json and yaml.
 
+Slicing
+~~~~~~~
+
+Slicing provides a way to look-up and return elements from an array, list, or tuple.
+
+Return the variable at the given position, with the first element starting at 0.
+
+::
+
+   <VARIABLE>[<POSITION>]
+
+Return the elements in the list until the given stop position.
+
+::
+
+   <VARIABLE>[:<STOP>]
+
+Return the elements in the list between a start and stop position.
+
+::
+
+   <VARIABLE>[<START>:<STOP>]
+
+Return the elements of a list from a start position until the end of the list.
+
+::
+
+   <VARIABLE>[<START>:]
+
+By default, slicing will increment by one step. Different step increments can be used.
+
+::
+
+   <VARIABLE>[<START>:<STOP>:<STEP>]
+
+Use negative integers for the position to get a reverse order. Below shows how to find the last item in a list.
+
+::
+
+   <VARIABLE>[-1]
+
+Return a reverse order of the entire list by using a negative step.
+
+::
+
+   <VARIABLE>[::-1]
+
+[7]
+
+Lists that are created by referencing another list will be used as a pointer to that same memory location. This means that changes to a new list referencing the old list will also update the original list. Slicing can be used to do a shallow copy of a list into a new separate variable.
+
+Example:
+
+.. code-block:: python
+
+   list_of_numbers = [1, 2, 3]
+   other_list_of_numbers = list_of_numbers
+   copy_list_of_numbers = list_of_numbers[:]
+   list_of_numbers[0] = 4
+   print(list_of_numbers)
+   print(other_list_of_numbers)
+   print(copy_list_of_numbers)
+
+::
+
+   [4, 2, 3]
+   [4, 2, 3]
+   [1, 2, 3]
+
+Lists with nested lists inside them will require a deep copy of all of the sub-elements. Otherwise, the nested lists will still point to the memory allocation of their original lists. This concept applies to lists, arrays, and dictionaries. The ``copy`` library provides a ``deepcopy`` method to help address this.
+
+::
+
+   import copy
+
+Methods:
+
+-  copy = Shallow copy (one level deep).
+-  deepcopy = Copy all nested structures.
+
+Lists are not immutable and can be globally modified. Tuples should be provided to methods/functions as arguments (instead of lists) to garuntee that the original list is never changed.
+
+[35]
+
 Conditionals
 ------------
 
@@ -1332,7 +1416,7 @@ Bibliography
 4. "Python break, continue and pass Statements." Tutorials Point. Accessed January 29, 2018. http://www.tutorialspoint.com/python/python_loop_control.htm
 5. "Compound statements." Python 3 Documentation. January 30, 2018. Accessed January 30, 2018. https://docs.python.org/3/reference/compound_stmts.html
 6. "Logging HOWTO." Python 3 Documentation. Accessed August 15, 2018. https://docs.python.org/3/howto/logging.html
-7. "Built-in Functions." Python 3 Documentation. Accessed September 14, 2018. https://docs.python.org/3/library/functions.html
+7. "Built-in Functions." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/functions.html
 8. "string - Common string operations." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/string.html
 9. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/tutorial/datastructures.html
 10. "Data Structures." Python 3 Documentation. Accessed August 25, 2018. https://docs.python.org/3/library/stdtypes.html
@@ -1360,3 +1444,4 @@ Bibliography
 32. "Installing packages using pip and virtualenv." Python Packaging User Guide. October 2, 2018. Accessed November 26, 2018. https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
 33. "logging — Logging facility for Python." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.html
 34. "logging.handlers — Logging handlers." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.handlers.html/
+35. "logging.handlers — Logging handlers." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/copy.html
