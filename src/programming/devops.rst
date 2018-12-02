@@ -17,7 +17,7 @@ SCRUM
 Technical Design Document
 --------------------------
 
-A technical design document (TDD) verbosely explains exactly how a program will work (in the present tense) and why the program is needed and precisely how it will be created. This also helps to define unit tests. The TDD should describe:
+A technical design document verbosely explains exactly how a program will work (in the present tense) and why the program is needed and precisely how it will be created. This also helps to define unit tests. The document should describe:
 
 -  The purpose of the program.
 -  Use cases. Examples of how the program will be consumed by end-users.
@@ -25,14 +25,14 @@ A technical design document (TDD) verbosely explains exactly how a program will 
 -  Functions and APIs. The expected inputs and outputs.
 -  If applicable, the user interface (UI). How it should look and the expected inputs and outputs.
 -  Milestones. The expected functionality and state of a specific version of the program and how long it should take to develop. Eventually the time estimates should be updated to reflect how much time it did take for development. These milestones could be alpha, beta, and stable milestones.
--  Revisions. The revision history for the TDD. The document should only be updated after a milestone is reached or, if necessary, after a sprint. All changes to the document should be noted.
+-  Revisions. The revision history for the document. It should only be updated after a milestone is reached or, if necessary, after a sprint. All changes to the document should be noted.
 
 [2]
 
 Integrated Development Environments
 -----------------------------------
 
-Integrated development environments are text editors that assist wit h programming. These usually provide syntax highlighting, styling recommendatins, function recommendations/auto-complete, and shortcuts to quickly build and test applications.
+Integrated development environments are text editors that assist with programming. These usually provide syntax highlighting, styling recommendatins, function recommendations/auto-complete, and shortcuts to quickly build and test applications.
 
 Common IDEs:
 
@@ -212,6 +212,51 @@ Common git procedures:
 
 [6]
 
+Versioning
+----------
+
+A software version scheme helps end-users and developers identify what release they are using. This is helpful for looking up documentation and understanding the current features and potential bugs in each release. Versions normally consist of a major, minor, patch/micro, and optionally a modifier to signify an alpha, beta, or rc (release candidiate).
+
+Semantic (SemVer)
+~~~~~~~~~~~~~~~~~
+
+-  Syntax: ``<MAJOR>.<MINOR>.<PATCH>``, ``X.Y.Z``
+-  Example: ``1.21.0``
+
+SemVer sections:
+
+-  Major = Only changes when huge backwards compatibility breaking changes are introduced.
+-  Minor = New features are added.
+-  Patch = Bug and/or security update.
+
+After some development time, a new software version is released and the major, minor, and/or patch are updated to align with what kind of updates were added. The positions of the version are sometimes referred to as ``X.Y.Z``. [9]
+
+Calendar Versioning (CalVer)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Syntax: ``YYYY.0M.0D``, ``YYYY-0M-0D``, ``YYYY.<RELEASE>``, etc.
+-  Example: ``2018.11.29``
+
+Large projects or projects with rolling releases can signify the date of release by using CalVer. Normally this is the ISO date of actual published release date. It can be expressed in many different ways with the most common showing the year, month, and day. [10]
+
+GitVersion
+~~~~~~~~~~
+
+-  Syntax: ``<MAJOR>.<MINOR>.<PATCH>+<NUMBER_OF_COMMITS_SINCE_LAST_RELEASE>``
+-  Example: ``4.21.9+11``
+
+This is aimed towards use with automated build systems. Developers can keep track of how many commits there are since the last release while also providing a more stream-lined way for end-users to test development builds and accurately report back their version/build. [11]
+
+Unofficial
+~~~~~~~~~~
+
+These are unofficial versioning schemes that do not have a popular and/or published standard.
+
+-  ``<MAJOR>.<MINOR>.<COMMIT_HASH>``
+-  ``<MAJOR>.<MINOR>.<NUMBER_OF_COMMITS>.r<COMMIT_HASH>``
+-  ``YYMM0M.<COMMIT_HASH>``
+-  ``<COMMIT_HASH>``
+
 Object Oriented Programming
 ---------------------------
 
@@ -227,7 +272,7 @@ Common OOP Languages:
 Testing
 -------
 
-All code should have unit and integration tests. Unit tests will run a test against each individual method to ensure they are all working as intended by returning the correct results. Integration tests will run multiple methods to ensure most, if not all, use-cases of a program continue to work. If any of the tests fail, then either a bug was introduced by new code or the tests need to be updated.
+All code should have ``unit`` and ``integration`` tests. Unit tests will run a test against each individual method to ensure they are all working as intended by returning the correct results. Integration tests will run multiple methods to ensure most, if not all, use-cases of a program continue to work. If any of the tests fail, then either a bug was introduced by new code or the tests need to be updated.
 
 Continuous Integration and Continuous Deployment
 ------------------------------------------------
@@ -383,3 +428,6 @@ Bibliography
 6. "git - the simple guide." rogerdudler GitHub Pages. Accessed October 15, 2018. http://rogerdudler.github.io/git-guide/
 7. "User Documentation." COPR documentation. Accessed October 19, 2018. https://docs.pagure.org/copr.copr/user_documentation.html
 8. "Copr command line interface." Fedora Developer Portal. Accessed October 19, 2018. https://developer.fedoraproject.org/deployment/copr/copr-cli.html
+9. "Semantic Versioning 2.0.0." Semantic Versioning. Accessed December 1, 2018. https://semver.org/
+10. "Calendar Versioning." CalVer. Accessed December 2, 2018. https://calver.org/
+11. "Version Incrementing." GitVersion Read the Docs. Accessed December 1, 2018. https://gitversion.readthedocs.io/en/latest/more-info/version-increments/
