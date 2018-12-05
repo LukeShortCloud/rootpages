@@ -1214,6 +1214,84 @@ includes repair utilities, including fsck. For clients, it is
 recommended to use a Linux kernel in the 4 series, or newer, to have the
 latest features and bug fixes for the file system. [28]
 
+Filesystem Hierarchy Standard
+-----------------------------
+
+The FHS provides a standard layout for files and directories for UNIX-like operating systems and is adopted by most Linux distributions.
+
+Minimal [30]:
+
+-  / = The top level root directory that the operating system is installed in.
+-  /bin/ = Binaries for common utilities for end-users.
+-  /boot/ = The boot loader, Linux kernel, and inital RAM disk image.
+-  /dev/ = Files for handling devices that support input and/or output.
+-  /etc/ = Configuration files for services.
+-  /home/ = All user home directories.
+-  /lib/ = Libraries for all of the binaries.
+-  /media/ = Mount points for physical media usch as USB and CD-ROM drives.
+-  /mnt/ = Temporary mount point for other file systems.
+-  /opt/ = Optional third-party (usually proprietary) software.
+-  /proc/ = Information about the system reported by the Linux kernel.
+-  /root/ = The "root" user's home directory.
+-  /sbin/ = System binaries required to start the operating system.
+-  /sys/ = Configurable kernel settings.
+-  /tmp/ = Temporary storage.
+-  /usr/ = Unix system resources. These programs are not used when booting a system.
+-  /var/ = Variable data. Databases, logs, and temporary files are normally stored here.
+
+Full:
+
+-  /etc/
+
+   - /etc/bash.bashrc = Bash specific shell functions.
+   - /etc/crypttab = The LUKS encrypted partition table.
+   - /etc/environment = Global shell variables.
+   - /etc/fstab = The partition table of partitions to mount on boot.
+   - /etc/issue = The message banner to display before login for local users.
+   - /etc/issue.net = The message banner to displaybefore login for remote users. This also needs to be configured in the ``/etc/ssh/sshd_config`` for SSH users.
+   - /etc/motd = The message of the day banner to display after a successful login.
+   - /etc/passwd = Basic user account settings.
+   - /etc/profile = Generic shell functions.
+   - /etc/profile.d/ = A collection of custom user-defined shell functions.
+   - /etc/rsyslog.conf = rsyslogd configuration for most handling OS system logs.
+   - /etc/shadow = Encrypted user passwords.
+   - /etc/shells = Lists all available CLI shells.
+   - /etc/sysconfig/selinux = SELinux configuration.
+   - /etc/systemd/system/ = Administrator defined custom systemd service files. These will override any files from the default ``/usr/lib/systemd/system/`` location.
+
+-  /proc/
+
+   - /proc/<PID>/ = A folder will exist for every running PID.
+   - /proc/cmdline = Kernel boot arguments provided by the bootloader.
+   - /proc/cpuinfo = Information about the processor.
+   - `/proc/sys/vm/ <https://www.kernel.org/doc/Documentation/sysctl/vm.txt>`__
+
+      - /proc/sys/vm/drop_caches = Handles removing cached memory. Set to "3" for dropping all caches.
+
+-  /sys/
+
+   - /sys/class/backlight/<BACKLIGHT_DEVICE>/{brightness,actual_brightness,max_brightness} = View and set the brightness level of the physical monitor.
+   - /sys/class/net = The full list of network devices.
+   - /sys/class/power_supply/BAT1/capacity = Show the maximum charge of the battery.
+   - /sys/class/power_supply/BAT1/status = Show the current battery charge left.
+   - /sys/class/scsi_host/host<PORT>/scan = Manually scan for a device on that port by setting to "- - -".
+   - /sys/block/<DEVICE>/device/delete = Manually deactivate a device by setting to "1".
+
+-  /var/
+
+   -  /var/log/ = System logs.
+
+      -  /var/log/audit/audit.log = SELinux log file.
+
+   -  /var/run/utmp = Shows currently logged in users.
+   -  /var/spool/cron/ = User crontabs are stored here.
+
+-  ~/ or $HOME
+
+   - ~/.bash_profile = Shell aliases and functions are sourced for interactive users only.
+   - ~/.bashrc = Non-interative and interactive shells will source aliases and functions from here.
+   - ~/.local/share/applications/ = Desktop application shortcuts.
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst>`__
 ----------------------------------------------------------------------------------------
 
@@ -1237,7 +1315,7 @@ Bibliography
 15. "RHEL7: Provide SMB network shares to specific clients." CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/
 16. "RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target." CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
 17. Karan Singh *Learning Ceph* (Birmingham, UK: Packet Publishing, 2015)
-18. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
+18. "Ceph Jewel Preview: a new store is coming, BlueStore." Sebastien Han. March 21, 2016. Accessed December 5, 2018. https://www.sebastien-han.fr/blog/2016/03/21/ceph-a-new-store-is-coming/
 19. "CACHE POOL." Ceph Documentation. Accessed January 19, 2017. http://docs.ceph.com/docs/jewel/dev/cache-pool/
 20. "CEPHX CONFIG REFERENCE." Ceph Documentation. Accessed January 28, 2017. http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/
 21. "INTRO TO CEPH." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/jewel/start/intro/
@@ -1249,3 +1327,4 @@ Bibliography
 27. "Secret XML." libvirt. Accessed January 27, 2017. https://libvirt.org/formatsecret.html
 28. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/
 29. "Btrfs." Fedora Project Wiki. March 9, 2017. Accessed May 11, 2018. https://fedoraproject.org/wiki/Btrfs
+30. "FilesystemHierarchyStandard." Debian Wiki. April 21, 2017. Accessed December 5, 2018. https://wiki.debian.org/FilesystemHierarchyStandard
