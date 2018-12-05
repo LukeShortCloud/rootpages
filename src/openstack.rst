@@ -1204,31 +1204,32 @@ variables to a YAML file and then add the arguments
 
 -  Common quickstart.sh options:
 
-   -  ``--clean`` = Remove previously created files from the working
-      directory on the start of TripleO Quickstart.
-   -  ``--no-clone`` = Use the current working directory for
-      TripleO Quickstart. This should only be if the entire repository
-      has been cloned.
-   -  ``--nodes config/nodes/<CONFIGURATION>.yml`` = Specify the
-      configuration that determines how many Overcloud nodes should be
-      deployed.
-   -  ``-p`` = Specify a Playbook to run.
-   -  ``--release`` = The OpenStack release to use. All of the available
-      releases can be found in the GitHub project in the
-      "config/release/" directory. Use "trunk/``<RELEASE_NAME>``" for
-      the development version and "stable/``<RELEASE_NAME>``" for the
-      stable version.
-   -  ``--retain-inventory`` = Use the existing inventory. This is
-      useful for managing an existing TripleO Quickstart infrastructure.
-   -  ``--teardown {all|nodes|none|virthost}`` = Delete everything
-      related to TripleO (all), only the virtual machines (nodes),
-      nothing (none), or the virtual machines and settings on the
-      hypervisor (virthost).
-   -  ``--tags all`` = Deploy a complete all-in-one TripleO installation
-      automatically. If a Playbook is specified via ``-p``, then
-      everything in that Playbook will run.
-   -  ``-v`` = Show verbose output from the Ansible Playbooks.
-   -  ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [81]
+   - ``--clean`` = Remove previously created files from the working
+     directory on the start of TripleO Quickstart.
+   - ``--extra-vars supported_distro_check=false`` = Run on an unsupported hypervisor such as Fedora.
+   - ``--no-clone`` = Use the current working directory for
+     TripleO Quickstart. This should only be if the entire repository
+     has been cloned.
+   - ``--nodes config/nodes/<CONFIGURATION>.yml`` = Specify the
+     configuration that determines how many Overcloud nodes should be
+     deployed.
+   - ``--playbook`` = Specify a Playbook to run.
+   - ``--release`` = The OpenStack release to use. All of the available
+     releases can be found in the GitHub project in the
+     "config/release/" directory. Use "trunk/``<RELEASE_NAME>``" for
+     the development version and "stable/``<RELEASE_NAME>``" for the
+     stable version.
+   - ``--retain-inventory`` = Use the existing inventory. This is
+     useful for managing an existing TripleO Quickstart infrastructure.
+   - ``--teardown {all|nodes|none|virthost}`` = Delete everything
+     related to TripleO (all), only the virtual machines (nodes),
+     nothing (none), or the virtual machines and settings on the
+     hypervisor (virthost).
+   - ``--tags all`` = Deploy a complete all-in-one TripleO installation
+     automatically. If a Playbook is specified via ``-p``, then
+     everything in that Playbook will run.
+   - ``-v`` = Show verbose output from the Ansible Playbooks.
+   - ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [81]
 
 --------------
 
