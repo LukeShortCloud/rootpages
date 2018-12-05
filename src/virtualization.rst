@@ -820,7 +820,7 @@ Supported operating systems:
 -  HypriotOS
 -  Container Linux
 
-The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling Swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with ``kubeadm``.
+The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [60] Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with kubeadm.
 
 .. code-block:: sh
 
@@ -1497,3 +1497,4 @@ Bibliography
 57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
 58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
 59. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+60. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
