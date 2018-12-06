@@ -1122,7 +1122,7 @@ TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a sm
 
 In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. Experimental support for also running the Undercloud services in containers was added in Queens and became the default configuration for Rocky. [81]
 
-Minimum hardware requirements [24]:
+Minimum recommended hardware requirements [24]:
 
 -  Undercloud node:
 
@@ -1136,6 +1136,16 @@ Minimum hardware requirements [24]:
    -  4 CPU cores
    -  8GB RAM
    -  80GB storage
+
+Here is an overview of the deployment process using TripleO:
+
+- Install the all-in-one Undercloud. This cloud will be used by the OpenStack operator to control and manage the Overcloud.
+- Import the Overcloud nodes into Ironic.
+- Configure those nodes to load both an initramfs and full kernel via a PXE boot.
+- Optionally set the nodes to be "manageable" and introspect the Overcloud nodes. This will report back detailed information about each node.
+- Set the Overcloud nodes to be "available" for provisioning.
+- Optionally configure settings for the Overcloud deployment (highly recommended).
+- Deploy the Overcloud. This cloud will be the production cloud that developers can use.
 
 Quick
 ^^^^^
@@ -1675,7 +1685,7 @@ Overcloud
    .. code-block:: yaml
 
       ---
-      paremeter_defaults:
+      parameter_defaults:
         ControllerCount: <NUMBER_OF_CONTROLLER_NODES>
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
 
@@ -1695,7 +1705,7 @@ Overcloud
 
    -  Virtual lab environment:
 
-      -  When the "Provisioning State" becomes "wait call-back" then manually start the virtual machines. The relevant Overcloud image will be copied to the local drive(s).
+      -  When the "Provisioning State" becomes "wait call-back" then manually start the virtual machines. The relevant Overcloud image will be copied to the local drive(s). At this point, Nova will have already changed the servers to have the "Status" of "BUILD".
 
          .. code-block:: sh
 
@@ -1714,7 +1724,7 @@ Overcloud
              | c1456e44-5245-4a4d-b551-3c6d6217dac4 | overcloud-controller-0  | BUILD  | ctlplane=192.168.24.34 | overcloud-full | control |
              +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
 
-      -  The nodes will then be in the "Provisioning State" of "deploying". The servers will have the "Status" of "BUILD".
+      -  The nodes will then be in the "Provisioning State" of "deploying".
 
          .. code-block:: sh
 
