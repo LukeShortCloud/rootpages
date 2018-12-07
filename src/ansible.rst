@@ -1751,6 +1751,22 @@ Examples:
 
 [45]
 
+In Ansible 2.7, the ``apply`` argument was added to both the ``include_role`` and ``include_tasks`` modules. This allows the end-user to apply the same type of attributes that a ``block`` can accept. These include tags, become arguments, delegation, and more.
+
+Example:
+
+.. code-block:: yaml
+
+   - name: Install Nova
+     include_role:
+       name: nova
+       apply:
+         delegate_to: "{{ compute_nodes }}"
+         tags:
+           - compute
+
+[79]
+
 Import and Include Tasks
 ''''''''''''''''''''''''
 
@@ -1771,6 +1787,17 @@ Syntax:
         <KEY1>: <VALUE1>
         <KEY2>: <VALUE2>
         <KEY3>: <VALUE3>
+
+.. code-block:: yaml
+
+    - include_tasks:
+        file: <TASK_FILE>.yml
+        vars:
+          <KEY1>: <VALUE1>
+          <KEY2>: <VALUE2>
+          <KEY3>: <VALUE3>
+        apply:
+          <APPLY_OTHER_ATTRIBUTES>
 
 [49]
 
@@ -4194,7 +4221,7 @@ Ansible supports a variety of custom plugins that can be used.
 [41]
 
 Containers
-~~~~~~~~~~
+----------
 
 Containers can be manually built by using special container connections provided by Ansible.
 
@@ -5090,3 +5117,4 @@ Bibliography
 76. "AWX Project." Ansible GitHub. September 18, 2018. Accessed September 18, 2018. https://github.com/ansible/awx
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
+79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
