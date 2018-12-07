@@ -200,7 +200,7 @@ backwards compatibility with Python 2 can be found `here <https://docs.ansible.c
 Commands Usage
 --------------
 
-See: `Linux Commands - Configuration Management - Ansible <linux_commands/configuration_management.html#ansible>`__.
+See: `Linux Commands - Configuration Management - Ansible <../commands/configuration_management.html#ansible>`__.
 
 Playbooks
 ---------

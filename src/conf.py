@@ -71,7 +71,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["template.rst", "linux_commands/template.rst"]
+exclude_patterns = ["template.rst", "commands/template.rst"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'

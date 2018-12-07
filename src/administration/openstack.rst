@@ -3135,9 +3135,7 @@ Command Line Interface Utilities
 
 The OpenStack command line interface (CLI) resources used to be handled
 by separate commands. These have all been modified and are managed by
-the universal "openstack" command. The various options and arguments are
-explained in Root Pages' OpenStack section `Linux Commands excel
-sheet <https://raw.githubusercontent.com/ekultails/rootpages/master/linux_commands.xlsx>`__.
+the universal "openstack" command. The various options and arguments for OpenStack related commands can be found in Root Pages' `Commands - OpenStack <../commands/openstack.html>`__.
 
 For the CLI utilities to work, the environment variables need to be set
 for the project and user. This way the commands can automatically

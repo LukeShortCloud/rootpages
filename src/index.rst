@@ -8,32 +8,21 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Administration
+   :caption: Administration
 
-   ansible
-   authentication
-   bootloaders
-   clustering
-   databases
-   dns_servers
-   file_systems
-   graphics
-   http_servers
-   linux
-   mail_servers
-   monitoring
-   openstack
-   operating_systems
-   packages
-   security
-   virtualization
-   wine
+   administration/index.rst
 
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Commands
+   :caption: Automation
 
-   linux_commands/index.rst
+   automation/index.rst
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Commands
+
+   commands/index.rst
 
 .. toctree::
    :maxdepth: 1

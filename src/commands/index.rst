@@ -1,6 +1,6 @@
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Commands
+   :caption: Commands
 
    clustering.rst
    compression.rst
