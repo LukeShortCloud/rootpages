@@ -414,6 +414,57 @@ Optionally enable the Copr repository using DNF.
 
 [8]
 
+Regular Expression
+------------------
+
+Regular expressions (regex) are a set of characters that can be used to search for patterns in a string. This is useful for finding if a certain string exists within a string and to do substitutions with. Most programming languages adopt the Perl specification of regex.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   ``\``, Escape character. Do not parse the next character as regex.
+   ``.``, One wild card character that is not a newline.
+   ``?``, Match the character before this zero or one time.
+   ``+``, Match the character before this one or more times.
+   ``^``, Beginning of a line.
+   ``$``, The end of a line.
+   ``()``, Put a group of characters inside paranthesis to create a group. Regex characters can then try to match against this group (instead of a single character).
+   ``|``, Or (the character before or after this).
+   ``[]``, One character specified in the brackets.
+   ``[A-Z]`` or ``[0-9]``, Match any range of characters by specifying a start and stop letter or number.
+   ``[a-zA-Z0-9]``, Any alphanumeric character.
+   ``[^]``, Any character except the ones specified (the inverse).
+   ``\s``, One whitespace (space or tab) character.
+   ``\S``, One non-whitespace character.
+   ``( )``, One space character.
+   ``\d``, One digit.
+   ``[0-9]``, One digit.
+   ``\D``, One non-digit.
+   ``[^0-9]``, One non-digit.
+   ``\w``, One word (a collection of alphabetical characters)
+   ``\W``, One non-word.
+   ``[\n]``, One newline character.
+   ``^$``, One blank line.
+
+.. csv-table::
+   :header: Example RegEx, Example Matches
+   :widths: 20, 20
+
+   ``h.``, "h1, ha, hb"
+   ``abc.+``, "abcd, abc0, acdZ"
+   ``[abcd]``, "a, b, c, d"
+   ``[X-Z]``, "X, Y, Z"
+   ``[2-5]``, "2, 3, 4, 5"
+   ``(cats)*``, "cats, catscats, (or nothing is matched)"
+   ``^(cat|dog)$``, "cat, dog"
+   ``[^helo]``, """ world"" (from ""hello world"")"
+   ``(bl|h|m)ouse``, "blouse, house, mouse"
+   ``"([^]+)"``, "(Everything between the two quotes)"
+   ``That's pretty( ugly)?``, "That's pretty, That's pretty ugly"
+
+[12]
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
 ----------------------------------------------------------------------------------------------
 
@@ -431,3 +482,4 @@ Bibliography
 9. "Semantic Versioning 2.0.0." Semantic Versioning. Accessed December 1, 2018. https://semver.org/
 10. "Calendar Versioning." CalVer. Accessed December 2, 2018. https://calver.org/
 11. "Version Incrementing." GitVersion Read the Docs. Accessed December 1, 2018. https://gitversion.readthedocs.io/en/latest/more-info/version-increments/
+12. "perlre." Perl Programming Documentation. Accessed December 7, 2018. http://perldoc.perl.org/perlre.html
