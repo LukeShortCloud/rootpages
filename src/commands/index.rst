@@ -13,6 +13,7 @@
    phones.rst
    security.rst
    software_code_management.rst
+   storage.rst
    text_editors.rst
    virtualization.rst
 

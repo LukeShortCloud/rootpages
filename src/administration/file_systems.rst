@@ -1274,6 +1274,7 @@ Full:
    - /sys/class/net = The full list of network devices.
    - /sys/class/power_supply/BAT1/capacity = Show the maximum charge of the battery.
    - /sys/class/power_supply/BAT1/status = Show the current battery charge left.
+   - /sys/class/scsi_device/device/rescan = Force a rescan of all drives by setting to "1".
    - /sys/class/scsi_host/host<PORT>/scan = Manually scan for a device on that port by setting to "- - -".
    - /sys/block/<DEVICE>/device/delete = Manually deactivate a device by setting to "1".
 
