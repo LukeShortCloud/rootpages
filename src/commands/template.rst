@@ -24,5 +24,5 @@ Package: command-pkg
 
    arg1 100, This will do foo 100 times.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/template.rst>`__
----------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/commands/template.rst>`__
+---------------------------------------------------------------------------------------------

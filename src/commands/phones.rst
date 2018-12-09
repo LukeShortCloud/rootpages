@@ -30,5 +30,5 @@ fastboot
    flash <PARTITION> <IMAGE>.img, flash the image to a specific partition (it will only flash to A on A/B systems)
    flash --slot all <PARTITION> <IMAGE>.img, "flash the image to a specific A/B partition (bootloader, radio, or vendor) on Oreo and newer devices"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/phones.rst>`__
--------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/commands/phones.rst>`__
+--------------------------------------------------------------------------------------------

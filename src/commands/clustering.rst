@@ -27,5 +27,5 @@ ipvsadm
    "-R, --restore", "restore the configuration from a file", ""
    "-C", "clear the current configuration", ""
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/clustering.rst>`__
------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/commands/clustering.rst>`__
+-----------------------------------------------------------------------------------------------

@@ -385,5 +385,5 @@ Package: winetricks
    "WINE=''", "specify the path to the wine binary to use; this is useful if different versions are installed"
    "alldlls=default", "revert all DLLs to their default state; if it is managed by Wine then Wine will use it's built-in replacement"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/virtualization.rst>`__
----------------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/commands/virtualization.rst>`__
+---------------------------------------------------------------------------------------------------

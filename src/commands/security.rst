@@ -179,5 +179,5 @@ Allow non-root accounts to temporarily run privileged commands.
 
    "-E", "keeps sudo enabled for the current shell session"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/security.rst>`__
----------------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/commands/security.rst>`__
+---------------------------------------------------------------------------------------------
