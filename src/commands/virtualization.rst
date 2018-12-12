@@ -47,7 +47,7 @@ Package: docker
    "ps -a", "list all active and stopped containers"
    "exec", "execute a single command in a specified container"
    "exec -it <CONTAINER_ID> bash", "open a Bash session in the container"
-   "run <IMAGE>", "start a container in the foreground"
+   "run --name <NAME> <IMAGE>", "start a container in the foreground and optionally give it a name"
    "run -d <IMAGE>", "start a container in the background"
    "run -d <IMAGE> tail -f /dev/null", "start a container and keep it running (by running a never-ending command)"
    "run --net=<NAME> --ip <IP_ADDRESS> -p <HYPERVISOR_PORT>:<CONTAINER_PORT>", "start a container using a specific network, assigning a static IP, and setup port forwarding"
@@ -117,6 +117,13 @@ podman
 Package: podman
 
 The libpod library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capatibilities to launch standalone Kubernetes pods.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   rm --all, Remove all stopped containers
+   rmi --all, Remove all images
 
 oVirt
 -----
