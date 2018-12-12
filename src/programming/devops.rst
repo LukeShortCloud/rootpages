@@ -465,6 +465,28 @@ Regular expressions (regex) are a set of characters that can be used to search f
 
 [12]
 
+Learning a New Programming Language
+-----------------------------------
+
+These are the most important concepts to learn when studying a new language listed in ascending order.
+
+-  Data types
+-  Console/tty input and output
+-  Code comments
+-  Function definitions
+-  Loops and conditionals
+-  Find and use a standardized code styling practice for the language
+-  Common libraries:
+
+   -  File input and output
+   -  Logging
+   -  Math
+   -  HTTP URL request handling
+
+-  Exception handling
+-  Object-oriented usage
+-  Multi-threading
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
 ----------------------------------------------------------------------------------------------
 
