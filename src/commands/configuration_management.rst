@@ -188,5 +188,44 @@ A CLI for interfacing with the Ansible Tower API.
    "--monitor", "show Job output"
    "job_template callback", "provision a Template to the local server"
 
+Puppet
+-------
+
+All of the Puppet binaries, including Ruby related ones, are installed into ``/opt/puppetlabs/puppet/bin/``.
+
+facter
+~~~~~~
+
+Package: puppet-agent
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   "", display the system facts
+   "<FACT>", display a specific fact and it's nested values
+   -p, display the system and puppet facts
+   -j, output to JSON
+   -y, output to YAML
+   parser validate, validate a manifest file
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   disks -y, show all of the facts about disks and output them into YAML
+
+puppet
+~~~~~~
+
+Package: puppet-agent
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   apply --noop --show_diff <MANIFEST>.pp, run in a dry-run and show the differences of what would have been changed
+   --version, show the Puppet version
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/commands/configuration_management.rst>`__
 -------------------------------------------------------------------------------------------------------------
