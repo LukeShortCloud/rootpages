@@ -35,7 +35,7 @@ Package: docker
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "search", "look for available Docker images online"
+   "search", "look for available docker images online"
    "pull <OS>", "download the latest image for a specified OS"
    "pull <OS>:<VERSION>", "download a specified version"
    "images", "show downloaded images"
@@ -53,12 +53,13 @@ Package: docker
    "run --net=<NAME> --ip <IP_ADDRESS> -p <HYPERVISOR_PORT>:<CONTAINER_PORT>", "start a container using a specific network, assigning a static IP, and setup port forwarding"
    "stop", "shutdown a container"
    "stop $(docker ps -aq)", "stop all containers"
-   "logs", "view the logs / standard output from a running Docker container"
+   "logs", "view the standard output from a running docker container"
+   logs -f, tail the current standard output stream in real-time
    "-v <SOURCE>:<DESTINATION>", "bind mount a folder from the host node to a folder inside of the container for persistent storage"
    "-q", "list only IDs"
    "-f", "force an action"
    "inspect", "view detailed information about a container"
-   "network create --subnet <CIDR> <NAME>", "create a new Docker network using a specific network CIDR and name"
+   "network create --subnet <CIDR> <NAME>", "create a new docker network using a specific network CIDR and name"
    "run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro <OS>:<VERSION> /usr/lib/systemd/systemd", "start a docker container with systemd support"
 
 kubectl
@@ -202,6 +203,7 @@ Package: libvirt-client
    "snapshot-revert --domain <VM> <SNAPSHOT_NAME>", "revert a VM image to a snapshot"
    "net-list", "list the active libvirt networks"
    "net-list --all", "show all of the defined libvirt networks"
+   net-dhcp-leases <NETWORK>, show all DHCP leases that are in use from a libvirt network
    "net-define", "add a new libvirt network configuration based on an XML file"
    "net-start", "start a libvirt network"
    "net-destroy", "forcefully stop a libvirt network"
@@ -308,6 +310,11 @@ Automatically increase partitions in virtual machine images.
 
    "--expand /dev/sd<XY> <SOURCEIMAGE> <BLANK_DESTINATION_IMAGE>", "increase the size of the partition /dev/sdXX to be the maximum available"
    "--expand /dev/sd<XX> --LV-expand /dev/<VOLUMEGROUP>/<LOGICALVOLUME> <SOURCEIMAGE> <BLANK_DESTINATION_IMAGE>", increase the size of a logical volume"
+
+virt-xml
+~~~~~~~~
+
+Generate an XML configuration based on the same arguments usage as ``virt-install``.
 
 virt-xml-validate
 ~~~~~~~~~~~~~~~~~
