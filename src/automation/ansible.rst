@@ -25,6 +25,11 @@ Editions
 
 There are two editions of Ansible available. There is the upstream Ansible community project which receives no support. For enterprise users, there is Red Hat Ansible Engine which provides support that covers Core modules, priority bug and feature updates, documentation, and more. Both use the same binary code with the only difference being support. [40]
 
+Deprecations
+~~~~~~~~~~~~
+
+If a component in Ansible release ``N`` becomes deprecated then it is normally left unmaintained up until ``N + 4`` when it is fully removed. For example, a module deprecated in 2.8 will be removed in 2.12. Ansible aims to be as highly backwards compatible as possible with each minor release.
+
 Installation
 ------------
 
