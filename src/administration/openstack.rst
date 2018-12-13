@@ -1176,7 +1176,7 @@ TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space when
 
    .. code-block:: sh
 
-       $ bash quickstart.sh --install-deps
+       $ sudo bash quickstart.sh --install-deps
 
 TripleO can now be installed automatically with the default setup of 3
 virtual machines. This will be created to meet the minimum TripleO cloud
