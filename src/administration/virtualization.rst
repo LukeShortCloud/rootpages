@@ -527,6 +527,31 @@ to as a chroot), containers can easily spin up and utilize system
 resources without the overhead of full hardware allocation. It is not
 possible to use separate kernels with this approach.
 
+Images
+^^^^^^
+
+`Docker Hub <https://hub.docker.com/>`__ provides a central location to find, download, and upload container docker and CRI-O compatible images. Here is a list of common operating system images for each family of distributions:
+
+-  Arch Linux
+
+   -  base/archlinux
+
+-  Fedora
+
+   -  centos:7
+   -  fedora:28
+
+-  Debian
+
+   -  debian:9
+   -  ubuntu:18.04
+
+-  openSUSE
+
+   -  opensuse/leap:15.0
+
+More containers can be found `here <https://hub.docker.com/explore/>`__.
+
 docker
 ^^^^^^
 
@@ -534,6 +559,7 @@ The docker software (with a lowercase "d") was created by the Docker company to 
 
 A command is ran to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append ``&& tail -f /dev/null`` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [16]
 
+The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.$
 By default, only the "root" user has access to manage docker containers. Users assigned to a "docker" group will have the necessary privileges. However, they will then have administrator access to the system. If the "docker" group is newly created then the daemon needs to be restarted for the change to load up. The docker user may also have to run the ``newgrp docker`` command to reload their groups. [48]
 
 .. code-block:: sh
