@@ -40,6 +40,12 @@ openSUSE:
 $ sudo zypper install python3-Sphinx
 ```
 
+Some operating systems will install the `sphinx-build` binary with a different suffix to inidicate that it is using Python 3. For ease of use, consider symlinking that to be `sphinx-build`.
+
+```
+$ sudo ln -s /usr/bin/sphinx-build-3* /usr/local/bin/sphinx-build
+```
+
 ## Usage
 
 Sphinx will save newly generated documents into the "build/" directory by default.
