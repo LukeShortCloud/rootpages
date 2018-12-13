@@ -3,3 +3,4 @@
    :caption: Automation
 
    ansible.rst
+   puppet.rst
