@@ -342,6 +342,7 @@ openstack baremetal
    "node list", "list all bare-metal servers deployed by Ironic"
    "node manage <NODE>", "place a node into the ""manageable"" state"
    "node provide <NODE>", "place a node into the ""available"" state"
+   node unset <NODE> --property capabilities, remove all capabilities
 
 Ceilometer
 ----------
@@ -401,7 +402,22 @@ Mange the Overcloud from a TripleO deployment of OpenStack.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "execute -s overcloud <SCRIPT>", "excute a script on all of the Overcloud nodes"
+   execute -s overcloud <SCRIPT>, excute a script on all of the Overcloud nodes
+   node import instackenv.json, import the Overcloud nodes based on an Ironic template (they will be in the manageable state)
+   node import --provide instackenv.json, "import the Overcloud nodes in the ""available"" state so they can be introspected"
+   node import --introspect --provide instackenv.json, "import the Overcloud nodes in the ""available"" state after automatically doing introspection"
+   node introspect --all-manageable, introspect all existing nodes
+   node introspect --all-manageable --provide, introspect all existing nodes and automatically place them in the ""available"" state when done
+   node provide --all-manageable, change all Overcloud nodes that are in a ""manageable"" state into an ""available"" state
+   profiles list, show the Nova flavors in use for each node
+   profiles match --control-flavor <FLAVOR> --control-scale <INTEGER> --compute-flavor <FLAVOR> --compute-scale <INTEGER>, see which nodes will match the flavor and scale of nodes specified
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   profiles match --control-flavor control --control-scale 3 --compute-flavor compute --compute-scale 2, show which nodes would be matched for a deployment with 3 controller nodes and 2 compute nodes
+
 
 tripleo-ansible-inventory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
