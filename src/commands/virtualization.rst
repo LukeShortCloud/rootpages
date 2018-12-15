@@ -167,6 +167,7 @@ Create and convert virtual machine images.
    "convert -f qcow2 -O raw <QCOW2_IMAGE> rbd:<POOL>/<IMAGE>", "upload a file to Ceph, while converting it into a raw format"
    "-o preallocation=metadata", "this provides the best performance for QCOW2 images without fully allocating all of the space"
    "-o preallocation=full", "the same as metadata except that all zeros (empty space) are actually written to the file system"
+   create -f qcow2 -b <ORIGINAL>.qcow2 <SNAPSHOT>.qcow2, "use -b to create a snapshot/backup image (use the snapshot image for the virtual machine now, it will contain the new writes)"
    "-p", "show a live progress bar"
 
 virsh
