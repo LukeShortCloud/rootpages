@@ -210,6 +210,8 @@ Package: libvirt-client
    "net-destroy", "forcefully stop a libvirt network"
    "net-autostart", "enable the libvirt network to be started when the libvirtd service is also started"
    "net-undefine", "remove the configure for the libvirt network"
+   pool-list, list the available image pools
+   pool-refresh <IMAGE_POOL>, refresh the cache list of current image names that exist in a given pool
 
 .. csv-table::
    :header: Example, Explanation

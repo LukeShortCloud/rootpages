@@ -774,7 +774,8 @@ A utility to dynamically rebuild the GRUB 2 configuration based on the installed
    :header: Example, Explanation
    :widths: 20, 20
 
-   -o /boot/grub2/grub.cfg, rebuild the GRUB2 BIOS configuration on RHEL 7
+   -o /boot/grub2/grub.cfg, rebuild the GRUB2 BIOS configuration on RHEL 7 and Fedora
+   -o /boot/grub/grub.cfg, rebuild the GRUB2 BIOS or UEFI configuration on Arch Linux
    -o /boot/efi/EFI/redhat/grub.cfg, rebuild the GRUB2 UEFI config on RHEL 7
    -o /boot/efi/EFI/fedora/grub.cfg, rebuild the GRUB2 UEFI config on Fedora
 

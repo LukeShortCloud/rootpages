@@ -78,6 +78,7 @@ vim (Interactive)
    "SHIFT+DOWN", "scroll the page down"
    "SHIFT+U", "set all selected characters to be upper case"
    "CTRL+O (CTRL + SHIFT + o)", "jump back to the previous place you were on"
+   ":noh, :nohlsearch", "clear the last search result highlights"
 
 .. csv-table::
    :header: Example, Explanation

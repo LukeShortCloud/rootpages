@@ -16,6 +16,14 @@ adb
    reboot bootloader, reboot into the bootloader
    reboot recovery, reboot into the recovery mode
    reboot fastboot, reboot into the fastboot mode
+   push, upload a file to the device
+   pull, download a file from the device
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   push recovery.img /sdcard/, upload an image file to the internal sdcard storage of the phone
 
 fastboot
 ~~~~~~~~

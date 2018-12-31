@@ -279,6 +279,7 @@ The default package manager for RHEL.
    "autoremove", "remove unused packages"
    "history", "shows yum transactions"
    "history new", "clear out yum's history"
+   "history undo <NUMBER>", "under an action from Yum history"
    "repolist all", "show all available repositories"
    "repository-packages <REPONAME> list", "show all packages in a repository"
    "changelog", "show the change log for a package; requires the ""yum-plugin-changelog"""

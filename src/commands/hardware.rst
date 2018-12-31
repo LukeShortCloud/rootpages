@@ -152,6 +152,41 @@ Displays information about the GPU driver and related libraries.
 
    "glxinfo | grep ""OpenGL version""", "find the maximum supported OpenGL version"
 
+obmenu-generator
+~~~~~~~~~~~~~~~~
+
+Generate menu items for the Openbox window manager.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -i, find and use icons for application
+   -p, create a menu that will always search for the latest installed applications
+   -s, create a menu once with the currently installed applications
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   -p -i, create a dynamic menu that contains icons for each application
+
+mhwd
+~~~~
+
+The Manjaro Hardware Detection utility is used to install hardware drivers on Manjaro Linux.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -a pci {free|nonfree} 0300, install the graphics drivers automatically based on the hardware found
+   -l -d {--pci}, view available drivers that can be installed (optionally only for PCI devices)
+   -li -d {--pci|--usb|}, list installed drivers
+   -i pci <DRIVER>, manually install a new driver
+   -f -i pci <DRIVER>, force a re-install of a driver
+   -r <DRIVER>, remove a hardware driver
+
 IPMI
 ----
 

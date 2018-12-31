@@ -25,7 +25,6 @@ Git is used for version controlling files.
    "status -v", "shows files that have been modified and not pushed yet"
    "diff <BRANCH_OR_COMMIT>", "shows deletions and inserts of the actual changes between this branch and a specified branch"
    "fetch --tags", "pull the latest tags"
-   "push origin", "push all local commits to a branch and new tags"
    "grep", "search for specific strings in all of the files"
    "blame", "show who made a specific commit"
    "merge --squash", "condense all commits into one"
@@ -121,9 +120,11 @@ Upload commits to a git repository.
    :header: Usage, Explanation
    :widths: 20, 20
 
+   "origin", "push all local commits, branches, and tags to the remote origin"
    "origin <TAG>", "upload a new read-only tag branch"
    "origin master", "upload your changes to the master branch"
    "origin --delete <BRANCH>", "delete a remote branch"
+   "-f, --force", "force a push that will rewrite the commit history to mirror the local commits"
 
 git branch
 ~~~~~~~~~~

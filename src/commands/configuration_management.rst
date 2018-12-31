@@ -54,6 +54,8 @@ Package: ansible
    "-l", "list all of the available modules"
    "<MODULE>", "show documentation about a specified <MODULE>"
    "--snippet <MODULE>", "provide a YAML template for available options in the module and a brief explaination of each possible option"
+   -t lookup -l, show all Ansible lookups
+   -t lookup <LOOKUP>, show documentation about a specific lookup
 
 ansible-playbook
 ~~~~~~~~~~~~~~~~
