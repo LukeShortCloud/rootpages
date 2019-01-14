@@ -4467,7 +4467,7 @@ Ansible Tower 3.2 requirements and support:
 
 -  PostgreSQL 9.6
 -  Release date: 2017-10-02
--  End-of-life (EOL): 2019-04-02 [66]
+-  EOL: 2019-04-02 [66]
 
 Ansible Tower 3.3 requirements and support:
 
@@ -4475,7 +4475,15 @@ Ansible Tower 3.3 requirements and support:
 -  PostgreSQL 9.6
 -  Ansible >= 2.2
 -  Release date: 2018-09-12
--  End-of-life (EOL): 2020-03-12 [66]
+-  EOL: 2020-03-12 [66]
+
+Ansible Tower 3.4 requirements and support:
+
+-  RHEL >= 7.4 or Ubuntu 16.04
+-  PostgreSQL 9.6
+-  Ansible >= 2.2
+-  Release date: 2019-01-09
+-  EOL: 2020-07-09 [66]
 
 [35]
 
@@ -4827,7 +4835,7 @@ Minor updates (for example, from 3.2.0 to 3.2.5) for Ansible Tower require using
 
     $ ./setup.sh
 
-Major upgrades require first updating to the latest minor version. Then sequentially upgrade to the next available major version. This will provide the highest chance of a successful upgrade. For example, to upgrade from 3.0.2 to 3.3.0 the process would be ``3.0.2 --> 3.0.4 --> 3.1.8 --> 3.2.6 --> 3.3.0``.
+Major upgrades require first updating to the latest minor version. Then sequentially upgrade to the next available major version. This will provide the highest chance of a successful upgrade. For example, to upgrade from 3.0.2 to 3.3.0 the process would be ``3.0.2 --> 3.0.4 --> 3.1.8 --> 3.2.8 --> 3.3.0``.
 
 AWX
 ~~~
@@ -4839,6 +4847,7 @@ project can be found in the
 
 Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [76]
 
+-  AWX 2.1.2 = Ansible Tower 3.4.0
 -  AWX 1.0.8 = Ansible Tower 3.3.0
 -  AWX 1.0.0 = Ansible Tower 3.2.0
 
@@ -5109,7 +5118,7 @@ Bibliography
 63. "Release and maintenance." Ansible Documention. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
-66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. September 12, 2018. Accessed September 14, 2018. https://access.redhat.com/support/policy/updates/ansible-tower
+66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. January 9, 2019. Accessed January 14, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
@@ -5119,7 +5128,7 @@ Bibliography
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
 74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
-76. "AWX Project." Ansible GitHub. September 18, 2018. Accessed September 18, 2018. https://github.com/ansible/awx
+76. "AWX Project." Ansible GitHub. January 11, 2019. Accessed January 14, 2019. https://github.com/ansible/awx
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
