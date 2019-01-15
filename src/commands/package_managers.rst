@@ -142,6 +142,18 @@ Lookup utility based on information gathered from ``apt-get update``.
 
    "search xfce", "search for the ""xfce"" package"
 
+apt-file
+~~~~~~~~
+
+Find which remote packages provide a specific file.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   update, update the local cache of files each remote package provides
+   find, find a package that contains a certain file
+
 dpkg
 ~~~~
 
