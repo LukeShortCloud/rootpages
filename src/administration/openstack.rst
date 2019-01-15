@@ -1627,7 +1627,7 @@ Overcloud
           $ openstack baremetal node list
           $ openstack overcloud node configure <NODE_ID>
 
--  If the profile and/or boot option were not specified in the instackenv.json file then configure it now. Verify that the profiles have been applied.
+-  If the profile and/or boot option were not specified in the instackenv.json file then configure it now. Verify that the profiles have been applied. Valid default flavors are ``block-strage``, ``ceph-stroage``, ``compute``, ``control``, and ``swift-storage``.
 
    .. code-block:: sh
 
