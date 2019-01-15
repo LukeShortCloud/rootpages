@@ -343,6 +343,13 @@ openstack baremetal
    "node manage <NODE>", "place a node into the ""manageable"" state"
    "node provide <NODE>", "place a node into the ""available"" state"
    node unset <NODE> --property capabilities, remove all capabilities
+   introspection data save <NODE>, display the JSON output of the introspection data for a specific node
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "openstack baremetal introspection data save <NODE> | python -m json.tool", view the introspection data in a human readable format
 
 Ceilometer
 ----------
