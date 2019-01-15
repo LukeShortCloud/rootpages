@@ -62,12 +62,25 @@ Package: docker
    "network create --subnet <CIDR> <NAME>", "create a new docker network using a specific network CIDR and name"
    "run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro <OS>:<VERSION> /usr/lib/systemd/systemd", "start a docker container with systemd support"
 
+kubeadm
+~~~~~~~
+
+Manage Kubernetes infrastructure.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   init --pod-network-cidr <CIDR>, create a new Kubernetes cluster with a valid network CIDR to allow pod network add-ons to be installed
+   token create, create a new temporary token that will expire in 24 hours
+   token list, list all active and expired tokens
+
 kubectl
 ~~~~~~~
 
 Package: kubernetes-client
 
-Manage Kubernetes.
+Manage Kubernetes resources via the API.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -75,7 +88,7 @@ Manage Kubernetes.
 
    "version", "show the Kubernetes version"
    "cluster-info", "show the clustered services and their status"
-   "get nodes", "show all of the Kubernetes hypervisor nodes"
+   "get nodes", "show all of the nodes in the Kubernetes cluster"
    "run <NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/bash", "start a container and enter into it via a Bash shell"
    "get deployments", "show all of the containers that have been defined"
