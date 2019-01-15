@@ -860,28 +860,44 @@ The official ``kubeadm`` utility is used to quickly create production environmen
 
 Kubernetes requires a network provider, Fannel by default, to create an overlay network for inter-communication between pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
 
-.. code-block:: sh
-
-   $ kubeadm init --pod-network-cidr <OVERLAY_NETWORK_CIDR>
-
-Create an authentication token.
+Syntax:
 
 .. code-block:: sh
 
-   $ kubeadm token create
+   $ sudo kubeadm init --pod-network-cidr <OVERLAY_NETWORK_CIDR>
+
+Example (Flannel):
+
+.. code-block:: sh
+
+   $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+Install a network add-on based on the Container Network Interface (CNI) protocols following the instructions `here <https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network>`__.
+
+Example (Flannel):
+
+.. code-block:: sh
+
+   $ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+
+Create an authentication token if the original deployment token expired.
+
+.. code-block:: sh
+
    $ kubeadm token list
+   $ kubeadm token create
 
-Look-up the certificate authority hash.
+Look-up the discovery token hash by using the certificate authority file.
 
 .. code-block:: sh
 
    $ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 
-On the worker nodes, add them to the cluster by running:
+On the app/worker nodes, add them to the cluster by running:
 
 .. code-block:: sh
 
-   $ kubeadm join --token <TOKEN> <MASTER_IP_ADDRESS>:6443 --discovery-token-ca-cert-hash sha256:<hash>
+   $ sudo kubeadm join --token <TOKEN> <MASTER_IP_ADDRESS>:6443 --discovery-token-ca-cert-hash sha256:<HASH>
 
 [59]
 
