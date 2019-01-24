@@ -339,10 +339,13 @@ openstack baremetal
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "node list", "list all bare-metal servers deployed by Ironic"
-   "node manage <NODE>", "place a node into the ""manageable"" state"
-   "node provide <NODE>", "place a node into the ""available"" state"
+   node list, list all bare-metal servers deployed by Ironic
+   node maintenance set <NODE>, turn maintenance mode on to disallow it from having health checks or being in new deployments
+   node maintenance unset <NODE>, turn off maintenance mode
+   node manage <NODE>, place a node into the ""manageable"" state to allow for introspection
+   node provide <NODE>, place a node into the ""available"" state to allow for deployment
    node unset <NODE> --property capabilities, remove all capabilities
+   introspection abort <NODE>, stop introspection
    introspection data save <NODE>, display the JSON output of the introspection data for a specific node
 
 .. csv-table::
