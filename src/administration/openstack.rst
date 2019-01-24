@@ -1474,6 +1474,7 @@ Overcloud
 
       -  name = The name of the node.
       -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "fake_pxe".
+      -  capabilities = Set custom capabilities. For example, the profile and boot options can be defined here: ``"profile:compute,boot_option:local"``.
 
    -  IPMI
 
@@ -1487,7 +1488,7 @@ Overcloud
       -  cpu = The number of processor cores.
       -  mac = A list of MAC addresses that should be managed by Ironic.
       -  memory = The amount of RAM, in MiB.
-      -  disk = The amount of disk space, in GiB.
+      -  disk = The amount of disk space, in GiB. Set this to be 1 GiB less than the actual reported storage size. That will prevent partitioning issues during the Overcloud deployment.
 
    -  Example instackenv.json:
 
@@ -1496,7 +1497,7 @@ Overcloud
           {
               "nodes": [
                   {
-                      "name": "control01",
+                      "name": "control00",
                       "pm_type": "fake_pxe",
                       "mac": [
                           "AA:BB:CC:DD:EE:FF"
@@ -1504,14 +1505,16 @@ Overcloud
                       "arch": "x86_64",
                       "cpu": "12",
                       "memory": "32768",
-                      "disk": "256"
+                      "disk": "256",
+                      "capabilities": "profile:control,boot_option:local"
                   },
                   {
-                      "name": "compute01",
+                      "name": "compute00",
                       "pm_type": "pxe_ipmitool",
                       "pm_user": "IPMIUSER",
                       "pm_password": "password123",
-                      "pm_addr": "10.10.10.11"
+                      "pm_addr": "10.10.10.11",
+                      "capabilities": "profile:compute,boot_option:local"
                   }
               ]
           }
@@ -1520,7 +1523,7 @@ Overcloud
 
       -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
 
-      -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface. Source: https://github.com/homeski/vagrant-openstack/tree/master/osp10
+      -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface. [103]
 
          .. code-block:: sh
 
@@ -1680,14 +1683,18 @@ Overcloud
              $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
              $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
 
--  Configure the number of controller and compute nodes that should be deployed in a YAML Heat template.
+-  In a YAML Heat tepmlate, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
 
    .. code-block:: yaml
 
       ---
       parameter_defaults:
+        OvercloudControllerFlavor: control
+        OvercloudComputeFlavor: compute
+        OvercloudCephStorageFlavor: ceph
         ControllerCount: <NUMBER_OF_CONTROLLER_NODES>
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
+        CephStorageCount: <NUMBER_OF_CEPH_NODES>
 
 -  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [30] Lab environments may need to use a simple network configuration and the low resource usage template: ``-e ~/templates/environments/net-single-nic-with-vlans.yaml -e ~/templates/environments/network-environment.yaml -e ~/templates/environments/low-memory-usage.yaml``.
 
@@ -3844,7 +3851,7 @@ Bibliography
 34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
 36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "Baremetal Environment." TripleO OpenStack Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
+37. "Baremetal Environment." TripleO OpenStack Documentation. January 19, 2019. Accessed January 22, 2019. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
 38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
@@ -3874,7 +3881,7 @@ Bibliography
 64. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
 65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. October 4, 2018. Accessed October 5, 2018. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
 66. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template_guide/hot_spec.html
-67. "Vagrant OpenStack Cloud Provider." GitHub - ggiamarchi. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
+67. "ggiamarchi/vagrant-openstack-provider." GitHub. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 68. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
 69. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
 70. "[Rally] Installation and upgrades." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html
@@ -3910,3 +3917,4 @@ Bibliography
 100. "Configuring Network Isolation." TripleO Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
 101. "Modifying default node configuration." TripleO Documentation. October 17, 2018. Accessed October 18, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/node_config.html
 102. "Containers based Overcloud Deployment." TripleO Documentation. December 4, 2018. Accessed December 14, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/overcloud.html
+103. "homeski/vagrant-openstack." GitHub. December 11, 2017. Accessed January 22, 2019. https://github.com/homeski/vagrant-openstack/tree/master/osp10
