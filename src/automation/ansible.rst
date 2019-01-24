@@ -4270,7 +4270,7 @@ This example for Ansible >= 2.7 shows how the new "apply" keyword can be used to
            apply:
              delegate_to: "{{ container_name }}"
 
-There is also a community project called `ansible-blender <https://github.com/TomasTomecek/ansible-bender>`__ that seeks to be a spiritual successor to the now deprecated Ansible-Container project. It is used to build containers using Ansible playbooks. [77]
+There is also a community project called `ansible-bender <https://github.com/TomasTomecek/ansible-bender>`__ that seeks to be a spiritual successor to the now deprecated Ansible-Container project. It is used to build containers using Ansible playbooks. [77]
 
 Python API
 ----------
