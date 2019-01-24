@@ -93,9 +93,16 @@ Manage Kubernetes resources via the API.
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/bash", "start a container and enter into it via a Bash shell"
    "get deployments", "show all of the containers that have been defined"
    "get pods", "show the actual containers"
-   "pod delete", "delete a container"
+   "describe pods <POD>", describe the settings for a specific pod
+   "delete pods <POD>", "delete a pod"
    "proxy", "create a proxy from your hypervisor to be able to access the private network that the containers share"
    "attach <NAME> -i", "attach to a already running container"
+   logs <POD> <CONTAINER>, show logs for a specific container
+   exec <POD> -- <COMMAND>, run a command on all containers in a pod
+   exec <POD> -c <CONTAINER> -- <COMMAND>, run a command on a specific container in a pod
+   exec -it <POD> -- /bin/bash, enter into a pod with an interactive Bash shell
+   port-forward <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward on the 127.0.0.1 localhost to help with debugging network services
+   port-forward --address 0.0.0.0 <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward that listens on all IP addresses
 
 minikube
 ~~~~~~~~
