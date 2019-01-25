@@ -1490,7 +1490,7 @@ Overcloud
       -  memory = The amount of RAM, in MiB.
       -  disk = The amount of disk space, in GiB. Set this to be 1 GiB less than the actual reported storage size. That will prevent partitioning issues during the Overcloud deployment.
 
-   -  Example instackenv.json:
+   -  Example instackenv (JSON):
 
       .. code-block:: json
 
@@ -1499,13 +1499,13 @@ Overcloud
                   {
                       "name": "control00",
                       "pm_type": "fake_pxe",
-                      "mac": [
-                          "AA:BB:CC:DD:EE:FF"
-                      ],
                       "arch": "x86_64",
                       "cpu": "12",
                       "memory": "32768",
                       "disk": "256",
+                      "mac": [
+                          "AA:BB:CC:DD:EE:FF"
+                      ],
                       "capabilities": "profile:control,boot_option:local"
                   },
                   {
@@ -1518,6 +1518,28 @@ Overcloud
                   }
               ]
           }
+
+   -  Example instackenv (YAML):
+
+      .. code-block:: yaml
+
+         ---
+         nodes:
+           - name: controller00
+             pm_type: fake_pxe
+             arch: x86_64
+             cpu: 12
+             memory: 32768
+             disk: 256
+             mac:
+               - AA:BB:CC:DD:EE:FF
+             capabilities: "profile:control,boot_option:local"
+           - name: compute00
+             pm_type: pxe_ipmitool
+             pm_user: IPMIUSER
+             pm_password: pasword123
+             pm_addr: 10.10.10.11
+             capabilities: "profile:compute,boot_option:local"
 
    -  Virtual lab environment:
 
@@ -1696,7 +1718,7 @@ Overcloud
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
         CephStorageCount: <NUMBER_OF_CEPH_NODES>
 
--  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [30] Lab environments may need to use a simple network configuration and the low resource usage template: ``-e ~/templates/environments/net-single-nic-with-vlans.yaml -e ~/templates/environments/network-environment.yaml -e ~/templates/environments/low-memory-usage.yaml``.
+-  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [30] Lab environments should use the low resource usage template: ``-e ~/templates/environments/low-memory-usage.yaml``.
 
    .. code-block:: sh
 
@@ -1724,7 +1746,7 @@ Overcloud
              | c1456e44-5245-4a4d-b551-3c6d6217dac4 | overcloud-controller-0  | BUILD  | ctlplane=192.168.24.34 | overcloud-full | control |
              +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
 
-      -  The nodes will then be in the "Provisioning State" of "deploying".
+      -  The nodes will then be in the "Provisioning State" of "deploying". At this phase the operating system image is copied over, partitions are resized, and SSH keys are configured for access to the ``heat-admin`` user account.
 
          .. code-block:: sh
 
