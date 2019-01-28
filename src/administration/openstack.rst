@@ -1871,6 +1871,66 @@ Add a Compute Node
 
 [77]
 
+Rebooting the Cloud
+&&&&&&&&&&&&&&&&&&&
+
+Servers hosting the cloud services will eventually need to go through a reboot to load up the latest patches for kernels, glibc, and other vital system components. This is the order in which servers should be restarted, one node at a time.
+
+-  Undercloud
+-  Controller
+
+   -  Stop clustered services on a controller node before rebooting.
+
+      .. code-block:: sh
+
+         $ sudo pcs cluster stop
+
+   -  Reconnect to the clustered services after the reboot.
+
+      .. code-block:: sh
+
+         $ sudo pcs cluster start
+
+-  Ceph
+
+   -  Disable rebalancing before rebooting.
+
+      .. code-block:: sh
+
+         $ sudo ceph osd set noout
+         $ sudo ceph osd set norebalance
+
+   -  Enable rebalancing after all of the nodes are back online.
+
+      .. code-block:: sh
+
+         $ sudo ceph osd unset noout
+         $ sudo ceph osd unset norebalance
+
+
+-  Compute
+
+   -  Disallow new instances from spawning on a specific compute node.
+
+      .. code-block:: sh
+
+         $ openstack compute service list
+         $ openstack compute service set <COMPUTE_HOST> nova-compute --disable
+
+   -  Live migrate all instances off of that compute node.
+
+      .. code-block:: sh
+
+         $ nova host-evacuate-live <COMPUTE_HOST>
+
+   -  Verify that all instances have been migrated off before rebooting.
+
+      .. code-block:: sh
+
+         $ openstack server list --host <COMPUTE_HOST> --all-projects
+
+[104]
+
 Configurations
 ^^^^^^^^^^^^^^
 
@@ -3940,3 +4000,4 @@ Bibliography
 101. "Modifying default node configuration." TripleO Documentation. October 17, 2018. Accessed October 18, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/node_config.html
 102. "Containers based Overcloud Deployment." TripleO Documentation. December 4, 2018. Accessed December 14, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/overcloud.html
 103. "homeski/vagrant-openstack." GitHub. December 11, 2017. Accessed January 22, 2019. https://github.com/homeski/vagrant-openstack/tree/master/osp10
+104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
