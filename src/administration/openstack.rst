@@ -3585,6 +3585,11 @@ it can be created by running:
 Testing
 -------
 
+Manual
+~~~~~~
+
+Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from `here <https://download.cirros-cloud.net/>`__. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the ``tiny`` instance flavor. The default password for < 0.4 is ``cubswin:)`` and for >= 0.4 it is ``gocubsgo``. [105]
+
 Tempest
 ~~~~~~~
 
@@ -4000,4 +4005,5 @@ Bibliography
 101. "Modifying default node configuration." TripleO Documentation. October 17, 2018. Accessed October 18, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/node_config.html
 102. "Containers based Overcloud Deployment." TripleO Documentation. December 4, 2018. Accessed December 14, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/overcloud.html
 103. "homeski/vagrant-openstack." GitHub. December 11, 2017. Accessed January 22, 2019. https://github.com/homeski/vagrant-openstack/tree/master/osp10
-104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
+104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
+105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
