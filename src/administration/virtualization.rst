@@ -901,6 +901,131 @@ On the app/worker nodes, add them to the cluster by running:
 
 [59]
 
+Storage
+'''''''
+
+Kubernetes storage requires a ``PersistentVolume`` (PV) pool that users can create multiple ``PersistentVolumeClaim`` (PVC) claims from.
+
+Storage is recommended to be dynamic (ephemeral) so that applications can scale and handle failures in a cloudy way. However, databases and legacy applications may require static (persistent) storage.
+
+-  PersistentVolume spec [61]:
+
+   -  storageClassName = The storage back-end to use. Leave blank to use the default. Set to a non-existent storage class to manually manage it (for example, "" or "manual").
+   -  **accessModes** [62]
+
+      -  ReadOnlyMany = More than one pod can only read the data to/from this storage
+      -  ReadWriteOnce = Only one pod can read and write to/from this storage.
+      -  ReadWriteMany = More than one pod can read and write data to/from this storage.
+
+   -  **capacity** =
+
+      -  **storage** = The capacity, in "Gi", that the PV pool contains.
+
+   -  mountOptions
+   -  nodeAffinity = A list of worker nodes that can use this storage.
+   -  persistentVolumeReclaimPolicy
+   -  volumeMode
+
+- (Configurable PV dictionaries)
+
+   -  awsElasticBlockStore
+   -  azureDisk
+   -  azureFile
+   -  cephfs
+   -  cinder
+   -  fc
+   -  flexVolume
+   -  flocker
+   -  gcePersistentDisk
+   -  glusterfs
+   -  hostPath = Use a local directory on a worker node to store data. Consider additionally setting the "nodeAffinity" to the node that will store the data. Alternatively, use ``glusterfs`` instead of ``hostPath`` to sync the directory across all of the worker nodes.
+
+      -  path = The file system path to use.
+
+   -  iscis
+   -  local
+   -  nfs
+   -  photonPersistentDisk
+   -  portworxVolume
+   -  quobyte
+   -  rbd
+   -  scaleIO
+   -  storageos
+   -  vsphereVolume
+
+Static
+&&&&&&
+
+The example below shows how to configure static storage for a pod using local storage.
+
+-  Create a PV. Set a unique ``<PV_NAME>``, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: <PV_NAME>
+     labels:
+       type: local
+   spec:
+     storageClassName: manual
+     capacity:
+       storage: <PV_STORAGE_MAX>Gi
+     accessModes:
+       - ReadWriteOnce
+     hostPath:
+       path: "<LOCAL_FILE_SYSTEM_PATH>"
+     nodeAffinity:
+       required:
+         nodeSelectorTerms:
+           - matchExpressions:
+             - key: kubernetes.io/hostname
+               operator: In
+               values:
+                 - <WORKER_NODE_WITH_LOCAL_FILE_SYSTEM_PATH>
+
+-  Create a PVC from the PV pool. Set a unique ``<PVC_NAME>`` and the ``<PVC_STORAGE>`` size. The size should not exceed the maximum available storage from the PV.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolumeClaim
+   apiVersion: v1
+   metadata:
+     name: <PVC_NAME>
+   spec:
+     storageClassName: manual
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: <PVC_STORAGE>Gi
+
+-  Create a pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: task-pv-pod
+   spec:
+     volumes:
+       - name: <POD_VOLUME_NAME>
+         persistentVolumeClaim:
+          claimName: <PVC_NAME>
+     containers:
+       - name: task-pv-container
+         image: mysql
+         volumeMounts:
+           - mountPath: "/var/lib/mysql"
+             name: <POD_VOLUME_NAME>
+
+[63]
+
 Orchestration
 -------------
 
@@ -1540,3 +1665,7 @@ Bibliography
 58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
 59. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 60. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
+61. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
+62. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+63. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+
