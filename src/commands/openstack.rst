@@ -115,6 +115,9 @@ openstack project
    "project list", "show tenants/projects"
    "user create --project <PROJECT_ID> --password <PASSWORD> <USER_NAME>", "create a new user"
    "user set <USER_NAME>", "update a user's account"
+   "purge", "delete a project and all of it s resources"
+   "purge --keep-project", "delete all of the resources in project but do not delete the project itself"
+   "purge --dry-run", "show what resources would be deleted from the purge"
 
 openstack role
 ~~~~~~~~~~~~~~
