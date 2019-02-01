@@ -1147,16 +1147,10 @@ Here is an overview of the deployment process using TripleO:
 - Optionally configure settings for the Overcloud deployment (highly recommended).
 - Deploy the Overcloud. This cloud will be the production cloud that developers can use.
 
-Quick
-^^^^^
+TripleO Quickstart
+^^^^^^^^^^^^^^^^^^
 
-The "TripleO Quickstart" project was created to use Ansible to automate
-deploying TripleO as fast and easily as possible. [23]
-
-Install
-'''''''
-
-TripleO Quickstart recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [25] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [26]
+The TripleO Quickstart project was created to use Ansible to automate deploying a TripleO Undercloud and Overcloud. [23] The project recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [25] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [26]
 
 -  Download the tripleo-quickstart script or clone the entire repository
    from GitHub.
@@ -1274,6 +1268,11 @@ variables to a YAML file and then add the arguments
        $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 
 [27]
+
+Standalone Containers
+^^^^^^^^^^^^^^^^^^^^^
+
+Starting with Rocky, an all-in-one cloud can be deployed using TripleO. This skips the Undercloud and instead deploys a fully functional Overcloud. Instructions on how to do this are documented `here <https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/standalone.html>`__.
 
 Full
 ^^^^
