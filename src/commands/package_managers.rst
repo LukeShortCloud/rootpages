@@ -409,6 +409,12 @@ Package: yum-utils
 
 Download RPMs from a YUM repository.
 
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --resolve, also download all of the dependency RPMs
+
 centos-upgrade-tool-cli
 ~~~~~~~~~~~~~~~~~~~~~~~
 
