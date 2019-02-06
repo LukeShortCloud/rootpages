@@ -693,13 +693,10 @@ The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Ku
 
 The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [52]
 
-Quick
-'''''
-
 Minishift
-&&&&&&&&&
+'''''''''
 
-Minishift is an easy to use all-in-one installation for testing out OpenShift.
+Minishift deploys a virtual machine with OpenShift pre-installed as a test environment for developers. This is only supported on x86_64 processors.
 
 **Install (Fedora):**
 
@@ -707,7 +704,7 @@ Minishift is an easy to use all-in-one installation for testing out OpenShift.
 
 .. code-block:: sh
 
-    $ MINISHIFT_VER=1.26.1
+    $ MINISHIFT_VER=1.31.0
     $ wget https://github.com/minishift/minishift/releases/download/v${MINISHIFT_VER}/minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ tar -v -x -f minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm -o /usr/local/bin/docker-machine-driver-kvm
@@ -747,26 +744,23 @@ For installing newer versions of Minishift, the old environment must be wiped fi
 
 [58]
 
-Full
-''''
-
 OpenShift Ansible
-&&&&&&&&&&&&&&&&&
+'''''''''''''''''
 
-The OpenShift Ansible project is an official collection of Ansible playbooks to manage the installation and life-cycle of OpenShift.
+The OpenShift Ansible project is an official collection of Ansible playbooks to manage the installation and life-cycle of production OpenShift clusters.
 
 .. code-block:: sh
 
    $ git clone https://github.com/openshift/openshift-ansible.git
    $ cd openshift-ansible
-   $ git checkout release-3.10
+   $ git checkout release-3.11
 
 Settings for the deployment are defined in a single inventory file. Examples can be found in the ``inventory`` directory. ``[OSEv3:children]`` is a group of groups that should contain all of the hosts.
 
 Inventory file variables:
 
 -  ``openshift_deployment_type`` = ``origin`` for the upstream OKD on CentOS or ``openshift-enterprise`` for the downstream OCP on Red Hat CoreOS.
--  ``openshift_release`` = The OpenShift release to use. Example: ``v3.10``.
+-  ``openshift_release`` = The OpenShift release to use. Example: ``v3.11``.
 -  ``openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]`` = Enable htpasswd authentication.
 -  ``openshift_master_htpasswd_users={'<USER1>': '<HTPASSWD_HASH>', '<USER2>': '<HTPASSWD_HASH>'}`` = Configure OpenShift users. Create a password for the user by running ``htpasswd -nb <USER> <PASSWORD>``.
 -  ``openshift_disable_check=memory_availability,disk_availability`` = Disable certain checks for a minimal lab deployment.
@@ -775,7 +769,7 @@ Inventory file variables:
 
 [56]
 
-The container registry is ephemeral so after a reboot the data will be wiped. All of the storage inventory configuration options and settings can be found `here <https://docs.openshift.com/container-platform/3.10/install/configuring_inventory_file.html#advanced-install-registry>`__. For lab environments using NFS, unsupported options will need to be enabled using ``openshift_enable_unsupported_configurations=True``. The ``nfs`` group will also need to be created and added to the ``OSEv3:children`` group of groups.
+The container registry is ephemeral so after a reboot the data will be wiped. All of the storage inventory configuration options and settings can be found `here <https://docs.openshift.com/container-platform/3.11/install/configuring_inventory_file.html#advanced-install-registry>`__. For lab environments using NFS, unsupported options will need to be enabled using ``openshift_enable_unsupported_configurations=True``. The ``nfs`` group will also need to be created and added to the ``OSEv3:children`` group of groups.
 
 Install Openshift.
 
@@ -785,7 +779,7 @@ Install Openshift.
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/prerequisites.yml
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/deploy_cluster.yml
 
-Persistent container application storage can also be configured after installation by using one of the configurations from `here <https://docs.openshift.com/container-platform/3.10/install_config/persistent_storage/index.html>`__.
+Persistent container application storage can also be configured after installation by using one of the configurations from `here <https://docs.openshift.com/container-platform/3.11/install_config/persistent_storage/index.html>`__.
 
 Uninstall OpenShift services from nodes by specifying them in the inventory and using the uninstall playbook.
 
@@ -798,26 +792,24 @@ Kubernetes
 
 Kubernetes provides an API and graphical user interface for the orchestration and scaling of docker containers. It was originally created by Google as part of their Google Kubernetes Engine cloud platform.
 
-Quick
-'''''
-
 Minikube
-&&&&&&&&
+''''''''
 
-Minikube is an easy to use all-in-one installation for testing out Kubernetes
+Minikube deploys a virtual machine with Kubernetes pre-installed as a test environment for developers. This is only supported on x86_64 processors.
 
 Download the latest Minikube release from `here <https://github.com/kubernetes/minikube/releases>`__.
 
 .. code-block:: sh
 
-   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v0.28.2/minikube-linux-amd64 -o /usr/local/bin/minikube
+   $ MINIKUBE_VER=0.33.1
+   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/minikube-linux-amd64 -o /usr/local/bin/minikube
    $ sudo chmod +x /usr/local/bin/minikube
 
 Install the the KVM2 virtualization driver.
 
 .. code-block:: sh
 
-   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v0.28.2/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
+   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
    $ sudo chmod +x /usr/local/bin/docker-machine-driver-kvm2
 
 Deploy Kubernetes using the specified version.
@@ -837,7 +829,7 @@ Install kubectl for managing Kubernetes.
 [51]
 
 kubeadm
-&&&&&&&
+'''''''
 
 Supported operating systems:
 
@@ -1660,7 +1652,7 @@ Bibliography
 53. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
 54. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
 55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
-56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed October 14, 2018. https://docs.openshift.com/container-platform/3.10/install_config/index.html
+56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
 57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
 58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
 59. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
