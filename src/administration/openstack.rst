@@ -24,7 +24,7 @@ Maintenance Phases >= Ocata
 -  Maintained = 18 months of stability and security fixes and official releases from the OpenStack Foundation.
 -  Extended Maintenance (em) = Stability and security fixes by community contributors. There are no tagged minor releases. The code will be treated as a rolling minor release.
 -  Unmaintained = 6 months of no community contributions.
--  EOL = The last version of that OpenStack release to be archived.
+-  End-of-life (eol) = The last version of that OpenStack release to be archived.
 
 [69]
 
@@ -477,11 +477,10 @@ The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack
 
 SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [14]
 
-Quick
-^^^^^
+All-in-One (AIO)
+^^^^^^^^^^^^^^^^
 
-Install
-'''''''
+**Install**
 
 Minimum requirements:
 
@@ -563,15 +562,14 @@ The all-in-one environment does not have the ability to create networks on the e
 
 [91]
 
-Uninstall
-'''''''''
+**Uninstall**
 
 `This Bash script <https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
 way to uninstall OpenStack-Ansible is to reinstall the operating system. [15]
 
-Full
-^^^^
+OpenStack-Ansible
+^^^^^^^^^^^^^^^^^
 
 Minimum requirements:
 
@@ -1274,14 +1272,86 @@ Standalone Containers
 
 Starting with Rocky, an all-in-one cloud can be deployed using TripleO. This skips the Undercloud and instead deploys a fully functional Overcloud. Instructions on how to do this are documented `here <https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/standalone.html>`__.
 
-Full
-^^^^
+InfraRed 2
+^^^^^^^^^^
 
-Install
-'''''''
+Infrared uses Ansible playbooks to automate deploying downstream RHOSP packages and upstream RDO packages.
+
+Install Infrared into a virtual environment.
+
+.. code-block:: shell
+
+   $ virtualenv ~/venv_infrared
+   $ source ~/venv_infrared/bin/activate
+   $ git clone https://github.com/redhat-openstack/infrared.git
+   $ cd infrared
+   $ pip2 install .
+
+Install the required plugins to install a TripleO cloud using virtual machines. These plugins will be installed from the local infrared repository directory.
+
+.. code-block:: shell
+
+   $ infrared plugin add plugins/virsh
+   $ infrared plugin add plugins/tripleo-undercloud
+   $ infrared plugin add plugins/tripleo-overcloud
+   $ infrared plugin add plugins/cloud-config
+
+-  Optionally create an answers file manually or by using the CLI and then import it. Otherwise, use the CLI arguments.
+
+   .. code-block:: shell
+
+      $ infrared virsh --from-file=virsh_prov.ini
+
+-  [virsh]
+
+   -  **host-address** = Required argument. Edit with any value, OR override with CLI: --host-address=<option>
+   -  host-memory-overcommit = Default: ``False``.
+   -  **host-key** = Required argument. Edit with any value, OR override with CLI: --host-key=<option>
+   -  host-user = Default: ``root``.
+   -  **topology-nodes** = The number of each node to deploy. Minimal: ``"undercloud:1,controller:1,compute:1"``.
+
+-  Deploy the virtual machines that will be used by the lab.
+
+   .. code-block:: sh
+
+      $ infrared virsh --host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --host-memory-overcommit yes --topology-nodes "undercloud:1,controller:1,compute:1"
+
+
+-  Deploy the Undercloud.
+
+   -  RHOSP:
+
+      .. code-block:: sh
+
+         $ RHOSP_VERSION=14
+         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --images-task rpm
+
+   -  RDO:
+
+      .. code-block:: sh
+
+         $ RDO_VERSION=rocky
+         $ infrared tripleo-undercloud --version ${RDO_VERSION} --images-task=import --images-url=https://images.rdoproject.org/${RDO_VERSION}/rdo_trunk/current-tripleo/stable/
+
+-  Deploy the Overcloud.
+
+   .. code-block:: sh
+
+      $ infrared tripleo-overcloud --deployment-files virt --version ${RDO_VERSION} --introspect yes --tagging yes --deploy yes
+
+-  After the Overcloud is deployed, optionally configure resources on it.
+
+   .. code-block:: sh
+
+      $ infrared cloud-config --deployment-files virt --tasks create_external_network,forward_overcloud_dashboard,network_time,tempest_deployer_input
+
+[106]
+
+TripleO
+^^^^^^^
 
 Undercloud
-&&&&&&&&&&
+''''''''''
 
 The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [82]
 
@@ -1316,7 +1386,6 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
       .. code-block:: sh
 
           $ ssh -F ~/.quickstart/ssh.config.ansible undercloud
-
 
 -  **Undercloud (Manual)**
 
@@ -1417,7 +1486,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 [28]
 
 Overcloud
-&&&&&&&&&
+'''''''''
 
 **Image Preperation**
 
@@ -4006,3 +4075,4 @@ Bibliography
 103. "homeski/vagrant-openstack." GitHub. December 11, 2017. Accessed January 22, 2019. https://github.com/homeski/vagrant-openstack/tree/master/osp10
 104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
+106. "Bootstrap." infrared Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html

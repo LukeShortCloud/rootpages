@@ -201,6 +201,15 @@ openstack host
    "list", "show all controller and compute nodes"
    "show <HOST>", "show all projects and their resource usage on a specific compute node"
 
+openstack hypervisor
+~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   stats show, show the used and available resources on the compute nodes
+
 openstack console
 ~~~~~~~~~~~~~~~~~
 
@@ -219,6 +228,24 @@ openstack usage
    :widths: 20, 20
 
    "list", "shows allocated data usage for all instances"
+
+openstack keypair
+~~~~~~~~~~~~~~~~~
+
+Manage SSH keys.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   create <KEY_NAME>, create a new public and private key
+   create --public-key ~/.ssh/id_rsa.pub <KEY_NAME>, import an existing public key
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   openstack keypair create shared_key > shared_key.pem, create and save the private key into a file
 
 openstack server
 ~~~~~~~~~~~~~~~~
@@ -424,13 +451,30 @@ Mange the Overcloud from a TripleO deployment of OpenStack.
    node provide --all-manageable, change all Overcloud nodes that are in a ""manageable"" state into an ""available"" state
    profiles list, show the Nova flavors in use for each node
    profiles match --control-flavor <FLAVOR> --control-scale <INTEGER> --compute-flavor <FLAVOR> --compute-scale <INTEGER>, see which nodes will match the flavor and scale of nodes specified
+   delete overcloud, delete the Overcloud stack and cleanup other generated resources (this is preferred over `openstack stack delete overcloud`)
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   profiles match --control-flavor control --control-scale 3 --compute-flavor compute --compute-scale 2, show which nodes would be matched for a deployment with 3 controller nodes and 2 compute nodes
+
+openstack overcloud deploy
+''''''''''''''''''''''''''
 
 .. csv-table::
    :header: Usage, Explanation
    :widths: 20, 20
 
-   profiles match --control-flavor control --control-scale 3 --compute-flavor compute --compute-scale 2, show which nodes would be matched for a deployment with 3 controller nodes and 2 compute nodes
+   --stack <STACK_NAME>, provide a custom stack name (default: overcloud)
+   --templates, the path to the Heat templates directory
+   -e, the path to an additional Heat template
 
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   --stack production --templates /home/stack/templates -e /home/stack/templates/environments/low-memory.yaml, deploy an Overcloud stack named production that will use the default settings annd low memory settings for the services
 
 tripleo-ansible-inventory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -442,6 +486,99 @@ Create dynamic inventory for Ansible to manage the Undercloud and Overcloud infr
    :widths: 20, 20
 
    "--list", "list the entire inventory"
+
+InfraRed
+--------
+
+infrared
+~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   ssh <NODE>, "ssh into a node (examples: undercloud-0, controller-2, compute-1, etc.)"
+
+infrared plugin
+~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   list, list the installed plugins
+   list --available, list all of the plugins that can be installed
+   add plugins/<PLUGIN>, install a new plugin
+   add all, install all of the plugins
+   remove <PLUGIN> <PLUGIN2>, delete one or more plugins
+   remove all, delete all of the plugins
+   update <PLUGIN>
+
+infrared virsh
+~~~~~~~~~~~~~~
+
+Manage the creation or deletion of a virtual lab environment using ``virsh``.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --host-address <IP_ADDRESS>, the hypervisor address to access via SSH
+   --host-user <SSH_USER>, the hypervisor SSH user
+   --host-key <SSH_KEY_FILE>, the private SSH key file to use
+   --host-validate no, do not attempt to enable hardware virtualizaiton on the hypervisor
+   --host-memory-overcommit yes, allow the hypervisor to run virtual machines that may consume more RAM then what is available
+   --topology <TOPLOGY>, specify the topology of what nodes should be deployed and how many
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "--host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --topology-nodes ""undercloud:1,controller:3,compute:2""", deploy 5 virtual machines for an InfraRed lab
+
+infrared tripleo-undercloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Manage the installation of the Undercloud.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --version, the RHOSP version number or RDO release name
+   "--enable-testing-repos {all,rhel,extras,ceph}", enable pre-release repositories
+   --cdn <FILE>, specify a file with a valid Red Hat subscription credentials
+   --images-task rpm, install RHOSP via RPM repositories
+   --images-task import --images-url=<URL>, install RDO via importing an existing Overcloud virtual machine image
+   --images-task build, use a RHEL or CentOS guest virtual machine image as a base to build an Overcloud image from
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   --images-task=import --version rocky --images-url=https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/, install a RDO Rocky Undercloud and setup the Overcloud image by importing a pre-built image
+
+infrared tripleo-overcloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Manage the deployment of the Overcloud.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --deployment-files <DIRECTORY>, the path to the TripleO Heat templates to deploy with
+   --deployment-files virt, use the default Infrared Overcloud Heat templates
+   --version, the RHOSP version number or RDO release name
+   --introspect yes, introspect the Overcloud nodes
+   --tagging yes, tag the Overcloud nodes
+   --deploy yes, deploy the Overcloud
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   --deploy-files virt --version 14 --introspect yes --tagging yes --deploy yes, fully deploy a RHOSP 14 Overcloud
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/commands/openstack.rst>`__
 ----------------------------------------------------------------------------------------------
