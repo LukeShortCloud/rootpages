@@ -550,6 +550,31 @@ The default package manager for Fedora Silverblue. All updates require a system 
    "status", "show the commits of ostree"
    "deploy <COMMIT>", "revert to an older version"
 
+Flatpak
+-------
+
+flatpak
+~~~~~~~
+
+Flatpak is a universal package manager that works on most Linux operating systems by providing a standardized runtime environment.
+
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   search <PACKAGE>, look for an installable package
+   install, install a package
+   install <REMOTE> <NAME>, install a package from a specific remote repository
+   uninstall, uninstall a package
+   uninstall --unused, uninstall unused runtimes
+   update, update all Flatpaks
+   update <PACKAGE>, update a specific package
+   remotes, list all of the repositories
+   remote-add <NAME> <URL>, add a new repository
+   remote-delete <NAME>, delete a repository
+   remote-ls <NAME>, view all fo the packages from a repository
+
 FreeBSD
 -------
 
