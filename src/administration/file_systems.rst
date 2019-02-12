@@ -238,6 +238,69 @@ have the "nfs\_t" file context for SELinux to work properly.
     $ sudo semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
     $ sudo restorecon -R "/path/to/dir"
 
+GlusterFS
+~~~~~~~~~
+
+Gluster syncs two or more network shares. It is recommended to use an odd number of nodes to maintain quorum and prevent split-brain issues. [31]
+
+**Install**
+
+CentOS:
+
+.. code-block:: sh
+
+   $ sudo yum install centos-release-gluster
+   $ sudo yum install glusterfs-server
+
+Debian:
+
+.. code-block:: sh
+
+   $ sudo apt-get install glusterfs-server
+
+Fedora:
+
+.. code-block:: sh
+
+   $ sudo dnf install glusterfs-server
+
+Start and enable the service.
+
+.. code-block:: sh
+
+   $ sudo systemctl enable --now glusterd
+
+**Usage**
+
+From one of the nodes, peer the other nodes to add them to the known hosts running Gluster services.
+
+.. code-block:: sh
+
+   $ sudo gluster peer probe <NODE2>
+   $ sudo gluster peer probe <NODE3>
+   $ sudo gluster peer status
+
+There are three types of volumes that can be created:
+
+-  replica = Reliability. Save a copy of every file to each node.
+-  disperse = Reliability and performance. A combination of replica and stripe. Files are read from and written to different nodes.
+-  stripe = Performance. Spread each file onto different nodes to spread out the I/O load among all of the nodes.
+
+.. code-block:: sh
+
+   $ gluster volume create <VOLUME_NAME> <VOLUME_TYPE> <NODE1>:/<PATH_TO_STORAGE> <NODE2>:/<PATH_TO_STORAGE> <NODE3>:/<PATH_TO_STORAGE> force
+   $ gluster volume start <VOLUME_NAME>
+   $ gluster volume status <VOLUME_NAME>
+
+On a client, mount the ``glusterfs`` file system and verify that it works.
+
+.. code-block:: sh
+
+   $ sudo mount -t glusterfs <NODE1>:/<VOLUME_NAME> /mnt
+   $ sudo touch /mnt/test
+
+[32]
+
 SMB
 ~~~
 
@@ -1329,3 +1392,5 @@ Bibliography
 28. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/
 29. "Btrfs." Fedora Project Wiki. March 9, 2017. Accessed May 11, 2018. https://fedoraproject.org/wiki/Btrfs
 30. "FilesystemHierarchyStandard." Debian Wiki. April 21, 2017. Accessed December 5, 2018. https://wiki.debian.org/FilesystemHierarchyStandard
+31. "Split brain and the ways to deal with it." Gluster Docs. Accessed February 12, 2019. https://docs.gluster.org/en/latest/Administrator%20Guide/Split%20brain%20and%20ways%20to%20deal%20with%20it/
+32. "Setting up GlusterFS Volumes." Gluster Docs. Accessed February 12, 2019. https://docs.gluster.org/en/latest/Administrator%20Guide/Setting%20Up%20Volumes/
