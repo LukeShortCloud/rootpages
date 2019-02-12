@@ -109,7 +109,7 @@ git commit
    :widths: 20, 20
 
    "-m '<USEFUL_COMMENT>'", "provide a commit comment"
-   "--amend", "undo commit"
+   "--amend", "change the last commit message"
 
 git push
 ~~~~~~~~
