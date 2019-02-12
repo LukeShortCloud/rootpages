@@ -114,7 +114,7 @@ Installation:
 -  Arch Linux: ``$ sudo pacman -S gnome gnome-extras``
 -  Debian (manual): ``$ sudo apt-get install gnome``
 -  Debian (automatic): ``$ sudo apt-get install task-gnome-desktop``
--  Fedora: ``$ sudo dnf groupinstall "GNOME Desktop Environment"``
+-  Fedora: ``$ sudo dnf groupinstall "Fedora Workstation"``
 
 KDE
 ~~~
@@ -124,7 +124,7 @@ Installation:
 -  Arch Linux: ``$ sudo pacman -S plasma kde-applications``
 -  Debian (manual): ``$ sudo apt-get install kde-standard``
 -  Debian (automatic): ``$ sudo apt-get install task-kde-desktop``
--  Fedora: ``$ sudo dnf groupinstall "KDE (K Desktop Environment)"``
+-  Fedora: ``$ sudo dnf groupinstall "KDE Plasma Workspaces"``
 
 Xfce
 ~~~~
