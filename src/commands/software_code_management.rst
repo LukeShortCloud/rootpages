@@ -190,6 +190,25 @@ Undo changes to the current branch.
    "--hard HEAD~1", "undo the last saved cimmit; all changes from the current commit will be lost"
    "--hard", "remove all uncommitted changes"
 
+git clean
+~~~~~~~~~~
+
+Delete inodes that are not part of the git repository.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -f, delete files
+   -d, delete empty directories
+   -x, delete hidden files or directories
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   -fdx, delete all files and directories that do not belong to the git repository
+
 git stash
 ~~~~~~~~~
 
