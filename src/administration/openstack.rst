@@ -178,6 +178,11 @@ Releases:
    -  Release: 2018-06-27
    -  EOL: 2023-06-27
 
+-  RHOSP 14 (Rocky)
+
+   -  Release: 2019-01-10
+   -  EOL: 2020-01-10
+
 [6]
 
 RHOSP supports running a virtualized Undercloud on these platforms [9]:
@@ -4001,7 +4006,7 @@ Bibliography
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed July 12, 2018. https://access.redhat.com/support/policy/updates/openstack/platform
+6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed February 18, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
