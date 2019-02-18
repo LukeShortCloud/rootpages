@@ -1826,7 +1826,7 @@ Overcloud
             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | deploying          | False       |
             +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
 
-      -  After that is complete, the virtual machines will power off. Ironic will report that the "Power State" is now "power on" and the Provisioning State" is now "active." Manually start the virtual machines now.
+      -  After that is complete, the virtual machines will power off. Ironic will report that the "Power State" is now "power on" and the Provisioning State" is now "active." The nodes have now been provisioned with the Overcloud image. Change the boot order of each machine to start with the hard drive instead of the network interface card. Manually start the virtual machines after that.
 
          .. code-block:: sh
 
@@ -1838,9 +1838,28 @@ Overcloud
              | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | active             | False       |
              +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
 
--  The rest of the deploy will continue and can take a few hours to complete.
+-  The deploy will continue onto the configuration management stage. Before Rocky, this process used Puppet. Starting with Rocky, this uses Ansible.
 
--  Verify that the Overcloud was deployed successfully. If it was not, then troubleshoot any stack resources that failed.
+-  Once the deployment is complete, verify that the Overcloud was deployed successfully. If it was not, then troubleshoot any stack resources that failed.
+
+   ::
+
+      PLAY RECAP *********************************************************************
+      overcloud-controller-0     : ok=257  changed=142  unreachable=0    failed=0
+      overcloud-novacompute-0    : ok=178  changed=78   unreachable=0    failed=0
+      undercloud                 : ok=21   changed=12   unreachable=0    failed=0
+      
+      Wednesday 13 February 2019  14:38:34 -0500 (0:00:00.103)       0:40:32.320 ****
+      ===============================================================================
+      
+      Ansible passed.
+      Overcloud configuration completed.
+      Waiting for messages on queue 'tripleo' with no timeout.
+      Host 192.168.24.23 not found in /home/stack/.ssh/known_hosts
+      Overcloud Endpoint: http://192.168.24.23:5000
+      Overcloud Horizon Dashboard URL: http://192.168.24.23:80/dashboard
+      Overcloud rc file: /home/stack/overcloudrc
+      Overcloud Deployed
 
    .. code-block:: sh
 
@@ -1849,6 +1868,7 @@ Overcloud
        $ openstack stack show <OVERCLOUD_STACK_ID>
        $ openstack stack resource list <OVERCLOUD_STACK_ID>
        $ openstack stack resource show <OVERCLOUD_STACK_ID> <RESOURCE_NAME>
+       $ openstack overcloud failures list # New in Rocky
 
 -  Source the Overcloud admin credentials to manage it.
 
@@ -1890,6 +1910,12 @@ Overcloud
     .. code-block:: sh
 
        $ openstack overcloud config download
+
+-  For a lab with a private network, use a proxy service from the hypervisor to access the dashboard and API IP address.
+
+    .. code-block:: sh
+
+       $ sshuttle -r stack@undercloud 192.168.24.23
 
 Operations
 ''''''''''
