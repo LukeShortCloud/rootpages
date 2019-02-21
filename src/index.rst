@@ -36,5 +36,11 @@ Welcome to Root Pages!
 
    programming/index.rst
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Virtualization
+
+   virtualization/index.rst
+
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
 

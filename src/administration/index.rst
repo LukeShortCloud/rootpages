@@ -13,9 +13,7 @@
    linux
    mail_servers
    monitoring
-   openstack
    operating_systems
    packages
    security
-   virtualization
    wine
