@@ -5,3 +5,4 @@
    containers.rst
    openstack.rst
    virtual_machines.rst
+   wine.rst

@@ -16,4 +16,3 @@
    operating_systems
    packages
    security
-   wine
