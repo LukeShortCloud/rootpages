@@ -1163,6 +1163,60 @@ Examples:
 
 [33][34]
 
+Generators
+----------
+
+Instead of using ``return`` to provide an array or list of return values after a function is finished, a ``yield`` creates a generator object that pauses the function until another iteration is requested. This provides the latest return value immediately into the generator object instead of having to wait for all of the results to be returned at once. This is very memory efficient since only one small value is returned instead of a large collection of values.
+
+Syntax:
+
+.. code-block:: python
+
+   yield <RETURN_VALUE>
+
+Example usage of a generator:
+
+.. code-block:: python
+
+   def generator_count_example(start, finish):
+   
+       if min < max:
+   
+           for n in range(start, finish):
+               yield n
+   
+   gen_obj = generator_count_example(0, 3)
+   
+   for value in gen_obj:
+       print(value)
+
+The ``next()`` method can be used to iterate the next item from a generator object.
+
+Syntax:
+
+.. code-block:: python
+
+   next(<GENERATOR_OBJECT>)
+
+Alternatively, all of the objects can be rendered out at once by converting the generator into a list. However, this removes the benefits of using a generator.
+
+Syntax:
+
+.. code-block:: python
+
+   list(<GENERATOR_OBJECT>)
+
+By encapsulating a program in parenthesis, it creates a generator object. This is called a generator expression and is similar to the concept of list comprehensions.
+
+Example:
+
+.. code-block:: python
+
+   number = ( n*4 for n in range(5) )
+   next(number)
+
+[36]
+
 Object Oriented Programming
 ---------------------------
 
@@ -1445,3 +1499,4 @@ Bibliography
 33. "logging — Logging facility for Python." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.html
 34. "logging.handlers — Logging handlers." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.handlers.html/
 35. "logging.handlers — Logging handlers." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/copy.html
+36. "LEARN TO LOOP THE PYTHON WAY: ITERATORS AND GENERATORS EXPLAINED." Hackaday. September 19, 2018. Accessed February 22, 2019. https://hackaday.com/2018/09/19/learn-to-loop-the-python-way-iterators-and-generators-explained/
