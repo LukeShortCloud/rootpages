@@ -3687,7 +3687,7 @@ Testing
 Manual
 ~~~~~~
 
-Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from `here <https://download.cirros-cloud.net/>`__. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the ``tiny`` instance flavor. The default password for < 0.4 is ``cubswin:)`` and for >= 0.4 it is ``gocubsgo``. [105]
+Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from `here <https://download.cirros-cloud.net/>`__. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the ``tiny`` instance flavor. [105] The default password for < 0.4 is ``cubswin:)`` and for >= 0.4 it is ``gocubsgo``. [107]
 
 Tempest
 ~~~~~~~
@@ -4107,3 +4107,4 @@ Bibliography
 104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
 106. "Bootstrap." infrared Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
+107. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
