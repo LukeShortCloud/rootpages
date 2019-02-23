@@ -75,6 +75,22 @@ netio
 
 Stress test utility for networks.
 
+i8kctl
+~~~~~~
+
+Package: `i8kutils <https://github.com/vitorafsr/i8kutils>`__.
+
+A utility to manage fans on Dell laptops. By default, the BIOS will have full automatic control over the fans. That will need to be disabled for this utility to work properly.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   fan, show the current speed settings
+   fan 0 0, disable both the left and right fan
+   fan 1 1, set the fans to be on low speed
+   fan 2 2, set the fans to be on max speed
+
 Audio
 -----
 
