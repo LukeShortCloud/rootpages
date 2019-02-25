@@ -264,11 +264,20 @@ Danified YUM (DNF) is the default package manager for Fedora >= 22. It is design
    "update", "update a specific package or all of the packages"
    "builddep", "install RPM dependencies from a spec file"
    "repoquery --deplist", "show package dependencies"
-   "config-manager --set-enabled", "enable a repository"
-   "config-manager --set-disabled", "disable a repository"
+   "config-manager --set-enabled", "permanently enable a repository"
+   "config-manager --set-disabled", "permanently disable a repository"
    "config-manager --add-repo <URL>", "add a new repository"
    "--security --sec-severity=Critical update", "only update packages with critical CVE patches"
    "--cacheonly, -C", "use the system cache for queries, do not update the remote metadata information"
+   --repo <REPOSITORY_NAME>, temporarily only use the provided repository (disable all others)
+   --enablerepo <REPOSITORY_NAME>, temporarily enable a repository if it is disabled
+   --disablerepo <REPOSITORY_NAME>, temporarily enable a repository if it is enabled
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   --enablerepo="*" install fuse-exfat, enable all repositories once for this command execution and install the fuse-exfat package
 
 yum
 ~~~
