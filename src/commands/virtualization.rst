@@ -103,6 +103,12 @@ Manage Kubernetes resources via the API.
    exec -it <POD> -- /bin/bash, enter into a pod with an interactive Bash shell
    port-forward <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward on the 127.0.0.1 localhost to help with debugging network services
    port-forward --address 0.0.0.0 <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward that listens on all IP addresses
+   get deployments --all-namespaces, show all deployments
+   delete -n <NAMESPACE> deployment <DEPLOYMENT>, delete a deployment (a pod and all of it's replicas)
+   get pvc, show all persistent volume claims
+   get pv, show all persistent volumes
+   delete pvc <PVC>, delete a persistent volume claim
+   delete pv <PV>, delete a persistent volume
 
 minikube
 ~~~~~~~~
