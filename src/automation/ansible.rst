@@ -5001,8 +5001,7 @@ Rundeck
 
 Rundeck is an open source dashboard and API framework, programmed with
 Java, for automating the execution of commands and scripts via SSH.
-There is a community supported Ansible plugin for Rundeck that is
-currently only *alpha* quality. It supports using Ansible inventory as
+There is a community supported `Ansible plugin for Rundeck <https://www.rundeck.com/ansible>`__ that has been stable since the plugin's 2.5.0 release. [80] It supports using Ansible inventory as
 well as running modules and Playbooks. This can be tested out using a
 pre-built docker image:
 
@@ -5132,3 +5131,4 @@ Bibliography
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
+80. "Major upgrade." Batix/rundeck-ansible-plugin, GitHub. August 15, 2018. Accessed February 26, 2019. https://github.com/Batix/rundeck-ansible-plugin/commit/a07e37537a8eda38b620d9de4fc5f01f22952121
