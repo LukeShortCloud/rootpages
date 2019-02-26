@@ -5035,7 +5035,7 @@ Installation:
 
 .. code-block:: sh
 
-    $ sudo curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.4.1/semaphore_linux_amd64 > /usr/bin/semaphore
+    $ sudo curl -L https://github.com/ansible-semaphore/semaphore/releases/download/v2.5.1/semaphore_linux_amd64 > /usr/bin/semaphore
     $ sudo /usr/bin/semaphore -setup
 
 Semaphore will now be available at ``http://<SEMAPHORE_HOST>:3000``.
