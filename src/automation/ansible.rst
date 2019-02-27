@@ -930,24 +930,31 @@ Example:
 Async
 ^^^^^
 
-The "async" function can be used to start a detached task on a remote
-system. Ansible will then poll the server periodically to see if the
-task is complete (by default, it checks every 10 seconds). Optionally a
-custom poll time can be set. [15]
+The ``async`` function is used to start a detached task on a managed
+system. Ansible will then poll that system periodically to see if the
+task is complete. By default, it checks every 10 seconds and will only
+move onto the next task if all of the processes are complete.
+Tasks with loops will execute the module in parallel for each item.
+By using ``poll: 0``, the task will be ran in the background and Ansible
+will continue onto the next task. Do not set ``async: 0`` as that will disable async.
+
 
 Syntax:
 
 .. code-block:: yaml
 
-    async: <SECONDS_TO_RUN>
+    async: <MAXIMUM_SECONDS_TO_RUN>
+    poll: <INTERNAL_IN_SECONDS>
 
-Example:
+This example will run a command, check every 5 seconds to see if it is complete, until 15 seconds has elapsed. If it is still not complete, Ansible will end that async process and mark the task as being failed.
 
 .. code-block:: yaml
 
     - command: bash /usr/local/bin/example.sh
       async: 15
       poll: 5
+
+[15]
 
 Block
 ^^^^^
@@ -5066,7 +5073,7 @@ Bibliography
 12. "Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks\_error\_handling.html
 13. "Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
 14. "Delegation, Rolling Updates, and Local Actions." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_delegation.html
-15. "Asynchronous Actions and Polling." Ansible Documentation. September 1, 2016. Accessed September 11, 2016. http://docs.ansible.com/ansible/playbooks\_async.html
+15. "Asynchronous Actions and Polling." Ansible Documentation. February 21, 2019. Accessed February 27, 2019. https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
 18. "Installation Guide." Ansible Documentation. August 17, 2018. Accessed August 21, 2018. https://docs.ansible.com/ansible/latest/installation_guide/intro\_installation.html
