@@ -272,12 +272,19 @@ Danified YUM (DNF) is the default package manager for Fedora >= 22. It is design
    --repo <REPOSITORY_NAME>, temporarily only use the provided repository (disable all others)
    --enablerepo <REPOSITORY_NAME>, temporarily enable a repository if it is disabled
    --disablerepo <REPOSITORY_NAME>, temporarily enable a repository if it is enabled
+   module list, list all modular packages along with their related streams and profiles
+   module list --enabled, show enabled modular repositories
+   module list --installed, list all installed modular repositories
+   module install <PACKAGE>:<STREAM>, install a modular package using the default packages
+   module install <PACKAGE>:<STREAM>/<PROFILE>, install a modular package using a specific profile of packages
+   module info <PACKAGE>, show detailed information about all of the streams and profiles available
 
 .. csv-table::
    :header: Example, Explanation
    :widths: 20, 20
 
    --enablerepo="*" install fuse-exfat, enable all repositories once for this command execution and install the fuse-exfat package
+   module install perl:5.24, install an older supported version of Perl using modularity
 
 yum
 ~~~
