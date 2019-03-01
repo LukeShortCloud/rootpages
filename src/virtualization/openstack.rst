@@ -3681,6 +3681,100 @@ it can be created by running:
 
 [67]
 
+Mistral Workflows
+-----------------
+
+List all of the available actions that Mistral can preform. [108]
+
+.. code-block:: sh
+
+   $ mistral action-list
+
+The only supported Mistral template version is ``2.0``. All templates should start with this block:
+
+.. code-block:: yaml
+
+   ---
+   version: 2.0
+
+A workflow can accept input and output variables. The input is used for the tasks and once complete output it is saved in the Mistral database.
+
+.. code-block:: yaml
+
+   <WORKFLOW_NAME>:
+     description: <DESCRIPTION>
+     input:
+       - <INPUT1>
+       - <INPUT2>
+     output:
+       - <KEY>: <VALUE>
+     tasks:
+       <TASK1_NAME>:
+         action: <MISTRAL_ACTION1>
+       <TASK2_NAME>:
+         action: <MISTRAL_ACTION2>
+
+Common actions:
+
+-  std.echo = Used for testing by displaying the output of variables.
+
+   -  **output** = The output to display.
+
+-  std.fail = Force the workflow to fail.
+-  std.http = Handle HTTP requests.
+
+   -  headers = Custom headers to add to the request.
+   -  method = The HTTP method to use.
+   -  **url** = The URL to interact with.
+   -  verify = If the certificate should be verified.
+
+-  std.ssh = Run commands via SSH.
+
+   -  **cmd** = The command to run.
+   -  host
+   -  username
+   -  password
+   -  private_key_filename = The full path to the private key or the name of the private key in ``~/.ssh/``.
+
+-  std.javascript or std.js = Execute JavaScript code.
+
+   -  **script** = The source code text to run.
+
+-  send_email = Send an e-mail.
+
+   -  to_addrs = A list of e-mail addresses to send the e-mail to.
+   -  body = The text body of the e-mail.
+
+Common task attributes:
+
+-  description = A string describing what the action does.
+-  input = Input strings
+-  output = Output strings.
+-  output-on-error = Strings that will only output if the task fails.
+-  on-{complete,error,success} = A list of tasks to run given the state of the current task.
+-  {pause-before,wait-before,wait-after} = Define dependencies or requirements between tasks.
+-  timeout = The timeout, in seconds, before the task is marked as a failure.
+-  retry = The number of times to retry the task before being marked as a failure.
+-  concurrency = The maximum number of parallel task actions to run at once.
+
+[109]
+
+Load the YAML workflow into Mistral.
+
+.. code-block:: sh
+
+   $ mistral workflow-create <WORKFLOW_YAML_FILE_NAME>
+
+Then execute the workflow using another file that contains the input variables and check it's progress.
+
+.. code-block:: sh
+
+   $ mistral execution-create <WORKFLOW> <VARIABLES_FILE>
+   $ mistral execution-list
+   $ mistral execution-get <EXECUTION_ID>
+
+[108]
+
 Testing
 -------
 
@@ -4108,3 +4202,5 @@ Bibliography
 105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
 106. "Bootstrap." infrared Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
 107. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
+108. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
+109. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
