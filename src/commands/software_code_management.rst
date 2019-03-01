@@ -250,7 +250,53 @@ Display the history of commits.
    :widths: 20, 20
 
    "", "show the commit history of the current branch"
-   "-p", "show the commit history of only a specific file or directory"
+   "-p <FILE>", "show the commit history of only a specific file or directory"
+   <BRANCH>, show the commit history for a specific branch
+
+git show
+~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   <COMMIT_HASH>, show the patch/diff of a specific commit
+   --pretty=full, "show the patch with the commit hash, author, and committer"
+   --pretty=email, "show the patch with the required information to use git over e-mail (commit hash, author, author date, and subject line)"
+
+git blame
+~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   <FILE>, find the author and commit hash of each line of code within a file
+   <BRANCH> <FILE>, look for commits from other branches (useful for merge conflicts)
+
+git review
+~~~~~~~~~~
+
+Manage patches through the Gerrit gating platform.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -s, automatically configure the local settings for gating jobs
+   "", send a patch for testing and peer review
+   -d <CHANGE_ID>, checkout a change-id from Gerrit
+
+git reflog
+~~~~~~~~~~
+
+View all actions that were down to the local git repository. ``git checkout`` can be used to switch to a commit and/or recreate previous steps.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   "", view all of the local changes to and hisotry of the git repository
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/commands/software_configuration_management.rst>`__
 ----------------------------------------------------------------------------------------------------------------------
