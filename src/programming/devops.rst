@@ -212,6 +212,28 @@ Common git procedures:
 
 [6]
 
+Git Conflicts
+^^^^^^^^^^^^^
+
+When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and the commit(s) that is being added in. The developer will have to go in and manually update the code. An example is shown below. Inbetween the ``<<<<<<<`` and ``=======`` section is the code from the original branch. Inbetween the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
+
+::
+
+   <<<<<<< HEAD
+   Hello world
+   =======
+   Hey world
+   >>>>>>> c14d3657... commit message here
+
+After resolving the conflict, add the commit back by doing a continue or a new commit.
+
+.. code-block:: sh
+
+   $ git add .
+   $ git {cherry-pick,merge,rebase} --continue
+
+[13]
+
 Versioning
 ----------
 
@@ -505,3 +527,4 @@ Bibliography
 10. "Calendar Versioning." CalVer. Accessed December 2, 2018. https://calver.org/
 11. "Version Incrementing." GitVersion Read the Docs. Accessed December 1, 2018. https://gitversion.readthedocs.io/en/latest/more-info/version-increments/
 12. "perlre." Perl Programming Documentation. Accessed December 7, 2018. http://perldoc.perl.org/perlre.html
+13. "Resolving a merge conflict using the command line." GitHub Help. Accessed March 1, 2019. https://help.github.com/en/articles/resolving-a-merge-conflict-using-the-command-line
