@@ -490,12 +490,15 @@ Regular expressions (regex) are a set of characters that can be used to search f
 Learning a New Programming Language
 -----------------------------------
 
-These are the most important concepts to learn when studying a new language listed in ascending order.
+These are the most important concepts to learn when studying a new language, listed in ascending order.
 
 -  Data types
 -  Console/tty input and output
+-  Creating a basic ``main()`` function
+-  Compiling and running code
 -  Code comments
 -  Function definitions
+-  Relational, arithmetic, assignment, unary, and bitwise operators
 -  Loops and conditionals
 -  Find and use a standardized code styling practice for the language
 -  Common libraries:
@@ -505,9 +508,12 @@ These are the most important concepts to learn when studying a new language list
    -  Math
    -  HTTP URL request handling
 
--  Exception handling
--  Object-oriented usage
+-  Exception/error handling
 -  Multi-threading
+-  Object-oriented usage (if applicable)
+-  Packaging (if applicable)
+
+   -  Most programming languages support a package manager for dependencies such as dep (Go), mvn/Maven (Java), npm (Node.js), pip/PyPI (Python), etc.
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
 ----------------------------------------------------------------------------------------------
