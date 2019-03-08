@@ -2161,6 +2161,24 @@ Settings that are not handled by the Puppet modules can be overriden manually. T
 
 [101]
 
+The root MySQL account password can be configured for the Undercloud and/or Overcloud.
+
+Undercloud:
+
+.. code-block:: ini
+
+   # undercloud.conf
+   [auth]
+   undercloud_db_password=<PASSWORD>
+
+Overcloud:
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     MysqlRootPassword: <PASSWORD>
+
 Common
 ~~~~~~
 
