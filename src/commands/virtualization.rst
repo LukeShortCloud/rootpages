@@ -45,6 +45,8 @@ Package: docker
    "rm", "delete a container"
    "ps", "list active containers"
    "ps -a", "list all active and stopped containers"
+   ps {-f|--filter} status={created|dead|exited|paused|removing|restarting|running}, filter containers by their current (docker supported) state
+   ps -f ""status=exited"", show stopped containers
    "exec", "execute a single command in a specified container"
    "exec -it <CONTAINER_ID> bash", "open a Bash session in the container"
    "run --name <NAME> <IMAGE>", "start a container in the foreground and optionally give it a name"
@@ -149,8 +151,16 @@ The libpod library provides a utility to manage and run containers with CRI-O an
    :header: Usage, Explanation
    :widths: 20, 20
 
+   ls, list running containers
+   create --name <NAME> <IMAGE>:<TAG>, create a container from an image and give it a name
+   start <NAME>, start a container
+   start {-i|--interactive} <NAME>, start a container and attach to the stdin
+   run --name <NAME> --interactive <IMAGE>:<TAG>, start a container and open an interactive shell inside of it
+   attach <NAME>, watch the stdout and stderr of a container process
+   ps {-f|--filter} status={configured|created|exited|paused|running|stopped|unknown}, filter containers by their current (podman supported) state; note that configured==created and stopped==exited are mapped for compatibility with docker
    rm --all, Remove all stopped containers
    rmi --all, Remove all images
+   --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registeries
 
 oVirt
 -----
