@@ -4,4 +4,5 @@
 
    c_and_c++.rst
    devops.rst
+   go.rst
    python.rst
