@@ -8,6 +8,8 @@ See also: Administrative, Configuration Management, LFH, Shell
 git
 ---
 
+The manual pages for each primary git argument can be found by running ``$ man git-<ARG>``.
+
 git
 ~~~
 
@@ -297,6 +299,29 @@ View all actions that were down to the local git repository. ``git checkout`` ca
    :widths: 20, 20
 
    "", view all of the local changes to and hisotry of the git repository
+
+git rebase
+~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   <COMMIT>, add a commit from another branch to the current one
+   --continue, "after fixing merge conflicts and doing a ``git add``, the rebase will be committed"
+   --abort, revert changes from a cherry pick that has merge conflicts
+
+git cherry-pick
+~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   <COMMIT>, add a commit from another branch to the current one
+   -x <COMMIT>, add a commit from another branch and reference the original commit hash at the bottom of the commit message
+   --continue, "after fixing merge conflicts and doing a ``git add``, the cherry-pick will be committed"
+   --abort, revert changes from a cherry pick that has merge conflicts
 
 `History <https://github.com/ekultails/rootpages/commits/master/src/commands/software_configuration_management.rst>`__
 ----------------------------------------------------------------------------------------------------------------------
