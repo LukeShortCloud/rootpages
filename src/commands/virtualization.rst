@@ -270,6 +270,8 @@ Execute commands inside of a virtual machine image file.
    "--root-password password:<PASSWORD>", "change the root password"
    "--run-command '<COMMAND>'", "run a command inside of the image"
 
+Note that newer versions of this tool will automatically generate an unique machine-id after any customization. This will cause issues later on with cluster services if more than one machine will run using a copy of that base image. systemd will only regenerate it if the configuration file exists and is empty: ``$ guestfish -a <IMAGE_FILE> -i 'echo > /etc/machine-id'``.
+
 virt-edit
 ~~~~~~~~~
 
