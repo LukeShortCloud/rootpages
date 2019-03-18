@@ -112,6 +112,7 @@ git commit
 
    "-m '<USEFUL_COMMENT>'", "provide a commit comment"
    "--amend", "change the last commit message"
+   --amend --no-edit, update the current commit and keep the same mesage
 
 git push
 ~~~~~~~~

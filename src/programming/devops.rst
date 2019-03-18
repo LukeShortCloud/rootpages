@@ -125,11 +125,15 @@ Common git procedures:
 
        $ git init
 
--  Download an existing git project from GitHub.
+-  Download an existing git project from GitHub using HTTP or SSH.
 
     .. code-block:: sh
 
        $ git clone https://github.com/<USER>/<PROJECT>.git
+
+    .. code-block:: sh
+
+       $ git clone git@github.com:<USER>/<PROJECT>.git
 
 -  View existing tags and branches.
 
@@ -194,7 +198,7 @@ Common git procedures:
        $ git branch --delete <BRANCH>
        $ git push origin --delete <BRANCH>
 
--  When managing a fork, the "upstream" branch should be configured to track changes from the original repository. This can now be referenced instead of "origin".
+-  When managing a fork, the "upstream" repository should be configured to track changes from the original repository. Continue to use "origin" for the forked repository.
 
     .. code-block:: sh
 
@@ -209,13 +213,21 @@ Common git procedures:
     .. code-block:: sh
 
        $ git reset --hard
+       $ git clean -dfx
+
+-  Update the patch for the current commit.
+
+    .. code-block:: sh
+
+       $ git add .
+       $ git commit --amend --no-edit
 
 [6]
 
 Git Conflicts
 ^^^^^^^^^^^^^
 
-When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and the commit(s) that is being added in. The developer will have to go in and manually update the code. An example is shown below. Inbetween the ``<<<<<<<`` and ``=======`` section is the code from the original branch. Inbetween the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
+When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and another commit that is being added in. The developer will have to go in and manually update the code. An example is shown below. Inbetween the ``<<<<<<<`` and ``=======`` section is the code from the original branch. Inbetween the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
 
 ::
 
@@ -230,7 +242,7 @@ After resolving the conflict, add the commit back by doing a continue or a new c
 .. code-block:: sh
 
    $ git add .
-   $ git {cherry-pick,merge,rebase} --continue
+   $ git {cherry-pick|merge|rebase} --continue
 
 [13]
 
