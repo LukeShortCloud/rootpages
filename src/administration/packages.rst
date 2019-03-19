@@ -313,6 +313,22 @@ Common repositories:
 -  rhel-7-server-devtools-rpms = Developer Tools. Useful packages for software developers. The subscriptions that can enable this are listed `here <https://access.redhat.com/documentation/en-US/Red\_Hat_Developer\_Toolset/1/html/User\_Guide/sect-Red\_Hat_Developer\_Toolset-Subscribe.html>`_.
 -  rhel-server-rhscl-7-rpms = Software Collections. Newer versions of software, usually aligning with upstream, are provided. They are installed into a prefix directory that is separate from the operating system libraries. [25]
 
+Fedora
+~~~~~~
+
+Fedy
+^^^^
+
+Fedora, by default, only provides free and open source software (no proprietary packages). The graphical utility ``Fedy`` allows a user to easily install required packages for media codecs, Oracle Java, and other utilities and tweaks. Both the ``free`` and ``non-free`` RPMFusion repositories have to be installed first.
+
+.. code-block:: sh
+
+   $ sudo dnf install "https://dl.folkswithhats.org/fedora/$(rpm -E %fedora)/RPMS/fedy-release.rpm"
+   $ sudo dnf install fedy
+   $ fedy
+
+[26]
+
 Packaging
 ~~~~~~~~~
 
@@ -654,3 +670,4 @@ Bibliography
 23. "About `Flatpak <#flatpak>`__." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/
 24. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html
 25. "Red Hat Developer Tools software repository not available." Red Hat Community Discussions. November 14, 2017. Accessed February 26, 2018. https://access.redhat.com/discussions/3155021
+26. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
