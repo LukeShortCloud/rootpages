@@ -224,6 +224,16 @@ Common git procedures:
 
 [6]
 
+-  Sync a fork with the original upstream repository.
+
+    .. code-block:: sh
+
+       $ git fetch upstream
+       $ git checkout origin/master
+       $ git merge upstream/master
+
+[14]
+
 Git Conflicts
 ^^^^^^^^^^^^^
 
@@ -546,3 +556,4 @@ Bibliography
 11. "Version Incrementing." GitVersion Read the Docs. Accessed December 1, 2018. https://gitversion.readthedocs.io/en/latest/more-info/version-increments/
 12. "perlre." Perl Programming Documentation. Accessed December 7, 2018. http://perldoc.perl.org/perlre.html
 13. "Resolving a merge conflict using the command line." GitHub Help. Accessed March 1, 2019. https://help.github.com/en/articles/resolving-a-merge-conflict-using-the-command-line
+14. "Syncing a fork." GitHub Help. Accessed March 19, 2019. https://help.github.com/en/articles/syncing-a-fork
