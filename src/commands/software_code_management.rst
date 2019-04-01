@@ -72,6 +72,8 @@ git clone
    :widths: 20, 20
 
    "--depth <DEPTH>", "only download the last <DEPTH> amount of commits"
+   --branch <BRANCH>, clone a repository and all of it's branches and then switch to the specified branch
+   --single-branch --branch <BRANCH>, clone only one specific branch from a repository
 
 git pull
 ~~~~~~~~
