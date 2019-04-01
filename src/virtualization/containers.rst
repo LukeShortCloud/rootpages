@@ -39,10 +39,10 @@ docker
 
 The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.
 
-A command is ran to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append ``&& tail -f /dev/null`` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [16]
+A command is ran to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append ``&& tail -f /dev/null`` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]
 
 The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.$
-By default, only the "root" user has access to manage docker containers. Users assigned to a "docker" group will have the necessary privileges. However, they will then have administrator access to the system. If the "docker" group is newly created then the daemon needs to be restarted for the change to load up. The docker user may also have to run the ``newgrp docker`` command to reload their groups. [48]
+By default, only the "root" user has access to manage docker containers. Users assigned to a "docker" group will have the necessary privileges. However, they will then have administrator access to the system. If the "docker" group is newly created then the daemon needs to be restarted for the change to load up. The docker user may also have to run the ``newgrp docker`` command to reload their groups. [2]
 
 .. code-block:: sh
 
@@ -94,7 +94,7 @@ packet size (MTU) issues. There are a few work-a-rounds.
 
        $ sudo iptables -I FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 
-[17]
+[3]
 
 In rare cases, the bridge networking will not be working properly. An
 error message similar to this may appear during creation.
@@ -111,12 +111,12 @@ restart the docker service for it to be properly recreated.
     $ sudo ip link delete docker0
     $ sudo systemctl restart docker
 
-[18]
+[4]
 
 Java
 ~~~~
 
-Java <= 9, by default, will try to allocate a large amount of memory for the runtime and garbage collection. This can lead to resource exhaustion of RAM on a hypervisor. The maximum memory allocation should be specified to Java applications using ``-Xmx<SIZE_IN_MB>m``. [54] This is no longer an issue in Java >= 10 as it is now aware of when it is being containerized. [55]
+Java <= 9, by default, will try to allocate a large amount of memory for the runtime and garbage collection. This can lead to resource exhaustion of RAM on a hypervisor. The maximum memory allocation should be specified to Java applications using ``-Xmx<SIZE_IN_MB>m``. [7] This is no longer an issue in Java >= 10 as it is now aware of when it is being containerized. [8]
 
 Example Java <=9 usage in a docker compose file that utilizes an environment variable:
 
@@ -130,13 +130,13 @@ LXC
 Linux Containers (LXC) utilizes the Linux kernel to natively run
 containers.
 
-Debian install [19]:
+Debian install [5]:
 
 .. code-block:: sh
 
     $ sudo apt-get install lxc
 
-RHEL install [20] requires the Extra Packages for Enterprise Linux (EPEL)
+RHEL install [6] requires the Extra Packages for Enterprise Linux (EPEL)
 repository:
 
 -  RHEL:
@@ -171,9 +171,9 @@ Container Management Platforms
 OpenShift
 ~~~~~~~~~
 
-The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [29] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [30]
+The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [9] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [10]
 
-The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [52]
+The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [15]
 
 Minishift
 ^^^^^^^^^
@@ -198,7 +198,7 @@ Minishift deploys a virtual machine with OpenShift pre-installed as a test envir
     $ ./minishift openshift version list
     $ ./minishift start --openshift-version v3.11.0
 
-[31][32]
+[11][12]
 
 **Install (RHEL):**
 
@@ -213,7 +213,7 @@ Enable the Red Hat Developer Tools repository first. Then Minishift can be insta
     $ minishift openshift version list
     $ minishift start --openshift-version v3.11.0
 
-[33]
+[13]
 
 For installing newer versions of Minishift, the old environment must be wiped first.
 
@@ -224,7 +224,7 @@ For installing newer versions of Minishift, the old environment must be wiped fi
    $ rm -rf ~/.kube ~/.minishift
    $ sudo rm -f $(which oc)
 
-[58]
+[22]
 
 OpenShift Ansible
 ^^^^^^^^^^^^^^^^^
@@ -249,7 +249,7 @@ Inventory file variables:
 -  ``openshift_master_cluster_hostname`` = The private internal hostname.
 -  ``openshift_master_cluster_public_hostname`` = The public internal hostname.
 
-[56]
+[21]
 
 The container registry is ephemeral so after a reboot the data will be wiped. All of the storage inventory configuration options and settings can be found `here <https://docs.openshift.com/container-platform/3.11/install/configuring_inventory_file.html#advanced-install-registry>`__. For lab environments using NFS, unsupported options will need to be enabled using ``openshift_enable_unsupported_configurations=True``. The ``nfs`` group will also need to be created and added to the ``OSEv3:children`` group of groups.
 
@@ -308,7 +308,7 @@ Install kubectl for managing Kubernetes.
    $ sudo curl -L https://storage.googleapis.com/kubernetes-release/release/<VERSION>/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
    $ sudo chomd +x /usr/local/bin/kubectl
 
-[51]
+[14]
 
 kubeadm
 ^^^^^^^
@@ -320,7 +320,7 @@ Supported operating systems:
 -  HypriotOS
 -  Container Linux
 
-The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [60] Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with kubeadm.
+The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [17] Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with kubeadm.
 
 .. code-block:: sh
 
@@ -373,7 +373,7 @@ On the app/worker nodes, add them to the cluster by running:
 
    $ sudo kubeadm join --token <TOKEN> <MASTER_IP_ADDRESS>:6443 --discovery-token-ca-cert-hash sha256:<HASH>
 
-[59]
+[16]
 
 k3s
 ^^^
@@ -430,10 +430,10 @@ Kubernetes storage requires a ``PersistentVolume`` (PV) pool that users can crea
 
 Storage is recommended to be dynamic (ephemeral) so that applications can scale and handle failures in a cloudy way. However, databases and legacy applications may require static (persistent) storage.
 
--  PersistentVolume spec [61]:
+-  PersistentVolume spec [18]:
 
    -  storageClassName = The storage back-end to use. Leave blank to use the default. Set to a non-existent storage class to manually manage it (for example, "" or "manual").
-   -  **accessModes** [62]
+   -  **accessModes** [19]
 
       -  ReadOnlyMany = More than one pod can only read the data to/from this storage
       -  ReadWriteOnce = Only one pod can read and write to/from this storage.
@@ -551,5 +551,33 @@ The example below shows how to configure static storage for a pod using local st
            - mountPath: "/var/lib/mysql"
              name: <POD_VOLUME_NAME>
 
-[63]
+[20]
 
+`History <https://github.com/ekultails/rootpages/commits/master/src/containers.rst>`__
+--------------------------------------------------------------------------------------
+
+Bibliography
+------------
+
+1. "Get started with Docker." Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted
+2. "Getting started with Docker." Fedora Developer Portal. Accessed May 16, 2018. https://developer.fedoraproject.org/tools/docker/docker-installation.html
+3. "containers in docker 1.11 does not get same MTU as host #22297." Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297
+4. "iptables failed - No chain/target/match by that name #16816." Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816
+5. "LXC." Ubuntu Documentation. Accessed August 8, 2017. https://help.ubuntu.com/lts/serverguide/lxc.html
+6. "How to install and setup LXC (Linux Container) on Fedora Linux 26." nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
+7. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
+8. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
+9. "OpenShift: Container Application Platform by Red Hat." OpenShift. Accessed February 26, 2018. https://www.openshift.com/
+10. "Persistent Storage." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/storage.html
+11. "Minishift Quickstart." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html
+12. "Run OpenShift Locally with Minishift." Fedora Magazine. June 20, 2017. Accessed February 26, 2018. https://fedoramagazine.org/run-openshift-locally-minishift/
+13. "CHAPTER 5. INSTALLING RED HAT CONTAINER DEVELOPMENT KIT." Red Hat Customer Portal. Accessed February 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_container_development_kit/3.0/html/installation_guide/installing-rhcdk
+14. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
+15. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
+16. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+17. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
+18. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
+19. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+20. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+21. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
+22. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift

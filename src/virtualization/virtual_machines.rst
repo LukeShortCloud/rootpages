@@ -188,7 +188,7 @@ Reboot the server and verify that the new settings have taken affect.
     Hugepagesize:       2048 kB
     Hugetlb:        16777216 kB
 
-[43]
+[33]
 
 Network
 '''''''
@@ -239,7 +239,7 @@ libvirt:
 Storage
 '''''''
 
-Raw disk partitions have the greatest speeds with the "virtio" driver, cache disabled, and the I/O mode set to "native." If a sparsely allocated storage device is used for the virtual machine (such as a thin-provisioned QCOW2 image) then the I/O mode of "threads" is preferred. This is because with "native" some writes may be temporarily blocked as the sparsely allocated storage needs to first grow before committing the write. [47]
+Raw disk partitions have the greatest speeds with the "virtio" driver, cache disabled, and the I/O mode set to "native." If a sparsely allocated storage device is used for the virtual machine (such as a thin-provisioned QCOW2 image) then the I/O mode of "threads" is preferred. This is because with "native" some writes may be temporarily blocked as the sparsely allocated storage needs to first grow before committing the write. [20]
 
 QEMU:
 
@@ -298,7 +298,7 @@ Verify that the computer's processor supports nested hardware virtualization.
 
        $ grep -m 1 svm /proc/cpuinfo
 
-Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processer and storage. [49] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [50]
+Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processer and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]
 
 .. code-block:: sh
 
@@ -562,7 +562,7 @@ Common commands:
 -  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
 -  partition = Manually create partitions.
 
-   -  UEFI devices need a dedicated partition for storing the EFI information. [57]
+   -  UEFI devices need a dedicated partition for storing the EFI information. [16]
 
       -  part /boot/efi --fstype vfat --size=256 --ondisk=sda
 
@@ -730,7 +730,7 @@ Provider specific options:
    -  linked_clone (boolean) = Use a thin provisioned virtual machine image.
    -  customize (list of strings) = Run custom commands after the virtual machine has been created.
 
-[53]
+[17]
 
 Networks
 ''''''''
@@ -954,7 +954,7 @@ Minimum requirements:
 
   -  One for the oVirt Engine (that is not in use) and one already set for the hypervisor
 
-Install the stable, development, or the master repository. [42]
+Install the stable, development, or the master repository. [32]
 
 -  Stable:
 
@@ -981,7 +981,7 @@ Install the oVirt Engine dependencies.
 
     $ sudo yum install ovirt-hosted-engine-setup ovirt-engine-appliance
 
-Setup NFS. The user "vdsm" needs full access to a NFS exported directory. The group "kvm" should have readable and executable permissions to run virtual machines from there. [41]
+Setup NFS. The user "vdsm" needs full access to a NFS exported directory. The group "kvm" should have readable and executable permissions to run virtual machines from there. [31]
 
 .. code-block:: sh
 
@@ -1038,9 +1038,9 @@ Specify the NFS mount options. For avoiding DNS issues, the NFS server's IP addr
 
 [40]
 
-Once the installation is complete, log into the oVirt Engine web portal at ``https://<OVIRT_ENGINE_HOSTNAME>``. Use the admin@internal account with the password that was configured during the setup. Accessing the web portal using the IP address may not work and result in this error: ``"The redirection URI for client is not registered"``. The fully qualified domain name has to be used for the link. [44]
+Once the installation is complete, log into the oVirt Engine web portal at ``https://<OVIRT_ENGINE_HOSTNAME>``. Use the admin@internal account with the password that was configured during the setup. Accessing the web portal using the IP address may not work and result in this error: ``"The redirection URI for client is not registered"``. The fully qualified domain name has to be used for the link. [41]
 
-If tasks, such as uploading an image, get stuck in the "Paused by System" state then the certificate authority (CA) needs to be imported into the end-user's web browser. Download it from the oVirt Engine by going to: ``https://<OVIRT_ENGINE_HOSTNAME>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA``.
+If tasks, such as uploading an image, get stuck in the "Paused by System" state then the certificate authority (CA) needs to be imported into the end-user's web browser. Download it from the oVirt Engine by going to: ``https://<OVIRT_ENGINE_HOSTNAME>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA``. [29]
 
 Hooks
 ^^^^^
@@ -1073,7 +1073,7 @@ Install the hook and define the required virtual machine property.
 
 This will add an option to virtual machines to allow MAC spoofing. By default, it will still not be allowed.
 
-[46]
+[30]
 
 Nested Virtualization
 '''''''''''''''''''''
@@ -1086,10 +1086,10 @@ Install the hook.
 
 Nested virtualization also requires MAC spoofing to be enabled.
 
-[46]
+[30]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
-------------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/virtual_machines.rst>`__
+--------------------------------------------------------------------------------------------
 
 Bibliography
 ------------
@@ -1109,11 +1109,11 @@ Bibliography
 13. "PCI passthrough via OVMF." Arch Linux Wiki. December 18, 2016. Accessed December 18, 2016. https://wiki.archlinux.org/index.php/PCI\_passthrough\_via\_OVMF
 14. "Xen Definition." TechTarget. March, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Xen
 15. "Nested Virtualization in Xen." Xen Project Wiki. November 2, 2017. Accessed December 22, 2017. https://wiki.xenproject.org/wiki/Nested\_Virtualization\_in\_Xen
-16. "Get started with Docker." Docker. Accessed November 19, 2016. https://docs.docker.com/engine/getstarted
-17. "containers in docker 1.11 does not get same MTU as host #22297." Docker GitHub. September 26, 2016. Accessed November 19, 2016. https://github.com/docker/docker/issues/22297
-18. "iptables failed - No chain/target/match by that name #16816." Docker GitHub. November 10, 2016. Accessed December 17, 2016. https://github.com/docker/docker/issues/16816
-19. "LXC." Ubuntu Documentation. Accessed August 8, 2017. https://help.ubuntu.com/lts/serverguide/lxc.html
-20. "How to install and setup LXC (Linux Container) on Fedora Linux 26." nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
+16. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
+17. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
+18. "APIC Virtualization Performance Testing and Iozone." Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone
+19. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
+20. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
 21. "Introduction to Vagrant." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/intro/getting-started/index.html
 22. "Available Vagrant Plugins." mitchell/vagrant GitHub. November 9, 2016. Accessed May 8, 2017. https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins
 23. "[Vagrant] Boxes." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/boxes.html
@@ -1122,11 +1122,11 @@ Bibliography
 26. "[Vagrant] Provisioning." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/provisioning/
 27. "[Vagrant] Multi-Machine." Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. https://www.vagrantup.com/docs/multi-machine/
 28. "Vagrantfile." Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html
-29. "OpenShift: Container Application Platform by Red Hat." OpenShift. Accessed February 26, 2018. https://www.openshift.com/
-30. "Persistent Storage." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/storage.html
-31. "Minishift Quickstart." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html
-32. "Run OpenShift Locally with Minishift." Fedora Magazine. June 20, 2017. Accessed February 26, 2018. https://fedoramagazine.org/run-openshift-locally-minishift/
-33. "CHAPTER 5. INSTALLING RED HAT CONTAINER DEVELOPMENT KIT." Red Hat Customer Portal. Accessed February 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_container_development_kit/3.0/html/installation_guide/installing-rhcdk
+29. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
+30. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
+31. "Storage." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/admin-guide/chap-Storage/
+32. "Install nightly snapshot." oVirt Documentation. Accessed March 21, 2018. https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/
+33. "Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25." Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html
 34. "PCI passthrough via OVMF." Arch Linux Wiki. February 13, 2018. Accessed February 26, 2018. https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF
 35. "RYZEN GPU PASSTHROUGH SETUP GUIDE: FEDORA 26 + WINDOWS GAMING ON LINUX." Level One Techs. June 25, 2017. Accessed February 26, 2018. https://level1techs.com/article/ryzen-gpu-passthrough-setup-guide-fedora-26-windows-gaming-linux
 36. "IOMMU Groups – What You Need to Consider." Heiko's Blog. July 25, 2017. Accessed March 3, 2018. https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/
@@ -1134,27 +1134,5 @@ Bibliography
 38. "Creating an automated CentOS 7 Install via Kickstart file." Marc Lopez Personal Blog. December 1, 2014. Accessed March 15, 2018. https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file
 39. "oVirt Architecture." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/architecture/architecture/
 40. "Deploying Self-Hosted Engine." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/
-41. "Storage." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/admin-guide/chap-Storage/
-42. "Install nightly snapshot." oVirt Documentation. Accessed March 21, 2018. https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/
-43. "Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25." Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html
-44. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
-45. "RHV 4 Upload Image tasks end in Paused by System state." Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. https://access.redhat.com/solutions/2592941
-46. "Testing oVirt 3.3 with Nested KVM." Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/
-47. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
-48. "Getting started with Docker." Fedora Developer Portal. Accessed May 16, 2018. https://developer.fedoraproject.org/tools/docker/docker-installation.html
-49. "APIC Virtualization Performance Testing and Iozone." Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone
-50. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
-51. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
-52. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
-53. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
-54. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
-55. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
-56. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
-57. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
-58. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
-59. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
-60. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
-61. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
-62. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-63. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+41. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
 
