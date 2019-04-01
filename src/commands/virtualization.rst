@@ -184,6 +184,30 @@ This manages the oVirt Engine virtual machine.
 QEMU
 ----
 
+guestfish
+~~~~~~~~~
+
+Package: libguestfs-tools-c
+
+Modify local virtual machine images.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -a, specify the image to modify
+   --ro, mount the image as read-only
+   --rw, mount the image as writable
+   -i , automatically mount partitions
+   --cmd-help, view guestfish commands that can be ran
+   <COMMAND>, run a command inside of the image
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+    -a rhel76.img --ro -i cat /etc/machine-id, mount the rhel76 image as read-only and then view the contents of the machine-id file
+
 qemu-img
 ~~~~~~~~
 
@@ -269,8 +293,17 @@ Execute commands inside of a virtual machine image file.
    "-a <IMAGE_FILE>", "specify the image to modify"
    "--root-password password:<PASSWORD>", "change the root password"
    "--run-command '<COMMAND>'", "run a command inside of the image"
+   --uninstall cloud-init, install the cloud-init software that is commonly installed on cloud images
+   --ssh-inject <USER>:file:<FILE>, inject a specified SSH public key into the user's ~/.ssh/authorized_keys file
+   --ssh-inject <USER>:string:<SSH_KEY_PUB>, same as file except the full public key string can be specified instead of the path to the file
 
-Note that newer versions of this tool will automatically generate an unique machine-id after any customization. This will cause issues later on with cluster services if more than one machine will run using a copy of that base image. systemd will only regenerate it if the configuration file exists and is empty: ``$ guestfish -a <IMAGE_FILE> -i 'echo > /etc/machine-id'``.
+Note that newer versions of this tool will automatically generate an unique machine-id after any customization. This will cause issues later on with cluster services if more than one machine will run using a copy of that base image. systemd will only regenerate it if the configuration file exists and is empty. This can be fixed by running: ``$ virt-sysprep --operations machine-id -a <IMAGE>``.
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   -a /var/lib/libvirt/images/rhel-server-7.6-x86_64-kvm.qcow2 --root-password password:toor --uninstall cloud-init, setup a RHEL 7.6 image to be used on a non-cloud environment
 
 virt-edit
 ~~~~~~~~~
