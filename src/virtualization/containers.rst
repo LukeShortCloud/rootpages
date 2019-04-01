@@ -499,6 +499,11 @@ The example below shows how to configure static storage for a pod using local st
        - ReadWriteOnce
      hostPath:
        path: "<LOCAL_FILE_SYSTEM_PATH>"
+     # For distributed storage, consider using "nfs" instead of "hostPath".
+     # See: https://docs.okd.io/latest/install_config/persistent_storage/persistent_storage_nfs.html
+     #nfs:
+     #  path: /exports/app
+     #  server: 192.168.1.100
      nodeAffinity:
        required:
          nodeSelectorTerms:
