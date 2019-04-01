@@ -375,6 +375,54 @@ On the app/worker nodes, add them to the cluster by running:
 
 [59]
 
+k3s
+^^^
+
+k3s was created by Rancher Labs as a simple way to deploy low-resource Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary.
+
+Install (master):
+
+.. code-block:: sh
+
+   $ git clone https://github.com/rancher/k3s.git
+   $ cd k3s
+   $ sudo ./install.sh
+
+Find the token on the master:
+
+.. code-block:: sh
+
+   $ sudo cat /var/lib/rancher/k3s/server/node-token
+
+Install (worker):
+
+.. code-block:: sh
+
+   $ git clone https://github.com/rancher/k3s.git
+   $ cd k3s
+   $ K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 ./install.sh
+
+Uninstall:
+
+.. code-block:: sh
+
+   $ sudo /usr/local/bin/k3s-uninstall.sh
+
+Access the ``kubectl`` command through ``k3s`` to manage resources on the cluster.
+
+.. code-block:: sh
+
+   $ sudo k3s kubectl --help
+
+For using the ``kubectl`` command on other systems, copy the configuration from the master node.
+
+.. code-block:: sh
+
+   $ scp root@<MASTER>:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+   $ sed -i s'/localhost/<MASTER_HOST>/'g ~/.kube/config
+
+Source: "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
+
 Storage
 ^^^^^^^
 
