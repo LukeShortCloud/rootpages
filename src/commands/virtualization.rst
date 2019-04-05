@@ -25,6 +25,15 @@ A utility used to build new container images as non-privileged users.
    run <NAME> /bin/bash, open an interactive shell on the container
    rm, remove a container
    rmi, remove an image
+   --format=docker, use the docker format instead of the default OCI format
+   bud -f <DOCKER_FILE> -t <NAME> ., "build a new image from a specified Dockerfile, give it a name, and save to the local directory"
+   push --tls-verify=false <IMAGE> docker://127.0.0.1:5000/<USER>/<IMAGE_NAME>:<TAG>, push the container image to a local private image registry (use the official docker ``registry`` image to run a local server)
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   bud -f Dockerfile -t fedora28-arm64-java ., build a new container from the Dockerfile
 
 docker
 ~~~~~~
