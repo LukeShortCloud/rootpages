@@ -50,6 +50,26 @@ By default, only the "root" user has access to manage docker containers. Users a
     $ sudo usermod -a -G docker <USER>
     $ sudo systemctl restart docker
 
+Dockerfile
+~~~~~~~~~~
+
+docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it's started.
+
+-  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
+-  ADD <SOURCE> <DESTINATION> = Add files from the local file system to the container. This will also download URLs and extract archives (unlike ``COPY``).
+-  CMD = The default command to run in the container, if ``ENTRYPOINT`` is not defined. If ``ENTRYPOINT`` is defined, then ``CMD`` will serve as default arguments to ``ENTRYPOINT`` that can be overriden from the docker CLI.
+-  **ENTRYPOINT** = The default command to run in this container. Arguments from the docker CLI will be passed to this command and override the optional ``CMD`` arguments. Use if this container is supposed to be an executable.
+-  ENV <VARIABLE>=<VALUE> = Create shell environment variables.
+-  EXPOSE <PORT>/<PROTOCOL> = Connect to certain network ports.
+-  **FROM** = The original image to create this container from.
+-  **MAINTAINER** = The name of the maintainer of this image.
+-  RUN = A command that can be ran once in the container. Use the ``CMD <COMMAND> <ARG1> <ARG2>`` format to open a shell or ``CMD ['<COMMAND>', '<ARG1>', '<ARG2>']`` to execute without a shell.
+-  USER <UID>:<GID> = Configure a UID and/or GID to run the container as.
+-  VOLUME <PATH> = A list of paths inside the container that can mount to an external persistent storagedevice (for example, for storing a database).
+-  WORKDIR = The working directory where commands will be executed from.
+
+[23]
+
 Networking
 ~~~~~~~~~~
 
@@ -581,3 +601,5 @@ Bibliography
 20. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 21. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
 22. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
+23. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
+
