@@ -1497,7 +1497,7 @@ Overcloud
 
 -  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
 
-   -  <= Queens
+   -  <= Queens (RDO)
 
       .. code-block:: sh
 
@@ -1508,7 +1508,7 @@ Overcloud
         $ tar -v -x -f ironic-python-agent.tar
         $ tar -v -x -f overcloud-full.tar
 
-   -  >= Rocky
+   -  >= Rocky (RDO)
 
       .. code-block:: sh
 
@@ -1518,6 +1518,16 @@ Overcloud
         $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/overcloud-full.tar
         $ tar -v -x -f ironic-python-agent.tar
         $ tar -v -x -f overcloud-full.tar
+
+   -  RHOSP 13 [112]
+
+      .. code-block:: sh
+
+         $ mkdir images
+         $ cd images
+         $ sudo yum install rhosp-director-images rhosp-director-images-ipa
+         $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-13.0.tar
+         $ tar -v -x -f /usr/share/rhosp-director-images/ironic-python-agent-latest-13.0.tar
 
 -  These files are extracted from the tar archives:
 
@@ -1869,7 +1879,7 @@ Overcloud
    .. code-block:: sh
 
        $ openstack stack list
-       $ openstack stack failures list <OVERCLOUD_STACK_ID>
+       $ openstack stack failures list <OVERCLOUD_STACK_ID> --long
        $ openstack stack show <OVERCLOUD_STACK_ID>
        $ openstack stack resource list <OVERCLOUD_STACK_ID>
        $ openstack stack resource show <OVERCLOUD_STACK_ID> <RESOURCE_NAME>
@@ -1921,6 +1931,99 @@ Overcloud
     .. code-block:: sh
 
        $ sshuttle -r stack@undercloud 192.168.24.23
+
+Overcloud (Pre-provisioned/deployed Nodes)
+''''''''''''''''''''''''''''''''''''''''''
+
+Instrospection and operating system deployment can be skipped if the Overcloud nodes already have the operating system installed and configured. This makes the Overcloud deployment process from TripleO faster. An Overcloud cannot have a mix of nodes that need provisioning and are pre-provisioned. If using this method, all Overcloud nodes must be pre-provisioned.
+
+**Overcloud Nodes**
+
+-  Install CentOS or RHEL.
+-  Create a ``stack`` user. Add the ``stack`` user's SSH key from the Undercloud to allow access during deployment.
+-  Enable the RDO or RHOSP repositories.
+-  Install the Heat user agent.
+
+   .. code-block:: sh
+
+      $ sudo yum -y install python-heat-agent*
+
+**Undercloud/Director**
+
+-  The control plane IP addresses should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration.
+-  A default installation of OpenStack through TripleO will automatically assign random IP addresses. Manually configure the desired IP addresses for the control plane to keep the original addresses.
+
+   .. code-block:: yaml
+
+       ---
+       resource_registry:
+         OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
+
+       parameter_defaults:
+         NeutronPublicInterface: eth1
+         ControlPlaneDefaultRoute: <UNDERCLOUD_LOCAL_IP>
+         EC2MetadataIp: <UNDERCLOUD_LOCAL_IP>
+         DeployedServerPortMap:
+           controller-0-ctlplane:
+             fixed_ips:
+               - ip_address: <CONTROLLER0_IPV4>
+             subnets:
+               - cidr: 24
+           controller-1-ctlplane:
+             fixed_ips:
+               - ip_address: <CONTROLLER1_IPV4>
+             subnets:
+               - cidr: 24
+           controller-2-ctlplane:
+             fixed_ips:
+               - ip_address: <CONTROLLER2_IPV4>
+             subnets:
+               - cidr: 24
+           compute-0-ctlplane:
+             fixed_ips:
+               - ip_address: <COMPUTE0_IPV4>
+             subnets:
+               - cidr: 24
+
+-  If config-download will be used, hostname maps have to be defined.
+
+   .. code-block:: yaml
+
+       ---
+       parameter_defaults:
+         HostnameMap:
+           overcloud-controller-0: <CONTROLLER0_HOSTNAME>
+           overcloud-controller-1: <CONTROLLER1_HOSTNAME>
+           overcloud-controller-2: <CONTROLLER2_HOSTNAME>
+           overcloud-novacompute-0: <COMPUTE0_HOSTNAME>
+
+-  Start the deployment of the Overcloud using at least these arguments and templates.
+
+   .. code-block:: sh
+
+      $ openstack overcloud deploy --disable-validations \
+         -e  ~/templates/environments/deployed-server-environment.yaml \
+         -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
+         -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
+         -r ~/templates/deployed-server/deployed-server-roles-data.yaml
+
+-  The deployment will pause on the creation of the Overcloud nodes.
+
+   ::
+
+      2019-01-01 12:00:00Z [overcloud.Compute.0.NovaCompute]: CREATE_IN_PROGRESS  state changed
+      2019-01-01 12:00:01Z [overcloud.Controller.0.Controller]: CREATE_IN_PROGRESS  state changed
+
+-  The Heat agents on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used.
+
+   .. code-block:: sh
+
+      $ export OVERCLOUD_ROLES="ControllerDeployedServer ComputeDeployedServer"
+      $ export ControllerDeployedServer_hosts="<CONTROLLER0_IP> <CONTROLLER1_IP> <CONTROLLER2_IP>"
+      $ export ComputeDeployedServer_hosts="<COMPUTE0_IP>"
+      $ /usr/share/openstack-tripleo-heat-templates/deployed-server/scripts/get-occ-config.sh
+
+[110][111]
 
 Operations
 ''''''''''
@@ -4222,3 +4325,6 @@ Bibliography
 107. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
 108. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
 109. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
+110. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
+111. "Using Already Deployed Servers." TripleO Documentation. January 2, 2019. Accessed April 3, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/deployed_server.html
+112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
