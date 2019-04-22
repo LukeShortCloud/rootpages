@@ -398,7 +398,7 @@ On the app/worker nodes, add them to the cluster by running:
 k3s
 ^^^
 
-k3s was created by Rancher Labs as a simple way to deploy low-resource Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary.
+k3s was created by Rancher Labs as a simple way to deploy low-resource Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
 
 Install (master):
 
@@ -441,7 +441,44 @@ For using the ``kubectl`` command on other systems, copy the configuration from 
    $ scp root@<MASTER>:/etc/rancher/k3s/k3s.yaml ~/.kube/config
    $ sed -i s'/localhost/<MASTER_HOST>/'g ~/.kube/config
 
-Source: "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
+[24]
+
+For storage, k3s supports all of the stable Container Storage Interface (CSI) and sample driver providers. As of k3s v0.4.0 (Kubernetes 1.14.0), these are the supported providers:
+
+-  Alicloud Elastic Block Storage
+-  Alicloud Elastic File System
+-  Alicloud OSS
+-  AWS Elastic File System
+-  AWS Elastic Storage
+-  AWS FSx for Lustre
+-  CephFS
+-  Cinder
+-  cloudscale.ch
+-  Datera
+-  DigitalOcean Block Storage
+-  DriveScale
+-  Flexvolume
+-  GlusterFS
+-  Hitachi Vantra
+-  HostPath
+-  Linode Block Storage
+-  LINSTOR
+-  MapR
+-  NFS
+-  Portworx
+-  QingCloud CSI
+-  QingStor CSI
+-  Quobyte
+-  RBD
+-  ScaleIO
+-  StorageOS
+-  Synology NAS
+-  XSKY
+-  VFS Driver
+-  vSphere
+-  YanRongYun
+
+[25]
 
 Storage
 ^^^^^^^
@@ -602,4 +639,5 @@ Bibliography
 21. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
 22. "How to run AWX on Minishift." OpenSource.com. October 26, 2018. Accessed October 29, 2018. https://opensource.com/article/18/10/how-run-awx-minishift
 23. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
-
+24. "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
+25. "Drivers." Kubernetes CSI Developer Documentation. Accessed April 11, 2019. https://kubernetes-csi.github.io/docs/drivers.html
