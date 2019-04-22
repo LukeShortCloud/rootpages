@@ -1297,6 +1297,9 @@ Methods can be set to be private for each class by setting by setting ``__<METHO
 Testing
 -------
 
+Unit and Integration Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The ``unittest`` library can be used to run unit and integration tests. Below is a template of how a test class should be defined in Python. The class must utilize ``unittest.TestCase`` to handle tests. The ``setUp()`` method is used instead of ``__init__()`` for initializing a test object. The ``tearDown()`` method is always executed after every test. Test method names created by the developer must start with ``test_`` or else they will not be executed. Returns from the methods are ignored. The unit tests suite only checks to see if ``assert`` methods have succeeded or failed. When the tests are complete, a status report of the tests will be printed to the standard output.
 
 Example:
@@ -1339,6 +1342,40 @@ Each test should have ``assert`` checks to verify that what is expected is being
 -  assertNotIsInstance
 
 [26]
+
+Mock
+~~~~
+
+Mock can be used to mimic method calls and return values. This is useful for writing tests that complete faster and to clone the behavior of methods that may not work on different environments.
+
+.. code-block:: python
+
+   from unittest.mock import Mock
+
+Common methods:
+
+-  call = Execute a mocked method and provide a list of arguments to it.
+-  call_args = A tuple of the last arguments used by the mocked method.
+-  call_args_list = The list of arguments that were provided to every call of the mocked method.
+-  return_value = A value the mocked method will always return.
+-  configure_mock = Define a new attribute, such as a variable and it's value, for the mocked method.
+-  side_effect = The side effect can be used to return one or more values from a mocked method.
+
+   -  A function to run when mock is called.
+   -  An exception that will be thrown if the mocked method is called.
+   -  An iterable tuple of tuples for each call to the mocked method.
+
+The ``patch`` method can be used to override an existing method and provide faked results
+
+.. code-block:: python
+
+   from unittest.mock import patch
+
+       @patch('main.<CLASS>.<METHOD>', return_value=<VALUE>)
+       def func():
+          return <METHOD>()
+
+[37]
 
 PyPI Packaging
 --------------
@@ -1500,3 +1537,4 @@ Bibliography
 34. "logging.handlers — Logging handlers." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.handlers.html/
 35. "logging.handlers — Logging handlers." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/copy.html
 36. "LEARN TO LOOP THE PYTHON WAY: ITERATORS AND GENERATORS EXPLAINED." Hackaday. September 19, 2018. Accessed February 22, 2019. https://hackaday.com/2018/09/19/learn-to-loop-the-python-way-iterators-and-generators-explained/
+37. "unittest.mock - mock object library." Python 3 Documentation. March 19, 2019. Accessed March 19, 2019. https://docs.python.org/3/library/unittest.mock.html
