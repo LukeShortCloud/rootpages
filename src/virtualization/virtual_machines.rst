@@ -521,6 +521,20 @@ Orchestration
 Virtual machine provisioning can be automated through the use of
 different tools.
 
+Manual
+~~~~~~
+
+Instead of installing operating systems from scratch, a pre-built cloud virtual machine image can be used and customized for use in a non-cloud environment.
+
+-  Find and download cloud images from `here <https://docs.openstack.org/image-guide/obtain-images.html>`__.
+-  Set the root password and uninstall cloud-init: ``$ virt-customize --root-password password:<PASSWORD> --uninstall cloud-init -a <VM_IMAGE>``
+-  Reset the machine-id: ``$ virt-sysprep --operations machine-id -a <VM_IMAGE>``
+-  Increase the QCOW2 image size: ``$ qemu-img resize <VM_IMAGE> <SIZE>G``
+-  Create a new QCOW2 image for resizing the partition: ``$ qemu-img create -f qcow2 <VM_IMAGE_NEW> <SIZE>G``
+-  Resize the partition: ``$ virt-resize --expand /dev/sda1 <VM_IMAGE> <VM_IMAGE_NEW>``
+-  Delete the original cloud image: ``$ rm <VM_IMAGE>``
+-  Rename the new resized QCOW2 image: ``$ mv <VM_IMAGE_NEW> <VM_IMAGE>``
+
 Anaconda
 ~~~~~~~~
 
