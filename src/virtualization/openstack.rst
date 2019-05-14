@@ -1806,7 +1806,7 @@ Overcloud
    .. code-block:: sh
 
        $ openstack help overcloud deploy
-       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml --control-flavor control --compute-flavor compute
+       $ openstack overcloud deploy --templates ~/templates -r ~/templates/roles_data_custom.yaml
 
    -  Virtual lab environment:
 
@@ -1932,6 +1932,17 @@ Overcloud
 
        $ sshuttle -r stack@undercloud 192.168.24.23
 
+Overcloud (Queens config-download)
+''''''''''''''''''''''''''''''''''
+
+The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running the deployment playbooks.
+
+.. code-block:: sh
+
+   $ openstack overcloud deploy --templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
+
+[113]
+
 Overcloud (Pre-provisioned/deployed Nodes)
 ''''''''''''''''''''''''''''''''''''''''''
 
@@ -1940,6 +1951,10 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 **Overcloud Nodes**
 
 -  Install CentOS or RHEL.
+-  Configure the nodes to have an IP address on the Undercloud provisioning network (192.168.24.0/24 by default)
+ 
+   -  Alternatively, follow `this guide <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/director_installation_and_usage/index#sect-Using_a_Separate_Network_for_Overcloud_Nodes>`__ to allow the nodes to access a routable public hostname for the Undercloud secured by SSL/TLS. This avoids the requirement of having access to the provisioning interface/network of the Undercloud.
+
 -  Create a ``stack`` user. Add the ``stack`` user's SSH key from the Undercloud to allow access during deployment.
 -  Enable the RDO or RHOSP repositories.
 -  Install the Heat user agent.
@@ -1951,7 +1966,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 **Undercloud/Director**
 
 -  The control plane IP addresses should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration.
--  A default installation of OpenStack through TripleO will automatically assign random IP addresses. Manually configure the desired IP addresses for the control plane to keep the original addresses.
+-  A default installation of OpenStack through TripleO will automatically assign random IP addresses. Manually configure the desired IP addresses for the control plane network to keep the original addresses.
 
    .. code-block:: yaml
 
@@ -1961,43 +1976,44 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
        parameter_defaults:
          NeutronPublicInterface: eth1
-         ControlPlaneDefaultRoute: <UNDERCLOUD_LOCAL_IP>
+         ControlPlaneDefaultRoute: <UNDERCLOUD_GATEWAY_IP>
          EC2MetadataIp: <UNDERCLOUD_LOCAL_IP>
          DeployedServerPortMap:
-           controller-0-ctlplane:
+           <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
                - ip_address: <CONTROLLER0_IPV4>
              subnets:
                - cidr: 24
-           controller-1-ctlplane:
+           <CONTROLLER1_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
                - ip_address: <CONTROLLER1_IPV4>
              subnets:
                - cidr: 24
-           controller-2-ctlplane:
+           <CONTROLLER2_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
                - ip_address: <CONTROLLER2_IPV4>
              subnets:
                - cidr: 24
-           compute-0-ctlplane:
+           <COMPUTE0_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
                - ip_address: <COMPUTE0_IPV4>
              subnets:
                - cidr: 24
 
--  If config-download will be used, hostname maps have to be defined.
+-  If config-download will be used, hostname maps have to be defined. These must be mapped to the short hostname of the servers.
 
    .. code-block:: yaml
 
        ---
        parameter_defaults:
          HostnameMap:
-           overcloud-controller-0: <CONTROLLER0_HOSTNAME>
-           overcloud-controller-1: <CONTROLLER1_HOSTNAME>
-           overcloud-controller-2: <CONTROLLER2_HOSTNAME>
-           overcloud-novacompute-0: <COMPUTE0_HOSTNAME>
+           overcloud-controller-0: <CONTROLLER0_SHORT_HOSTNAME>
+           overcloud-controller-1: <CONTROLLER1_SHORT_HOSTNAME>
+           overcloud-controller-2: <CONTROLLER2_SHORT_HOSTNAME>
+           overcloud-compute-0: <COMPUTE0_SHORT_HOSTNAME>
 
--  Start the deployment of the Overcloud using at least these arguments and templates.
+-  Ensure that the Overcloud nodes have an interface and IP address on the same provisioning network that the Undercloud uses. By default, the network is configured is ``192.168.24.0/24`` with the Undercloud API endpoints listening on ``192.168.24.1``. The endpoints have to be reachable via the Overcloud nodes.
+-  Start the deployment of the Overcloud using at least these arguments and templates. Add the ``-e ~/templates/hostname-map.yaml`` argument for config-download to do the hostname mapping.
 
    .. code-block:: sh
 
@@ -2007,14 +2023,15 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
          -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
          -r ~/templates/deployed-server/deployed-server-roles-data.yaml
 
--  The deployment will pause on the creation of the Overcloud nodes.
+**Queens (Automatic)**
+
+-  When using Queens without config-download, the deployment will pause on the creation of the Overcloud nodes. The Heat agent on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used.
+
 
    ::
 
       2019-01-01 12:00:00Z [overcloud.Compute.0.NovaCompute]: CREATE_IN_PROGRESS  state changed
       2019-01-01 12:00:01Z [overcloud.Controller.0.Controller]: CREATE_IN_PROGRESS  state changed
-
--  The Heat agents on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used.
 
    .. code-block:: sh
 
@@ -2022,6 +2039,43 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
       $ export ControllerDeployedServer_hosts="<CONTROLLER0_IP> <CONTROLLER1_IP> <CONTROLLER2_IP>"
       $ export ComputeDeployedServer_hosts="<COMPUTE0_IP>"
       $ /usr/share/openstack-tripleo-heat-templates/deployed-server/scripts/get-occ-config.sh
+
+**Queens (Manual)**
+
+-  Use the manual method if the automatic one does not work.
+-  Generate metadata URLs for the Overcloud nodes.
+
+   .. code-block:: sh
+
+      $ for STACK in $(openstack stack resource list -n5 --filter name=deployed-server -c stack_name -f value overcloud) ; do STACKID=$(echo $STACK | cut -d '-' -f2,4 --output-delimiter " ") ; echo "== Metadata URL for $STACKID ==" ; openstack stack resource metadata $STACK deployed-server | jq -r '.["os-collect-config"].request.metadata_url' ; echo ; done
+
+-  On the Overcloud nodes, add the correct metadata URL to the os-collect-config configuration, and then restart the service.
+
+   .. code-block:: sh
+
+      $ sudo rm /usr/libexec/os-apply-config/templates/etc/os-collect-config.conf
+      $ sudo vi /usr/libexec/os-apply-config/templates/etc/os-collect-config.conf
+
+   .. code-block:: ini
+
+      [DEFAULT]
+      collectors=request
+      command=os-refresh-config
+      polling_interval=30
+      
+      [request]
+      metadata_url=<METADATA_URL>
+
+   .. code-block:: sh
+
+      $ sudo systemctl restart os-collect-config
+
+-  If issues are encountered with the manual process, stop the service and then run the os-collect-config command and force it to use the primary configuration file.
+
+  .. code-block:: sh
+
+     $ sudo systemctl stop os-collect-config
+     $ sudo os-collect-config --debug --force --one-time --config-file /etc/os-collect-config.conf
 
 [110][111]
 
@@ -4325,6 +4379,7 @@ Bibliography
 107. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
 108. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
 109. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
-110. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
+110. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
 111. "Using Already Deployed Servers." TripleO Documentation. January 2, 2019. Accessed April 3, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/deployed_server.html
 112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
+113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
