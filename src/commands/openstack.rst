@@ -469,6 +469,8 @@ openstack overcloud deploy
    --stack <STACK_NAME>, provide a custom stack name (default: overcloud)
    --templates, the path to the Heat templates directory
    -e, the path to an additional Heat template
+   "--{control,compute}-flavor <FLAVOR>", "REMOVED IN TRAIN, use Heat template variables instead. Assign a custom flavor profile."
+   --override-ansible-cfg, provide a custom Ansible configuration file for config-download
 
 .. csv-table::
    :header: Example, Explanation
