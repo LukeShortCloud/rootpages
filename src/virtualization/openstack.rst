@@ -295,18 +295,37 @@ Install
 
 First, install the required repositories for OpenStack.
 
-RHEL:
+RHEL (common):
+
+.. code-block:: sh
+
+    $ sudo subscription-manager repos --enable rhel-7-server-rpms --enable rhel-7-server-rh-common-rpms --enable rhel-7-server-extras-rpms
+
+RHEL (RDO)
 
 .. code-block:: sh
 
     $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
-    $ sudo subscription-manager repos --enable rhel-7-server-optional-rpms --enable rhel-7-server-extras-rpms
 
-CentOS:
+RHEL (RHOSP):
+
+.. code-block:: sh
+
+   $ sudo subscription-manager repos --enable rhel-7-server-openstack-13-rpms --enable rhel-7-server-openstack-13-devtools-rpms
+
+[114]
+
+CentOS (RDO):
 
 .. code-block:: sh
 
     $ sudo yum install centos-release-openstack-queens
+
+Disable NetworkManager:
+
+.. code-block:: sh
+
+    $ sudo systemctl disable NetworkManager
 
 Finally, install the Packstack utility.
 
@@ -4383,3 +4402,4 @@ Bibliography
 111. "Using Already Deployed Servers." TripleO Documentation. January 2, 2019. Accessed April 3, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/deployed_server.html
 112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
+114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
