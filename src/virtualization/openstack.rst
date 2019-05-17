@@ -1998,8 +1998,8 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
        parameter_defaults:
          NeutronPublicInterface: eth1
-         ControlPlaneDefaultRoute: <UNDERCLOUD_GATEWAY_IP>
-         EC2MetadataIp: <UNDERCLOUD_LOCAL_IP>
+         ControlPlaneDefaultRoute: 192.168.24.1
+         EC2MetadataIp: 192.168.24.1
          DeployedServerPortMap:
            <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
@@ -2243,7 +2243,7 @@ Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
    <NETWORK_TYPE>AllocationPools: [{"start": "<START_IP>", "end": "<LAST_IP>"}]
    <NETWORK_TYPE>NetworkVlanID: <VLAN_ID>
 
-Configure these settings to match the IP address that the Undercloud is configured to use for provisioning.
+Configure these settings to match the IP address that the Undercloud is configured to use for provisioning. The default value is ``192.168.24.1``.
 
 ::
 
@@ -2266,6 +2266,13 @@ Define the allowed network tag/tunnel types that Neutron networks use. The Neutr
    NeutronNetworkType: "vxlan,gre,vlan,flat"
    NeutronTunnelTypes: "vxlan"
    NeutronExternalNetworkBridge: "''"
+
+Define the interface to use for public networks. Optionally, define a VLAN tag for it. If no IP addressing information is configured for this interface, TripleO will default to configuring DHCP.
+
+::
+
+   NeutronPublicInterface: eth1
+   NeutronPublicInterfaceTag: 100
 
 Configure bonding interface options, if applicable. Below is an example for LACP.
 
