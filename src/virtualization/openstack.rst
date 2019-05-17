@@ -2044,7 +2044,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
 **Queens (Automatic)**
 
--  When using Queens without config-download, the deployment will pause on the creation of the Overcloud nodes. The Heat agent on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used.
+-  When using Queens without config-download, the deployment will pause on the creation of the Overcloud nodes. The Heat agent on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used. Use the Overcloud node roles defined in the "roles_data.yaml" configuration file.
 
 
    ::
@@ -2054,9 +2054,9 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
    .. code-block:: sh
 
-      $ export OVERCLOUD_ROLES="ControllerDeployedServer ComputeDeployedServer"
-      $ export ControllerDeployedServer_hosts="<CONTROLLER0_IP> <CONTROLLER1_IP> <CONTROLLER2_IP>"
-      $ export ComputeDeployedServer_hosts="<COMPUTE0_IP>"
+      $ export OVERCLOUD_ROLES="Controller Compute"
+      $ export Controller_hosts="<CONTROLLER0_IP> <CONTROLLER1_IP> <CONTROLLER2_IP>"
+      $ export Compute_hosts="<COMPUTE0_IP>"
       $ /usr/share/openstack-tripleo-heat-templates/deployed-server/scripts/get-occ-config.sh
 
 **Queens (Manual)**
@@ -2093,6 +2093,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
   .. code-block:: sh
 
+     $ sudo rm -rf /var/lib/heat-config/deployed/*
      $ sudo systemctl stop os-collect-config
      $ sudo os-collect-config --debug --force --one-time --config-file /etc/os-collect-config.conf
 
