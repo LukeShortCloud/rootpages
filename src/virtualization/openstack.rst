@@ -96,12 +96,15 @@ Releases:
 
 19. Stein
 
-    -  Expected release: 2019-04-10
+    -  Release: 2019-04-10
     -  EOL: TBD [1]
     -  Goals:
 
        -  Use Python 3 by default. Python 2.7 will only be tested using unit tests.
        -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues. [95]
+
+    -  `New Features <https://www.openstack.org/news/view/421/openstack-stein-enhances-bare-metal-and-network-management-while-launching-kubernetes-clusters-faster-than-ever>`__
+    -  `Release Highlights <https://releases.openstack.org/stein/highlights.html>`__
 
 Red Hat OpenStack Platform
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,12 +117,12 @@ Fedora based operating systems. [7]
 
 The Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that
 takes the upstream OpenStack source code and makes it enterprise quality
-by hardening the security and increasing it's stability. Normal releases
-are supported for 3 years. Long-life (LL) releases were introduced with
-RHOSP 10 where it will receive up to 5 years of support. Every 3rd
-release of RHOSP will have LL support. Rolling major upgrades are
-supported from one version to the next sequential version, starting with
-RHOSP 8.
+by hardening the security and increasing it's stability. Upgrades from one major release of RHOSP to the next have been supported since RHOSP 8.
+
+Release Cycle:
+
+-  RHOSP < 10 = Each release is supported for up to 3 years.
+-  RHOSP >= 10 = Starting with RHOSP 10, every third release of RHOSP is a long-life (LL) release with up to 5 years of support. In-between releases are supported for 1 year. Fast-forward upgrades are supported to upgrade directly from one LL release to the next (for example, 10 to 13).
 
 Releases:
 
