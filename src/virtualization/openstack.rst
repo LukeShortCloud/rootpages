@@ -801,13 +801,13 @@ overriden using the "ceph\_extra"confs" dictionary.
 .. code-block:: yaml
 
     ceph_extra_confs:
-    -  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
-       dest: "/etc/ceph/ceph.conf"
-       mon_host: <MONITOR_IP>
-       client_name: <CEPH_CLIENT>
-       keyring_src: <PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE>
-       keyring_dest: /etc/ceph/ceph.client.<CEPH_CLIENT>.keyring
-       secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
+      -  src: "<PATH_TO_LOCAL_CEPH_CONFIGURATION>"
+         dest: "/etc/ceph/ceph.conf"
+         mon_host: <MONITOR_IP>
+         client_name: <CEPH_CLIENT>
+         keyring_src: <PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE>
+         keyring_dest: /etc/ceph/ceph.client.<CEPH_CLIENT>.keyring
+         secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
 
 Alternatively, the entire configuration file can be defined as a
 variable using proper YAML syntax. [19]
@@ -848,28 +848,6 @@ File: /etc/openstack_deploy/openstack_user_config.yml
 Another real-world example of deploying and managing Ceph as part of
 OpenStack-Ansible can be found here:
 https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
-
-TripleO Queens configuration:
-
-.. code-block:: yaml
-
-   parameter_defaults:
-     NovaEnableRbdBackend: true
-     CinderEnableRbdBackend: true
-     CinderBackupBackend: ceph
-     GlanceBackend: rbd
-     GnocchiBackend: rbd
-     NovaRbdPoolName: vms
-     CinderRbdPoolName: volumes
-     CinderBackupRbdPoolName: backups
-     GlanceRbdPoolName: images
-     GnocchiRbdPoolName: metrics
-     CephClientUserName: openstack
-     CephClusterFSID: '<CLUSTER_FILE_SYSTEM_ID>'
-     CephClientKey: '<CEPHX_USER_KEY>'
-     CephExternalMonHost: '<CEPH_MONITOR_1>, <CEPH_MONITOR_2>, <CEPH_MONITOR_3>'
-
-[98]
 
 Install
 '''''''
@@ -2299,6 +2277,31 @@ A different repository for Overcloud service containers can be configured (>= Pi
     DockerNamespaceIsRegistry: true
     DockerInsecureRegistryAddress: registry.example.tld
     DockerNamespaceIsInsecureRegistry: true
+
+Ceph
+''''
+
+TripleO Queens configuration (external Ceph cluster):
+
+.. code-block:: yaml
+
+   parameter_defaults:
+     NovaEnableRbdBackend: true
+     CinderEnableRbdBackend: true
+     CinderBackupBackend: ceph
+     GlanceBackend: rbd
+     GnocchiBackend: rbd
+     NovaRbdPoolName: vms
+     CinderRbdPoolName: volumes
+     CinderBackupRbdPoolName: backups
+     GlanceRbdPoolName: images
+     GnocchiRbdPoolName: metrics
+     CephClientUserName: openstack
+     CephClusterFSID: '<CLUSTER_FILE_SYSTEM_ID>'
+     CephClientKey: '<CEPHX_USER_KEY>'
+     CephExternalMonHost: '<CEPH_MONITOR_1>, <CEPH_MONITOR_2>, <CEPH_MONITOR_3>'
+
+[98]
 
 Configurations
 --------------
