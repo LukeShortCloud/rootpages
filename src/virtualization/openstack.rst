@@ -1123,9 +1123,9 @@ Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
-In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. Experimental support for also running the Undercloud services in containers was added in Queens and became the default configuration for Rocky. [81]
+In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. Support for also running the Undercloud services in containers was added in Queens and became the default configuration for Rocky. [81]
 
-Minimum recommended hardware requirements [24]:
+Minimum recommended requirements [24]:
 
 -  Undercloud node:
 
@@ -1133,6 +1133,7 @@ Minimum recommended hardware requirements [24]:
    -  8GB RAM (16GB recommended)
    -  60GB storage
    -  2 network interface cards (NICs) [82]
+   -  A fully qualified domain name (FQDN)
 
 -  Overcloud nodes:
 
@@ -1939,7 +1940,7 @@ The Queens release of TripleO featured optional usage of Ansible configuration m
 
 .. code-block:: sh
 
-   $ openstack overcloud deploy --templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
+   $ openstack overcloud deploy --templates ~/templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
 
 [113]
 
@@ -2017,7 +2018,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
    .. code-block:: sh
 
-      $ openstack overcloud deploy --disable-validations \
+      $ openstack overcloud deploy --disable-validations --templates ~/templates \
          -e  ~/templates/environments/deployed-server-environment.yaml \
          -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
          -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
