@@ -114,7 +114,7 @@ Installation:
 -  Arch Linux: ``$ sudo pacman -S gnome gnome-extras``
 -  Debian (manual): ``$ sudo apt-get install gnome``
 -  Debian (automatic): ``$ sudo apt-get install task-gnome-desktop``
--  Fedora: ``$ sudo dnf groupinstall "Fedora Workstation"``
+-  Fedora: ``$ sudo dnf groupinstall "GNOME Desktop Environment"``
 
 KDE
 ~~~
