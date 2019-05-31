@@ -480,7 +480,7 @@ For uninstalling everything that is installed by Packstack, run `this Bash scrip
 OpenStack-Ansible
 ~~~~~~~~~~~~~~~~~
 
--  Supported operating systems: Ubuntu 16.04
+-  Supported operating systems: Ubuntu 16.04 or 18.04
 -  Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
 
 OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
@@ -524,9 +524,9 @@ Setup the OpenStack-Ansible project.
 
 .. code-block:: sh
 
-    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    $ cd /opt/openstack-ansible/
-    $ sudo git checkout stable/queens
+   git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+   cd /opt/openstack-ansible/
+   git checkout stable/queens
 
 There are many all-in-one scenarios that will run different Ansible playbooks. The default is "aio_lxc" which deploys the major OpenStack services to LXC containers. This can be changed to a different scenario by setting the ``SCENARIO`` shell variable to something else. Alternatively, the playbooks to run can be manually modified from the variable file ``/opt/openstack-ansible/tests/vars/bootstrap-aio-vars.yml``. Additional playbooks can be added by copying them from ``/opt/openstack-ansible/etc/openstack_deploy/conf.d/`` to ``/etc/openstack_deploy/conf.d/``. The file extensions should be changed from ``.yml.aio`` to ``.yml`` to be correctly parsed.
 
@@ -546,12 +546,12 @@ Then OpenStack-Ansible project can now setup and deploy the LXC containers along
 
 .. code-block:: sh
 
-    $ sudo scripts/bootstrap-ansible.sh
-    $ sudo scripts/bootstrap-aio.sh
-    $ cd /opt/openstack-ansible/playbooks
-    $ sudo openstack-ansible setup-hosts.yml
-    $ sudo openstack-ansible setup-infrastructure.yml
-    $ sudo openstack-ansible setup-openstack.yml
+   scripts/bootstrap-ansible.sh
+   scripts/bootstrap-aio.sh
+   cd /opt/openstack-ansible/playbooks
+   openstack-ansible setup-hosts.yml
+   openstack-ansible setup-infrastructure.yml
+   openstack-ansible setup-openstack.yml
 
 If the installation fails, it is recommended to reinstall the operating
 system to completely clear out all of the custom configurations that
@@ -563,8 +563,8 @@ After a reboot, the three-node MariaDB Galera cluster needs to be restarted prop
 
 .. code-block:: sh
 
-   $ cd /opt/openstack-ansible/playbooks
-   $ sudo openstack-ansible -e galera_ignore_cluster_state=true galera-install.yml
+   cd /opt/openstack-ansible/playbooks
+   openstack-ansible -e galera_ignore_cluster_state=true galera-install.yml
 
 [15]
 
@@ -572,20 +572,20 @@ OpenStack-Ansible will create a default "public" and "private" networks for the 
 
 .. code-block:: sh
 
-    $ openstack router unset --external-gateway router
-    $ openstack router remove subnet router private-subnet
-    $ openstack router delete router
-    $ openstack network delete public
-    $ openstack network delete private
+   openstack router unset --external-gateway router
+   openstack router remove subnet router private-subnet
+   openstack router delete router
+   openstack network delete public
+   openstack network delete private
 
 The all-in-one environment does not have the ability to create networks on the external network. On a more complete lab deployment of OpenStack-Ansible (not an all-in-one), this is normally accomplished by creating a flat provider network. Example:
 
 .. code-block:: sh
 
-    $ openstack router create router_public
-    $ openstack network create --share --provider-network-type flat --provider-physical-network flat --external external_network
-    $ openstack subnet create --subnet-range 192.168.1.0/24 --allocation-pool start=192.168.1.201,end=192.168.1.254 --dns-nameserver 192.168.1.1 --gateway 192.168.1.1 --no-dhcp --network external_network external_subnet
-    $ openstack router set router_public --external-gateway external_network
+   openstack router create router_public
+   openstack network create --share --provider-network-type flat --provider-physical-network flat --external external_network
+   openstack subnet create --subnet-range 192.168.1.0/24 --allocation-pool start=192.168.1.201,end=192.168.1.254 --dns-nameserver 192.168.1.1 --gateway 192.168.1.1 --no-dhcp --network external_network external_subnet
+   openstack router set router_public --external-gateway external_network
 
 [91]
 
@@ -732,19 +732,35 @@ The valid service types are:
 Neutron
 &&&&&&&
 
-The ``br-vlan`` interface should provide access to the Internet. This is normally configured to use a VLAN. However, it can also be configured to use flat networking using the example configurations below. The "eth11" interface will be used to attach the ``br-vlan`` bridge onto with no VLAN tagging. [89]
+OpenStack-Ansible does not manage the network interfaces on host nodes. The ``br-vlan`` interface is recommended to be configured to provide access to the Internet. However, any network configuration can be configured. [89]
+
+Configure OpenStack-Ansible to only use a single interface (eth0), with no VLANs, on the 192.168.1.0/24 subnet:
 
 .. code-block:: yaml
 
-    provider_networks:
-      - network:
-        container_bridge: "br-vlan"
-        container_type: "veth"
-        container_interface: "eth11"
-        type: "flat"
-        net_name: "flat"
-        group_binds:
-          - neutron_linuxbridge_agent
+   cidr_networks:
+     management: "192.168.1.0/24"
+
+   used_ips:
+     - 192.168.1.1,192.168.1.251,192.168.1.252
+
+   global_overrides:
+     internal_lb_vip_address: 192.168.1.252
+     external_lb_vip_address: 192.168.1.251
+     tunnel_bridge: eth0
+     management_bridge: eth0
+     provider_networks:
+       - network:
+         container_bridge: eth0
+         container_type: veth
+         type: raw
+         container_interface: eth1
+         ip_from_q: management
+         is_container_address: True
+         is_ssh_address: True
+         groups_binds:
+           - all_containers
+           - hosts
 
 After deployment, the external Neutron network and subnet can be created. [90]
 
@@ -857,48 +873,50 @@ GitHub.
 
 .. code-block:: sh
 
-    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
-    $ cd /opt/openstack-ansible/
-    $ sudo git checkout stable/queens
-    $ sudo cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
+   git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+   cd /opt/openstack-ansible/
+   git checkout stable/rocky
+   cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
 
 Install Ansible and the related OpenStack Roles.
 
 .. code-block:: sh
 
-    $ sudo /opt/openstack-ansible/scripts/bootstrap-ansible.sh
+   /opt/openstack-ansible/scripts/bootstrap-ansible.sh
 
 Generate random passwords for the services.
 
 .. code-block:: sh
 
-    $ sudo /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+   /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
-- Configure OSA and verify that the configuration syntax is correct.
+- Configure OSA and verify that the configuration syntax is correct. There are "example", "test", and "prod[uction]" configuration files provided to ues as a base to start a new configuration from.
 
 .. code-block:: sh
 
-    $ sudo cp /etc/openstack_deploy/openstack_user_config.yml.example /etc/openstack_deploy/openstack_user_config.yml
-    $ sudo vim /etc/openstack_deploy/openstack_user_config.yml
-    $ sudo openstack-ansible setup-infrastructure.yml --syntax-check
+   cp /etc/openstack_deploy/openstack_user_config.yml.test.example /etc/openstack_deploy/openstack_user_config.yml
+   cp /etc/openstack_deploy/user_variables.yml.test.example /etc/openstack_deploy/user_variables.yml
+   vim /etc/openstack_deploy/openstack_user_config.yml
+   cd /opt/openstack-ansible/playbooks/
+   openstack-ansible setup-infrastructure.yml --syntax-check
 
 -  Prepare the hosts.
 
 .. code-block:: sh
 
-    $ sudo openstack-ansible setup-hosts.yml
+   openstack-ansible setup-hosts.yml
 
 - Setup the LXC containers.
 
 .. code-block:: sh
 
-    $ sudo openstack-ansible setup-infrastructure.yml
+   openstack-ansible setup-infrastructure.yml
 
 -  Install the OpenStack services.
 
 .. code-block:: sh
 
-    $ sudo openstack-ansible setup-openstack.yml
+   openstack-ansible setup-openstack.yml
 
 [16]
 
@@ -913,22 +931,22 @@ primary container to use is the ``utility`` container.
 
 .. code-block:: sh
 
-    $ sudo lxc-ls -1 | grep utility
-    $ sudo lxc-attach -n <UTILITY_CONTAINER_NAME>
+   lxc-ls -1 | grep utility
+   lxc-attach -n <UTILITY_CONTAINER_NAME>
 
 The file ``/root/openrc`` should exist on the container with the
 administrator credentials. Source this file to use them.
 
 .. code-block:: sh
 
-    $ source /root/openrc
+   source /root/openrc
 
 Verify that all of the correct services and endpoints exist.
 
 .. code-block:: sh
 
-    $ openstack service list
-    $ openstack endpoint list
+   openstack service list
+   openstack endpoint list
 
 [20]
 
@@ -944,31 +962,31 @@ for management and troubleshooting.
 
    .. code-block:: sh
 
-       $ cd /opt/openstack-ansible/
+      /opt/openstack-ansible/
 
 -  Show all of the groups and the hosts that are a part of it.
 
    .. code-block:: sh
 
-       $ sudo ./scripts/inventory-manage.py -G
+      ./scripts/inventory-manage.py -G
 
 -  Show all of the hosts and the groups they are a part of.
 
    .. code-block:: sh
 
-       $ sudo ./scripts/inventory-manage.py -g
+      ./scripts/inventory-manage.py -g
 
 -  List hosts that a Playbook will run against.
 
    .. code-block:: sh
 
-       $ sudo openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
+      openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP> --list-hosts
 
 -  List all the Ansible tasks that will be executed on a group or host.
 
    .. code-block:: sh
 
-       $ sudo openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
+      openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
 [21]
 
@@ -984,11 +1002,11 @@ infrastructure node.
 
 .. code-block:: sh
 
-    $ cd /opt/openstack-ansible/playbooks
-    $ sudo /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py > /dev/null
-    $ sudo /opt/openstack-ansible/scripts/inventory-manage.py -l |awk '/<NEW_INFRA_HOST>/ {print $2}' | sort -u | tee /root/add_host.limit
-    $ sudo openstack-ansible setup-everything.yml --limit @/root/add_host.limit
-    $ sudo openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
+   cd /opt/openstack-ansible/playbooks
+   /opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py > /dev/null
+   /opt/openstack-ansible/scripts/inventory-manage.py -l |awk '/<NEW_INFRA_HOST>/ {print $2}' | sort -u | tee /root/add_host.limit
+   openstack-ansible setup-everything.yml --limit @/root/add_host.limit
+   openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
 
 [20]
 
@@ -1001,11 +1019,11 @@ OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use
 
 .. code-block:: sh
 
-    $ cd /opt/openstack-ansible/playbooks
-    $ sudo openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
-    $ sudo ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
-    $ sudo openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
-    $ sudo openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
+   cd /opt/openstack-ansible/playbooks
+   openstack-ansible setup-hosts.yml --limit localhost,<NEW_COMPUTE_HOST>
+   ansible nova_all -m setup -a 'filter=ansible_local gather_subset="!all"'
+   openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
+   openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
 
 [20]
 
@@ -1020,14 +1038,14 @@ done.
 
 .. code-block:: sh
 
-    $ sudo lxc-ls -1 | grep compute
-    $ sudo lxc-attach -n <COMPUTE_CONTAINER_TO_REMOVE>
-    $ sudo stop nova-compute
-    $ sudo stop neutron-linuxbridge-agent
-    $ exit
-    $ sudo git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
-    $ cd /opt/openstack-ansible-ops/ansible_tools/playbooks
-    $ sudo openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
+    lxc-ls -1 | grep compute
+    lxc-attach -n <COMPUTE_CONTAINER_TO_REMOVE>
+    stop nova-compute
+    stop neutron-linuxbridge-agent
+    exit
+    git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
+    cd /opt/openstack-ansible-ops/ansible_tools/playbooks
+    openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
 
 [20]
 
@@ -1045,10 +1063,10 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 
    .. code-block:: sh
 
-       $ cd /opt/openstack-ansible/
-       $ sudo git fetch --all
-       $ sudo git tag
-       $ sudo git checkout <TAG>
+      cd /opt/openstack-ansible/
+      git fetch --all
+      git tag
+      git checkout <TAG>
 
 -  Update:
 
@@ -1056,11 +1074,11 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 
       .. code-block:: sh
 
-          $ sudo ./scripts/bootstrap-ansible.sh
-          $ cd ./playbooks/
-          $ sudo openstack-ansible setup-hosts.yml
-          $ sudo openstack-ansible -e rabbitmq_upgrade=true setup-infrastructure.yml
-          $ sudo openstack-ansible setup-openstack.yml
+         ./scripts/bootstrap-ansible.sh
+         cd ./playbooks/
+         openstack-ansible setup-hosts.yml
+         openstack-ansible -e rabbitmq_upgrade=true setup-infrastructure.yml
+         openstack-ansible setup-openstack.yml
 
    -  **Specific services.**
 
@@ -1068,25 +1086,25 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 
          .. code-block:: sh
 
-             $ cd ./playbooks/
-             $ sudo openstack-ansible repo-install.yml
+            cd ./playbooks/
+            sudo openstack-ansible repo-install.yml
 
       -  A single service can be upgraded now.
 
          .. code-block:: sh
 
-             $ sudo openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
+            openstack-ansible <COMPONENT>-install.yml --limit <GROUP_OR_HOST>
 
       -  Some services, such as MariaDB and RabbitMQ, require special
          variables to be set to force an upgrade.
 
          .. code-block:: sh
 
-             $ sudo openstack-ansible galera-install.yml -e 'galera_upgrade=true'
+            openstack-ansible galera-install.yml -e 'galera_upgrade=true'
 
          .. code-block:: sh
 
-             $ sudo openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
+            openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
 
 [22]
 
@@ -1099,22 +1117,22 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
 
    .. code-block:: sh
 
-       $ cd /opt/openstack-ansible
+      cd /opt/openstack-ansible
 
 -  View the available OpenStack releases and choose which one to use.
 
    .. code-block:: sh
 
-       $ sudo git fetch --all
-       $ sudo git branch -a
-       $ sudo git tag
-       $ sudo git checkout <BRANCH_OR_TAG>
+      git fetch --all
+      git branch -a
+      git tag
+      git checkout <BRANCH_OR_TAG>
 
 -  Run the upgrade script.
 
    .. code-block:: sh
 
-       $ sudo ./scripts/run-upgrade.sh
+      ./scripts/run-upgrade.sh
 
 TripleO
 ~~~~~~~
