@@ -1984,6 +1984,14 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
 
 **Undercloud/Director**
 
+-  For config-download scenarios, generate Heat templates for pre-provisioned nodes.
+
+   .. code-block:: sh
+
+      $ cd /usr/share/openstack-tripleo-heat-templates/
+      $ mkdir /home/stack/templates/
+      $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml --output /home/stack/templates/
+
 -  The control plane IP addresses should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration.
 -  A default installation of OpenStack through TripleO will automatically assign random IP addresses. Manually configure the desired IP addresses for the control plane network to keep the original addresses.
 
