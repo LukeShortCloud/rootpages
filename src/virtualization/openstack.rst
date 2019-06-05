@@ -1509,6 +1509,11 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
 [28]
 
+Uninstall
+&&&&&&&&&
+
+Use the script provided `here <https://access.redhat.com/solutions/2210421>`__ to uninstall the Undercloud services.
+
 Overcloud
 '''''''''
 
