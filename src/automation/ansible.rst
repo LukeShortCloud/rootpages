@@ -4426,7 +4426,17 @@ Example:
 
 Specific tasks in a role can be disabled by setting the "molecule-notest" or "notest" tag.
 
-During the creation and deletion of the infrastructure to test with, Ansible is set to disable logging to hide sensitive information about the environment. If any issues are encountered, use the ``--debug`` argument to re-enable logging information from certain tasks and provide additional Molecule debug information.
+During the creation and deletion of the infrastructure to test with, Molecule configures the Ansible playbook to disable logging to hide sensitive information about the environment. If any issues are encounteredin the provisioning stage, use one of these methods to re-enable logging. Any of these methods will essentially set the parameter `no_log: False` for all create and destroy tasks.
+
+-  Use the ``molecule --debug`` argument.
+-  Export the environment variable ``MOLECULE_DEBUG=True``.
+-  Configure the provisioner in ``molecule.yml`` to have debugging enabled.
+
+   .. code-block:: yaml
+
+      provisioner:
+        name: ansible
+        debug: True
 
 The virtual environment instance can be accessed with ``molecule login``. If more than one environment is created, use the ``--host`` argument to specify which one to enter.
 
