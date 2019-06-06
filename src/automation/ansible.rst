@@ -4290,7 +4290,7 @@ Testing
 Molecule
 ~~~~~~~~
 
-Molecule is a tesitng framework designed specifically for Ansible. It assists with running syntax and other validation checks.
+Molecule is a testing framework designed specifically for Ansible roles. It assists with running validations such as lint and syntax checks. Users can optionally configure custom tests via an Ansible playbook and/or Python with the ``testinfra`` library. It was originally created by Cisco employees and, as of October 2018, it is now maintained by Red Hat. Molecule 2.20 was the first release of Molecule by Red Hat. [81]
 
 Checks done by ``molecule test`` (in order of execution):
 
@@ -5149,3 +5149,4 @@ Bibliography
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
 80. "Major upgrade." Batix/rundeck-ansible-plugin, GitHub. August 15, 2018. Accessed February 26, 2019. https://github.com/Batix/rundeck-ansible-plugin/commit/a07e37537a8eda38b620d9de4fc5f01f22952121
+81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
