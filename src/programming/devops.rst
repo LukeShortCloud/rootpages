@@ -3,6 +3,19 @@ DevOps
 
 .. contents:: Table of Contents
 
+Definition
+----------
+
+The term "DevOps" was first used by Andrew Clay Shafer in 2009. It expands out to stand for development and operations. He defines it as "optimizing human performance and experience operating software, with software, and with humans." [15] Developers should be empowered with the tools they need to easily manage and scale up their application and infrastructure. The barriers for approvals and between departments should be lowered or removed to promote open communication between all departments within the company. Ideas should be able to become a reality quickly so that, if something fails, it fails fast. Then the developers can move onto figuring out a different solution. Adopting DevOps usually results in higher up-front resource and learning costs but also results in lower technical debt and higher scalability in the long-run. Jez Humble, from Chef, also states that "DevOps is not a goal, it is a never-ending process of continual improvement." [16]
+
+DevOps can be categorized into 5 topics known as the CALMS [17]:
+
+-  Culture = Everyone must be open to change. A lot of changes to workflows and tools are required to get the benefits of DevOps. For example, moving applications to microservices and/or serverless containers to help with scale.
+-  Automation = Automation helps save time and allow resources to scale up easier and faster. This frees up Engineers to work on other work objectives. For example, use Ansible for configuration management.
+-  Lean = Being able to accomplish more with less resources due to efficiency. For example, by using CI/CD).
+-  Measurement = Measure performance, usage, and other relevant information to help better define and shape the future of the application. For example, use an Elasticsearch, Logstash, and Kibana (ELK) stack to monitor applications.
+-  Sharing = Communication is the most important and hardest part of DevOps. Team members must be open to sharing ideas and working together on common goals.
+
 Methodologies
 -------------
 
@@ -559,3 +572,6 @@ Bibliography
 12. "perlre." Perl Programming Documentation. Accessed December 7, 2018. http://perldoc.perl.org/perlre.html
 13. "Resolving a merge conflict using the command line." GitHub Help. Accessed March 1, 2019. https://help.github.com/en/articles/resolving-a-merge-conflict-using-the-command-line
 14. "Syncing a fork." GitHub Help. Accessed March 19, 2019. https://help.github.com/en/articles/syncing-a-fork
+15. "the end of the beginning - devopsdays Denver 2017." SlideShare. April 10, 2017. Accessed June 10, 2019. https://www.slideshare.net/littleidea/the-end-of-the-beginning-devopsdays-denver-2017
+16. "10 Deep DevOps Thoughts From Chef’s Jez Humble." New Relic Blog. April 28, 2015. Accessed June 10, 2019. https://blog.newrelic.com/technology/devops-jez-humble/
+17. "Using CALMS to Assess an Organization’s DevOps." DevOps.com. May 25, 2018. Accessed June 10, 2019. https://devops.com/using-calms-to-assess-organizations-devops/
