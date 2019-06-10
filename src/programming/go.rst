@@ -12,6 +12,10 @@ Tutorials
 
    -  `A Tour of Go <https://tour.golang.org/welcome/1>`__
 
+-  Best practices:
+
+   -  `Effective Go <https://golang.org/doc/effective_go.html>`__
+
 -  Code examples:
 
    -  `Go Cheat Sheet <https://github.com/a8m/go-lang-cheat-sheet>`__
@@ -22,6 +26,11 @@ Tutorials
 -  Videos:
 
    -  `Golang Tutorial - Learn the Go Programming Language <https://www.youtube.com/watch?list=PLSak_q1UXfPp971Hgv7wHCU2gDOb13gBQ&time_continue=14&v=6lBeN973T4Q>`__
+
+Style Guide
+-----------
+
+The ``gofmt`` command will automatically format a Go source code file into the standard format. Other manual changes to for best practice on synatx usage can be found `here <https://github.com/golang/go/wiki/CodeReviewComments>`__.
 
 Data Types
 ----------
@@ -159,6 +168,18 @@ Specific local variables can also be returned.
    }
 
 [4]
+
+Certain return variables can be ignored by using "_" as a place holder.
+
+.. code-block:: go
+
+   func returnTwoThings() (int, int) {
+       return 1, 2
+   }
+
+   func getTwoThings() (int) {
+       varOne, _ := returnTwoThings()
+   }
 
 Conditionals
 ------------
