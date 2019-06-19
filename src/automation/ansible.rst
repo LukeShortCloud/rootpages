@@ -4287,6 +4287,18 @@ Ansible is written in Python so it can be used programmatically to run Playbooks
 Testing
 -------
 
+Ansible Lint
+~~~~~~~~~~~~
+
+The ``ansible-lint`` utility is used to check for best practices in Ansible playbooks and roles. If a certain rule was trigged and is deemed to be a false-positive then the affected line can have the comment ``# noqa <ANSIBLE_LINT_RULE_ID>`` appended to it to skip checking that rule. Alternatively, add the tag ``skip_ansible_lint`` to the task to skip all lint checks on that particular task.
+
+.. code-block:: yaml
+
+   tags:
+     - skip_ansible_lint
+
+[82]
+
 Molecule
 ~~~~~~~~
 
@@ -4864,6 +4876,7 @@ project can be found in the
 
 Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [76]
 
+-  AWX 5.0.0 = Ansible Tower 3.5.0
 -  AWX 2.1.2 = Ansible Tower 3.4.0
 -  AWX 1.0.8 = Ansible Tower 3.3.0
 -  AWX 1.0.0 = Ansible Tower 3.2.0
@@ -5144,9 +5157,10 @@ Bibliography
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
 74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
-76. "AWX Project." Ansible GitHub. January 11, 2019. Accessed January 14, 2019. https://github.com/ansible/awx
+76. "AWX Project." Ansible GitHub. June 19, 2019. Accessed June 19, 2019. https://github.com/ansible/awx
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
 80. "Major upgrade." Batix/rundeck-ansible-plugin, GitHub. August 15, 2018. Accessed February 26, 2019. https://github.com/Batix/rundeck-ansible-plugin/commit/a07e37537a8eda38b620d9de4fc5f01f22952121
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
+82. "Rules." Ansible Lint Documentation. February 12, 2019. Accesed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
