@@ -478,6 +478,13 @@ This utility handles subscriptions to private Red Hat software repositories.
    "repos --list-enabled", "show enabled repositories"
    "repos --enable", "enable a repository"
    "repos --disbale", "disable a repository"
+   release --set <RHEL_VERSION>, set the RHEL version of packages to use
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   release --set 7.6, configure the RHEL 7.6 repositories
 
 subscription-manager-gui
 ~~~~~~~~~~~~~~~~~~~~~~~~
