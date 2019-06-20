@@ -675,6 +675,30 @@ The default username and password should be ``vagrant``.
 This guide can be followed for creating custom Vagrant boxes:
 https://www.vagrantup.com/docs/boxes/base.html.
 
+Images
+^^^^^^
+
+Common Vagrant boxes to use with ``vagrant init``:
+
+-  Arch Linux
+
+   -  archlinux/archlinux
+
+-  Debian
+
+   -  debian/stretch64 (Debian 9)
+   -  ubuntu/bionic64 (Ubuntu 18.04)
+
+-  Fedora
+
+   -  centos/7
+   -  fedora/28-cloud-base
+
+-  openSUSE
+
+   -  opensuse/openSUSE-15.0-x86_64
+   -  opensuse/openSUSE-Tumbleweed-x86_64
+
 Vagrantfile
 ^^^^^^^^^^^
 
