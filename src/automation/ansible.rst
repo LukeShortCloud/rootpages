@@ -4321,7 +4321,7 @@ Checks done by ``molecule test`` (in order of execution):
 Supported virtualization drivers and their provisioners:
 
 -  azure
--  delegated = Manually create and use a new driver.
+-  delegated = Use a custom driver. The default for this is to run ``create.yaml`` and ``destroy.yaml`` for provisioning the test environment unless ``[driver][options]managed=False`` is configured.
 -  docker
 -  ec2
 -  gce
@@ -4449,6 +4449,19 @@ During the creation and deletion of the infrastructure to test with, Molecule co
       provisioner:
         name: ansible
         debug: True
+
+Additional Ansible arguments can be defined in the configuration or via the command line.
+
+.. code-block:: yaml
+
+   provisioner:
+     name: ansible
+     ansible_args:
+       - --skip-tags molecule_skip
+
+.. code-block:: sh
+
+   $ molecule converge -- --skip-tags molecule_skip
 
 The virtual environment instance can be accessed with ``molecule login``. If more than one environment is created, use the ``--host`` argument to specify which one to enter.
 
