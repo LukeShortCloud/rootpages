@@ -66,12 +66,19 @@ Package: docker
    "stop $(docker ps -aq)", "stop all containers"
    "logs", "view the standard output from a running docker container"
    logs -f, tail the current standard output stream in real-time
-   "-v <SOURCE>:<DESTINATION>", "bind mount a folder from the host node to a folder inside of the container for persistent storage"
-   "-q", "list only IDs"
-   "-f", "force an action"
+   "{-v,--volume} <SOURCE>:<DESTINATION>", "bind mount a folder from the host node to a folder inside of the container for persistent storage"
+   "{images|ps} {-q,--quiet,--quiet=true}", "list only IDs for images or running containers"
+   "{-f,--force}", "force an action"
    "inspect", "view detailed information about a container"
    "network create --subnet <CIDR> <NAME>", "create a new docker network using a specific network CIDR and name"
-   "run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro <OS>:<VERSION> /usr/lib/systemd/systemd", "start a docker container with systemd support"
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro unop/fedora-systemd:28 /usr/lib/systemd/systemd", "start a docker container with systemd support (requires systemd to be installed into the image)"
+   "run -v /var/run/docker.sock:/var/run/docker.sock ---cap-add=SYS_ADMIN", start a container with support to run nested docker containers
+   "run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /var/run/docker.sock:/var/run/docker.sock --privileged --name fedora28systemd -d unop/fedora-systemd:28 /usr/sbin/init", run a container with systemd and docker support
 
 kubeadm
 ~~~~~~~
