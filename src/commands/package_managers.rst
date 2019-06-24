@@ -597,6 +597,9 @@ Flatpak is a universal package manager that works on most Linux operating system
    remote-add <NAME> <URL>, add a new repository
    remote-delete <NAME>, delete a repository
    remote-ls <NAME>, view all fo the packages from a repository
+   list, list all of the installed flatpaks
+   run <NAME>, run a flatpak
+   run --command=bash <NAME>, open a Bash shell in the flatpak for troubleshooting issues
 
 FreeBSD
 -------
