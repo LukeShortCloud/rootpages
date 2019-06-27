@@ -1246,7 +1246,7 @@ Class initalization syntax:
             self.<VARIABLE1> = <VARIABLE1>
             self.<VARIABLE2> = <VARIABLE2>
 
-Methods are assumed to be passed the ``self`` variable to work with data from the object itself. If the method is generic in nature is can be marked as a static method as to not require ``self``. Class objects can be passed using ``cls`` if other class variables or methods need to be executed.
+Methods are assumed to be passed the ``self`` variable to work with data from the object itself. If the method is generic in nature is can be marked as a static method as to not require ``self``. Class objects can be passed using ``cls`` if other class variables or methods need to be executed. Class and static methods should be defined by setting the relevant decorator above the method definition.
 
 Method examples:
 
@@ -1357,6 +1357,8 @@ Common methods:
 -  call = Execute a mocked method and provide a list of arguments to it.
 -  call_args = A tuple of the last arguments used by the mocked method.
 -  call_args_list = The list of arguments that were provided to every call of the mocked method.
+-  method_calls = The of methods calls to a mocked class.
+-  mock_calls = The list of each call, and the related arguments made to a mocked method.
 -  return_value = A value the mocked method will always return.
 -  configure_mock = Define a new attribute, such as a variable and it's value, for the mocked method.
 -  side_effect = The side effect can be used to return one or more values from a mocked method.
@@ -1365,15 +1367,69 @@ Common methods:
    -  An exception that will be thrown if the mocked method is called.
    -  An iterable tuple of tuples for each call to the mocked method.
 
-The ``patch`` method can be used to override an existing method and provide faked results
+The ``patch`` method can be used as a decorator to override an existing method and provide faked results. Override settings can be configured at within the method itself. Replace ``<FILE>`` with the path to the library that should be mocked. For example, a class named ``Up`` with method ``foo`` in ``teleport/particules/beam.py`` would translate to the use of ``@patch(teleport.particules.Up.foo)``.
+
+Syntax:
 
 .. code-block:: python
 
    from unittest.mock import patch
 
-       @patch('main.<CLASS>.<METHOD>', return_value=<VALUE>)
-       def func():
-          return <METHOD>()
+   @patch('<FILE>.<CLASS>.<METHOD2>')
+   @patch('<FILE>.<CLASS>.<METHOD1>', return_value=<VALUE1>)
+   def func(<METHOD1>, <METHOD2>):
+      <METHOD2>.return_value = <VALUE2>
+      return <METHOD1>(), <METHOD2>()
+
+Example:
+
+.. code-block:: python
+
+   # File name: mockexample.py
+
+   from unittest.mock import patch
+
+   def hello():
+       return "hello"
+
+   def world():
+       return "world"
+
+   @patch('mockexample.world')
+   @patch('mockexample.hello', return_value="world")
+   def say(hello, world):
+       world.return_value = "hello"
+       return hello, world
+
+   print(say())
+
+::
+
+   world hello
+
+Mock can also be used at any time by assigning as class or method as a Mock object. The expected mocked return values must be specified before the relevant methods are called. The example below will not actually delete the files.
+
+Example:
+
+.. code-block:: python
+
+   from unittest.mock import Mock
+   import os
+
+   def cleanup():
+       os.remove("/tmp/db.csv")
+       os.remove("/tmp/config")
+       return True
+
+   def mock_cleanup():
+       os.remove = Mock()
+       # os.remove() should return None if completed successfully.
+       os.remove.side_effect = ((None), (None))
+
+       if cleanup():
+           print("Cleanup complete.")
+
+   mock_cleanup()
 
 [37]
 
@@ -1537,4 +1593,4 @@ Bibliography
 34. "logging.handlers — Logging handlers." Python 3 Documentation. November 29, 2018. Accessed November 29, 2018. https://docs.python.org/3/library/logging.handlers.html/
 35. "logging.handlers — Logging handlers." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/copy.html
 36. "LEARN TO LOOP THE PYTHON WAY: ITERATORS AND GENERATORS EXPLAINED." Hackaday. September 19, 2018. Accessed February 22, 2019. https://hackaday.com/2018/09/19/learn-to-loop-the-python-way-iterators-and-generators-explained/
-37. "unittest.mock - mock object library." Python 3 Documentation. March 19, 2019. Accessed March 19, 2019. https://docs.python.org/3/library/unittest.mock.html
+37. "unittest.mock - mock object library." Python 3 Documentation. June 27, 2019. Accessed June 27, 2019. https://docs.python.org/3/library/unittest.mock.html
