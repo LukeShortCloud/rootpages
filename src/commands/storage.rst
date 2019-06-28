@@ -409,7 +409,9 @@ Controls loop devices.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   -d, detach a loop device
+   -a, view all loop devices created by losetup
+   -d <LOOP_DEVICE>, detach a loop device
+   --detach-all, detach all loop devices created by losetup
 
 xfs_admin
 ~~~~~~~~~
