@@ -858,17 +858,21 @@ Magic Variables
 Magic variables are variables that Ansible creates and manages outside of user-defined variables. Most of these exist with every playbook run.
 
 -  ansible_check_mode = If the playbook is ran with ``--check`` mode to see if tasks will make any modifications.
+-  ansible_dependent_role_names = A list of all of the roles imported as dependencies by playbooks that are referenced in the main playbook.
 -  ansible_diff_mode = If the playbook is ran with ``--diff`` mode to see what modifications were made.
--  ansible_user_dir = The $HOME directory for the user that is being accessed on the managed node.
--  ansible_play_batch = The current hosts that are running, limited to only the hosts running from the ``serial`` size.
--  ansible_play_hosts = The list of all of the (non-failed) hosts that the playbook ``hosts`` is set to use.
--  ansible_playbook_python = The Python executable used to run Ansible on the control node.
+-  ansible_forks = The number of forks that are set.
 -  ansible_inventory_sources = A list of all of the inventory files that are loaded.
 -  ansible_limit = The string of hosts defined by ``--limit`` that the playbook is currently limited to.
+-  ansible_play_batch = The current hosts that are running, limited to only the hosts running from the ``serial`` size.
+-  ansible_play_hosts = The list of all of the (non-failed) hosts that the playbook ``hosts`` is set to use.
+-  ansible_play_name = The name of the playbook that is running.
+-  ansible_play_role_names = A list of the roles that are defined in the playbook file.
+-  ansible_playbook_python = The Python executable used to run Ansible on the control node.
 -  ansible_run_tags = A list of tags that are defined by ``--tags`` that the playbook is running.
--  ansible_forks = The number of forks that are set.
 -  ansible_skip_tags = A list of tags that are defined by ``--skip-tags`` that the playbook is skipping.
+-  ansible_user_dir = The $HOME directory for the user that is being accessed on the managed node.
 -  ansible_verbosity = The level of verbosity set for the playbook execution.
+-  ansible_version = The Ansible version running.
 -  hostvars = Access variables from another host. Example: ``hostvars['web01']['ansible_hostname']``.
 -  inventory_dir = The directory that contains the inventory file(s).
 -  inventory_file = The full path to the primary "inventory" file that is loaded.
@@ -877,10 +881,11 @@ Magic variables are variables that Ansible creates and manages outside of user-d
 -  groups = A list of all hosts and groups from the inventories that are loaded.
 -  group_names = A list of all of the groups that the current host is a part of.
 -  playbook_dir = The full path to the directory where the current playbook is located.
+-  omit = Used to skip the passing of an argument to a task. This is commonly used via the use of the Jinja filter ``default(omit)``.
 -  role_name = The name of the current role in use.
 -  role_path = The full path to the current role in use.
 
-[4][44][69]
+[82]
 
 Modules
 -------
@@ -4297,7 +4302,7 @@ The ``ansible-lint`` utility is used to check for best practices in Ansible play
    tags:
      - skip_ansible_lint
 
-[82]
+[69]
 
 Molecule
 ~~~~~~~~
@@ -5163,7 +5168,7 @@ Bibliography
 66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. January 9, 2019. Accessed January 14, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
-69. "ANSIBLE 2.5: TRAVELING SPACE AND TIME." Ansible. May 23, 2018. Accessed June 7, 2018. https://www.ansible.com/blog/ansible-2.5-traveling-space-and-time
+69. "Rules." Ansible Lint Documentation. February 12, 2019. Accesed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
 70. "Molecule." Molecule documentation. Accessed November 29, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
@@ -5176,4 +5181,4 @@ Bibliography
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
 80. "Major upgrade." Batix/rundeck-ansible-plugin, GitHub. August 15, 2018. Accessed February 26, 2019. https://github.com/Batix/rundeck-ansible-plugin/commit/a07e37537a8eda38b620d9de4fc5f01f22952121
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
-82. "Rules." Ansible Lint Documentation. February 12, 2019. Accesed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
+82. "Special Variables." Ansible Documentation. June 27, 2019. Accessed June 28, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
