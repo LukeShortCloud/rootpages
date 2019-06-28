@@ -1763,7 +1763,7 @@ Examples:
 
 [45]
 
-In Ansible 2.7, the ``apply`` argument was added to both the ``include_role`` and ``include_tasks`` modules. This allows the end-user to apply the same type of attributes that a ``block`` can accept. These include tags, become arguments, delegation, and more.
+In Ansible 2.7, the ``apply`` argument was added to both the ``include_role`` and ``include_tasks`` modules. This allows the end-user to apply the same type of keyword attributes that a  normal ``role`` can accept. These include become arguments, delegation, ignore_errors, tags, and more. The full list of allowed keywords can be found `here <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#role>`__.
 
 Example:
 
