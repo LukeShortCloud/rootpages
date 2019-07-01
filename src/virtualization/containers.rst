@@ -400,13 +400,16 @@ k3s
 
 k3s was created by Rancher Labs as a simple way to deploy low-resource Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
 
-Install (master):
+**Install**
+
+Master:
 
 .. code-block:: sh
 
    $ git clone https://github.com/rancher/k3s.git
    $ cd k3s
    $ sudo ./install.sh
+   $ sudo systemctl enable k3s
 
 Find the token on the master:
 
@@ -414,19 +417,52 @@ Find the token on the master:
 
    $ sudo cat /var/lib/rancher/k3s/server/node-token
 
-Install (worker):
+Worker:
 
 .. code-block:: sh
 
    $ git clone https://github.com/rancher/k3s.git
    $ cd k3s
    $ K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 ./install.sh
+   $ sudo systemctl enable k3s-agent
 
-Uninstall:
+**Upgrade**
+
+Either update the local git repository and checkout the desired version tag to upgrade to or curl the latest installer script and specify the version using an environment variable.
+
+Master:
+
+.. code-block:: sh
+
+   $ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
+
+Agent:
+
+.. code-block:: sh
+
+   $ curl -sfL https://get.k3s.io | K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
+
+Verify that the upgrade worked.
+
+.. code-block:: sh
+
+   $ k3s --version
+
+**Uninstall**
+
+Master:
 
 .. code-block:: sh
 
    $ sudo /usr/local/bin/k3s-uninstall.sh
+
+Worker:
+
+.. code-block:: sh
+
+   $ sudo /usr/local/bin/k3s-agent-uninstall.sh
+
+**Commands**
 
 Access the ``kubectl`` command through ``k3s`` to manage resources on the cluster.
 
