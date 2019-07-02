@@ -19,6 +19,6 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $SUPERSECRET
-  keep-history: true
+  keep-history: false
   on:
     tags: true
