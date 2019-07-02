@@ -21,4 +21,4 @@ deploy:
   github-token: $SUPERSECRET
   keep-history: true
   on:
-    branch: master
+    tags: true
