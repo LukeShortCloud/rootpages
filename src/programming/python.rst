@@ -1163,8 +1163,11 @@ Examples:
 
 [33][34]
 
+Concurrency
+-----------
+
 Generators
-----------
+~~~~~~~~~~
 
 Instead of using ``return`` to provide an array or list of return values after a function is finished, a ``yield`` creates a generator object that pauses the function until another iteration is requested. This provides the latest return value immediately into the generator object instead of having to wait for all of the results to be returned at once. This is very memory efficient since only one small value is returned instead of a large collection of values.
 
@@ -1216,6 +1219,66 @@ Example:
    next(number)
 
 [36]
+
+Threading
+~~~~~~~~~
+
+Threads can share variables between the original program and themselves. However, threads will not run in parallel. There is a lock on threads that only allows one to run at a time.
+
+Example:
+
+.. code-block:: python
+
+   from threading import Thread
+   from queue import Queue
+   from random import randint
+
+   q = Queue()
+   threads = []
+
+   def number_generator(max_int=5):
+       q.put(randint(0, max_int) + 1)
+
+   for item in range(0,3):
+       t = Thread(target=number_generator, args=(11,))
+       threads.append(t)
+       t.start()
+
+   while not q.empty():
+       print(q.get())
+
+[38]
+
+Multiprocessing
+~~~~~~~~~~~~~~~
+
+Multiprocessing will run functions in true parallelism. However, the processes are truly independent of each other and do not share variables with the original program. There is no native locking mechanism for processes.
+
+Example:
+
+.. code-block:: python
+
+   from multiprocessing import Queue, Process
+   from random import randint
+
+   q = Queue()
+   processes = []
+
+   def number_generator(max_int=5):
+       q.put(randint(0, max_int) + 1)
+
+   for item in range(0,3):
+       p = Process(target=number_generator, args=(11,))
+       processes.append(p)
+       p.start()
+
+   for process in processes:
+       process.join()
+
+   while not q.empty():
+       print(q.get())
+
+[39]
 
 Object Oriented Programming
 ---------------------------
@@ -1594,3 +1657,5 @@ Bibliography
 35. "logging.handlers — Logging handlers." Python 3 Documentation. December 2, 2018. Accessed December 2, 2018. https://docs.python.org/3/library/copy.html
 36. "LEARN TO LOOP THE PYTHON WAY: ITERATORS AND GENERATORS EXPLAINED." Hackaday. September 19, 2018. Accessed February 22, 2019. https://hackaday.com/2018/09/19/learn-to-loop-the-python-way-iterators-and-generators-explained/
 37. "unittest.mock - mock object library." Python 3 Documentation. June 27, 2019. Accessed June 27, 2019. https://docs.python.org/3/library/unittest.mock.html
+38. "Threading in Python." Linux Journal. January 24, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/threading-python
+39. "Multiprocesing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
