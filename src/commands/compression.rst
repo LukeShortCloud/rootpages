@@ -171,6 +171,23 @@ Best for compressing text files (saves the most space).
 zip
 ---
 
+unzip
+~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -d <DEST_DIR>, specify a destination directory to extract to
+   -j, decompress files to the current working directory
+   -l, list contents of the archive
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   -j <ZIP_FILE> <PATH_TO_COMPRESSED_FILE>, decompress a specific file and save it to the current working directory
+
 jar
 ~~~
 
