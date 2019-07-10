@@ -328,6 +328,20 @@ Common OOP Languages:
 -  PHP
 -  Python
 
+Big O Notation
+--------------
+
+The Big O Notation is used to explain the complexity and time required for a function to return in programming. The letter `O` repesents the "order". The letter `N` presents the number of input values for the function. Programmers should try to refactor their code to achieve a scale of `O(1)` which is a constant time and can scale efficiently no matter how much input data is provided.
+
+-  O(1) = The function will always take the same amount of time to return.
+-  O(N) = Time to completion scales linearly based on the input given.
+-  O(N^2) = Nested loops can cause exponential scaling issues.
+-  O(2N) = Based on the amount of input given, it will take twice as long to return.
+
+[18]
+
+In some situations, modern programming languages provide `generators` that can help achieve O(1) by `yield` ing a return value as soon as one is available.
+
 Testing
 -------
 
@@ -575,3 +589,4 @@ Bibliography
 15. "the end of the beginning - devopsdays Denver 2017." SlideShare. April 10, 2017. Accessed June 10, 2019. https://www.slideshare.net/littleidea/the-end-of-the-beginning-devopsdays-denver-2017
 16. "10 Deep DevOps Thoughts From Chef’s Jez Humble." New Relic Blog. April 28, 2015. Accessed June 10, 2019. https://blog.newrelic.com/technology/devops-jez-humble/
 17. "Using CALMS to Assess an Organization’s DevOps." DevOps.com. May 25, 2018. Accessed June 10, 2019. https://devops.com/using-calms-to-assess-organizations-devops/
+18. "A beginner's guide to Big O notation." Rob-Bell.net. June 23, 2009. Accessed July 9, 2019. https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/
