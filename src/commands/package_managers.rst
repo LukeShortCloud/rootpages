@@ -470,7 +470,8 @@ This utility handles subscriptions to private Red Hat software repositories.
    :widths: 20, 20
 
    "--username <USER> --password <PASS>", "provide RedHat.com credentials"
-   "--auto-attach", "attempt to guess what subscription should be used"
+   --register --auto-attach, attempt to guess what subscription should be used
+   --register --force, override the current subscription registration
    "list", "list current subscription details"
    "list --available", "show all available subscriptions"
    "register", "register with a specific subscription"
