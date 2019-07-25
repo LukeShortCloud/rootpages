@@ -3505,6 +3505,11 @@ namespace should look similar to this.
 
 [60][61]
 
+cloud-init
+----------
+
+Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/modules.html>`__. Example configurations can be found `here <https://cloudinit.readthedocs.io/en/latest/topics/examples.html>`__. cloud-init will only run once. The service can be forced to run again by deleting the ``/var/lib/cloud/instance/`` directory. All of the files and directories wihtin ``/var/lib/cloud/`` are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html>`__. [115]
+
 Upgrades
 --------
 
@@ -4449,3 +4454,4 @@ Bibliography
 112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
+115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
