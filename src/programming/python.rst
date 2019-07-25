@@ -1496,6 +1496,47 @@ Example:
 
 [37]
 
+Debugging
+~~~~~~~~~
+
+The ``pdb`` library can help with debugging. By using the ``set_trace()`` method, it will pause the program at that point to let the programmer manually investigate the running Python program and it's state. By using the ``continue`` statement, the program will continue to execute from where it left off.
+
+Example:
+
+::
+
+   # File name: /tmp/time_start_end.py
+
+   import pdb
+   from datetime import datetime
+   from time import sleep
+
+   time_start = datetime.now().isoformat()
+   pdb.set_trace()
+   print("Start time: {}".format(time_start))
+   time_end= datetime.now().isoformat()
+   pdb.set_trace()
+   print("End time: {}".format(time_end))
+
+::
+
+   > /tmp/time_start_end.py(8)<module>()
+   -> print("Start time: {}".format(time_start))
+   (Pdb) time_start
+   '2019-07-17T11:51:43.022303'
+   (Pdb) time_end
+   *** NameError: name 'time_end' is not defined
+   (Pdb) continue
+   Start time: 2019-07-17T11:51:43.022303
+   > /tmp/time_start_end.py(12)<module>()
+   -> print("End time: {}".format(time_end))
+   (Pdb) time_end
+   '2019-07-17T11:52:01.029841'
+   (Pdb) continue
+   End time: 2019-07-17T11:52:01.029841
+
+[40]
+
 PyPI Packaging
 --------------
 
@@ -1659,3 +1700,4 @@ Bibliography
 37. "unittest.mock - mock object library." Python 3 Documentation. June 27, 2019. Accessed June 27, 2019. https://docs.python.org/3/library/unittest.mock.html
 38. "Threading in Python." Linux Journal. January 24, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/threading-python
 39. "Multiprocesing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
+40. "pdb - The Python Debugger." Python 3 Documentation. Jul 19, 2019. Accessed July 19, 2019. https://docs.python.org/3/library/pdb.html
