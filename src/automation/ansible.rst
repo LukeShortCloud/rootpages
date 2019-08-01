@@ -4287,7 +4287,7 @@ There is also a community project called `ansible-bender <https://github.com/Tom
 Python API
 ----------
 
-Ansible is written in Python so it can be used programmatically to run Playbooks. This does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. It is recommended to use a RESTful API from a dashboard such as the official AWX project. Using the direct Python libraries for Ansible is not recommended. [32]
+Ansible is written in Python so it can be used programmatically to run Playbooks. Using the Ansible Python library directly is not recommended. It does not provide a thread-safe interface and is subject to change depending on the needs of the actual Ansible utilities. Instead, consider using `ansible-runner <https://ansible-runner.readthedocs.io/en/latest/>`__ or a RESTful API from a dashboard such as the official AWX project. [32]
 
 Testing
 -------
