@@ -570,9 +570,25 @@ The default package manager for Fedora Silverblue. All updates require a system 
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "install", "install an RPM using DNF"
-   "status", "show the commits of ostree"
-   "deploy <COMMIT>", "revert to an older version"
+   install, install a RPM
+   uninstall, uninstall a RPM
+   update, update the base OS and any RPMs that are installed
+   status, show the commits of ostree
+   deploy <COMMIT>, revert to an older version of the OS
+   rollback, change the boot entry to boot from the last OS version
+   rebase <REMOTE>:<BRANCH>, change or upgrade the base OS
+   kargs --append=<CMDLINE_OPTION>, append GRUB's boot options for the kernel
+   kargs --delete=<CMDLINE_OPTION, remove a boot option for the kernel
+   kargs --replace=<KEY>=<OLD_VALUE>=<NEW_VALUE>, replace the value for an existing key
+   kargs --editor, interactively edit the boot options for the kernel
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   kargs --apend=rd.driver.blacklist=nouveau --append=modprobe.blacklist=nouveau --append=nvidia-drm.modeset=1, disable the proprietary Nvidia driver on boot
+   rebase fedora/rawhide/x86_64/silverblue, switch the base OS to the rawhide (development) branch of Fedoraa
+   rebase fedora-workstation:fedora/30/x86_64/silverblue, switch the base OS to Fedora 30
 
 Flatpak
 -------

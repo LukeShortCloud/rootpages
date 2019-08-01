@@ -57,6 +57,25 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
     - Red Hat Enterprise Linux (RHEL)
     - Scientific Linux
 
+Fedora Silverblue
+~~~~~~~~~~~~~~~~~
+
+Fedora Silverblue uses ostree (via rpm-ostree) to manage the operating system in a way similar to git. There is a history of each update that can easily be rolled back. The file system is read-only except for writable directories for the user. Beyond the base operating system, it is recommended to install and manage applications as Flatpaks and/or containers. Silverblue may eventually replace the normal Fedora Workstation as the default desktop operating system.
+
+Pros:
+
+-  Automatic updates.
+-  Easy to rollback updates.
+-  Modular design.
+-  Difficult to break due to the read-only file system.
+
+Cons:
+
+-  Does not support dual-booting.
+-  Partitions cannot be customized as fully as Fedora Workstation.
+
+[13]
+
 Gentoo
 ------
 
@@ -129,3 +148,4 @@ Bibliography
 10. "[openSUSE Wiki] Main Page." openSUSE Wiki. November 16, 2016. Accessed January 2, 2018. https://en.opensuse.org/Main_Page
 11. "About Debian." Debian. June 6, 2017. Accessed January 2, 2018. https://www.debian.org/intro/about
 12. "Derivatives." OpenSUSE Wiki. Accessed March 20, 2018. https://en.opensuse.org/Derivatives
+13. "What is Silverblue?" Fedora Magazine. July 12, 2019. Accessed July 29, 2019. https://fedoramagazine.org/what-is-silverblue/
