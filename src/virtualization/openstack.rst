@@ -1294,7 +1294,7 @@ variables to a YAML file and then add the arguments
 Standalone Containers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Starting with Rocky, an all-in-one cloud can be deployed using TripleO. This skips the Undercloud and instead deploys a fully functional Overcloud. Instructions on how to do this are documented `here <https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/standalone.html>`__.
+Starting with Rocky, an all-in-one cloud can be deployed using TripleO. This skips the Undercloud and instead deploys a fully functional Overcloud. Instructions on how to do this are documented `here <https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/standalone.html>`__. The config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``.
 
 InfraRed 2
 ^^^^^^^^^^
@@ -2219,6 +2219,55 @@ Servers hosting the cloud services will eventually need to go through a reboot t
          $ openstack server list --host <COMPUTE_HOST> --all-projects
 
 [104]
+
+Ansible Playbooks (config-download)
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+The playbooks and variables used to deploy the Overcloud can be downloaded to the current working directory.
+
+.. code-block:: sh
+
+    $ openstack overcloud config download
+
+The ``deploy_steps_playbook.yaml`` file is the primary playbook that executes all of the deployment playbooks.
+
+A static inventory can be created using the available dynamic inventory script ``tripleo-ansible-inventory``.
+
+.. code-block:: sh
+
+   $ tripleo-ansible-inventory --ansible_ssh_user tripleo-admin --static-yaml-inventory tripleo-ansible-inventory.yaml
+
+Tags (as of Stein):
+
+-  always
+-  facts
+-  common_roles
+-  container_config
+-  container_config_scripts
+-  container_config_tasks
+-  container_image_prepare
+-  container_startup_configs
+-  external_deploy_steps
+-  external_post_deploy_steps
+-  host_config
+-  host_prep_steps
+-  overcloud
+-  pre_deploy_steps
+-  step0
+-  step1
+-  step2
+-  step3
+-  step4
+-  step5
+-  tripleo_ssh_known_hosts
+
+For only updating the Ansible playbooks based on the Heat templates, pass the ``--stack-only`` argument to the Overcloud deployment. They can then be downloaded and executed manually.
+
+.. code-block:: sh
+
+   $ openstack overcloud deploy --stack-only
+
+[116]
 
 Configurations
 ^^^^^^^^^^^^^^
@@ -4455,3 +4504,4 @@ Bibliography
 113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
 115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
+116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. August 6, 2019. Accessed August 14, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ansible_config_download.html
