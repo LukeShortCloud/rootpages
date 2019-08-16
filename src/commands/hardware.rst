@@ -128,7 +128,20 @@ Monitor utility for Intel integrated graphics.
 nvidia-smi
 ~~~~~~~~~~
 
-Monitor utility for Nvidia cards. This only works with the proprietary "nvidia" driver.
+Monitor utility for Nvidia graphics cards. This only works with the proprietary "nvidia" driver.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   "", show the resource and power utiliization of the card
+   -i 0 -p1 <WATTS>, set the maximum amount of wattage that the first Nvidia card detected should use
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   -i 0 -p1 80, only allow the first Nvidia card to use up to 80 watts of power
 
 aticonfig
 ~~~~~~~~~
