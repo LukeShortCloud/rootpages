@@ -116,14 +116,24 @@ then native DLLs.
 
 [5]
 
+Forks
+-----
+
+Many forks of the upstream Wine project exist.
+
+-  `CrossOver <https://www.codeweavers.com/products/more-information/source>`__ = The commercial product of Wine made by CodeWeavers which employees the primary Wine developers.
+-  `Proton <https://github.com/ValveSoftware/Proton>`__ = Officially developed and funded by Valve, it aims to provide better compatibility and performance for gaming.
+-  `Proton-tkg <https://github.com/Tk-Glitch/PKGBUILDS/tree/master/proton-tkg>`__ = A highly configurable set of scripts for building Wine with Proton patches.
+-  `Proton GE <https://github.com/GloriousEggroll/proton-ge-custom/releases>`__ = The latest development version of Wine with Staging and Proton patches. d9vk is enabled by default. It also uses protonfixes to apply workarounds for certain games.
+
 Frameworks
 ----------
 
 Various different frameworks exist for helping to install Windows applications on UNIX-like systems. These normally use a combination of Wine, winetricks, and scripts to modify settings and configuraitons for specific Windows applications to work.
 
 -  `Lutris <https://lutris.net/>`__ = An open source gaming platform that helps with installing emulators and Windows applications. It uses JSON and YAML structures to define how to install applications using Python helper functions.
--  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4)
--  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = Uses a JSON structure to define dependencies and uses Java helper functions to assist with installating applications.
+-  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses bash scripts to help with installing Windows applications.
+-  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official succesor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installating applications.
 -  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
 
 PlayOnLinux 4
