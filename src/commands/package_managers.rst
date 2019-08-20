@@ -561,6 +561,18 @@ Preform major Fedora upgrades
    "--releasever", "target a specific major release version"
    "download", "download all of the RPMs to allow for an offline upgrade"
 
+ostree
+~~~~~~
+
+Manage an ostree file system.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   admin pin <INDEX>, pin a certain index so that it will not be deleted/consolidated
+   admin pin --unpin <INDEX>, unpin an index so it can be deleted/consolidated
+
 rpm-ostree
 ~~~~~~~~~~
 
@@ -581,6 +593,8 @@ The default package manager for Fedora Silverblue. All updates require a system 
    kargs --delete=<CMDLINE_OPTION, remove a boot option for the kernel
    kargs --replace=<KEY>=<OLD_VALUE>=<NEW_VALUE>, replace the value for an existing key
    kargs --editor, interactively edit the boot options for the kernel
+   ex, use expertimental features
+   ex livefs --i-like-danger, layer the pending deployment changes to avoid a reboot
 
 .. csv-table::
    :header: Example, Explanation
