@@ -1484,6 +1484,8 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
       -  **gateway** (**network\_gateway** in Newton) = The default gateway to use for external connectivity to the Internet during provisioning. Use the "local\_ip" when masquerading is used.
       -  undercloud\_admin\_vip = The IP address to listen on for admin API endpoints.
       -  undercloud\_hostname = The fully qualified hostname to use for the Undercloud.
+      -  undercloud\_nameservers = A list of DNS resolvers to use.
+      -  undercloud\_ntp\_servers = A list of NTP servers to use.
       -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
       -  enabled_hardware_types (**enabled\_drivers** in Newton) = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management" (Queens) or "fake_pxe" (Newton) to this list.
 
@@ -1773,12 +1775,11 @@ Overcloud
        | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | available       | compute         |                   |       |
        +--------------------------------------+-----------+-----------------+-----------------+-------------------+-------
 
--  Set a DNS nameserver.
+-  Set a DNS nameserver on the control plane subnet. Starting with Rocky, this is automatically set to the value of ``undercloud_nameservers`` from the ``undercloud.conf`` configuration.
 
    .. code-block:: sh
 
-      $ openstack subnet list
-      $ openstack subnet set --dns-nameserver 8.8.8.8 <SUBNET_ID>
+      $ openstack subnet set --dns-nameserver 8.8.8.8 --dns-nameserver 1.1.1.1 ctlplane-subnet
 
 **Deployment**
 
@@ -2283,7 +2284,9 @@ These are configurations specific to Overcloud deployments using TripleO. Custom
 Networks
 ''''''''
 
-There are 6 different types of networks in a standard TripleO deployment:
+When no network template is defined, VLANs are not used and instead each network will be assigned different subnets. Networks are only created using the ``STACK_CRATE`` phase and will not run during the ``STACK_UPDATE`` phase unless the Heat parameter ``NetworkDeploymentActions: ['CREATE','UPDATE']`` is set.
+
+There are 6 different types of networks in a standard TripleO deployment using a VLANs template.
 
 -  External = The external network that can access the Internet. This is used for the Horizon dashboard, public API endpoints, and floating IP addresses. Default VLAN: 10
 -  Internal = Default VLAN: 20.
@@ -2299,7 +2302,9 @@ Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
 ::
 
    <NETWORK_TYPE>NetCidr: <CIDR>
-   <NETWORK_TYPE>AllocationPools: [{"start": "<START_IP>", "end": "<LAST_IP>"}]
+   <NETWORK_TYPE>AllocationPools:
+     - start: <START_IP>
+       end: <END_IP>
    <NETWORK_TYPE>NetworkVlanID: <VLAN_ID>
 
 Configure these settings to match the IP address that the Undercloud is configured to use for provisioning. The default value is ``192.168.24.1``.
@@ -2310,13 +2315,17 @@ Configure these settings to match the IP address that the Undercloud is configur
    ControlPlaneDefaultRoute: <UNDERCLOUD_IP>
    EC2MetadataIp: <UNDERCLOUD_IP>
 
-Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers.
+Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers. It is important the DNS is setup correctly because if chronyc fails to resolve the NTP servers then it will not try to resolve them again. DNS is also reuqired to download and install additional TripleO packages.
 
 ::
 
    ExternalInterfaceDefaultRoute: <PUBLIC_DEFAULT_GATEWAY_ADDRESS>
-   DnsServers: ["8.8.8.8", "8.8.4.4"]
-   NtpServer: ["pool.ntp.org"]
+   DnsServers:
+     - 10.5.30.160
+     - 10.11.5.19
+   NtpServer:
+     - clock.redhat.com
+     - clock2.redhat.com
 
 Define the allowed network tag/tunnel types that Neutron networks use. The Neutron tunnel type is used for internal tranmissions between the compute and network nodes. By default, the Neutron network bridge will be attached to ``br-int`` if left blank. This will configure a provider network. Otherwise, ``br-ex`` should be specified for self-service networks.
 
