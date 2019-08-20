@@ -1489,7 +1489,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
       -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
       -  enabled_hardware_types (**enabled\_drivers** in Newton) = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management" (Queens) or "fake_pxe" (Newton) to this list.
 
-   -  Deploy an all-in-one Undercloud on the virtual machine.
+   -  Deploy the Undercloud. Anytime the configuration for the Undercloud changes, this command needs to be re-ran to update the installation.
 
       .. code-block:: sh
 
@@ -2349,6 +2349,40 @@ Configure bonding interface options, if applicable. Below is an example for LACP
    bonding_options: "mode=802.3ad lacp_rate=slow updelay=1000 miimon=100"
 
 [100]
+
+Containers
+''''''''''
+
+-  Configure the Undercloud to cache container images and serve them to the Overcloud nodes. This caching speeds up the deployment and lowers the amount of Internet bandwidth used. By default, Overcloud nodes will directly get images from the defined public registries. A private registry on the Undercloud will need to be configured as an insecure registry (it does not use a SSL/TLS certificate).
+
+.. code-block:: ini
+
+   # undercloud.conf
+   [DEFAULT]
+   container_images_file = /home/stack/containers-prepare-parameter.yml
+   container_insecure_registries = ['192.168.24.1:8787']
+
+.. code-block:: yaml
+
+   ---
+   # containers-prepare-parameters.yml
+   parameter_defaults:
+     DockerInsecureRegistryAddress:
+       - 192.168.24.1:8787
+     ContainerImagePrepare:
+       - push_destination: true
+
+-  Authenticate with a registry. For example, the Red Hat repository that contains the RHOSP container images. [117]
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+   ContainerImageRegistryCredentials:
+     registry.redhat.io:
+       <RED_HAT_USERNAME>: <RED_HAT_PASSWORD>
+
+-  Information on how to define custom registries and other related settings can be found `here <https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/container_image_prepare.html>`__.
 
 Pacakges
 ''''''''
@@ -4514,3 +4548,4 @@ Bibliography
 114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
 115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
 116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. August 6, 2019. Accessed August 14, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ansible_config_download.html
+117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Beta Documentation. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15-beta/html/director_installation_and_usage/preparing-for-director-installation
