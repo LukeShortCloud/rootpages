@@ -2224,11 +2224,13 @@ Servers hosting the cloud services will eventually need to go through a reboot t
 Ansible Playbooks (config-download)
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
-The playbooks and variables used to deploy the Overcloud can be downloaded to the current working directory.
+The latest playbooks and variables used to deploy the Overcloud can be downloaded to the current working directory.
 
 .. code-block:: sh
 
     $ openstack overcloud config download
+
+All of that Ansible content is stored in a local git repository at ``/var/lib/mistral/overcloud/``. The log of the last config-download run is found at ``/var/lib/mistral/overcloud/ansible.log``.
 
 The ``deploy_steps_playbook.yaml`` file is the primary playbook that executes all of the deployment playbooks.
 
