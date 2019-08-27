@@ -1981,6 +1981,9 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
    -  Alternatively, follow `this guide <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/director_installation_and_usage/index#sect-Using_a_Separate_Network_for_Overcloud_Nodes>`__ to allow the nodes to access a routable public hostname for the Undercloud secured by SSL/TLS. This avoids the requirement of having access to the provisioning interface/network of the Undercloud.
 
 -  Create a ``stack`` user. Add the ``stack`` user's SSH key from the Undercloud to allow access during deployment.
+
+   -  Alternatively, specify a different user for the deployment with ``openstack overcloud deploy --overcloud-ssh-user <USER> --overcloud-ssh-key <PRIVATE_KEY_FLIE>``. This user is only used during the initial deployment to create a ``tripleo-admin`` user (or the user ``heat-admin`` in Queens release and older).
+
 -  Enable the RDO or RHOSP repositories.
 -  Install the Heat user agent.
 
