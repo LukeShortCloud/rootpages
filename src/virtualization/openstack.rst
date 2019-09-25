@@ -1957,17 +1957,6 @@ Overcloud
 
        $ sshuttle -r stack@undercloud 192.168.24.23
 
-Overcloud (Queens config-download)
-''''''''''''''''''''''''''''''''''
-
-The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running the deployment playbooks.
-
-.. code-block:: sh
-
-   $ openstack overcloud deploy --templates ~/templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
-
-[113]
-
 Overcloud (Pre-provisioned/deployed Nodes)
 ''''''''''''''''''''''''''''''''''''''''''
 
@@ -2227,6 +2216,12 @@ Servers hosting the cloud services will eventually need to go through a reboot t
 Ansible Playbooks (config-download)
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
+The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running updates and upgrades in the future [113]. Use these arguments to enable config-download on Queens.
+
+.. code-block:: sh
+
+   $ openstack overcloud deploy --templates ~/templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
+
 The latest playbooks and variables used to deploy the Overcloud can be downloaded to the current working directory.
 
 .. code-block:: sh
@@ -2274,6 +2269,12 @@ For only updating the Ansible playbooks based on the Heat templates, pass the ``
    $ openstack overcloud deploy --stack-only
 
 [116]
+
+If the playbooks are already generated from a successful STACK_CREATE of the Overcloud, then the deployment can be ran again using only the playbooks (skipping the need to parse the Heat templates).
+
+.. code-block:: sh
+
+   $ openstack overcloud deploy --config-download-only
 
 Configurations
 ^^^^^^^^^^^^^^
@@ -2431,6 +2432,16 @@ TripleO Queens configuration (external Ceph cluster):
      CephExternalMonHost: '<CEPH_MONITOR_1>, <CEPH_MONITOR_2>, <CEPH_MONITOR_3>'
 
 [98]
+
+Overcloud
+
+The Overcloud nodes can be configured using cloud-init configuration data.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     OS::TripleO::NodeUserData: <CLOUD_INIT_CONFIG>.yml
 
 Configurations
 --------------
