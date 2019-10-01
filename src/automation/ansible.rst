@@ -16,9 +16,9 @@ Official documentation:
 
 -  `Stable <https://docs.ansible.com/ansible/latest/>`__
 -  `Development <https://docs.ansible.com/ansible/devel/>`__
+-  `2.9 <https://docs.ansible.com/ansible/2.9/>`__
+-  `2.8 <https://docs.ansible.com/ansible/2.8/>`__
 -  `2.7 <https://docs.ansible.com/ansible/2.7/>`__
--  `2.6 <https://docs.ansible.com/ansible/2.6/>`__
--  `2.5 <https://docs.ansible.com/ansible/2.5/>`__
 
 Editions
 ~~~~~~~~
@@ -33,7 +33,7 @@ If a component in Ansible release ``N`` becomes deprecated then it is normally l
 Installation
 ------------
 
-Ansible 2.7 requires Python 2.7 or >= 3.5 on both the control and managed nodes. [74] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
+Ansible requires Python 2.7 or >= 3.5 on both the control and managed nodes. [74] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
 
 Fedora:
 
@@ -71,8 +71,11 @@ Updating source code installations:
 Ansible RPMs for Fedora based operating systems are available from:
 
 -  The "extras" repository (Fedora)
--  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (RHEL, CentOS, and Fedora)
--  The Ansible Engine repository "rhel-7-server-ansible-2.7-rpms" (RHEL)
+-  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (Enterprise Linux and Fedora)
+-  The Ansible Engine repository (RHEL)
+
+   -  RHEL 7: rhel-7-server-ansible-2-rpms OR rhel-7-server-ansible-2.9-rpms + rhel-7-server-extras-rpms
+   -  RHEL 8: ansible-2-for-rhel-8-x86_64-rpms OR ansible-2.9-for-rhel-8-x86_64-rpms
 
 [18]
 
