@@ -3677,6 +3677,18 @@ The OpenStack command line interface (CLI) resources used to be handled
 by separate commands. These have all been modified and are managed by
 the universal "openstack" command. The various options and arguments for OpenStack related commands can be found in Root Pages' `Commands - OpenStack <../commands/openstack.html>`__.
 
+Install all of the OpenStack CLI tools using pip.
+
+.. code-block:: sh
+
+   $ pip install --user python-openstackclient
+
+Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [119]
+
+.. code-block:: sh
+
+   $ pip install --user python-<SERVICE>client
+
 For the CLI utilities to work, the environment variables need to be set
 for the project and user. This way the commands can automatically
 authenticate.
@@ -4572,3 +4584,4 @@ Bibliography
 116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. August 6, 2019. Accessed August 14, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ansible_config_download.html
 117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
+119. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
