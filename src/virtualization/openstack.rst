@@ -123,6 +123,7 @@ Release Cycle:
 
 -  RHOSP < 10 = Each release is supported for up to 3 years.
 -  RHOSP >= 10 = Starting with RHOSP 10, every third release of RHOSP is a long-life (LL) release with up to 5 years of support. In-between releases are supported for 1 year. Fast-forward upgrades are supported to upgrade directly from one LL release to the next (for example, 10 to 13).
+-  RHOSP >= 16 = Every release of RHOSP is now a LL release. [118]
 
 Releases:
 
@@ -185,6 +186,11 @@ Releases:
 
    -  Release: 2019-01-10
    -  EOL: 2020-01-10
+
+-  RHOSP 15 (Stein)
+
+   -  Release: 2019-09-19
+   -  EOL: 2020-09-19
 
 [6]
 
@@ -4453,7 +4459,7 @@ Bibliography
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed February 18, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
+6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 26, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
 9. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
@@ -4564,4 +4570,5 @@ Bibliography
 114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
 115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
 116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. August 6, 2019. Accessed August 14, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ansible_config_download.html
-117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Beta Documentation. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15-beta/html/director_installation_and_usage/preparing-for-director-installation
+117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
+118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
