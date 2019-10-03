@@ -73,6 +73,7 @@ Cons:
 
 -  Does not support dual-booting.
 -  Partitions cannot be customized as fully as Fedora Workstation.
+-  RPM updates require a system reboot.
 
 [13]
 

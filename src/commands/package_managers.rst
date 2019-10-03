@@ -582,9 +582,14 @@ The default package manager for Fedora Silverblue. All updates require a system 
    :header: Usage, Explanation
    :widths: 20, 20
 
-   install, install a RPM
-   uninstall, uninstall a RPM
-   update, update the base OS and any RPMs that are installed
+   install <RPM>, install a RPM
+   uninstall <RPM>, uninstall a RPM
+   update, an alias for upgrade
+   upgrade, update the base OS and any RPMs that are installed
+   upgrade --check, check for updates
+   override replace <RPM>, install a RPM that replaces a base image package
+   override remove <RPM>, uninstall a RPM from the base image
+   overridden reset <RPM>, uninstall the overidden RPM and install the base image package again
    status, show the commits of ostree
    deploy <COMMIT>, revert to an older version of the OS
    rollback, change the boot entry to boot from the last OS version
