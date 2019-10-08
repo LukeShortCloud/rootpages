@@ -64,9 +64,8 @@ Fedora Silverblue uses ostree (via rpm-ostree) to manage the operating system in
 
 Pros:
 
--  Automatic updates.
+-  Automatic updates by default.
 -  Easy to rollback updates.
--  Modular design.
 -  Difficult to break due to the read-only file system.
 
 Cons:
@@ -74,6 +73,7 @@ Cons:
 -  Does not support dual-booting.
 -  Partitions cannot be customized as fully as Fedora Workstation.
 -  RPM updates require a system reboot.
+-  Cannot search for specific packages (no ``dnf search`` equivalent).
 
 [13]
 
