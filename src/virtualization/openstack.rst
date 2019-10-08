@@ -203,31 +203,13 @@ RHOSP supports running a virtualized Undercloud on these platforms [9]:
 
 RHOSP only supports using libvirt with KVM as the compute hypervisor's virtualization technology. [94]
 
-The version of RHOSP in use can be found on the Undercloud by viewing
-the "/etc/rhosp-release" file.
+The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/rhosp-release" file. OpenStack packages can also be tracked down to which major release it is a part of by using https://access.redhat.com/downloads/content/package-browser.
+
 
 .. code-block:: sh
 
     $ cat /etc/rhosp-release
-    Red Hat OpenStack Platform release 10.0 (Newton)
-
-On other nodes, the version can be found by checking the "version" and
-"release" of the RPM packages. The version consists of the year and
-month of the upstream OpenStack release. The last number in the version
-is the bugfix release for this specific package. The release section is
-the minor version of the RHOSP. In the example below, the upstream
-OpenStack release is Newton that was released on the 10th month of 2016.
-The corresponding major RHOSP version is 10 for Newton. This is the 2nd
-bugfix release for the package "openstack-nova-common." The minor
-release is 8. The full RHOSP version is referenced as "10z8." [8]
-
-.. code-block:: sh
-
-    $ rpm -qi openstack-nova-common
-    Name        : openstack-nova-common
-    Version     : 2016.10.2
-    Release     : 8.el7ost
-    ...
+    Red Hat OpenStack Platform release 10.0.11 (Newton)
 
 Services
 ~~~~~~~~
