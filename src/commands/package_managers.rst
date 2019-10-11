@@ -257,6 +257,8 @@ Danified YUM (DNF) is the default package manager for Fedora >= 22. It is design
    "install", "install a package"
    "remove", "uninstall a package"
    "autoremove", "remove unneeded dependencies"
+   repository-packages <REPO>, manage all packages relating to a certain repository
+   repository-packages <REPO> remove, uninstall all packages that came from a specified repository
    "clean all", "removes DNF all cache, including packages"
    "clean packages", "remove cached packages (old, uninstalled, and/or downloaded packages)"
    "clean expire-cache", "set the cache to be expired on the next dnf usage; this allows ""dnf -C"" to still work against cached repository metadata"
