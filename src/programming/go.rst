@@ -3,7 +3,7 @@ Go
 
 .. contents:: Table of Contents
 
-The ``Go`` programming language is sometimes referred to as ``golang`` to avoid confusion with the English word "go."
+The open source ``Go`` programming language was created by Google in 2009 to get the speed of compiled C code while also having quality-of-life features of memory protection, garbage collection, and multiprocessing. The language is sometimes referred to as ``golang`` to avoid confusion with the English word "go." [6]
 
 Tutorials
 ---------
@@ -325,3 +325,4 @@ Bibliography
 3. "Package fmt." The Go Programming Language. Accessed March 5, 2019. https://golang.org/pkg/fmt/
 4. "Functions." A Tour of Go. Accessed March 6, 2019. https://tour.golang.org/basics/4
 5. "Golang Control Flow Statements: If, Switch and For." CalliCoder. January 29, 2018. Accessed March 8, 2019. https://www.callicoder.com/golang-control-flow/
+6. "The Evolution of Go: A History of Success." QArea Blog. March 20, 2018. Accessed October 14, 2019. https://qarea.com/blog/the-evolution-of-go-a-history-of-success
