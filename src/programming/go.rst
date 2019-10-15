@@ -39,6 +39,7 @@ Data Types
 -  ``complex64``, ``complex128`` = Complex. A float that supports imaginary numbers.
 -  ``float32``, ``float64`` = Float. Large decimal numbers.
 -  ``int``, ``int8`` (or ``byte``), ``int16``, ``int32`` (or ``rune``), ``int64`` = Integer. By default, ``int`` will be 32-bit or 64-bit based on the operating system architecture.
+-  ``nil`` = An empty/null variable.
 -  ``string`` = String. Alphanumeric UTF-8 values.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
 
@@ -169,7 +170,7 @@ Specific local variables can also be returned.
 
 [4]
 
-Certain return variables can be ignored by using "_" as a place holder.
+Certain return variables can be ignored by using "_" as a place holder. In this example, ``varOne`` will be set to ``1``.
 
 .. code-block:: go
 
@@ -314,6 +315,186 @@ Comparisons can also be checked where a case will be matched if a boolean return
 
 [5]
 
+File Input and Output
+---------------------
+
+File handling is done via the ``io/ioutil`` library. The two main methods are ``ReadFile`` and ``WriteFile``. Information read and written from/to uses as an array of the ``bytes`` data type.
+
+.. code-block:: go
+
+   package main
+
+   import (
+       "io/ioutil"
+   )
+
+The ``ReadFile`` method will first return the file text in an array of bytes and, if there was a failure, it will also return an error as a string.
+
+Syntax:
+
+.. code-block:: go
+
+   text_bytes, error := ioutil.ReadFile(<FILE_NAME>)
+
+The ``WriteFile`` method will only return an error message if it fails. Otherwise, a variable assigned to it will be kept as having a ``nil`` value.
+
+Syntax:
+
+.. code-block:: go
+
+   error := ioutil.WriteFile(<FILE_NAME>, <INPUT_BYTES>, <FILE_MODE_PERMISSIONS>)
+
+Example:
+
+.. code-block:: go
+
+   package main
+   
+   import (
+       "fmt"
+       "io/ioutil"
+   )
+   
+   func main() {
+       file := "hello_world.txt"
+       text := []byte("Hello world")
+       error := ioutil.WriteFile(file, text, 0644)
+   
+       if error != nil {
+           fmt.Println(error)
+       } else {
+           fmt.Println("The file was written successfully.")
+       }
+   
+       read_text_bytes, error := ioutil.ReadFile(file)
+       read_text_string := string(read_text_bytes)
+   
+       if error != nil {
+           fmt.Println(error)
+       } else {
+           fmt.Printf("The file says: \n%v\n", read_text_string)
+       }
+   }
+
+::
+
+   The file was written successfully.
+   The file says:
+   Hello world
+
+More advanced operations for files (such as appending text, truncating, renaming/relocating, etc.) are handled via the ``os`` library.
+
+.. code-block:: go
+
+   import "os"
+
+For appending to a file, the ``os.OpenFile`` method should be used. It provides more advanced options than the simpler ``os.Open`` and ``ioutil.ReadFile`` methods.
+
+.. code-block:: go
+
+   OpenFile(<FILE_NAME>, <ATTRIBUTES>, <PERMISSIONS>)
+
+Here is the list of valid attributes for oppening the file.
+
+-  os.O_APPEND = Append to an existing file.
+-  os.O_CREATE = Create a new file.
+-  os.O_RDONLY = Read.
+-  os.O_RDWR = Read and write.
+-  os.O_TRUNC = Truncate a file / empty it.
+-  os.O_WRONLY = Write.
+
+Multiple attributes can be combined using an OR ``|`` statement. The ``os`` file methods also require the object to be manually closed (something that is done automatically with the ``ioutil`` methods).
+
+.. code-block:: go
+
+   text_file, error = OpenFile("example.txt", os.O_CREATE|os.O_APPEND, 0644)
+   text_file.WriteString("This is a new line of text!\n")
+   text_file.close()
+
+[7]
+
+Libraries
+---------
+
+All of the libraries and methods can be found at `https://golang.org/pkg/ <https://golang.org/pkg/>`__. The methods will list all of the possible input and output values.
+
+(Files)
+~~~~~~~
+
+These are the methods related to examining and manipulating files.
+
+-  `io.ioutil <https://golang.org/pkg/io/ioutil/>`__
+
+   -  NopCloser
+   -  ReadAll
+   -  ReadDir
+   -  ReadFile
+   -  TempDir
+   -  TempFile
+   -  WriteFile
+
+-  `os <https://golang.org/pkg/os/>`__
+
+   -  Chown
+   -  Chmod
+   -  Chtimes
+   -  Create
+   -  Chdir
+   -  FileInfo
+   -  Getwd
+   -  IsExist
+   -  IsNotExist
+   -  IsPathSeparator
+   -  Lchown
+   -  Link
+   -  Mkdir
+   -  MkdirAll
+   -  Open
+   -  OpenFile
+   -  Readlink
+   -  Remove
+   -  RemoveAll
+   -  Rename
+   -  SameFile
+   -  Stat
+   -  Symlink
+   -  TempDir
+   -  Truncate
+   -  UserCacheDir
+   -  UserConfigDir
+   -  UserHomeDir
+
+(File Object)
+^^^^^^^^^^^^^
+
+These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``File`` object/data type.
+
+-  Create
+-  NewFile
+-  Open
+-  OpenFile
+-  Chdir
+-  Chmod
+-  Chown
+-  Close
+-  Fd
+-  Name
+-  Read
+-  ReadAt
+-  Readdir
+-  Readdirnames
+-  Seek
+-  SetDeadline
+-  SetReadDeadline
+-  SetWriteDeadline
+-  Stat
+-  Sync
+-  SyscallConn
+-  Truncate
+-  Write
+-  WriteAt
+-  WriteString
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/programming/golang.rst>`__
 ----------------------------------------------------------------------------------------------
 
@@ -326,3 +507,4 @@ Bibliography
 4. "Functions." A Tour of Go. Accessed March 6, 2019. https://tour.golang.org/basics/4
 5. "Golang Control Flow Statements: If, Switch and For." CalliCoder. January 29, 2018. Accessed March 8, 2019. https://www.callicoder.com/golang-control-flow/
 6. "The Evolution of Go: A History of Success." QArea Blog. March 20, 2018. Accessed October 14, 2019. https://qarea.com/blog/the-evolution-of-go-a-history-of-success
+7. "Working with Files in Go." DevDungeon. August 23, 2015. Accessed October 15, 2019. https://www.devdungeon.com/content/working-files-go
