@@ -1282,7 +1282,13 @@ variables to a YAML file and then add the arguments
 Standalone Containers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Starting with Rocky, an all-in-one cloud can be deployed using TripleO. This skips the Undercloud and instead deploys a fully functional Overcloud. Instructions on how to do this are documented `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html>`__. The config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``.
+Requirements:
+
+-  4 CPU cores
+-  8GB RAM
+-  50GB storage
+
+Starting with Rocky, an all-in-one cloud can be deployed without the need of an Undercloud. This skips the Undercloud deployment and instead deploys a fully functional Overcloud onto the local server. Unlike a typical deployment, Mistral is not used. Instructions on how to setup a Standalone cloud are documented `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html>`__. After the installation, the config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``. The Standalone deployment does not support being scaled out and is designed specifically for developers as an alternative to `devstack <https://docs.openstack.org/devstack/latest/>`__.
 
 InfraRed 2
 ^^^^^^^^^^
