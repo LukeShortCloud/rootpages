@@ -2968,16 +2968,25 @@ Neutron
 Network Types
 ^^^^^^^^^^^^^
 
-In OpenStack, there are two common scenarios for networks: "provider"
-and "self-service."
+In OpenStack, there are two common scenarios for networks: ``provider`` and ``self-service``.
 
-Provider is is a simpler approach. It gives virtual machines direct
-access to a bridge device.
+Provider:
 
-Self-service networks are more complex due to the added bridge and
-tunnel devices. This complexity allows for more advanced features such
-as isolated private networks, load-balancing-as-a-service (LBaaS),
-Firewall-as-a-Service (FWaaS), and more. [48]
+-  Simpler
+-  Instances have direct access to a bridge device.
+-  Faster
+-  Best network for bare-metal machines.
+
+Self-service:
+
+-  Complex
+-  Instances network traffic is isolated and tunneled.
+-  More available virtual networks
+-  Required for Firewall-as-a-Service (FWaaS) Load-Balancing-as-a-Service (LBaaS) to work.
+
+[48]
+
+For software-defined networking, the recommended services to use for Neutron's Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [120]
 
 Provider Networks
 '''''''''''''''''
@@ -4567,3 +4576,4 @@ Bibliography
 117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
 119. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
+120. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
