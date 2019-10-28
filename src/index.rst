@@ -20,12 +20,6 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Commands
-
-   commands/index.rst
-
-.. toctree::
-   :maxdepth: 1
    :caption: Networking
 
    networking/index.rst
@@ -41,6 +35,15 @@ Welcome to Root Pages!
    :caption: Virtualization
 
    virtualization/index.rst
+
+-----
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Commands
+
+   commands/index.rst
+
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
 
