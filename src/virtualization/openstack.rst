@@ -720,7 +720,7 @@ The valid service types are:
 Neutron
 &&&&&&&
 
-OpenStack-Ansible does not manage the network interfaces on host nodes. The ``br-vlan`` interface is recommended to be configured to provide access to the Internet. However, any network configuration can be configured. [89]
+OpenStack-Ansible does not manage the network interfaces on host nodes. The ``br-vlan`` interface is recommended to be configured to provide access to the Internet. However, any network configuration can be configured.
 
 Configure OpenStack-Ansible to only use a single interface (eth0), with no VLANs, on the 192.168.1.0/24 subnet:
 
@@ -1129,7 +1129,7 @@ Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
-In Pike, most of the Overcloud can be deployed into docker containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services can now be installed as docker containers. Support for also running the Undercloud services in containers was added in Queens and became the default configuration for Rocky. [81]
+In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://github.com/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [81]
 
 Minimum recommended requirements [24]:
 
@@ -1648,7 +1648,7 @@ Overcloud
 
       -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
 
-      -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface. [103]
+      -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface.
 
          .. code-block:: sh
 
@@ -1951,7 +1951,7 @@ Overcloud
 
        $ sshuttle -r stack@undercloud 192.168.24.23
 
-Overcloud (Pre-provisioned/deployed Nodes)
+Overcloud (Pre-deployed/provisioned Nodes)
 ''''''''''''''''''''''''''''''''''''''''''
 
 Instrospection and operating system deployment can be skipped if the Overcloud nodes already have the operating system installed and configured. This makes the Overcloud deployment process from TripleO faster. An Overcloud cannot have a mix of nodes that need provisioning and are pre-provisioned. If using this method, all Overcloud nodes must be pre-provisioned.
@@ -2407,9 +2407,9 @@ Ceph
 
 **Releases**
 
-Ceph is fully supported as a back-end for Overcloud storage services. If Ceph is enabled in TripleO, it will be used by default for Glance and Cinder. Before Pike, puppet-ceph was used to manage Ceph. Experimental support for using ceph-ansible was added in Pike. [121] It is fully supported via config-download as of Rocky. In Train, it uses the same Ansible inventory as config-download. Ceph updates are handled during the ``external_deploy_steps_tasks`` stage of config-download.
+Ceph is fully supported as a back-end for Overcloud storage services. If Ceph is enabled in TripleO, it will be used by default for Glance and Cinder. Before Pike, puppet-ceph was used to manage Ceph. Experimental support for using ceph-ansible was added in Pike. [66] It is fully supported via config-download as of Rocky. In Train, it uses the same Ansible inventory as config-download. Ceph updates are handled during the ``external_deploy_steps_tasks`` stage of config-download.
 
-Red Hat Ceph Storage (RHCS) is the supported enterprise version of Ceph. RHCS 3.2 added official support for BlueStore. Using Ceph's FileStore mechanism has been deprecated since RHOSP 14. FileStore to BlueStore migration is supported by Red Hat. Customers must first update to RHCS 4 and then each OSD node is upgraded one at a time. [122]
+Red Hat Ceph Storage (RHCS) is the supported enterprise version of Ceph. RHCS 3.2 added official support for BlueStore. Using Ceph's FileStore mechanism has been deprecated since RHOSP 14. FileStore to BlueStore migration is supported by Red Hat. Customers must first update to RHCS 4 and then each OSD node is upgraded one at a time. [41]
 
 RHCS releases and supported platforms:
 
@@ -2836,7 +2836,7 @@ related Credential authentication.
        $ sudo chown keystone.keystone /etc/keystone/credential-keys/
        $ sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
-[40][41]
+[40]
 
 TripleO Queens configuration [97]:
 
@@ -3109,7 +3109,7 @@ Self-service:
 
 [48]
 
-For software-defined networking, the recommended services to use for Neutron's Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [120]
+For software-defined networking, the recommended services to use for Neutron's Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [89]
 
 Provider Networks
 '''''''''''''''''
@@ -3797,7 +3797,7 @@ Install all of the OpenStack CLI tools using pip.
 
    $ pip install --user python-openstackclient
 
-Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [119]
+Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [103]
 
 .. code-block:: sh
 
@@ -4124,7 +4124,7 @@ syntax for the variable:
 
     { get_param: <CUSTOM_NAME> }
 
-[66]
+[65]
 
 Vagrant
 ~~~~~~~
@@ -4584,7 +4584,7 @@ Bibliography
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-5. "Queens [Goals]." OpenStack Documentation. September 26, 2017. Accessed October 4, 2017. https://governance.openstack.org/tc/goals/pike/index.html
+5. "Queens [Goals]." OpenStack Documentation. June 27, 2019. Accessed October 28, 2019. https://governance.openstack.org/tc/goals/queens/index.html
 6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 26, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
 7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
@@ -4599,16 +4599,16 @@ Bibliography
 17. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os_nova/queens/
 18. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 19. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
-20. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
+20. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. October 8, 2019. Accessed October 28, 2019. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
 21. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
-22. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html/
+22. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
 23. "TripleO quickstart." RDO Project. Accessed March 26, 2018. https://www.rdoproject.org/tripleo/
 24. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
 25. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
 26. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
 27. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
 28. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
-29. "Basic Deployment (CLI)." OpenStack Documentation. Accessed November 9, 2017. https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html
+29. "Basic Deployment (CLI)." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/install_overcloud.html
 30. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
 31. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
 32. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
@@ -4616,11 +4616,11 @@ Bibliography
 34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
 35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
 36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "Baremetal Environment." TripleO OpenStack Documentation. January 19, 2019. Accessed January 22, 2019. https://docs.openstack.org/tripleo-docs/latest/install/environments/baremetal.html
+37. "Baremetal Environment." TripleO OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/environments/baremetal.html
 38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
 39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
 40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
-41. "OpenStack Keystone Fernet tokens." Dolph Mathews. Accessed August 27th, 2016. http://dolphm.com/openstack-keystone-fernet-tokens/
+41. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
 42. "Ocata Series [Keystone] Release Notes." OpenStack Documentation. Accessed April 3, 2017. https://docs.openstack.org/releasenotes/keystone/ocata.html
 43. "Hypervisors." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html
 44. “Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute.” Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
@@ -4644,8 +4644,8 @@ Bibliography
 62. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
 63. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
 64. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
-65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. October 4, 2018. Accessed October 5, 2018. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
-66. "Heat Orchestration Template (HOT) specification." OpenStack Developer Documentation. October 21, 2016. Accessed October 22, 2016. http://docs.openstack.org/developer/heat/template_guide/hot_spec.html
+65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. February 15, 2019. Accessed October 28, 2019. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
+66. "Configuring Ceph with Custom Config Settings." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
 67. "ggiamarchi/vagrant-openstack-provider." GitHub. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 68. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
 69. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
@@ -4655,20 +4655,20 @@ Bibliography
 73. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
 74. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
 75. "[Ironic] Enabling drivers." OpenStack Documentation. March 15, 2018. Accessed March 15, 2018. https://docs.openstack.org/ironic/queens/admin/drivers.html
-76. "VirtualBMC." TripleO Documentation. Accessed January 29, 2018.
+76. "VirtualBMC." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/environments/virtualbmc.html
 77. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
-78. "Verification reports." Rally Documentation. Accessed March 13, 2018. http://docs.xrally.xyz/projects/openstack/en/latest/verification/reports.html
-79. "OpenStack Pike Repository." CentOS Mirror. Accessed March 15, 2018. http://mirror.centos.org/centos-7/7/cloud/x86_64/openstack-pike/
+78. "Verification reports." Rally Documentation. Accessed October 28, 2019. https://docs.openstack.org/rally/latest/verification/reports.html
+79. "OpenStack Pike Repository." CentOS Vault. May 20, 2019. Accessed October 28, 2019. http://vault.centos.org/7.6.1810/cloud/x86_64/openstack-pike/
 80. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
-81. "Containers based Undercloud Deployment." OpenStack Documentation. Accessed September 26, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/undercloud.html
+81. "Containers based Undercloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/undercloud.html
 82. "[TripleO Quickstart] Networking." TripleO Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html
-83. "Repository Enablement." OpenStack TripleO Documentation. May 5, 2018. Accessed May 7, 2018. https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/repositories.html
+83. "Repository Enablement." OpenStack TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/repositories.html
 84. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
 85. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
 86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
 87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
 88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
-89. "Deploying and customizing OpenStack Mitaka with openstack-ansible." cunninghamshane. August 19, 2016. Accessed July 25, 2018. https://cunninghamshane.com/deploying-and-customizing-openstack-mitaka-with-openstack-ansible/
+89. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
 90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
 91. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
 92. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
@@ -4676,13 +4676,13 @@ Bibliography
 94. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/release_notes/Red_Hat_OpenStack_Platform-13-Release_Notes-en-US.pdf
 95. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
 96. "Feature Configuraiton." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
-97. "Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform." Sweeping Information. December 12, 2017. Accessed September 27, 2018. https://hk.saowen.com/a/d108272fc7f3a3edaaa5d48200444b7ec08af46e5d8898311ad68286da265538
-98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. September 29, 2018. Accessed September 30, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ceph_external.html
+97. "Enabling Keystone's Fernet Tokens in Red Hat OpenStack Platform." Red Hat Blog. December 11, 2017. Accessed October 28, 2019. https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform
+98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
 99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
-100. "Configuring Network Isolation." TripleO Documentation. October 17, 2018. Accessed October 17, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/network_isolation.html
-101. "Modifying default node configuration." TripleO Documentation. October 17, 2018. Accessed October 18, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/node_config.html
-102. "Containers based Overcloud Deployment." TripleO Documentation. December 4, 2018. Accessed December 14, 2018. https://docs.openstack.org/tripleo-docs/latest/install/containers_deployment/overcloud.html
-103. "homeski/vagrant-openstack." GitHub. December 11, 2017. Accessed January 22, 2019. https://github.com/homeski/vagrant-openstack/tree/master/osp10
+100. "Configuring Network Isolation." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/network_isolation.html
+101. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
+102. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
+103. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
 104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
 106. "Bootstrap." infrared Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
@@ -4690,15 +4690,11 @@ Bibliography
 108. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
 109. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
 110. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
-111. "Using Already Deployed Servers." TripleO Documentation. January 2, 2019. Accessed April 3, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/deployed_server.html
+111. "Using Already Deployed Servers." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
 112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
 115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
-116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. August 6, 2019. Accessed August 14, 2019. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/ansible_config_download.html
+116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
 117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
-119. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
-120. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
-121. "Configuring Ceph with Custom Config Settings." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
-122. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
