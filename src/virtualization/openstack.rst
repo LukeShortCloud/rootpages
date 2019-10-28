@@ -2405,10 +2405,126 @@ A different repository for Overcloud service containers can be configured (>= Pi
 Ceph
 ''''
 
-TripleO Queens configuration (external Ceph cluster):
+**Releases**
+
+Ceph is fully supported as a back-end for Overcloud storage services. If Ceph is enabled in TripleO, it will be used by default for Glance and Cinder. Before Pike, puppet-ceph was used to manage Ceph. Experimental support for using ceph-ansible was added in Pike. [121] It is fully supported via config-download as of Rocky. In Train, it uses the same Ansible inventory as config-download. Ceph updates are handled during the ``external_deploy_steps_tasks`` stage of config-download.
+
+Red Hat Ceph Storage (RHCS) is the supported enterprise version of Ceph. RHCS 3.2 added official support for BlueStore. Using Ceph's FileStore mechanism has been deprecated since RHOSP 14. FileStore to BlueStore migration is supported by Red Hat. Customers must first update to RHCS 4 and then each OSD node is upgraded one at a time. [122]
+
+RHCS releases and supported platforms:
+
+-  RHCS 2 (Jewel) = RHOSP 10, 11, and 12.
+-  RHCS 3 (Luminous) = RHOSP 13 and 14.
+-  RHCS 4 (Nautilus) = RHOSP >= 15.
+
+**Deployment Types**
+
+TripleO can use an existing/independent ``external`` Ceph cluster. This is not managed by TripleO, and only provides connection details for OpenStack to communicate with the Ceph cluster. This requires the ``environments/ceph-ansible-external.yaml`` template. For a managed ``internal`` cluster, TripleO can deploy and manage the life-cycle of Ceph by using the ``enviornments/ceph-ansible.yaml`` template.
+
+**Packages**
+
+There are package and container requirements for both ``internal`` and ``external`` deployments of Ceph. The ceph-ansible package has to be installed for either the internal or external use case. For RHOSP, this is provided by the ``ceph-tools`` repository. As of Pike, the ``ceph-container`` has to be used to manage the Ceph services (even only as a client). This means that troubleshooting must be done inside the container. All OSD daemons run through a single container on each OSD node.
+
+**Architecture**
+
+TripleO puts the ceph-mon[itors] on the Overcloud Controller nodes. The OSDs are recommended to be placed on dedicated hardware. Hyperconverged infrastructure (HCI) is supported to run OSDs on the Compute nodes alongside the OpenStack services. For the Edge deployments, the ceph-mons live on the OSD nodes.
+
+If the specified disks for deployment are clean, TripleO will create the LVMs required for the Ceph OSDs.
+
+Pools for each OpenStack service are automatically created.
+
+-  images = Glance
+-  metrics = Gnocchi
+-  backups = Cinder
+-  vms = Nova
+-  volumes = Cinder
+
+One keyring at ``/etc/ceph/ceph.client.openstack.keyring`` is created by default to access all of the pool/rbds.
+
+**Deployment (Internal)**
+
+Use the ``environments/ceph-ansible.yaml`` Heat template. The command output of ``ceph-ansible`` is saved in the config-download directory at ``ceph-ansible/ceph-ansible-command.log``.
+
+``~/templates/enviornments/ceph-ansible.yaml`` = Enables Ceph
+``~/ceph.yaml`` = Specify a custom file with your own overrides
+
+Configure the object storage back-end: ``bluestore`` or ``filestore``.
 
 .. code-block:: yaml
 
+   ---
+   parameter_defaults:
+     osd_objectstore: <BACKEND>
+
+Example configuration of letting ``ceph-volume`` automatically determine which disks to use for what purpose (OSD or metadata). LVM is the recommended scenario.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     CephAnsibleDisksConfig:
+       devices:
+         - /dev/sdb
+         - /dev/sdc
+         - /dev/nvme1n1
+       osd_scenario: lvm
+       osd_objectstore: bluestore
+
+Manually created LVMs can also be defined to skip the usage of ``ceph-volume``.
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     CephAnsibleDisksConfig:
+       lvm_volumes:
+         - data: data-lv2
+           data_vg: vg2
+           db: db-lv2
+           db_vg: vg2
+       osd_scenario: lvm
+       osd_objectstore: bluestore
+
+If the initial deployment of TripleO with internal Ceph fails, the storage devices used for Ceph should be cleaned. If the undercloud.conf has ``clean_nodes = True`` set then the cleaning will be done automatically when Ironic chances a node state from ``active`` to ``available`` or ``manageable`` to ``available``.
+
+Example of common settings for Ceph in RHOSP:
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     CephAnsiblePlaybookVerbosity: 3
+     CephPoolDefaultSize: 1
+     CephPoolDefaultPgNum: 32
+     LocalCephAnsibleFetchDirectoryBackup: /tmp/fetch_dir
+     CephAnsibleDisksConfig:
+       osd_scenario: lvm
+       osd_objectstore: bluestore
+       lvm_volumes:
+         - data: data-lv2
+           data_vg: vg2
+           db: db-lv2
+           db_vg: vg2
+     CephAnsibleExtraConfig:
+       mon_host_v1:
+         enabled: False
+     # Required on RHOSP 15 until RHCS 4 becomes GA.
+     EnableRhcs4Beta: true
+
+-  CephAnsiblePlaybookVerbosity = If set to > 0, then the playbooks are kept (and the vebrosity is enabled for the playbook).
+-  CephAnsiblePoolDefaultSize = Set the replica size for each pool. Default: 3. Lab recommended: 1.
+-  CephAnsibleDefaultPgNum = For a production environment, use `PGCalc <https://access.redhat.com/labs/cephpgc/>`__ to determine the optimal value. Set to a low number for a lab with 1 disk. Lab recommended: 32.
+-  CephAnsibleExtraConfig: mon_host_v1: enabled: false = Force msgr2 (messenger v2). By default, both v1 and v2 are used, which causes issues in lab environments such as Standalone.
+
+**Deployment (External)**
+
+Use the ``environments/ceph-ansible-external.yaml`` Heat template.
+
+TripleO Queens:
+
+.. code-block:: yaml
+
+   ---
    parameter_defaults:
      NovaEnableRbdBackend: true
      CinderEnableRbdBackend: true
@@ -2427,9 +2543,10 @@ TripleO Queens configuration (external Ceph cluster):
 
 [98]
 
-Overcloud
+Overcloud (cloud-init)
+''''''''''''''''''''''
 
-The Overcloud nodes can be configured using cloud-init configuration data.
+Any Overcloud node that is provisioned and managed by Ironic and Nova can be configured using cloud-init configuration data.
 
 .. code-block:: yaml
 
@@ -4583,3 +4700,5 @@ Bibliography
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
 119. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
 120. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
+121. "Configuring Ceph with Custom Config Settings." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
+122. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
