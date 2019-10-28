@@ -583,11 +583,7 @@ Syntax:
 Ceph
 ~~~~
 
-Ceph has developed a concept called Reliable Autonomic Distributed
-Object Store (RADOS). It provides scalable, fast, and reliable
-software-defined storage by storing files as objects and calculating
-their location on the fly. Failovers will even happen automatically so
-no data is lost.
+Ceph is a storage project that is sponsored by The Linux Foundation. It has developed a storage system that uses Reliable Autonomic Distributed Object Store (RADOS) to provide scalable, fast, and reliable software-defined storage by storing files as objects and calculating their location on the fly. Failovers will even happen automatically so no data is lost. By default, there are 3 replicas of each file stored on an OSD.
 
 Vocabulary:
 
@@ -639,24 +635,25 @@ When the end-user asks for a file, that name is combined with it's PG ID
 and then CRUSH hashes it to find the exact location of it on all of the
 OSDs. The master OSD for that file serves the content. [17]
 
+For OSD nodes, it is recommend that the operating system is on two disks in a RAID 1. All of the over disks can be used for OSD or journal/metadata services.
+
+As of Luminous release, the new ``mgr`` (managers) mointoring service is required. It helps to collect metrics about the cluster. It should be running on all of the monitor nodes. https://docs.ceph.com/docs/luminous/release-notes/
+
 The current back-end for handling data storage is FileStore. When data
 is written to a Ceph OSD, it is first fully written to the OSD journal.
 This is a separate partition that can be on the same drive or a
 different drive. It is faster to have the journal on an SSD if the OSD
 drive is a regular spinning-disk drive.
 
-The new BlueStore was released as a technology preview in the Ceph Jewel
-release. In the next LTS release this will become the default data
-storage handler. This helps to overcome the double write penalty of
-FileStore by writing the the data to the block device first and then
-updating the metadata of the data's location. All of the metadata is
-also stored in the fast RocksDB key-value store. File systems are no
-longer required for OSDs because BlueStore can write data directly to
-the block device of the hard drive. [18]
+The new BlueStore back-end was released as a technology preview in the Ceph Jewel release. In the Luminous release, it had became the default data storage handler. This helps to overcome the double write penalty of FileStore by writing the the data to the block device first and then updating the metadata of the data's location. That means that in some cases, BlueStore is twice as fast as FileStore. All of the metadata is also stored in the fast RocksDB key-value store. File systems are no longer required for OSDs because BlueStore writes data directly to the block device of the hard drive. [18] It is recommended to have a 3:1 ratio for OSDS to BlueStore journals/metadata. The metadata drives should be a fast storage medium such as an SSD or NVMe.
 
-The optimal number of PGs is found be using this equation (replacing the
-number of OSD daemons and how many replicas are set). This number should
-be rounded up to the next power of 2.
+``ceph-volume`` is a tool for automagically figuring out which disks to use for journals/metadata or OSDs. It replaces ceph-disk and supports BlueStore. It does not support loopback devices. The logic it normally follows is:
+
+-  1 OSD per HDD
+-  2 OSDs per SSD
+-  HDD + SSD = HDD OSDs and SSD metadata
+
+The optimal number of PGs is found be using this equation (replacing the number of OSD daemons and how many replicas are set). This number should be rounded up to the next power of 2. `PGCalc <https://ceph.io/pgcalc/>`__ is an online utility/calculator to help automatically determine this value.
 
 ::
     Total PGs = (<NUMBER_OF_OSDS> * 100) / <REPLICA_COUNT> / <NUMBER_OF_POOLS>
