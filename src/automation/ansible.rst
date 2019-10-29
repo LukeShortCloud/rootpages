@@ -35,6 +35,15 @@ Installation
 
 Ansible requires Python 2.7 or >= 3.5 on both the control and managed nodes. [74] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
 
+Ansible RPMs for Fedora based operating systems are available from:
+
+-  The "extras" repository (Fedora)
+-  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (Enterprise Linux and Fedora)
+-  The Ansible Engine repository (RHEL)
+
+   -  RHEL 7: rhel-7-server-ansible-2-rpms OR rhel-7-server-ansible-2.9-rpms + rhel-7-server-extras-rpms
+   -  RHEL 8: ansible-2-for-rhel-8-x86_64-rpms OR ansible-2.9-for-rhel-8-x86_64-rpms
+
 Fedora:
 
 .. code-block:: sh
@@ -68,14 +77,11 @@ Updating source code installations:
     $ git pull --rebase
     $ git submodule update --init --recursive
 
-Ansible RPMs for Fedora based operating systems are available from:
+Pre-release branch or tag directly from GitHub using pip:
 
--  The "extras" repository (Fedora)
--  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (Enterprise Linux and Fedora)
--  The Ansible Engine repository (RHEL)
+.. code-block:: sh
 
-   -  RHEL 7: rhel-7-server-ansible-2-rpms OR rhel-7-server-ansible-2.9-rpms + rhel-7-server-extras-rpms
-   -  RHEL 8: ansible-2-for-rhel-8-x86_64-rpms OR ansible-2.9-for-rhel-8-x86_64-rpms
+   $ pip install --user git+https://github.com/ansible/ansible.git@<BRANCH_OR_TAG>
 
 [18]
 
