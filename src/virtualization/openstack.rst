@@ -1924,6 +1924,12 @@ Overcloud
 
 ::
 
+   2019-10-30 23:40:47Z [overcloud-AllNodesDeploySteps-5yoxyq2a4bgz]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+   2019-10-30 23:40:47Z [AllNodesDeploySteps]: UPDATE_COMPLETE  state changed
+   2019-10-30 23:40:51Z [overcloud]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+
+    Stack overcloud UPDATE_COMPLETE
+
    Deploying overcloud configuration
    Enabling ssh admin (tripleo-admin) for hosts:
    192.168.24.17 192.168.24.16
