@@ -1920,7 +1920,26 @@ Overcloud
              | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | 5c2d1374-8b20-4af6-b114-df15bbd3d9ca | power on    | active             | False       |
              +--------------------------------------+-----------+--------------------------------------+-------------+--------------------+-------------+
 
--  The deploy will continue onto the configuration management stage. Before Rocky, this process used Puppet. Starting with Rocky, this uses Ansible.
+-  The deploy will continue onto the configuration management stage. Before Rocky, this process used os-collect-config (Heat). Starting with Rocky, this now uses config-download (Ansible).
+
+::
+
+   Deploying overcloud configuration
+   Enabling ssh admin (tripleo-admin) for hosts:
+   192.168.24.17 192.168.24.16
+   Using ssh user cloud-user for initial connection.
+   Using ssh key at /home/stack/.ssh/id_rsa for initial connection.
+   Inserting TripleO short term key for 192.168.24.17
+   Warning: Permanently added '192.168.24.17' (ECDSA) to the list of known hosts.
+   Inserting TripleO short term key for 192.168.24.16
+   Warning: Permanently added '192.168.24.16' (ECDSA) to the list of known hosts.
+   Starting ssh admin enablement workflow
+   Started Mistral Workflow tripleo.access.v1.enable_ssh_admin. Execution ID: 0a69a3a3-d9bb-43c6-8aed-0ef33f6336d7
+   ssh admin enablement workflow - RUNNING.
+   ssh admin enablement workflow - RUNNING.
+   ssh admin enablement workflow - COMPLETE.
+   Removing TripleO short term key from 192.168.24.17
+   Warning: Permanently added '192.168.24.17' (ECDSA) to the list of known hosts.
 
 -  Once the deployment is complete, verify that the Overcloud was deployed successfully. If it was not, then troubleshoot any stack resources that failed.
 
@@ -2090,7 +2109,15 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
          -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
          -r ~/templates/deployed-server/deployed-server-roles-data.yaml
 
-**Queens (Automatic)**
+**config-download (>= Rocky)**
+
+No further action is required.
+
+**config-download (Queens)**
+
+Add the ``--config-download -e ~/templates/environments/config-download-environment.yaml`` template after (not before) the predeployed server templates to properly enable config-download.
+
+**os-collect-config (Queens, Automatic)**
 
 -  When using Queens without config-download, the deployment will pause on the creation of the Overcloud nodes. The Heat agent on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used. Use the Overcloud node roles defined in the "roles_data.yaml" configuration file.
 
@@ -2107,7 +2134,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
       $ export Compute_hosts="<COMPUTE0_IP>"
       $ /usr/share/openstack-tripleo-heat-templates/deployed-server/scripts/get-occ-config.sh
 
-**Queens (Manual)**
+**os-collect-config (Queens, Manual)**
 
 -  Use the manual method if the automatic one does not work.
 -  Generate metadata URLs for the Overcloud nodes.
@@ -2317,6 +2344,12 @@ If the playbooks are already generated from a successful STACK_CREATE of the Ove
 .. code-block:: sh
 
    $ openstack overcloud deploy --config-download-only
+
+Fact caching is enabled by default which can lead to issues with re-deployment. This can be manually cleared out on the Undercloud.
+
+.. code-block:: sh
+
+   $ sudo rm -rf /var/tmp/ansible_fact_cache/*
 
 Configurations
 ^^^^^^^^^^^^^^
