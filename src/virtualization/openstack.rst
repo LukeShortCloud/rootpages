@@ -2368,6 +2368,22 @@ These are configurations specific to Overcloud deployments using TripleO. Custom
    parameter_defaults:
      <KEY>: <VALUE>
 
+Services
+''''''''
+
+Overcloud services (both OpenStack and Linux) are defined in TripleO Heat templates. In <= Stein, the services were configured using puppet-tripleo. In >= Train, the services are configured using tripleo-ansible. All of the valid services are defined in the ``/usr/share/openstack-tripleo-heat-templates/roles_data.yaml`` file.
+
+Services can be disabled from being deployed and configured on the Overcloud one of two ways.
+
+1. Remove the service entry from the relevant role in the ``roles_data.yaml`` file before processing/generating the Heat templates.
+2. Create a new Heat template file and set the service to ``OS::Heat::None``.
+
+.. code-block:: yaml
+
+   ---
+   resource_registry:
+     OS::TripleO::Services::<SERVICE>: OS::Heat::None
+
 Networks
 ''''''''
 
