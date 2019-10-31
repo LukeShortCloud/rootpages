@@ -2035,7 +2035,7 @@ Instrospection and operating system deployment can be skipped if the Overcloud n
    -  Alternatively, specify a different user for the deployment with ``openstack overcloud deploy --overcloud-ssh-user <USER> --overcloud-ssh-key <PRIVATE_KEY_FLIE>``. This user is only used during the initial deployment to create a ``tripleo-admin`` user (or the user ``heat-admin`` in Queens release and older).
 
 -  Enable the RDO or RHOSP repositories.
--  Install the Heat user agent.
+-  Install the Heat user agent (required only for <= Queens when not using config-download).
 
    .. code-block:: sh
 
