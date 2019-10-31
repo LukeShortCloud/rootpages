@@ -1295,7 +1295,7 @@ InfraRed 2
 
 Infrared uses Ansible playbooks to automate deploying downstream RHOSP packages and upstream RDO packages.
 
-Install Infrared into a virtual environment.
+Install Infrared into a Python 2 virtual environment.
 
 .. code-block:: shell
 
@@ -1305,7 +1305,55 @@ Install Infrared into a virtual environment.
    $ cd infrared
    $ pip2 install .
 
-Install the required plugins to install a TripleO cloud using virtual machines. These plugins will be installed from the local infrared repository directory.
+As of 2019, these are the officially supported plugins in Infrared.
+
+-  provision
+
+   -  beaker
+   -  docker
+   -  foreman
+   -  openstack
+   -  virsh
+
+-  install
+
+   -  build-packages
+   -  cloud-config
+   -  containers-sanity
+   -  install-ceph
+   -  oooq
+   -  packstack
+   -  patch-components
+   -  tripleo-overcloud
+   -  tripleo-standalone
+   -  tripleo-undercloud
+
+-  test
+
+   -  browbeat
+   -  bzaf
+   -  gabbi
+   -  jordan
+   -  openstack-coverage
+   -  ospdui
+   -  pytest-runner
+   -  rally
+   -  robot
+   -  tempest
+   -  tripleo-config-changes
+   -  tripleo-post-tests
+
+-  other
+
+   -  collect-logs
+   -  dellemc-idrac
+   -  list-builds
+
+Use the ``infrared plugin search`` command to view the GitHub URL of each plugin. Then use ``infrared plugin add <GITHUB_URL>`` to install the plugin.
+
+Alternatively, install plugins from the working directory of the ``infrared`` repository.
+
+Install a provision plugin, such as virsh, along with the required plugins for deploying and managing a TripleO cloud.
 
 .. code-block:: shell
 
@@ -1342,7 +1390,7 @@ Install the required plugins to install a TripleO cloud using virtual machines. 
       .. code-block:: sh
 
          $ RHOSP_VERSION=14
-         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --images-task rpm
+         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --build ${PUDDLE_VERSION} --images-task rpm
 
    -  RDO:
 
