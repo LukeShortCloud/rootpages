@@ -2657,6 +2657,35 @@ Any Overcloud node that is provisioned and managed by Ironic and Nova can be con
    parameter_defaults:
      OS::TripleO::NodeUserData: <CLOUD_INIT_CONFIG>.yml
 
+Minions
+'''''''
+
+Introduced in the Train release, the Undercloud can be scaled horizontally by using ``minion`` nodes to help with a large Overcloud deployment, update, or upgrade. This runs the "heat-engine" and "ironic-conductor" services on additional nodes. There are no limits to the number of minions that can be used. When not in use, minion nodes can be turned off. The only requirement is that all of the nodes are on the Control Plane network. The framework for the minion installer is based on the standalone installer.
+
+-  Copy the required files from the Undercloud to the minions.
+
+.. code-block:: sh
+
+   $ scp tripleo-undercloud-outputs.yaml tripleo-undercloud-passwords.yaml <USER>@<MINION_MACHINE>
+
+-  Install TripleO, configure the minion.conf to mirror the undercloud.conf, and then install the minion services.
+
+.. code-block:: sh
+
+   $ sudo yum install -y python-tripleoclient
+   $ cp /usr/share/python-tripleoclient/minion.conf.sample ~/minion.conf
+   $ openstack undercloud minion install
+
+-  Verify the services are running as expected.
+
+.. code-block:: sh
+
+   $ source ~/stackrc
+   $ openstack orchestration service list
+   $ openstack baremetal conductor list
+
+[120]
+
 Configurations
 --------------
 
@@ -4800,3 +4829,4 @@ Bibliography
 117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
 119. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
+120. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html
