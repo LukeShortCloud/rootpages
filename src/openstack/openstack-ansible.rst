@@ -1,10 +1,12 @@
 OpenStack-Ansible
-~~~~~~~~~~~~~~~~~
+=================
+
+.. contents:: Table of Contents
+
+OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 -  Supported operating systems: Ubuntu 16.04 or 18.04
 -  Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
-
-OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
 It offers key features that include:
 
@@ -26,7 +28,7 @@ The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack
 SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [14]
 
 All-in-One (AIO)
-^^^^^^^^^^^^^^^^
+----------------
 
 **Install**
 
@@ -116,8 +118,8 @@ The all-in-one environment does not have the ability to create networks on the e
 OpenStack-Ansible installation. Use at your own risk. The recommended
 way to uninstall OpenStack-Ansible is to reinstall the operating system. [15]
 
-OpenStack-Ansible
-^^^^^^^^^^^^^^^^^
+Configurations
+--------------
 
 Minimum requirements:
 
@@ -137,9 +139,6 @@ It is also required to have at least 3 different network bridges.
 -  **br-vxlan** = This should exist on the "network" and "compute" nodes. It is used for private self-service networks.
 
 [16]
-
-Configurations
-''''''''''''''
 
 View the
 ``/etc/openstack_deploy/openstack_user_config.yml.prod.example`` for a
@@ -251,7 +250,7 @@ The valid service types are:
 [16]
 
 Neutron
-&&&&&&&
+~~~~~~~
 
 OpenStack-Ansible does not manage the network interfaces on host nodes. The ``br-vlan`` interface is recommended to be configured to provide access to the Internet. However, any network configuration can be configured.
 
@@ -292,7 +291,7 @@ After deployment, the external Neutron network and subnet can be created. [90]
     $ openstack subnet create --subnet-range 192.168.1.0/24 --gateway 192.168.1.1 --network external_network --allocation-pool start=192.168.1.201,end=192.168.1.254 --no-dhcp public_subnet
 
 Nova
-&&&&
+~~~~
 
 Common variables:
 
@@ -305,7 +304,7 @@ Common variables:
 [17]
 
 Ceph
-&&&&
+~~~~
 
 Ceph can be customized to be deployed differently from the default
 configuration or to use an existing Ceph cluster.
@@ -387,10 +386,9 @@ OpenStack-Ansible can be found here:
 https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
 
 Install
-'''''''
+-------
 
-Download and install the latest stable OpenStack-Ansible suite from
-GitHub.
+Download and install the latest stable OpenStack-Ansible suite from GitHub.
 
 .. code-block:: sh
 
@@ -442,10 +440,10 @@ Generate random passwords for the services.
 [16]
 
 Operations
-''''''''''
+----------
 
 OpenStack Utilities
-&&&&&&&&&&&&&&&&&&&
+~~~~~~~~~~~~~~~~~~~
 
 Once OpenStack-Ansible is installed, it can be used immediately. The
 primary container to use is the ``utility`` container.
@@ -472,7 +470,7 @@ Verify that all of the correct services and endpoints exist.
 [20]
 
 Ansible Inventory
-&&&&&&&&&&&&&&&&&
+~~~~~~~~~~~~~~~~~
 
 Ansible's inventory contains all of the connection and variable details
 about the hosts (in this case, LXC containers) and which group they are
@@ -512,7 +510,7 @@ for management and troubleshooting.
 [21]
 
 Add a Infrastructure Node
-&&&&&&&&&&&&&&&&&&&&&&&&&
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add the new host to the ``infra_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the inventory
@@ -532,7 +530,7 @@ infrastructure node.
 [20]
 
 Add a Compute Node
-&&&&&&&&&&&&&&&&&&
+~~~~~~~~~~~~~~~~~~
 
 Add the new host to the ``compute_hosts`` section in
 ``/etc/openstack_deploy/openstack_user_config.yml``. Then the
@@ -549,7 +547,7 @@ OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use
 [20]
 
 Remove a Compute Node
-&&&&&&&&&&&&&&&&&&&&&
+~~~~~~~~~~~~~~~~~~~~~
 
 Stop the services on the compute container and then use the
 ``openstack-ansible-ops`` project's Playbook ``remote_compute_node.yml``
@@ -571,10 +569,10 @@ done.
 [20]
 
 Upgrades
-''''''''
+--------
 
 Minor
-&&&&&
+~~~~~
 
 This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 17.0.0 to 17.0.6.
 
@@ -630,7 +628,7 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 [22]
 
 Major
-&&&&&
+~~~~~
 
 OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html>`__. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [22]
 
@@ -654,294 +652,3 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
    .. code-block:: sh
 
       ./scripts/run-upgrade.sh
-
-TripleO
-~~~~~~~
-
-Supported operating systems: RHEL/CentOS 7, Fedora >= 22
-
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
-
-In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://github.com/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [81]
-
-Minimum recommended requirements [24]:
-
--  Undercloud node:
-
-   -  4 CPU cores
-   -  8GB RAM (16GB recommended)
-   -  60GB storage
-   -  2 network interface cards (NICs) [82]
-   -  A fully qualified domain name (FQDN)
-
--  Overcloud nodes:
-
-   -  4 CPU cores
-   -  8GB RAM
-   -  80GB storage
-
-Here is an overview of the deployment process using TripleO:
-
-- Install the all-in-one Undercloud. This cloud will be used by the OpenStack operator to control and manage the Overcloud.
-- Import the Overcloud nodes into Ironic.
-- Configure those nodes to load both an initramfs and full kernel via a PXE boot.
-- Optionally set the nodes to be "manageable" and introspect the Overcloud nodes. This will report back detailed information about each node.
-- Set the Overcloud nodes to be "available" for provisioning.
-- Optionally configure settings for the Overcloud deployment (highly recommended).
-- Deploy the Overcloud. This cloud will be the production cloud that developers can use.
-
-TripleO Quickstart
-^^^^^^^^^^^^^^^^^^
-
-The TripleO Quickstart project was created to use Ansible to automate deploying a TripleO Undercloud and Overcloud. [23] The project recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [25] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [26]
-
--  Download the tripleo-quickstart script or clone the entire repository
-   from GitHub.
-
-   .. code-block:: sh
-
-       $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
-
-   OR
-
-   .. code-block:: sh
-
-       $ git clone https://github.com/openstack/tripleo-quickstart.git
-       $ cd tripleo-quickstart
-
--  Install dependencies for the quickstart script.
-
-   .. code-block:: sh
-
-       $ sudo bash quickstart.sh --install-deps
-
-TripleO can now be installed automatically with the default setup of 3
-virtual machines. This will be created to meet the minimum TripleO cloud
-requirements: (1) an Undercloud to deploy a (2) controller and (3)
-compute node. [24] . Otherwise, a different node configuration from
-"config/nodes/" can be specified or created.
-
-Common node variables:
-
--  {block\|ceph\|compute\|control\|default\|objectstorage\|undercloud}\_{memory\|vcpu}
-   = Define the amount of processor cores or RAM (in megabytes) to
-   allocate to the respective virtual machine type. Use "default" to
-   apply to all nodes that are not explicitly defined.
-
-Further customizations should be configured now before deploying the
-TripleO environment. Refer to the `Undercloud Deploy role's
-documentation <https://github.com/openstack/tripleo-quickstart-extras/blob/master/roles/undercloud-deploy/README.md>`__
-on all of the Ansible variables for the Undercloud. Add any override
-variables to a YAML file and then add the arguments
-``-e @<VARIABLE_FILE>.yaml`` to the "quickstart.sh" commands.
-
-``1.`` Automatic
-
--  Run the quickstart script to install TripleO. Use "127.0.0.2" for the
-   localhost IP address if TripleO will be installed on the same system
-   that the quickstart command is running on.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
-
-[23]
-
-``2.`` Manual
-
--  Common quickstart.sh options:
-
-   - ``--clean`` = Remove previously created files from the working
-     directory on the start of TripleO Quickstart.
-   - ``--extra-vars supported_distro_check=false`` = Run on an unsupported hypervisor such as Fedora.
-   - ``--no-clone`` = Use the current working directory for
-     TripleO Quickstart. This should only be if the entire repository
-     has been cloned.
-   - ``--nodes config/nodes/<CONFIGURATION>.yml`` = Specify the
-     configuration that determines how many Overcloud nodes should be
-     deployed.
-   - ``--playbook`` = Specify a Playbook to run.
-   - ``--release`` = The OpenStack release to use. All of the available
-     releases can be found in the GitHub project in the
-     "config/release/" directory. Use "trunk/``<RELEASE_NAME>``" for
-     the development version and "stable/``<RELEASE_NAME>``" for the
-     stable version.
-   - ``--retain-inventory`` = Use the existing inventory. This is
-     useful for managing an existing TripleO Quickstart infrastructure.
-   - ``--teardown {all|nodes|none|virthost}`` = Delete everything
-     related to TripleO (all), only the virtual machines (nodes),
-     nothing (none), or the virtual machines and settings on the
-     hypervisor (virthost).
-   - ``--tags all`` = Deploy a complete all-in-one TripleO installation
-     automatically. If a Playbook is specified via ``-p``, then
-     everything in that Playbook will run.
-   - ``-v`` = Show verbose output from the Ansible Playbooks.
-   - ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [81]
-
---------------
-
--  Setup the Undercloud virtual machine.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --clean --teardown all --tags all --playbook quickstart.yml <REMOTE_HYPERVISOR_IP>
-
--  Install the Undercloud services.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --retain-inventory --playbook quickstart-extras-undercloud.yml <REMOTE_HYPERVISOR_IP>
-
--  Setup the Overcloud virtual machines.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud-prep.yml <REMOTE_HYPERVISOR_IP>
-
--  Install the Overcloud services.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory --playbook quickstart-extras-overcloud.yml <REMOTE_HYPERVISOR_IP>
-
--  Validate the installation.
-
-   .. code-block:: sh
-
-       $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
-
-[27]
-
-Standalone Containers
-^^^^^^^^^^^^^^^^^^^^^
-
-Requirements:
-
--  4 CPU cores
--  8GB RAM
--  50GB storage
-
-Starting with Rocky, an all-in-one cloud can be deployed without the need of an Undercloud. This skips the Undercloud deployment and instead deploys a fully functional Overcloud onto the local server. Unlike a typical deployment, Mistral is not used. Instructions on how to setup a Standalone cloud are documented `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html>`__. After the installation, the config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``. The Standalone deployment does not support being scaled out and is designed specifically for developers as an alternative to `devstack <https://docs.openstack.org/devstack/latest/>`__.
-
-InfraRed 2
-^^^^^^^^^^
-
-Infrared uses Ansible playbooks to automate deploying downstream RHOSP packages and upstream RDO packages.
-
-Install Infrared into a Python 2 virtual environment.
-
-.. code-block:: shell
-
-   $ virtualenv ~/venv_infrared
-   $ source ~/venv_infrared/bin/activate
-   $ git clone https://github.com/redhat-openstack/infrared.git
-   $ cd infrared
-   $ pip2 install .
-
-As of 2019, these are the officially supported plugins in Infrared.
-
--  provision
-
-   -  beaker
-   -  docker
-   -  foreman
-   -  openstack
-   -  virsh
-
--  install
-
-   -  build-packages
-   -  cloud-config
-   -  containers-sanity
-   -  install-ceph
-   -  oooq
-   -  packstack
-   -  patch-components
-   -  tripleo-overcloud
-   -  tripleo-standalone
-   -  tripleo-undercloud
-
--  test
-
-   -  browbeat
-   -  bzaf
-   -  gabbi
-   -  jordan
-   -  openstack-coverage
-   -  ospdui
-   -  pytest-runner
-   -  rally
-   -  robot
-   -  tempest
-   -  tripleo-config-changes
-   -  tripleo-post-tests
-
--  other
-
-   -  collect-logs
-   -  dellemc-idrac
-   -  list-builds
-
-Use the ``infrared plugin search`` command to view the GitHub URL of each plugin. Then use ``infrared plugin add <GITHUB_URL>`` to install the plugin.
-
-Alternatively, install plugins from the working directory of the ``infrared`` repository.
-
-Install a provision plugin, such as virsh, along with the required plugins for deploying and managing a TripleO cloud.
-
-.. code-block:: shell
-
-   $ infrared plugin add plugins/virsh
-   $ infrared plugin add plugins/tripleo-undercloud
-   $ infrared plugin add plugins/tripleo-overcloud
-   $ infrared plugin add plugins/cloud-config
-
--  Optionally create an answers file manually or by using the CLI and then import it. Otherwise, use the CLI arguments.
-
-   .. code-block:: shell
-
-      $ infrared virsh --from-file=virsh_prov.ini
-
--  [virsh]
-
-   -  **host-address** = Required argument. Edit with any value, OR override with CLI: --host-address=<option>
-   -  host-memory-overcommit = Default: ``False``.
-   -  **host-key** = Required argument. Edit with any value, OR override with CLI: --host-key=<option>
-   -  host-user = Default: ``root``.
-   -  **topology-nodes** = The number of each node to deploy. Minimal: ``"undercloud:1,controller:1,compute:1"``.
-
--  Deploy the virtual machines that will be used by the lab.
-
-   .. code-block:: sh
-
-      $ infrared virsh --host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --host-memory-overcommit yes --topology-nodes "undercloud:1,controller:1,compute:1"
-
-
--  Deploy the Undercloud.
-
-   -  RHOSP:
-
-      .. code-block:: sh
-
-         $ RHOSP_VERSION=14
-         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --build ${PUDDLE_VERSION} --images-task rpm
-
-   -  RDO:
-
-      .. code-block:: sh
-
-         $ RDO_VERSION=rocky
-         $ infrared tripleo-undercloud --version ${RDO_VERSION} --images-task=import --images-url=https://images.rdoproject.org/${RDO_VERSION}/rdo_trunk/current-tripleo/stable/
-
--  Deploy the Overcloud.
-
-   .. code-block:: sh
-
-      $ infrared tripleo-overcloud --deployment-files virt --version ${RDO_VERSION} --introspect yes --tagging yes --deploy yes
-
--  After the Overcloud is deployed, optionally configure resources on it.
-
-   .. code-block:: sh
-
-      $ infrared cloud-config --deployment-files virt --tasks create_external_network,forward_overcloud_dashboard,network_time,tempest_deployer_input
-
-[106]
