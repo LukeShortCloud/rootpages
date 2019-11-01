@@ -3844,11 +3844,7 @@ Every instance that is managed by Nova will be configured if cloud-init is insta
 Upgrades
 --------
 
-Upgrading a production OpenStack environment requires a lot of planning.
-It is recommended to test an upgrade of the environment virtually before
-rolling it out to production. Automation tools generally have their own
-guides but most of these guidelines should still apply to manual
-deployment upgrades. The entire steps include to:
+Upgrading a production OpenStack environment requires a lot of planning. It is recommended to test an upgrade in a pre-production environment before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:
 
 -  Backup configuration files and databases.
 -  Review the `release notes <https://releases.openstack.org/>`__ of the OpenStack services that will be
@@ -3886,6 +3882,8 @@ deployment upgrades. The entire steps include to:
 -  Update the packages and restart the services on the other nodes.
 
 [62]
+
+As of the Newton release, services are compatible with a ``N - 1`` release. This means that, for example, services that are partially upgraded to Newton will continue to work with Mitaka. [119]
 
 Command Line Interface Utilities
 --------------------------------
@@ -4801,3 +4799,4 @@ Bibliography
 116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
 117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
+119. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
