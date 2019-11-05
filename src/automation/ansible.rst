@@ -5060,7 +5060,7 @@ Stop and delete the AWX docker containers.
 
 .. code-block:: sh
 
-    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do docker stop ${docker_container}; docker rm -f ${docker_container}; done
+    $ for docker_container in awx_task awx_web memcached rabbitmq postgres; do sudo docker stop ${docker_container}; sudo docker rm -f ${docker_container}; done
 
 The "postgres_data_dir" directory, as defined in the inventory file, will need to be manually deleted.
 
