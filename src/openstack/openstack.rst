@@ -26,7 +26,7 @@ Maintenance Phases >= Ocata
 -  Unmaintained = 6 months of no community contributions.
 -  End-of-life (eol) = The last version of that OpenStack release to be archived.
 
-[69]
+[42]
 
 Releases:
 
@@ -89,7 +89,7 @@ Releases:
     -  Goals:
 
        -  Make configuraiton options mutable. This avoids having to restart services whenever the configuraiton is updated.
-       -  Remove deprecated mox tests to further push towards full Python 3 support. [93]
+       -  Remove deprecated mox tests to further push towards full Python 3 support. [53]
 
     -  `New Features <https://superuser.openstack.org/articles/what-you-need-to-know-about-the-openstack-rocky-release/>`__
     -  `Release Highlights <https://releases.openstack.org/rocky/highlights.html>`__
@@ -101,7 +101,7 @@ Releases:
     -  Goals:
 
        -  Use Python 3 by default. Python 2.7 will only be tested using unit tests.
-       -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues. [95]
+       -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues. [54]
 
     -  `New Features <https://www.openstack.org/news/view/421/openstack-stein-enhances-bare-metal-and-network-management-while-launching-kubernetes-clusters-faster-than-ever>`__
     -  `Release Highlights <https://releases.openstack.org/stein/highlights.html>`__
@@ -156,7 +156,7 @@ Other services:
 -  Zaqar = Messaging
 -  Zun = Containers
 
-[10]
+[6]
 
 Configurations
 --------------
@@ -174,14 +174,14 @@ Database
 Different database servers can be used by the API services on the
 controller nodes.
 
--  MariaDB/MySQL. The original ``mysql://`` connector can be used for the "MySQL-Python" library. Starting with Liberty, the newer "PyMySQL" library was added for Python 3 support. [31] RDO first added the required ``python2-PyMySQL`` package in the Pike release. [34][79]
+-  MariaDB/MySQL. The original ``mysql://`` connector can be used for the "MySQL-Python" library. Starting with Liberty, the newer "PyMySQL" library was added for Python 3 support. [7] RDO first added the required ``python2-PyMySQL`` package in the Pike release. [10][49]
 
    .. code-block:: ini
 
        [database]
        connection = mysql+pymysql://<USER>:<PASSWORD>@<MYSQL_HOST>:<MYSQL_PORT>/<DATABASE>
 
--  PostgreSQL. Requires the "psycopg2" Python library. [32]
+-  PostgreSQL. Requires the "psycopg2" Python library. [8]
 
    .. code-block:: ini
 
@@ -196,7 +196,7 @@ controller nodes.
        connection = sqlite:///<DATABASE>.sqlite
 
 -  MongoDB is generally only used for Ceilometer when it is not using
-   the Gnocchi back-end. [33]
+   the Gnocchi back-end. [9]
 
    .. code-block:: ini
 
@@ -238,7 +238,7 @@ use ``/``.
     [DEFAULT]
     transport_url = rabbit://<RABBIT_USER>:<RABBIT_PASSWORD>@<RABBIT_HOST>/<VIRTUAL_HOST>
 
-[35]
+[11][12]
 
 Ironic
 ~~~~~~
@@ -266,7 +266,7 @@ OpenStack Queens configuration:
     enabled_power_interfaces = <POWER_INTERFACE>
     enabled_management_interfaces = <MANAGEMENT_INTERFACE>
 
-TripleO Queens configuration [96]:
+TripleO Queens configuration [55]:
 
 .. code-block:: yaml
 
@@ -311,7 +311,7 @@ Keystone
 API v3
 ^^^^^^
 
-In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the ``T`` release. [38] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
+In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the ``T`` release. [13] It is possible to run both v2.0 and v3 at the same time but it's desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3's domain scoping. For disabling v2.0 entirely, Keystone's API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.
 
 File: /etc/keystone/keystone-paste.ini
 
@@ -329,7 +329,7 @@ File: /etc/keystone/keystone-paste.ini
     [composite:admin]
     /v2.0 = admin_api
 
-[39]
+[14]
 
 Token Provider
 ^^^^^^^^^^^^^^
@@ -379,9 +379,9 @@ related Credential authentication.
        $ sudo chown keystone.keystone /etc/keystone/credential-keys/
        $ sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
-[40]
+[15]
 
-TripleO Queens configuration [97]:
+TripleO Queens configuration [56]:
 
 Create the Fernet keys and save them to Swift
 
@@ -407,7 +407,7 @@ Append the token provider setting to the "parameter_defaults" section in the "de
 
 Scenario #3 - PKI
 
-PKI tokens have been removed since the Ocata release. [42]
+PKI tokens have been removed since the Ocata release. [16]
 
 .. code-block:: ini
 
@@ -441,7 +441,7 @@ File: /etc/nova/nova.conf
     [DEFAULT]
     enabled_apis = osapi_compute,metadata
 
--  Do not inject passwords, SSH keys, or partitions via Nova. This is recommended for Ceph storage back-ends. [46] This should be handled by the Nova's metadata service that will use cloud-init instead of Nova itself. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on the configuration.
+-  Do not inject passwords, SSH keys, or partitions via Nova. This is recommended for Ceph storage back-ends. [20] This should be handled by the Nova's metadata service that will use cloud-init instead of Nova itself. This will either be "openstack-nova-api" or "openstack-nova-metadata-api" depending on the configuration.
 
 .. code-block:: ini
 
@@ -486,7 +486,7 @@ Scenario #3 - LXC
     [libvirt]
     virt_type = lxc
 
-[43]
+[17]
 
 CPU Pinning
 ^^^^^^^^^^^
@@ -523,7 +523,7 @@ CPU Pinning
        $ sudo virsh nodeinfo | grep NUMA
        NUMA cell(s):        2
 
-[44]
+[18]
 
 -  Append the NUMA filter "NUMATopologyFilter" to the Nova ``scheduler_default_filters`` key.
 
@@ -570,7 +570,7 @@ File: /etc/nova/nova.conf
 
        $ openstack image set <IMAGE_ID> --property hw_cpu_policy=dedicated --property hw_cpu_thread_policy=<POLICY>
 
-[45]
+[19]
 
 Ceph
 ^^^^
@@ -589,7 +589,7 @@ File: /etc/nova/nova.conf
     rbd_secret_uuid = <LIBVIRT_SECRET_UUID>
     disk_cachemodes="network=writeback"
 
-[46]
+[20]
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -626,7 +626,7 @@ File: /etc/nova/nova.conf
     virt_type = kvm
     cpu_mode = host-passthrough
 
-[47]
+[21]
 
 Neutron
 ~~~~~~~
@@ -650,9 +650,9 @@ Self-service:
 -  More available virtual networks
 -  Required for Firewall-as-a-Service (FWaaS) Load-Balancing-as-a-Service (LBaaS) to work.
 
-[48]
+[22]
 
-For software-defined networking, the recommended services to use for Neutron's Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [89]
+For software-defined networking, the recommended services to use for Neutron's Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [51]
 
 Provider Networks
 '''''''''''''''''
@@ -735,7 +735,7 @@ File: /etc/neutron/l3\_agent.ini
     interface_driver = openvswitch
     external_network_bridge =
 
-[49]
+[23]
 
 On the controller node, restart the Nova API service and then start the
 required Neutron services.
@@ -755,7 +755,7 @@ start the Open vSwitch agent.
     $ sudo systemctl enable neutron-openvswitch-agent
     $ sudo systemctl start neutron-openvswitch-agent
 
-[50]
+[24]
 
 DNS
 ^^^
@@ -785,7 +785,7 @@ Scenario #3 - Do not provide resolvers, use the ones provided in the image
     [DEFAULT]
     dnsmasq_local_resolv = True
 
-[51]
+[25]
 
 Metadata
 ^^^^^^^^
@@ -855,7 +855,7 @@ File: /etc/neutron/l3\_agent.ini
     [DEFAULT]
     enable_metadata_proxy = True
 
-[52]
+[26]
 
 Load-Balancing-as-a-Service
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -912,7 +912,7 @@ File: /etc/neutron/neutron\_lbaas.conf
     [service_providers]
     service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
 
-[53]
+[27]
 
 Quality of Service
 ^^^^^^^^^^^^^^^^^^
@@ -967,7 +967,7 @@ File: /etc/neutron/l3_agent.ini
     [DEFAULT]
     ovs_use_veth = True
 
-[54]
+[28]
 
 Distributed Virtual Routing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -977,7 +977,7 @@ routers to both the compute and network nodes to spread out resource
 usage. All layer 2 traffic will be equally spread out among the servers.
 Public floating IPs will still need to go through the SNAT process via
 the routers on the controller or network nodes. This is only supported when the Open
-vSwitch agent is used. [55]
+vSwitch agent is used. [29]
 
 File: /etc/neutron/neutron.conf
 
@@ -1015,9 +1015,9 @@ File: /etc/neutron/plugins/ml2/openvswitch\_agent.ini
     l2_population = True
     enable_distributed_routing = True
 
-[56]
+[30]
 
-TripleO configuration [96]:
+TripleO configuration [55]:
 
 .. code-block:: yaml
 
@@ -1040,7 +1040,7 @@ File: /etc/neutron/neutron.conf
     max_l3_agents_per_router = 2
     allow_automatic_l3agent_failover = True
 
-[55]
+[29]
 
 Ceph
 ~~~~
@@ -1090,7 +1090,7 @@ the Glance and Cinder service.
 If Cephx is turned on to utilize authentication, then a client keyring
 file should be created on the controller and compute nodes. This will
 allow the services to communicate to Ceph as a specific user. The
-usernames should match the client users that were just created. [57]
+usernames should match the client users that were just created. [31]
 
 File: ``/etc/ceph/ceph.client.<USERNAME>.keyring``
 
@@ -1113,7 +1113,7 @@ share these settings.
 
 For the services to work, the relevant Python libraries for accessing
 Ceph need to be installed. These can be installed by the operating
-system's package manager. [57]
+system's package manager. [31]
 
 Fedora:
 
@@ -1170,13 +1170,13 @@ File: /etc/nova/nova.conf
     #This is the Libvirt secret UUID used for Cephx authentication.
     rbd_secret_uuid = <LIBVIRT_SECRET_UUID>
 
-[57]
+[31]
 
 Encryption
 ^^^^^^^^^^
 
 Cinder volumes support the Linux LUKS encryption. The only requirement
-is that the compute nodes have the "cryptsetup" package installed. [58]
+is that the compute nodes have the "cryptsetup" package installed. [32]
 
 .. code-block:: sh
 
@@ -1219,7 +1219,7 @@ File: /etc/glance/glance-api.conf
     rbd_store_ceph_conf = /etc/ceph/ceph.conf
     rbd_store_chunk_size = 8
 
-[59][80]
+[33][50]
 
 Neutron Troubleshooting
 -----------------------
@@ -1274,12 +1274,12 @@ namespace should look similar to this.
     -A neutron-l3-agent-snat -m mark ! --mark 0x2/0xffff -m conntrack --ctstate DNAT -j SNAT --to-source <PUBLIC_ROUTER_IP>
     -A neutron-postrouting-bottom -m comment --comment "Perform source NAT on outgoing traffic." -j neutron-l3-agent-snat
 
-[60][61]
+[34][35]
 
 cloud-init
 ----------
 
-Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/modules.html>`__. Example configurations can be found `here <https://cloudinit.readthedocs.io/en/latest/topics/examples.html>`__. cloud-init will only run once. The service can be forced to run again by deleting the ``/var/lib/cloud/instance/`` directory. All of the files and directories wihtin ``/var/lib/cloud/`` are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html>`__. [115]
+Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/modules.html>`__. Example configurations can be found `here <https://cloudinit.readthedocs.io/en/latest/topics/examples.html>`__. cloud-init will only run once. The service can be forced to run again by deleting the ``/var/lib/cloud/instance/`` directory. All of the files and directories wihtin ``/var/lib/cloud/`` are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html>`__. [62]
 
 Upgrades
 --------
@@ -1297,7 +1297,7 @@ Upgrading a production OpenStack environment requires a lot of planning. It is r
 -  Remove the old package repository for OpenStack.
 -  Add the new package repository for OpenStack.
 -  Update all of the packages on the controller node first.
--  Update the database schemas. [92]
+-  Update the database schemas. [52]
 
 .. code-block:: sh
 
@@ -1321,9 +1321,9 @@ Upgrading a production OpenStack environment requires a lot of planning. It is r
 
 -  Update the packages and restart the services on the other nodes.
 
-[62]
+[36]
 
-As of the Newton release, services are compatible with a ``N - 1`` release. This means that, for example, services that are partially upgraded to Newton will continue to work with Mitaka. [119]
+As of the Newton release, services are compatible with a ``N - 1`` release. This means that, for example, services that are partially upgraded to Newton will continue to work with Mitaka. [63]
 
 Command Line Interface Utilities
 --------------------------------
@@ -1338,7 +1338,7 @@ Install all of the OpenStack CLI tools using pip.
 
    $ pip install --user python-openstackclient
 
-Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [103]
+Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [57]
 
 .. code-block:: sh
 
@@ -1424,7 +1424,7 @@ authenticate.
 
        $ openstack help <OPTION>
 
-[63]
+[37]
 
 Orchestration
 -------------
@@ -1451,7 +1451,7 @@ Resources use properties to create a component. If no name is specified
 (for example, a network name), a random string will be used. Most
 properties also accept either an exact ID of a resource or a reference
 to a dynamically generated resource (which will provide it's ID once it
-has been created). [64]
+has been created). [38]
 
 All Heat templates must began with defining the version of OpenStack is
 was designed for (using the release date as the version) and enclose all
@@ -1466,7 +1466,7 @@ compatibility reasons. Since the Newton release, the release name can be used in
 
     resources:
 
-Valid Heat template versions include [65]:
+Valid Heat template versions include [39]:
 
 -  ``2018-08-31`` or ``rocky``
 -  ``2018-03-02`` or ``queens``
@@ -1665,7 +1665,7 @@ syntax for the variable:
 
     { get_param: <CUSTOM_NAME> }
 
-[65]
+[39]
 
 Vagrant
 ~~~~~~~
@@ -1705,12 +1705,12 @@ it can be created by running:
 
     $ vagrant up --provider=openstack
 
-[67]
+[40]
 
 Mistral Workflows
 -----------------
 
-List all of the available actions that Mistral can preform. [108]
+List all of the available actions that Mistral can preform. [60]
 
 .. code-block:: sh
 
@@ -1783,7 +1783,7 @@ Common task attributes:
 -  retry = The number of times to retry the task before being marked as a failure.
 -  concurrency = The maximum number of parallel task actions to run at once.
 
-[109]
+[61]
 
 Load the YAML workflow into Mistral.
 
@@ -1799,7 +1799,7 @@ Then execute the workflow using another file that contains the input variables a
    $ mistral execution-list
    $ mistral execution-get <EXECUTION_ID>
 
-[108]
+[60]
 
 Testing
 -------
@@ -1807,7 +1807,7 @@ Testing
 Manual
 ~~~~~~
 
-Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from `here <https://download.cirros-cloud.net/>`__. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the ``tiny`` instance flavor. [105] The default password for < 0.4 is ``cubswin:)`` and for >= 0.4 it is ``gocubsgo``. [107]
+Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from `here <https://download.cirros-cloud.net/>`__. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the ``tiny`` instance flavor. [58] The default password for < 0.4 is ``cubswin:)`` and for >= 0.4 it is ``gocubsgo``. [59]
 
 Tempest
 ~~~~~~~
@@ -1875,7 +1875,7 @@ The sample configuration file "/etc/tempest/tempest.conf.sample" should be copie
        sahara = false
        ironic = false
 
-[68]
+[41]
 
 Rally
 ~~~~~
@@ -1910,12 +1910,12 @@ If Rally is ever upgraded to the latest version, the database schema also needs 
     (rally-venv)$ rally db revision
     (rally-venv)$ rally db upgrade
 
-[70]
+[43]
 
 Registering
 ^^^^^^^^^^^
 
-Rally requires a deployment, that defines the OpenStack credentials to test with, to be registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. The "admin" user is no longer required in Rally version >= 0.10.0. [73]
+Rally requires a deployment, that defines the OpenStack credentials to test with, to be registered. It is recommended to use an account with the "admin" role so that all features of the cloud can be tested and benchmarked. The "admin" user is no longer required in Rally version >= 0.10.0. [46]
 
 View registered deployments:
 
@@ -1980,7 +1980,7 @@ A JSON file can be created to define the OpenStack credentials that Rally will b
         }
     }
 
-For only using non-privileged OpenStack users, omit the "admin" dictionary. [72]
+For only using non-privileged OpenStack users, omit the "admin" dictionary. [45]
 
 .. code-block:: json
 
@@ -2005,7 +2005,7 @@ For only using non-privileged OpenStack users, omit the "admin" dictionary. [72]
 
     (rally-venv)$ rally deployment create --file=~/existing.json --name=<DEPLOYMENT_NAME>
 
-[71]
+[44]
 
 Scenarios
 ^^^^^^^^^
@@ -2022,7 +2022,7 @@ Each scenario can be configured using similar options.
 
 -  args = Override default values for a task.
 -  context = Defines the resources that need to be created before a task runs.
--  runner [74]
+-  runner [47]
 
     -  concurrency (constant types) = The number of tasks to run at the same time (as different threads).
     -  duration (constant_for_duration type) = The number of seconds to run a scenario before finishing.
@@ -2060,7 +2060,7 @@ Additional variables can be passed via the command line.
 
     (rally-venv)$ rally task start --task-args-file <ARGS_FILE>.<JSON_OR_YAML> <SCENARIO_FILE>.<JSON_OR_YAML>
 
-[71]
+[44]
 
 Reports
 ^^^^^^^
@@ -2086,7 +2086,7 @@ The JUnit XML (a Java unit test library) format can also be used. This library i
     (rally-venv)$ pip install junit-xml
     (rally-venv)$ rally task export <TASK_UUID> --type junit
 
-[78]
+[48]
 
 Performance
 -----------
@@ -2115,8 +2115,8 @@ OpenStack can be tuned to use less processing power and run faster.
 
         -  This is configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
--------------------------------------------------------------------------------------
+`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack.rst>`__
+-----------------------------------------------------------------------------------------------
 
 Bibliography
 ------------
@@ -2126,118 +2126,61 @@ Bibliography
 3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
 5. "Queens [Goals]." OpenStack Documentation. June 27, 2019. Accessed October 28, 2019. https://governance.openstack.org/tc/goals/queens/index.html
-6. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 26, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
-7. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
-8. "How can I determine which version of Red Hat Enterprise Linux - Openstack Platform (RHEL-OSP) I am using?" Red Hat Articles. May 20, 2016. Accessed December 19, 2017. https://access.redhat.com/articles/1250803
-9. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
-10. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
-11. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
-12. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
-13. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
-14. "Hosts role should set SELinux into permissive mode." openstack-ansible Launchpad Bugs. January 27, 2017. Accessed July 25, 2018. https://bugs.launchpad.net/openstack-ansible/+bug/1657517
-15. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
-16. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
-17. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os_nova/queens/
-18. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
-19. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
-20. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. October 8, 2019. Accessed October 28, 2019. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
-21. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
-22. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
-23. "TripleO quickstart." RDO Project. Accessed March 26, 2018. https://www.rdoproject.org/tripleo/
-24. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
-25. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
-26. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
-27. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
-28. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
-29. "Basic Deployment (CLI)." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/install_overcloud.html
-30. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
-31. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
-32. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
-33. "[Ceilometer] Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/ceilometer/queens/install/
-34. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
-35. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
-36. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
-37. "Baremetal Environment." TripleO OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/environments/baremetal.html
-38. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
-39. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
-40. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
-41. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
-42. "Ocata Series [Keystone] Release Notes." OpenStack Documentation. Accessed April 3, 2017. https://docs.openstack.org/releasenotes/keystone/ocata.html
-43. "Hypervisors." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html
-44. “Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute.” Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
-45. "CPU topologies." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/cpu-topologies.html
-46. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 18, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack
-47. "Nested Virtualization in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
-48. "[Compute service] Overview." OpenStack Documentation. March 8, 2018. Accessed March 19, 2018. https://docs.openstack.org/nova/queens/install/overview.html
-49. "Open vSwitch: Self-service networks." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html
-50. "Neutron Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/install/index.html
-51. "DNS resolution for instances." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dns-res.html
-52. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
-53. "Load Balancer as a Service (LBaaS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-lbaas.html
-54. "Quality of Service (QoS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-qos.html
-55. "Neutron/DVR/HowTo" OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
-56. "Distributed Virtual Routing with VRRP." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html
-57. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 26, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
-58. "Volume encryption supported by the key manager." Openstack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html
-59. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
-60. "Adding additional NAT rule on neutron-l3-agent." Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/
-61. "Networking in too much detail." RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/
-62. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
-63. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
-64. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
-65. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. February 15, 2019. Accessed October 28, 2019. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
-66. "Configuring Ceph with Custom Config Settings." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
-67. "ggiamarchi/vagrant-openstack-provider." GitHub. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
-68. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
-69. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
-70. "[Rally] Installation and upgrades." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html
-71. "[Rally] Quick start." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/quick_start/index.html
-72. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html
-73. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
-74. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
-75. "[Ironic] Enabling drivers." OpenStack Documentation. March 15, 2018. Accessed March 15, 2018. https://docs.openstack.org/ironic/queens/admin/drivers.html
-76. "VirtualBMC." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/environments/virtualbmc.html
-77. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
-78. "Verification reports." Rally Documentation. Accessed October 28, 2019. https://docs.openstack.org/rally/latest/verification/reports.html
-79. "OpenStack Pike Repository." CentOS Vault. May 20, 2019. Accessed October 28, 2019. http://vault.centos.org/7.6.1810/cloud/x86_64/openstack-pike/
-80. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
-81. "Containers based Undercloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/undercloud.html
-82. "[TripleO Quickstart] Networking." TripleO Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html
-83. "Repository Enablement." OpenStack TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/repositories.html
-84. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
-85. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
-86. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
-87. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
-88. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
-89. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
-90. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
-91. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
-92. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
-93. "Rocky [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
-94. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/release_notes/Red_Hat_OpenStack_Platform-13-Release_Notes-en-US.pdf
-95. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
-96. "Feature Configuraiton." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
-97. "Enabling Keystone's Fernet Tokens in Red Hat OpenStack Platform." Red Hat Blog. December 11, 2017. Accessed October 28, 2019. https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform
-98. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
-99. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
-100. "Configuring Network Isolation." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/network_isolation.html
-101. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
-102. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
-103. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
-104. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
-105. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
-106. "Bootstrap." infrared Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
-107. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
-108. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
-109. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
-110. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
-111. "Using Already Deployed Servers." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
-112. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
-113. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
-114. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
-115. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
-116. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
-117. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
-118. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
-119. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
-120. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html
+6. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
+7. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
+8. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
+9. "[Ceilometer] Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/ceilometer/queens/install/
+10. "Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found." OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. https://bugs.launchpad.net/openstack-manuals/+bug/1501991
+11. "Message queue." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/install-guide/environment-messaging.html
+12. "[oslo.messaging] Configurations." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/oslo.messaging/queens/configuration/
+13. "[Keystone] Pike Series Release Notes." OpenStack Documentation. Accessed March 15, 2018. https://docs.openstack.org/releasenotes/keystone/pike.html
+14. "Setting up an RDO deployment to be Identity V3 Only." Young Logic. May 8, 2015. Accessed October 16, 2016. https://adam.younglogic.com/2015/05/rdo-v3-only/
+15. "Install and configure [Keystone on RDO]." OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html
+16. "Ocata Series [Keystone] Release Notes." OpenStack Documentation. Accessed April 3, 2017. https://docs.openstack.org/releasenotes/keystone/ocata.html
+17. "Hypervisors." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html
+18. “Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute.” Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/
+19. "CPU topologies." OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. https://docs.openstack.org/nova/queens/admin/cpu-topologies.html
+20. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 18, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack
+21. "Nested Virtualization in OpenStack, Part 2." Stratoscale. June 28, 2016. Accessed November 9, 2017. https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/
+22. "[Compute service] Overview." OpenStack Documentation. March 8, 2018. Accessed March 19, 2018. https://docs.openstack.org/nova/queens/install/overview.html
+23. "Open vSwitch: Self-service networks." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html
+24. "Neutron Installation Guide." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/install/index.html
+25. "DNS resolution for instances." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dns-res.html
+26. "Introduction of Metadata Service in OpenStack." VietStack. September 09, 2014. Accessed August 13th, 2016. https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/
+27. "Load Balancer as a Service (LBaaS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-lbaas.html
+28. "Quality of Service (QoS)." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-qos.html
+29. "Neutron/DVR/HowTo" OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
+30. "Distributed Virtual Routing with VRRP." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html
+31. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 26, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
+32. "Volume encryption supported by the key manager." Openstack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html
+33. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
+34. "Adding additional NAT rule on neutron-l3-agent." Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/
+35. "Networking in too much detail." RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/
+36. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
+37. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
+38. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
+39. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. February 15, 2019. Accessed October 28, 2019. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
+40. "ggiamarchi/vagrant-openstack-provider." GitHub. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
+41. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
+42. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
+43. "[Rally] Installation and upgrades." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html
+44. "[Rally] Quick start." Rally Documentation. Accessed January 25, 2018. https://rally.readthedocs.io/en/latest/quick_start/index.html
+45. "Step 3. Benchmarking OpenStack with existing users." OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html
+46. "Allow deployment without admin creds." OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. https://review.openstack.org/#/c/465495/
+47. "Main concepts of Rally." OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. https://docs.openstack.org/developer/rally/miscellaneous/concepts.html
+48. "Verification reports." Rally Documentation. Accessed October 28, 2019. https://docs.openstack.org/rally/latest/verification/reports.html
+49. "OpenStack Pike Repository." CentOS Vault. May 20, 2019. Accessed October 28, 2019. http://vault.centos.org/7.6.1810/cloud/x86_64/openstack-pike/
+50. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
+51. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
+52. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
+53. "Rocky [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
+54. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
+55. "Feature Configuration." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
+56. "Enabling Keystone's Fernet Tokens in Red Hat OpenStack Platform." Red Hat Blog. December 11, 2017. Accessed October 28, 2019. https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform
+57. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
+58. "Get images." OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. https://docs.openstack.org/image-guide/obtain-images.html
+59. "set default password to 'gocubsgo'." cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477
+60. "Workflow service (mistral) command-line client." OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. https://docs.openstack.org/ocata/cli-reference/mistral.html
+61. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
+62. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
+63. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo

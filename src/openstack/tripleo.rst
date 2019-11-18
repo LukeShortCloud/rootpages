@@ -10,7 +10,7 @@ Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
-In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://github.com/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [81]
+In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://github.com/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
 Red Hat OpenStack Platform Releases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,7 +19,7 @@ Red Hat provides most of the development to the core OpenStack services.
 The RPM Distribution of OpenStack (RDO) project is a community project
 lead by Red Hat to use the latest upstream code from OpenStack and
 package it to work and be distributable on Red Hat Enterprise Linux and
-Fedora based operating systems. [7]
+Fedora based operating systems. [2]
 
 The Red Hat OpenStack Platform (RHOSP) is a solution by Red Hat that
 takes the upstream OpenStack source code and makes it enterprise quality
@@ -29,7 +29,7 @@ Release Cycle:
 
 -  RHOSP < 10 = Each release is supported for up to 3 years.
 -  RHOSP >= 10 = Starting with RHOSP 10, every third release of RHOSP is a long-life (LL) release with up to 5 years of support. In-between releases are supported for 1 year. Fast-forward upgrades are supported to upgrade directly from one LL release to the next (for example, 10 to 13).
--  RHOSP >= 16 = Every release of RHOSP is now a LL release. [118]
+-  RHOSP >= 16 = Every release of RHOSP is now a LL release. [43]
 
 Releases:
 
@@ -98,16 +98,16 @@ Releases:
    -  Release: 2019-09-19
    -  EOL: 2020-09-19
 
-[6]
+[1]
 
-RHOSP supports running a virtualized Undercloud on these platforms [9]:
+RHOSP supports running a virtualized Undercloud on these platforms [3]:
 
 -  Kernel-based Virtual Machine (QEMU with KVM acceleration)
 -  Red Hat Virtualization (RHV)
 -  Microsoft Hyper-V
 -  VMWare ESX and ESXi
 
-RHOSP only supports using libvirt with KVM as the compute hypervisor's virtualization technology. [94]
+RHOSP only supports using libvirt with KVM as the compute hypervisor's virtualization technology. [28]
 
 The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/rhosp-release" file. OpenStack packages can also be tracked down to which major release it is a part of by using https://access.redhat.com/downloads/content/package-browser.
 
@@ -129,7 +129,7 @@ Packstack is part of Red Hat's RDO project. It's purpose is for
 providing small and simple demonstrations of OpenStack. This tool does
 not handle any upgrades of the OpenStack services.
 
-Hardware requirements [25]:
+Hardware requirements [9]:
 
 -  16GB RAM
 
@@ -156,7 +156,7 @@ RHEL (RHOSP):
 
    $ sudo subscription-manager repos --enable rhel-7-server-openstack-13-rpms --enable rhel-7-server-openstack-13-devtools-rpms
 
-[114]
+[40]
 
 CentOS (RDO):
 
@@ -187,7 +187,7 @@ network (2).
 
 Generate a configuration file referred to as the "answer" file. This can
 optionally be customized. Then install OpenStack using the answer file.
-By default, the network will be entirely isolated. [11]
+By default, the network will be entirely isolated. [4]
 
 .. code-block:: sh
 
@@ -270,7 +270,7 @@ After the installation is finished, create the necessary network in Neutron as t
 
 The "external\_network" can now be associated with a router in user accounts.
 
-[12][90]
+[5][90]
 
 Answer File
 ^^^^^^^^^^^
@@ -289,7 +289,7 @@ Common options:
 -  CONFIG\_MARIADB\_PW = The MariaDB root user's password.
 -  CONFIG\_HORIZON\_SSL = Configure an SSL for the Horizon dashboard.
    This requires that SSLs be generated manually and then defined in the
-   configuration file [13]:
+   configuration file [6]:
 
    ::
 
@@ -320,7 +320,7 @@ For uninstalling everything that is installed by Packstack, run `this Bash scrip
 TripleO Quickstart
 ~~~~~~~~~~~~~~~~~~
 
-The TripleO Quickstart project was created to use Ansible to automate deploying a TripleO Undercloud and Overcloud. [23] The project recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [25] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [26]
+The TripleO Quickstart project was created to use Ansible to automate deploying a TripleO Undercloud and Overcloud. [7] The project recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [9] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [10]
 
 -  Download the tripleo-quickstart script or clone the entire repository
    from GitHub.
@@ -345,7 +345,7 @@ The TripleO Quickstart project was created to use Ansible to automate deploying 
 TripleO can now be installed automatically with the default setup of 3
 virtual machines. This will be created to meet the minimum TripleO cloud
 requirements: (1) an Undercloud to deploy a (2) controller and (3)
-compute node. [24] . Otherwise, a different node configuration from
+compute node. [8] . Otherwise, a different node configuration from
 "config/nodes/" can be specified or created.
 
 Common node variables:
@@ -372,7 +372,7 @@ variables to a YAML file and then add the arguments
 
        $ bash quickstart.sh --release trunk/queens --tags all <REMOTE_HYPERVISOR_IP>
 
-[23]
+[7]
 
 ``2.`` Manual
 
@@ -403,7 +403,7 @@ variables to a YAML file and then add the arguments
      automatically. If a Playbook is specified via ``-p``, then
      everything in that Playbook will run.
    - ``-v`` = Show verbose output from the Ansible Playbooks.
-   - ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [81]
+   - ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [20]
 
 --------------
 
@@ -437,7 +437,7 @@ variables to a YAML file and then add the arguments
 
        $ bash quickstart.sh --release trunk/queens --teardown none --no-clone --tags all --nodes config/nodes/1ctlr_1comp.yml --retain-inventory  --playbook quickstart-extras-validate.yml <REMOTE_HYPERVISOR_IP>
 
-[27]
+[11]
 
 Standalone Containers
 ~~~~~~~~~~~~~~~~~~~~~
@@ -571,19 +571,19 @@ Install a provision plugin, such as virsh, along with the required plugins for d
 
       $ infrared cloud-config --deployment-files virt --tasks create_external_network,forward_overcloud_dashboard,network_time,tempest_deployer_input
 
-[106]
+[35]
 
 Deployment (Full)
 -----------------
 
-Minimum recommended requirements [24]:
+Minimum recommended requirements [8]:
 
 -  Undercloud node:
 
    -  4 CPU cores
    -  8GB RAM (16GB recommended)
    -  60GB storage
-   -  2 network interface cards (NICs) [82]
+   -  2 network interface cards (NICs) [21]
    -  A fully qualified domain name (FQDN)
 
 -  Overcloud nodes:
@@ -605,7 +605,7 @@ Here is an overview of the deployment process using TripleO:
 Undercloud
 ~~~~~~~~~~
 
-The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [82]
+The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [21]
 
 -  **Undercloud (Automatic)**
 
@@ -652,20 +652,20 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
                 $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
                 $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
 
-         -  Install the latest Tripleo repository manager. This will allow newer minor versions of OpenStack packages to be installed in the future. [83]
+         -  Install the latest Tripleo repository manager. This will allow newer minor versions of OpenStack packages to be installed in the future. [22]
 
             .. code-block:: sh
 
                 $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
                 $ sudo tripleo-repos -b queens current
 
-      -  RHOSP 10 [87]:
+      -  RHOSP 10 [26]:
 
          .. code-block:: sh
 
              $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-2-tools-rpms --enable=rhel-7-server-rhceph-2-mon-rpms --enable=rhel-7-server-rhceph-2-osd-rpms --enable=rhel-7-server-openstack-10-rpms
 
-      -  RHOSP 13 [88]:
+      -  RHOSP 13 [27]:
 
          .. code-block:: sh
 
@@ -699,7 +699,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
           $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 
-   -  Common Undercloud configuration options. If using an automated power management driver with Ironic, the IP address for the Undercloud's provisioning NIC must use the same network and broadcast domain. [37]
+   -  Common Undercloud configuration options. If using an automated power management driver with Ironic, the IP address for the Undercloud's provisioning NIC must use the same network and broadcast domain. [15]
 
       -  enable\_\* = Enable or disable non-essential OpenStack services on the Undercloud.
       -  **dhcp\_{start\|end}** = The range of IP addresses to temporarily use for provisioning Overcloud nodes. This range is a limiting factor in how many nodes can be provisioned at once.
@@ -737,7 +737,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
    -  All OpenStack service passwords will be saved to
       ``$HOME/undercloud-passwords.conf``.
 
-[28]
+[12]
 
 Uninstall
 ^^^^^^^^^
@@ -773,7 +773,7 @@ Overcloud
         $ tar -v -x -f ironic-python-agent.tar
         $ tar -v -x -f overcloud-full.tar
 
-   -  RHOSP 13 [112]
+   -  RHOSP 13 [38]
 
       .. code-block:: sh
 
@@ -797,7 +797,7 @@ Overcloud
 
        $ openstack overcloud image upload --image-path /home/stack/images/
 
--  For using containers, the RDO images from Docker Hub are configured by default. Enable container caching on the Undercloud by generating this template. This will increase the Overcluod deployment time since container images will only have to be pulled from Docker Hub once. [102]
+-  For using containers, the RDO images from Docker Hub are configured by default. Enable container caching on the Undercloud by generating this template. This will increase the Overcluod deployment time since container images will only have to be pulled from Docker Hub once. [33]
 
    .. code-block:: sh
 
@@ -805,7 +805,7 @@ Overcloud
 
 **Introspection**
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [37] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [75] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
+-  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [15] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [18] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
 
    -  All
 
@@ -896,7 +896,7 @@ Overcloud
 
           $ openstack baremetal import --json instackenv.json
 
-   -  Queens [85]:
+   -  Queens [24]:
 
       .. code-block:: sh
 
@@ -922,7 +922,7 @@ Overcloud
 
                 $ openstack baremetal introspection bulk start
 
-         -  Queens [85]:
+         -  Queens [24]:
 
             .. code-block:: sh
 
@@ -954,7 +954,7 @@ Overcloud
 
       -  Import the configuration that defines the Overcloud infrastructure and have it introspected so it can be deployed.
 
-         -  Queens [85]:
+         -  Queens [24]:
 
             .. code-block:: sh
 
@@ -968,7 +968,7 @@ Overcloud
 
                 $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
--  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [86] Commonly custom "control" and "compute" flavors will need to be created.
+-  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [25] Commonly custom "control" and "compute" flavors will need to be created.
 
    .. code-block:: sh
 
@@ -982,7 +982,7 @@ Overcloud
 
           $ openstack baremetal configure boot
 
-   -  Queens (optional) [85]:
+   -  Queens (optional) [24]:
 
       .. code-block:: sh
 
@@ -1054,7 +1054,7 @@ Overcloud
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
         CephStorageCount: <NUMBER_OF_CEPH_NODES>
 
--  Deploy the Overcloud with any custom Heat configurations. [29] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [30] Lab environments should use the low resource usage template: ``-e ~/templates/environments/low-memory-usage.yaml``.
+-  Deploy the Overcloud with any custom Heat configurations. [13] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [14] Lab environments should use the low resource usage template: ``-e ~/templates/environments/low-memory-usage.yaml``.
 
    .. code-block:: sh
 
@@ -1182,7 +1182,7 @@ Overcloud
       +--------------------------------------+-------------------------+--------+------------------------+----------------+---------+
       $ ssh -l heat-admin 192.168.24.34
 
-[29][84]
+[13][23]
 
 -  Passwords for the Overcloud services can be found by running:
 
@@ -1198,7 +1198,7 @@ Overcloud
 
          $ openstack object save overcloud plan-environment.yaml
 
--  In >= Rocky (or in Queens, if configured), the Ansible files used for the configuration management can be downloaded. Those files can then be imported into an external source such as Ansible Tower or AWX. The ``tripleo-ansible-inventory`` script is used to generate a dynamic inventory file for Ansible that contains the Overcloud hosts. [99]
+-  In >= Rocky (or in Queens, if configured), the Ansible files used for the configuration management can be downloaded. Those files can then be imported into an external source such as Ansible Tower or AWX. The ``tripleo-ansible-inventory`` script is used to generate a dynamic inventory file for Ansible that contains the Overcloud hosts. [30]
 
     .. code-block:: sh
 
@@ -1364,7 +1364,7 @@ Add the ``--config-download -e ~/templates/environments/config-download-environm
      $ sudo systemctl stop os-collect-config
      $ sudo os-collect-config --debug --force --one-time --config-file /etc/os-collect-config.conf
 
-[110][111]
+[36][37]
 
 Operations
 ----------
@@ -1412,7 +1412,7 @@ Add a Compute Node
 
     $ openstack overcloud deploy --templates ~/templates <DEPLOYMENT_OPTIONS>
 
-[77]
+[19]
 
 Rebooting the Cloud
 ~~~~~~~~~~~~~~~~~~~
@@ -1472,12 +1472,12 @@ Servers hosting the cloud services will eventually need to go through a reboot t
 
          $ openstack server list --host <COMPUTE_HOST> --all-projects
 
-[104]
+[34]
 
 Ansible Playbooks (config-download)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running updates and upgrades in the future [113]. Use these arguments to enable config-download on Queens.
+The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running updates and upgrades in the future [39]. Use these arguments to enable config-download on Queens.
 
 .. code-block:: sh
 
@@ -1529,7 +1529,7 @@ For only updating the Ansible playbooks based on the Heat templates, pass the ``
 
    $ openstack overcloud deploy --stack-only
 
-[116]
+[41]
 
 If the playbooks are already generated from a successful STACK_CREATE of the Overcloud, then the deployment can be ran again using only the playbooks (skipping the need to parse the Heat templates).
 
@@ -1608,7 +1608,7 @@ Settings that are not handled by the Puppet modules can be overriden manually. T
             '<SECTION>/<KEY>':
               value: <VALUE>
 
-[101]
+[32]
 
 The root MySQL account password can be configured for the Undercloud and/or Overcloud.
 
@@ -1642,7 +1642,7 @@ There are 6 different types of networks in a standard TripleO deployment using a
 -  Tenant = Default VLAN: 50
 -  Management = Default VLAN: 60.
 
-The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network. [100]
+The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network. [31]
 
 Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
 
@@ -1695,7 +1695,7 @@ Configure bonding interface options, if applicable. Below is an example for LACP
 
    bonding_options: "mode=802.3ad lacp_rate=slow updelay=1000 miimon=100"
 
-[100]
+[31]
 
 Containers
 ~~~~~~~~~~
@@ -1719,7 +1719,7 @@ Containers
      ContainerImagePrepare:
        - push_destination: true
 
--  Authenticate with a registry. For example, the Red Hat repository that contains the RHOSP container images. [117]
+-  Authenticate with a registry. For example, the Red Hat repository that contains the RHOSP container images. [42]
 
 .. code-block:: yaml
 
@@ -1754,9 +1754,9 @@ Ceph
 
 **Releases**
 
-Ceph is fully supported as a back-end for Overcloud storage services. If Ceph is enabled in TripleO, it will be used by default for Glance and Cinder. Before Pike, puppet-ceph was used to manage Ceph. Experimental support for using ceph-ansible was added in Pike. [66] It is fully supported via config-download as of Rocky. In Train, it uses the same Ansible inventory as config-download. Ceph updates are handled during the ``external_deploy_steps_tasks`` stage of config-download.
+Ceph is fully supported as a back-end for Overcloud storage services. If Ceph is enabled in TripleO, it will be used by default for Glance and Cinder. Before Pike, puppet-ceph was used to manage Ceph. Experimental support for using ceph-ansible was added in Pike. [17] It is fully supported via config-download as of Rocky. In Train, it uses the same Ansible inventory as config-download. Ceph updates are handled during the ``external_deploy_steps_tasks`` stage of config-download.
 
-Red Hat Ceph Storage (RHCS) is the supported enterprise version of Ceph. RHCS 3.2 added official support for BlueStore. Using Ceph's FileStore mechanism has been deprecated since RHOSP 14. FileStore to BlueStore migration is supported by Red Hat. Customers must first update to RHCS 4 and then each OSD node is upgraded one at a time. [41]
+Red Hat Ceph Storage (RHCS) is the supported enterprise version of Ceph. RHCS 3.2 added official support for BlueStore. Using Ceph's FileStore mechanism has been deprecated since RHOSP 14. FileStore to BlueStore migration is supported by Red Hat. Customers must first update to RHCS 4 and then each OSD node is upgraded one at a time. [16]
 
 RHCS releases and supported platforms:
 
@@ -1888,7 +1888,7 @@ TripleO Queens:
      CephClientKey: '<CEPHX_USER_KEY>'
      CephExternalMonHost: '<CEPH_MONITOR_1>, <CEPH_MONITOR_2>, <CEPH_MONITOR_3>'
 
-[98]
+[29]
 
 Overcloud (cloud-init)
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1928,4 +1928,55 @@ Introduced in the Train release, the Undercloud can be scaled horizontally by us
    $ openstack orchestration service list
    $ openstack baremetal conductor list
 
-[120]
+[44]
+
+`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/tripleo.rst>`__
+---------------------------------------------------------------------------------------------
+
+Bibliography
+------------
+
+1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed September 26, 2019. https://access.redhat.com/support/policy/updates/openstack/platform
+2. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
+3. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
+4. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
+5. "Neutron with existing external network. RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/networking/neutron-with-existing-external-network/
+6. "Error while installing openstack 'newton' using rdo packstack." Ask OpenStack. October 25, 2016. Accessed September 28, 2017. https://ask.openstack.org/en/question/97645/error-while-installing-openstack-newton-using-rdo-packstack/
+7. "TripleO quickstart." RDO Project. Accessed March 26, 2018. https://www.rdoproject.org/tripleo/
+8. "[TripleO] Minimum System Requirements." TripleO Documentation. September 7, 2016. Accessed March 26, 2018. https://images.rdoproject.org/docs/baremetal/requirements.html
+9. [RDO] Recommended hardware." RDO Project. Accessed September 28, 2017. https://www.rdoproject.org/hardware/recommended/
+10. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
+11. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
+12. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
+13. "Basic Deployment (CLI)." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/install_overcloud.html
+14. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
+15. "Baremetal Environment." TripleO OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/environments/baremetal.html
+16. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
+17. "Configuring Ceph with Custom Config Settings." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
+18. "[Ironic] Enabling drivers." OpenStack Documentation. March 15, 2018. Accessed March 15, 2018. https://docs.openstack.org/ironic/queens/admin/drivers.html
+19. "CHAPTER 8. SCALING THE OVERCLOUD." Red Hat Documentation. Accessed January 30, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/sect-scaling_the_overcloud
+20. "Containers based Undercloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/undercloud.html
+21. "[TripleO Quickstart] Networking." TripleO Documentation. September 7, 2016. Accessed April 9, 2018. https://images.rdoproject.org/docs/baremetal/networking.html
+22. "Repository Enablement." OpenStack TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/repositories.html
+23. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
+24. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
+25. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
+26. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
+27. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
+28. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/release_notes/Red_Hat_OpenStack_Platform-13-Release_Notes-en-US.pdf
+29. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
+30. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
+31. "Configuring Network Isolation." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/network_isolation.html
+32. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
+33. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
+34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
+35. "Bootstrap." InfraRed Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
+36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
+37. "Using Already Deployed Servers." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
+38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
+39. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
+40. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
+41. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
+42. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
+43. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
+44. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html

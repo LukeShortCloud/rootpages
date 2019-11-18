@@ -17,7 +17,7 @@ It offers key features that include:
 -  OpenStack package repository caching.
 -  Automated upgrades.
 
-[16]
+[3]
 
 The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack-ansible>`__ has three different versions that can be used for deployments or upgrades.
 
@@ -25,7 +25,7 @@ The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack
 -  ``<OPENSTACK_RELEASE_NUMBER_MAJOR>.<OSA_MINOR>.<OSA_PATCH>`` = A tag of a specific OpenStack-Ansible release. The major version number is the same number that correlates to the OpenStack release. The minor and patch versions represent OpenStack-Ansible updates to the code. Example: "17.0.2" is the OpenStack Queens release and is the second OpenStack-Ansible update.
 -  ``<OPENSTACK-RELEASE>-eol`` =  A tag of an end-of-life release. Upstream versions of OpenStack no longer recieve any support after a year. This contains the last code for that release. Example: "newton-eol".
 
-SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [14]
+SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [1]
 
 All-in-One (AIO)
 ----------------
@@ -89,7 +89,7 @@ After a reboot, the three-node MariaDB Galera cluster needs to be restarted prop
    cd /opt/openstack-ansible/playbooks
    openstack-ansible -e galera_ignore_cluster_state=true galera-install.yml
 
-[15]
+[2]
 
 OpenStack-Ansible will create a default "public" and "private" networks for the "demo" project. These are both on isolated networks that are only on the hypervisor. These networks can be removed by deleting these resources in the order below.
 
@@ -110,13 +110,13 @@ The all-in-one environment does not have the ability to create networks on the e
    openstack subnet create --subnet-range 192.168.1.0/24 --allocation-pool start=192.168.1.201,end=192.168.1.254 --dns-nameserver 192.168.1.1 --gateway 192.168.1.1 --no-dhcp --network external_network external_subnet
    openstack router set router_public --external-gateway external_network
 
-[91]
+[11]
 
 **Uninstall**
 
 `This Bash script <https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html#rebuilding-an-aio>`__ can be used to clean up and uninstall most of the
 OpenStack-Ansible installation. Use at your own risk. The recommended
-way to uninstall OpenStack-Ansible is to reinstall the operating system. [15]
+way to uninstall OpenStack-Ansible is to reinstall the operating system. [2]
 
 Configurations
 --------------
@@ -138,7 +138,7 @@ It is also required to have at least 3 different network bridges.
 -  **br-vlan** = This should exist on the "network" (when using bare-metal) and "compute" nodes. It is used for external provider networks.
 -  **br-vxlan** = This should exist on the "network" and "compute" nodes. It is used for private self-service networks.
 
-[16]
+[3]
 
 View the
 ``/etc/openstack_deploy/openstack_user_config.yml.prod.example`` for a
@@ -247,7 +247,7 @@ The valid service types are:
 -  magnum-infra = Magnum.
 -  sahra-infra = Sahara.
 
-[16]
+[3]
 
 Neutron
 ~~~~~~~
@@ -282,7 +282,7 @@ Configure OpenStack-Ansible to only use a single interface (eth0), with no VLANs
            - all_containers
            - hosts
 
-After deployment, the external Neutron network and subnet can be created. [90]
+After deployment, the external Neutron network and subnet can be created. [10]
 
 .. code-block:: sh
 
@@ -301,7 +301,7 @@ Common variables:
    Valid options are: ``qemu``, ``kvm``, ``lxd``, ``ironic``, or
    ``powervm``.
 
-[17]
+[4]
 
 Ceph
 ~~~~
@@ -346,7 +346,7 @@ overriden using the "ceph\_extra"confs" dictionary.
          secret_uuid: '{{ cinder_ceph_client_<CEPH_CLIENT> }}'
 
 Alternatively, the entire configuration file can be defined as a
-variable using proper YAML syntax. [19]
+variable using proper YAML syntax. [6]
 
 .. code-block:: yaml
 
@@ -359,7 +359,7 @@ variable using proper YAML syntax. [19]
       auth_service_required = cephx
 
 A new custom deployment of Ceph can be configured. It is recommended to
-use at least 3 hosts for high availability and quorum. [18]
+use at least 3 hosts for high availability and quorum. [5]
 
 File: /etc/openstack_deploy/openstack_user_config.yml
 
@@ -379,7 +379,7 @@ File: /etc/openstack_deploy/openstack_user_config.yml
               rbd_ceph_conf: /etc/ceph/ceph.conf
               rbd_user: <CINDER_CEPHX_USER>
 
-[18]
+[5]
 
 Another real-world example of deploying and managing Ceph as part of
 OpenStack-Ansible can be found here:
@@ -437,7 +437,7 @@ Generate random passwords for the services.
 
    openstack-ansible setup-openstack.yml
 
-[16]
+[3]
 
 Operations
 ----------
@@ -467,7 +467,7 @@ Verify that all of the correct services and endpoints exist.
    openstack service list
    openstack endpoint list
 
-[20]
+[7]
 
 Ansible Inventory
 ~~~~~~~~~~~~~~~~~
@@ -507,7 +507,7 @@ for management and troubleshooting.
 
       openstack-ansible ./playbooks/os-<COMPONENT>-install.yml --limit <GROUP_OR_HOST> --list-tasks
 
-[21]
+[8]
 
 Add a Infrastructure Node
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -527,7 +527,7 @@ infrastructure node.
    openstack-ansible setup-everything.yml --limit @/root/add_host.limit
    openstack-ansible --tags=openstack-host-hostfile setup-hosts.yml
 
-[20]
+[7]
 
 Add a Compute Node
 ~~~~~~~~~~~~~~~~~~
@@ -544,7 +544,7 @@ OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use
    openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,<NEW_COMPUTE_HOST>
    openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
 
-[20]
+[7]
 
 Remove a Compute Node
 ~~~~~~~~~~~~~~~~~~~~~
@@ -566,7 +566,7 @@ done.
     cd /opt/openstack-ansible-ops/ansible_tools/playbooks
     openstack-ansible remove_compute_node.yml -e node_to_be_removed="<COMPUTE_CONTAINER_TO_REMOVE>"
 
-[20]
+[7]
 
 Upgrades
 --------
@@ -625,12 +625,12 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 
             openstack-ansible rabbitmq-install.yml -e 'rabbitmq_upgrade=true'
 
-[22]
+[9]
 
 Major
 ~~~~~
 
-OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html>`__. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [22]
+OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the `official guide <https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html>`__. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [9]
 
 -  Move into the OpenStack-Ansible project.
 
@@ -652,3 +652,21 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
    .. code-block:: sh
 
       ./scripts/run-upgrade.sh
+
+`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack-ansible.rst>`__
+-------------------------------------------------------------------------------------------------------
+
+Bibliography
+------------
+
+1. "Hosts role should set SELinux into permissive mode." openstack-ansible Launchpad Bugs. January 27, 2017. Accessed July 25, 2018. https://bugs.launchpad.net/openstack-ansible/+bug/1657517
+2. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
+3. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+4. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os_nova/queens/
+5. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
+6. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
+7. "[OpenStack-Ansible] Operations Guide." OpenStack Documentation. October 8, 2019. Accessed October 28, 2019. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
+8. "Developer Documentation." OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible/latest/contributor/index.html
+9. "Operations Guide." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/admin/index.html
+10. "Open vSwitch: Provider Networks." Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html
+11. "Deploying a Home Lab using OpenStack-Ansible." Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab
