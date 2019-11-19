@@ -1700,7 +1700,7 @@ Configure bonding interface options, if applicable. Below is an example for LACP
 Containers
 ~~~~~~~~~~
 
--  Configure the Undercloud to cache container images and serve them to the Overcloud nodes. This caching speeds up the deployment and lowers the amount of Internet bandwidth used. By default, Overcloud nodes will directly get images from the defined public registries. A private registry on the Undercloud will need to be configured as an insecure registry (it does not use a SSL/TLS certificate).
+-  Configure the Undercloud to cache container images and serve them to the Overcloud nodes. This caching speeds up the deployment and lowers the amount of Internet bandwidth used. By default, Overcloud nodes will directly get images from the defined public registries. A private registry on the Undercloud will need to be configured as an insecure registry (it does not use a SSL/TLS certificate by default).
 
 .. code-block:: ini
 
@@ -1729,7 +1729,20 @@ Containers
      registry.redhat.io:
        <RED_HAT_USERNAME>: <RED_HAT_PASSWORD>
 
--  Information on how to define custom registries and other related settings can be found `here <https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/container_image_prepare.html>`__.
+-  Information on how to define custom registries, set container names, version tags to use, and other related settings can be found `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html>`__.
+
+-  Custom package repositories and RPMs installed in containers are handled by the `tripleo-modify-image <https://github.com/openstack/ansible-role-tripleo-modify-image>`__ Ansible role.
+
+.. code-block:: yaml
+
+   ContainerImagePrepare:
+     - push_destination: true
+       includes:
+         - <CONTAINER_NAME>
+       modify_role: tripleo-modify-image
+       modify_append_tag: "-hotfix"
+       modify_vars:
+         <TRIPLEO_MODIFY_IMAGES_ROLE_VARIABLES>
 
 Pacakges
 ~~~~~~~~
