@@ -1213,7 +1213,20 @@ Overcloud
 Overcloud (Pre-deployed/provisioned Nodes)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instrospection and operating system deployment can be skipped if the Overcloud nodes already have the operating system installed and configured. This makes the Overcloud deployment process from TripleO faster. An Overcloud cannot have a mix of nodes that need provisioning and are pre-provisioned. If using this method, all Overcloud nodes must be pre-provisioned.
+Instrospection and the operating system provisioning can be skipped if the Overcloud nodes are already setup and running.
+
+Pros:
+
+-  Easier and faster to deploy.
+
+Cons:
+
+-  All Overclouds nodes must be pre-provisioned. Ironic cannot manage any for provisioning.
+-  Requires the operating system to already be installed.
+-  ``os-net-config`` does not manage networks. Networks have to be manually set up.
+-  Validations are not supported.
+
+-----
 
 **Overcloud Nodes**
 
