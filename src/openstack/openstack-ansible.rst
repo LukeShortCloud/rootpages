@@ -19,7 +19,7 @@ It offers key features that include:
 
 [3]
 
-The `OpenStack-Ansible GitHub repository <https://github.com/openstack/openstack-ansible>`__ has three different versions that can be used for deployments or upgrades.
+The `OpenStack-Ansible git repository <https://opendev.org/openstack/openstack-ansible>`__ has three different versions that can be used for deployments or upgrades.
 
 -  ``stable/<OPENSTACK_RELEASE_NAME>`` = A branch for a specific release of OpenStack. All of the latest updates are committed here. Example: "stable/queens".
 -  ``<OPENSTACK_RELEASE_NUMBER_MAJOR>.<OSA_MINOR>.<OSA_PATCH>`` = A tag of a specific OpenStack-Ansible release. The major version number is the same number that correlates to the OpenStack release. The minor and patch versions represent OpenStack-Ansible updates to the code. Example: "17.0.2" is the OpenStack Queens release and is the second OpenStack-Ansible update.
@@ -381,14 +381,12 @@ File: /etc/openstack_deploy/openstack_user_config.yml
 
 [5]
 
-Another real-world example of deploying and managing Ceph as part of
-OpenStack-Ansible can be found here:
-https://github.com/openstack/openstack-ansible/commit/057bb30547ef753b4559a689902be711b83fd76f
+Another real-world example of deploying and managing Ceph as part of OpenStack-Ansible can be found `here <https://docs.openstack.org/project-deploy-guide/openstack-ansible/html/latest/app-config-prod.html>`__.
 
 Install
 -------
 
-Download and install the latest stable OpenStack-Ansible suite from GitHub.
+Download and install the latest stable OpenStack-Ansible suite from OpenDev or GitHub.
 
 .. code-block:: sh
 
@@ -578,7 +576,7 @@ This is for upgrading OpenStack from one minor version to another in the same ma
 
 -  Change the OpenStack-Ansible version to a new minor tag release. If a
    branch for a OpenStack release name is being used already, pull the
-   latest branch commits down from GitHub.
+   latest branch commits down from OpenDev or GitHub.
 
    .. code-block:: sh
 

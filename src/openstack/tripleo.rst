@@ -10,7 +10,7 @@ Supported operating systems: RHEL/CentOS 7, Fedora >= 22
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
 
-In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://github.com/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
+In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
 Red Hat OpenStack Platform Releases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -323,17 +323,17 @@ TripleO Quickstart
 The TripleO Quickstart project was created to use Ansible to automate deploying a TripleO Undercloud and Overcloud. [7] The project recommends a minimum of 32GB RAM and 120GB of disk space when deploying with the default settings. [9] This deployment has to use a baremetal hypervisor. Deploying TripleO within a virtual machine that uses nested virtualization is not supported. [10]
 
 -  Download the tripleo-quickstart script or clone the entire repository
-   from GitHub.
+   from OpenDev or GitHub.
 
    .. code-block:: sh
 
-       $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+       $ curl -O https://opendev.org/openstack/tripleo-quickstart/raw/branch/master/quickstart.sh
 
    OR
 
    .. code-block:: sh
 
-       $ git clone https://github.com/openstack/tripleo-quickstart.git
+       $ git clone https://opendev.org/openstack/tripleo-quickstart.git
        $ cd tripleo-quickstart
 
 -  Install dependencies for the quickstart script.
@@ -357,7 +357,7 @@ Common node variables:
 
 Further customizations should be configured now before deploying the
 TripleO environment. Refer to the `Undercloud Deploy role's
-documentation <https://github.com/openstack/tripleo-quickstart-extras/blob/master/roles/undercloud-deploy/README.md>`__
+documentation <https://opendev.org/openstack/tripleo-quickstart-extras/src/branch/master/roles/undercloud-deploy/README.md>`__
 on all of the Ansible variables for the Undercloud. Add any override
 variables to a YAML file and then add the arguments
 ``-e @<VARIABLE_FILE>.yaml`` to the "quickstart.sh" commands.
@@ -389,7 +389,7 @@ variables to a YAML file and then add the arguments
      deployed.
    - ``--playbook`` = Specify a Playbook to run.
    - ``--release`` = The OpenStack release to use. All of the available
-     releases can be found in the GitHub project in the
+     releases can be found in the OpenDev or GitHub project in the
      "config/release/" directory. Use "trunk/``<RELEASE_NAME>``" for
      the development version and "stable/``<RELEASE_NAME>``" for the
      stable version.
@@ -629,7 +629,7 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
       .. code-block:: sh
 
-          $ curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+          $ curl -O https://opendev.org/openstack/tripleo-quickstart/raw/branch/master/quickstart.sh
           $ bash quickstart.sh --release trunk/queens --tags all --playbook quickstart.yml -e overcloud_nodes="" $VIRTHOST
 
    -  Log into the virtual machine once TripleO Quickstart has completed
@@ -1731,7 +1731,7 @@ Containers
 
 -  Information on how to define custom registries, set container names, version tags to use, and other related settings can be found `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html>`__.
 
--  Custom package repositories and RPMs installed in containers are handled by the `tripleo-modify-image <https://github.com/openstack/ansible-role-tripleo-modify-image>`__ Ansible role.
+-  Custom package repositories and RPMs installed in containers are handled by the `tripleo-modify-image <https://opendev.org/openstack/ansible-role-tripleo-modify-image>`__ Ansible role.
 
 .. code-block:: yaml
 

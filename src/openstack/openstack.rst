@@ -1504,9 +1504,7 @@ created network) the "get\_resource" function should be used.
 
     { get_resource: <OBJECT_NAME> }
 
-Official examples of Heat templates can be found here:
-https://github.com/openstack/heat-templates/tree/master/hot. Below is a
-demonstration on how to create a virtual machine with public networking.
+Official examples of Heat templates can be found `here <https://opendev.org/openstack/heat-templates/src/branch/master/hot>`__. Below is a demonstration on how to create a virtual machine with public networking.
 
 -  Create a network, assigned to the "internal\_network" object.
 
