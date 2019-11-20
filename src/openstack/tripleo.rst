@@ -602,6 +602,8 @@ Here is an overview of the deployment process using TripleO:
 - Optionally configure settings for the Overcloud deployment (highly recommended).
 - Deploy the Overcloud. This cloud will be the production cloud that developers can use.
 
+RHOSP enables high-availability (HA) for the control plane by default and requires having exactly 3 Controller nodes as part of the Overcloud. [45] TripleO can have HA enabled by setting the ``ControllerCount`` to ``3`` and including this template: ``-e /usr/share/openstack-tripleo-heat-templates/environments/docker-ha.yaml``. [46]
+
 Undercloud
 ~~~~~~~~~~
 
@@ -1956,6 +1958,11 @@ Introduced in the Train release, the Undercloud can be scaled horizontally by us
 
 [44]
 
+Scaling (Large Overcloud)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__.
+
 Troubleshooting
 ---------------
 
@@ -2011,3 +2018,5 @@ Bibliography
 42. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 43. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
 44. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html
+45. "CHAPTER 3. PLANNING YOUR OVERCLOUD." Red Hat Documentation. Accessed November 20, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-planning_your_overcloud
+46. "Configuring High Availability." tripleo-docs. November 20, 2019. Accessed November 20, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/high_availability.html
