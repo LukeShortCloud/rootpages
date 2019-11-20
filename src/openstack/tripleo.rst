@@ -1956,6 +1956,11 @@ Introduced in the Train release, the Undercloud can be scaled horizontally by us
 
 [44]
 
+Troubleshooting
+---------------
+
+-  Disable the Extra Packages for Enterprise Linux (EPEL) and Puppet Labs repositories if these are available. These will cause package conflicts and result in the installation of wrong dependencies.
+
 `History <https://github.com/ekultails/rootpages/commits/master/src/openstack/tripleo.rst>`__
 ---------------------------------------------------------------------------------------------
 
