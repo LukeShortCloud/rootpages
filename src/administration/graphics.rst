@@ -14,8 +14,11 @@ AMD provides an open-source driver that is part of the Linux kernel. For the bes
 Nvidia
 ~~~~~~
 
+Installation
+^^^^^^^^^^^^
+
 Fedora
-^^^^^^
+''''''
 
 If the official Nvidia installer was originally used then those libraries need to be cleaned up.
 
@@ -59,6 +62,38 @@ Set nvidia-xrun to launch OpenBox.
 Switch to a free TTY. This is normally done in Linux by pressing ``CTRL`` + ``ALT`` + ``F2``. Log in and then run ``nvidia-xrun``. OpenBox will now be running with full access to the Nvidia graphics card.
 
 [4]
+
+optimus-manager (Arch Linux and Manjaro Linux)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``optimus-manager`` provides an easy way to change the graphics card in use on a laptop.
+
+.. code-block:: sh
+
+   $ yay -S optimus-manager
+   $ sudo systemctl start optimus-manager
+
+Temporarily switch the primary graphics card mode (this will restart the Xorg session):
+
+.. code-block:: sh
+
+   $ optimus-manager --switch [intel|nvidia|hybrid]
+
+Or change it on the next boot (this way is more reliable):
+
+.. code-block:: sh
+
+   $ optimus-manager --set-startup [intel|nvidia|hybrid]
+
+For using a HDMI port, the laptop must be in the ``nvidia`` mode.
+
+[5]
+
+With Nvidia version >= 435 drivers and Xorg >= 1.20.6, the ``hybrid`` mode supports GPU offloading. This means the integrated Intel graphics can be used for power efficiency until the dedicated Nvidia GPU is required for gaming or productivity. The example below offloads graphical power to the Nvidia GPU for Vulkan and OpenGL while running Steam. [6]
+
+.. code-block:: sh
+
+   $ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia steam
 
 Window Managers
 ---------------
@@ -146,3 +181,5 @@ Bibliography
 2. "New third-party repositories - easily install Chrome & Steam on Fedora." Fedora Magazine. April 27, 2018. Accessed October 7, 2018. https://fedoramagazine.org/third-party-repositories-fedora/
 3. "Nvidia-xrun." Arch Linux Wiki. Accessed November 4, 2018. September 11, 2018. https://wiki.archlinux.org/index.php/Nvidia-xrun
 4. "DesktopEnvironment." Debian Wiki. June 7, 2018. Accessed November 26, 2018. https://wiki.debian.org/DesktopEnvironment
+5. "NVIDIA Optimus." ArchWiki. October 28, 2019. Accessed November 20, 2019. https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Using_optimus-manager
+6. "Manjaro Gaming with Nvidia Offloading & D3 Power Managment." Reddit r/linux_gaming. September 28, 2019. Accessed November 20, 2019. https://www.reddit.com/r/linux_gaming/comments/dac4bc/manjaro_gaming_with_nvidia_offloading_d3_power/
