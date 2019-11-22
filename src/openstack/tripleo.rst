@@ -1056,7 +1056,7 @@ Overcloud
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
         CephStorageCount: <NUMBER_OF_CEPH_NODES>
 
--  Deploy the Overcloud with any custom Heat configurations. [13] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [14] Lab environments should use the low resource usage template: ``-e ~/templates/environments/low-memory-usage.yaml``.
+-  Deploy the Overcloud with any custom Heat configurations. [13] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [14]
 
    .. code-block:: sh
 
@@ -1962,6 +1962,16 @@ Scaling (Large Overcloud)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__.
+
+Lab Tips
+~~~~~~~~
+
+These are trips and tricks for setting up a full, yet basic, TripleO cloud for testing the deployment.
+
+-  Use the minimum amount of nodes for TripleO: 1 Undercloud, 1 Controller, and 1 Compute.
+-  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utliziation (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
+-  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and seperate traffic using different subnets.
+-  Use `this template <https://opendev.org/openstack/tripleo-heat-templates/src/commit/d2bcf0f530cade1ca65b90fbe91953dfb67958b0/ci/environments/scenario000-standalone.yaml>`__ (designed for Train) as a reference to prevent deploying unnecessary services on the Overcloud. That template will disable everything except Keystone.
 
 Troubleshooting
 ---------------
