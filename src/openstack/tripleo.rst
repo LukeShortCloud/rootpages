@@ -719,6 +719,18 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
       -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
       -  enabled_hardware_types (**enabled\_drivers** in Newton) = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management" (Queens) or "fake_pxe" (Newton) to this list.
 
+   -  Example of changing the control plane (provisioning) network details.
+
+      .. code-block:: ini
+
+         [ctlplane-subnet]
+         cidr = 192.168.100.0/24
+         dhcp_start = 192.168.100.2
+         dhcp_end = 192.168.100.254
+         gateway = 192.168.100.1
+         inspection_iprange = 192.168.100.2,192.168.100.254
+         masquerade = true
+
    -  Deploy the Undercloud. Anytime the configuration for the Undercloud changes, this command needs to be re-ran to update the installation.
 
       .. code-block:: sh
