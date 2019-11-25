@@ -890,7 +890,15 @@ Overcloud
 
              $ sudo virsh detach-interface ${VM_NAME} network --persistent --mac $(sudo virsh dumpxml ${VM_NAME} | grep -B4 vagrant-libvirt | grep mac | cut -d "'" -f2)
 
--  Import the nodes.
+-  Import the nodes and then introspect them immediately.
+
+  -  Queens [24]:
+
+     .. code-block:: sh
+
+         $ openstack overcloud node import --introspect --provide instackenv.json
+
+-  Alternatively, import them and inspect them later.
 
    -  Newton:
 
@@ -908,6 +916,11 @@ Overcloud
           2 node(s) successfully moved to the "manageable" state.
           Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
           Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+
+   -  Verify that Ironic has successfully added the new baremetal nodes.
+
+      .. code-block:: sh
+
           $ openstack baremetal node list
           +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
           | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
@@ -916,7 +929,40 @@ Overcloud
           | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
           +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
--  Start the introspection. In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
+-  Start the introspection.
+
+   -  **Method \#1:** Automatic introspection with a managed Ironic driver (such as IPMI).
+
+         -  Newton:
+
+            .. code-block:: sh
+
+                $ openstack baremetal introspection bulk start
+
+         -  Queens [24]:
+
+            .. code-block:: sh
+
+                $ openstack overcloud node introspect --all-manageable --provide
+                Waiting for introspection to finish...
+                Waiting for messages on queue 'tripleo' with no timeout.
+                Introspection of node c1456e44-5245-4a4d-b551-3c6d6217dac4 completed. Status:SUCCESS. Errors:None
+                Introspection of node 9a277de3-02be-4022-ad26-ec4e66d97bd1 completed. Status:SUCCESS. Errors:None
+                Introspection completed.
+                Waiting for messages on queue 'tripleo' with no timeout.
+                2 node(s) successfully moved to the "available" state.
+
+   -  **Method \#2:** Automatic but the connection details are given via the CLI instead of the instackenv file.
+
+         -  Automatically discover the available servers by scanning hardware devices (such as IPMI) via a CIDR range and using different logins.
+
+            .. code-block:: sh
+
+                $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
+
+   -  **Method \#3:** Lab environment using the manual-management/fake_pxe driver.
+
+      -  In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
 
          -  Newton:
 
@@ -952,25 +998,7 @@ Overcloud
             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power off   | available          | False       |
             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
-   -  Physical environment:
-
-      -  Import the configuration that defines the Overcloud infrastructure and have it introspected so it can be deployed.
-
-         -  Queens [24]:
-
-            .. code-block:: sh
-
-                $ openstack overcloud node import --introspect --provide instackenv.json
-
-         -  Alternatively, automatically discover the available servers by
-            scanning IPMI devices via a CIDR range and using different IPMI
-            logins.
-
-            .. code-block:: sh
-
-                $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
-
--  Configure the necessary flavors (mandatory for getting accurate results when using the fake_pxe Ironic driver). [25] Commonly custom "control" and "compute" flavors will need to be created.
+-  Configure the necessary flavors (mandatory for getting accurate results when using the manual-management/fake_pxe Ironic driver). [25] Commonly custom "control" and "compute" flavors will need to be created.
 
    .. code-block:: sh
 
