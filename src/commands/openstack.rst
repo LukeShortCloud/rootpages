@@ -78,6 +78,9 @@ openstack
 
    "--all-projects", "when used with some options, it will show all resources created"
    "--format {csv|json|table|value|yaml}", "format the output with one of these data structures"
+   --log-file <FILE_NAME>, save the stdout and stderr to a text file
+   --quiet, run with no verbosity (the default is 1 verbosity)
+   -v, run with double verbosity
 
 packstack
 ~~~~~~~~~~
