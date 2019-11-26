@@ -20,6 +20,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: HTTP
+
+   http/index.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: Networking
 
    networking/index.rst

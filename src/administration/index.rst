@@ -4,12 +4,8 @@
 
    authentication
    bootloaders
-   clustering
-   databases
-   dns_servers
    file_systems
    graphics
-   http_servers
    linux
    mail_servers
    monitoring
