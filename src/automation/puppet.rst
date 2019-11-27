@@ -530,8 +530,10 @@ or
 
    KEY => VALUE
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/automation/puppet.rst>`__
----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/automation/puppet.rst>`__
 
 Bibliography
 ------------

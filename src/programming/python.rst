@@ -1655,8 +1655,12 @@ Commands can also be executed directly from the virtual environment without any 
 
 [32]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
-----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/python.md>`__
 
 Bibliography
 ------------

@@ -326,5 +326,8 @@ git cherry-pick
    --continue, "after fixing merge conflicts and doing a ``git add``, the cherry-pick will be committed"
    --abort, revert changes from a cherry pick that has merge conflicts
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/software_configuration_management.rst>`__
-----------------------------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/software_code_management.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/software_code_management.rst>`__

@@ -262,8 +262,14 @@ Configuration options:
 
 [11]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/databases.rst>`__
--------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/databases.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/databases.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/databases.rst>`__
+-  `< 2018.01.01 (NoSQL) <https://github.com/ekultails/rootpages/commits/master/markdown/nosql.md>`__
+-  `< 2018.01.01 (SQL) <https://github.com/ekultails/rootpages/commits/master/markdown/sql.md>`__
 
 Bibliography
 ------------

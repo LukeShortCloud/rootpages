@@ -585,5 +585,8 @@ Manage the deployment of the Overcloud.
 
    --deploy-files virt --version 14 --introspect yes --tagging yes --deploy yes, fully deploy a RHOSP 14 Overcloud
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/openstack.rst>`__
-----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/openstack.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/openstack.rst>`__

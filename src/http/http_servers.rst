@@ -490,8 +490,13 @@ Full Verified Syntax:
 
 [13]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/http_servers.rst>`__
-----------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/http_servers.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/http_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/http_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/http_servers.md>`__
 
 Bibliography
 ------------

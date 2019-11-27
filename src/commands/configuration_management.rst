@@ -229,5 +229,8 @@ Package: puppet-agent
    apply --noop --show_diff <MANIFEST>.pp, run in a dry-run and show the differences of what would have been changed
    --version, show the Puppet version
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/configuration_management.rst>`__
--------------------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/configuration_management.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/configuration_management.rst>`__

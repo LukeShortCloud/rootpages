@@ -235,8 +235,13 @@ Here is an example of converting addresses to nibble.
 
           $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/dns_servers.rst>`__
----------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/dns_servers.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/dns_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/dns_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/dns_servers.md>`__
 
 Bibliography
 ------------

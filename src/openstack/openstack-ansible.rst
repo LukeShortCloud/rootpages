@@ -651,8 +651,13 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
 
       ./scripts/run-upgrade.sh
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack-ansible.rst>`__
--------------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack-ansible.rst>`__
+-  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst>`__
+-  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
+-  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md>`__
 
 Bibliography
 ------------

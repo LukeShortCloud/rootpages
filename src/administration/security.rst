@@ -217,8 +217,12 @@ Verify that the authentication works.
 
 [2][4]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/security.rst>`__
-------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/security.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/security.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/security.md>`__
 
 Bibliography
 ------------

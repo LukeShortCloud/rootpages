@@ -141,5 +141,8 @@ ufw
    "deny <PORT>", "deny all traffic to this port", ""
    "--dry-run", "do not make changes; only show what iptables rules will be made", ""
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/firewalls.rst>`__
-----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/firewalls.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/firewalls.rst>`__

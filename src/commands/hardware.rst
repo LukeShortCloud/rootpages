@@ -280,5 +280,8 @@ IPMI firmware update utility.
 
    "-i kcs -f", "update IPMI's firmware"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/hardware.rst>`__
----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/hardware.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/hardware.rst>`__

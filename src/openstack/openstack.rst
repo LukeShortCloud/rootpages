@@ -2113,8 +2113,13 @@ OpenStack can be tuned to use less processing power and run faster.
 
         -  This is configured by an option called "memcache\_servers" in the configuration files for most services. Consider using "CouchBase" for it's ease of clustering and redundancy support.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack.rst>`__
------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md>`__
 
 Bibliography
 ------------

@@ -639,8 +639,12 @@ Flatpak
 
 Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [23] This package manager is available for most modern Linux distributions. [24]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/packages.rst>`__
-------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/packages.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/packages.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/packages.md>`__
 
 Bibliography
 ------------

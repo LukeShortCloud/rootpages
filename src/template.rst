@@ -64,8 +64,10 @@ Header 5
 Header 6
 &&&&&&&&
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/template.rst>`__
-------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/template.rst>`__
 
 Bibliography
 ------------

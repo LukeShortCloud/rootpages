@@ -1,6 +1,8 @@
 Phones
 ======
 
+.. contents:: Table of Contents
+
 Android
 -------
 
@@ -38,5 +40,8 @@ fastboot
    flash <PARTITION> <IMAGE>.img, flash the image to a specific partition (it will only flash to A on A/B systems)
    flash --slot all <PARTITION> <IMAGE>.img, "flash the image to a specific A/B partition (bootloader, radio, or vendor) on Oreo and newer devices"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/phones.rst>`__
---------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/phones.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/phones.rst>`__

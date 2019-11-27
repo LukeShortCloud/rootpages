@@ -646,8 +646,13 @@ The example below shows how to configure static storage for a pod using local st
 
 [20]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/containers.rst>`__
---------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/virtualization/containers.rst>`__
+-  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/administration/virtualization.rst>`__
+-  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
+-  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/markdown/virtualization.md>`__
 
 Bibliography
 ------------

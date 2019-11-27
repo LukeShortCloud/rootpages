@@ -220,5 +220,8 @@ Packag: zip
 
    "-r root_archive.zip /root/", "create a zip archive of the root user home directory"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/compression.rst>`__
-------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/compression.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/compression.rst>`__

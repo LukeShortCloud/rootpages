@@ -284,8 +284,12 @@ File: /etc/dracut.conf
 
 [11]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/linux.rst>`__
----------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/linux.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/linux.md>`__
 
 Bibliography
 ------------

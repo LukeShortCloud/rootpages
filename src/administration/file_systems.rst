@@ -1353,8 +1353,12 @@ Full:
    - ~/.bashrc = Non-interative and interactive shells will source aliases and functions from here.
    - ~/.local/share/applications/ = Desktop application shortcuts.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst>`__
-----------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/file_systems.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/file_systems.md>`__
 
 Bibliography
 ------------

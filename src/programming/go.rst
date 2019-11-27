@@ -495,8 +495,10 @@ These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``F
 -  WriteAt
 -  WriteString
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/programming/golang.rst>`__
-----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/go.rst>`__
 
 Bibliography
 ------------

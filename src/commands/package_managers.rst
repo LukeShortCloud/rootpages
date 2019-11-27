@@ -859,5 +859,8 @@ GNU C++ compiler.
 
    "-std=c++{98|03|11|14|17}", "compile using a ANSI C++ standard, based on the year it was released"
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/package_managers.rst>`__
-------------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/package_managers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/package_managers.rst>`__

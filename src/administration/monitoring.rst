@@ -230,8 +230,12 @@ Event Types:
 -  2097152=status
 -  4194304=uptime [3]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/monitoring.rst>`__
---------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/monitoring.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/monitoring.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/monitoring.md>`__
 
 Bibliography
 ------------

@@ -566,8 +566,11 @@ These are the most important concepts to learn when studying a new language, lis
 
    -  Most programming languages support a package manager for dependencies such as dep (Go), mvn/Maven (Java), npm (Node.js), pip/PyPI (Python), etc.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
-----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
+-  `< 2018.07.01 <https://github.com/ekultails/rootpages/commits/master/src/devops.rst>`__
 
 Bibliography
 ------------

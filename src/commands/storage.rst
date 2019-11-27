@@ -1002,5 +1002,7 @@ Utility for creating Windows Master Boot Records (MBR).
    --fat32, create a FAT32 DOS MBR
    -7, create a Windows 7 MBR
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/commands/storage.rst>`__
---------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/storage.rst>`__

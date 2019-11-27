@@ -240,8 +240,12 @@ Fedora:
 
     $ sudo yum install lvm2
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
----------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/bootloaders.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/bootloaders.md>`__
 
 Bibliography
 ------------

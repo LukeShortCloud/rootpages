@@ -2018,8 +2018,13 @@ Troubleshooting
 
 -  Disable the Extra Packages for Enterprise Linux (EPEL) and Puppet Labs repositories if these are available. These will cause package conflicts and result in the installation of wrong dependencies.
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/openstack/tripleo.rst>`__
----------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/tripleo.rst>`__
+-  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst>`__
+-  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
+-  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md>`__
 
 Bibliography
 ------------

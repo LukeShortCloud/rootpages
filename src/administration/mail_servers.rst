@@ -64,8 +64,12 @@ network to the 10.0.0.1 server.
 
 [2][3]
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/mail_servers.rst>`__
-----------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/mail_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/mail_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/mail_servers.md>`__
 
 Bibliography
 ------------

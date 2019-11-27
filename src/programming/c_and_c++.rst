@@ -671,8 +671,12 @@ fgetc example:
         fclose(file_to_read);
     }
 
-`History <https://github.com/ekultails/rootpages/commits/master/src/programming/c_and_c++.rst>`__
--------------------------------------------------------------------------------------------------
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/c_and_c++.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/c_and_c++.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/c_and_c++.md>`__
 
 Bibliography
 ------------
