@@ -98,6 +98,10 @@ View commits from a specific author:
 
 ``https://github.com/openstack/openstack-ansible/commits?author=<USER>``
 
+View SSH public keys for a specific user:
+
+``https://github.com/<USER>.keys``
+
 GitPrep
 ^^^^^^^
 
