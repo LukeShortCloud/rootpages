@@ -436,6 +436,16 @@ Package: python-swiftclient
 TripleO
 -------
 
+openstack undercloud
+~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   install, install the Undercloud using the ~/undercloud.conf configuration file
+   minion install, (>= Train) install Minion services (minimal Heat and Ironic) on another Undercloud node
+
 openstack overcloud
 ~~~~~~~~~~~~~~~~~~~
 
@@ -480,6 +490,15 @@ openstack overcloud deploy
    :widths: 20, 20
 
    --stack production --templates /home/stack/templates -e /home/stack/templates/environments/low-memory.yaml, deploy an Overcloud stack named production that will use the default settings annd low memory settings for the services
+
+openstack tripleo
+~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   container image push, (>= Train) push a local container image to the local Undercloud container registry
 
 tripleo-ansible-inventory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
