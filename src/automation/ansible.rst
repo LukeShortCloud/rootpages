@@ -3945,8 +3945,16 @@ Does not work:
 
       - name: find interface facts
         debug:
-          msg: "{{ ansible_%s| format(item)] }}"
+          msg: "{{ ansible_%s | format(item)] }}"
         with_items: "{{ ansible_interfaces }}"
+
+Variables can be updated and manipulated using Python attributes by using Jinja's no-print ``do`` method.
+
+::
+
+   {% do example_list.append('new item') %}
+
+[20]
 
 Filters
 ~~~~~~~
