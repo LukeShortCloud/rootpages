@@ -1259,12 +1259,14 @@ Instrospection and the operating system provisioning can be skipped if the Overc
 
 Pros:
 
--  Easier and faster to deploy.
+-  Easier to deploy.
+-  Faster to deploy.
 
 Cons:
 
 -  All Overclouds nodes must be pre-provisioned. Ironic cannot manage any for provisioning.
 -  Requires the operating system to already be installed.
+-  Repositories have to be installed and enabled manually.
 -  ``os-net-config`` does not manage networks. Networks have to be manually set up.
 -  Validations are not supported.
 
