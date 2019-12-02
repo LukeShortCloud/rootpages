@@ -427,11 +427,9 @@ All:
    -  [defaults]
 
       -  gathering = smart
-      -  fact\_caching = 86400
+      -  fact\_caching = 86400 \# This will set the cache time to 1 day.
 
-         -  This will set the cache time to 1 day.
-
-File (JSON):
+JSON File:
 
 -  ansible.cfg
 
@@ -451,6 +449,16 @@ Redis:
       -  fact\_caching\_connection = ``<HOST>:<PORT>``
 
 [4]
+
+If tasks between hosts can run independently of each other, then tasks can be allowed to move onto the next one immediately when a host is done (even if other hosts are not).
+
+-  ansible.cfg
+
+   -  [defaults]
+
+      -  strategy = free
+
+[36]
 
 Inventory
 ---------
@@ -1398,10 +1406,7 @@ Syntax:
 Serial
 ^^^^^^
 
-By default, Ansible will only run tasks on 5 hosts at once. This limit
-can be modified to run on a different number of hosts or a percentage of
-the amount of hosts. This is useful for running Playbooks on a large
-amount of servers. [14]
+By default, Ansible will run all tasks in parallels on all hosts. By setting a number or percentage of hosts, a user can restrict how many hosts must fully complete in a playbook before moving onto the next set of hosts. [14] The ``serial`` keyword can only be used at the playbook level. [83]
 
 Syntax:
 
@@ -1414,12 +1419,12 @@ Example:
 .. code-block:: yaml
 
     - hosts: web
+      serial: 50%
       tasks:
         - name: Installing Nginx
           package:
             name: nginx
             state: present
-          serial: 50%
 
 Strategy
 ^^^^^^^^
@@ -1777,7 +1782,7 @@ Examples:
 
 [45]
 
-In Ansible 2.7, the ``apply`` argument was added to both the ``include_role`` and ``include_tasks`` modules. This allows the end-user to apply the same type of keyword attributes that a  normal ``role`` can accept. These include become arguments, delegation, ignore_errors, tags, and more. The full list of allowed keywords can be found `here <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#role>`__.
+In Ansible 2.7, the ``apply`` argument was added to both the ``include_role`` and ``include_tasks`` modules. This allows the end-user to apply the same type of keyword attributes that a  normal ``role`` can accept. These include become arguments, delegation, ignore_errors, tags, and more. The full list of allowed keywords for roles can be found `here <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#role>`__.
 
 Example:
 
@@ -5145,7 +5150,7 @@ Bibliography
 11. "Conditionals." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_conditionals.html
 12. "Error Handling In Playbooks." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/playbooks\_error\_handling.html
 13. "Become (Privilege Escalation)." Ansible Documentation. August 24, 2016. Accessed August 27, 2016. http://docs.ansible.com/ansible/become.html
-14. "Delegation, Rolling Updates, and Local Actions." Ansible Documentation. April 12, 2017. Accessed April 13, 2017. http://docs.ansible.com/ansible/playbooks\_delegation.html
+14. "Delegation, Rolling Updates, and Local Actions." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. http://docs.ansible.com/ansible/playbooks\_delegation.html
 15. "Asynchronous Actions and Polling." Ansible Documentation. February 21, 2019. Accessed February 27, 2019. https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
@@ -5167,7 +5172,7 @@ Bibliography
 33. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 34. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
 35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed October 11, 2019. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
-36. "Ansible Strategies." Ansible Documentation. August 16, 2017. Accessed August 24, 2017. http://docs.ansible.com/ansible/latest/playbooks\_strategies.html
+36. "Controlling playbook execution: strategies and more." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_strategies.html
 37. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
 39. "Ansible announces AWX open source project." OpenSource.com. September 7, 2017. Accessed September 7, 2017. https://opensource.com/article/17/9/ansible-announces-awx-open-source-project
@@ -5214,3 +5219,4 @@ Bibliography
 80. "Major upgrade." Batix/rundeck-ansible-plugin, GitHub. August 15, 2018. Accessed February 26, 2019. https://github.com/Batix/rundeck-ansible-plugin/commit/a07e37537a8eda38b620d9de4fc5f01f22952121
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
 82. "Special Variables." Ansible Documentation. June 27, 2019. Accessed June 28, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
+83. "Playbook Keywords." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html
