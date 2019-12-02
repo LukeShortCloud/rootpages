@@ -1083,6 +1083,10 @@ Overcloud
              $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
              $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
 
+      -  Scenario #3 - No templates:
+
+         -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to seperate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
+
 -  In a YAML Heat tepmlate, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
 
    .. code-block:: yaml
