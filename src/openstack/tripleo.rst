@@ -1598,7 +1598,13 @@ Fact caching is enabled by default which can lead to issues with re-deployment. 
 
 .. code-block:: sh
 
-   $ sudo rm -rf /var/tmp/ansible_fact_cache/*
+   $ sudo rm -rf /var/lib/mistral/ansible_fact_cache/*
+
+Force re-running tasks that only run during the initial deployment by using the ``force=true`` variable. The example below will run the network configuration tasks again.
+
+.. code-block:: sh
+
+   $ ansible-playbook -i inventory.yaml --become --tags facts,post_deploy_steps deploy_steps_playbook.yaml -e force=true
 
 Configurations
 --------------
