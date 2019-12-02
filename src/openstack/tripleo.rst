@@ -1100,6 +1100,17 @@ Overcloud
         ComputeCount: <NUMBER_OF_COMPUTE_NODES>
         CephStorageCount: <NUMBER_OF_CEPH_NODES>
 
+-  Alternatively, the initial default count can be set in the ``roles_data.yaml`` file.
+
+   .. code-block:: yaml
+
+      - name: Controller
+        CountDefault: <NUMBER_OF_CONTROLLER_NODES>
+      - name: Compute
+        CountDefault: <NUMBER_OF_COMPUTE_NODES>
+      - name: CephStorage
+        CountDefault: <NUMBER_OF_CEPHSTORAGE_NODES>
+
 -  Deploy the Overcloud with any custom Heat configurations. [13] Starting with the Pike release, most services are deployed as containers by default. For preventing the use of containers, remove the "docker.yaml" and "docker-ha.yaml" files from ``${TEMPLATES_DIRECTORY}/environments/``. [14]
 
    .. code-block:: sh
@@ -1296,7 +1307,7 @@ Cons:
 
 **Undercloud/Director**
 
--  For config-download scenarios, generate Heat templates for pre-provisioned nodes.
+-  For config-download scenarios on < Train, generate Heat templates for pre-provisioned nodes from a special roles data file. Starting in Train, it uses the default ``/usr/share/openstack-tripleo-heat-templates/roles_data.yaml`` file.
 
    .. code-block:: sh
 
@@ -1336,6 +1347,9 @@ Cons:
            <COMPUTE0_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
                - ip_address: <COMPUTE0_IPV4>
+           <COMPUTE1_SHORT_HOSTNAME>-ctlplane:
+             fixed_ips:
+               - ip_address: <COMPUTE1_IPV4>
              subnets:
                - cidr: 24
 
@@ -1350,6 +1364,7 @@ Cons:
            overcloud-controller-1: <CONTROLLER1_SHORT_HOSTNAME>
            overcloud-controller-2: <CONTROLLER2_SHORT_HOSTNAME>
            overcloud-compute-0: <COMPUTE0_SHORT_HOSTNAME>
+           overcloud-compute-1: <COMPUTE1_SHORT_HOSTNAME>
 
 -  Ensure that the Overcloud nodes have an interface and IP address on the same provisioning network that the Undercloud uses. By default, the network is configured is ``192.168.24.0/24`` with the Undercloud API endpoints listening on ``192.168.24.1``. The endpoints have to be reachable via the Overcloud nodes.
 -  Start the deployment of the Overcloud using at least these arguments and templates. Add the ``-e ~/templates/hostname-map.yaml`` argument for config-download to do the hostname mapping.
