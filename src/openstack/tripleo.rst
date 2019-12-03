@@ -1999,7 +1999,7 @@ Any Overcloud node that is provisioned and managed by Ironic and Nova can be con
 Minions
 ~~~~~~~
 
-Introduced in the Train release, the Undercloud can be scaled horizontally by using ``minion`` nodes to help with a large Overcloud deployment, update, or upgrade. This runs the "heat-engine" and "ironic-conductor" services on additional nodes. There are no limits to the number of minions that can be used. When not in use, minion nodes can be turned off. The only requirement is that all of the nodes are on the Control Plane network. The framework for the minion installer is based on the standalone installer.
+Introduced in the Train release [47], the Undercloud can be scaled horizontally by using ``minion`` nodes to help with a large Overcloud deployment, update, or upgrade. This runs the "heat-engine" and "ironic-conductor" services on additional nodes. There are no limits to the number of minions that can be used. When not in use, minion nodes can be turned off. The only requirement is that all of the nodes are on the Control Plane network. The framework for the minion installer is based on the standalone installer.
 
 -  Copy the required files from the Undercloud to the minions.
 
@@ -2007,12 +2007,22 @@ Introduced in the Train release, the Undercloud can be scaled horizontally by us
 
    $ scp tripleo-undercloud-outputs.yaml tripleo-undercloud-passwords.yaml <USER>@<MINION_MACHINE>
 
--  Install TripleO, configure the minion.conf to mirror the undercloud.conf, and then install the minion services.
+-  Install the TripleO packages.
 
 .. code-block:: sh
 
-   $ sudo yum install -y python-tripleoclient
-   $ cp /usr/share/python-tripleoclient/minion.conf.sample ~/minion.conf
+   $ sudo yum install python3-tripleoclient
+
+Configure the Minion node. The ``minion_local_ip`` and the ``minion_local_interface`` should be on the Overcloud control plane / provisioning network. The ``container_images_file`` should also use the same custom ``container-image-prepare.yaml`` file that the Undercloud uses (if applicable).
+
+.. code-block:: sh
+
+   $ cp /usr/share/python3-tripleoclient/minion.conf.sample ~/minion.conf
+
+Install the Minion services.
+
+.. code-block:: sh
+
    $ openstack undercloud minion install
 
 -  Verify the services are running as expected.
@@ -2102,3 +2112,4 @@ Bibliography
 44. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html
 45. "CHAPTER 3. PLANNING YOUR OVERCLOUD." Red Hat Documentation. Accessed November 20, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-planning_your_overcloud
 46. "Configuring High Availability." tripleo-docs. November 20, 2019. Accessed November 20, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/high_availability.html
+47. "Scale Undercloud with a Minion." tripleo-docs. May 3, 2019. Accessed December 3, 2019. https://specs.openstack.org/openstack/tripleo-specs/specs/train/undercloud-minion.html
