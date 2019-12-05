@@ -1323,6 +1323,9 @@ Cons:
        ---
        resource_registry:
          OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
+         # These two resources will convert the NeutronPublicInterface into the required br-ex brdige interface.
+         OS::TripleO::Controller::Net::SoftwareConfig: templates/net-config-static-bridge.yaml
+         OS::TripleO::Compute::Net::SoftwareConfig: templates/net-config-static-bridge.yaml
 
        parameter_defaults:
          NeutronPublicInterface: eth1
@@ -1741,7 +1744,7 @@ Configure these settings to match the IP address that the Undercloud is configur
 ::
 
    ControlPlaneSubnetCidr: '24'
-   ControlPlaneDefaultRoute: <UNDERCLOUD_IP>
+   ControlPlaneDefaultRoute: <UNDERCLOUD_IP_OR_ROUTER>
    EC2MetadataIp: <UNDERCLOUD_IP>
 
 Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers. It is important the DNS is setup correctly because if chronyc fails to resolve the NTP servers then it will not try to resolve them again. DNS is also reuqired to download and install additional TripleO packages.
