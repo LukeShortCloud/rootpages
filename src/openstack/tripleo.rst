@@ -402,7 +402,7 @@ variables to a YAML file and then add the arguments
    - ``--tags all`` = Deploy a complete all-in-one TripleO installation
      automatically. If a Playbook is specified via ``-p``, then
      everything in that Playbook will run.
-   - ``-v`` = Show verbose output from the Ansible Playbooks.
+   - ``-v`` = Show verbose output from the Ansible playbooks.
    - ``--config=~/.quickstart/config/general_config/containers_minimal.yml`` = Deploy the Overcloud from Kolla docker containers. [20]
 
 --------------
@@ -1218,7 +1218,7 @@ Overcloud
        $ openstack stack show <OVERCLOUD_STACK_ID>
        $ openstack stack resource list <OVERCLOUD_STACK_ID>
        $ openstack stack resource show <OVERCLOUD_STACK_ID> <RESOURCE_NAME>
-       $ openstack overcloud failures list # New in Rocky
+       $ openstack overcloud failures list # Requires >= Rocky
 
 -  Source the Overcloud admin credentials to manage it.
 
@@ -1568,7 +1568,7 @@ The latest playbooks and variables used to deploy the Overcloud can be downloade
 
     $ openstack overcloud config download
 
-All of that Ansible content is stored in a local git repository at ``/var/lib/mistral/overcloud/``. The log of the last config-download run is found at ``/var/lib/mistral/overcloud/ansible.log``.
+All of that Ansible content is stored in a local git repository at ``/var/lib/mistral/overcloud/``. The log files of the last config-download run are found at ``/var/lib/mistral/overcloud/ansible.log`` and ``/var/lib/mistral/overcloud/ansible-errors.json``.
 
 The ``deploy_steps_playbook.yaml`` file is the primary playbook that executes all of the deployment playbooks.
 
@@ -2057,6 +2057,22 @@ Troubleshooting
 ---------------
 
 -  Disable the Extra Packages for Enterprise Linux (EPEL) and Puppet Labs repositories if these are available. These will cause package conflicts and result in the installation of wrong dependencies.
+-  If a deployment fails, view the config-download playbook errors: ``$ openstack overcloud failures list``.
+-  If highly-available (HA) services on the Controller nodes are stopped or not working, cleanup and restart the affected resources managed by Pacemaker.
+
+.. code-block:: sh
+
+   $ sudo pcs status
+   $ sudo crm_resource -C <RESOURCE_BUNDLE>
+   $ sudo pcs resource restart <RESOURCE_BUNDLE>
+
+-  Changes can be made to a container manually for testing. For permenant changes, use the `containers-prepare-parameter.yaml <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html>`__ file.
+
+.. code-block:: sh
+
+   $ sudo systemctl stop tripleo_<SERVICE>
+   $ sudo vim /var/lib/config-data/puppet-generated/<CONTAINER_NAME>/etc/foo/bar.conf
+   $ sudo systemctl start tripleo_<SERVICE>
 
 History
 -------
