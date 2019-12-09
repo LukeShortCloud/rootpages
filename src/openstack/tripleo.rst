@@ -1556,7 +1556,7 @@ Servers hosting the cloud services will eventually need to go through a reboot t
 Ansible Playbooks (config-download)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running updates and upgrades in the future [39]. Use these arguments to enable config-download on Queens.
+The Queens release of TripleO featured optional usage of Ansible configuration management via a feature called ``config-download``. It has been the default method of deployment since Rocky where it also added official support for deploying Ceph and Octavia. TripleO will log into the Overcloud nodes and configure a ``tripleo-admin`` user that will be used by Ansible for running updates and upgrades [39]. Use these arguments to enable config-download on Queens.
 
 .. code-block:: sh
 
