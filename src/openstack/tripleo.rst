@@ -2074,6 +2074,12 @@ Troubleshooting
    $ sudo vim /var/lib/config-data/puppet-generated/<CONTAINER_NAME>/etc/foo/bar.conf
    $ sudo systemctl start tripleo_<SERVICE>
 
+-  Puppet variables can be retrieved from Hieradata on both the Undercloud and Overcloud nodes. Example:
+
+.. code-block:: sh
+
+   $ sudo hiera -c /etc/puppet/hiera.yaml mysql::server::root_password
+
 History
 -------
 
