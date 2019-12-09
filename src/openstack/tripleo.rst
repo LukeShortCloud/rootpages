@@ -1328,9 +1328,11 @@ Cons:
          OS::TripleO::Compute::Net::SoftwareConfig: templates/net-config-static-bridge.yaml
 
        parameter_defaults:
+         # The Overcloud NIC that has a default route.
          NeutronPublicInterface: eth1
-         ControlPlaneDefaultRoute: 192.168.24.1
-         EC2MetadataIp: 192.168.24.1
+         # The default route for the Overcloud nodes.
+         ControlPlaneDefaultRoute: <DEFAULT_ROUTE_IP_ADDRESS>
+         EC2MetadataIp: <UNDERCLOUD_IP>
          DeployedServerPortMap:
            <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
              fixed_ips:
@@ -1372,13 +1374,24 @@ Cons:
 -  Ensure that the Overcloud nodes have an interface and IP address on the same provisioning network that the Undercloud uses. By default, the network is configured is ``192.168.24.0/24`` with the Undercloud API endpoints listening on ``192.168.24.1``. The endpoints have to be reachable via the Overcloud nodes.
 -  Start the deployment of the Overcloud using at least these arguments and templates. Add the ``-e ~/templates/hostname-map.yaml`` argument for config-download to do the hostname mapping.
 
-   .. code-block:: sh
+   -  <= Stein:
 
-      $ openstack overcloud deploy --disable-validations --templates ~/templates \
-         -e  ~/templates/environments/deployed-server-environment.yaml \
-         -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
-         -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
-         -r ~/templates/deployed-server/deployed-server-roles-data.yaml
+      .. code-block:: sh
+
+         $ openstack overcloud deploy --disable-validations --templates ~/templates \
+             -e  ~/templates/environments/deployed-server-environment.yaml \
+             -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
+             -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
+             -r ~/templates/deployed-server/deployed-server-roles-data.yaml
+             -r /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml
+
+   -  >= Train:
+
+      .. code-block:: sh
+
+         $ openstack overcloud deploy --disable-validations --templates ~/templates \
+             -e  ~/templates/environments/deployed-server-environment.yaml \
+             -r /usr/share/openstack-tripleo-heat-templates/roles_data.yaml
 
 **config-download (>= Rocky)**
 
@@ -2127,7 +2140,7 @@ Bibliography
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 35. "Bootstrap." InfraRed Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
 36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
-37. "Using Already Deployed Servers." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
+37. "Using Already Deployed Servers." OpenStack Documentation. November 25, 2019. Accessed December 9, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
 38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 39. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 40. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
