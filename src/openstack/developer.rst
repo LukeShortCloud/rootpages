@@ -30,6 +30,12 @@ recheck
 
 git cherry-pick -x
 
+Gerrit patches can be downloaded and applied to a localy environment. Find the patch to download by going to: ``Download`` > ``Patch-File`` > Copy and use the link to the base64 file.
+
+.. code-block:: sh
+
+   $ cd /usr/lib/python3.6/site-packages
+   $ sudo patch -p1 < <(base64 --decode <(curl -s "https://review.opendev.org/changes/<GERRIT_NUMBER>/revisions/<COMMIT_HASH>/patch?download"))
 
 Git messages
 ~~~~~~~~~~~~
