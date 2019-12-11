@@ -2069,6 +2069,9 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 Troubleshooting
 ---------------
 
+Tips
+~~~~
+
 -  Disable the Extra Packages for Enterprise Linux (EPEL) and Puppet Labs repositories if these are available. These will cause package conflicts and result in the installation of wrong dependencies.
 -  If a deployment fails, view the config-download playbook errors: ``$ openstack overcloud failures list``.
 -  If highly-available (HA) services on the Controller nodes are stopped or not working, cleanup and restart the affected resources managed by Pacemaker.

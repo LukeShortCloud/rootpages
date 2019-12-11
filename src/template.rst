@@ -64,6 +64,23 @@ Header 5
 Header 6
 &&&&&&&&
 
+Troubleshooting
+---------------
+
+Tips
+~~~~
+
+Error Messages
+~~~~~~~~~~~~~~
+
+-  ``[WARN] Invalid parameter found.`` = A variable in the configuration is invalid. Review the configuration file for any issues.
+
+Error Codes
+~~~~~~~~~~~
+
+-  0 = Success
+-  1 = Failure
+
 History
 -------
 
