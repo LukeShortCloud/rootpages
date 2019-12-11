@@ -9,7 +9,32 @@ Drivers
 AMD
 ~~~
 
-AMD provides an open-source driver that is part of the Linux kernel. For the best experience, use the latest stable Linux kernel.
+AMD provides an open source driver that is part of the Linux kernel. For the best experience, use the latest development versions of the Linux kernel, Mesa, and LLVM. Compared to the open source driver, the AMDGPU-Pro propreitary driver provides a more stable interface with full OpenGL and Vulkan capabilities.
+
+Installation (AMDGPU-Pro)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supported operating systems:
+
+-  CentOS 8
+-  RHEL 8
+-  Ubuntu 18.04
+-  SLED/SLES 15
+
+[7]
+
+SUSE Linux Enterprise
+'''''''''''''''''''''
+
+The Enterprise Desktop, Enterprise Server, and openSUSE Leap variants are all supported.
+
+-  Enable the `stable kernel repository <https://download.opensuse.org/repositories/Kernel:/stable/standard/>`__. Install Linux >= 5.4 and latest ``linux-firmware`` for the best stability with Navi cards. Linux 5.5 is required for overclocking support on Navi cards. [9]
+-  Download the latest driver for the graphics card by putting in the product details `here <https://www.amd.com/en/support>`__.
+-  Extract the driver archive and run the ``amdgpu-pro-install`` script to install a local repository of the RPMs.
+-  Install the required packages: ``zypper install amdgpu-pro libgl-amdgpu-pro vulkan-amdgpu-pro``.
+-  Reboot.
+
+[8]
 
 Nvidia
 ~~~~~~
@@ -186,3 +211,6 @@ Bibliography
 4. "DesktopEnvironment." Debian Wiki. June 7, 2018. Accessed November 26, 2018. https://wiki.debian.org/DesktopEnvironment
 5. "NVIDIA Optimus." ArchWiki. October 28, 2019. Accessed November 20, 2019. https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Using_optimus-manager
 6. "Manjaro Gaming with Nvidia Offloading & D3 Power Managment." Reddit r/linux_gaming. September 28, 2019. Accessed November 20, 2019. https://www.reddit.com/r/linux_gaming/comments/dac4bc/manjaro_gaming_with_nvidia_offloading_d3_power/
+7. "Radeo Software for Linux 19.30 Release Notes." AMD. November 5, 2019. Accessed December 10, 2019. https://www.amd.com/en/support/kb/release-notes/rn-rad-lin-19-30-unified
+8. "SDB:AMDGPU-PRO." openSUSE Wiki. July 17, 2019. Accessed December 10, 2019. https://en.opensuse.org/SDB:AMDGPU-PRO
+9. "AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel." Phoronix. November 16, 2019. Accessed December 10, 2019. https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.5-AMD-Navi-Overclocking
