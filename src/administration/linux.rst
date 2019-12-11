@@ -284,6 +284,19 @@ File: /etc/dracut.conf
 
 [11]
 
+Troubleshooting
+---------------
+
+Errors Messages
+~~~~~~~~~~~~~~~
+
+**Compiling**
+
+This is a list of common errors and warnings that make occur while building a kernel and how to resolve them.
+
+-  ``.config:<LINE_NUMBER>:warning: symbol value '<SYMBOL_VALUE>' invalid for <CONFIG_OPTION>`` = The symbol (y, n, or m) is invalid. Use a different symbol.
+-  ``.config:<LINE_NUMBER>:warning: override: reassigning to symbol <CONFIG_OPTION>`` = A configuration option is listed more than once. Remove the duplicates.
+
 History
 -------
 
