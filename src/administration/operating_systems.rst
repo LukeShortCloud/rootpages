@@ -10,6 +10,9 @@ Arch Linux
 
 Arch Linux is a 64-bit operating system whose motto is "Keep it Simple." There is no graphical installer and the end-user is expected to manually configure their own system to their liking. Unlike Gentoo, compiled system packages are provided. Very detailed documentation about the operating system is provided in the official Arch Linux Wiki: https://wiki.archlinux.org/. [1]
 
+- Life Cycle:
+   - `Rolling Release <https://wiki.archlinux.org/index.php/Arch_Linux>`__
+
 - Package Format:
     - Tape archive, LZMA2 compressed (tar.xz)
 
@@ -25,6 +28,11 @@ Debian
 ------
 
 Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD, and Linux kernels. [11]
+
+- Life Cycle:
+   - Debian: `5 Years <https://www.debian.org/releases/>`__
+   - Ubuntu LTS (>= 18.04): `10 Years <https://wiki.ubuntu.com/Releases>`__
+   - Ubuntu LTS (<= 16.04): `5 Years <https://wiki.ubuntu.com/LTS>`__
 
 - Package Format:
     - deb
@@ -44,6 +52,11 @@ Fedora
 ------
 
 Fedora is a upstream community operating system that is sponsored by Red Hat, Inc. that is designed to test the latest technologies. After years of testing, Fedora is eventually used as a base to create a new Red Hat Enterprise Linux (RHEL) operating system that is known for it's enterprise support and long life cycle. [4] The Community Enterprise Operating System (CentOS) is a rebuild of RHEL without the Red Hat, Inc. branding. [5]
+
+- Life Cycle:
+   - Fedora: `13 months <https://fedoraproject.org/wiki/Fedora_Release_Life_Cycle>`__
+   - CentOS: `10 Years <https://www.centosblog.com/centos-eol-dates/>`__
+   - RHEL: `> 10 Years <https://access.redhat.com/support/policy/updates/errata>`__
 
 - Package Format:
     - rpm
@@ -82,6 +95,9 @@ Gentoo
 
 Gentoo is designed to be very configurable and optimized. Most packages need to be compiled from source code that is distributed through the package manager, Portage. This allows customized compilation options and compiler tuning.
 
+- Life Cycle:
+   - `Rolling Release <https://wiki.gentoo.org/wiki/FAQ>`__
+
 - Package Format:
     - Tape archive, block-sorting compressed (tbz2) [6]
 
@@ -98,6 +114,9 @@ Mandriva
 
 Mandriva, which was originally called Mandrake Linux, was a fork of the original Red Hat Linux 5.1 in 1998. After it's start, Mandriva no longer shares code with Fedora or RHEL and is it's own operating system. The last release came out in 2011. Several derivatives still keep the Mandriva operating system alive. The Mageia project is the closest spiritual successor to the original Mandriva project.
 
+- Life Cycle:
+   - Mageia: `1.5 Years <https://www.mageia.org/en/support/>`__
+
 - Package Format:
     - rpm
 
@@ -112,10 +131,14 @@ Mandriva, which was originally called Mandrake Linux, was a fork of the original
 
 [8]
 
-openSUSE
---------
+openSUSE Leap
+-------------
 
-openSUSE is a upstream community operating system that is sponsored by SUSE. It is designed to test the latest technologies. openSUSE is used as a base for the SUSE Linux Enterprise that SUSE provides enterprise support for.
+openSUSE Leap is a upstream community operating system that is sponsored by SUSE. It is a stable release based off of openSUSE Tumbleweed. It is used as a base for the SUSE Linux Enterprise Server (SLES).
+
+- Life Cycle:
+   - Leap: `3 Years <https://en.opensuse.org/Lifetime>`__
+   - Tumbleweed: `Rolling Release <https://en.opensuse.org/Portal:Tumbleweed>`__
 
 - Package Format:
     - rpm
@@ -127,7 +150,7 @@ openSUSE is a upstream community operating system that is sponsored by SUSE. It 
 - Popular derivatives [2][12]:
     - FyreLinux
     - GeckoLinux
-    - SUSE Linux Enterprise Server (SLES)
+    - SLES
 
 [10]
 
