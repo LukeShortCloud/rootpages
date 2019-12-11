@@ -2056,6 +2056,15 @@ Scaling (Large Overcloud)
 
 RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__.
 
+Puppet
+~~~~~~
+
+Puppet is used for configuring the OpenStack and operating system services.
+
+-  Train = Puppet 5
+-  Queens = Puppet 4
+-  Newton = Puppet 3
+
 Lab Tips
 ~~~~~~~~
 
