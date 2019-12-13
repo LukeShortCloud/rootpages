@@ -691,10 +691,13 @@ Package: zypper2
    :header: Usage, Explanation
    :widths: 20, 20
 
+   "addrepo, ar <URL> <NAME>", download and add a new repository from a repo file
+   dup --allow-vendor-change, switch the repository that existing packages come from and update them
+   "install, in", "install a package"
+   "repos", "list all available repositories"
+   refresh, download the latest metadata from all enabled repositories
    "search --provides --match-exact", "search for a package that contains a certain file"
    "search", "search for available packages"
-   "{in|install}", "install a package"
-   "repos", "list all available repositories"
 
 Programming Languages
 ---------------------
