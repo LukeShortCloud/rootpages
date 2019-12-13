@@ -43,12 +43,17 @@ Git messages
 -  DNM = Do not merge. This is normally used to manually run CI jobs.
 -  WIP = Work-in-progress. This patch is not complete and possibly not working yet. It is not ready for reviews yet.
 -  [Queens-only]
--  Closes-Bug: #123456
+-  Closes-Bug: #<BUG_NUMBER>
 -  Partial-Bug:
 -  Related-Bug:
 -  Task:
 -  Story:
--  Implements: blueprint <BLUEPRINT>
+-  Implements: blueprint <BLUEPRINT_NAME>
+-  Co-Authored-By: <FULL_NAME> <E_MAIL>
+-  Change-Id: <CHANGE_ID>
+-  Depends-On: <CHANGE_ID>
+-  Conflicts:
+-  Resolves: rhbz#<BUG_NUMBER>
 
 ::
 
