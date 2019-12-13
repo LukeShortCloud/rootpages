@@ -407,10 +407,7 @@ modules and Playbooks.
 
    -  [defaults]
 
-      -  forks = The number of parallel processes that are spun up for
-         remote connections. The default is 5. This should be increased
-         to a larger number to handle . The recommended number is
-         ``forks = (processor_cores * 5)``. [33]
+      -  forks = The number of parallel processes that are spun up for remote connections. Each fork connects to one host. The default is 5. This should be increased to a larger number to handle . The recommended number is between ``processor_cores x 10`` and ``100 per 4GB RAM`` depending on whether the Ansible tasks are CPU- or RAM-bound. Ansible is normally CPU-bound.
       -  pipelining = Enable pipelining to bundle commands together that
          do not require a file transfer. This is disabled by default
          because most sudo users are enforced to use the ``requiretty``
