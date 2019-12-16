@@ -2069,7 +2069,12 @@ Lab Tips
 
 These are trips and tricks for setting up a full, yet basic, TripleO cloud for testing the deployment.
 
--  Use the minimum amount of nodes for TripleO: 1 Undercloud, 1 Controller, and 1 Compute.
+-  Use the Standalone deployment or at least the minimum amount of nodes required for TripleO: 1 Undercloud, 1 Controller, and 1 Compute.
+-  Use the most minimal resources required on the Overcloud nodes for a deployment.
+
+   -  Controller: 4 vCPUs and 16GB RAM
+   -  Comupte: 2 vCPUs and 2GB RAM
+
 -  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utliziation (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
 -  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and seperate traffic using different subnets.
 -  Use `this template <https://opendev.org/openstack/tripleo-heat-templates/src/commit/d2bcf0f530cade1ca65b90fbe91953dfb67958b0/ci/environments/scenario000-standalone.yaml>`__ (designed for Train) as a reference to prevent deploying unnecessary services on the Overcloud. That template will disable everything except Keystone.
