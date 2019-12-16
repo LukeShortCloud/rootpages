@@ -1087,8 +1087,7 @@ Examples:
 Debug
 ^^^^^
 
-The debug module is used for helping facilitate troubleshooting. It
-prints out specified information to standard output.
+The debug module is used for helping facilitate troubleshooting. It prints out specified information to standard output.
 
 Syntax:
 
@@ -1098,20 +1097,19 @@ Syntax:
 
 Common options:
 
--  msg = Display a message.
+-  msg = Display a message. Default: ``Hello world!``.
 -  var = Display a variable.
--  verbosity = Show more verbose information. The higher the number, the
-   more verbose the information will be. [45]
+-  verbosity = Only display the debug output when a certain verbosity level is set for Ansible. Default: ``0``. [45]
 
 Example:
 
--  Print Ansible's hostname of the current server that the script is
-   being run on.
+-  Print Ansible's hostname of the current server that the script is being run on.
 
 .. code-block:: yaml
 
     debug:
       msg: The inventory host name is {{ inventory_hostname }}
+      verbosity: 1
 
 Gather Facts
 ^^^^^^^^^^^^
@@ -1957,9 +1955,10 @@ Example:
 
 .. code-block:: yaml
 
-   - name: Show loop control syntax
+   - name: Debug the API messages and loop index
      debug:
        msg: "{{ current.message }}. Current index: {{ index }}"
+       verbosity: 1
      loop:
        - message: Hello world
          settings:
@@ -4303,6 +4302,58 @@ This example for Ansible >= 2.7 shows how the new "apply" keyword can be used to
 
 There is also a community project called `ansible-bender <https://github.com/TomasTomecek/ansible-bender>`__ that seeks to be a spiritual successor to the now deprecated Ansible-Container project. It is used to build containers using Ansible playbooks. [77]
 
+Best Practices
+--------------
+
+-  Store Ansible content in a source control manager (SCM) such as git. It is important to keep a history of changes for infrastructure-as-code content.
+
+-  Formatting:
+
+   -  Use YAML formatting. Do not use single-line tasks.
+   -  Indent YAML dictionaries/lists by two spaces under the key.
+   -  Leave one newline between each task.
+
+-  Inventory:
+
+   -  Hosts and groups in an inventory should have a descriptive name.
+
+-  Tasks:
+
+   -  Every task should have a ``name:`` to declaratively describe what it does.
+   -  Define the expected ``state:`` of a task (if applicable).
+   -  Avoid ``command``, ``raw``, and ``shell`` modules. If that is not possible, add additional tasks to do idempotency checks.
+   -  Use ``handlers`` to restart system services.
+   -  Set a ``tag:`` for tasks to showcase it has certain attributes such as ``become:`` set.
+
+.. code-block:: yaml
+
+   - name: Check the Apache configuration syntax
+     command: httpd -t
+     changed_when: False
+     tags:
+       - become
+     become: True
+     become_user: apache
+
+-  Roles:
+
+   -  Roles should be desgined to be re-usable and re-distributable for other projects.
+   -  Fill out the details in the ``requirements.yml`` file for every role.
+   -  Add Molecule tests for each scenario supported by a role.
+
+-  Variables:
+
+   -  Define variables that can be overriden in the ``defaults`` folder in a role. Define variables that should never be changed in the ``vars`` folder instead.
+   -  Prefix role-specific variable names with the role name.
+
+-  Files:
+
+   -  Place static files in the ``files`` directory in a role. Only Jinja templates should exist in the ``templates`` directory.
+   -  Jinja templates should have the ``.j2`` file extension name.
+   -  Jinja templates should contain ``{{ ansible_managed | comment }}`` at the top of the file.
+
+[5][84]
+
 Python API
 ----------
 
@@ -5138,7 +5189,7 @@ Bibliography
 2. "Intro to Playbooks." Ansible Documentation. August 4, 2017. Accessed August 6, 2017. http://docs.ansible.com/ansible/playbooks\_intro.html
 3. "Inventory." Ansible Docs. June 22, 2016. Accessed July 9, 2016. http://docs.ansible.com/ansible/intro\_inventory.html
 4. "Variables." Ansible Documentation. October 2, 2018. Accessed October 2, 2018. http://docs.ansible.com/ansible/latest/user_guide/playbooks\_variables.html
-5. "Best Practices." Ansible Documentation. June 4, 2017. Accessed June 4, 2017. http://docs.ansible.com/ansible/playbooks\_best\_practices.html
+5. "Best Practices." Ansible Documentation. December 11, 2019. Accessed December 14, 2019. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_best\_practices.html
 6. "Commands modules." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/list\_of\_commands_modules.html
 7. "Source Control Modules." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/list\_of\_source\_control\_modules.html
 8. "Tags." Ansible Documentation. April 21, 2017. Accessed April 22, 2017. http://docs.ansible.com/ansible/playbooks\_tags.html
@@ -5217,3 +5268,4 @@ Bibliography
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
 82. "Special Variables." Ansible Documentation. June 27, 2019. Accessed June 28, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 83. "Playbook Keywords." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html
+84. "ANSIBLE BEST PRACTICES: THE ESSENTIALS." Ansible. 2018. Accessed December 16, 2019. https://www.ansible.com/hubfs/2018_Content/AA%20BOS%202018%20Slides/Ansible%20Best%20Practices.pdf
