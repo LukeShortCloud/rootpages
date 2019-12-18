@@ -697,9 +697,17 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
 
    -  Copy the sample configuration to use as a base template. Optionally configure it.
 
-      .. code-block:: sh
+      -  <= Stein:
 
-          $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+         .. code-block:: sh
+
+             $ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+
+      -  >= Train:
+
+         .. code-block:: sh
+
+             $ cp /usr/share/python-tripleoclient/undercloud.conf.sample ~/undercloud.conf
 
    -  Common Undercloud configuration options. If using an automated power management driver with Ironic, the IP address for the Undercloud's provisioning NIC must use the same network and broadcast domain. [15]
 
