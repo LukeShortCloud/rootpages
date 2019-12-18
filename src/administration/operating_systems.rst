@@ -154,6 +154,36 @@ openSUSE Leap is a upstream community operating system that is sponsored by SUSE
 
 [10]
 
+Top Distributions
+-----------------
+
+This is an extremely biased list of the best distribution for each use case.
+
+-  Alternative to macOS = elementary OS
+-  Alternative to Windows = Zorion OS
+-  Bleedging edge (stable) = Manjaro
+-  Bleeding edge (unstable) = Arch Linux
+-  Community support = Arch Linux
+-  CPU architectures supported = Debian
+-  Customizable = Gentoo
+-  Customizable (easy) = Arch Linux
+-  Desktop (slow updates) = Debian
+-  Desktop (moderate updates) = openSUSE Leap
+-  Desktop (fast updates) = Fedora
+-  Easiest = Zorion OS
+-  Free and open source software (FOSS) = Fedora
+-  Gaming = 1. Pop!_OS 2. Manjaro
+-  Hardest = Linux From Scratch
+-  Hardware support = Arch Linux
+-  Lightweight = Tiny Core Linux
+-  Longest support = RHEL
+-  Old Computer = Linux Lite
+-  Packages available = Ubuntu
+-  Security penetration testing = Kali Linux
+-  Server = 1. RHEL 2. CentOS 3. Debian
+-  Stable = 1. RHEL 2. CentOS 3. Debian
+-  USB drive = Puppy Linux
+
 History
 -------
 
