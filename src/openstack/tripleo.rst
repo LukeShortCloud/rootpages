@@ -683,11 +683,11 @@ The Undercloud can be installed onto a bare metal server or a virtual machine. F
           $ sudo chmod 0440 /etc/sudoers.d/stack
           $ su - stack
 
-   -  Install TripleO.
+   -  Install TripleO. For <= Stein, install ``python-tripleoclient`` instead.
 
       .. code-block:: sh
 
-          $ sudo yum install python-tripleoclient openstack-tripleo-common openstack-tripleo-heat-templates
+          $ sudo yum install python3-tripleoclient openstack-tripleo-common openstack-tripleo-heat-templates
 
    -  Update the operating system and reboot the server.
 
@@ -2040,7 +2040,7 @@ Configure the Minion node. The ``minion_local_ip`` and the ``minion_local_interf
 
 .. code-block:: sh
 
-   $ cp /usr/share/python3-tripleoclient/minion.conf.sample ~/minion.conf
+   $ cp /usr/share/python-tripleoclient/minion.conf.sample ~/minion.conf
 
 Install the Minion services.
 
