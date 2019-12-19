@@ -2061,7 +2061,7 @@ Install the Minion services.
 Scaling (Large Overcloud)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__.
+RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__. Set the ``NodeCreateBatchSize`` Heat paramater to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
 
 Puppet
 ~~~~~~
