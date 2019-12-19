@@ -33,7 +33,7 @@ If a component in Ansible release ``N`` becomes deprecated then it is normally l
 Installation
 ------------
 
-Ansible requires Python 2.7 or >= 3.5 on both the control and managed nodes. [74] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
+Ansible requires Python 2.7 or >= 3.5 on both the control and managed nodes. [18] Python 3 support is stable and has been fully supported since the Ansible 2.5 release. [43]
 
 Ansible RPMs for Fedora based operating systems are available from:
 
@@ -4352,7 +4352,7 @@ Best Practices
    -  Jinja templates should have the ``.j2`` file extension name.
    -  Jinja templates should contain ``{{ ansible_managed | comment }}`` at the top of the file.
 
-[5][84]
+[5][74]
 
 Python API
 ----------
@@ -4566,6 +4566,15 @@ Ansible Tower is the official dashboard maintained by Red Hat. The program is bu
 
 **Requirements and Support**
 
+-  3.6
+
+   -  EL 8 or EL >= 7.4
+   -  PostgreSQL 10
+   -  Ansible >= 2.2 (EL 7)
+   -  Ansible >= 2.8 (EL 8)
+   -  Release date: 2019-11-14
+   -  EOL: 2021-05-14
+
 -  3.5
 
    -  EL 8, EL >= 7.4, or Ubuntu 16.04 (Ubuntu is now deprecated)
@@ -4573,7 +4582,7 @@ Ansible Tower is the official dashboard maintained by Red Hat. The program is bu
    -  Ansible >= 2.2 (EL 7 or Ubuntu)
    -  Ansible >= 2.8 (EL 8)
    -  Release date: 2019-05-29
-   -  EOL: 2020-11-29 [66]
+   -  EOL: 2020-11-29
 
 -  3.4
 
@@ -4581,7 +4590,7 @@ Ansible Tower is the official dashboard maintained by Red Hat. The program is bu
    -  PostgreSQL 9.6
    -  Ansible >= 2.2
    -  Release date: 2019-01-09
-   -  EOL: 2020-07-09 [66]
+   -  EOL: 2020-07-09
 
 -  3.3
 
@@ -4589,7 +4598,7 @@ Ansible Tower is the official dashboard maintained by Red Hat. The program is bu
    -  PostgreSQL 9.6
    -  Ansible >= 2.2
    -  Release date: 2018-09-12
-   -  EOL: 2020-03-12 [66]
+   -  EOL: 2020-03-12
 
 -  3.2
 
@@ -4600,20 +4609,15 @@ Ansible Tower is the official dashboard maintained by Red Hat. The program is bu
 
    -  PostgreSQL 9.6
    -  Release date: 2017-10-02
-   -  EOL: 2019-04-02 [66]
+   -  EOL: 2019-04-02
 
--  3.1
 
-   -  Enterprise Linux (RHEL/CentOS) 7, Ubuntu 16.04, or Ubuntu 14.04
+**Support Changes**
 
-      -  Support for RHEL 6 was dropped in 3.1.0
+-  3.6.0 dropped support for Ubuntu.
+-  3.1.0 dropped support for EL 6.
 
-   -  Ansible >= 2.1
-   -  PostgreSQL 9.4
-   -  Release date: 2017-02-28
-   -  End-of-life (EOL): 2018-10-02 [66]
-
-[35]
+[35][66]
 
 Tower can be downloaded from http://releases.ansible.com/ansible-tower/. The "setup" package only contains Ansible Tower. The "setup-bundle" has all of the dependencies for an offline installation on RHEL servers. At least a free trial of Tower can be used to manage up to 10 servers for testing purposes only. A license can be bought from Red Hat to use Tower for managing more servers and to provide customer support. A license can be obtained from the `Ansible Tower license page <https://www.ansible.com/license>`__.
 
@@ -4975,6 +4979,7 @@ project can be found in the
 
 Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [76]
 
+-  AWX 9.0.1 = Ansible Tower 3.6.0
 -  AWX 5.0.0 = Ansible Tower 3.5.0
 -  AWX 2.1.2 = Ansible Tower 3.4.0
 -  AWX 1.0.8 = Ansible Tower 3.3.0
@@ -5202,7 +5207,7 @@ Bibliography
 15. "Asynchronous Actions and Polling." Ansible Documentation. February 21, 2019. Accessed February 27, 2019. https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html
 16. "mysql\_db - Add or remove MySQL databases from a remote host." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_db\_module.html
 17. "mysql\_user - Adds or removes a user from a MySQL database." Ansible Documentation. September 28, 2016. Accessed October 1, 2016. http://docs.ansible.com/ansible/mysql\_user\_module.html
-18. "Installation Guide." Ansible Documentation. August 17, 2018. Accessed August 21, 2018. https://docs.ansible.com/ansible/latest/installation_guide/intro\_installation.html
+18. "Installation Guide." Ansible Documentation. December 16, 2019. Accessed December 19, 2019. https://docs.ansible.com/ansible/latest/installation_guide/intro\_installation.html
 19. "Cache Plugins." Ansible Documentation. July 5, 2018. Accessed July 12, 2018. https://docs.ansible.com/ansible/latest/plugins/cache.html
 20. "Jinja Template Designer Documentation." Jinja2 Documentation. Accessed April 23, 2017. http://jinja.pocoo.org/docs/dev/templates/
 21. "Ansible Vault." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/vault.html
@@ -5219,7 +5224,7 @@ Bibliography
 32. "Ansible Python API." Ansible Documentation. March 29, 2018. Accessed March 30, 2018. http://docs.ansible.com/ansible/latest/dev\_guide/developing\_api.html
 33. "Installing and Configuring Ansible Tower Clusters - AnsbileFest London 2017." YouTube - Ansible. July 19, 2017. Accessed August 10, 2017. https://www.youtube.com/watch?v=NiM4xNkauig
 34. "Ansible Tower API Guide." Ansible Documentation. Accessed October 2, 2017. http://docs.ansible.com/ansible-tower/latest/html/towerapi/index.html
-35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed October 11, 2019. http://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
+35. "Ansible Tower Installation and Reference Guide." Ansible Documentation. Accessed December 19, 2019. https://docs.ansible.com/ansible-tower/latest/html/installandreference/index.html
 36. "Controlling playbook execution: strategies and more." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_strategies.html
 37. "Get-WindowsFeature." MSDN Library. November 1, 2013. Accessed August 6, 2017. https://msdn.microsoft.com/en-us/library/ee662312.aspx
 38. "Ansible Tower Job Templates." Ansible Tower Documentation. Accessed September 7, 2017. http://docs.ansible.com/ansible-tower/latest/html/userguide/job\_templates.html
@@ -5250,7 +5255,7 @@ Bibliography
 63. "Release and maintenance." Ansible Documention. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
-66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. October 1, 2019. Accessed October 11, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
+66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. November 14, 2019. Accessed December 19, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "Rules." Ansible Lint Documentation. February 12, 2019. Accesed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
@@ -5258,7 +5263,7 @@ Bibliography
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
-74. "Installation Guide." Ansible Documentation. September 7, 2018. Accessed September 12, 2018. http://docs.ansible.com/ansible/latest/intro\_installation.html
+74. "ANSIBLE BEST PRACTICES: THE ESSENTIALS." Ansible. 2018. Accessed December 16, 2019. https://www.ansible.com/hubfs/2018_Content/AA%20BOS%202018%20Slides/Ansible%20Best%20Practices.pdf
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
 76. "AWX Project." Ansible GitHub. June 19, 2019. Accessed June 19, 2019. https://github.com/ansible/awx
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
@@ -5268,4 +5273,3 @@ Bibliography
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
 82. "Special Variables." Ansible Documentation. June 27, 2019. Accessed June 28, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 83. "Playbook Keywords." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html
-84. "ANSIBLE BEST PRACTICES: THE ESSENTIALS." Ansible. 2018. Accessed December 16, 2019. https://www.ansible.com/hubfs/2018_Content/AA%20BOS%202018%20Slides/Ansible%20Best%20Practices.pdf
