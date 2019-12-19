@@ -5068,8 +5068,25 @@ Upgrades
 
 AWX is the development version of Ansible Tower. Rolling upgrades are not supported on the AWX 1.Y.Z releases. [60] Starting with AWX 2.0.0, it supports automatic upgrade migrations between tags published on GitHub and Docker Hub.
 
-Manual Upgrade
-''''''''''''''
+Automatic
+'''''''''
+
+Keep the same variables and inventory settings. It is also important to have the password variables (listed below) set to their current values. Download the latest AWX playbooks and re-run the installation to upgrade. [84]
+
+-  admin_password
+-  pg_password
+-  rabbitmq_password
+-  secret_key
+
+If there are issues with the upgrade, try manually upgrading the database schema.
+
+.. code-block:: sh
+
+   $ sudo docker exec -it <AWX_CONTAINER> bash
+   $ awx-manage migrate
+
+Manual
+''''''
 
 The `tower-cli <https://github.com/ansible/tower-cli>`__ command can be used to backup and restore the AWX data. This method can also be used to migrate from AWX to Ansible Tower or vice versa. [61]
 
@@ -5273,3 +5290,4 @@ Bibliography
 81. "History." Molecule documentation. Accessed June 6, 2019. https://molecule.readthedocs.io/en/stable/changelog.html
 82. "Special Variables." Ansible Documentation. June 27, 2019. Accessed June 28, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 83. "Playbook Keywords." Ansible Documentation. November 15, 2019. Accessed November 27, 2019. https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html
+84. "Installing AWX." GitHub ansible/awx. November 15, 2019. Accessed December 19, 2019. https://github.com/ansible/awx/blob/devel/INSTALL.md
