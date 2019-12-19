@@ -2109,6 +2109,7 @@ Tips
 
    $ sudo systemctl stop tripleo_<SERVICE>
    $ sudo vim /var/lib/config-data/puppet-generated/<CONTAINER_NAME>/etc/foo/bar.conf
+   $ sudo vim /var/lib/config-data/puppet-generated/<CONTAINER_NAME>/etc/httpd/conf.d/10-<SERVICE>_wsgi.conf
    $ sudo systemctl start tripleo_<SERVICE>
 
 -  Puppet variables can be retrieved from Hieradata on both the Undercloud and Overcloud nodes. Example:
