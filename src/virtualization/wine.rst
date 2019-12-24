@@ -116,6 +116,18 @@ then native DLLs.
 
 [5]
 
+Graphics Translations
+---------------------
+
+These are useful graphics translation layers for running Windows games using Wine and alternative back-end drivers. In some scenarios, a combination of these are required to get games working.
+
+-  `dgVoodoo 2 <http://dege.freeweb.hu/>`__ = Glide (Voodoo) and DirectX <= 9 to DirectX 11.
+-  `D9VK <https://github.com/Joshua-Ashton/d9vk>`__ = This has been merged directly into DXVK. DirectX 9 to Vulkan.
+-  `DXVK <https://github.com/doitsujin/dxvk>`__ = DirectX 9, 10, and 11 to Vulkan.
+-  `MoltenVK (mac OS) <https://moltengl.com/moltenvk/>`__ = Vulkan to Metal.
+-  `WineD3D <https://www.winehq.org/>`__ = DirectX <= 11 to OpenGL.
+-  `Vkd3d <https://wiki.winehq.org/Vkd3d>`__ = DirectX 12 to Vulkan.
+
 Forks
 -----
 
