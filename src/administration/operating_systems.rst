@@ -161,7 +161,7 @@ This is an extremely biased list of the best distribution for each use case.
 
 -  Alternative to macOS = elementary OS
 -  Alternative to Windows = Zorion OS
--  Bleedging edge (stable) = Manjaro
+-  Bleeding edge (stable) = Manjaro
 -  Bleeding edge (unstable) = Arch Linux
 -  Community support = Arch Linux
 -  CPU architectures supported = Debian

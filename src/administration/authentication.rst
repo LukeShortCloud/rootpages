@@ -202,7 +202,7 @@ FreeIPA
 
 FreeIPA provides a suite of services for authentication including LDAP, Kerberos, NTP, DNS, and a certificate management system. This is the upstream version of Red Hat Identity Management (IdM). [6]
 
-For AD integraiton, the Scheme Compatibility plugin is required.
+For AD integration, the Scheme Compatibility plugin is required.
 
 .. code-block:: sh
 
@@ -237,7 +237,7 @@ Commands
 
    .. code-block:: sh
 
-       $ ipa gropu-remove-member --users=<USER1> --users=<USER2> --users=<USER3>
+       $ ipa group-remove-member --users=<USER1> --users=<USER2> --users=<USER3>
 
 How to create users and groups in Windows Active Directory:
 

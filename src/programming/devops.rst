@@ -47,7 +47,7 @@ A technical design document verbosely explains exactly how a program will work (
 Integrated Development Environments
 -----------------------------------
 
-Integrated development environments are text editors that assist with programming. These usually provide syntax highlighting, styling recommendatins, function recommendations/auto-complete, and shortcuts to quickly build and test applications.
+Integrated development environments are text editors that assist with programming. These usually provide syntax highlighting, styling recommendations, function recommendations/auto-complete, and shortcuts to quickly build and test applications.
 
 Common IDEs:
 
@@ -256,7 +256,7 @@ Common git procedures:
 Git Conflicts
 ^^^^^^^^^^^^^
 
-When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and another commit that is being added in. The developer will have to go in and manually update the code. An example is shown below. Inbetween the ``<<<<<<<`` and ``=======`` section is the code from the original branch. Inbetween the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
+When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and another commit that is being added in. The developer will have to go in and manually update the code. An example is shown below. In between the ``<<<<<<<`` and ``=======`` section is the code from the original branch. In between the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
 
 ::
 
@@ -278,7 +278,7 @@ After resolving the conflict, add the commit back by doing a continue or a new c
 Versioning
 ----------
 
-A software version scheme helps end-users and developers identify what release they are using. This is helpful for looking up documentation and understanding the current features and potential bugs in each release. Versions normally consist of a major, minor, patch/micro, and optionally a modifier to signify an alpha, beta, or rc (release candidiate).
+A software version scheme helps end-users and developers identify what release they are using. This is helpful for looking up documentation and understanding the current features and potential bugs in each release. Versions normally consist of a major, minor, patch/micro, and optionally a modifier to signify an alpha, beta, or rc (release candidate).
 
 Semantic (SemVer)
 ~~~~~~~~~~~~~~~~~
@@ -362,9 +362,9 @@ CI
 Travis CI
 ^^^^^^^^^
 
-Travis CI is a free continous integration service for open source git projects.
+Travis CI is a free continuous integration service for open source git projects.
 
-Travis supports Ubuntu and macOS virtual machine environments for testing code. Other operatings system can be used via defining how to setup and use docker containers. [3]
+Travis supports Ubuntu and macOS virtual machine environments for testing code. Other operating systems can be used via defining how to setup and use docker containers. [3]
 
 The ``.travis.yml`` file in the root directory of a git project defines the environment to test on, how to set it up, and how to run tests. All of the configuration options can be found `here <https://docs.travis-ci.com/user/customizing-the-build/>`__. Example configurations for different languages can be found `here <https://docs.travis-ci.com/user/language-specific/>`__.
 
@@ -457,7 +457,7 @@ CD
 Fedora Copr
 ^^^^^^^^^^^
 
-Fedora Copr is a build system that builds RPMs for RPM based operating systems such as Fedora, Mageia, and openSUSE. Only the latest RPMs are kept. Older versions are deleted after 14 days. The ``copr-cli`` utility can be used to help add continuous delievery to a CI/CD pipeline. [7]
+Fedora Copr is a build system that builds RPMs for RPM based operating systems such as Fedora, Mageia, and openSUSE. Only the latest RPMs are kept. Older versions are deleted after 14 days. The ``copr-cli`` utility can be used to help add continuous delivery to a CI/CD pipeline. [7]
 
 Generate an API token from `here <https://copr.fedoraproject.org/api/>`__. Use the credentials provided to create a new configuration at ``~/.config/copr``. For CD, this file should be encrypted with a tool such as ``travis encrpt-file`` and stored in the SCM repository.
 
@@ -506,7 +506,7 @@ Regular expressions (regex) are a set of characters that can be used to search f
    ``+``, Match the character before this one or more times.
    ``^``, Beginning of a line.
    ``$``, The end of a line.
-   ``()``, Put a group of characters inside paranthesis to create a group. Regex characters can then try to match against this group (instead of a single character).
+   ``()``, Put a group of characters inside parentheses to create a group. Regex characters can then try to match against this group (instead of a single character).
    ``|``, Or (the character before or after this).
    ``[]``, One character specified in the brackets.
    ``[A-Z]`` or ``[0-9]``, Match any range of characters by specifying a start and stop letter or number.
@@ -579,7 +579,7 @@ History
 Bibliography
 ------------
 
-1. "Configuration Cheat Sheet." Gitea Documentaiton. Accessed July 10, 2018. https://docs.gitea.io/en-us/config-cheat-sheet/
+1. "Configuration Cheat Sheet." Gitea Documentation. Accessed July 10, 2018. https://docs.gitea.io/en-us/config-cheat-sheet/
 2. "Why Writing Software Design Documents Matters." Toptal. Accessed September 3, 2018. https://www.toptal.com/freelance/why-design-documents-matter
 3. "Build Environment Overview." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/reference/overview/
 4. "Customizing the Build." Travis CI Docs. Accessed September 11, 2018. https://docs.travis-ci.com/user/customizing-the-build/

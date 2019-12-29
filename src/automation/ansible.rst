@@ -1845,7 +1845,7 @@ Syntax:
 
 .. code-block:: yaml
 
-    include: <TASK>.yml <VAR1>=<VAULE1> <VAR2>=<VALUE2>
+    include: <TASK>.yml <VAR1>=<VALUE1> <VAR2>=<VALUE2>
 
 Example:
 
@@ -1979,7 +1979,7 @@ Example:
 Until Loops
 '''''''''''
 
-Do-Until loops can be used to continuely run a check and verify it's completion.
+Do-Until loops can be used to continually run a check and verify it's completion.
 
 -  **until** = The logic of the ``until`` loop. The typical use case is to check the output of a registered variable or do a Jinja lookup. When the condition is not met, the module runs again. When the condition is met, the module finishes and moves onto the next task.
 -  retries = The number of times to retry the loop until marking the task as failed. Default: 3.
@@ -2621,7 +2621,7 @@ Common options:
 -  charset = String. The text file encoding format.
 -  checksum = String. The has of the path.
 -  dev = Integer. The device the inode exists on.
--  {executable\|readable\|writeable} = Boolean. If the file is
+-  {executable\|readable\|writable} = Boolean. If the file is
    executable, readable, or writeable by the remote user that Ansible is
    running as.
 -  exists = Boolean. If the file exists or not.
@@ -3322,7 +3322,7 @@ All options:
 
 -  arguments = Arguments that should be supplied to the executable.
 -  days\_of\_week = A list of weekdays to run the task.
--  description = A uesful description for the purpose of the task.
+-  description = A useful description for the purpose of the task.
 -  enabled = Set the task to be enabled or not.
 -  executable = The command the task should run.
 -  frequency = The frequency to run the command.
@@ -4343,7 +4343,7 @@ Best Practices
 
 -  Variables:
 
-   -  Define variables that can be overriden in the ``defaults`` folder in a role. Define variables that should never be changed in the ``vars`` folder instead.
+   -  Define variables that can be overridden in the ``defaults`` folder in a role. Define variables that should never be changed in the ``vars`` folder instead.
    -  Prefix role-specific variable names with the role name.
 
 -  Files:
@@ -5268,14 +5268,14 @@ Bibliography
 59. "Specify a PGDATA directory to prevent container re-create issues #535." GitHub Ansible. February 22, 2018. Accessed March 9, 2018. https://github.com/ansible/awx/pull/535
 60. "1.0.4 - 1.0.5 upgrade killed my workers & errors db upgrade Key (username)=(admin) already exists. #1707." GitHub AWX. March 30, 2018. Accessed April 6, 2018. https://github.com/ansible/awx/issues/1707
 61. "Feature to download & upload data in Tower #197." GitHub tower-cli. February 28, 2018. Accessed April 6, 2018. https://github.com/ansible/tower-cli/issues/197
-62. "Lookup Plugins." Ansible Documention. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
+62. "Lookup Plugins." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
 63. "Release and maintenance." Ansible Documention. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
 66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. November 14, 2019. Accessed December 19, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
-69. "Rules." Ansible Lint Documentation. February 12, 2019. Accesed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
+69. "Rules." Ansible Lint Documentation. February 12, 2019. Accessed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
 70. "Molecule." Molecule documentation. Accessed November 29, 2018. https://molecule.readthedocs.io/en/latest/
 71. "Ansible Galaxy Home." Ansible Galaxy. Accessed August 8, 2018. https://galaxy.ansible.com/home
 72. "When using docker (image alpine:3.6): Authentication or permission failure #1043." metacloud/molecule GitHub. November 20, 2017 Accessed August 23, 2018. https://github.com/metacloud/molecule/issues/1043

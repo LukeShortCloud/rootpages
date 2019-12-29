@@ -150,9 +150,9 @@ the ``type()`` function.
    int, Integer, A whole number.
    float, Float, A decimal number.
    bool, Boolean, "A true or false value. This can be a ``1`` or ``0``, or it can be ``True`` or ``False``."
-   list, List, An array of values of any data type. This is more flexbile than an array.
+   list, List, An array of values of any data type. This is more flexible than an array.
    tuple, Tuple, "A read-only list that cannot be modified."
-   arr, Array, A collection of values that have the same data type. This is more memory efficent than a list.
+   arr, Array, A collection of values that have the same data type. This is more memory efficient than a list.
    dict, Dictionary, "A list of nested variables of any data type."
 
 Variables defined outside of a function are global variables. Although
@@ -313,7 +313,7 @@ Methods:
 -  copy = Shallow copy (one level deep).
 -  deepcopy = Copy all nested structures.
 
-Lists are not immutable and can be globally modified. Tuples should be provided to methods/functions as arguments (instead of lists) to garuntee that the original list is never changed.
+Lists are not immutable and can be globally modified. Tuples should be provided to methods/functions as arguments (instead of lists) to guarantee that the original list is never changed.
 
 [35]
 
@@ -350,7 +350,7 @@ Control and Operators
    not, No booleans can be true.
 
 .. csv-table::
-   :header: Membership Operator, Descriptoin
+   :header: Membership Operator, Description
    :widths: 20, 20
 
    in, The first variable needs to exist as at least a substring or key in the second variable.
@@ -588,7 +588,7 @@ Example:
    def function():
        print("Hello world")
 
-Functions can take arguments to use. The order that the variables are set in the funciton definition have to match when supplying a function these variables. Otherwise, the original variable name can be used to specify variables in a different order by using the syntax ``function(<ORIGINAL_VARIABLE_NAME>=<VALUE>)``. Arguments can also have default values at the function definition.
+Functions can take arguments to use. The order that the variables are set in the function definition have to match when supplying a function these variables. Otherwise, the original variable name can be used to specify variables in a different order by using the syntax ``function(<ORIGINAL_VARIABLE_NAME>=<VALUE>)``. Arguments can also have default values at the function definition.
 
 Example:
 
@@ -1299,7 +1299,7 @@ Classes have a few reserved and optional methods that can be used.
 
 [30]
 
-Class initalization syntax:
+Class initialization syntax:
 
 ::
 
@@ -1340,7 +1340,7 @@ Object invocation syntax:
 Inheritance
 ~~~~~~~~~~~
 
-A class can be created from one or more existing classes by passing them as arguments to the new class. This will inheirt variables and methods from those classes. This is useful if a new class will use similar methods from an existing class and also needs additional functionality added.
+A class can be created from one or more existing classes by passing them as arguments to the new class. This will inherit variables and methods from those classes. This is useful if a new class will use similar methods from an existing class and also needs additional functionality added.
 
 ::
 
@@ -1559,7 +1559,7 @@ The ``setup.py`` file defines attributes for a package and how it will be instal
 -  license = The license that the software is using.
 -  long_description = A long description of the purpose of the package.
 -  packages = A list of sub-packages bundled in this package. These can be dynamically found by using ``setuptools.find_packages()``.
--  scripts = A list of exectuable scripts that will be installed to the ``bin/`` directory.
+-  scripts = A list of executable scripts that will be installed to the ``bin/`` directory.
 -  url = The URL to the main website for the package.
 -  version = The semantic package version.
 
@@ -1628,7 +1628,7 @@ Create a new environment using a specific Python version/binary installed on the
 
    $ python3 -m virtualenv -p /usr/bin/python2.7 <PATH_TO_NEW_VIRTUAL_ENVIRONMENT>
 
-Create a new environment using symlinks to the original Python installation. New library installations will be overriden in the virtual environment. This is useful for operaitng systems that ship packages that are not available in PyPI such as ``python3-libselinux`` on Fedora.
+Create a new environment using symlinks to the original Python installation. New library installations will be overriden in the virtual environment. This is useful for operating systems that ship packages that are not available in PyPI such as ``python3-libselinux`` on Fedora.
 
 .. code-block:: sh
 

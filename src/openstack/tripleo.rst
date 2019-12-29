@@ -795,7 +795,7 @@ Use the script provided `here <https://access.redhat.com/solutions/2210421>`__ t
 Overcloud
 ~~~~~~~~~
 
-**Image Preperation**
+**Image Preparation**
 
 -  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
 
@@ -1121,7 +1121,7 @@ Overcloud
 
          -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to seperate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
 
--  In a YAML Heat tepmlate, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
+-  In a YAML Heat template, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
 
    .. code-block:: yaml
 
@@ -1717,7 +1717,7 @@ Puppet manifests define the default variables that are set. These also show what
    ---
    parameter_defaults:
      <EXTRACONFIG_SERVICE>ExtraConfig:
-        # The primary manifest handles at least the primary configuraiton file.
+        # The primary manifest handles at least the primary configuration file.
         <OPENSTACK_SERVICE>::<MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
         # Some OpenStack services use more than one configuration file which could be handled
         # by nested manifests.
@@ -1793,7 +1793,7 @@ Configure these settings to match the IP address that the Undercloud is configur
    ControlPlaneDefaultRoute: <UNDERCLOUD_IP_OR_ROUTER>
    EC2MetadataIp: <UNDERCLOUD_IP>
 
-Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers. It is important the DNS is setup correctly because if chronyc fails to resolve the NTP servers then it will not try to resolve them again. DNS is also reuqired to download and install additional TripleO packages.
+Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers. It is important the DNS is setup correctly because if chronyc fails to resolve the NTP servers then it will not try to resolve them again. DNS is also required to download and install additional TripleO packages.
 
 ::
 
@@ -1910,7 +1910,7 @@ RHCS releases and supported platforms:
 
 **Deployment Types**
 
-TripleO can use an existing/independent ``external`` Ceph cluster. This is not managed by TripleO, and only provides connection details for OpenStack to communicate with the Ceph cluster. This requires the ``environments/ceph-ansible-external.yaml`` template. For a managed ``internal`` cluster, TripleO can deploy and manage the life-cycle of Ceph by using the ``enviornments/ceph-ansible.yaml`` template.
+TripleO can use an existing/independent ``external`` Ceph cluster. This is not managed by TripleO, and only provides connection details for OpenStack to communicate with the Ceph cluster. This requires the ``environments/ceph-ansible-external.yaml`` template. For a managed ``internal`` cluster, TripleO can deploy and manage the life-cycle of Ceph by using the ``environments/ceph-ansible.yaml`` template.
 
 **Packages**
 
@@ -1936,7 +1936,7 @@ One keyring at ``/etc/ceph/ceph.client.openstack.keyring`` is created by default
 
 Use the ``environments/ceph-ansible.yaml`` Heat template. The command output of ``ceph-ansible`` is saved in the config-download directory at ``ceph-ansible/ceph-ansible-command.log``.
 
-``~/templates/enviornments/ceph-ansible.yaml`` = Enables Ceph
+``~/templates/environments/ceph-ansible.yaml`` = Enables Ceph
 ``~/ceph.yaml`` = Specify a custom file with your own overrides
 
 Configure the object storage back-end: ``bluestore`` or ``filestore``.
@@ -2129,7 +2129,7 @@ Tips
    $ sudo crm_resource -C <RESOURCE_BUNDLE>
    $ sudo pcs resource restart <RESOURCE_BUNDLE>
 
--  Changes can be made to a container manually for testing. For permenant changes, use the `containers-prepare-parameter.yaml <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html>`__ file.
+-  Changes can be made to a container manually for testing. For permanent changes, use the `containers-prepare-parameter.yaml <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html>`__ file.
 
 .. code-block:: sh
 

@@ -637,7 +637,7 @@ OSDs. The master OSD for that file serves the content. [17]
 
 For OSD nodes, it is recommend that the operating system is on two disks in a RAID 1. All of the over disks can be used for OSD or journal/metadata services.
 
-As of Luminous release, the new ``mgr`` (managers) mointoring service is required. It helps to collect metrics about the cluster. It should be running on all of the monitor nodes. https://docs.ceph.com/docs/luminous/release-notes/
+As of Luminous release, the new ``mgr`` (managers) monitoring service is required. It helps to collect metrics about the cluster. It should be running on all of the monitor nodes. https://docs.ceph.com/docs/luminous/release-notes/
 
 The current back-end for handling data storage is FileStore. When data
 is written to a Ceph OSD, it is first fully written to the OSD journal.
@@ -718,7 +718,7 @@ Ceph Requirements:
 -  1GB RAM per 1TB of Ceph OSD storage, per OSD daemon.
 -  1GB RAM per monitor daemon.
 -  1GB RAM per metadata daemon.
--  An odd number of montior nodes (starting at least 3 for high
+-  An odd number of monitor nodes (starting at least 3 for high
    availability and quorum). [21]
 
 Quick
@@ -1288,7 +1288,7 @@ Minimal [30]:
 -  /etc/ = Configuration files for services.
 -  /home/ = All user home directories.
 -  /lib/ = Libraries for all of the binaries.
--  /media/ = Mount points for physical media usch as USB and CD-ROM drives.
+-  /media/ = Mount points for physical media such as USB and disk drives.
 -  /mnt/ = Temporary mount point for other file systems.
 -  /opt/ = Optional third-party (usually proprietary) software.
 -  /proc/ = Information about the system reported by the Linux kernel.

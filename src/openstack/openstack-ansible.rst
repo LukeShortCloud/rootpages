@@ -23,7 +23,7 @@ The `OpenStack-Ansible git repository <https://opendev.org/openstack/openstack-a
 
 -  ``stable/<OPENSTACK_RELEASE_NAME>`` = A branch for a specific release of OpenStack. All of the latest updates are committed here. Example: "stable/queens".
 -  ``<OPENSTACK_RELEASE_NUMBER_MAJOR>.<OSA_MINOR>.<OSA_PATCH>`` = A tag of a specific OpenStack-Ansible release. The major version number is the same number that correlates to the OpenStack release. The minor and patch versions represent OpenStack-Ansible updates to the code. Example: "17.0.2" is the OpenStack Queens release and is the second OpenStack-Ansible update.
--  ``<OPENSTACK-RELEASE>-eol`` =  A tag of an end-of-life release. Upstream versions of OpenStack no longer recieve any support after a year. This contains the last code for that release. Example: "newton-eol".
+-  ``<OPENSTACK-RELEASE>-eol`` =  A tag of an end-of-life release. Upstream versions of OpenStack no longer receive any support after a year. This contains the last code for that release. Example: "newton-eol".
 
 SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [1]
 
@@ -245,7 +245,7 @@ The valid service types are:
 -  dnsaas = Designate.
 -  unbound = Caching DNS server nodes.
 -  magnum-infra = Magnum.
--  sahra-infra = Sahara.
+-  sahara-infra = Sahara.
 
 [3]
 
@@ -332,7 +332,7 @@ File: /etc/openstack_deploy/user_variables.yml
 By default, OpenStack-Ansible will generate the ceph.conf configuration
 file by connecting to the Ceph monitor hosts and obtaining the
 information from there. Extra configuration options can be specified or
-overriden using the "ceph\_extra"confs" dictionary.
+overridden using the "ceph\_extra"confs" dictionary.
 
 .. code-block:: yaml
 
@@ -407,7 +407,7 @@ Generate random passwords for the services.
 
    /opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
-- Configure OSA and verify that the configuration syntax is correct. There are "example", "test", and "prod[uction]" configuration files provided to ues as a base to start a new configuration from.
+- Configure OSA and verify that the configuration syntax is correct. There are "example", "test", and "prod[uction]" configuration files provided to use as a base to start a new configuration from.
 
 .. code-block:: sh
 

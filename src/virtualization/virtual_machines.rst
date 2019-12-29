@@ -14,7 +14,7 @@ machines. [1]
 Hardware Virtualization
 -----------------------
 
-Hardware virtualization speeds up and further isolates virtualized environments. Most newer CPUs support this. There is "Intel VT (Virtualization Techonology)" and "AMD SVM (Secure Virtual Machine)" for x86 processors. Hardware virtualization must be supported by both the motherboard and processor. It should also be enabled in the BIOS. [2]
+Hardware virtualization speeds up and further isolates virtualized environments. Most newer CPUs support this. There is "Intel VT (Virtualization Technology)" and "AMD SVM (Secure Virtual Machine)" for x86 processors. Hardware virtualization must be supported by both the motherboard and processor. It should also be enabled in the BIOS. [2]
 
 Intel has three subtypes of virtualization:
 

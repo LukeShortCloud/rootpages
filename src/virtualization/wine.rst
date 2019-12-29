@@ -141,17 +141,17 @@ Many forks of the upstream Wine project exist.
 Frameworks
 ----------
 
-Various different frameworks exist for helping to install Windows applications on UNIX-like systems. These normally use a combination of Wine, winetricks, and scripts to modify settings and configuraitons for specific Windows applications to work.
+Various different frameworks exist for helping to install Windows applications on UNIX-like systems. These normally use a combination of Wine, winetricks, and scripts to modify settings and configurations for specific Windows applications to work.
 
 -  `Lutris <https://lutris.net/>`__ = An open source gaming platform that helps with installing emulators and Windows applications. It uses JSON and YAML structures to define how to install applications using Python helper functions.
 -  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses bash scripts to help with installing Windows applications.
--  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official succesor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installating applications.
+-  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official successor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installing applications.
 -  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
 
 PlayOnLinux 4
 ~~~~~~~~~~~~~
 
-PlayOnLinux (PoL) uses Python helper functions inside of BASH scripts to define how to install an application. Windows applicaitons are installed into their own separate Wine prefixes so dependencies from one application does not interfere with those from another. All of the data that PoL handles is stored in ``$HOME/.PlayOnLinux/``.
+PlayOnLinux (PoL) uses Python helper functions inside of BASH scripts to define how to install an application. Windows applications are installed into their own separate Wine prefixes so dependencies from one application does not interfere with those from another. All of the data that PoL handles is stored in ``$HOME/.PlayOnLinux/``.
 
 Important directories:
 

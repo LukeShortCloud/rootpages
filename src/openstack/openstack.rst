@@ -88,7 +88,7 @@ Releases:
     -  EOL: TBD [1]
     -  Goals:
 
-       -  Make configuraiton options mutable. This avoids having to restart services whenever the configuraiton is updated.
+       -  Make configuration options mutable. This avoids having to restart services whenever the configuration is updated.
        -  Remove deprecated mox tests to further push towards full Python 3 support. [53]
 
     -  `New Features <https://superuser.openstack.org/articles/what-you-need-to-know-about-the-openstack-rocky-release/>`__
@@ -1936,7 +1936,7 @@ A deployment and it's resources and be removing by running:
 
    (rally-venv)$ rally deployment destroy <DEPLOYMENT_NAME>
 
-Alternatively, keep the configuraiton and only clean-up the OpenStack resources and existing test data.
+Alternatively, keep the configuration and only clean-up the OpenStack resources and existing test data.
 
 .. code-block:: sh
 

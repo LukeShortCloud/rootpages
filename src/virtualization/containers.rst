@@ -57,7 +57,7 @@ docker containers are built by using a template called ``Dockerfile``. This file
 
 -  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
 -  ADD <SOURCE> <DESTINATION> = Add files from the local file system to the container. This will also download URLs and extract archives (unlike ``COPY``).
--  CMD = The default command to run in the container, if ``ENTRYPOINT`` is not defined. If ``ENTRYPOINT`` is defined, then ``CMD`` will serve as default arguments to ``ENTRYPOINT`` that can be overriden from the docker CLI.
+-  CMD = The default command to run in the container, if ``ENTRYPOINT`` is not defined. If ``ENTRYPOINT`` is defined, then ``CMD`` will serve as default arguments to ``ENTRYPOINT`` that can be overridden from the docker CLI.
 -  **ENTRYPOINT** = The default command to run in this container. Arguments from the docker CLI will be passed to this command and override the optional ``CMD`` arguments. Use if this container is supposed to be an executable.
 -  ENV <VARIABLE>=<VALUE> = Create shell environment variables.
 -  EXPOSE <PORT>/<PROTOCOL> = Connect to certain network ports.
@@ -352,7 +352,7 @@ The official ``kubeadm`` utility is used to quickly create production environmen
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
 
-Kubernetes requires a network provider, Fannel by default, to create an overlay network for inter-communication between pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
+Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
 
 Syntax:
 

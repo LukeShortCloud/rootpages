@@ -99,7 +99,7 @@ The ``fmt`` library provides the functions for inputting and outputting strings.
    fmt.Scan(&string)
    fmt.Printf("%v, how are ye?\n", greeting)
 
-A long string consistenting of spaces can be entered by using ``Scanf()`` and quoting the input.
+A long string consisting of spaces can be entered by using ``Scanf()`` and quoting the input.
 
 .. code-block:: go
 
@@ -139,7 +139,7 @@ User defined functions need a name, input variables and their types, as well as 
    func <FUNCTION_NAME>(<VARIABLE> <DATA_TYPE>) <RETURN_DATA_TYPE> {
    }
 
-If multiple variables share the same data type, they can be consildated by only mentioning the data type once.
+If multiple variables share the same data type, they can be consolidated by only mentioning the data type once.
 
 .. code-block:: go
 
@@ -394,7 +394,7 @@ For appending to a file, the ``os.OpenFile`` method should be used. It provides 
 
    OpenFile(<FILE_NAME>, <ATTRIBUTES>, <PERMISSIONS>)
 
-Here is the list of valid attributes for oppening the file.
+Here is the list of valid attributes for opening the file.
 
 -  os.O_APPEND = Append to an existing file.
 -  os.O_CREATE = Create a new file.

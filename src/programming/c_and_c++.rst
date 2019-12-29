@@ -569,7 +569,7 @@ Syntax:
 
 .. code-block:: c
 
-    scanf("<FORMATER>", <VARIABLE>);
+    scanf("<FORMATTER>", <VARIABLE>);
 
 .. code-block:: c++
 
@@ -693,7 +693,7 @@ Bibliography
 10. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
 11. "Variables in C++." Studytonight. Accessed May 21, 2017. http://www.studytonight.com/cpp/variables-scope-details.php
 12. "C++ final specifier." GeeksForGeeks. January 4, 2017. https://www.geeksforgeeks.org/c-final-specifier/
-13. "[C++] Operators." cpluspluss.com. Accessed May 21, 2017. http://www.cplusplus.com/doc/tutorial/operators/
+13. "[C++] Operators." cplusplus.com. Accessed May 21, 2017. http://www.cplusplus.com/doc/tutorial/operators/
 14. "Lesson 2: If statements in C++." Cprogramming.com. Accessed May 21, 2017. http://www.cprogramming.com/tutorial/lesson2.html
 15. "[C++] switch statement." C++ reference. March 6, 2017. Accessed May 21, 2017. http://en.cppreference.com/w/cpp/language/switch
 16. "C++ for loop." Tutorials Point. Accessed May 21, 2017. https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm

@@ -16,7 +16,7 @@ The types of Linux kernel releases include:
 
 -  mainline = The latest development release that is working towards a stable release.
 -  stable = The current stable release.
--  longterm = Long-term supported kernels are older versions that primarily only recieve bug fixes.
+-  longterm = Long-term supported kernels are older versions that primarily only receive bug fixes.
 -  linux-next = Daily unstable development releases from the "master" git branch.
 
 System Calls
@@ -258,7 +258,7 @@ File: /etc/mkinitcpio.conf
       -  net = Add networking.
       -  mdadm = mdadm software RAID modules.
       -  fsck = FSCK utilities for available operating systems.
-      -  encrypt = LUKS encyrption modules.
+      -  encrypt = LUKS encryption modules.
       -  lvm2 = Logical volume manager (LVM) modules.
       -  shutdown = Allows the initramfs to properly shutdown.
 
