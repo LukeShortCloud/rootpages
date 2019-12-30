@@ -52,10 +52,10 @@ Releases:
 
     -  Release: 2017-02-22
     -  EOL: TBD [1]
-    -  Goals:
+    -  Goals [3]:
 
        -  Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
-       -  Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages. [3]
+       -  Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages.
 
     - `New Features <https://www.openstack.org/news/view/302/openstack-ocata-strengthens-core-infrastructure-services-and-container-integration-with-15th-release-of-cloud-computing-software>`__
 
@@ -63,10 +63,10 @@ Releases:
 
     -  Release: 2017-08-30
     -  EOL: TBD [1]
-    -  Goals:
+    -  Goals [4]:
 
        -  Convert most of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
-       -  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon. [4]
+       -  Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon.
 
     -  `New Features <https://www.openstack.org/news/view/340/openstack-pike-delivers-composable-infrastructure-services-and-improved-lifecycle-management>`__
 
@@ -74,10 +74,10 @@ Releases:
 
     -  Release: 2018-02-28
     -  EOL: TBD [1]
-    -  Goals:
+    -  Goals [5]:
 
        -  Remove the need for the access control list "policy" files by having default values defined in the source code.
-       -  Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository. [5]
+       -  Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository.
 
     -  `New Features <https://www.openstack.org/news/view/371/openstack-queens-release-expands-support-for-gpus-and-containers-to-meet-edge-nfv-and-machine-learning-workload-demands>`__
     -  `Release Highlights <https://releases.openstack.org/queens/highlights.html>`__
@@ -86,10 +86,10 @@ Releases:
 
     -  Release: 2018-08-30
     -  EOL: TBD [1]
-    -  Goals:
+    -  Goals [53]:
 
        -  Make configuration options mutable. This avoids having to restart services whenever the configuration is updated.
-       -  Remove deprecated mox tests to further push towards full Python 3 support. [53]
+       -  Remove deprecated mox tests to further push towards full Python 3 support.
 
     -  `New Features <https://superuser.openstack.org/articles/what-you-need-to-know-about-the-openstack-rocky-release/>`__
     -  `Release Highlights <https://releases.openstack.org/rocky/highlights.html>`__
@@ -98,13 +98,26 @@ Releases:
 
     -  Release: 2019-04-10
     -  EOL: TBD [1]
-    -  Goals:
+    -  Goals [54]:
 
        -  Use Python 3 by default. Python 2.7 will only be tested using unit tests.
-       -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues. [54]
+       -  Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues.
 
     -  `New Features <https://www.openstack.org/news/view/421/openstack-stein-enhances-bare-metal-and-network-management-while-launching-kubernetes-clusters-faster-than-ever>`__
     -  `Release Highlights <https://releases.openstack.org/stein/highlights.html>`__
+
+20. Train
+
+    -  Release: 2019-10-16
+    -  EOL: TBD [1]
+    -  Goals [64]:
+
+       -  Fully support IPv6 environments where IPv4 is not available or used.
+       -  Test against Python 3.7 instead of 3.5.
+       -  Project documentation will additionally be built and provided as PDF files (instead of HTML webpages).
+
+    -  `New Features <https://www.openstack.org/news/view/438/openstack-train-release-extends-security-and-data-protection-adds-new-ai-and-ml-support>`__
+    -  `Release Highlights <https://releases.openstack.org/train/highlights.html>`__
 
 Services
 ~~~~~~~~
@@ -2124,11 +2137,11 @@ History
 Bibliography
 ------------
 
-1. "OpenStack Releases." OpenStack Releases. September 26, 2018. Accessed September 26, 2018. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. December 23, 2019. Accessed December 29, 2019. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
-3. "Ocata [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
-4. "Pike [Goals]." OpenStack Documentation. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
-5. "Queens [Goals]." OpenStack Documentation. June 27, 2019. Accessed October 28, 2019. https://governance.openstack.org/tc/goals/queens/index.html
+3. "Ocata [Goals]." OpenStack Governance. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
+4. "Pike [Goals]." OpenStack Governance. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
+5. "Queens [Goals]." OpenStack Governance. June 27, 2019. Accessed October 28, 2019. https://governance.openstack.org/tc/goals/queens/index.html
 6. "Project Navigator." OpenStack. Accessed March 15, 2018. https://www.openstack.org/software/project-navigator/
 7. "DevStack switching from MySQL-python to PyMySQL." OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql
 8. "Using PostgreSQL with OpenStack." FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. https://fosskb.in/2014/06/06/using-postgresql-with-openstack/
@@ -2176,8 +2189,8 @@ Bibliography
 50. "External Ceph." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html
 51. "OVS 2.6 and The First Release of OVN." Russell Bryant. September 29, 2016. Accessed October 24, 2019. https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/
 52. "Upgrading OpenStack Services Simultaneously." RDO Project. Accessed August 15, 2018. https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once
-53. "Rocky [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
-54. "Stein [Goals]." OpenStack Documentation. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
+53. "Rocky [Goals]." OpenStack Governance. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/pike/index.html
+54. "Stein [Goals]." OpenStack Governance. September 21, 2018. Accessed September 26, 2018. https://governance.openstack.org/tc/goals/stein/index.html
 55. "Feature Configuration." TripleO Documentation. September 21, 2018. Accessed September 27, 2018. https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html
 56. "Enabling Keystone's Fernet Tokens in Red Hat OpenStack Platform." Red Hat Blog. December 11, 2017. Accessed October 28, 2019. https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform
 57. "Install the OpenStack command-line clients." OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html
@@ -2187,3 +2200,4 @@ Bibliography
 61. "Mistral Workflow Language v2 specification." OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html
 62. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
 63. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
+64. "Train [Goals]." OpenStack Governance. June 27, 2019. Accessed December 29, 2019. https://governance.openstack.org/tc/goals/selected/train/index.html
