@@ -139,11 +139,10 @@ These are various services that are helpful for collaboration and sharing.
 -  `Etherpad <https://etherpad.openstack.org/>`__ = Collaborative online document. `Back-end documentation <https://docs.openstack.org/infra/system-config/etherpad.html>`__.
 -  `OpenDev Git Repositories <https://opendev.org/openstack>`__ = All of the OpenStack services source code.
 
-Blueprints and Specs
---------------------
+Specification and Blueprint
+---------------------------
 
-Blueprints = General outline (recommended to start with before a spec)
-Specs = Technical overview of how to implement it (required).
+A specification (spec) and blueprint are required for any new large feature or code refactoring. The specification is a detailed document explaining the work that needs to be done and the impact it will have on the project. [4] Some considerations are impacts to the API, security, notifications, end user, performance, etc. A full example of a spec can be found `here <https://specs.openstack.org/openstack/nova-specs/specs/train/implemented/train-template.html>`__. Blueprints are created as a more generalized version of a specification. The progress of the new feature is tracked by mentioning the blueprint in related git commit messages.
 
 Licenses
 --------
@@ -161,3 +160,4 @@ Bibliography
 1. "Developer’s Guide." infra-manual (OpenStack Documentation). August 2, 2019. Accessed December 4, 2019. https://docs.openstack.org/infra/manual/developers.html
 2. "Setup IRC." OpenStack Documentation Contributor Guide. December 19, 2019. Accessed January 2, 2020. https://docs.openstack.org/contributors/common/irc.html
 3. "Bugs." OpenStack Documentation Project Team Guide. June 28, 2018. Accessed January 2, 2020. https://docs.openstack.org/project-team-guide/bugs.html
+4. "Blueprints and specifications." OpenStack Documentation Contributor Guide. January 2, 2020. Accessed January 2, 2020. https://docs.openstack.org/doc-contrib-guide/blueprints-and-specs.html
