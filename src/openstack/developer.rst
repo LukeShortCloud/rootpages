@@ -6,8 +6,10 @@ OpenStack Developer
 New Contributor
 ---------------
 
+These are the steps required to sign up as a new OpenStack developer:
+
 -  Sign up for an `Ubuntu One account <https://login.ubuntu.com/>`__.
--  Log into the `OpenDev Gerrit portal < https://review.opendev.org/>`__.
+-  Log into the `OpenDev Gerrit portal <https://review.opendev.org/>`__.
 -  Agree to the `Individual Contributor License Agreement <https://review.opendev.org/#/settings/agreements>`__ (ICLA).
 -  Add a `public SSH key to Gerrit <https://review.opendev.org/#/settings/ssh-keys>`__.
 
