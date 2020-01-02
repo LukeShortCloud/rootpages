@@ -15,6 +15,28 @@ These are the steps required to sign up as a new OpenStack developer:
 
 [1]
 
+IRC
+---
+
+IRC is one of the few ways that OpenStack developers communicate with each other. The connection details to the Freenode service used by OpenStack are listed below.
+
+-  Username: ``<LAUNCHPAD_USERNAME>``
+-  Host: irc.freenode.net
+-  SSL: Yes
+-  Port: 6697
+
+Once logged in for the first time, connect to an OpenStack channel such as ``#openstack`` to register an IRC account. [2]
+
+::
+
+   /msg nickserv register <NEW_IRC_PASSWORD> <EMAIL>
+
+Useful links:
+
+-  `IRC Channels <https://wiki.openstack.org/wiki/IRC>`__. Most channels are named ``#openstack-<PROJECT>``.
+-  `IRC Logs <http://eavesdrop.openstack.org/irclogs/>`__
+-  `Scheduled project meeting times and channels. <http://eavesdrop.openstack.org/>`__
+
 Git
 ---
 
@@ -73,13 +95,6 @@ When submitting a patch, the git commit message (from ``git commit -m``) can con
           path/to/conflicting/file.py
           path/to/conflicting/file2.py
 
-IRC
----
-
-freenode.net
-
-SSL vs. non-SSL
-
 Bugs
 ----
 
@@ -122,3 +137,4 @@ Bibliography
 ------------
 
 1. "Developer’s Guide." infra-manual (OpenStack Documentation). August 2, 2019. Accessed December 4, 2019. https://docs.openstack.org/infra/manual/developers.html
+2. "Setup IRC." OpenStack Documentation Contributor Guide. December 19, 2019. Accessed January 2, 2020. https://docs.openstack.org/contributors/common/irc.html
