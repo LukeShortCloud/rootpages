@@ -147,7 +147,7 @@ A specification (spec) and blueprint are required for any new large feature or c
 Licenses
 --------
 
-Apache Software License v2.0 (ASL v2.0).
+OpenStack is a collection of various different projects that use software licenses that are approved by the Open Source Initiative (OSI). It is recommended that new projects use the Apache Software License v2.0 (ASL v2.0). For supporting the Contributor License Agreement (CLA), a license such as ASL v2.0, BSD, or MIT must be used. [5]
 
 History
 -------
@@ -161,3 +161,4 @@ Bibliography
 2. "Setup IRC." OpenStack Documentation Contributor Guide. December 19, 2019. Accessed January 2, 2020. https://docs.openstack.org/contributors/common/irc.html
 3. "Bugs." OpenStack Documentation Project Team Guide. June 28, 2018. Accessed January 2, 2020. https://docs.openstack.org/project-team-guide/bugs.html
 4. "Blueprints and specifications." OpenStack Documentation Contributor Guide. January 2, 2020. Accessed January 2, 2020. https://docs.openstack.org/doc-contrib-guide/blueprints-and-specs.html
+5. "Licensing requirements." OpenStack Governance. July 18, 2017. Accessed January 2, 2020. https://governance.openstack.org/tc/reference/licensing.html
