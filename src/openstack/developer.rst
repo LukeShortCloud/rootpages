@@ -98,7 +98,36 @@ When submitting a patch, the git commit message (from ``git commit -m``) can con
 Bugs
 ----
 
-https://bugs.launchpad.net/openstack
+The bug tracker system used is Canonical's Launchpad. Generic OpenStack issues can be reported to ``https://bugs.launchpad.net/openstack``. Project specific issues can be found at ``https://bugs.launchpad.net/<OPENSTACK_PROJECT>``.
+
+Each bug has specific attributes:
+
+-  Affects = The OpenStack project that is affected.
+-  Status = The current status of the bug.
+
+   -  Confirmed
+   -  Fix Committed
+   -  Fix Released
+   -  In Progress
+   -  Incomplete
+   -  Invalid
+   -  New
+   -  Opinion
+   -  Triaged
+   -  Won't Fix
+
+-  Importance = The importance/priority of the bug.
+
+   -  Critical
+   -  High
+   -  Medium
+   -  Low
+   -  Wishlist
+
+-  Assigned to = The owner of the bug.
+-  Milestone = The next development release that this is targetted to be fixed in.
+
+[3]
 
 Resources
 ---------
@@ -138,3 +167,4 @@ Bibliography
 
 1. "Developer’s Guide." infra-manual (OpenStack Documentation). August 2, 2019. Accessed December 4, 2019. https://docs.openstack.org/infra/manual/developers.html
 2. "Setup IRC." OpenStack Documentation Contributor Guide. December 19, 2019. Accessed January 2, 2020. https://docs.openstack.org/contributors/common/irc.html
+3. "Bugs." OpenStack Documentation Project Team Guide. June 28, 2018. Accessed January 2, 2020. https://docs.openstack.org/project-team-guide/bugs.html
