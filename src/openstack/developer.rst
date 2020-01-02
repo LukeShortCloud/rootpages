@@ -45,25 +45,33 @@ Gerrit patches can be downloaded and applied to a localy environment. Find the p
 Git messages
 ~~~~~~~~~~~~
 
+When submitting a patch, the git commit message (from ``git commit -m``) can contain any of these valid tags:
+
 -  DNM = Do not merge. This is normally used to manually run CI jobs.
 -  WIP = Work-in-progress. This patch is not complete and possibly not working yet. It is not ready for reviews yet.
 -  [Queens-only]
--  Closes-Bug: #<BUG_NUMBER>
+-  Closes-Bug: ``#<BUG_NUMBER>``
+-  Resolves: ``rhbz#<BUG_NUMBER>``
+
+   -  List a Red Hat Bugzilla that the patch resolves.
+
 -  Partial-Bug:
 -  Related-Bug:
 -  Task:
 -  Story:
--  Implements: blueprint <BLUEPRINT_NAME>
--  Co-Authored-By: <FULL_NAME> <E_MAIL>
--  Change-Id: <CHANGE_ID>
--  Depends-On: <CHANGE_ID>
+-  Implements: blueprint ``<BLUEPRINT_NAME>``
+-  Co-Authored-By: ``<FULL_NAME>`` ``<E_MAIL>``
+-  Change-Id: ``<CHANGE_ID>``
+-  Depends-On: ``<CHANGE_ID>``
 -  Conflicts:
--  Resolves: rhbz#<BUG_NUMBER>
 
-::
+   -  Specify the path to each file that had a merge conflict that was manually resolved.
 
-   Conflicts:
-       path/to/conflicting/file.py
+   ::
+
+      Conflicts:
+          path/to/conflicting/file.py
+          path/to/conflicting/file2.py
 
 IRC
 ---
