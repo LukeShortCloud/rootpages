@@ -49,7 +49,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'Root Pages'
 # This will render out a sentence that starts with "Copyright None"
-copyright = 'None, Copyleft 2019, Luke Short. Documents licensed under GFDLv1.3'
+copyright = 'None, Copyleft 2020, Luke Short. Documents licensed under GFDLv1.3'
 author = 'Luke Short'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -57,7 +57,7 @@ author = 'Luke Short'
 # built documents.
 #
 # The short X.Y version.
-version = '2020.01.01-dev'
+version = '2020.01.01'
 # The full version, including alpha/beta/rc tags.
 #release = ''
 
