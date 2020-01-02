@@ -23,14 +23,17 @@ Gerrit
 
 -  Install the ``git-review`` via a system package or ``pip``.
 -  Clone an `OpenStack repository from OpenDev <https://opendev.org/openstack>`__ with ``git clone https://opendev.org/openstack/<PROJECT>``.
--  Add the registered Gerrit username with ``git config --global gitreview.username` <GERRIT_USER>``
+-  Add the registered Gerrit username with ``git config --global gitreview.username <GERRIT_USER>``
 -  Use ``git review -s`` to configure Gerrit for the repository and to ensure the local workstation can connect to it.
+-  All reviews are posted on `review.opendev.org <https://review.opendev.org>`__.
+-  Re-run all CI tests if there is a failure by posting a comment on the review with the word ``recheck`` in it.
 
-review.opendev.org
+   -  For the RDO/TripleO community, RDO specific CI jobs can be re-ran by commenting with ``check-rdo``.
 
-recheck
+-  For a patch to merge, it needs at least ``+2`` from Code-Reviews, a Verified label from CI, and a ``+1`` to Workflow from a core contributor.
+-  Once a patch is merged into master, consider backporting it to previous stable branches with ``git cherry-pick -x``.
 
-git cherry-pick -x
+   -  It is preferred to backport sequentially from one release to the next (instead of directly from master) to help avoid merge conflicts.
 
 Gerrit patches can be downloaded and applied to a localy environment. Find the patch to download by going to: ``Download`` > ``Patch-File`` > Copy and use the link to the base64 file.
 
