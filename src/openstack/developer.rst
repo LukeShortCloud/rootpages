@@ -132,19 +132,12 @@ Each bug has specific attributes:
 Resources
 ---------
 
-Paste:
-https://docs.openstack.org/infra/system-config/paste.html
-http://paste.openstack.org/
+These are various services that are helpful for collaboration and sharing.
 
-Etherpad:
-https://etherpad.openstack.org/
-https://docs.openstack.org/infra/system-config/etherpad.html
-
-Story Board (project planning):
-https://storyboard.openstack.org/
-
-OpenStack Git repositories
-https://opendev.org/openstack
+-  `Story Board <https://storyboard.openstack.org/>`__ = Project planning.
+-  `Paste <http://paste.openstack.org/>`__ = Paste large code blocks. `Back-end documentation <https://docs.openstack.org/infra/system-config/paste.html>`__.
+-  `Etherpad <https://etherpad.openstack.org/>`__ = Collaborative online document. `Back-end documentation <https://docs.openstack.org/infra/system-config/etherpad.html>`__.
+-  `OpenDev Git Repositories <https://opendev.org/openstack>`__ = All of the OpenStack services source code.
 
 Blueprints and Specs
 --------------------
