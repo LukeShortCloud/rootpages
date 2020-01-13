@@ -2132,6 +2132,18 @@ Example:
 UNIX Modules
 ~~~~~~~~~~~~
 
+Authorized Key
+^^^^^^^^^^^^^^
+
+The ``authorized_key`` module will add a public SSH key to the specified user's ``~/.ssh/authorized_keys`` file. [55]
+
+.. code-block:: yaml
+
+   - name: Configure SSH key access
+     authorized_key:
+       user: foo
+       key: "{{ ssh_public_key }}"
+
 Command and Shell
 ^^^^^^^^^^^^^^^^^
 
@@ -5261,7 +5273,7 @@ Bibliography
 52. "Ansible Tower Administration Guide." Ansible Documentation. Accessed June 19, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/index.html
 53. "Blocks." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/playbooks\_blocks.html
 54. "Net Tools Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_net\_tools\_modules.html
-55. "System Modules." Ansible Documentation. September 18, 2017. Accessed September 26, 2017. http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
+55. "System Modules." Ansible Documentation. December 11, 2019. Accessed January 13, 2020. http://docs.ansible.com/ansible/latest/list\_of\_system\_modules.html
 56. "Rundeck Ansible Plugin [README.md]." Batix GitHub. August 9, 2017. Accessed September 26, 2017. https://github.com/Batix/rundeck-ansible-plugin
 57. "Tensor [README.md]." PearsonAppEng GitHub. April 25, 2017. Accessed September 6, 2018. https://github.com/pearsonappeng/tensor
 58. "Including and Importing." Ansible Documentation. October 10, 2017. Accessed March 2, 2018. http://docs.ansible.com/ansible/latest/playbooks\_reuse\_includes.html
