@@ -3595,9 +3595,12 @@ AnsibleModule object.
 Roles
 -----
 
-Roles are used to accomplish and/or manage one specific item. Usually
-this will be to install and setup a program. A Playbook can be created
-to use multiple roles.
+Roles are a collection of related tasks. Playbooks use one or more roles to configure remote hosts. Ansible searches in these locations for roles:
+
+-  /etc/ansible/roles/ (set by ``roles_path`` in the ansible.cfg)
+-  /usr/share/ansible/roles/
+-  ~/.ansible/roles/
+-  roles/
 
 Galaxy
 ~~~~~~
