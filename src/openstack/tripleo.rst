@@ -6,9 +6,23 @@ TripleO
 Introduction
 ------------
 
-Supported operating systems: RHEL/CentOS 7, Fedora >= 22
+Supported operating systems: RHEL/CentOS >= 7, Fedora
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. This server is then used to create and manage a full Overcloud cluster.
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. That server is then used to create and manage a full production cloud called the Overcloud.
+
+TripleO is a collection of many services:
+
+-  Ansible = Used for deploying the Undercloud/Overcloud services.
+-  Glance = Image management used by Ironic.
+-  Heat = Heat parameters define the deployment settings.
+-  Ironic = Manages the bare-metal provisioning.
+-  Keystone = Authentication of OpenStack services.
+-  Kolla = Provides container images of OpenStack services.
+-  Neutron = Manages the Overcloud networks.
+-  Nova = Manages the Overcloud nodes after provisioning.
+-  Paunch = Container state management.
+-  Podman = Tool for managing CRI-O containers.
+-  Puppet = Configuration management.
 
 In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
