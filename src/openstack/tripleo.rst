@@ -649,6 +649,16 @@ Undercloud
 
 The Undercloud can be installed onto a bare metal server or a virtual machine. Follow the "hypervisor" section to assist with automatically creating an Undercloud virtual machine. The Undercloud requires at least 2 NICs (typically ``eth0`` and ``eth1``). The first is used for external connectivity. The second is dedicated to provisioning the Overcloud nodes with Ironic. On those nodes, the related interface that can reach the Undercloud's ``eth1`` should be configured for PXE booting in the BIOS. [21]
 
+Considerations before starting the Undercloud deployment:
+
+-  The Undercloud server requires two network interfaces. One with public Internet/management access and the second dedicated to provisioning.
+-  Configure the hostname.
+-  Set `push_destination: True` in a custom container-image-prepare.yaml file.
+-  undercloud.conf
+    - The NTP and DNS resolvers need to be accurate and accessible.
+    - If deploying or managing more than 250 hosts, it is required to change the ctlplane-subnet to a use a subnet mask with more available IP addresses.
+    - Use the custom container-image-prepare.yaml file.
+
 -  **Undercloud (Automatic)**
 
    -  RDO provides pre-made Undercloud images.
