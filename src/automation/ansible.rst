@@ -39,7 +39,7 @@ Ansible RPMs for Fedora based operating systems are available from:
 
 -  The "extras" repository (Fedora)
 -  The upstream Ansible repository http://releases.ansible.com/ansible/rpm/release/ (Enterprise Linux and Fedora)
--  The Ansible Engine repository (RHEL)
+-  The Ansible Engine repository (RHEL): ``sudo subscription-manager repos --enable=<REPO>``
 
    -  RHEL 7: rhel-7-server-ansible-2-rpms OR rhel-7-server-ansible-2.9-rpms + rhel-7-server-extras-rpms
    -  RHEL 8: ansible-2-for-rhel-8-x86_64-rpms OR ansible-2.9-for-rhel-8-x86_64-rpms
