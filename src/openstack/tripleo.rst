@@ -1640,7 +1640,20 @@ The latest playbooks and variables used to deploy the Overcloud can be downloade
 
 All of that Ansible content is stored in a local git repository at ``/var/lib/mistral/overcloud/``. The log files of the last config-download run are found at ``/var/lib/mistral/overcloud/ansible.log`` and ``/var/lib/mistral/overcloud/ansible-errors.json``.
 
-The ``deploy_steps_playbook.yaml`` file is the primary playbook that executes all of the deployment playbooks.
+The ``deploy_steps_playbook.yaml`` file is the primary playbook that executes all of the deployment playbooks. Before running the playbook, the tripleo-admin account needs to be configured on the Overcloud nodes. This can be done manually if the playbooks for the deployment or scale-up are used manually (ex., not using ``openstack overcloud deploy``) [36]:
+
+-  Queens:
+
+   .. code-block:: sh
+
+      $ export OVERCLOUD_HOSTS="<IP1> <IP2>"
+      $ /usr/share/openstack-tripleo-heat-templates/deployed-server/scripts/enable-ssh-admin.sh
+
+-  Train:
+
+   .. code-block:: sh
+
+      $ openstack overcloud admin authorize
 
 A static inventory can be created using the available dynamic inventory script ``tripleo-ansible-inventory``.
 
@@ -2214,7 +2227,7 @@ Bibliography
 33. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 35. "Bootstrap." InfraRed Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
-36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
+36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed January 28, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
 37. "Using Already Deployed Servers." OpenStack Documentation. November 25, 2019. Accessed December 9, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
 38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 39. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
