@@ -1563,6 +1563,36 @@ Add a Compute Node
 
 [19]
 
+Remove a Compute Node
+~~~~~~~~~~~~~~~~~~~~~
+
+Disable the Nova services.
+
+.. code-block:: sh
+
+   $ . ~/overcloudrc
+   $ openstack compute service set <NODE> nova-compute --disable
+
+Delete the Compute node and include the templates used during deployment. [49]
+
+.. code-block:: sh
+
+   $ . ~/strackrc
+   $ openstack overcloud node delete --stack overcloud --templates ~/templates <NODE>
+
+Delete additional services related to the Compute node.
+
+.. code-block:: sh
+
+   $ . ~/overcloudrc
+   $ opentack compute service delete <NODE>
+   $ openstack network agent delete <NODE>
+   $ openstack resource provider delete <NDOE>
+
+Decrease the ``ComputeCount`` in the Heat parameters used for the deployment.
+
+[50]
+
 Rebooting the Cloud
 ~~~~~~~~~~~~~~~~~~~
 
@@ -2240,3 +2270,5 @@ Bibliography
 46. "Configuring High Availability." tripleo-docs. November 20, 2019. Accessed November 20, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/high_availability.html
 47. "Scale Undercloud with a Minion." tripleo-docs. May 3, 2019. Accessed December 3, 2019. https://specs.openstack.org/openstack/tripleo-specs/specs/train/undercloud-minion.html
 48. "Understanding undercloud/standalone stack updates." tripleo-docs. December 19, 2019. Accessed December 19, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/updating-stacks-notes.html
+49. "Deleting Overcloud Nodes." TripleO Documentation. January 30, 2020. Accessed January 30, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/delete_nodes.html
+50. "Scaling the Overcloud. Red Hat OpenStack Platform 13 Documentation. Accessed January 30, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-scaling_the_overcloud
