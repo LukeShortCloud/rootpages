@@ -246,6 +246,8 @@ For installing newer versions of Minishift, the old environment must be wiped fi
 
 [22]
 
+The default accounts are ``admin`` and ``developer``. The password is the same as the username.
+
 OpenShift Ansible
 ^^^^^^^^^^^^^^^^^
 
