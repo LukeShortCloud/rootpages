@@ -1368,65 +1368,145 @@ Cons:
       $ mkdir /home/stack/templates/
       $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml --output /home/stack/templates/
 
--  The control plane IP addresses should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration.
--  TripleO needs a hostname and port mapping to know what IP addresses to connect to for the deployment. The ``NeutronPublicInterface`` will be converted into a bridge. It will have static IP addressing set to what the ``fixed_ips``, ``cidr``, and ``ControlPlaneDefaultRoute`` are set to.
+-  TripleO needs a hostname and port mapping to know what IP addresses to connect to for the deployment. The ``NeutronPublicInterface`` will be converted into a bridge. It will have static IP addressing set to what the ``fixed_ips`` and ``cidr`` are set to. The ``ControlPlaneDefaultRoute`` will set the default route in ``/etc/sysconfig/network-scripts/route-br-ex``.
 
-   .. code-block:: yaml
+-  **Scenario 1: Use the Undercloud control plane network.**
 
-       ---
-       resource_registry:
-         # This allows the IPs for provisioning to be manually set via DeployedServerPortMap.
-         OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
-         # These resources allow the control plane / provisioning fixed IP addresses from DeployedServerPortMap to be used for services.
-         OS::TripleO::Network::Ports::ControlPlaneVipPort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
-         OS::TripleO::Network::Ports::RedisVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
-         OS::TripleO::Network::Ports::OVNDBsVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
-         # These role resources will convert the NeutronPublicInterface into the required br-ex brdige interface.
-         ## Open vSwitch
-         OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: templates/net-config-static-bridge.yaml
-         OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: templates/net-config-static-bridge.yaml
-         ## Linux Bridge
-         #OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: templates/net-config-linux-bridge.yaml
-         #OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: templates/net-config-linux-bridge.yaml
+   -  The control plane IP address of each Overcloud node should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration. By default this is ``192.168.24.0/24``.
 
-       parameter_defaults:
-         # The Overcloud NIC that has a default route.
-         ## Specify the exact network interface name.
-         ## Alternatively, use a Heat alias such as "nic1" (eth0) or "nic2" (eth1) if the NICs are named
-         ## differently on the Overcloud nodes.
-         NeutronPublicInterface: nic2
-         # The default route for the Overcloud nodes.
-         ControlPlaneDefaultRoute: <DEFAULT_ROUTE_IP_ADDRESS>
-         EC2MetadataIp: <UNDERCLOUD_IP>
-         DeployedServerPortMap:
-           <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
-             fixed_ips:
-               - ip_address: <CONTROLLER0_IPV4>
-             subnets:
-               # Example = 192.168.24.0/24
-               - cidr: <NETWORK_ADDRESS>/<PREFIX>
-           <CONTROLLER1_SHORT_HOSTNAME>-ctlplane:
-             fixed_ips:
-               - ip_address: <CONTROLLER1_IPV4>
-             subnets:
-               - cidr: <NETWORK_ADDRESS>/<PREFIX>
-           <CONTROLLER2_SHORT_HOSTNAME>-ctlplane:
-             fixed_ips:
-               - ip_address: <CONTROLLER2_IPV4>
-             subnets:
-               - cidr: <NETWORK_ADDRESS>/<PREFIX>
-           <COMPUTE0_SHORT_HOSTNAME>-ctlplane:
-             fixed_ips:
-               - ip_address: <COMPUTE0_IPV4>
-             subnets:
-               - cidr: <NETWORK_ADDRESS>/<PREFIX>
-           <COMPUTE1_SHORT_HOSTNAME>-ctlplane:
-             fixed_ips:
-               - ip_address: <COMPUTE1_IPV4>
-             subnets:
-               - cidr: <NETWORK_ADDRESS>/<PREFIX>
+      .. code-block:: yaml
 
--  If config-download will be used, hostname maps have to be defined. These must be mapped to the short hostname of the servers.
+          ---
+          resource_registry:
+            # This allows the IPs for provisioning to be manually set via DeployedServerPortMap.
+            OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
+            # These role resources will convert the NeutronPublicInterface into the required br-ex brdige interface.
+            ## Open vSwitch
+            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            ## Linux Bridge
+            ### Also include the `-e ~/templates/environments/neutron-linuxbridge.yaml` file
+            #OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-linux-bridge.yaml
+            #OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-linux-bridge.yaml
+
+          parameter_defaults:
+            # The Overcloud NIC that has a default route.
+            ## Specify the exact network interface name.
+            ## Alternatively, use a Heat alias such as "nic1" (eth0) or "nic2" (eth1) if the NICs are named
+            ## differently on the Overcloud nodes.
+            NeutronPublicInterface: nic2
+            # The default route for the Overcloud nodes.
+            ControlPlaneDefaultRoute: <DEFAULT_ROUTE_IP_ADDRESS>
+            EC2MetadataIp: <UNDERCLOUD_LOCAL_IP>
+            DeployedServerPortMap:
+              <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <CONTROLLER0_IPV4>
+                subnets:
+                  # Example = 192.168.24.0/24
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    # Example = 192.168.24.0/24
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <CONTROLLER1_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <CONTROLLER1_IPV4>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <CONTROLLER2_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <CONTROLLER2_IPV4>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <COMPUTE0_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <COMPUTE0_IPV4>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <COMPUTE1_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <COMPUTE1_IPV4>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+
+-  **Scenario 2: Use a custom network (not on the Undercloud control plane).**
+
+   -  The Undercloud must be configured to use a public host for API communication during provisioning. The only way to do that, for security reasons, is to enable a TLS certificate.
+
+      -  Set the ``undercloud_public_host`` in the ``undercloud.conf`` to an IP address or hostname that will be accessible by the Overcloud control plane IP addresses.
+      -  Create a YAML file with the Puppet Hiera data that forces the deployment to use the public API endpoint on the Undercloud instead of the internal one. Set the ``hieradata_override`` value to the file path of that YAML file in the ``undercloud.conf``.
+
+         .. code-block:: yaml
+
+           ---
+           heat_clients_endpoint_type: public
+           heat::engine::default_deployment_signal_transport: TEMP_URL_SIGNAL
+
+      -  Set the ``generate_service_certificate`` to ``true`` in the ``undercloud.conf``. This will generate a self-signed certificate.
+      -  Load the new Undercloud configuration by re-running ``openstack undercloud install``.
+
+   -  Set a custom control plane virtual IP that will be used by the HAProxy load balancer.
+
+      .. code-block:: yaml
+
+          ---
+          resource_registry:
+            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            # These resources will allow for a custom control plane virtual IP to be used for controller node services.
+            OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
+            OS::TripleO::Network::Ports::ControlPlaneVipPort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
+            OS::TripleO::Network::Ports::RedisVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+            OS::TripleO::Network::Ports::OVNDBsVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/noop.yaml
+
+          parameter_defaults:
+            NeutronPublicInterface: <NIC>
+            ControlPlaneDefaultRoute: <DEFAULT_ROUTE_IP_ADDRESS>
+            EC2MetadataIp: <UNDERCLOUD_PUBLIC_HOST>
+            DeployedServerPortMap:
+              control_virtual_ip:
+                fixed_ips:
+                  # This IP must be accessible by all of the Overcloud nodes and should be on the same network.
+                  # It must also must be a unique IP address and not conflict with any other IP addresses.
+                  - ip_address: <CONTROL_VIRTUAL_IP_ADDRESS>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <CONTROLLER0_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <CONTROLLER0_IPV4>
+                subnets:
+                  # Example = 192.168.122.0/24
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    # Example = 192.168.122.0/24
+                    - <NETWORK_ADDRESS>/<PREFIX>
+              <COMPUTE0_SHORT_HOSTNAME>-ctlplane:
+                fixed_ips:
+                  - ip_address: <COMPUTE0_IPV4>
+                subnets:
+                  - cidr: <NETWORK_ADDRESS>/<PREFIX>
+                network:
+                  tags:
+                    - <NETWORK_ADDRESS>/<PREFIX>
+
+-  If config-download will be used, hostname maps have to be defined. These must be mapped to the short hostname of the servers that relate to the port mappings.
 
    .. code-block:: yaml
 
@@ -1439,15 +1519,14 @@ Cons:
            overcloud-novacompute-0: <COMPUTE0_SHORT_HOSTNAME>
            overcloud-novacompute-1: <COMPUTE1_SHORT_HOSTNAME>
 
--  Ensure that the Overcloud nodes have an interface and IP address on the same provisioning network that the Undercloud uses. By default, the network is configured is ``192.168.24.0/24`` with the Undercloud API endpoints listening on ``192.168.24.1``. The endpoints have to be reachable via the Overcloud nodes.
--  Start the deployment of the Overcloud using at least these arguments and templates. Add the ``-e ~/templates/hostname-map.yaml`` argument for config-download to do the hostname mapping.
+-  Start the deployment of the Overcloud using at least these arguments and templates. The Heat templates defining the hostname and port maps must also be included.
 
    -  <= Stein:
 
       .. code-block:: sh
 
          $ openstack overcloud deploy --disable-validations --templates ~/templates \
-             -e  ~/templates/environments/deployed-server-environment.yaml \
+             -e ~/templates/environments/deployed-server-environment.yaml \
              -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
              -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
              -r /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml
@@ -1457,7 +1536,7 @@ Cons:
       .. code-block:: sh
 
          $ openstack overcloud deploy --disable-validations --templates ~/templates \
-             -e  ~/templates/environments/deployed-server-environment.yaml \
+             -e ~/templates/environments/deployed-server-environment.yaml \
              -r /usr/share/openstack-tripleo-heat-templates/roles_data.yaml
 
 **config-download (>= Rocky)**
@@ -2270,7 +2349,7 @@ Bibliography
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 35. "Bootstrap." InfraRed Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
 36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed January 28, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
-37. "Using Already Deployed Servers." OpenStack Documentation. November 25, 2019. Accessed December 9, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
+37. "Using Already Deployed Servers." OpenStack Documentation. January 30, 2020. Accessed February 4, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
 38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 39. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 40. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
