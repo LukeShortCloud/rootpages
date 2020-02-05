@@ -1931,7 +1931,7 @@ There are 6 different types of networks in a standard TripleO deployment using a
 -  Tenant = Default VLAN: 50
 -  Management = Default VLAN: 60.
 
-The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network. [31]
+The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network.
 
 Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
 
@@ -1983,6 +1983,13 @@ Configure bonding interface options, if applicable. Below is an example for LACP
 ::
 
    bonding_options: "mode=802.3ad lacp_rate=slow updelay=1000 miimon=100"
+
+Configure the bridge that will be used for public routers and floating IPs. Map it to a user-friendly name that will be used by Neutron resources.
+
+::
+
+   NeutronPhysicalBridge: br-ctlplane
+   NeutronBridgeMappings: datacentre:br-ctlplane
 
 [31]
 
@@ -2343,7 +2350,7 @@ Bibliography
 28. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/release_notes/Red_Hat_OpenStack_Platform-13-Release_Notes-en-US.pdf
 29. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
 30. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
-31. "Configuring Network Isolation." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/network_isolation.html
+31. "Configuring Network Isolation." TripleO Documentation. January 30, 2020. Accessed February 5, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/network_isolation.html
 32. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
 33. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
