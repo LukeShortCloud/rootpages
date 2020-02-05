@@ -2276,8 +2276,63 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 
 -  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utliziation (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
 -  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and seperate traffic using different subnets.
--  Use `this template <https://opendev.org/openstack/tripleo-heat-templates/src/commit/d2bcf0f530cade1ca65b90fbe91953dfb67958b0/ci/environments/scenario000-standalone.yaml>`__ (designed for Train) as a reference to prevent deploying unnecessary services on the Overcloud. That template will disable everything except Keystone.
 -  For virtual machines without nested virtualization, set the parameter ``NovaComputeLibvirtType`` to ``qemu``.
+-  Use `this template <https://opendev.org/openstack/tripleo-heat-templates/src/commit/d2bcf0f530cade1ca65b90fbe91953dfb67958b0/ci/environments/scenario000-standalone.yaml>`__ (designed for Train) as a reference to prevent deploying unnecessary services on the Overcloud. That template will disable everything except Keystone. Alternatively, remove services from the ``roles_data.yaml`` file.
+-  Disable Swift. Then use NFS as the back-end for Cinder, Glance, Gnocchi, and Nova based off of the configuration files from ``/usr/share/openstack-tripleo-heat-templates/environments/storage/*-nfs.yaml``. [51] Add the NFS mount option 'nosharecache' to address `this <https://bugzilla.redhat.com/show_bug.cgi?id=1513275>`__ bug.
+
+   .. code-block:: yaml
+
+     ---
+     # Disable Swift
+     resource_registry:
+       OS::TripleO::Services::SwiftProxy: OS::Heat::None
+       OS::TripleO::Services::SwiftStorage: OS::Heat::None
+       OS::TripleO::Services::SwiftRingBuilder: OS::Heat::None
+
+     parameter_defaults:
+       ControllerExtraConfig:
+         tripleo::haproxy::swift_proxy_server: false
+
+   .. code-block:: yaml
+
+      ---
+      # Enable NFS back-ends
+      resource_registry:
+        OS::TripleO::Services::CephMgr: ~/templates/docker/services/ceph-ansible/ceph-mgr.yaml
+        OS::TripleO::Services::CephMon: ~/templates/docker/services/ceph-ansible/ceph-mon.yaml
+        OS::TripleO::Services::CephOSD: ~/templates/docker/services/ceph-ansible/ceph-osd.yaml
+        OS::TripleO::Services::CephClient: ~/templates/docker/services/ceph-ansible/ceph-client.yaml
+
+      parameter_defaults:
+        # Cinder
+        CinderBackupBackend: nfs
+        CinderEnableIscsiBackend: false
+        CinderEnableNfsBackend: true
+        CinderEnableRbdBackend: false
+        CinderNfsMountOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:cinder_var_lib_t:s0'
+        CinderNfsServers: '<NFS_SERVER_IP>:/exports/cinder'
+        # Glance
+        GlanceBackend: file
+        GlanceNfsEnabled: true
+        GlanceNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:glance_var_lib_t:s0'
+        GlanceNfsShare: '<NFS_SERVER_IP>:/exports/glance'
+        # Gnocchi
+        GnocchiBackend: file
+        # Nova
+        NovaNfsEnabled: true
+        NovaEnableRbdBackend: false
+        NovaNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:nfs_t:s0'
+        NovaNfsShare: '<NFS_SERVER_IP>:/exports/nova'
+
+   -  TripleO will not create or manage an NFS server. If using the Undercloud as the NFS server, the firewall ports for the service will need to be opened.
+
+      .. code-block:: sh
+
+         $ sudo iptables -I INPUT -p tcp -m tcp --dport 111 -j ACCEPT
+         $ sudo iptables -I INPUT -p tcp -m tcp --dport 2049 -j ACCEPT
+         $ sudo iptables -I INPUT -p udp -m udp --dport 111 -j ACCEPT
+         $ sudo iptables -I INPUT -p udp -m udp --dport 2049 -j ACCEPT
+         $ sudo iptables-save | sudo tee /etc/sysconfig/iptables
 
 Troubleshooting
 ---------------
@@ -2383,3 +2438,4 @@ Bibliography
 48. "Understanding undercloud/standalone stack updates." tripleo-docs. December 19, 2019. Accessed December 19, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/updating-stacks-notes.html
 49. "Deleting Overcloud Nodes." TripleO Documentation. January 30, 2020. Accessed January 30, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/delete_nodes.html
 50. "Scaling the Overcloud. Red Hat OpenStack Platform 13 Documentation. Accessed January 30, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-scaling_the_overcloud
+51. "Chapter 19. Storage Configuration." Red Hat OpenStack Platform 13 Documentation. Accessed February 5, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/advanced_overcloud_customization/storage_configuration
