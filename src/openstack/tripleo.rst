@@ -2309,6 +2309,18 @@ Tips
 
    $ sudo hiera -c /etc/puppet/hiera.yaml mysql::server::root_password
 
+-  Enable various parameters to assist with debugging.
+
+   .. code-block:: yaml
+
+      ---
+      parameter_defaults:
+        ContainerHealthcheckDisabled: true
+        ContainerImagePrepareDebug: true
+        # Enable 'Debug' logging for all OpenStack services.
+        Debug: true
+        SELinuxMode: permissive
+
 History
 -------
 
