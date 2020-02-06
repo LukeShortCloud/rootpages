@@ -10,19 +10,25 @@ Supported operating systems: RHEL/CentOS >= 7, Fedora
 
 TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. That server is then used to create and manage a full production cloud called the Overcloud.
 
-TripleO is a collection of many services:
+TripleO is a collection of many services. These are the services that are used on the Undercloud [52]:
 
 -  Ansible = Used for deploying the Undercloud/Overcloud services.
+-  Ceilometer = Collects information about the Overcloud nodes.
 -  Glance = Image management used by Ironic.
 -  Heat = Heat parameters define the deployment settings.
+-  Horizon = Web dashboard for deploying an Overcloud.
 -  Ironic = Manages the bare-metal provisioning.
 -  Keystone = Authentication of OpenStack services.
 -  Kolla = Provides container images of OpenStack services.
+-  MariaDB = Database for OpenStack services.
+-  Mistral = Workflows are used to define and execute all of the deployment processes.
 -  Neutron = Manages the Overcloud networks.
 -  Nova = Manages the Overcloud nodes after provisioning.
 -  Paunch = Container state management.
--  Podman = Tool for managing CRI-O containers.
+-  Podman = Tool for managing CRI-O containers (previously was docker).
 -  Puppet = Configuration management.
+-  RabbitMQ = Messaing back-end for OpenStack services.
+-  Zaqar = A messaging service used by Mistral.
 
 In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
@@ -2439,3 +2445,4 @@ Bibliography
 49. "Deleting Overcloud Nodes." TripleO Documentation. January 30, 2020. Accessed January 30, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/delete_nodes.html
 50. "Scaling the Overcloud. Red Hat OpenStack Platform 13 Documentation. Accessed January 30, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-scaling_the_overcloud
 51. "Chapter 19. Storage Configuration." Red Hat OpenStack Platform 13 Documentation. Accessed February 5, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/advanced_overcloud_customization/storage_configuration
+52. "TripleO Architecture." TripleO Documentation. August 16, 2019. Accessed February 6, 2020. https://docs.openstack.org/tripleo-docs/latest/install/introduction/architecture.html
