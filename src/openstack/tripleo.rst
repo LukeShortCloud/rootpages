@@ -137,6 +137,118 @@ The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/
     $ cat /etc/rhosp-release
     Red Hat OpenStack Platform release 10.0.11 (Newton)
 
+Repositories
+------------
+
+Upstream
+~~~~~~~~
+
+The upstream TripleO project has three main repositories for each OpenStack release:
+
+.. csv-table::
+   :header: Name and Aliases, Testing Level, Use Case
+   :widths: 20, 20, 20
+
+   "General Availability (GA), Release, or Tested", High, Production
+   "Testing, Test, or Buildlogs", Medium, Pre-production
+   "Trunk, Current, Consistent, or Untested", Low, Development
+
+If installing on RHEL, it is required to enable additional repositories [40]:
+
+   -  RHEL 7:
+
+      .. code-block:: sh
+
+         $ sudo subscription-manager repos --enable rhel-7-server-rpms --enable rhel-7-server-rh-common-rpms --enable rhel-7-server-extras-rpms
+
+-  **GA**:
+
+   -  CentOS:
+
+      .. code-block:: sh
+
+         $ sudo yum install centos-release-openstack-${OPENSTACK_RELEASE}
+
+   -  RHEL:
+
+      .. code-block:: sh
+
+        $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-${OPENSTACK_RELEASE}/rdo-release-${OPENSTACK_RELEASE}-${RDO_RPM_RELEASE}.noarch.rpm
+
+-  **Testing**
+
+   -  CentOS:
+
+      .. code-block:: sh
+
+         $ sudo yum install centos-release-openstack-${OPENSTACK_RELEASE}
+         $ sudo yum-config-manager --enable centos-openstack-${OPENSTACK_RELEASE}-test
+
+   -  RHEL:
+
+      .. code-block:: sh
+
+        $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-${OPENSTACK_RELEASE}/rdo-release-${OPENSTACK_RELEASE}-${RDO_RPM_RELEASE}.noarch.rpm
+        $ sudo yum-config-manager --enable openstack-${OPENSTACK_RELEASE}-testing
+
+-  **Trunk**
+
+   -  Trunk builds are divided into three different categories [54]:
+
+      -  current = The latest successfully built packages from every individual RDO and OpenStack project.
+      -  consistent = A snapshot of the last current build when all of the packages were successfully built.
+      -  current-passed-ci (default for ``rdo-trunk-*-tested``) = A snapshot of the last consistent build that passed all of the CI tests.
+
+   -  RDO repository:
+
+      .. code-block:: sh
+
+        $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-${OPENSTACK_RELEASE}/rdo-release-${OPENSTACK_RELEASE}-${RDO_RPM_RELEASE}.noarch.rpm
+        $ sudo yum-config-manager --enable rdo-trunk-${OPENSTACK_RELEASE}-tested
+
+   -  Or ``tripleo-repos`` [22]:
+
+      .. code-block:: sh
+
+          $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
+          $ sudo tripleo-repos -b ${OPENSTACK_RELEASE} current-passed-ci
+
+   -  Or manually:
+
+      .. code-block:: sh
+
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/current-passed-ci/delorean.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/delorean-deps.repo
+
+[53]
+
+Downstream
+~~~~~~~~~~
+
+It is recommended to disable any existing repositories to avoid package conflicts.
+
+.. code-block:: sh
+
+   $ sudo subscription-manager repos --disable=*
+
+-  RHOSP 10 [26]:
+
+   .. code-block:: sh
+
+       $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-2-tools-rpms --enable=rhel-7-server-rhceph-2-mon-rpms --enable=rhel-7-server-rhceph-2-osd-rpms --enable=rhel-7-server-openstack-10-rpms
+
+-  RHOSP 13 [27]:
+
+   .. code-block:: sh
+
+       $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-3-tools-rpms --enable=rhel-7-server-rhceph-3-mon-rpms --enable=rhel-7-server-rhceph-3-osd-rpms --enable=rhel-7-server-openstack-13-rpms
+
+-  RHOSP 16 [55]:
+
+   .. code-block:: sh
+
+       $ sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms --enable=rhel-8-for-x86_64-appstream-rpms --enable=rhel-8-for-x86_64-highavailability-rpms --enable=ansible-2.8-for-rhel-8-x86_64-rpms --enable=openstack-16-for-rhel-8-x86_64-rpms --enable=fast-datapath-for-rhel-8-x86_64-rpms
+
 Deployment (Quick)
 ------------------
 
@@ -156,41 +268,13 @@ Hardware requirements [9]:
 Install
 ^^^^^^^
 
-First, install the required repositories for OpenStack.
-
-RHEL (common):
-
-.. code-block:: sh
-
-    $ sudo subscription-manager repos --enable rhel-7-server-rpms --enable rhel-7-server-rh-common-rpms --enable rhel-7-server-extras-rpms
-
-RHEL (RDO)
-
-.. code-block:: sh
-
-    $ sudo yum install https://repos.fedorapeople.org/repos/openstack/openstack-queens/rdo-release-queens-1.noarch.rpm
-
-RHEL (RHOSP):
-
-.. code-block:: sh
-
-   $ sudo subscription-manager repos --enable rhel-7-server-openstack-13-rpms --enable rhel-7-server-openstack-13-devtools-rpms
-
-[40]
-
-CentOS (RDO):
-
-.. code-block:: sh
-
-    $ sudo yum install centos-release-openstack-queens
-
-Disable NetworkManager:
+Disable NetworkManager. It is not compatible with Packstack.
 
 .. code-block:: sh
 
     $ sudo systemctl disable NetworkManager
 
-Finally, install the Packstack utility.
+Install the Packstack utility.
 
 .. code-block:: sh
 
@@ -699,35 +783,6 @@ Considerations before starting the Undercloud deployment:
 
 -  **Undercloud (Manual)**
 
-   -  Install the necessary repositories.
-
-      -  TripleO
-
-         -  Install the RDO Trunk / Delorean repositories.
-
-            .. code-block:: sh
-
-                $ sudo curl -L -o /etc/yum.repos.d/delorean-queens.repo https://trunk.rdoproject.org/centos7-queens/current/delorean.repo
-                $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-queens.repo https://trunk.rdoproject.org/centos7-queens/delorean-deps.repo
-
-         -  Install the latest Tripleo repository manager. This will allow newer minor versions of OpenStack packages to be installed in the future. [22]
-
-            .. code-block:: sh
-
-                $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
-                $ sudo tripleo-repos -b queens current
-
-      -  RHOSP 10 [26]:
-
-         .. code-block:: sh
-
-             $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-2-tools-rpms --enable=rhel-7-server-rhceph-2-mon-rpms --enable=rhel-7-server-rhceph-2-osd-rpms --enable=rhel-7-server-openstack-10-rpms
-
-      -  RHOSP 13 [27]:
-
-         .. code-block:: sh
-
-             $ sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-nfv-rpms --enable=rhel-7-server-rhceph-3-tools-rpms --enable=rhel-7-server-rhceph-3-mon-rpms --enable=rhel-7-server-rhceph-3-osd-rpms --enable=rhel-7-server-openstack-13-rpms
    -  It is recommended to create a user named "stack" with sudo
       privileges to manage the Undercloud.
 
@@ -2419,8 +2474,8 @@ Bibliography
 23. "TripleO: Using the fake_pxe driver with Ironic." Leif Madsen Blog. November 11, 2016. Accessed June 13, 2018. http://blog.leifmadsen.com/blog/2016/11/11/tripleo-using-the-fake_pxe-driver-with-ironic/
 24. "Bug 1535214 - baremetal commands that were deprecated in Ocata have been removed in Queens." Red Hat Bugzilla. Accessed June 13, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1535214
 25. "OpenStack lab on your laptop with TripleO and director." Tricky Cloud. November 25, 2015. Accessed June 13, 2018. https://trickycloud.wordpress.com/2015/11/15/openstack-lab-on-your-laptop-with-tripleo-and-director/
-26. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 10 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
-27. "DIRECTOR INSTALLATION AND USAGE." Red Hat OpenStack Platform 13 Support Access. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
+26. "Director Installation and Usage." Red Hat OpenStack Platform 10 Documentation. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/10/html/director_installation_and_usage/
+27. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. Accessed July 18, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/
 28. "Red Hat OpenStack Platform 13 Release Notes." Red Hat OpenStack Platform 13 Documentation. September 20, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/release_notes/Red_Hat_OpenStack_Platform-13-Release_Notes-en-US.pdf
 29. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
 30. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
@@ -2446,3 +2501,6 @@ Bibliography
 50. "Scaling the Overcloud. Red Hat OpenStack Platform 13 Documentation. Accessed January 30, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-scaling_the_overcloud
 51. "Chapter 19. Storage Configuration." Red Hat OpenStack Platform 13 Documentation. Accessed February 5, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/advanced_overcloud_customization/storage_configuration
 52. "TripleO Architecture." TripleO Documentation. August 16, 2019. Accessed February 6, 2020. https://docs.openstack.org/tripleo-docs/latest/install/introduction/architecture.html
+53. "Overview of available RDO repos." RDO Project. January 27, 2018. Accessed February 6, 2020. https://www.rdoproject.org/what/repos/
+54. "Workflow: RDO Trunk repo." RDO Project. May 24, 2019. Accessed February 6, 2020. https://www.rdoproject.org/what/trunk-repos/
+55. "Director Installation and Usage." Red Hat OpenStack Platform 16.0 Documentation. Accessed February 7, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/index
