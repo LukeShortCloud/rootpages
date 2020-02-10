@@ -1819,6 +1819,17 @@ The Queens release of TripleO featured optional usage of Ansible configuration m
 
    $ openstack overcloud deploy --templates ~/templates --config-download -e /usr/share/openstack-tripleo-heat-templates/environments/config-download-environment.yaml --overcloud-ssh-user heat-admin --overcloud-ssh-key ~/.ssh/id_rsa
 
+In Queens, for reverting back to using Heat for the deployment, remove the config-download arguments and include an environment file with these resource registries [56]:
+
+.. code-block:: yaml
+
+   ---
+   resource_registry:
+     OS::TripleO::SoftwareDeployment: OS::Heat::StructuredDeployment
+     OS::TripleO::DeploymentSteps: OS::Heat::StructuredDeploymentGroup
+     OS::Heat::SoftwareDeployment:  OS::TripleO::Heat::SoftwareDeployment
+     OS::Heat::StructuredDeployment: OS::TripleO::Heat::StructuredDeployment
+
 The latest playbooks and variables used to deploy the Overcloud can be downloaded to the current working directory.
 
 .. code-block:: sh
@@ -2509,3 +2520,4 @@ Bibliography
 53. "Overview of available RDO repos." RDO Project. January 27, 2018. Accessed February 6, 2020. https://www.rdoproject.org/what/repos/
 54. "Workflow: RDO Trunk repo." RDO Project. May 24, 2019. Accessed February 6, 2020. https://www.rdoproject.org/what/trunk-repos/
 55. "Director Installation and Usage." Red Hat OpenStack Platform 16.0 Documentation. Accessed February 7, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/index
+56. "Ensure config-download mappings are unset on ceph-upgrade." OpenDev openstack/tripleo-heat-templates. April 27, 2018. Accessed February 10, 2020. https://opendev.org/openstack/tripleo-heat-templates/commit/24469e3c02747b7b6de6d61fcf2a8b9be67b370b
