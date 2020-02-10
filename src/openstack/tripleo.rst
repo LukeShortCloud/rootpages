@@ -202,9 +202,11 @@ If installing on RHEL, it is required to enable additional repositories [40]:
 
       -  current = The latest successfully built packages from every individual RDO and OpenStack project.
       -  consistent = A snapshot of the last current build when all of the packages were successfully built.
-      -  current-passed-ci (default for ``rdo-trunk-*-tested``) = A snapshot of the last consistent build that passed all of the CI tests.
+      -  current-passed-ci = A snapshot of the last consistent build that passed all of the `CI promotion jobs <https://ci.centos.org/view/rdo/view/promotion-pipeline/job/rdo_trunk-promote-train-current-tripleo/>`__.
 
-   -  RDO repository:
+         -  current-tripleo-rdo is a symlink to current-passed-ci.
+
+   -  RDO repository (current-passed-ci):
 
       .. code-block:: sh
 
