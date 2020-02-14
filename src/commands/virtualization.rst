@@ -62,6 +62,8 @@ Package: docker
    "run -d <IMAGE>", "start a container in the background"
    "run -d <IMAGE> tail -f /dev/null", "start a container and keep it running (by running a never-ending command)"
    "run --net=<NAME> --ip <IP_ADDRESS> -p <HYPERVISOR_PORT>:<CONTAINER_PORT>", "start a container using a specific network, assigning a static IP, and setup port forwarding"
+   "run --mount type=bind,source=<DIR_ON_HYPERVISOR>,target=<DIR_IN_CONTAINER>", start a container with a bind mount to access the part of the hyeprvisor's file system
+   "--volume <DIR_ON_HYPERVISOR>:<DIR_IN_CONTAINER>:z", mount a volume with SELinux labelling enabled
    "stop", "shutdown a container"
    "stop $(docker ps -aq)", "stop all containers"
    "logs", "view the standard output from a running docker container"
@@ -71,6 +73,7 @@ Package: docker
    "{-f,--force}", "force an action"
    "inspect", "view detailed information about a container"
    "network create --subnet <CIDR> <NAME>", "create a new docker network using a specific network CIDR and name"
+   cp <SRC> <CONTAINER>:<DEST>, copy a file or directory from the hypervisor to a container
 
 .. csv-table::
    :header: Example, Explanation
