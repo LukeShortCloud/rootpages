@@ -142,6 +142,121 @@ The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/
     $ cat /etc/rhosp-release
     Red Hat OpenStack Platform release 10.0.11 (Newton)
 
+Historical Milestones
+---------------------
+
+Upstream
+~~~~~~~~
+
+-  Havana
+
+   -  `The first release of Spinal Stack. <https://spinal-stack.readthedocs.io/en/latest/changelog/havana/index.html>`__
+
+-  Icehouse
+
+   -  `The last release of Spinal Stack before it was rebranded to TripleO (OpenStack-on-OpenStack) for the Juno release. <https://spinal-stack.readthedocs.io/en/latest/changelog/icehouse/index.html>`__
+
+-  Mitaka
+
+   -  `Introduced the TripleO UI dashboard for helping to deploy an Overcloud. <https://specs.openstack.org/openstack/tripleo-specs/specs/mitaka/tripleo-ui.html>`__
+
+-  Ocata
+
+   -  `OpenStack services on the Overcloud are containerized using containers built by Kolla (except for Cinder, Manila, and Neutron). <https://specs.openstack.org/openstack/tripleo-specs/specs/ocata/containerize-tripleo-overcloud.html>`__
+
+-  Pike
+
+   -  config-download (Ansible content) was created as an alternative to Heat for deploying the OpenStack services on the Overcloud.
+
+-  Queens
+
+   -  `Introduced Fast Forward Upgrades (FFUs). The first supported FFU is from Newton straight to Queens. <https://specs.openstack.org/openstack/tripleo-specs/specs/queens/fast-forward-upgrades.html>`__
+   -  All OpenStack services on the Overcloud have been containerized.
+   -  Experimental support for using containerized OpenStack services on the Undercloud.
+
+-  Rocky
+
+   -  instack-undercloud is no longer used for installing the Undercloud. The Undercloud now reuses the same workflows used by the Overcloud deploy, update, and upgrade process.
+   -  Undercloud services are now containerized by default.
+   -  `config-download is now the default deployment method. <https://blueprints.launchpad.net/tripleo/+spec/config-download-default>`__
+   -  config-download now supports using ceph-ansible for managing Ceph clusters.
+   -  `Introduced Standalone deployments (an all-in-one Overcloud that does not require an Undercloud). <https://blueprints.launchpad.net/tripleo/+spec/all-in-one>`__
+   -  Deprecated the TripleO UI.
+
+-  Stein
+
+   -  `Container management can now use podman instead of docker. <https://specs.openstack.org/openstack/tripleo-specs/specs/stein/podman.html>`__
+   -  `Removed the TripleO UI. <https://docs.openstack.org/tripleo-docs/latest/install/deprecated/basic_deployment_ui.html>`__
+
+-  Train
+
+   -  Fast Forward Upgrade from Queens to Train.
+   -  `The first upstream release to support CentOS 8. <https://blogs.rdoproject.org/2019/10/rdo-centos-stream/>`__
+   -  `Minion node support for scaling the Undercloud resources for Heat and Ironic. <https://specs.openstack.org/openstack/tripleo-specs/specs/train/undercloud-minion.html>`__
+
+-  Ussuri (work-in-progress)
+
+   -  `Replaced Paunch with Ansible for container management. <https://review.opendev.org/#/c/700738/>`__
+   -  `Removed Undercloud dependencies on Glance, Neutron, and Nova by having a Nova-less deployment process. <https://blueprints.launchpad.net/tripleo/+spec/nova-less-deploy>`__ `MetalSmith <https://github.com/openstack/metalsmith>`__ can now used to provision the Overcloud nodes separately from the Overcloud deployment. TripleO treats all deployments as pre-deployed servers.
+   -  `Removed Mistral and Zaqar from the Undercloud. The Overcloud deployment workflow now uses Ansible. <https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/mistral-to-ansible.html>`__
+   -  `Provided standardized Ansible playbooks and roles for operators to manage their TripleO clouds. <https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/tripleo-operator-ansible.html>`__
+
+[57][58]
+
+Downstream
+~~~~~~~~~~
+
+-  RHOSP 2
+
+   -  `The first OpenStack product released by Red Hat. <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/2/html/Release_Notes/index.html>`__
+
+-  RHOSP 3
+
+   -  The first RHOSP release to include the `Foreman OpenStack Manager <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/3/html/Deployment_Guide_Foreman_Technology_Preview/index.html>`__ to automate the deployment of servers and installation of OpenStack services.
+   -  This was the first RHOSP release to have official support.
+
+-  RHOSP 5
+
+   -  `Introduced Packstack as an easy way to deploy a single-node proof-of-concept cloud using Puppet. <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Getting_Started_Guide/index.html>`__.
+   -  `The first release to support RHEL 7 <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/5/html/Technical_Notes/index.html>`__.
+   -  `Red Hat acquired eNovance, the company that created TripleO (previously named Spinal Stack), in June of 2014. <https://www.redhat.com/en/about/press-releases/red-hat-acquire-enovance-leader-openstack-integration-services>`__
+
+-  RHOSP 6
+
+   -  `Introduced TripleO as another proof-of-concept deployment tool. It uses an all-in-one OpenStack cloud (the Undercloud) to deploy a production cloud (the Overcloud). <https://access.redhat.com/articles/1320563>`__
+
+-  RHOSP 7
+
+   -  `TripleO, now known as Director downstream and temporarily renamed to the RDO Manager upstream, replaces the Foreman OpenStack Manager as the deployment tool. <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_openstack_platform/7/html/director_installation_and_usage/index>`__
+
+-  RHOSP 8
+
+   -  `Automated minor updates and major upgrades. <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/8/html/upgrading_red_hat_openstack_platform/index>`__
+
+-  RHOSP 10
+
+   -  The first long-life release to receive up to 5 years of support.
+
+-  RHOSP 13
+
+   -  RHOSP's second long-life release.
+   -  Introduced Fast Forward Upgrade path from RHOSP 10 to 13.
+
+-  RHOSP 14
+
+   -  The TripleO UI has been deprecated.
+
+-  RHOSP 15
+
+   -  The first release to support RHEL 8.
+
+-  RHOSP 16
+
+   -  RHOSP's third long-life release.
+   -  Introduced Fast Forward Upgrade path from RHOSP 13 to 16.
+
+[1]
+
 Repositories
 ------------
 
@@ -2467,7 +2582,7 @@ History
 Bibliography
 ------------
 
-1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed February 8, 2020. https://access.redhat.com/support/policy/updates/openstack/platform
+1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed February 17, 2020. https://access.redhat.com/support/policy/updates/openstack/platform
 2. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 3. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
 4. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
@@ -2523,3 +2638,5 @@ Bibliography
 54. "Workflow: RDO Trunk repo." RDO Project. May 24, 2019. Accessed February 6, 2020. https://www.rdoproject.org/what/trunk-repos/
 55. "Director Installation and Usage." Red Hat OpenStack Platform 16.0 Documentation. Accessed February 7, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/index
 56. "Ensure config-download mappings are unset on ceph-upgrade." OpenDev openstack/tripleo-heat-templates. April 27, 2018. Accessed February 10, 2020. https://opendev.org/openstack/tripleo-heat-templates/commit/24469e3c02747b7b6de6d61fcf2a8b9be67b370b
+57. "Tripleo Project Specifications." TripleO Documentation. October 16, 2019. Accessed February 17, 2020. https://specs.openstack.org/openstack/tripleo-specs/
+58. "Blueprints for tripleo." tripleo Launchpad. Accessed February 17, 2020. https://blueprints.launchpad.net/tripleo
