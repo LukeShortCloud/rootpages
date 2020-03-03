@@ -4,6 +4,7 @@
 
    authentication
    bootloaders
+   chromebook
    file_systems
    graphics
    linux
