@@ -1,6 +1,8 @@
 Chromebook
 ==========
 
+.. contents:: Table of Contents
+
 Linux
 -----
 
