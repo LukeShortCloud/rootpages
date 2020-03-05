@@ -22,7 +22,7 @@ Maintenance Phases <= Newton
 Maintenance Phases >= Ocata
 
 -  Maintained = 18 months of stability and security fixes and official releases from the OpenStack Foundation.
--  Extended Maintenance (em) = Stability and security fixes by community contributors. There are no tagged minor releases. The code will be treated as a rolling minor release.
+-  Extended Maintenance (em) = Stability and security fixes by community contributors. There are no tagged minor releases. The code will be treated as a rolling minor release. A project can stay in extended maintenance for as long as it wants.
 -  Unmaintained = 6 months of no community contributions.
 -  End-of-life (eol) = The last version of that OpenStack release to be archived.
 
@@ -51,7 +51,6 @@ Releases:
 15. Ocata
 
     -  Release: 2017-02-22
-    -  EOL: TBD [1]
     -  Goals [3]:
 
        -  Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]
@@ -62,7 +61,6 @@ Releases:
 16. Pike
 
     -  Release: 2017-08-30
-    -  EOL: TBD [1]
     -  Goals [4]:
 
        -  Convert most of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.
@@ -73,7 +71,6 @@ Releases:
 17. Queens
 
     -  Release: 2018-02-28
-    -  EOL: TBD [1]
     -  Goals [5]:
 
        -  Remove the need for the access control list "policy" files by having default values defined in the source code.
@@ -85,7 +82,6 @@ Releases:
 18. Rocky
 
     -  Release: 2018-08-30
-    -  EOL: TBD [1]
     -  Goals [53]:
 
        -  Make configuration options mutable. This avoids having to restart services whenever the configuration is updated.
@@ -97,7 +93,6 @@ Releases:
 19. Stein
 
     -  Release: 2019-04-10
-    -  EOL: TBD [1]
     -  Goals [54]:
 
        -  Use Python 3 by default. Python 2.7 will only be tested using unit tests.
@@ -109,7 +104,6 @@ Releases:
 20. Train
 
     -  Release: 2019-10-16
-    -  EOL: TBD [1]
     -  Goals [64]:
 
        -  Fully support IPv6 environments where IPv4 is not available or used.
@@ -118,6 +112,8 @@ Releases:
 
     -  `New Features <https://www.openstack.org/news/view/438/openstack-train-release-extends-security-and-data-protection-adds-new-ai-and-ml-support>`__
     -  `Release Highlights <https://releases.openstack.org/train/highlights.html>`__
+
+[1]
 
 Services
 ~~~~~~~~
