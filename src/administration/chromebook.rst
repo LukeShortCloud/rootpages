@@ -30,7 +30,7 @@ Enabling this mode will powerwash (reset) the device. Start the Chromebook in Re
 
 Use the command ``chromeos-setdevpasswd`` to enable the sudo password for the ``chronos`` user in the ``Secure Shell App``. Use the password that was set when enabling debugging features to access the ``root`` account.
 
--  Using ``Secure Shell App``:
+-  Using ``Secure Shell App`` by pressing ``CTRL`` + ``ALT`` + ``t``:
 
 ::
 
@@ -51,7 +51,6 @@ Boot
 
 When booting a Chromebook in developer mode, there are a few options to choose from. By default, a screen will appear for 30 seconds saying ``OS verification is OFF``. It will beep and continue to boot into local storage if no boot option is specified via keyboard shortcuts. Pressing the ``<SPACE>`` bar will powerwash the Chromebook.
 
-
 -  Internal storage = ``CTRL`` + ``d``.
 -  External storage = ``CTRL`` + ``u``.
 -  Legacy boot loader (SeaBIOS) = ``CTRL`` + ``l`` (L).
@@ -64,7 +63,63 @@ Linux
 Crostini
 ~~~~~~~~
 
-Crostini is an official set of technologies used to securely run Linux (using a LXC container) on ChromeOS. By default, it runs Debian 10 Buster as of ChromeOS 80. [3] It does not require developer mode. Enable it by going into ChromeOS settings and selecting ``Linux (Beta)``. [1]
+Crostini is an official set of technologies used to securely run Linux on ChromeOS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of ChromeOS 80. [3] It does not require developer mode. Enable it by going into ChromeOS settings and selecting ``Linux (Beta)``. [1]
+
+Container Management
+^^^^^^^^^^^^^^^^^^^^
+
+With developer mode enabled, the ``termina`` VM can be manually edited with the ``vmc`` command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.
+
+-  Manually start and connect to the ``termina`` VM.
+
+::
+
+   crosh> vmc start termina
+   (termina) chronos@localhost ~ $
+
+-  Manually connect to an already running ``termina`` VM.
+
+::
+
+   crosh> vsh termina
+   (termina) chronos@localhost ~ $
+
+-  View all of the created containers. By default, there should only be the ``penguin`` container.
+
+::
+
+   (termina) chronos@localhost ~ $ lxc ls
+
+-  A list of all LXC images can be found `here <https://us.images.linuxcontainers.org/>`__ or by running:
+
+::
+
+   (termina) chronos@localhost ~ $ lxc image list images:
+
+-  Create new containers:
+
+::
+
+   (termina) chronos@localhost ~ $ lxc launch images:<IMAGE_NAME>/<IMAGE_VERSION>/amd64 <CONTAINER_NAME>
+
+::
+
+   (termina) chronos@localhost ~ $ lxc launch images:centos/8/amd64 centos8
+
+-  Enter a container [9]:
+
+::
+
+   (termina) chronos@localhost ~ $ lxc exec <CONTAINER_NAME> /bin/bash
+   [root@<CONTAINER_NAME> ~]# cat /etc/os-release
+
+-  The VM can be reset by stopping, deleting, and then starting it again. If the ``termina`` VM does not exist, ``vmc`` will create it. [10]
+
+::
+
+   crosh> vmc stop termina
+   crosh> vmc destroy termina
+   crosh> vmc start termina
 
 File Sharing
 ^^^^^^^^^^^^
@@ -82,3 +137,5 @@ Bibliography
 6. "Turn on debugging features." Chromebook Help. Accessed March 4, 2020. https://support.google.com/chromebook/answer/6204310?hl=en
 7. "Debug Button Shortcuts." Chromium OS Docs. Accessed March 4, 2020. https://chromium.googlesource.com/chromiumos/docs/+/master/debug_buttons.md
 8. "Debugging Features." Chromium OS. Accessed March 4, 2020. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
+9. "LXD Getting started - command line." Linux containers. Accessed March 7, 2020. https://linuxcontainers.org/lxd/getting-started-cli/
+10. "Crostini Setup Guide." Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide
