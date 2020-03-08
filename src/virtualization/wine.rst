@@ -135,7 +135,7 @@ Many forks of the upstream Wine project exist.
 
 -  `CrossOver <https://www.codeweavers.com/products/more-information/source>`__ = The commercial product of Wine made by CodeWeavers which employees the primary Wine developers.
 -  `Lutris <https://github.com/lutris/lutris/wiki/Wine-Builds>`__ = A combination of patches from Proton, Proton GE, and TKG.
--  `Proton <https://github.com/ValveSoftware/Proton>`__ = Officially developed by CodeWeavers and funded by Valve, it aims to provide better compatibility and performance for gaming.
+-  `Proton <https://github.com/ValveSoftware/Proton>`__ = Officially developed by CodeWeavers and funded by Valve, it aims to provide better compatibility and performance for gaming. It bundles DXVK, Vkd3d, Mono, FAudio, fsync, missing fonts, and OpenVR.
 -  `Proton-tkg <https://github.com/Tk-Glitch/PKGBUILDS/tree/master/proton-tkg>`__ = A highly configurable set of scripts for building Wine with Proton patches.
 -  `Proton GE <https://github.com/GloriousEggroll/proton-ge-custom/releases>`__ = The latest development version of Wine with Staging and Proton patches. It also uses `protonfixes <https://github.com/simons-public/protonfixes>`__ to apply workarounds for certain games.
 -  `Staging <https://github.com/wine-staging/wine-staging>`__ = Experimental patches that are either too large/complex, lack tests, or are hacky workarounds for specific applications. The goal is to provide a place to test patches as they continue to be worked on to be merged into upstream Wine.
@@ -148,6 +148,7 @@ Various different frameworks exist for helping to install Windows applications o
 -  `Lutris <https://lutris.net/>`__ = An open source gaming platform that helps with installing emulators and Windows applications. It uses JSON and YAML structures to define how to install applications using Python helper functions.
 -  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses bash scripts to help with installing Windows applications.
 -  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official successor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installing applications.
+-  `Steam Play <https://steamcommunity.com/games/221410/announcements/detail/1696055855739350561>`__ = Uses Proton, a forked version of Wine, to natively run Windows games on Linux using the Steam gaming platform.
 -  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
 
 PlayOnLinux 4
@@ -161,6 +162,11 @@ Important directories:
 * ``wineprefix/`` = Isolated Wine prefixes for each game are stored here.
 
 `Versions of Wine from Lutris <https://lutris.net/files/runners/>`__ can be downloaded and extracted into the ``wine/linux-<ARCHITECTURE>/`` directory. These will become available for use in PlayOnLinux. Lutris builds stable, development, staging, and custom patched versions of Wine. [6]
+
+Steam Play
+~~~~~~~~~~
+
+Steam reports the operating system in use for each sale of a developer's game. For counting as a Linux purchase, it can be bought on the Steam client for Linux and not played. Alternatively, it has to be played on Linux (even with Proton/Steam Play) more than any other platform in the first two weeks. The operating system reported after the end of the two weeks is final and will never change. [7]
 
 History
 -------
@@ -179,3 +185,4 @@ Bibliography
 4. "Wine User's Guide." WineHQ. September 15, 2017. Accessed October 29, 2017. https://wiki.winehq.org/Wine\_User%27s\_Guide
 5. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Debug\_Channels
 6. "Lutris Wine Versions." PlayOnLinux Forum. April 3, 2018. Accessed June 16, 2018. https://www.playonlinux.com/en/topic-15838-Lutris\_Wine\_Versions.html
+7. "Valve officially confirm a new version of 'Steam Play' which includes a modified version of Wine." GamingOnLinux. August 21, 2018. Accessed March 8, 2020. https://www.gamingonlinux.com/articles/valve-officially-confirm-a-new-version-of-steam-play-which-includes-a-modified-version-of-wine.12400
