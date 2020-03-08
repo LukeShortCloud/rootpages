@@ -123,6 +123,16 @@ Mount options:
    up the space from a deleted file for use with new files.
 -  nodiscard = Disables TRIM. [9]
 
+Swap
+~~~~
+
+Swap is a special file system that cannot be mounted. It is used by the operating system to temporarily read and write files to when the RAM is full. It prevents out-of-memory (oom) errors but it leads to a huge performance penalty because device storage is typically a lot slower than RAM. It is recommended to allocate more RAM instead of relying on swap wherever possible. According to `this poll <https://opensource.com/article/19/2/swap-space-poll>`__, most users prefer to allocate this amount of swap based on the available system RAM:
+
+-  ``<RAM>`` = ``<SWAP>``
+-  <= 2GB = x2 RAM
+-  2-8GB = RAM
+-  > 8GB = 8GB
+
 RAIDs
 -----
 
