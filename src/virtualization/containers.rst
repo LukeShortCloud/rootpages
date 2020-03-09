@@ -191,9 +191,28 @@ Container Management Platforms
 OpenShift
 ~~~~~~~~~
 
-The OpenShift Container Platform (OCP) is a Red Hat product based on Google's Kubernetes. [9] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [10]
+Versions
+^^^^^^^^
 
-The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of OpenShift. [15]
+The Red Hat OpenShift Container Platform (OCP) is an enterprise product based on Google's Kubernetes. [9] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [10]
+
+The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [15]
+
+Below is a list of RHOCP and OKD versions that correspond with the upstream Kubernetes release. The RHOCP 4.0 release was skipped and used for internal testing only. RHOCP 4 introduced Operators and OperatorHub. It also requires all Master nodes to be installed on Red Hat CoreOS. [26]
+
+.. csv-table::
+   :header: RHOCP/OKD, Kubernetes
+   :widths: 20, 20
+
+   4.4, 1.17
+   4.3, 1.16
+   4.2, 1.14
+   4.1, 1.13
+   3.11, 1.11
+   3.10, 1.10
+   3.9, 1.9
+
+Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> + 3`` is released, the ``<RHOCP_RELEASE>`` soon becomes end-of-life. [27]
 
 Minishift
 ^^^^^^^^^
@@ -684,3 +703,6 @@ Bibliography
 23. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
 24. "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
 25. "Drivers." Kubernetes CSI Developer Documentation. Accessed April 11, 2019. https://kubernetes-csi.github.io/docs/drivers.html
+26. "Releases Notes. OpenShift Container Platform 4.1 Documentation. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/release_notes/index
+27. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed March 9, 2020. https://access.redhat.com/support/policy/updates/openshift
+
