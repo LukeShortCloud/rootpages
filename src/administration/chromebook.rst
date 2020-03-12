@@ -126,6 +126,51 @@ File Sharing
 
 The ``Files`` app will list ``Linux files``. That will load the visible contents of the ``/home/$USER/`` directory in the container. Directories from the ChromeOS hypervisor, such as ``Downloads``, can also be shared with the container. In the ``Files`` app, right-click on the directory and select ``Share with Linux``. It will be available in the container at ``/mnt/chromeos/MyFiles/``. [2]
 
+GPU Acceleration
+^^^^^^^^^^^^^^^^
+
+Crostini supports OpenGL graphics hardware acceleration via the use of `Virgil 3d <https://virgil3d.github.io/>`__. This allows the passthrough of OpenGL calls from the virtual machine ``termina`` to the host system. Vulkan passthrough support is planned to be released in 2020. [11] For gaming, it is recommended to enable these flags:
+
+-  chrome://flags#crostini-gpu-support = Enable Virgil 3d support. It is enabled by default as of Chrome OS 80 [12].
+-  chrome://flags#scheduler-configuration = Enable hyper-threading on Chrome OS (if available on the processor). This will help improve the performance of games by allowing the virtual machine to use more processing power.
+-  chrome://flags#exo-pointer-lock = Lock the mouse pointer to any application running in Crostini. Games that use the mouse for movement require this.
+
+Verify that the processor count has doubled.
+
+::
+
+   user@penguin:~$ grep -c ^processor /proc/cpuinfo
+   4
+
+Verify that Virgil 3d is being recognized by OpenGL.
+
+::
+
+   user@penguin:~$ sudo apt-get install mesa-utils
+   user@penguin:~$ glxinfo | grep "OpenGL renderer"
+   OpenGL renderer string: virgl
+
+Steam
+'''''
+
+Steam requires a handful of dependencies. Enable the proprietary repository to install Steam, enable 32-bit packages, and install recommended dependencies for Wine. These will be required to run native Linux games or Windows games running with Proton (Valve's forked version of Wine) [13].
+
+::
+
+   user@penguin~$ sudo usermod -a -G video,audio $USER
+   user@penguin~$ sudo nano /etc/apt/sources.list.d/non-free.list
+   deb http://deb.debian.org/debian buster main contrib non-free
+   deb http://security.debian.org/ buster/updates main contrib non-free
+   user@penguin~$ sudo dpkg --add-architecture i386
+   user@penguin~$ sudo apt-get install --install-recommends wine
+   user@penguin~$ sudo apt-get install libgl1-mesa-dri:i386 libgl1-mesa-glx:i386 libglapi-mesa:i386 steam
+
+Proton uses DXVK to translate DirectX 9, 10, and 11 to Vulkan. Because there is currently no Vulkan hardware acceleration, start Steam and have it use the WineD3D translation layer for DirectX 9, 10, 11 to OpenGL.
+
+::
+
+   user@penguin:~$ PROTON_USE_WINED3D=1 steam
+
 Bibliography
 ------------
 
@@ -139,3 +184,6 @@ Bibliography
 8. "Debugging Features." Chromium OS. Accessed March 4, 2020. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
 9. "LXD Getting started - command line." Linux containers. Accessed March 7, 2020. https://linuxcontainers.org/lxd/getting-started-cli/
 10. "Crostini Setup Guide." Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide
+11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. February 12, 2020. Accessed March 11, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
+12. "CHROME OS 80 MAKES GRAPHIC INTENSIVE LINUX APPS SO MUCH BETTER." Chrome Unboxed. March 10, 2020. Accessed March 11, 2020. https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/
+13. "How to install Steam." r/Crostini Reddit. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
