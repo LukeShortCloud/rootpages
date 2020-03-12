@@ -57,6 +57,26 @@ When booting a Chromebook in developer mode, there are a few options to choose f
 
 [7]
 
+Terminal
+~~~~~~~~
+
+The ``Secure Shell App`` is the official way to access a shell terminal from within Chrome OS. With the Google Chrome web browser open, press ``CTRL`` + ``ALT`` + ``t`` to open the app. It will start in ``crosh`` (the Chrome Shell).
+
+View all of the available commands in ``crosh`` and their help descriptions.
+
+::
+
+   crosh> help
+   crosh> help_advanced
+
+Open a full shell terminal in developer mode to access more commands.
+
+::
+
+   crosh> shell
+
+The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: ``CTRL`` + ``SHIFT`` + ``p``. Go to ``Sounds`` > ``Alert bell sound (URI)`` and then remove the string.
+
 Linux
 -----
 
