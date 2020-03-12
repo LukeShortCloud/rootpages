@@ -964,12 +964,15 @@ Considerations before starting the Undercloud deployment:
 
       .. code-block:: ini
 
+         [DEFAULT]
+         undercloud_admin_host = 192.168.100.3
+         undercloud_public_host = 192.168.100.2
          [ctlplane-subnet]
          cidr = 192.168.100.0/24
-         dhcp_start = 192.168.100.2
-         dhcp_end = 192.168.100.254
+         dhcp_start = 192.168.100.4
+         dhcp_end = 192.168.100.150
          gateway = 192.168.100.1
-         inspection_iprange = 192.168.100.2,192.168.100.254
+         inspection_iprange = 192.168.100.201,192.168.100.250
          masquerade = true
 
    -  Deploy the Undercloud. Anytime the configuration for the Undercloud changes, this command needs to be re-ran to update the installation.
@@ -1555,7 +1558,7 @@ Cons:
 
 -  **Scenario 1: Use the Undercloud control plane network.**
 
-   -  The control plane IP address of each Overcloud node should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration. By default this is ``192.168.24.0/24``.
+   -  The control plane IP address of each Overcloud node should be within the range of the ``network_cidr`` value defined in the ``undercloud.conf`` configuration. By default this is ``192.168.24.0/24`` with 192.168.24.{1,2,3} all being reserved/used by the Undercloud.
 
       .. code-block:: yaml
 
@@ -1579,6 +1582,7 @@ Cons:
             ## differently on the Overcloud nodes.
             NeutronPublicInterface: nic2
             # The default route for the Overcloud nodes.
+            # Example: 192.168.24.1
             ControlPlaneDefaultRoute: <DEFAULT_ROUTE_IP_ADDRESS>
             EC2MetadataIp: <UNDERCLOUD_LOCAL_IP>
             DeployedServerPortMap:
