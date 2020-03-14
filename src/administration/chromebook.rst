@@ -202,6 +202,11 @@ Proton uses DXVK to translate DirectX 9, 10, and 11 to Vulkan. Because there is 
 
    user@penguin:~$ PROTON_USE_WINED3D=1 steam
 
+History
+-------
+
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/chromebook.rst>`__
+
 Bibliography
 ------------
 
