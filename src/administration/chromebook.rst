@@ -3,6 +3,17 @@ Chromebook
 
 .. contents:: Table of Contents
 
+Support
+-------
+
+Chromebooks recieve anywhere between 5 and 8 years of Chrome OS updates [14]. When it becomes end-of-life, the operating system will continue to work but will also become vulnerable to unpatched security flaws. A list of every Chromebooks' update expiration date can be found `here <https://support.google.com/chrome/a/answer/6220366?hl=en>`__.
+
+There are three update channels to choose from for Chrome OS updates. This can be changed by going to: ``Settings`` > ``About Chrome OS`` > ``Additional details`` > ``Channel`` > ``Change channel`` [15].
+
+-  Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.
+-  Beta = Minor updates every week. Major upgrades every 6 weeks.
+-  Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with ``Developer Mode`` which is different.
+
 Keyboard Shortcuts
 ------------------
 
@@ -207,3 +218,5 @@ Bibliography
 11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. February 12, 2020. Accessed March 11, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
 12. "CHROME OS 80 MAKES GRAPHIC INTENSIVE LINUX APPS SO MUCH BETTER." Chrome Unboxed. March 10, 2020. Accessed March 11, 2020. https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/
 13. "How to install Steam." r/Crostini Reddit. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
+14. "Auto Update Policy." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chrome/a/answer/6220366?hl=en
+15. "Switch between stable, beta & dev software." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chromebook/answer/1086915?hl=en
