@@ -202,6 +202,76 @@ Proton uses DXVK to translate DirectX 9, 10, and 11 to Vulkan. Because there is 
 
    user@penguin:~$ PROTON_USE_WINED3D=1 steam
 
+Change the Default Operating System
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The default Linux container ``penguin`` can be changed to use a different operating system other than Debian. The container requires `cros-container-guest-tools <https://chromium.googlesource.com/chromiumos/containers/cros-container-guest-tools/>`__ which provides a set of tools and services for Crostini integration. Wayland is optionally required to run graphical applications.
+
+**All**
+
+Stop and rename the original container.
+
+::
+
+   crosh> vsh termina
+   (termina) chronos@localhost ~ $ lxc stop penguin
+   (termina) chronos@localhost ~ $ lxc rename penguin penguin-original
+   (termina) chronos@localhost ~ $ lxc launch images:<IMAGE_NAME>/<IMAGE_VERSION> penguin
+
+Create a user using the same username as the Chrome OS user (which is normally the first part of the e-mail address used to log in: ``<CHROME_OS_USER>@gmail.com``). This user should have privileged access via the use of ``sudo``.
+
+::
+
+   (termina) chronos@localhost ~ $ lxc exec penguin /bin/bash
+   [root@penguin ~]# useradd <CHROME_OS_USER>
+   [root@penguin ~]# mkdir /etc/sudoers.d/
+   [root@penguin ~]# echo '<CHROME_OS_USER> ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/<CHROME_OS_USER>
+   [root@penguin ~]# chmod 0440 /etc/sudoers.d/<CHROME_OS_USER>
+
+**archlinux/current**
+
+First install a package manager such as `yay <https://github.com/Jguer/yay>`__. This is required to install packages from the Arch Linux User Repository (AUR).
+
+::
+
+   [root@penguin ~]# yay -S cros-container-guest-tools-git
+   [root@penguin ~]# pacman -S sudo wayland xorg-server-xwayland
+
+[16]
+
+**centos/8**
+
+::
+
+   [root@penguin ~]# dnf install epel-release sudo xorg-x11-server-Xwayland
+   [root@penguin ~]# dnf install cros-guest-tools --enablerepo=epel-testing
+
+[17]
+
+**fedora/31**
+
+::
+
+   [root@penguin ~]# dnf install sudo xorg-x11-server-Xwayland
+   [root@penguin ~]# dnf install cros-guest-tools sudo --enablerepo=updates-testing
+
+[18]
+
+**All**
+
+Enable the required services and then restart the virtual machine to load the new ``penguin`` container integration.
+
+::
+
+   [root@penguin ~]# systemctl enable cros-sftp
+   [root@penguin ~]# su - <CHROME_OS_USER>
+   [<CHROME_OS_USER>@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommlier@1 sommelier-x@1 cros-garcon cros-pulse-config
+
+::
+
+   crosh> vmc stop termina
+   crosh> vmc start termina
+
 History
 -------
 
@@ -222,6 +292,9 @@ Bibliography
 10. "Crostini Setup Guide." Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide
 11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. February 12, 2020. Accessed March 11, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
 12. "CHROME OS 80 MAKES GRAPHIC INTENSIVE LINUX APPS SO MUCH BETTER." Chrome Unboxed. March 10, 2020. Accessed March 11, 2020. https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/
-13. "How to install Steam." r/Crostini Reddit. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
+13. "How to install Steam." Reddit r/Crostini. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
 14. "Auto Update Policy." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chrome/a/answer/6220366?hl=en
 15. "Switch between stable, beta & dev software." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chromebook/answer/1086915?hl=en
+16. "Chrome OS devices/Crostini." Arch Linux Wiki. February 17, 2020. Accessed March 14, 2020. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
+17. "How to run CentOS instead of Debian." Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux
+18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
