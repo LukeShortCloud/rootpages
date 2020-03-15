@@ -24,13 +24,22 @@ Chromebooks come with modified keyboards that do not include the traditional lay
 -  Page Down: ``<SEARCH>`` + ``<DOWN_ARROW>``
 -  Home (start of line): ``<SEARCH>`` + ``<LEFT_ARROW>``
 -  End (end of line): ``<SEARCH>`` + ``<RIGHT_ARROW>``
+-  Delete (backspace in reverse): ``<SEARCH>`` + ``backspace``
 -  Caps Lock: ``<SEARCH>`` + ``<ALT>``
 -  Function keys 1 through 12: ``<SEARCH>`` + (``1`` THROUGH ``=``)
 -  (Move to the next word): ``SHIFT`` + ``CTRL`` + (``<LEFT_ARROW>`` OR ``<RIGHT_ARROW>``)
--  (Dock a window to the left or right): ``<SEARCH>`` + (``[`` OR ``]``)
+-  (Dock a window to the left or right): ``ALT`` + (``[`` OR ``]``)
+-  (Dock a window to the top or bottom)*: ``ALT`` + ``SHIFT`` + (``<UP_ARROW>`` OR ``<DOWN_ARROW>``)
 -  (Adjust the keyboard backlight): ``ALT`` + (``<BRIGHTNESS_DOWN>`` OR ``<BRIGHTNESS_UP>``)
+-  (View all windows and virtual desks): ``[]||``
+-  (Create a new virtual desk): ``SHIFT`` + ``<SEARCH>`` + ``+``
+-  (Close a virtual desk. All windows will be moved to the next available virtual desk): ``SHIFT`` + ``<SEARCH>`` + ``-``
+-  (Move to the next virtual desk): ``<SEARCH>`` + (``[`` OR ``]``)
+-  (Move to the next word): ``CTRL`` + (``<LEFT_ARROW>`` OR ``<RIGHT_ARROW>``)
 
 [4]
+
+\*Requires the `Windows Manager for Google Chrome <https://chrome.google.com/webstore/detail/windows-manager-for-googl/gophpkegccafhjahoijdembdkbjpiflb>`__ extension.
 
 Developer Mode
 --------------
