@@ -125,7 +125,7 @@ These are useful graphics translation layers for running Windows games using Win
 -  `D9VK <https://github.com/Joshua-Ashton/d9vk>`__ = This has been merged directly into DXVK. DirectX 9 to Vulkan.
 -  `DXVK <https://github.com/doitsujin/dxvk>`__ = DirectX 9, 10, and 11 to Vulkan.
 -  `MoltenVK (mac OS) <https://moltengl.com/moltenvk/>`__ = Vulkan to Metal.
--  `WineD3D <https://www.winehq.org/>`__ = DirectX <= 11 to OpenGL.
+-  `WineD3D <https://www.winehq.org/>`__ = DirectX <= 11 to `OpenGL 4.4 <https://source.winehq.org/git/wine.git/commitdiff/0db4d1c251d293333e2721a78d6156008a90ff6f>`__. Older versions of OpenGL will still work but will not expose as many working features of DirectX.
 -  `Vkd3d <https://wiki.winehq.org/Vkd3d>`__ = DirectX 12 to Vulkan.
 
 Forks
