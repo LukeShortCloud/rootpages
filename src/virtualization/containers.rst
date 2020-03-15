@@ -325,29 +325,28 @@ Download the latest Minikube release from `here <https://github.com/kubernetes/m
 
 .. code-block:: sh
 
-   $ MINIKUBE_VER=0.33.1
+   $ MINIKUBE_VER=1.8.2
    $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/minikube-linux-amd64 -o /usr/local/bin/minikube
    $ sudo chmod +x /usr/local/bin/minikube
 
-Install the the KVM2 virtualization driver.
+Optionally install a driver such as KVM2. The ``minikube`` installer will automatically download it if it cannot be found.
 
 .. code-block:: sh
 
    $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
    $ sudo chmod +x /usr/local/bin/docker-machine-driver-kvm2
 
-Deploy Kubernetes using the specified version.
+Deploy Kubernetes. Optionally speicfy the Kubernetes version to use. If using the ``kvm2`` driver as the root user, the ``--force`` argument is also required.
 
 .. code-block:: sh
 
-   $ minikube get-k8s-versions
-   $ minikube start --vm-driver kvm2 --kubernetes-version <VERSION>
+   $ minikube start --vm-driver kvm2 --kubernetes-version ${KUBERNETES_VERSION}
 
 Install kubectl for managing Kubernetes.
 
 .. code-block:: sh
 
-   $ sudo curl -L https://storage.googleapis.com/kubernetes-release/release/<VERSION>/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
+   $ sudo curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
    $ sudo chomd +x /usr/local/bin/kubectl
 
 [14]
