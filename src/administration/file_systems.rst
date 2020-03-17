@@ -77,7 +77,7 @@ Known limitations:
       df's output. [7]
 
       -  ``$ sudo btrfs balance start /``
-      -  ``$ sudo btrfs defragment -r /``
+      -  ``$ sudo btrfs filesystem defrag -r /``
 
 -  The ``btrfs-convert`` command used for converting an Ext3 or Ext4 filesystems to Btrfs was rewritten in btrfs-progs 4.6. Older versions of this may not work reliably. [29]
 
