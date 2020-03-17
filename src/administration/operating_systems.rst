@@ -159,7 +159,7 @@ Top Distributions
 
 This is an extremely biased list of the best distribution for each use case.
 
--  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. GalliumOS
+-  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. GalliumOS
 -  Alternative to macOS = elementary OS
 -  Alternative to Windows = Zorion OS
 -  Bleeding edge (stable) = Manjaro
@@ -185,6 +185,17 @@ This is an extremely biased list of the best distribution for each use case.
 -  Stable = 1. RHEL 2. CentOS 3. Debian
 -  Touchscreen = Fedora
 -  USB drive = Puppy Linux
+-  Desktop environments:
+
+   -  Cinnamon = Linux Mint
+   -  Deepin = Deepin
+   -  Enlightenment = Bodhi Linux
+   -  GNOME = Fedora
+   -  KDE = KDE neon
+   -  LXDE/LXQt = Mageia
+   -  MATE = Solus MATE
+   -  Pantheon = elementary OS
+   -  Xfce = Xubuntu
 
 History
 -------
