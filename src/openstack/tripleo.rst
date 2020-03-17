@@ -705,9 +705,9 @@ These steps apply to both Undercloud and Standalone cloud deployments.
 InfraRed 2
 ~~~~~~~~~~
 
-Infrared uses Ansible playbooks to automate deploying downstream RHOSP packages and upstream RDO packages.
+InfraRed uses Ansible playbooks to automate deploying downstream RHOSP packages and upstream RDO packages.
 
-Install Infrared into a Python 2 virtual environment.
+Install InfraRed into a Python 2 virtual environment.
 
 .. code-block:: shell
 
@@ -715,9 +715,9 @@ Install Infrared into a Python 2 virtual environment.
    $ source ~/venv_infrared/bin/activate
    $ git clone https://github.com/redhat-openstack/infrared.git
    $ cd infrared
-   $ pip2 install .
+   $ pip2 install --user .
 
-As of 2019, these are the officially supported plugins in Infrared.
+As of 2019, these are the officially supported plugins in InfraRed.
 
 -  provision
 
@@ -786,14 +786,26 @@ Install a provision plugin, such as virsh, along with the required plugins for d
    -  host-memory-overcommit = Default: ``False``.
    -  **host-key** = Required argument. Edit with any value, OR override with CLI: --host-key=<option>
    -  host-user = Default: ``root``.
-   -  **topology-nodes** = The number of each node to deploy. Minimal: ``"undercloud:1,controller:1,compute:1"``.
+   -  **topology-nodes** = The number of each node to deploy.
+
+      -  Minimal: ``"ovb_undercloud:1,controller:1,compute:1"``.
+      -  Minimal with OpenStack Virtual Baremetal (OVB) support for provisioning: ``"ovb_undercloud:1,ovb_controller:1,ovb_compute:1"``.
 
 -  Deploy the virtual machines that will be used by the lab.
 
-   .. code-block:: sh
+   -  Virsh provisioner:
 
-      $ infrared virsh --host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --host-memory-overcommit yes --topology-nodes "undercloud:1,controller:1,compute:1"
+      .. code-block:: sh
 
+         $ infrared virsh --host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --host-memory-overcommit yes --topology-nodes "ovb_undercloud:1,controller:1,compute:1"
+
+   -  OpenStack provisioner:
+
+      .. code-block:: sh
+
+         $ infrared openstack --cloud ${OS_CLOUD} --prefix <OPTIONAL_RESOURCE_PREFIX> --key-file ~/.ssh/id_rsa --topology-network 3_nets_ovb --topology-nodes "ovb_undercloud:1,ovb_controller:1,ovb_compute:1" --anti-spoofing False --provider-network <EXTERNAL_PROVIDER_NETWORK> --image <RHEL_OR_CENTOS> --username <SSH_USER>
+
+   -  An Ansible inventory of the hosts will be generated here: ``~/.infrared/.workspaces/active/hosts``.
 
 -  Deploy the Undercloud.
 
@@ -801,14 +813,14 @@ Install a provision plugin, such as virsh, along with the required plugins for d
 
       .. code-block:: sh
 
-         $ RHOSP_VERSION=14
+         $ RHOSP_VERSION=16
          $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --build ${PUDDLE_VERSION} --images-task rpm
 
    -  RDO:
 
       .. code-block:: sh
 
-         $ RDO_VERSION=rocky
+         $ RDO_VERSION=train
          $ infrared tripleo-undercloud --version ${RDO_VERSION} --images-task=import --images-url=https://images.rdoproject.org/${RDO_VERSION}/rdo_trunk/current-tripleo/stable/
 
 -  Deploy the Overcloud.
@@ -2471,6 +2483,12 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 
    -  Controller: 4 vCPUs and 16GB RAM
    -  Comupte: 2 vCPUs and 2GB RAM
+
+-  If using OpenStack as the lab infrastructure, disable port security to allow any MAC and IP address to be used. Also disable security groups to avoid further connection issues.
+
+   ::
+
+      $ openstack port set --disable-port-security --no-security-group <PORT>
 
 -  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utliziation (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
 -  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and seperate traffic using different subnets.
