@@ -317,11 +317,9 @@ If installing on RHEL, it is required to enable additional repositories [40]:
 
       -  current = The latest successfully built packages from every individual RDO and OpenStack project.
       -  consistent = A snapshot of the last current build when all of the packages were successfully built.
-      -  current-passed-ci = A snapshot of the last consistent build that passed all of the `CI promotion jobs <https://ci.centos.org/view/rdo/view/promotion-pipeline/job/rdo_trunk-promote-train-current-tripleo/>`__.
+      -  current-tripleo-rdo = A snapshot of the last consistent build that passed all of the `CI promotion jobs <https://ci.centos.org/view/rdo/view/promotion-pipeline/job/rdo_trunk-promote-train-current-tripleo/>`__. This is also known as current-passed-ci.
 
-         -  current-tripleo-rdo is a symlink to current-passed-ci.
-
-   -  RDO repository (current-passed-ci):
+   -  RDO repository (current-tripleo-rdo):
 
       .. code-block:: sh
 
@@ -333,14 +331,29 @@ If installing on RHEL, it is required to enable additional repositories [40]:
       .. code-block:: sh
 
           $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
-          $ sudo tripleo-repos -b ${OPENSTACK_RELEASE} current-passed-ci
+          $ sudo tripleo-repos -b ${OPENSTACK_RELEASE} current-tripleo-rdo
 
    -  Or manually:
 
       .. code-block:: sh
 
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/current-passed-ci/delorean.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/current-tripleo-rdo/delorean.repo
           $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/delorean-deps.repo
+
+   -  Create a container image prepare file that uses the ``current-tripleo`` (default) or ``current-tripleo-rdo`` tag. Configure the ``undercloud.conf`` to use this file via the ``container_images_file`` parameter. Configure the Overcloud to use it by adding it as another Heat environment template: ``openstack overcloud deploy --templates -e ~/containers-prepare-parameters.yaml``.
+
+      .. code-block:: sh
+
+         $ openstack tripleo container image prepare default --output-env-file ~/containers-prepare-parameters.yaml
+         $ ${EDITOR} ~/containers-prepare-parameters.yaml
+
+      .. code-block:: yaml
+
+         ---
+         parameter_defaults:
+           ContainerImagePrepare:
+              - set:
+                  tag: current-tripleo-rdo
 
 [53]
 
