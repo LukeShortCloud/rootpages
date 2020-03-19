@@ -22,6 +22,7 @@ Tutorials
    -  `Go by Example <https://gobyexample.com/>`__
    -  `Golang Training <https://github.com/go-training/training>`__
    -  `go-packages <https://github.com/radovskyb/go-packages>`__
+   -  `Go Source Code <https://golang.org/src/>`__ = Contains a ``example_test.go`` file for each library.
 
 -  Videos:
 
@@ -116,6 +117,19 @@ Common formats:
 -  %T = The data type of a variable.
 
 [3]
+
+Arithmetic Math
+---------------
+
+These basic arithmetic operators are available to be used without any external libraries:
+
+-  Add = ``+``
+-  Subtract = ``-``
+-  Multiply = ``*``
+-  Divide = ``/``
+-  Remainder = ``%``
+
+A number can become the opposite sign (negative or positive) by placing a ``-`` in front of the variable name. [8] For more advanced functionality, use the `math <https://golang.org/pkg/math/>`__ library.
 
 Functions
 ---------
@@ -287,7 +301,7 @@ If
 Switch
 ~~~~~~
 
-The ``switch`` statement is a simplified ``if`` statement to check the value of a variable. Only the first mathced case will be executed.
+The ``switch`` statement is a simplified ``if`` statement to check the value of a variable. Only the first matched case will be executed.
 
 .. code-block:: go
 
@@ -495,6 +509,23 @@ These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``F
 -  WriteAt
 -  WriteString
 
+math
+~~~~
+
+-  Abs = Absolute value.
+-  Max = Maximum. Return the bigger number.
+-  Min = Minimum. Return the smaller number.
+-  Power = Exponential power.
+-  Round = Round to the nearest whole number.
+-  Sqrt = Square root.
+-  `rand <https://golang.org/pkg/math/rand/>`__ = The random number generation library. [9]
+
+   -  Seed = The seed used for helping to generate different random numbers. Defaults to 1.
+   -  New(<SEED>) = Create a new ``rand`` object, optionally providing a seed.
+   -  ``<NUMBER_DATA_TYPE>`` = The random library supports creating a random number in any related data type. For example, ``Int()``.
+
+[10]
+
 History
 -------
 
@@ -510,3 +541,6 @@ Bibliography
 5. "Golang Control Flow Statements: If, Switch and For." CalliCoder. January 29, 2018. Accessed March 8, 2019. https://www.callicoder.com/golang-control-flow/
 6. "The Evolution of Go: A History of Success." QArea Blog. March 20, 2018. Accessed October 14, 2019. https://qarea.com/blog/the-evolution-of-go-a-history-of-success
 7. "Working with Files in Go." DevDungeon. August 23, 2015. Accessed October 15, 2019. https://www.devdungeon.com/content/working-files-go
+8. "How To Do Math in Go with Operators." How To Code in Go. May 15, 2019. Accessed March 19, 2020. https://www.digitalocean.com/community/tutorials/how-to-do-math-in-go-with-operators
+9. "Package math." The Go Programming Language. Accessed March 19, 2020. https://golang.org/pkg/math/
+10. "Package rand." The Go Programming Language. Accessed March 19, 2020. https://golang.org/pkg/math/rand/
