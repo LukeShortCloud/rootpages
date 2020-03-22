@@ -56,20 +56,40 @@ Dockerfile
 
 docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it's started.
 
+**Dockerfile Commands**
+
 -  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
--  ADD <SOURCE> <DESTINATION> = Add files from the local file system to the container. This will also download URLs and extract archives (unlike ``COPY``).
+-  ADD <SOURCE> <DESTINATION> = Similar in functionality to ``COPY``. This should only be used to download URLs or extract archives.
 -  CMD = The default command to run in the container, if ``ENTRYPOINT`` is not defined. If ``ENTRYPOINT`` is defined, then ``CMD`` will serve as default arguments to ``ENTRYPOINT`` that can be overridden from the docker CLI.
+-  COPY <SOURCE> <DESINTATION> = Copy a file or directory to/from the container image. It is recommended to use this method instead of ``ADD`` for simple operations.
 -  **ENTRYPOINT** = The default command to run in this container. Arguments from the docker CLI will be passed to this command and override the optional ``CMD`` arguments. Use if this container is supposed to be an executable.
 -  ENV <VARIABLE>=<VALUE> = Create shell environment variables.
 -  EXPOSE <PORT>/<PROTOCOL> = Connect to certain network ports.
 -  **FROM** = The original image to create this container from.
--  **MAINTAINER** = The name of the maintainer of this image.
+-  LABEL = A no-operation string that helps to identify the image. One or more labels can be specified.
+-  MAINTAINER (deprecated) = The name or e-mail address of the image maintainer.
+
+   -  Use ``LABEL maintainer=<EMAIL_ADDRESS>`` instead.
+
 -  RUN = A command that can be ran once in the container. Use the ``CMD <COMMAND> <ARG1> <ARG2>`` format to open a shell or ``CMD ['<COMMAND>', '<ARG1>', '<ARG2>']`` to execute without a shell.
 -  USER <UID>:<GID> = Configure a UID and/or GID to run the container as.
 -  VOLUME <PATH> = A list of paths inside the container that can mount to an external persistent storagedevice (for example, for storing a database).
 -  WORKDIR = The working directory where commands will be executed from.
 
 [23]
+
+**Storage Space**
+
+Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Dockerfile operation creates a writable/container layer ontop of the previous layer. Each layer takes up more space.
+
+Lower space usage by [28]:
+
+-  Using a small image such as `alpine <https://hub.docker.com/_/alpine>`__.
+-  Combining all ``RUN`` commands into one statement. Chain them together with ``&&`` to ensure that each command succeeds before moving onto the next one.
+-  Cleaning package manager cache (if applicable).
+-  Using the `docker image build --squash <https://docs.docker.com/engine/reference/commandline/image_build/>`__  or `buildah bud --squash <https://github.com/containers/buildah/blob/master/docs/buildah-bud.md>`__ command to consolidate all additional layers when creating a new image. Use `docker-squash <https://github.com/goldmann/docker-squash>`__ to consolidate an existing image.
+
+A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [29]
 
 Networking
 ~~~~~~~~~~
@@ -705,4 +725,5 @@ Bibliography
 25. "Drivers." Kubernetes CSI Developer Documentation. Accessed April 11, 2019. https://kubernetes-csi.github.io/docs/drivers.html
 26. "Releases Notes. OpenShift Container Platform 4.1 Documentation. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/release_notes/index
 27. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed March 9, 2020. https://access.redhat.com/support/policy/updates/openshift
-
+28. "Five Ways to Slim Docker Images." Codacy Blog. December 14, 2017. Accessed March 21, 2020. https://blog.codacy.com/five-ways-to-slim-your-docker-images/
+29. "Best practices for writing Dockerfiles." Docker Documentation. Accessed March 21, 2020. https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
