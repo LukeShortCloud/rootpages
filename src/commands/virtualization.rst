@@ -26,7 +26,9 @@ A utility used to build new container images as non-privileged users.
    rm, remove a container
    rmi, remove an image
    --format=docker, use the docker format instead of the default OCI format
-   bud -f <DOCKER_FILE> -t <NAME> ., "build a new image from a specified Dockerfile, give it a name, and save to the local directory"
+   "{bud,build-using-dockerfile Dockerfile}", build an image from a Dockerfile; this mirrors the usage of `docker image build`
+   bud -f <DOCKER_FILE> -t <IMAGE_NAME>:<TAG_NAME> ., "build a new image from a specified Dockerfile, give it a named tag, and save to the local directory"
+   bud --squash, build an image and consolidate as many layers as possible
    push --tls-verify=false <IMAGE> docker://127.0.0.1:5000/<USER>/<IMAGE_NAME>:<TAG>, push the container image to a local private image registry (use the official docker ``registry`` image to run a local server)
 
 .. csv-table::
@@ -72,7 +74,9 @@ Package: docker
    "{images|ps} {-q,--quiet,--quiet=true}", "list only IDs for images or running containers"
    "{-f,--force}", "force an action"
    "inspect", "view detailed information about a container"
-   "network create --subnet <CIDR> <NAME>", "create a new docker network using a specific network CIDR and name"
+   image build --squash <DOCKERFILE> <IMAGE_NAME>, build a container image from a Dockerfile and consolidate as many layers as possible
+   image build -f <DOCKERFILE>, build an image using a Dockerfile in a different directory (the current working directory will be used by the build instead of where the Dockerfile is located)
+   "network create --subnet <CIDR> <NETWORK_NAME>", "create a new docker network using a specific network CIDR and name"
    cp <SRC> <CONTAINER>:<DEST>, copy a file or directory from the hypervisor to a container
 
 .. csv-table::
