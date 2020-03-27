@@ -556,6 +556,28 @@ location of the patch file.
 
 [19]
 
+Troubleshooting
+^^^^^^^^^^^^^^^
+
+Error Messages
+''''''''''''''
+
+-  The ``custom_macro`` macro does not exist. Find and install it to ``/usr/lib/rpm/macros.d/``.
+-  Alternatively, if the message complains about a native macro instead, it could be used in the wrong section.
+
+.. code-block:: sh
+
+   $ rpmbuild
+
+::
+
+   + echo foo bar
+   + %custom_macro
+   /var/tmp/rpm-tmp.0Sev9I: line 324: fg: no job control
+   error: Bad exit status from /var/tmp/rpm-tmp.0Sev9I (%prep)
+
+[27]
+
 PKGBUILD
 --------
 
@@ -675,3 +697,4 @@ Bibliography
 24. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html
 25. "Red Hat Developer Tools software repository not available." Red Hat Community Discussions. November 14, 2017. Accessed February 26, 2018. https://access.redhat.com/discussions/3155021
 26. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
+27. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
