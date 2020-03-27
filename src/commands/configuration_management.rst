@@ -151,8 +151,11 @@ A testing framework for Ansible that uses virtual test environments.
 
    init role -r, create a new role with support for Molecule
    test, "create the test environments, run tests, and then destroy the environment"
-   test -s, run a full test on a specific scenario
+   test -s <SCENARIO>, run a full test on a specific scenario
+   test --parallel, run tests in parallel
+   test --destroy never, run tests but do not destroy the environment when done
    test --all, run a full test on all of the scenarios in the molecule/ directory
+   test -d <DRIVER>, run tests with a different driver
    create, create the environment
    destroy, delete the environment
    converge, create the environment and run all of the tests
