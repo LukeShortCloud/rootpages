@@ -1092,7 +1092,7 @@ Overcloud
 
    -  All
 
-      -  name = The name of the node.
+      -  name = A descriptive name of the node.
       -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "fake_pxe".
       -  capabilities = Set custom capabilities. For example, the profile and boot options can be defined here: ``"profile:compute,boot_option:local"``.
 
@@ -1106,59 +1106,57 @@ Overcloud
 
       -  arch = The processor architecture. The standard is "x86_64".
       -  cpu = The number of processor cores.
-      -  mac = A list of MAC addresses that should be managed by Ironic.
+      -  mac = A list of MAC addresses that should be used for the PXE boot. This normally only contains one value.
       -  memory = The amount of RAM, in MiB.
       -  disk = The amount of disk space, in GiB. Set this to be 1 GiB less than the actual reported storage size. That will prevent partitioning issues during the Overcloud deployment.
 
-   -  Example instackenv (JSON):
+   -  ``instackenv.json`` syntax:
 
       .. code-block:: json
 
           {
               "nodes": [
                   {
-                      "name": "control00",
+                      "name": "<DESCRIPTIVE_NAME>",
                       "pm_type": "fake_pxe",
                       "arch": "x86_64",
-                      "cpu": "12",
-                      "memory": "32768",
-                      "disk": "256",
-                      "mac": [
-                          "AA:BB:CC:DD:EE:FF"
-                      ],
+                      "cpu": "<CPU_CORES>",
+                      "memory": "<RAM_MB>",
+                      "disk": "<DISK_GB>",
                       "capabilities": "profile:control,boot_option:local"
                   },
                   {
-                      "name": "compute00",
+                      "name": "<DESCRIPTIVE_NAME>",
                       "pm_type": "pxe_ipmitool",
-                      "pm_user": "IPMIUSER",
-                      "pm_password": "password123",
-                      "pm_addr": "10.10.10.11",
+                      "pm_user": "<IPMI_USER>",
+                      "pm_password": "<IPMI_PASSWORD>",
+                      "pm_addr": "<IPMI_IP_ADDRESS>",
+                      "mac": [
+                          "AA:BB:CC:DD:EE:FF"
+                      ],
                       "capabilities": "profile:compute,boot_option:local"
                   }
               ]
           }
 
-   -  Example instackenv (YAML):
+   -  ``instackenv.yaml`` syntax:
 
       .. code-block:: yaml
 
          ---
          nodes:
-           - name: controller00
+           - name: <DESCRIPTIVE_NAME>
              pm_type: fake_pxe
              arch: x86_64
-             cpu: 12
-             memory: 32768
-             disk: 256
-             mac:
-               - AA:BB:CC:DD:EE:FF
+             cpu: <CPU_CORES>
+             memory: <RAM_MB>
+             disk: <DISK_GB>
              capabilities: "profile:control,boot_option:local"
-           - name: compute00
+           - name: <DESCRIPTIVE_NAME>
              pm_type: pxe_ipmitool
-             pm_user: IPMIUSER
-             pm_password: pasword123
-             pm_addr: 10.10.10.11
+             pm_user: <IPMI_USER>
+             pm_password: <IPMI_PASSWORD>
+             pm_addr: <IPMI_IP_ADDRESS>
              capabilities: "profile:compute,boot_option:local"
 
    -  Virtual lab environment:
