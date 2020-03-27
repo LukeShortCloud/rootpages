@@ -243,13 +243,14 @@ Common git procedures:
 
 [6]
 
--  Sync a fork with the original upstream repository.
+-  Sync the ``master`` branch of a fork with the original upstream repository.
 
     .. code-block:: sh
 
        $ git fetch upstream
        $ git checkout origin/master
-       $ git merge upstream/master
+       $ git rebase upstream/master
+       $ git push origin master
 
 [14]
 
