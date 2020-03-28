@@ -97,6 +97,39 @@ Open a full shell terminal in developer mode to access more commands.
 
 The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: ``CTRL`` + ``SHIFT`` + ``p``. Go to ``Sounds`` > ``Alert bell sound (URI)`` and then remove the string.
 
+Chromebrew
+----------
+
+Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires ``Developer Mode`` to be enabled.
+
+Install:
+
+.. code-block:: sh
+
+   $ curl -Ls git.io/vddgY | bash
+
+Usage:
+
+.. code-block:: sh
+
+   $ crew {build,const,download,files,help,install,list,postinstall,reinstall,remove,search,update,upgrade,whatprovides}
+   $ crew help <ARGUMENT>
+
+Find and install a package. The `full list of packages <https://github.com/skycocker/chromebrew/tree/master/packages>`__ is listed in it's GitHub repository. Over one thousand packages are available.
+
+.. code-block:: sh
+
+   $ crew search <PACKAGE>
+   $ crew install [--build-from-source] <PACKAGE>
+
+Installing a package will remove other packages that are already installed. Use the ``--keep`` argument to prevent uninstalling them:
+
+.. code-block:: sh
+
+   $ crew install --keep <INSTALLED_PACKAGE> <NEW_PACKAGE>
+
+[19]
+
 Linux
 -----
 
@@ -307,3 +340,4 @@ Bibliography
 16. "Chrome OS devices/Crostini." Arch Linux Wiki. February 17, 2020. Accessed March 14, 2020. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
 17. "How to run CentOS instead of Debian." Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux
 18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
+19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
