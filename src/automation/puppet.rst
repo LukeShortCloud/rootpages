@@ -8,7 +8,7 @@ Introduction
 
 Puppet is an automation and configuration management tool. It can be used to push or pull updates to a system. At a minimum, a system needs the ``puppet-agent`` installed to utilize Puppet. A master server/cluster is not required.
 
-This tool fundamentally relies on resources to manage the state of different things on a system. These resources can be bundled into classes, manifests, and modules. In acsending order, these are the various different sections that can make up a module.
+This tool fundamentally relies on resources to manage the state of different things on a system. These resources can be bundled into classes, manifests, and modules. In ascending order, these are the various different sections that can make up a module.
 
 -  Resource = Describes the desired state of something (file, package, service, etc.)
 
@@ -240,7 +240,7 @@ Attributes:
    -  held = A package will only be updated if another package resource requires it to be.
    -  present or installed
    -  purged = Uninstall the package and delete the related configuration files.
-   -  <VERESION> = Specify the exact package version that should be present.
+   -  <VERSION> = Specify the exact package version that should be present.
 
 -  install_options = An array of additional arguments to use with the package manager during installations.
 -  reinstall_on_refresh = If the package should be reinstalled when activated by a fresh event. Default: false.
@@ -484,7 +484,7 @@ Example:
 Nodes
 -----
 
-Resoures can be configured to only run on specific nodes.
+Resources can be configured to only run on specific nodes.
 
 Syntax:
 

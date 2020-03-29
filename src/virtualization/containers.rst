@@ -61,7 +61,7 @@ docker containers are built by using a template called ``Dockerfile``. This file
 -  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
 -  ADD <SOURCE> <DESTINATION> = Similar in functionality to ``COPY``. This should only be used to download URLs or extract archives.
 -  CMD = The default command to run in the container, if ``ENTRYPOINT`` is not defined. If ``ENTRYPOINT`` is defined, then ``CMD`` will serve as default arguments to ``ENTRYPOINT`` that can be overridden from the docker CLI.
--  COPY <SOURCE> <DESINTATION> = Copy a file or directory to/from the container image. It is recommended to use this method instead of ``ADD`` for simple operations.
+-  COPY <SOURCE> <DESTINATION> = Copy a file or directory to/from the container image. It is recommended to use this method instead of ``ADD`` for simple operations.
 -  **ENTRYPOINT** = The default command to run in this container. Arguments from the docker CLI will be passed to this command and override the optional ``CMD`` arguments. Use if this container is supposed to be an executable.
 -  ENV <VARIABLE>=<VALUE> = Create shell environment variables.
 -  EXPOSE <PORT>/<PROTOCOL> = Connect to certain network ports.
@@ -356,7 +356,7 @@ Optionally install a driver such as KVM2. The ``minikube`` installer will automa
    $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
    $ sudo chmod +x /usr/local/bin/docker-machine-driver-kvm2
 
-Deploy Kubernetes. Optionally speicfy the Kubernetes version to use. If using the ``kvm2`` driver as the root user, the ``--force`` argument is also required.
+Deploy Kubernetes. Optionally specify the Kubernetes version to use. If using the ``kvm2`` driver as the root user, the ``--force`` argument is also required.
 
 .. code-block:: sh
 

@@ -22,8 +22,8 @@ fdisk
 
    -l, "lists all partitions, sector and disk label information"
    m, shows menu options
-   p, show current parition layout
-   d, deletes paritition
+   p, show current partition layout
+   d, deletes partition
 
 .. csv-table::
    :header: Example, Explanation
@@ -76,7 +76,7 @@ Manage Btrfs partitions.
    subvolume list, list all of the snapshots and subvolumes under a specified mount directory
    snapshot create, create a snapshot of the partition
    subvolume snapshot, create a snapshot of a subvolume
-   filesystem defragment -r -v -c lzo, "defragment the system files, recursively, verbosely, and compress them using the high performance ""lzo"" algorithim; be sure to add the ""compress=lzo"" mount option in /etc/fstab for the partition"
+   filesystem defragment -r -v -c lzo, "defragment the system files, recursively, verbosely, and compress them using the high performance ""lzo"" algorithm; be sure to add the ""compress=lzo"" mount option in /etc/fstab for the partition"
    balance start / -v, "rebalance/defragment the repartition at the block level, on the root partition, verbosely; this will help free up space"
 
 .. csv-table::
@@ -103,7 +103,7 @@ Package: util-linux
    :header: Example, Explanation
    :widths: 20, 20
 
-   /dev/sda2, creates swap parition format on /dev/sda2
+   /dev/sda2, creates swap partition format on /dev/sda2
 
 swapon
 ~~~~~~
@@ -300,7 +300,7 @@ Lookup UUIDs of partitions. These can be used in /etc/fstab.
 dmesg
 ~~~~~
 
-Kernel logs for hardware devices. After plugging in a USB device, check this to find it's device name and parition to mount.
+Kernel logs for hardware devices. After plugging in a USB device, check this to find it's device name and partition to mount.
 
 .. csv-table::
    :header: Example, Explanation
@@ -347,7 +347,7 @@ iostat
    :header: Usage, Explanation
    :widths: 20, 20
 
-   -x <INTEGER>, monitor every specifed number of seconds
+   -x <INTEGER>, monitor every specified number of seconds
 
 .. csv-table::
    :header: Example, Explanation
@@ -358,7 +358,7 @@ iostat
 partprobe
 ~~~~~~~~~
 
-Pacakage: parted
+Package: parted
 
 Rescan for the latest information about available partitions. Sometimes required after updating or changing a partition.
 
@@ -367,7 +367,7 @@ smartctl
 
 Package: smartmontools
 
-Monitor drive health using SMART firmware (standard on mondern storage devices).
+Monitor drive health using SMART firmware (standard on modern storage devices).
 
 .. csv-table::
    :header: Usage, Explanation
@@ -477,7 +477,7 @@ Create and manage encrypted partitions.
    :widths: 20, 20
 
    create, create a new volume
-   open, specifiy a partition and a mapper to map it to
+   open, specify a partition and a mapper to map it to
    close, remove the mapper device
    --fstype, specify filesystem
    --encrypt, specify encryption
@@ -580,7 +580,7 @@ Mount QCOW2 images non-interactively.
    :header: Example, Explanation
    :widths: 20, 20
 
-   guestmount -a image.qcow2 -m /dev/sda1 --rw /mnt, mount the sda1 partition from a QCOW2 image in a writeable mode to the /mnt directory
+   guestmount -a image.qcow2 -m /dev/sda1 --rw /mnt, mount the sda1 partition from a QCOW2 image in a writable mode to the /mnt directory
 
 guestunmount
 ~~~~~~~~~~~~
@@ -663,7 +663,7 @@ Create a logical volume.
    :header: Example, Explanation
    :widths: 20, 20
 
-   --name media --size 30G fileserver, create a logical volume to be used as a virtual drive/parition
+   --name media --size 30G fileserver, create a logical volume to be used as a virtual drive/partition
    -L30G -s -n newsnapshot /dev/fileserver/media, create a 30GB snapshot of the media logical volume
    -V 4G --thin -n <NEW_LOGICAL_VOLUME> <VOLUME_GROUP>/<LOGICAL_VOLUME>, "create a logical thin volume within a logical thin pool (does not fully allocate the space, allows for over-allocating resources)"
 
@@ -734,7 +734,7 @@ Restore a snapshot.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   --merge <LOGICAL_VOLUME_SNAPSHOT>, the original logical volume will be restoed to this specified snapshot
+   --merge <LOGICAL_VOLUME_SNAPSHOT>, the original logical volume will be restored to this specified snapshot
 
 lvchange
 ~~~~~~~~
@@ -798,7 +798,7 @@ If GRUB fails to boot, a ``grub rescue>`` prompt is presented to the end-user.
    insmod normal; normal, this will load the kernel module for the GUI GRUB prompt
    blkid, list partitions and their UUIDs
    ls, list the partitions; this can also be used to view files in the partition
-   busybox, busybox is sometimes provided to have common shell utilies available
+   busybox, busybox is sometimes provided to have common shell utilities available
 
 dracut
 ~~~~~~
@@ -834,8 +834,8 @@ Install and manage Ceph.
    :widths: 20, 20
 
    install --release <RELEASE> <SERVER1> <SERVER2>, install or upgrade the release version of Ceph (see http://docs.ceph.com/docs/master/releases/) on the specified servers
-   mon create-inital, install the Ceph monitor services on the local node
-   disk list <SERVER1>, show all avaiable disks on a specified server
+   mon create-initial, install the Ceph monitor services on the local node
+   disk list <SERVER1>, show all available disks on a specified server
    disk zap <SERVER1>:<DRIVE1>, remove the partition table off of the specified server's drives
    osd create <SERVER1>:<DRIVE1>, "prepare the drives; two partitions are created, a (1) data and (2) journal partition"
 

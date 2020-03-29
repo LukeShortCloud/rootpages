@@ -61,9 +61,9 @@ Build a pacman package using a ``PKGBUILD`` file.
 
    "-c; --clean", "clean up left over files after a build"
    "-C; --cleanup", "clean up source files before starting a new build"
-   "-d; --nodeps", "do not check for depedencies"
+   "-d; --nodeps", "do not check for dependencies"
    "-i", "install the package after being built"
-   "-s", "install missing depdencies using pacman"
+   "-s", "install missing dependencies using pacman"
    "--skippgpcheck", "skip GPG signed verification"
 
 pkgfile
@@ -114,7 +114,7 @@ Manage packages from local and remote sources.
    "--download-only source", "download the source code"
    "--compile", "compile from source code in repository"
    "-y, --yes", "answers yes to all prompts"
-   "-q, --quiet", "surpresses changelog and question prompts"
+   "-q, --quiet", "suppresses changelog and question prompts"
    "build-dep", "install build dependencies for a package; this requires a source repository to be enabled"
 
 .. csv-table::
@@ -199,7 +199,7 @@ dh_make
 
    "-p <PROGRAM>_<VERSION>", "specify the program and version name"
    "-f", "specify the original source code file to create a org.tar.gz archive from"
-   "--createorig", "create an orgininal source tarball from the current directory"
+   "--createorig", "create an original source tarball from the current directory"
    "--copyright", "specify a license to use for the program"
    "-r {old|dh7|cdbs}", "specify the format for rules to use"
 
@@ -244,7 +244,7 @@ Fedora
 dnf
 ~~~
 
-Danified YUM (DNF) is the default package manager for Fedora >= 22. It is designed to use RPM package repositories, be faster than YUM, and rely on Python 3.
+Dandified YUM (DNF) is the default package manager for Fedora >= 22. It is designed to use RPM package repositories, be faster than YUM, and rely on Python 3.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -304,7 +304,7 @@ The default package manager for RHEL.
    "install", "install one or more RPMs"
    "uninstall", "uninstall one or more RPM"
    "check-update", "checks for available updates"
-   "update", "updates al packagess"
+   "update", "updates al packages"
    "deplist", "list all of the files/binaries depdencies required for the RPM"
    "grouplist", "shows all available groups of packages"
    "groupinfo", "shows what packages are a part of the group"
@@ -323,7 +323,7 @@ The default package manager for RHEL.
    "--disableexcludes=all", "disable all excluded packages (re-enable them) from the configuration files"
    "-y", "automatically proceed (do not ask for user input)"
    "--releasever=", "this will temporarily interpret the ""releasever"" variable in the repository files as a different operating system version"
-   "check", "check for problems between yum and the rpm databse"
+   "check", "check for problems between yum and the rpm database"
    "--installroot", "install the package to another directory root that is not /"
 
 .. csv-table::
@@ -366,13 +366,13 @@ rpm
 yum-complete-transaction
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Manage incomplete YUM processes. Those transactions are normally stopped from recieving a SIGKILL from an end-user pressing CTRL+c.
+Manage incomplete YUM processes. Those transactions are normally stopped from receiving a SIGKILL from an end-user pressing CTRL+c.
 
 .. csv-table::
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "", "finish installing the last cancelled Yum transaction"
+   "", "finish installing the last canceled Yum transaction"
    "--cleanup-only", "remove all of the pending Yum transactions"
 
 repoquery
@@ -480,7 +480,7 @@ This utility handles subscriptions to private Red Hat software repositories.
    "repo --list", "show all Red Hat repositories"
    "repos --list-enabled", "show enabled repositories"
    "repos --enable", "enable a repository"
-   "repos --disbale", "disable a repository"
+   "repos --disable", "disable a repository"
    release --set <RHEL_VERSION>, set the RHEL version of packages to use
 
 .. csv-table::
@@ -519,7 +519,7 @@ The software collections suite (SCL) offers newer versions of major software. Th
 mock
 ~~~~
 
-Cross compile RPMs for different RHEL based distrubtions and architectures.
+Cross compile RPMs for different RHEL based distributions and architectures.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -591,7 +591,7 @@ The default package manager for Fedora Silverblue. All updates require a system 
    upgrade --check, check for updates
    override replace <RPM>, install a RPM that replaces a base image package
    override remove <RPM>, uninstall a RPM from the base image
-   overridden reset <RPM>, uninstall the overidden RPM and install the base image package again
+   overridden reset <RPM>, uninstall the overridden RPM and install the base image package again
    status, show the commits of ostree
    deploy <COMMIT>, revert to an older version of the OS
    rollback, change the boot entry to boot from the last OS version
@@ -600,7 +600,7 @@ The default package manager for Fedora Silverblue. All updates require a system 
    kargs --delete=<CMDLINE_OPTION, remove a boot option for the kernel
    kargs --replace=<KEY>=<OLD_VALUE>=<NEW_VALUE>, replace the value for an existing key
    kargs --editor, interactively edit the boot options for the kernel
-   ex, use expertimental features
+   ex, use experimental features
    ex livefs --i-like-danger, layer the pending deployment changes to avoid a reboot
 
 .. csv-table::
@@ -608,7 +608,7 @@ The default package manager for Fedora Silverblue. All updates require a system 
    :widths: 20, 20
 
    kargs --apend=rd.driver.blacklist=nouveau --append=modprobe.blacklist=nouveau --append=nvidia-drm.modeset=1, disable the proprietary Nvidia driver on boot
-   rebase fedora/rawhide/x86_64/silverblue, switch the base OS to the rawhide (development) branch of Fedoraa
+   rebase fedora/rawhide/x86_64/silverblue, switch the base OS to the rawhide (development) branch of Fedora
    rebase fedora-workstation:fedora/30/x86_64/silverblue, switch the base OS to Fedora 30
 
 Flatpak

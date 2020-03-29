@@ -99,7 +99,7 @@ alsamixer
 
 Package: alsa-utils
 
-A CLI utiliy for volume control of the speakers.
+A CLI utility for volume control of the speakers.
 
 speaker-test
 ~~~~~~~~~~~~
@@ -108,7 +108,7 @@ speaker-test
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "-c 2", "test audio output on stero speakers"
+   "-c 2", "test audio output on stereo speakers"
    "-D hw:<DEVICE>", "test a specific audio device; you can get this information from /proc/asound/pcm"
 
 .. csv-table::
@@ -134,7 +134,7 @@ Monitor utility for Nvidia graphics cards. This only works with the proprietary 
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "", show the resource and power utiliization of the card
+   "", show the resource and power utilization of the card
    -i 0 -p1 <WATTS>, set the maximum amount of wattage that the first Nvidia card detected should use
 
 .. csv-table::

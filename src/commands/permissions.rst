@@ -60,7 +60,7 @@ Create a new user.
    "-m", "creates home dir using /etc/skel files"
    "-u", "provide a custom UID"
    "-g", "provide a custom GID"
-   "-p", "specifiy an encrypted password"
+   "-p", "specify an encrypted password"
    "-s", "choose their default shell"
    "-Z", "set the SELinux user for the user's login"
 
@@ -108,7 +108,7 @@ Manage the password for a user.
    :header: Example, Explanation
    :widths: 20, 20
 
-   "echo 'newpass' | passwd --stidn", "non-interactively set a password for a user"
+   "echo 'newpass' | passwd --stdin", "non-interactively set a password for a user"
 
 groupadd
 ~~~~~~~~
@@ -267,7 +267,7 @@ Change access control lists.
 umask
 ~~~~~
 
-Set the defeault file and folder permissions for creation. The default is 666 for files and 777 for directories. The input value is then substracted from the respective number.
+Set the default file and folder permissions for creation. The default is 666 for files and 777 for directories. The input value is then subtracted from the respective number.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -294,7 +294,7 @@ Change file attributes.
 
    "+a", "makes the file appendable only"
    "+C", "disables copy-on-write (CoW) on a file, if CoW is available on the file system"
-   "+i", "makes files immutables; it cannot be modified or deleted"
+   "+i", "makes a file immutable; it cannot be modified or deleted"
    "+u", "makes a file undeletable"
    "-R", "recursively through multiple files"
    "-V", "output is verbose"

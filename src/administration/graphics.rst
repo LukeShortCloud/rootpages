@@ -9,7 +9,7 @@ Drivers
 AMD
 ~~~
 
-AMD provides an open source driver that is part of the Linux kernel. For the best experience, use the latest development versions of the Linux kernel, Mesa, and LLVM. Compared to the open source driver, the AMDGPU-Pro propreitary driver provides a more stable interface with full OpenGL and Vulkan capabilities.
+AMD provides an open source driver that is part of the Linux kernel. For the best experience, use the latest development versions of the Linux kernel, Mesa, and LLVM. Compared to the open source driver, the AMDGPU-Pro proprietary driver provides a more stable interface with full OpenGL and Vulkan capabilities.
 
 Installation (AMDGPU-Pro)
 ^^^^^^^^^^^^^^^^^^^^^^^^^

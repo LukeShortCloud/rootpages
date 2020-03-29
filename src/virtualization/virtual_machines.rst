@@ -232,7 +232,7 @@ libvirt:
     $ sudo virsh edit <VIRTUAL_MACHINE>
         <interface type='bridge'>
     ...
-          <source bridge='<BRDIGE_DEVICE>'/>
+          <source bridge='<BRIDGE_DEVICE>'/>
           <model type='virtio'/>
         </interface>
 
@@ -298,7 +298,7 @@ Verify that the computer's processor supports nested hardware virtualization.
 
        $ grep -m 1 svm /proc/cpuinfo
 
-Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processer and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]
+Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processor and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]
 
 .. code-block:: sh
 
@@ -631,7 +631,7 @@ the hypervisor but other technologies can be used.
    -  parallels
    -  vsphere
 
-Most unoffocial hypervisor providers can be automatically installed as a
+Most unofficial hypervisor providers can be automatically installed as a
 plugin from the command line.
 
 .. code-block:: sh
@@ -988,7 +988,7 @@ Minimum requirements:
 -  One 1Gb network interface
 -  Hardware virtualization
 -  60GB free disk space in /var/tmp/ or a custom directory
--  Two fully qualified doman names (FQDNs) setup
+-  Two fully qualified domain names (FQDNs) setup
 
   -  One for the oVirt Engine (that is not in use) and one already set for the hypervisor
 

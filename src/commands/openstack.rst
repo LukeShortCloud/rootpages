@@ -455,7 +455,7 @@ Mange the Overcloud from a TripleO deployment of OpenStack.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   execute -s overcloud <SCRIPT>, excute a script on all of the Overcloud nodes
+   execute -s overcloud <SCRIPT>, execute a script on all of the Overcloud nodes
    node import instackenv.json, import the Overcloud nodes based on an Ironic template (they will be in the manageable state)
    node import --provide instackenv.json, "import the Overcloud nodes in the ""available"" state so they can be introspected"
    node import --introspect --provide instackenv.json, "import the Overcloud nodes in the ""available"" state after automatically doing introspection"
@@ -489,7 +489,7 @@ openstack overcloud deploy
    :header: Example, Explanation
    :widths: 20, 20
 
-   --stack production --templates /home/stack/templates -e /home/stack/templates/environments/low-memory.yaml, deploy an Overcloud stack named production that will use the default settings annd low memory settings for the services
+   --stack production --templates /home/stack/templates -e /home/stack/templates/environments/low-memory.yaml, deploy an Overcloud stack named production that will use the default settings and low memory settings for the services
 
 openstack tripleo
 ~~~~~~~~~~~~~~~~~
@@ -550,9 +550,9 @@ Manage the creation or deletion of a virtual lab environment using ``virsh``.
    --host-address <IP_ADDRESS>, the hypervisor address to access via SSH
    --host-user <SSH_USER>, the hypervisor SSH user
    --host-key <SSH_KEY_FILE>, the private SSH key file to use
-   --host-validate no, do not attempt to enable hardware virtualizaiton on the hypervisor
+   --host-validate no, do not attempt to enable hardware virtualization on the hypervisor
    --host-memory-overcommit yes, allow the hypervisor to run virtual machines that may consume more RAM then what is available
-   --topology <TOPLOGY>, specify the topology of what nodes should be deployed and how many
+   --topology <TOPOLOGY>, specify the topology of what nodes should be deployed and how many
 
 .. csv-table::
    :header: Example, Explanation

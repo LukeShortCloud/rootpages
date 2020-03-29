@@ -205,7 +205,7 @@ Jar files are Java applications that are compressed using ``zip``.
 zip
 ~~~
 
-Packag: zip
+Package: zip
 
 .. csv-table::
    :header: Usage, Explanation

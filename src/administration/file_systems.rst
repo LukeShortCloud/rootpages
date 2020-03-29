@@ -18,7 +18,7 @@ calculated by using the equation: ``2^<BIT_SIZE> - 1``.
 
    "Fat16 (vfat)", "DOS", "No journaling.", "2GiB", "2GiB", "16"
    "Fat32 (vfat)", "DOS", "No journaling.", "4GiB", "8TiB", "32"
-   "NTFS (ntfs-3g)", "Windows NT", "Journaling, encyption, compression.", "2TiB", "256TiB", "32"
+   "NTFS (ntfs-3g)", "Windows NT", "Journaling, encryption, compression.", "2TiB", "256TiB", "32"
    "ext4 [2]", "Linux", "Journaling, less fragmentation, better performance.", "16TiB", "1EiB", "32"
    "XFS", "Linux", "Journaling, online resizing (but cannot shrink), and online defragmentation.", "8EiB (theoretically up to 16EiB)", "8EiB (theoretically up to 16EiB)", "64"
    "Btrfs [3]", "Linux", "Journaling, copy-on-write (CoW), compression, snapshots, and RAID.", "8EiB (theoretically up to 16EiB)", "8EiB (theoretically up to 16EiB)", 64
@@ -142,7 +142,7 @@ automatic backup from using multiple disks together. It utilizes these
 drives to create 1 logical drive.
 
 .. csv-table::
-   :header: RAID Level, Minimum Drivers, Speed, Redundancy, Increated Storage, Description
+   :header: RAID Level, Minimum Drivers, Speed, Redundancy, Increased Storage, Description
    :widths: 20, 20, 20, 20, 20, 20
 
    0, 2, Yes, No, Yes, "I/O operations are equally spread to each disk."
@@ -755,7 +755,7 @@ separated from the OSD storage nodes.
 
    .. code-block:: sh
 
-       $ sudo ceph-deploy mon create-inital <SERVER1>
+       $ sudo ceph-deploy mon create-initial <SERVER1>
 
 -  Install the monitor service on the other nodes.
 
@@ -1021,17 +1021,17 @@ Typically these should define physical locations of the OSDs.
 
    -  Uniform = Assumes that all hardware in the bucket instance is
       exactly the same so all OSDs receive the same weight.
-   -  List = Lists use the RUSH algorithim to read and write objects in
+   -  List = Lists use the RUSH algorithm to read and write objects in
       sequential order from the first OSD to the last. This is best
       suited for data that does not need to be deleted (to avoid
       rebalancing).
-   -  Tree = The binary search tree uses the RUSH algorithim to
+   -  Tree = The binary search tree uses the RUSH algorithm to
       efficiently handle larger amounts of data.
    -  Straw = A combination of both "list" and "tree." One of the two
       bucket types will randomly be selected for operations. Replication
       is fast but rebalancing will be slow.
 
--  hash = Required. The hashing algorithim used by CRUSH to lookup and
+-  hash = Required. The hashing algorithm used by CRUSH to lookup and
    store files. As of the Jewel release, only option "0" for "rjenkins1"
    is supported.
 -  item = Optional. The OSD name and weight for individual OSDs. This is
@@ -1293,7 +1293,7 @@ Minimal [30]:
 
 -  / = The top level root directory that the operating system is installed in.
 -  /bin/ = Binaries for common utilities for end-users.
--  /boot/ = The boot loader, Linux kernel, and inital RAM disk image.
+-  /boot/ = The boot loader, Linux kernel, and initial RAM disk image.
 -  /dev/ = Files for handling devices that support input and/or output.
 -  /etc/ = Configuration files for services.
 -  /home/ = All user home directories.
@@ -1360,7 +1360,7 @@ Full:
 -  ~/ or $HOME
 
    - ~/.bash_profile = Shell aliases and functions are sourced for interactive users only.
-   - ~/.bashrc = Non-interative and interactive shells will source aliases and functions from here.
+   - ~/.bashrc = Non-interactive and interactive shells will source aliases and functions from here.
    - ~/.local/share/applications/ = Desktop application shortcuts.
 
 History

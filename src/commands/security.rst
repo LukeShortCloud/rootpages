@@ -17,7 +17,7 @@ A free and open source anti-virus command line utility. Run "freshclam" to updat
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "-r", "recurisvely through folders"
+   "-r", "recursively through folders"
    "-i", "only output infected files"
    "--move=<PATH>", "specify path to move infected files to"
 

@@ -27,7 +27,7 @@ TripleO is a collection of many services. These are the services that are used o
 -  Paunch = Container state management.
 -  Podman = Tool for managing CRI-O containers (previously was docker).
 -  Puppet = Configuration management.
--  RabbitMQ = Messaing back-end for OpenStack services.
+-  RabbitMQ = Messaging back-end for OpenStack services.
 -  Zaqar = A messaging service used by Mistral.
 
 In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
@@ -1080,7 +1080,7 @@ Overcloud
 
        $ openstack overcloud image upload --image-path /home/stack/images/
 
--  For using containers, the RDO images from Docker Hub are configured by default. Enable container caching on the Undercloud by generating this template. This will increase the Overcluod deployment time since container images will only have to be pulled from Docker Hub once. [33]
+-  For using containers, the RDO images from Docker Hub are configured by default. Enable container caching on the Undercloud by generating this template. This will increase the Overcloud deployment time since container images will only have to be pulled from Docker Hub once. [33]
 
    .. code-block:: sh
 
@@ -1298,7 +1298,7 @@ Overcloud
           $ openstack baremetal node list
           $ openstack overcloud node configure <NODE_ID>
 
--  If the profile and/or boot option were not specified in the instackenv.json file then configure it now. Verify that the profiles have been applied. Valid default flavors are ``block-strage``, ``ceph-stroage``, ``compute``, ``control``, and ``swift-storage``.
+-  If the profile and/or boot option were not specified in the instackenv.json file then configure it now. Verify that the profiles have been applied. Valid default flavors are ``block-storage``, ``ceph-storage``, ``compute``, ``control``, and ``swift-storage``.
 
    .. code-block:: sh
 
@@ -1352,7 +1352,7 @@ Overcloud
 
       -  Scenario #3 - No templates:
 
-         -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to seperate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
+         -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to separate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
 
 -  In a YAML Heat template, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
 
@@ -1537,7 +1537,7 @@ Overcloud
 Overcloud (Pre-deployed/provisioned Nodes)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instrospection and the operating system provisioning can be skipped if the Overcloud nodes are already setup and running.
+Introspection and the operating system provisioning can be skipped if the Overcloud nodes are already setup and running.
 
 Pros:
 
@@ -1589,7 +1589,7 @@ Cons:
           resource_registry:
             # This allows the IPs for provisioning to be manually set via DeployedServerPortMap.
             OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
-            # These role resources will convert the NeutronPublicInterface into the required br-ex brdige interface.
+            # These role resources will convert the NeutronPublicInterface into the required br-ex bridge interface.
             ## Open vSwitch
             OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
             OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
@@ -1886,7 +1886,7 @@ Delete additional services related to the Compute node.
 .. code-block:: sh
 
    $ . ~/overcloudrc
-   $ opentack compute service delete <NODE>
+   $ openstack compute service delete <NODE>
    $ openstack network agent delete <NODE>
    $ openstack resource provider delete <NDOE>
 
@@ -2102,7 +2102,7 @@ Puppet manifests define the default variables that are set. These also show what
         # by nested manifests.
         <OPENSTACK_SERVICE>::<MANIFEST>::<MANIFEST_SUB_DIRECTORY>::<SUB_MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
 
-Settings that are not handled by the Puppet modules can be overriden manually. The dictionary name for each configuration file is defined in mainfests/config.pp in the ``<OPENSTACK_SERVICE>::config`` class.
+Settings that are not handled by the Puppet modules can be overridden manually. The dictionary name for each configuration file is defined in ``manifests/config.pp`` in the ``<OPENSTACK_SERVICE>::config`` class.
 
 .. code-block:: yaml
 
@@ -2184,7 +2184,7 @@ Configure the Overcloud access to the public Internet. Define the default router
      - clock.redhat.com
      - clock2.redhat.com
 
-Define the allowed network tag/tunnel types that Neutron networks use. The Neutron tunnel type is used for internal tranmissions between the compute and network nodes. By default, the Neutron network bridge will be attached to ``br-int`` if left blank. This will configure a provider network. Otherwise, ``br-ex`` should be specified for self-service networks.
+Define the allowed network tag/tunnel types that Neutron networks use. The Neutron tunnel type is used for internal transmissions between the compute and network nodes. By default, the Neutron network bridge will be attached to ``br-int`` if left blank. This will configure a provider network. Otherwise, ``br-ex`` should be specified for self-service networks.
 
 ::
 
@@ -2261,7 +2261,7 @@ Containers
        modify_vars:
          <TRIPLEO_MODIFY_IMAGES_ROLE_VARIABLES>
 
-Pacakges
+Packages
 ~~~~~~~~
 
 By default, TripleO will not install packages. The standard Overcloud image from RDO already has all of the OpenStack packages installed. When using a custom image or not using Ironic for deploying Overcloud nodes, packages can be configured to be installed.
@@ -2388,7 +2388,7 @@ Example of common settings for Ceph in RHOSP:
      # Required on RHOSP 15 until RHCS 4 becomes GA.
      EnableRhcs4Beta: true
 
--  CephAnsiblePlaybookVerbosity = If set to > 0, then the playbooks are kept (and the vebrosity is enabled for the playbook).
+-  CephAnsiblePlaybookVerbosity = If set to > 0, then the playbooks are kept (and the verbosity is enabled for the playbook).
 -  CephAnsiblePoolDefaultSize = Set the replica size for each pool. Default: 3. Lab recommended: 1.
 -  CephAnsibleDefaultPgNum = For a production environment, use `PGCalc <https://access.redhat.com/labs/cephpgc/>`__ to determine the optimal value. Set to a low number for a lab with 1 disk. Lab recommended: 32.
 -  CephAnsibleExtraConfig: mon_host_v1: enabled: false = Force msgr2 (messenger v2). By default, both v1 and v2 are used, which causes issues in lab environments such as Standalone.
@@ -2473,7 +2473,7 @@ Install the Minion services.
 Scaling (Large Overcloud)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__. Set the ``NodeCreateBatchSize`` Heat paramater to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
+RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__. Set the ``NodeCreateBatchSize`` Heat parameter to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
 
 Puppet
 ~~~~~~
@@ -2493,7 +2493,7 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 -  Use the most minimal resources required on the Overcloud nodes for a deployment.
 
    -  Controller: 4 vCPUs and 16GB RAM
-   -  Comupte: 2 vCPUs and 2GB RAM
+   -  Compute: 2 vCPUs and 2GB RAM
 
 -  If using OpenStack as the lab infrastructure, disable port security to allow any MAC and IP address to be used. Also disable security groups to avoid further connection issues.
 
@@ -2501,8 +2501,8 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 
       $ openstack port set --disable-port-security --no-security-group <PORT>
 
--  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utliziation (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
--  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and seperate traffic using different subnets.
+-  Use the low resource usage template: ``environments/low-memory-usage.yaml``. This sets the ``worker`` count to 1 for all of the OpenStack services, lowers the Apache resource utilization (used as the CGI handler for OpenStack services), and configures low defaults for (optional) Ceph services.
+-  Avoid using complex network templates such as ``environments/network-isolation.yaml`` and ``environments/network-environment.yaml``. By default, TripleO will use flat networking for all of the services and separate traffic using different subnets.
 -  For virtual machines without nested virtualization, set the parameter ``NovaComputeLibvirtType`` to ``qemu``.
 -  Use `this template <https://opendev.org/openstack/tripleo-heat-templates/src/commit/d2bcf0f530cade1ca65b90fbe91953dfb67958b0/ci/environments/scenario000-standalone.yaml>`__ (designed for Train) as a reference to prevent deploying unnecessary services on the Overcloud. That template will disable everything except Keystone. Alternatively, remove services from the ``roles_data.yaml`` file.
 -  Disable Swift. Then use NFS as the back-end for Cinder, Glance, Gnocchi, and Nova based off of the configuration files from ``/usr/share/openstack-tripleo-heat-templates/environments/storage/*-nfs.yaml``. [51] Add the NFS mount option 'nosharecache' to address `this <https://bugzilla.redhat.com/show_bug.cgi?id=1513275>`__ bug.
@@ -2649,7 +2649,7 @@ Bibliography
 32. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
 33. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
-35. "Bootstrap." InfraRed Documetnation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
+35. "Bootstrap." InfraRed Documentation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html
 36. "CHAPTER 8. CONFIGURING A BASIC OVERCLOUD USING PRE-PROVISIONED NODES." Red Hat Documentation. Accessed January 28, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/chap-configuring_basic_overcloud_requirements_on_pre_provisioned_nodes
 37. "Using Already Deployed Servers." OpenStack Documentation. January 30, 2020. Accessed February 4, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/deployed_server.html
 38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
@@ -2671,5 +2671,5 @@ Bibliography
 54. "Workflow: RDO Trunk repo." RDO Project. May 24, 2019. Accessed February 6, 2020. https://www.rdoproject.org/what/trunk-repos/
 55. "Director Installation and Usage." Red Hat OpenStack Platform 16.0 Documentation. Accessed February 7, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/index
 56. "Ensure config-download mappings are unset on ceph-upgrade." OpenDev openstack/tripleo-heat-templates. April 27, 2018. Accessed February 10, 2020. https://opendev.org/openstack/tripleo-heat-templates/commit/24469e3c02747b7b6de6d61fcf2a8b9be67b370b
-57. "Tripleo Project Specifications." TripleO Documentation. October 16, 2019. Accessed February 17, 2020. https://specs.openstack.org/openstack/tripleo-specs/
+57. "TripleO Project Specifications." TripleO Documentation. October 16, 2019. Accessed February 17, 2020. https://specs.openstack.org/openstack/tripleo-specs/
 58. "Blueprints for tripleo." tripleo Launchpad. Accessed February 17, 2020. https://blueprints.launchpad.net/tripleo

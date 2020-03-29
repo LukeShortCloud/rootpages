@@ -46,7 +46,7 @@ Example of setting up a network address translation for all connections from eth
 
 .. code-block:: sh
 
-   # Append to the POSTROUTING chain to allow NAT/masquerad'ing on the output interface eth0
+   # Append to the POSTROUTING chain to allow masquerading (NAT) on the output interface eth0
    $ iptables -t nat -A POSTROUTING -o eth0 -j MAS
    # Append the FORWARD chain to allow requests from eth1 to eth0
    $ iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT

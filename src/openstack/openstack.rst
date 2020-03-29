@@ -443,7 +443,7 @@ File: /etc/nova/nova.conf
     [database]
     connection = <DB_PROVIDER>//<DB_USER>:<DB_PASS>@<DB_HOST>/nova
 
--  Enable support for the Nova API and Nova's metadata API. If "metedata" is specified here, then the "openstack-nova-api" will handle the metadata and not "openstack-nova-metadata-api."
+-  Enable support for the Nova API and Nova's metadata API. If "metadata" is specified here, then the "openstack-nova-api" will handle the metadata and not "openstack-nova-metadata-api."
 
 .. code-block:: ini
 
@@ -1288,7 +1288,7 @@ namespace should look similar to this.
 cloud-init
 ----------
 
-Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/modules.html>`__. Example configurations can be found `here <https://cloudinit.readthedocs.io/en/latest/topics/examples.html>`__. cloud-init will only run once. The service can be forced to run again by deleting the ``/var/lib/cloud/instance/`` directory. All of the files and directories wihtin ``/var/lib/cloud/`` are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html>`__. [62]
+Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/modules.html>`__. Example configurations can be found `here <https://cloudinit.readthedocs.io/en/latest/topics/examples.html>`__. cloud-init will only run once. The service can be forced to run again by deleting the ``/var/lib/cloud/instance/`` directory. All of the files and directories within ``/var/lib/cloud/`` are documented `here <https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html>`__. [62]
 
 Upgrades
 --------
@@ -1678,7 +1678,7 @@ Vagrant
 ~~~~~~~
 
 Vagrant is a tool to automate the deployment of virtual machines. A
-"Vagrantfile" file is used to initalize the instance. An example is
+"Vagrantfile" file is used to initialize the instance. An example is
 provided below.
 
 .. code-block:: ruby
@@ -2164,7 +2164,7 @@ Bibliography
 29. "Neutron/DVR/HowTo" OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. https://wiki.openstack.org/wiki/Neutron/DVR/HowTo
 30. "Distributed Virtual Routing with VRRP." OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html
 31. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. Accessed March 26, 2018. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
-32. "Volume encryption supported by the key manager." Openstack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html
+32. "Volume encryption supported by the key manager." OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html
 33. "BLOCK DEVICES AND OPENSTACK." Ceph Documentation. April 5, 2017. Accessed April 5, 2017. http://docs.ceph.com/docs/master/rbd/rbd-openstack/
 34. "Adding additional NAT rule on neutron-l3-agent." Ask OpenStack. February 15, 2015. Accessed February 23, 2017. https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/
 35. "Networking in too much detail." RDO Project. January 9, 2017. Accessed February 23, 2017. https://www.rdoproject.org/networking/networking-in-too-much-detail/

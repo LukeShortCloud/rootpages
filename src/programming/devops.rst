@@ -460,7 +460,7 @@ Fedora Copr
 
 Fedora Copr is a build system that builds RPMs for RPM based operating systems such as Fedora, Mageia, and openSUSE. Only the latest RPMs are kept. Older versions are deleted after 14 days. The ``copr-cli`` utility can be used to help add continuous delivery to a CI/CD pipeline. [7]
 
-Generate an API token from `here <https://copr.fedoraproject.org/api/>`__. Use the credentials provided to create a new configuration at ``~/.config/copr``. For CD, this file should be encrypted with a tool such as ``travis encrpt-file`` and stored in the SCM repository.
+Generate an API token from `here <https://copr.fedoraproject.org/api/>`__. Use the credentials provided to create a new configuration at ``~/.config/copr``. For CD, this file should be encrypted with a tool such as ``travis encrypt-file`` and stored in the SCM repository.
 
 .. code-block:: ini
 

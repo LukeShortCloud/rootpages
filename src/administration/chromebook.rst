@@ -6,7 +6,7 @@ Chromebook
 Support
 -------
 
-Chromebooks recieve anywhere between 5 and 8 years of Chrome OS updates [14]. When it becomes end-of-life, the operating system will continue to work but will also become vulnerable to unpatched security flaws. A list of every Chromebooks' update expiration date can be found `here <https://support.google.com/chrome/a/answer/6220366?hl=en>`__.
+Chromebooks receive anywhere between 5 and 8 years of Chrome OS updates [14]. When it becomes end-of-life, the operating system will continue to work but will also become vulnerable to unpatched security flaws. A list of every Chromebooks' update expiration date can be found `here <https://support.google.com/chrome/a/answer/6220366?hl=en>`__.
 
 There are three update channels to choose from for Chrome OS updates. This can be changed by going to: ``Settings`` > ``About Chrome OS`` > ``Additional details`` > ``Channel`` > ``Change channel`` [15].
 
@@ -46,7 +46,7 @@ Developer Mode
 
 Chromebooks have an optional developer mode that unlocks additional features of Chrome OS. It allows the usage of a shell, ``root`` user access, and the ability to install and boot custom operating systems. [5]
 
-Enabling this mode will powerwash (reset) the device. Start the Chromebook in Recovery mode by pressing ``ESC`` + ``<REFRESH>`` + ``<POWER>``. Once booted, press ``CTRL`` + ``d`` to boot into developer mode. Optionally select to enable debugging features to allow writing to the root file system, booting to external storage devices, and changing the root password. [6][8] After compeletion, whenever booting up the Chromebook, use ``CTRL`` + ``d`` to boot Chrome OS.
+Enabling this mode will powerwash (reset) the device. Start the Chromebook in Recovery mode by pressing ``ESC`` + ``<REFRESH>`` + ``<POWER>``. Once booted, press ``CTRL`` + ``d`` to boot into developer mode. Optionally select to enable debugging features to allow writing to the root file system, booting to external storage devices, and changing the root password. [6][8] After completion, whenever booting up the Chromebook, use ``CTRL`` + ``d`` to boot Chrome OS.
 
 Use the command ``chromeos-setdevpasswd`` to enable the sudo password for the ``chronos`` user in the ``Secure Shell App``. Use the password that was set when enabling debugging features to access the ``root`` account.
 
@@ -317,7 +317,7 @@ Enable the required services and then restart the virtual machine to load the ne
 Crouton
 ~~~~~~~
 
-Crouton allows installing Debian based operating systems into a chroot directory. It supports better integration with Chrome OS via the `crouton integration extenstion <https://chrome.google.com/webstore/detail/crouton-integration/gcpneefbbnfalgjniomfjknbcgkbijom>`__.
+Crouton allows installing Debian based operating systems into a chroot directory. It supports better integration with Chrome OS via the `crouton integration extension <https://chrome.google.com/webstore/detail/crouton-integration/gcpneefbbnfalgjniomfjknbcgkbijom>`__.
 
 Advantages of Crouton over Crostini:
 

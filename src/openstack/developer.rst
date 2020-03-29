@@ -125,7 +125,7 @@ Each bug has specific attributes:
    -  Wishlist
 
 -  Assigned to = The owner of the bug.
--  Milestone = The next development release that this is targetted to be fixed in.
+-  Milestone = The next development release that this is targeted to be fixed in.
 
 [3]
 

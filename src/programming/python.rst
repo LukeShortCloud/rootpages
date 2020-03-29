@@ -105,7 +105,7 @@ Syntax:
        <VARIABLE1> (<TYPE>): <DESCRIPTION>
        <VARIABLE2> (<TYPE>): <DESCRIPTION>
 
-   Retruns:
+   Returns:
        <VARIABLE1> (<TYPE>): <DESCRIPTION>
        <VARIABLE2> (<TYPE>): <DESCRIPTION>
 
@@ -891,7 +891,7 @@ Complex operations on files.
 
    "chown(<DEST>, user=<USER>, group=<GROUP>)", "Change the ownership of a file."
    "copyfile(<SRC>, <DEST>)", "Copy a file without any metadata."
-   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metdata."
+   "copyfile2(<SRC>, <DEST>)", "Copy a file with most of it's metadata."
    "copyfileobj(<ORIGINAL>, <NEW>)", "Copy a file object."
    "copytree(<SRC>, <DEST>)", "Copy files from one directory to another."
    "disk_usage(<DEST>)", "Find disk usage information about the directory and it s contents."
@@ -924,7 +924,7 @@ subprocess
 (subprocess.Popen Object)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In Python >= 3.0, stdandard input/output/error is returned as bytes instead of strings. Use ``decode()`` to convert the bytes into a string.
+In Python >= 3.0, standard input/output/error is returned as bytes instead of strings. Use ``decode()`` to convert the bytes into a string.
 
 .. csv-table::
    :header: Method, Description
@@ -1628,7 +1628,7 @@ Create a new environment using a specific Python version/binary installed on the
 
    $ python3 -m virtualenv -p /usr/bin/python2.7 <PATH_TO_NEW_VIRTUAL_ENVIRONMENT>
 
-Create a new environment using symlinks to the original Python installation. New library installations will be overriden in the virtual environment. This is useful for operating systems that ship packages that are not available in PyPI such as ``python3-libselinux`` on Fedora.
+Create a new environment using symlinks to the original Python installation. New library installations will be overridden in the virtual environment. This is useful for operating systems that ship packages that are not available in PyPI such as ``python3-libselinux`` on Fedora.
 
 .. code-block:: sh
 
@@ -1703,5 +1703,5 @@ Bibliography
 36. "LEARN TO LOOP THE PYTHON WAY: ITERATORS AND GENERATORS EXPLAINED." Hackaday. September 19, 2018. Accessed February 22, 2019. https://hackaday.com/2018/09/19/learn-to-loop-the-python-way-iterators-and-generators-explained/
 37. "unittest.mock - mock object library." Python 3 Documentation. June 27, 2019. Accessed June 27, 2019. https://docs.python.org/3/library/unittest.mock.html
 38. "Threading in Python." Linux Journal. January 24, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/threading-python
-39. "Multiprocesing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
+39. "Multiprocessing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
 40. "pdb - The Python Debugger." Python 3 Documentation. Jul 19, 2019. Accessed July 19, 2019. https://docs.python.org/3/library/pdb.html

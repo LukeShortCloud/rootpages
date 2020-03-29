@@ -2634,7 +2634,7 @@ Common options:
 -  checksum = String. The has of the path.
 -  dev = Integer. The device the inode exists on.
 -  {executable\|readable\|writable} = Boolean. If the file is
-   executable, readable, or writeable by the remote user that Ansible is
+   executable, readable, or writable by the remote user that Ansible is
    running as.
 -  exists = Boolean. If the file exists or not.
 -  {gr\|pw}\_name = String. The name of the group or user owner.
@@ -2656,11 +2656,11 @@ Common options:
 -  nlink. Integer. The number of links that are used to redirect to the
    original inode.
 -  path = String. The full path to the file.
--  {r\|w\|x}usr = Boolean. If the user owner has readable, writeable, or
+-  {r\|w\|x}usr = Boolean. If the user owner has readable, writable, or
    executable permissions.
--  {r\|w\|x}grp = Boolean. If the group owner has readable, writeable,
+-  {r\|w\|x}grp = Boolean. If the group owner has readable, writable,
    or executable permissions.
--  {r\|w\|x}oth = Boolean. If other users have readable, writeable, or
+-  {r\|w\|x}oth = Boolean. If other users have readable, writable, or
    executable permissions.
 -  size = Integer. The size, in bytes, of the file.
 -  {uid\|gid} = Integer. The ID of user or group owner of the file.
@@ -2684,7 +2684,7 @@ Common options:
 -  dest = A path to where a file should be downloaded to.
 -  follow\_redirects = Default: safe.
 
-   -  all = Follo wall redirects.
+   -  all = Follow all redirects.
    -  none = Do not follow any redirects.
    -  safe = Follow the first redirect only.
 
@@ -3785,7 +3785,7 @@ MartinVerges <https://github.com/MartinVerges>`__.
 The role can be passed any of these dictionaries to configure the
 network devices.
 
--  network\_ether\_interfaces = Configure ethernet devices.
+-  network\_ether\_interfaces = Configure Ethernet devices.
 -  network\_bridge\_interfaces = Configure bridge devices.
 -  network\_bond\_interfaces = Configure bond devices.
 -  network\_vlan\_interfaces = Configure VLAN devices.
@@ -3803,11 +3803,11 @@ Valid dictionary values:
 -  hwaddress = Use a custom MAC address.
 -  mtu = Specify the MTU packet size.
 -  vlan = Set to ``True`` for creating the VLAN devices.
--  bond\_ports = Required for bond interfaces. Specify the ethernet
+-  bond\_ports = Required for bond interfaces. Specify the Ethernet
    devices to use for the unified bond.
 -  bond\_mode = For bond interfaces. Define the type of Linux bonding
    method.
--  bridge\_ports = Required for bridge interfaces. Specify the ethernet
+-  bridge\_ports = Required for bridge interfaces. Specify the Ethernet
    device(s) to use for the bridge.
 -  dns-nameserver = A Python list of DNS nameservers to use.
 
@@ -4352,7 +4352,7 @@ Best Practices
 
 -  Roles:
 
-   -  Roles should be desgined to be re-usable and re-distributable for other projects.
+   -  Roles should be designed to be re-usable and re-distributable for other projects.
    -  Fill out the details in the ``requirements.yml`` file for every role.
    -  Add Molecule tests for each scenario supported by a role.
 
@@ -4380,7 +4380,7 @@ Testing
 Ansible Lint
 ~~~~~~~~~~~~
 
-The ``ansible-lint`` utility is used to check for best practices in Ansible playbooks and roles. If a certain rule was trigged and is deemed to be a false-positive then the affected line can have the comment ``# noqa <ANSIBLE_LINT_RULE_ID>`` appended to it to skip checking that rule. Alternatively, add the tag ``skip_ansible_lint`` to the task to skip all lint checks on that particular task.
+The ``ansible-lint`` utility is used to check for best practices in Ansible playbooks and roles. If a certain rule was triggered and is deemed to be a false-positive then the affected line can have the comment ``# noqa <ANSIBLE_LINT_RULE_ID>`` appended to it to skip checking that rule. Alternatively, add the tag ``skip_ansible_lint`` to the task to skip all lint checks on that particular task.
 
 .. code-block:: yaml
 
@@ -4730,7 +4730,7 @@ Logs are stored in ``/var/log/tower/``. The main log file is
 
 Ports:
 
--  80/tcp = Unencyrpted Ansible Tower dashboard web traffic.
+-  80/tcp = Unencrypted Ansible Tower dashboard web traffic.
 -  443/tcp = SSL encrypted Ansible Tower dashboard web traffic.
 -  5432/tcp = PostgreSQL relational database server.
 
@@ -5284,8 +5284,8 @@ Bibliography
 60. "1.0.4 - 1.0.5 upgrade killed my workers & errors db upgrade Key (username)=(admin) already exists. #1707." GitHub AWX. March 30, 2018. Accessed April 6, 2018. https://github.com/ansible/awx/issues/1707
 61. "Feature to download & upload data in Tower #197." GitHub tower-cli. February 28, 2018. Accessed April 6, 2018. https://github.com/ansible/tower-cli/issues/197
 62. "Lookup Plugins." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. https://docs.ansible.com/ansible/2.5/plugins/lookup.html
-63. "Release and maintenance." Ansible Documention. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
-64. "Frequently Asked Questions." Ansible Documention. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
+63. "Release and maintenance." Ansible Documentation. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
+64. "Frequently Asked Questions." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
 66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. November 14, 2019. Accessed December 19, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html

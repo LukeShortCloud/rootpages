@@ -22,7 +22,7 @@ Git is used for version controlling files.
    :widths: 20, 20
 
    "--work-tree=<PATH> --git-dir=<PATH>/.git", "change the git working directory to ``<PATH>``"
-   "init", "initlaize an empty git directory"
+   "init", "initialize an empty git directory"
    "reset --hard", "deletes all local changes"
    "status -v", "shows files that have been modified and not pushed yet"
    "diff <BRANCH_OR_COMMIT>", "shows deletions and inserts of the actual changes between this branch and a specified branch"
@@ -32,7 +32,7 @@ Git is used for version controlling files.
    "merge --squash", "condense all commits into one"
    "reflog <BRANCH>", "show the local git history"
    "-c", "specify a configuration option to temporarily override"
-   "-c http.sslVerify=false", "turn off SSL vertification to use self-signed SSLs"
+   "-c http.sslVerify=false", "turn off SSL verification to use self-signed SSLs"
 
 git remote
 ~~~~~~~~~~
@@ -114,7 +114,7 @@ git commit
 
    "-m '<USEFUL_COMMENT>'", "provide a commit comment"
    "--amend", "change the last commit message"
-   --amend --no-edit, update the current commit and keep the same mesage
+   --amend --no-edit, update the current commit and keep the same message
 
 git push
 ~~~~~~~~
@@ -192,7 +192,7 @@ Undo changes to the current branch.
 
    "<BRANCH>@{#}", "switch to a specific commit"
    "--soft HEAD~1", "undo the last saved commit; the file changes will be preserved"
-   "--hard HEAD~1", "undo the last saved cimmit; all changes from the current commit will be lost"
+   "--hard HEAD~1", "undo the last saved commit; all changes from the current commit will be lost"
    "--hard", "remove all uncommitted changes"
 
 git clean
@@ -221,8 +221,8 @@ git stash
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "save", "temporarily save uncommited changes in a branch and revert to HEAD; this is useful for saving changes and then switching to another branch"
-   "pop", "revert back from HEAD to the commited changes"
+   "save", "temporarily save uncommitted changes in a branch and revert to HEAD; this is useful for saving changes and then switching to another branch"
+   "pop", "revert back from HEAD to the committed changes"
 
 git fsck
 ~~~~~~~~
@@ -301,7 +301,7 @@ View all actions that were down to the local git repository. ``git checkout`` ca
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "", view all of the local changes to and hisotry of the git repository
+   "", view all of the local changes to and history of the git repository
 
 git rebase
 ~~~~~~~~~~

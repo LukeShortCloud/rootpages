@@ -64,7 +64,7 @@ Package: docker
    "run -d <IMAGE>", "start a container in the background"
    "run -d <IMAGE> tail -f /dev/null", "start a container and keep it running (by running a never-ending command)"
    "run --net=<NAME> --ip <IP_ADDRESS> -p <HYPERVISOR_PORT>:<CONTAINER_PORT>", "start a container using a specific network, assigning a static IP, and setup port forwarding"
-   "run --mount type=bind,source=<DIR_ON_HYPERVISOR>,target=<DIR_IN_CONTAINER>", start a container with a bind mount to access the part of the hyeprvisor's file system
+   "run --mount type=bind,source=<DIR_ON_HYPERVISOR>,target=<DIR_IN_CONTAINER>", start a container with a bind mount to access the part of the hypervisor's file system
    "--volume <DIR_ON_HYPERVISOR>:<DIR_IN_CONTAINER>:z", mount a volume with SELinux labelling enabled
    "stop", "shutdown a container"
    "stop $(docker ps -aq)", "stop all containers"
@@ -168,7 +168,7 @@ podman
 
 Package: podman
 
-The libpod library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capatibilities to launch standalone Kubernetes pods.
+The libpod library provides a utility to manage and run containers with CRI-O and not the docker deamon. It provides all of the same arguments and syntax as the docker command (except for Docker Swarm administration) along with additional capabilities to launch standalone Kubernetes pods.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -183,7 +183,7 @@ The libpod library provides a utility to manage and run containers with CRI-O an
    ps {-f|--filter} status={configured|created|exited|paused|running|stopped|unknown}, filter containers by their current (podman supported) state; note that configured==created and stopped==exited are mapped for compatibility with docker
    rm --all, Remove all stopped containers
    rmi --all, Remove all images
-   --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registeries
+   --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registries
 
 oVirt
 -----
@@ -345,7 +345,7 @@ Modify files inside of a virtual machine image file.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "web1 /boot/grub2/grub.conf", "edit the GRUB2 configuraiton file on the web1 virtual machine"
+   "web1 /boot/grub2/grub.conf", "edit the GRUB2 configuration file on the web1 virtual machine"
 
 virt-filesystems
 ~~~~~~~~~~~~~~~~
@@ -454,7 +454,7 @@ Automatically deploy customized virtual machines.
    "status", "show all VMs managed by Vagrant and their current status"
    "halt", "shutdown a VM"
    "suspend", "suspend the VM into a sleep state"
-   "ssh-config", "show the SSH configuraiton details for the virtual machines"
+   "ssh-config", "show the SSH configuration details for the virtual machines"
    "box list", "show all of the cached images"
    "prune <IMAGE>", "delete all old versions of a cached image"
    "box remove <IMAGE>", "delete an image"
@@ -475,7 +475,7 @@ Wine is Not an Emulator (WINE) provides a compatibility layer that translates Wi
 
    "WINEPREFIX=''", "specify this prefix variable before the wine command to use a different Wine environment"
    "WINEARCH=''", "set the architecture to win32 or win64"
-   "WINEDLLOVERIDES='<DLL>=b,n'", "manually override a DLL to use the built-in Wine libraries and fallback to native Windows DLLs (if those are installed)"
+   "WINEDLLOVERRIDES='<DLL>=b,n'", "manually override a DLL to use the built-in Wine libraries and fallback to native Windows DLLs (if those are installed)"
    "msiexec /i", "install a MSI executable"
 
 .. csv-table::

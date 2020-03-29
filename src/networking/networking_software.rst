@@ -312,13 +312,13 @@ revert back to eth\* and wlan\* naming. Otherwise, devices will be named
 based on their physical location and connection to the motherboard. [7]
 
 Network configurations are saved in ``/etc/sysconfig/network-scripts/``.
-The ethernet device names start with "ifcfg-eth" when ifnames is
+The Ethernet device names start with "ifcfg-eth" when ifnames is
 disabled or "ifcfg-e" if not.
 
 Options:
 
 -  {NAME\|DEVICE} = The name of the network interface. The first device
-   is generally "eth0" for ethernet or "wlan0" for wireless devices.
+   is generally "eth0" for Ethernet or "wlan0" for wireless devices.
 -  ONBOOT = {yes\|no}. Enable or disable this interface on startup of
    the system.
 -  HWADDR = The MAC address of the device.
@@ -630,7 +630,7 @@ Bibliography
 2. "systemd.network — Network configuration." freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.network.html
 3. "systemd.netdev — Virtual Network Device configuration." freedesktop.org. Accessed November 27, 2016. https://www.freedesktop.org/software/systemd/man/systemd.netdev.html
 4. "Managing WPA wireless with systemd-networkd ?" Arch Linux Wiki - Networking, Server, and Protection. March 13, 2014. Accessed November 27, 2016. https://bbs.archlinux.org/viewtopic.php?id=178625
-5. "Frequently Asked Questions Open vSwitch." Open vSwitch Suppport. March 30, 2017. April 9, 2017. http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html
+5. "Frequently Asked Questions Open vSwitch." Open vSwitch Support. March 30, 2017. April 9, 2017. http://openvswitch.org/support/dist-docs-2.5/FAQ.md.html
 6. "[Ubuntu 16.04] Network Configuration." Ubuntu Documentation. June 23, 2017. Accessed July 2, 2017. https://help.ubuntu.com/lts/serverguide/network-configuration.html
 7. "Disable consistent network device naming in RHEL7." Red Hat Community Discussions. June 11, 2014. Accessed January 7, 2016. https://access.redhat.com/discussions/916973
 8. "Interface Configuration Files." Accessed January 7, 2016. https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/6/html/Deployment\_Guide/s1-networkscripts-interfaces.html
