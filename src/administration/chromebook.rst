@@ -314,6 +314,78 @@ Enable the required services and then restart the virtual machine to load the ne
    crosh> vmc stop termina
    crosh> vmc start termina
 
+Crouton
+~~~~~~~
+
+Crouton allows installing Debian based operating systems into a chroot directory. It supports better integration with Chrome OS via the `crouton integration extenstion <https://chrome.google.com/webstore/detail/crouton-integration/gcpneefbbnfalgjniomfjknbcgkbijom>`__.
+
+Advantages of Crouton over Crostini:
+
+-  Complete OpenGL and Vulkan hardware-accelerated support.
+
+    -  Virgil, used by Crostini for OpenGL acceleration, is `limited to OpenGL 4.3 <https://lwn.net/Articles/767970/>`__ and older versions. OpenGL 4.6 is the current latest version. Virgil also lacks Vulkan support.
+
+-  Lower disk space usage.
+-  No virtualization overhead.
+-  Optional installation to an external storage device.
+-  Chroot Linux installations can be encrypted.
+-  Support for all processor architectures. Crostini only works on 64-bit Chrome OS devices.
+
+Cons:
+
+-  Insecure compared to Crostini. Resources are not isolated from the Chrome OS operating system.
+-  Requires ``Developer Mode`` to be enabled.
+-  Installs an old operating system by default (Ubuntu 16.04).
+
+Download and install the ``crouton`` script to a location found in ``$PATH``. Alternatively, it can be executed from any user directory.
+
+::
+
+   crosh> shell
+   chronos@localhost / $ cd ~/Downloads/
+   chronos@localhost ~/Downloads $ wget https://goo.gl/fd3zc -O crouton
+   chronos@localhost ~/Downloads $ sudo install -Dt /usr/local/bin -m 755 ~/Downloads/crouton
+
+Chroot Management
+^^^^^^^^^^^^^^^^^
+
+Supported configurations:
+
+-  Desktop environments:
+
+   -  gnome
+   -  kde
+   -  lxde
+   -  unity
+   -  xfce
+
+-  Operating systems:
+
+   -  Debian
+   -  Kali Linux
+   -  Ubuntu
+
+View available operating system versions that can be installed along with the types of packages than can be automatically configured. By default, Ubuntu 16.04 is installed with the XFCE desktop environment.
+
+::
+
+   chronos@localhost / $ crouton -r list
+   chronos@localhost / $ crouton -t list
+
+Example of creating a minimal chroot.
+
+::
+
+   chronos@localhost / $ sudo crouton -t core
+
+Example of installing Debian Sid, with common features enabled, encrypting the chroot, and naming the chroot "debian_sid_crouton".
+
+::
+
+   chronos@localhost / $ sudo crouton -r sid -t core,audio,touch,keyboard,extension,xorg,xfce -e -n debian_sid_crouton
+
+[20]
+
 History
 -------
 
@@ -341,3 +413,4 @@ Bibliography
 17. "How to run CentOS instead of Debian." Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux
 18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
 19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
+20. "dnschneid/crouton." GitHub. January 17, 2020. Accessed March 29, 2020. https://github.com/dnschneid/crouton
