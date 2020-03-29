@@ -17,7 +17,7 @@ There are three update channels to choose from for Chrome OS updates. This can b
 Keyboard Shortcuts
 ------------------
 
-Chromebooks come with modified keyboards that do not include the traditional layout of keys. These are shortcuts that replace some of those dedicated keys and also improve the experience of using ChromeOS. Note that the ``<SEARCH>`` key is located where the ``<CAPS_LOCK>`` key normally is.
+Chromebooks come with modified keyboards that do not include the traditional layout of keys. These are shortcuts that replace some of those dedicated keys and also improve the experience of using Chrome OS. Note that the ``<SEARCH>`` key is located where the ``<CAPS_LOCK>`` key normally is.
 
 -  (View keyboard shortcuts): ``CTRL`` + ``ALT`` + (``?`` OR ``/``)
 -  Page Up: ``<SEARCH>`` + ``<UP_ARROW>``
@@ -136,7 +136,7 @@ Linux
 Crostini
 ~~~~~~~~
 
-Crostini is an official set of technologies used to securely run Linux on ChromeOS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of ChromeOS 80. [3] It does not require developer mode. Enable it by going into ChromeOS settings and selecting ``Linux (Beta)``. [1]
+Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require developer mode. Enable it by going into Chrome OS settings and selecting ``Linux (Beta)``. [1]
 
 Container Management
 ^^^^^^^^^^^^^^^^^^^^
@@ -197,7 +197,7 @@ With developer mode enabled, the ``termina`` VM can be manually edited with the 
 File Sharing
 ^^^^^^^^^^^^
 
-The ``Files`` app will list ``Linux files``. That will load the visible contents of the ``/home/$USER/`` directory in the container. Directories from the ChromeOS hypervisor, such as ``Downloads``, can also be shared with the container. In the ``Files`` app, right-click on the directory and select ``Share with Linux``. It will be available in the container at ``/mnt/chromeos/MyFiles/``. [2]
+The ``Files`` app will list ``Linux files``. That will load the visible contents of the ``/home/$USER/`` directory in the container. Directories from the Chrome OS hypervisor, such as ``Downloads``, can also be shared with the container. In the ``Files`` app, right-click on the directory and select ``Share with Linux``. It will be available in the container at ``/mnt/chromeos/MyFiles/``. [2]
 
 GPU Acceleration
 ^^^^^^^^^^^^^^^^
