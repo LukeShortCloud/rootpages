@@ -560,6 +560,25 @@ Manage the creation or deletion of a virtual lab environment using ``virsh``.
 
    "--host-address 127.0.0.1 --host-key ~/.ssh/id_rsa --topology-nodes ""undercloud:1,controller:3,compute:2""", deploy 5 virtual machines for an InfraRed lab
 
+infrared openstack
+~~~~~~~~~~~~~~~~~~
+
+Manage a virtual TripleO lab environment using OpenStack instances.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --cloud ${OS_CLOUD}, the OpenStack cloud credentials to use
+   --prefix <OPTIONAL_RESOURCE_PREFIX>, a prefix for all virtual resources (allows for multiple lab environments)
+   --key-file ~/.ssh/id_rsa, the public SSH key that should be added to the Undercloud ``~/.ssh/authorized_keys`` file
+   "--topology-network 3_nets_ovb --topology-nodes 'ovb_undercloud:1,ovb_controller:1,ovb_compute:1'", use Open Virtual Baremetal (OVB)
+   --anti-spoofing False, allow spoofing to allow any IP address and MAC to be used on a Neutron network
+   "--dns <DNS1>,<DNS2>", custom DNS servers for the Undercloud
+   --provider-network <EXTERNAL_PROVIDER_NETWORK>, the provider network that will be used to assign floating IP addresses from
+   --image <RHEL_OR_CENTOS>, the operating system image to use
+   --username <SSH_USER>, the SSH user that is configured in the image
+
 infrared tripleo-undercloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -575,6 +594,7 @@ Manage the installation of the Undercloud.
    --images-task rpm, install RHOSP via RPM repositories
    --images-task import --images-url=<URL>, install RDO via importing an existing Overcloud virtual machine image
    --images-task build, use a RHEL or CentOS guest virtual machine image as a base to build an Overcloud image from
+   "--ntp-server <NTP_SERVER1>,<NTP_SERVER2>", specify custom NTP servers for the Undercloud
 
 .. csv-table::
    :header: Example, Explanation

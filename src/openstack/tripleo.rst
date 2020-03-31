@@ -816,7 +816,7 @@ Install a provision plugin, such as virsh, along with the required plugins for d
 
       .. code-block:: sh
 
-         $ infrared openstack --cloud ${OS_CLOUD} --prefix <OPTIONAL_RESOURCE_PREFIX> --key-file ~/.ssh/id_rsa --topology-network 3_nets_ovb --topology-nodes "ovb_undercloud:1,ovb_controller:1,ovb_compute:1" --anti-spoofing False --provider-network <EXTERNAL_PROVIDER_NETWORK> --image <RHEL_OR_CENTOS> --username <SSH_USER>
+         $ infrared openstack --cloud ${OS_CLOUD} --prefix <OPTIONAL_RESOURCE_PREFIX> --key-file ~/.ssh/id_rsa --topology-network 3_nets_ovb --topology-nodes "ovb_undercloud:1,ovb_controller:1,ovb_compute:1" --anti-spoofing False --dns <DNS1>,<DNS2> --provider-network <EXTERNAL_PROVIDER_NETWORK> --image <RHEL_OR_CENTOS> --username <SSH_USER>
 
    -  An Ansible inventory of the hosts will be generated here: ``~/.infrared/.workspaces/active/hosts``.
 
@@ -827,7 +827,7 @@ Install a provision plugin, such as virsh, along with the required plugins for d
       .. code-block:: sh
 
          $ RHOSP_VERSION=16
-         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --build ${PUDDLE_VERSION} --images-task rpm
+         $ infrared tripleo-undercloud --version ${RHOSP_VERSION} --build ${PUDDLE_VERSION} --images-task rpm --ntp-server clock.redhat.com,clock2.redhat.com
 
    -  RDO:
 
