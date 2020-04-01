@@ -5,7 +5,9 @@ python:
 sudo: required
 before_install:
   - sudo apt-get update
-  - sudo apt-get install make
+  - sudo apt-get install make hunspell hunspell-en-us
+# Travis CI instances are unreliable. The misspelled words are different on every CI run.
+#  - bad_words=$(hunspell -l -d en_US -p ./hunspell_dictionary_root_pages.txt src/*/*.rst); if [[ "${bad_words}" != "" ]]; then echo -e "${bad_words}\nSpelling errors found."; exit 1; fi
 install:
   - pip install Sphinx sphinx-rtd-theme
 script:

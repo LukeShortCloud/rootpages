@@ -936,7 +936,7 @@ File: /etc/neutron/neutron.conf
 .. code-block:: ini
 
     [DEFAULT]
-    service_plugins = <EXISTING_PLGUINS>,neutron.services.qos.qos_plugin.QoSPlugin
+    service_plugins = <EXISTING_PLUGINS>,neutron.services.qos.qos_plugin.QoSPlugin
 
 Layer 2 QoS
 

@@ -312,7 +312,7 @@ Bibliography
 3. "Kernel modules." The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/Kernel\_modules
 4. "Tuning the Task Scheduler." openSUSE Documentation. December 15, 2016. Accessed July 9, 2017. https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html
 5. "Change Linux CPU default scheduler." A else B. January 6, 2016. Accessed July 9, 2017. https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/
-6. Linux System Programming. (Love: O’Reilly Media, Inc., 2007).
+6. Linux System Programming. (Love: O'Reilly Media, Inc., 2007).
 7. "What is the suggested I/O scheduler to improve disk performance when using Red Hat Enterprise Linux with virtualization?" Red Hat Knowledgebase. December 16, 2016. Accessed December 18, 2016. https://access.redhat.com/solutions/5427
 8. 'The Kernel Newbie Corner: "initrd" and "initramfs"--What's Up With That?' Linux.com September 30, 2009. Accessed November 19, 2016. https://www.linux.com/learn/kernel-newbie-corner-initrd-and-initramfs-whats
 9. "ramfs, rootfs and initramfs." The Linux Kernel Documentation. May 29, 2015. Accessed November 19, 2016. https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt
