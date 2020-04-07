@@ -139,8 +139,9 @@ The version of RHOSP in use can be found on the Undercloud by viewing the "/etc/
 
 .. code-block:: sh
 
+    $ yum install rhosp-release
     $ cat /etc/rhosp-release
-    Red Hat OpenStack Platform release 10.0.11 (Newton)
+    Red Hat OpenStack Platform release 16.0.1 (Train)
 
 Historical Milestones
 ---------------------
@@ -975,15 +976,15 @@ Considerations before starting the Undercloud deployment:
       -  **local\_ip** = The local IP address of the Undercloud node to be used for using DHCP for providing IP addresses for Overcloud nodes during PXE booting. This should not be a public IP address.
       -  **inspection\_iprange** = The IP range to use for Ironic's introspection of the Overcloud nodes. This range needs to unique from the DHCP start/end range.
       -  local\_mtu = The MTU size to use for the local interface.
-      -  **cidr** (**network_cidr** in Newton) = The CIDR range of IP addresses to use for the Overcloud nodes.
+      -  **cidr** = The CIDR range of IP addresses to use for the Overcloud nodes.
       -  masquerade\_network = The network CIDR that will be used for masquerading external network connections.
-      -  **gateway** (**network\_gateway** in Newton) = The default gateway to use for external connectivity to the Internet during provisioning. Use the "local\_ip" when masquerading is used.
+      -  **gateway** = The default gateway to use for external connectivity to the Internet during provisioning. Use the "local\_ip" when masquerading is used.
       -  undercloud\_admin\_vip = The IP address to listen on for admin API endpoints.
       -  undercloud\_hostname = The fully qualified hostname to use for the Undercloud.
       -  undercloud\_nameservers = A list of DNS resolvers to use.
       -  undercloud\_ntp\_servers = A list of NTP servers to use.
       -  undercloud\_public\_vip = The IP address to listen on for public API endpoints.
-      -  enabled_hardware_types (**enabled\_drivers** in Newton) = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management" (Queens) or "fake_pxe" (Newton) to this list.
+      -  enabled_hardware_types = The Ironic power management drivers to enable. For virtual lab environments, append "manual-management".
 
    -  Example of changing the control plane (provisioning) network details.
 
@@ -1093,7 +1094,7 @@ Overcloud
    -  All
 
       -  name = A descriptive name of the node.
-      -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "fake_pxe".
+      -  pm_type = The power management driver type to use. Common drivers include "pxe_ipmitool" and "manual-management".
       -  capabilities = Set custom capabilities. For example, the profile and boot options can be defined here: ``"profile:compute,boot_option:local"``.
 
    -  IPMI
@@ -1118,7 +1119,7 @@ Overcloud
               "nodes": [
                   {
                       "name": "<DESCRIPTIVE_NAME>",
-                      "pm_type": "fake_pxe",
+                      "pm_type": "manual-management",
                       "arch": "x86_64",
                       "cpu": "<CPU_CORES>",
                       "memory": "<RAM_MB>",
@@ -1146,7 +1147,7 @@ Overcloud
          ---
          nodes:
            - name: <DESCRIPTIVE_NAME>
-             pm_type: fake_pxe
+             pm_type: manual-management
              arch: x86_64
              cpu: <CPU_CORES>
              memory: <RAM_MB>
@@ -1179,12 +1180,6 @@ Overcloud
 
 -  Alternatively, import them and inspect them later.
 
-   -  Newton:
-
-      .. code-block:: sh
-
-          $ openstack baremetal import --json instackenv.json
-
    -  Queens [24]:
 
       .. code-block:: sh
@@ -1212,12 +1207,6 @@ Overcloud
 
    -  **Method \#1:** Automatic introspection with a managed Ironic driver (such as IPMI).
 
-         -  Newton:
-
-            .. code-block:: sh
-
-                $ openstack baremetal introspection bulk start
-
          -  Queens [24]:
 
             .. code-block:: sh
@@ -1239,15 +1228,9 @@ Overcloud
 
                 $ openstack overcloud node discover --range <CIDR> --credentials <USER1>:<PASSWORD1> --credentials <USER2>:<PASSWORD2>
 
-   -  **Method \#3:** Lab environment using the manual-management/fake_pxe driver.
+   -  **Method \#3:** Lab environment using the manual-management driver.
 
       -  In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
-
-         -  Newton:
-
-            .. code-block:: sh
-
-                $ openstack baremetal introspection bulk start
 
          -  Queens [24]:
 
@@ -1277,19 +1260,13 @@ Overcloud
             | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power off   | available          | False       |
             +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
--  Configure the necessary flavors (mandatory for getting accurate results when using the manual-management/fake_pxe Ironic driver). [25] Commonly custom "control" and "compute" flavors will need to be created.
+-  Configure the necessary flavors (mandatory for getting accurate results when using the manual-management Ironic driver). [25] Commonly custom "control" and "compute" flavors will need to be created.
 
    .. code-block:: sh
 
        $ openstack flavor create --id auto --vcpus <CPU_COUNT> --ram <RAM_IN_MB> --disk <DISK_IN_GB_MINUS_ONE> --swap <SWAP_IN_MB> --property "capabilities:profile"="<FLAVOR_NAME>" <FLAVOR_NAME>
 
 -  Configure the kernel and initramfs that the baremetal nodes should boot from.
-
-   -  Newton:
-
-      .. code-block:: sh
-
-          $ openstack baremetal configure boot
 
    -  Queens (optional) [24]:
 
@@ -1321,15 +1298,6 @@ Overcloud
 **Deployment**
 
 -  Configure the networking Heat templates that define the physical and virtual network interface settings.
-
-   -  Newton:
-
-      -  Pick a network configuration from ``/usr/share/openstack-tripleo-heat-templates/environments/`` and modify it to fit the deployment environment. Templates include:
-
-         -  bond-with-vlans
-         -  multiple-nics
-         -  single-nic-linux-bridge-vlans
-         -  single-nic-vlans
 
    -  Queens:
 
@@ -1509,12 +1477,6 @@ Overcloud
 [13][23]
 
 -  Passwords for the Overcloud services can be found by running:
-
-   -  TripleO Newton:
-
-      .. code-block:: sh
-
-         $ mistral environment-get overcloud
 
    -  TripleO Queens:
 
