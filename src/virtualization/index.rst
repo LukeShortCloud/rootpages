@@ -3,5 +3,6 @@
    :caption: Virtualization
 
    containers.rst
+   kubernetes.rst
    virtual_machines.rst
    wine.rst
