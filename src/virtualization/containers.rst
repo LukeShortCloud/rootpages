@@ -76,20 +76,20 @@ docker containers are built by using a template called ``Dockerfile``. This file
 -  VOLUME <PATH> = A list of paths inside the container that can mount to an external persistent storagedevice (for example, for storing a database).
 -  WORKDIR = The working directory where commands will be executed from.
 
-[23]
+[9]
 
 **Storage Space**
 
 Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Dockerfile operation creates a writable/container layer ontop of the previous layer. Each layer takes up more space.
 
-Lower space usage by [28]:
+Lower space usage by [10]:
 
 -  Using a small image such as `alpine <https://hub.docker.com/_/alpine>`__.
 -  Combining all ``RUN`` commands into one statement. Chain them together with ``&&`` to ensure that each command succeeds before moving onto the next one.
 -  Cleaning package manager cache (if applicable).
 -  Using the `docker image build --squash <https://docs.docker.com/engine/reference/commandline/image_build/>`__  or `buildah bud --squash <https://github.com/containers/buildah/blob/master/docs/buildah-bud.md>`__ command to consolidate all additional layers when creating a new image. Use `docker-squash <https://github.com/goldmann/docker-squash>`__ to consolidate an existing image.
 
-A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [29]
+A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
 
 Networking
 ~~~~~~~~~~
@@ -206,144 +206,6 @@ able to run.
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
 
-Container Management Platforms
-------------------------------
-
-Kubernetes
-~~~~~~~~~~
-
-Kubernetes provides an API and graphical user interface for the orchestration and scaling of docker containers. It was originally created by Google as part of their Google Kubernetes Engine cloud platform.
-
-Storage
-^^^^^^^
-
-Kubernetes storage requires a ``PersistentVolume`` (PV) pool that users can create multiple ``PersistentVolumeClaim`` (PVC) claims from.
-
-Storage is recommended to be dynamic (ephemeral) so that applications can scale and handle failures in a cloudy way. However, databases and legacy applications may require static (persistent) storage.
-
--  PersistentVolume spec [18]:
-
-   -  storageClassName = The storage back-end to use. Leave blank to use the default. Set to a non-existent storage class to manually manage it (for example, "" or "manual").
-   -  **accessModes** [19]
-
-      -  ReadOnlyMany = More than one pod can only read the data to/from this storage
-      -  ReadWriteOnce = Only one pod can read and write to/from this storage.
-      -  ReadWriteMany = More than one pod can read and write data to/from this storage.
-
-   -  **capacity** =
-
-      -  **storage** = The capacity, in "Gi", that the PV pool contains.
-
-   -  mountOptions
-   -  nodeAffinity = A list of worker nodes that can use this storage.
-   -  persistentVolumeReclaimPolicy
-   -  volumeMode
-
-- (Configurable PV dictionaries)
-
-   -  awsElasticBlockStore
-   -  azureDisk
-   -  azureFile
-   -  cephfs
-   -  cinder
-   -  fc
-   -  flexVolume
-   -  flocker
-   -  gcePersistentDisk
-   -  glusterfs
-   -  hostPath = Use a local directory on a worker node to store data. Consider additionally setting the "nodeAffinity" to the node that will store the data. Alternatively, use ``glusterfs`` instead of ``hostPath`` to sync the directory across all of the worker nodes.
-
-      -  path = The file system path to use.
-
-   -  iscis
-   -  local
-   -  nfs
-   -  photonPersistentDisk
-   -  portworxVolume
-   -  quobyte
-   -  rbd
-   -  scaleIO
-   -  storageos
-   -  vsphereVolume
-
-Static
-''''''
-
-The example below shows how to configure static storage for a pod using local storage.
-
--  Create a PV. Set a unique ``<PV_NAME>``, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
-
-.. code-block:: yaml
-
-   ---
-   kind: PersistentVolume
-   apiVersion: v1
-   metadata:
-     name: <PV_NAME>
-     labels:
-       type: local
-   spec:
-     storageClassName: manual
-     capacity:
-       storage: <PV_STORAGE_MAX>Gi
-     accessModes:
-       - ReadWriteOnce
-     hostPath:
-       path: "<LOCAL_FILE_SYSTEM_PATH>"
-     # For distributed storage, consider using "nfs" instead of "hostPath".
-     # See: https://docs.okd.io/latest/install_config/persistent_storage/persistent_storage_nfs.html
-     #nfs:
-     #  path: /exports/app
-     #  server: 192.168.1.100
-     nodeAffinity:
-       required:
-         nodeSelectorTerms:
-           - matchExpressions:
-             - key: kubernetes.io/hostname
-               operator: In
-               values:
-                 - <WORKER_NODE_WITH_LOCAL_FILE_SYSTEM_PATH>
-
--  Create a PVC from the PV pool. Set a unique ``<PVC_NAME>`` and the ``<PVC_STORAGE>`` size. The size should not exceed the maximum available storage from the PV.
-
-.. code-block:: yaml
-
-   ---
-   kind: PersistentVolumeClaim
-   apiVersion: v1
-   metadata:
-     name: <PVC_NAME>
-   spec:
-     storageClassName: manual
-     accessModes:
-       - ReadWriteOnce
-     resources:
-       requests:
-         storage: <PVC_STORAGE>Gi
-
--  Create a pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
-
-.. code-block:: yaml
-
-   ---
-   kind: Pod
-   apiVersion: v1
-   metadata:
-     name: task-pv-pod
-   spec:
-     volumes:
-       - name: <POD_VOLUME_NAME>
-         persistentVolumeClaim:
-          claimName: <PVC_NAME>
-     containers:
-       - name: task-pv-container
-         image: mysql
-         volumeMounts:
-           - mountPath: "/var/lib/mysql"
-             name: <POD_VOLUME_NAME>
-
-[20]
-
 History
 -------
 
@@ -363,9 +225,6 @@ Bibliography
 6. "How to install and setup LXC (Linux Container) on Fedora Linux 26." nixCraft. July 13, 2017. Accessed August 8, 2017. https://www.cyberciti.biz/faq/how-to-install-and-setup-lxc-linux-container-on-fedora-linux-26/
 7. "Java inside docker: What you must know to not FAIL." Red Hat Developers Blog. March 14, 2017. Accessed October 2018. https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
 8. "Improve docker container detection and resource configuration usage." Java Bug System. November 16, 2017. Accessed October 5, 2018. https://bugs.openjdk.java.net/browse/JDK-8146115
-18. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
-19. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-20. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
-23. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
-28. "Five Ways to Slim Docker Images." Codacy Blog. December 14, 2017. Accessed March 21, 2020. https://blog.codacy.com/five-ways-to-slim-your-docker-images/
-29. "Best practices for writing Dockerfiles." Docker Documentation. Accessed March 21, 2020. https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+9. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
+10. "Five Ways to Slim Docker Images." Codacy Blog. December 14, 2017. Accessed March 21, 2020. https://blog.codacy.com/five-ways-to-slim-your-docker-images/
+11. "Best practices for writing Dockerfiles." Docker Documentation. Accessed March 21, 2020. https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
