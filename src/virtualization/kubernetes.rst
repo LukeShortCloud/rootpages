@@ -183,6 +183,39 @@ Below is a list of RHOCP and OKD versions that correspond with the upstream Kube
 
 Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> + 3`` is released, the ``<RHOCP_RELEASE>`` soon becomes end-of-life. [6]
 
+API
+---
+
+Stability
+~~~~~~~~~
+
+New Kubernetes APIs go through a life-cycle of updates before being marked as stable. Below are the different possible stages in ascending order.
+
+-  Development or Prototype = Not found in any official releases. May not work.
+-  Alpha = Partially implemented. Disabled by default. Versioning starts with ``v1alpha1``.
+-  Beta = Feature complete. Includes mostly completed API test coverage. Upgrades may break. Versioning starts with ``v1beta1``.
+-  Stable or General Availability (GA) = Fully supported in Kubernetes. Will remain backwards compatible with upgrades. Versioning starts with ``v1``.
+
+[20]
+
+Types
+~~~~~
+
+All of the available APIs are categorized into these types:
+
+-  Cluster
+-  Config and Storage
+-  Metadata
+-  Service
+-  Workloads
+
+All APIs contain these fields that should be referenced in every template file:
+
+-  apiVersion = The version of the API.
+-  kind = Name of the API to create an object from.
+
+[21]
+
 Installation
 ------------
 
@@ -654,3 +687,5 @@ Bibliography
 17. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed April 15, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
