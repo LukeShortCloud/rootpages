@@ -63,11 +63,102 @@ Release highlights:
    -  Cross-cluster discovery support for running Pods across multiple clouds.
    -  `PetSet objects <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>`__ (later `renamed to SatefulSet <https://github.com/kubernetes/kubernetes/issues/35534>`__) introduced for running stateful applications such as databases.
 
+-  `1.4 <https://kubernetes.io/blog/2016/09/kubernetes-1-4-making-it-easy-to-run-on-kuberentes-anywhere/>`__
+
+   -   `kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/>`__` introduced for installing Kubernetes clusters.
+   -  ScheduledJob objects (later named to `CronJob <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/>`__) added to run an application during a regularyly scheduled time.
+   -  `PodSecurityPolicies <https://kubernetes.io/docs/concepts/policy/pod-security-policy/>`__ object added for setting the security context of containers.
+   -  `Anti- and Inter-Affinity <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>`__ for helping to select which Nodes a Pod will be deployed on.
+   -  AppArmor support.
+   -  Azure Data Disk and Quobyte volume plugins.
+
+-  `1.5 <https://kubernetes.io/blog/2016/12/kubernetes-1-5-supporting-production-workloads/>`__
+
+   -  `kubefed <https://github.com/kubernetes-sigs/kubefed/blob/master/docs/userguide.md>`__ command for manginging federated Kubernetes clusters.
+   -  `PodDistruptionBudget <https://kubernetes.io/docs/tasks/run-application/configure-pdb/>`__ object allows for managing Node eviction rules.
+   -  Windows container support.
+   -  `Container Runtime Interface (CRI) <https://developer.ibm.com/technologies/containers/blogs/kube-cri-overview/>`__ allows different runtimes besides docker.
+   -  Functionality tests for Nodes.
+   -  PetSet renamed to StatefulSet.
+
+-  `1.6 <https://coreos.com/blog/kubernetes-1-6.html>`__
+
+   -  The first release of Kubernetes not from Google (from CoreOS).
+   -  etcd now defaults to version 3.
+   -  docker is no longer a dependency. Other runtimes such as rkt and CRI-O are supported.
+   -  RBAC is now in beta.
+   -  PersistentVolumeClaim objects will now be created automatically.
+
+-  `1.7 <https://www.redhat.com/en/blog/whats-new-kubernetes-17-extensibility-rules>`__
+
+   -  `Custom Resource Definitions (CRDs) <https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/>`__ allows existing APIs to have expanded functionality.
+   -  `API Aggregation <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/>`__ allows new APIs to be natively added to Kubernetes.
+   -  Secrets can now be encrypted in etcd.
+   -  Nodes can now have limited access to a subset of the Kubernetes APIs (only the ones it needs).
+   -  Extensible External Admission Control adds additional security policies and checks.
+   -  `NetworkPolicy API <https://kubernetes.io/docs/concepts/services-networking/network-policies/>`__ is now stable.
+
+-  `1.8 <https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.8.md#notable-features>`__
+
+   -  RBAC is now stable.
+   -  Storage mount options are now stable.
+   -  `kubectl plugins <https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/>`__ are now supported to extend the CLI's functionality.
+
+-  `1.9 <https://kubernetes.io/blog/2017/12/kubernetes-19-workloads-expanded-ecosystem/>`__
+
+   -  `Workloads APIs <https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#-strong-workloads-apis-strong->`__ are now stable.
+   -  Introduced Container Storage Interface (CSI) for adding additional storage back-ends to Kubernetes.
+   -  `CoreDNS installation <https://kubernetes.io/docs/tasks/administer-cluster/coredns/>`__ is now supported by ``kubeadm``.
+
+-  `1.10 <https://kubernetes.io/blog/2018/03/26/kubernetes-1.10-stabilizing-storage-security-networking/>`__
+
+   -  Third-party authentication can now be used with ``kubectl``.
+
+-  `1.11 <https://kubernetes.io/blog/2018/06/27/kubernetes-1.11-release-announcement/>`__
+
+   -  `IPVS load balancing <https://kubernetes.io/blog/2018/07/09/ipvs-based-in-cluster-load-balancing-deep-dive/>`__ is now stable.
+   -  CoreDNS support is now stable.
+
+-  `1.12 <https://kubernetes.io/blog/2018/09/27/kubernetes-1.12-kubelet-tls-bootstrap-and-azure-virtual-machine-scale-sets-vmss-move-to-general-availability/>`__
+
+   -  `Kubelet TLS Bootstrap <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/>`__ is now stable.
+   -  Snapshot support for CSI managed Persistent Volumes.
+
 -  `1.13 <https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/>`__
 
    -  `kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/>`__ is now officially supported for installing and setting up a Kubernetes cluster.
    -  `CoreDNS <https://coredns.io/>`__ is the default DNS provider.
    -  `Container Storage Interface (CSI) <https://kubernetes-csi.github.io/docs/drivers.html>`__ is now stable for integrating more cloud storage solutions.
+
+-  `1.14 <https://kubernetes.io/blog/2019/03/25/kubernetes-1-14-release-announcement/>`__
+
+   -  Windows Nodes is now stable.
+   -  Persistent Local Volumes is now stable.
+   -  ``kubectl`` plugin mechanism is now stable.
+
+-  `1.15 <https://kubernetes.io/blog/2019/06/19/kubernetes-1-15-release-announcement/>`__
+
+   -  CRDs now support default settings.
+   -  Storage plugins are being converted to use CSI instead.
+   -  Cloning CSI Persistent Volumes is now supported.
+
+-  `1.16 <https://kubernetes.io/blog/2019/09/18/kubernetes-1-16-release-announcement/>`__
+
+   -  CRDs are now stable.
+   -  Metrics now use a registry (just as how all other Kubernetes services do).
+   -  ``kubeadm`` now supports joining and reseting Windows Nodes.
+   -  CSI support on Windows.
+   -  `EndpointSlice API <https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/>`__ introduced as a scalable alternative to Endpoints.
+
+-  `1.17 <https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-release-announcement/>`__
+
+   -  Cloud Prover Labels are now stable.
+
+-  `1.18 <https://kubernetes.io/blog/2020/03/25/kubernetes-1-18-release-announcement/>`__
+
+   -  Toplogy Manager API now supports NUMA CPU pinning.
+   -  `kubectl alpha debug <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#ephemeral-container>`__ argument introduced to attach a temporary container to a running container for troubleshooting purposes.
+   -  Windows CSI now supports privileged storage configurations.
 
 OpenShift
 ~~~~~~~~~
