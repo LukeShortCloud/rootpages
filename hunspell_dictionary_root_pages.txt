@@ -1219,6 +1219,9 @@ hwaddress
 Hyperconverged
 hyperthreads
 hyperv
+hypervisor
+Hypervisor
+HYPERVISOR
 HypriotOS
 i3
 i386
@@ -1650,6 +1653,9 @@ memorybacking
 memoryBacking
 menuentry
 metacloud
+metadata
+Metadata
+METADATA
 MetalSmith
 Metaparameters
 METHOD1
@@ -2740,7 +2746,11 @@ thinpool
 THP
 tid
 TimedRotatingFileHandler
+'time
 timeslice
+timestamp
+Timestamp
+TIMESTAMP
 TINYINT
 tkg
 TKG
@@ -2937,6 +2947,9 @@ vgrename
 vhd
 vhost
 VietStack
+virtualization
+Virtualization
+VIRTUALIZATION
 vip
 vipw
 virbr0
@@ -3051,6 +3064,9 @@ wlan0
 Wmii
 WMs
 WORKDIR
+workflow
+Workflow
+WORKFLOW
 workgroup
 WORKGROUP
 Workspaces
