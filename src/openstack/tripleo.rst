@@ -1023,49 +1023,56 @@ Considerations before starting the Undercloud deployment:
 
 [12]
 
+The next step is to optionally provision the Overcloud nodes and then deploy the OpenStack services.
+
 Uninstall
 ^^^^^^^^^
 
 Use the script provided `here <https://access.redhat.com/solutions/2210421>`__ to uninstall the Undercloud services.
 
-Overcloud
-~~~~~~~~~
+Overcloud (Provision Nodes with Ironic)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Image Preparation**
+TripleO can provision a full CentOS or RHEL operating system onto a new baremetal server using the Ironic service. The normal TripleO deployment process is split into these steps [59]:
 
--  Download the prebuilt Overcloud image files from https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/.
+-  Upload pre-built Overcloud image files to Glance.
+-  Import the ``instackenv`` file with power management details about the nodes.
+-  Introspect the nodes. This will PXE/network boot the Overcloud nodes so that Ironic can gather hardware information used during provisioning.
+-  Deploy the Overcloud. This will automatically provision the nodes. Provisioning can optionally be done manually before the deployment.
 
-   -  <= Queens (RDO)
+-----
+
+-  **Image Preparation**
+
+   -  GA releases do not have pre-built Overcloud image files. They must be manually created. [60]
 
       .. code-block:: sh
 
+        $ The openstack overcloud image build --all
+
+   -  RDO Trunk (current-tripleo-rdo):
+
+      .. code-block:: sh
+
+        $ export OS_RELEASE="train"
+        $ export TRUNK_BRANCH="current-tripleo-rdo"
         $ mkdir images
         $ cd images
-        $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/ironic-python-agent.tar
-        $ curl -O https://images.rdoproject.org/queens/delorean/current-tripleo-rdo/overcloud-full.tar
+        $ curl -O https://images.rdoproject.org/${OS_RELEASE}/rdo_trunk/${TRUNK_BRANCH}/ironic-python-agent.tar
+        $ curl -O https://images.rdoproject.org/${OS_RELEASE}/rdo_trunk/${TRUNK_BRANCH}/overcloud-full.tar
         $ tar -v -x -f ironic-python-agent.tar
         $ tar -v -x -f overcloud-full.tar
 
-   -  >= Rocky (RDO)
+   -  RHOSP [38]
 
       .. code-block:: sh
 
+        $ export OS_RELEASE="13.0"
         $ mkdir images
         $ cd images
-        $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/ironic-python-agent.tar
-        $ curl -O https://images.rdoproject.org/rocky/rdo_trunk/current-tripleo-rdo/overcloud-full.tar
-        $ tar -v -x -f ironic-python-agent.tar
-        $ tar -v -x -f overcloud-full.tar
-
-   -  RHOSP 13 [38]
-
-      .. code-block:: sh
-
-         $ mkdir images
-         $ cd images
-         $ sudo yum install rhosp-director-images rhosp-director-images-ipa
-         $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-13.0.tar
-         $ tar -v -x -f /usr/share/rhosp-director-images/ironic-python-agent-latest-13.0.tar
+        $ sudo yum install rhosp-director-images rhosp-director-images-ipa
+        $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-${OS_RELEEASE}.tar
+        $ tar -v -x -f /usr/share/rhosp-director-images/ironic-python-agent-latest-${OS_RELEASE}.tar
 
 -  These files are extracted from the tar archives:
 
@@ -1089,7 +1096,7 @@ Overcloud
 
 **Introspection**
 
--  Create a "instackenv.json" file that describes the physical infrastructure of the Overcloud. [15] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [18] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
+-  Create an ``instackenv.{json|yaml}`` file that describes the physical infrastructure of the Overcloud. [15] By default Ironic manages rebooting machines using the IPMI "pxe_ipmitool" driver. [18] Below are the common values to use that define how to handle power management (PM) for the Overcloud nodes via Ironic.
 
    -  All
 
@@ -1152,6 +1159,8 @@ Overcloud
              cpu: <CPU_CORES>
              memory: <RAM_MB>
              disk: <DISK_GB>
+             mac:
+               - "AA:BB:CC:DD:EE:FF"
              capabilities: "profile:control,boot_option:local"
            - name: <DESCRIPTIVE_NAME>
              pm_type: pxe_ipmitool
@@ -1162,7 +1171,7 @@ Overcloud
 
    -  Virtual lab environment:
 
-      -  The "pxe_fake" driver can be used. This will require the end-user to manually reboot the managed nodes.
+      -  The "manual-management" driver can be used. This will require the end-user to manually reboot the managed nodes.
 
       -  Virtual machines deployed using Vagrant need to have vagrant-libvirt's default eth0 management interface removed. The first interface on the machine (normally eth0) is used for introspection and provisioning and cannot be that management interface.
 
@@ -1170,26 +1179,22 @@ Overcloud
 
              $ sudo virsh detach-interface ${VM_NAME} network --persistent --mac $(sudo virsh dumpxml ${VM_NAME} | grep -B4 vagrant-libvirt | grep mac | cut -d "'" -f2)
 
--  Import the nodes and then introspect them immediately.
+-  Import the nodes and then introspect them immediately. [24]
 
-  -  Queens [24]:
+   .. code-block:: sh
 
-     .. code-block:: sh
-
-         $ openstack overcloud node import --introspect --provide instackenv.json
+       $ openstack overcloud node import --introspect --provide instackenv.json
 
 -  Alternatively, import them and inspect them later.
 
-   -  Queens [24]:
+   .. code-block:: sh
 
-      .. code-block:: sh
-
-          $ openstack overcloud node import instackenv.json
-          Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
-          Waiting for messages on queue 'tripleo' with no timeout.
-          2 node(s) successfully moved to the "manageable" state.
-          Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
-          Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
+       $ openstack overcloud node import instackenv.json
+       Started Mistral Workflow tripleo.baremetal.v1.register_or_update. Execution ID: cf2ce144-a22a-4838-9a68-e7c3c5cf0dad
+       Waiting for messages on queue 'tripleo' with no timeout.
+       2 node(s) successfully moved to the "manageable" state.
+       Successfully registered node UUID c1456e44-5245-4a4d-b551-3c6d6217dac4
+       Successfully registered node UUID 9a277de3-02be-4022-ad26-ec4e66d97bd1
 
    -  Verify that Ironic has successfully added the new baremetal nodes.
 
@@ -1203,26 +1208,24 @@ Overcloud
           | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | None        | manageable         | False       |
           +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
--  Start the introspection.
+-  Start the introspection. [24] Each Overcloud node requires at least 4GB of RAM or else the introspection will fail with a kernel panic during the network booted live session.
 
-   -  **Method \#1:** Automatic introspection with a managed Ironic driver (such as IPMI).
+   -  **Method \#1:** Automatical introspection with a managed Ironic driver (such as IPMI). This command will introspect all nodes in the ``management`` state and set them to the ``available`` state when complete.
 
-         -  Queens [24]:
+      .. code-block:: sh
 
-            .. code-block:: sh
-
-                $ openstack overcloud node introspect --all-manageable --provide
-                Waiting for introspection to finish...
-                Waiting for messages on queue 'tripleo' with no timeout.
-                Introspection of node c1456e44-5245-4a4d-b551-3c6d6217dac4 completed. Status:SUCCESS. Errors:None
-                Introspection of node 9a277de3-02be-4022-ad26-ec4e66d97bd1 completed. Status:SUCCESS. Errors:None
-                Introspection completed.
-                Waiting for messages on queue 'tripleo' with no timeout.
-                2 node(s) successfully moved to the "available" state.
+          $ openstack overcloud node introspect --all-manageable --provide
+          Waiting for introspection to finish...
+          Waiting for messages on queue 'tripleo' with no timeout.
+          Introspection of node c1456e44-5245-4a4d-b551-3c6d6217dac4 completed. Status:SUCCESS. Errors:None
+          Introspection of node 9a277de3-02be-4022-ad26-ec4e66d97bd1 completed. Status:SUCCESS. Errors:None
+          Introspection completed.
+          Waiting for messages on queue 'tripleo' with no timeout.
+          2 node(s) successfully moved to the "available" state.
 
    -  **Method \#2:** Automatic but the connection details are given via the CLI instead of the instackenv file.
 
-         -  Automatically discover the available servers by scanning hardware devices (such as IPMI) via a CIDR range and using different logins.
+      -  Automatically discover the available servers by scanning hardware devices (such as IPMI) via a CIDR range and using different logins.
 
             .. code-block:: sh
 
@@ -1232,21 +1235,19 @@ Overcloud
 
       -  In another terminal, verify that the "Power State" is "power on" and then manually start the virtual machines. The introspection will take a long time to complete.
 
-         -  Queens [24]:
+         .. code-block:: sh
 
-            .. code-block:: sh
+             $ openstack overcloud node introspect --all-manageable --provide
 
-                $ openstack overcloud node introspect --all-manageable --provide
+         .. code-block:: sh
 
-            .. code-block:: sh
-
-               $ openstack baremetal node list
-               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-               | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
-               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
-               | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power on    | manageable         | False       |
-               | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power on    | manageable         | False       |
-               +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            $ openstack baremetal node list
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            | UUID                                 | Name      | Instance UUID | Power State | Provisioning State | Maintenance |
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
+            | c1456e44-5245-4a4d-b551-3c6d6217dac4 | control01 | None          | power on    | manageable         | False       |
+            | 9a277de3-02be-4022-ad26-ec4e66d97bd1 | compute01 | None          | power on    | manageable         | False       |
+            +--------------------------------------+-----------+---------------+-------------+--------------------+-------------+
 
       -  When the "Power State" becomes "power off" and the "Provisioning State" becomes "available" then manually shutdown the virtual machines.
 
@@ -1299,28 +1300,26 @@ Overcloud
 
 -  Configure the networking Heat templates that define the physical and virtual network interface settings.
 
-   -  Queens:
+   -  Scenario #1 - Default templates:
 
-      -  Scenario #1 - Default templates:
+      .. code-block:: sh
 
-         .. code-block:: sh
+          $ cd /usr/share/openstack-tripleo-heat-templates/
+          $ mkdir /home/stack/templates/
+          $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o /home/stack/templates/
 
-             $ cd /usr/share/openstack-tripleo-heat-templates/
-             $ mkdir /home/stack/templates/
-             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o /home/stack/templates/
+   -  Scenario #2 - Variables can be customized via the "roles_data.yaml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
 
-      -  Scenario #2 - Variables can be customized via the "roles_data.yaml" and "network_data.yml" files. Example usage can be found `here <https://github.com/redhat-openstack/tripleo-workshop/tree/master/composable-roles-dev>`__.
+      .. code-block:: sh
 
-         .. code-block:: sh
+          $ mkdir /home/stack/templates/
+          $ cp /usr/share/openstack-tripleo-heat-templates/roles_data.yaml /home/stack/templates/roles_data_custom.yaml
+          $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
+          $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
 
-             $ mkdir /home/stack/templates/
-             $ cp /usr/share/openstack-tripleo-heat-templates/roles_data.yaml /home/stack/templates/roles_data_custom.yaml
-             $ cp /usr/share/openstack-tripleo-heat-templates/network_data.yml /home/stack/templates/network_data_custom.yaml
-             $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data ~/templates/roles_data_custom.yaml --roles-data ~/templates/network_data_custom.yaml
+   -  Scenario #3 - No templates:
 
-      -  Scenario #3 - No templates:
-
-         -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to separate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
+      -  If no custom network settings will be used, then the Heat templates do not need to be generated. By default, TripleO will configure different subnets to separate traffic (instead of also using VLANs) onto the default network interface of the Overcloud nodes.
 
 -  In a YAML Heat template, set the number of controller, compute, Ceph, and/or any other nodes that should be deployed.
 
@@ -1722,7 +1721,6 @@ Add the ``--config-download -e ~/templates/environments/config-download-environm
 **os-collect-config (Queens, Automatic)**
 
 -  When using Queens without config-download, the deployment will pause on the creation of the Overcloud nodes. The Heat agent on the Overcloud nodes need to be registered for the deployment to continue. For new deployments only (not scaling), automatic detection of the Heat agents can be used. Use the Overcloud node roles defined in the "roles_data.yaml" configuration file.
-
 
    ::
 
@@ -2455,7 +2453,10 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 -  Use the most minimal resources required on the Overcloud nodes for a deployment.
 
    -  Controller: 4 vCPUs and 16GB RAM
-   -  Compute: 2 vCPUs and 2GB RAM
+   -  Compute: 2 vCPUs
+
+      -  Pre-deployed: 2GB RAM
+      -  Ironic provisioned: 4GB RAM
 
 -  If using OpenStack as the lab infrastructure, disable port security to allow any MAC and IP address to be used. Also disable security groups to avoid further connection issues.
 
@@ -2635,3 +2636,5 @@ Bibliography
 56. "Ensure config-download mappings are unset on ceph-upgrade." OpenDev openstack/tripleo-heat-templates. April 27, 2018. Accessed February 10, 2020. https://opendev.org/openstack/tripleo-heat-templates/commit/24469e3c02747b7b6de6d61fcf2a8b9be67b370b
 57. "TripleO Project Specifications." TripleO Documentation. October 16, 2019. Accessed February 17, 2020. https://specs.openstack.org/openstack/tripleo-specs/
 58. "Blueprints for tripleo." tripleo Launchpad. Accessed February 17, 2020. https://blueprints.launchpad.net/tripleo
+59. "CHAPTER 7. CONFIGURING A BASIC OVERCLOUD WITH CLI TOOLS." Red hat RHOSP 16 Documentation. Accessed April 21, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/creating-a-basic-overcloud-with-cli-tools
+60. "Building a Single Image." TripleO Documentation. April 20, 2020. Accessed April 21, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/build_single_image.html
