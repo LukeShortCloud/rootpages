@@ -68,7 +68,7 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
 - Popular derivatives [2]:
     - Community Enterprise Linux (CentOS)
     - Red Hat Enterprise Linux (RHEL)
-    - Scientific Linux
+    - Yellow Dog Linux (YDL)
 
 Fedora Silverblue
 ~~~~~~~~~~~~~~~~~
@@ -207,7 +207,7 @@ Bibliography
 ------------
 
 1. "Arch Linux." Arch Linux. November 8, 2017. Accessed January 2, 2018. https://www.archlinux.org/
-2. "DistroWatch." DistroWatch. Accessed March 20, 2018. https://distrowatch.com/
+2. "DistroWatch." DistroWatch. Accessed April 27, 2020. https://distrowatch.com/
 3. "Chapter 8 - The Debian package management tools." The Debian GNU/Linux FAQ. Accessed January 2, 2018. https://www.debian.org/doc/manuals/debian-faq/ch-pkgtools.en.html
 4. "What is the relationship between Fedora and Red Hat Enterprise Linux?" Red Hat. Accessed January 2, 2018. https://www.redhat.com/en/technologies/linux-platforms/articles/relationship-between-fedora-and-rhel
 5. "About CentOS." CentOS. Accessed January 2, 2018. https://www.centos.org/about/
