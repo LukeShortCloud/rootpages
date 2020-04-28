@@ -3662,6 +3662,7 @@ Below is an example of defining support for all Linux operating systems that are
 
 .. code-block:: yaml
 
+    ---
     platforms:
       - name: Alpine
         versions:
@@ -3675,6 +3676,8 @@ Below is an example of defining support for all Linux operating systems that are
       - name: Devuan
         versions:
           - all
+      # "CentOS" and "RHEL" are not valid names. Use "EL" instead.
+      # https://github.com/ansible/galaxy/issues/2072
       - name: EL
         versions:
           - all
