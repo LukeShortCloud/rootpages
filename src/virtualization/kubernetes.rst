@@ -209,12 +209,79 @@ All of the available APIs are categorized into these types:
 -  Service
 -  Workloads
 
-All APIs contain these fields that should be referenced in every template file:
-
--  apiVersion = The version of the API.
--  kind = Name of the API to create an object from.
-
 [21]
+
+Resources
+~~~~~~~~~
+
+Resource APIs are used to create objects in Kubernetes. They define the desired state of objects. Controllers are used to enforce that state. Every object must be defined using a YAML template file with these fields:
+
+-  **apiVersion (string)** = The version of the API. Normally ``v1`` or ``<APIGROUP>/v1``.
+-  **kind (string)** = Name of the API to create an object from.
+-  **metadata (dictionary)** = Metadata for the object.
+
+   -  **name (string)** = The unique name of this object. Only one object with this Resoure kind and name can exist in a namespace.
+   -  **labels (dictionary)** = Any key-value pair to help identify this object. This is optional but recommended to help find specific or related objects.
+
+-  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: <RESOURCE_APIGROUP>/<RESOURCE_APIVERSION>
+   kind: <RESOURCE_KIND>
+   metadata:
+     name: <OBJECT_NAME>
+     labels:
+       <KEY>: <VALUE>
+   spec:
+
+[22]
+
+List the values for each Resource such as the ``<NAME>``, ``<APIGROUP>``, ``<KIND>``, and if it supports namespaces. Further documentation on all of the available configuration fields for a Resource can also be shown.
+
+.. code-block:: sh
+
+   $ kubectl api-resources
+   $ kubectl explain <RESOURCE_NAME>
+   $ kubectl explain <RESOURCE_NAME>.spec --recursive
+   $ kubectl explain <RESOURCE_NAME> --recursive
+
+View the ``<RESOURCE_APIGROUP>/<RESOURCE_APIVERSION>`` versions available to use.
+
+.. code-block:: sh
+
+   $ kubectl api-versions
+
+Show all objects from one of the Resource APIs.
+
+.. code-block:: sh
+
+   $ kubectl get <RESOURCE_NAME>
+
+View details about an object.
+
+.. code-block:: sh
+
+   $ kubectl describe <RESOURCE_NAME> <OBJECT_NAME>
+
+[23]
+
+Edit or view the YAML configuration for an existing object.
+
+.. code-block:: sh
+
+   $ kubectl edit <RESOURCE_NAME> <OBJECT_NAME>
+   $ kubectl get <RESOURCE_NAME> <OBJECT_NAME> -o yaml --export
+
+Create a basic template for a Deployment or any object. It can be saved and used as a starting point for a new template. No object will be created.
+
+.. code-block:: sh
+
+   $ kubectl run <DEPLOYMENT_NAME> --image=<CONTAINER_IMAGE_NAME> --dry-run -o yaml
+   $ kubectl create <RESOURCE_NAME> <OBJECT_NAME> --dry-run -o yaml
+
+[24]
 
 Installation
 ------------
@@ -322,7 +389,7 @@ On the app/worker nodes, add them to the cluster by running:
 k3s
 ~~~
 
-k3s was created by Rancher Labs as a simple way to deploy low-resource Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
+k3s was created by Rancher Labs as a simple way to deploy small Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
 
 Master:
 
@@ -689,3 +756,6 @@ Bibliography
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed April 15, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
+23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
+24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
