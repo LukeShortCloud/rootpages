@@ -28,6 +28,23 @@ Tutorials
 
    -  `Golang Tutorial - Learn the Go Programming Language <https://www.youtube.com/watch?list=PLSak_q1UXfPp971Hgv7wHCU2gDOb13gBQ&time_continue=14&v=6lBeN973T4Q>`__
 
+Installation
+------------
+
+`Download Go <https://golang.org/dl/>`__, extract it, add the new Go binary $PATH and load it. [11]
+
+::
+
+   $ wget https://dl.google.com/go/go<GO_VERSION>.<OPERATING_SYSTEM>-<CPU_ARCHITECTURE>.tar.gz
+   $ tar -C /usr/local -x -z -f go<GO_VERSION>.<OPERATING_SYSTEM>-<CPU_ARCHITECTURE>.tar.gz
+   $ echo "PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+   $ . ~/.profile
+
+Release Cycle
+-------------
+
+A new major ``1.Y`` release of Go comes out every 6 months. Every release gets updates for 1 year before being marked as end-of-life. The first 6 months, Go gets fixes for bugs and security issues. The second/last 6 months only get security fixes. [12] All Go 1 source code using the standard library is guaranteed to be backwards compatible for all ``1.Y`` releases. [13]
+
 Style Guide
 -----------
 
@@ -544,3 +561,6 @@ Bibliography
 8. "How To Do Math in Go with Operators." How To Code in Go. May 15, 2019. Accessed March 19, 2020. https://www.digitalocean.com/community/tutorials/how-to-do-math-in-go-with-operators
 9. "Package math." The Go Programming Language. Accessed March 19, 2020. https://golang.org/pkg/math/
 10. "Package rand." The Go Programming Language. Accessed March 19, 2020. https://golang.org/pkg/math/rand/
+11. "Getting Started." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/install
+12. "Go Release Cycle." GitHub golang/go. January 18, 2019. Accessed April 28, 2020. https://github.com/golang/go/wiki/Go-Release-Cycle
+13. "Go 1 and the Future of Go Programs." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/go1compat
