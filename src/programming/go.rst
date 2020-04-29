@@ -450,8 +450,11 @@ Libraries
 
 All of the libraries and methods can be found at `https://golang.org/pkg/ <https://golang.org/pkg/>`__. The methods will list all of the possible input and output values.
 
+Standard
+~~~~~~~~
+
 (Files)
-~~~~~~~
+^^^^^^^
 
 These are the methods related to examining and manipulating files.
 
@@ -497,7 +500,7 @@ These are the methods related to examining and manipulating files.
    -  UserHomeDir
 
 (File Object)
-^^^^^^^^^^^^^
+'''''''''''''
 
 These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``File`` object/data type.
 
@@ -528,7 +531,7 @@ These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``F
 -  WriteString
 
 math
-~~~~
+^^^^
 
 -  Abs = Absolute value.
 -  Max = Maximum. Return the bigger number.

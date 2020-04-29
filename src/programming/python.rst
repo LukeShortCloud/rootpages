@@ -673,10 +673,12 @@ Libraries can even be imported with new names. This can avoid conflicts with any
 
    import lib123 as lib_123
 
-Built-in
+A list of useful libraries for different types of projects are presented on the `Python wiki <https://wiki.python.org/moin/UsefulModules>`__.
+
+Standard
 ~~~~~~~~
 
-These are methods that are natively available in a default installation of Python.
+The `Python Standard Library <https://docs.python.org/3/library/>`__ is a set of methods that are natively available with a minimal installation of Python.
 
 .. csv-table::
    :header: Method, Description
