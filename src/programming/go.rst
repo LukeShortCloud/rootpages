@@ -27,6 +27,7 @@ Tutorials
 -  Videos:
 
    -  `Golang Tutorial - Learn the Go Programming Language <https://www.youtube.com/watch?list=PLSak_q1UXfPp971Hgv7wHCU2gDOb13gBQ&time_continue=14&v=6lBeN973T4Q>`__
+   -  `Learn Go Programming - Golang Tutorial for Beginners <https://www.youtube.com/watch?v=YS4e4q9oBaU&list=WL>`__
 
 Installation
 ------------
