@@ -59,7 +59,7 @@ Data Types
 -  ``float32``, ``float64`` = Float. Large decimal numbers.
 -  ``int``, ``int8`` (or ``byte``), ``int16``, ``int32`` (or ``rune``), ``int64`` = Integer. By default, ``int`` will be 32-bit or 64-bit based on the operating system architecture.
 -  ``nil`` = An empty/null variable.
--  ``string`` = String. Alphanumeric UTF-8 values.
+-  ``string`` = String. Alphanumeric UTF-8 values. Strings that are written out using double quotes (``"``) only. Single quotes are reserved for defining a rune (single character) data type.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
 
 Go will, by default, guess what data type the variable should be based on the value that is assigned to it.
@@ -106,6 +106,14 @@ The ``fmt`` library provides the functions for inputting and outputting strings.
 
    greeting := "Ahoy there matey"
    fmt.Printf("%v, how are ye?\n", greeting)
+
+``Sprintf`` is used for formatting strings without printing to standard output.
+
+.. code-block:: go
+
+   soup := "garden vegetable"
+   soup_msg := fmt.Sprintf("Today's soup is %v.", soup)
+   fmt.Println(soup_msg)
 
 ``Println`` can do standard default formatting by adding spaces between variables and strings along with adding a newline character at the end of the print statement.
 
