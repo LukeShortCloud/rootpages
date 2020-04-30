@@ -557,6 +557,8 @@ These are the most important concepts to learn when studying a new language, lis
 -  Relational, arithmetic, assignment, unary, and bitwise operators
 -  Loops and conditionals
 -  Find and use a standardized code styling practice for the language
+-  Exception/error handling
+-  Testing via fake and real unit and functional tests
 -  Common libraries:
 
    -  File input and output
@@ -564,7 +566,6 @@ These are the most important concepts to learn when studying a new language, lis
    -  Math
    -  HTTP URL request handling
 
--  Exception/error handling
 -  Multi-threading
 -  Object-oriented usage (if applicable)
 -  Packaging (if applicable)
