@@ -8,9 +8,9 @@ All Root Pages are written in the reStructuredText (RST) markup language. Sphinx
 
 ## Website
 
-The latest updates to Root Pages are automatically published online using [Travis CI](https://travis-ci.org/) and [GitHub Pages](https://pages.github.com/). The website code is stored in the "gh-pages" branch.
-
 https://ekultails.github.io/rootpages/
+
+The latest updates to Root Pages are automatically tested via [Travis CI](https://travis-ci.org/). Tags are published quarterly which Travis CI will automatically push the built website to [GitHub Pages](https://pages.github.com/). The hosted website is stored in the "gh-pages" branch.
 
 ## Install
 
@@ -148,7 +148,7 @@ There are a lot of [issues open on GitHub that have the label "new content."](ht
 
 ### Quarterly Updates
 
-Every three months, Root Pages is tagged as a milestone release. The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
+Every three months, Root Pages is tagged as a milestone release. The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Quarterly updates minimize breakage to bookmarks and links compared to a rolling release model. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
 
 ### Yearly Updates
 
