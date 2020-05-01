@@ -453,6 +453,94 @@ Multiple attributes can be combined using an OR ``|`` statement. The ``os`` file
 
 [7]
 
+Testing
+-------
+
+Go natively supports tests with the ``testing`` library. When building binaries, tests are never included to keep them small.
+
+Go tests should be created in a new file named after the primary file or package it will test: ``<FILE_TO_TEST>_test.go``. The tests are defined using the syntax ``func Test<FUNCTION_NAME>(*testing.T) {}``.
+
+Example:
+
+.. code-block:: go
+
+   package hello
+
+   import "fmt"
+
+   func Greeting(phrase string) string {
+       if phrase == "hello" {
+           return "Hello world!"
+       } else if phrase == "goodbye" {
+           return "Goodbye cruel world!"
+       } else {
+           return "Not a valid phrase. Please use 'hello' or 'goodbye'."
+       }
+   }
+
+   func main() {
+       fmt.Println(Greeting("hello"))
+       fmt.Println(Greeting("goodbye"))
+       fmt.Println(Greeting("unknown"))
+   }
+
+.. code-block:: go
+
+   package hello
+
+   import "testing"
+
+   func TestGreeting(t *testing.T) {
+       greeting_hello := Greeting("hello")
+       // This check is missing the "ld!" at the end of the phrase so it will fail.
+       if greeting_hello != "Hello wor" {
+           t.Error("Greeting(\"hello\") provided the wrong output:", greeting_hello)
+       }
+   }
+
+Tests can be run within the current package directory, using a GitHub repository, or a single test file can be tested.
+
+.. code-block:: sh
+
+   $ go test
+   $ go test github.com/<USER>/<PROJECT>
+   $ go test <MAIN_FILE> <TEST_FILE>
+
+Run a "short mode" test. This will set ``test.Short()`` to True and if then a Test function can end/return if ``t.Skip()`` is called.
+
+.. code-block:: sh
+
+   $ go test -short
+
+.. code-block:: go
+
+   func Test<FUNCTION_NAME>(t *testing.T) {
+       if testing.Short() {
+           t.Skip("Short mode detected. Skipping test.")
+       }
+   }
+
+Show the percentage of test coverage.
+
+.. code-block:: sh
+
+   $ go test -cover
+
+Alternatively, a graphical HTML page can be generated with the test coverage results.
+
+.. code-block:: sh
+
+   $ go test -cover -coverprofile=c.out
+   $ go tool cover -html=c.out -o coverage.html
+
+Go also supports special benchmark tests as defined using the syntax ``func Benchmark<FUNCTION_NAME>() {}``. These tests are not run by default.
+
+.. code-block:: sh
+
+   $ go test -bench
+
+[14][15]
+
 Libraries
 ---------
 
@@ -576,3 +664,5 @@ Bibliography
 11. "Getting Started." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/install
 12. "Go Release Cycle." GitHub golang/go. January 18, 2019. Accessed April 28, 2020. https://github.com/golang/go/wiki/Go-Release-Cycle
 13. "Go 1 and the Future of Go Programs." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/go1compat
+14. "Package testing." The Go Programming Language. Accessed April 30, 2020. https://golang.org/pkg/testing/
+15. "Golang basics - writing unit tests." Alex Ellis' Blog. February 9, 2017. Accessed April 30, 2020. https://blog.alexellis.io/golang-writing-unit-tests/
