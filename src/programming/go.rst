@@ -46,10 +46,46 @@ Release Cycle
 
 A new major ``1.Y`` release of Go comes out every 6 months. Every release gets updates for 1 year before being marked as end-of-life. The first 6 months, Go gets fixes for bugs and security issues. The second/last 6 months only get security fixes. [12] All Go 1 source code using the standard library is guaranteed to be backwards compatible for all ``1.Y`` releases. [13]
 
+Documentation
+-------------
+
+The official documentation website for Go is `golang.org/doc/ <https://golang.org/doc/>`__. The unofficial website `godoc.org <https://godoc.org/>`__ provides documentation for many third-party libraries.
+
+The `godoc <https://godoc.org/golang.org/x/tools/cmd/godoc>`__ tool can be used to run the official documentation at locally at ``127.0.0.1:6060``.
+
+.. code-block:: sh
+
+   $ go get golang.org/x/tools/cmd/godoc
+   $ godoc
+
+Go has a built in `go doc <https://golang.org/cmd/doc/>`__ command to show documentation from a package or a function within it.
+
+.. code-block:: sh
+
+   $ go doc <PACKAGE>.<SYMBOL>.<FUNCTION>
+
+[16]
+
 Style Guide
 -----------
 
-The ``gofmt`` command will automatically format a Go source code file into the standard format. Other manual changes to for best practice on synatx usage can be found `here <https://github.com/golang/go/wiki/CodeReviewComments>`__.
+The ``gofmt`` command will automatically format a Go source code file into the standard format. The most common styling mistakes are documented in the `Go Code Review Comments page <https://github.com/golang/go/wiki/CodeReviewComments>`__ on the Go wiki.
+
+.. code-block:: sh
+
+   $ gofmt <FILE>.go # prints to stdout
+   $ gofmt -d <FILE>.go # diff the original file and gofmt formatted output
+   $ gofmt -w <FILE>.go # apply the format and overwrite the file
+
+Lint
+~~~~
+
+Go provides a basic lint tool with ``golint``. It will look for common issues and print out warnings for any that it finds. A community project called ``golangci-lint`` has even more lint checks and functionality. Installation instructions can be found in the project's `README.md <https://github.com/golangci/golangci-lint/blob/master/README.md>`__ file.
+
+Comments
+~~~~~~~~
+
+At least the main package needs to have a comment at the beginning to describe what it is and how it can be used. Package comments should start with ``// Package <PACKAGE>``. Comments for other parts of the code such as functions and variables should start with ``// <FUNCTION_NAME>``. [17]
 
 Data Types
 ----------
@@ -666,3 +702,5 @@ Bibliography
 13. "Go 1 and the Future of Go Programs." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/go1compat
 14. "Package testing." The Go Programming Language. Accessed April 30, 2020. https://golang.org/pkg/testing/
 15. "Golang basics - writing unit tests." Alex Ellis' Blog. February 9, 2017. Accessed April 30, 2020. https://blog.alexellis.io/golang-writing-unit-tests/
+16. "Go Documentation: godoc, go doc, godoc.org, and go/doc—Which One’s Which?" Whipperstacker. September 30, 2015. Accessed May 1, 2020. http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/
+17. "Effective Go." The Go Programming Language. Accessed May 1, 2020. https://golang.org/doc/effective_go.html
