@@ -561,8 +561,9 @@ These are the most important concepts to learn when studying a new language, lis
 -  Testing via fake and real unit and functional tests
 -  Common libraries:
 
-   -  File input and output
    -  Logging
+   -  CLI argument parsing
+   -  File input and output
    -  Math
    -  HTTP URL request handling
 
@@ -571,6 +572,8 @@ These are the most important concepts to learn when studying a new language, lis
 -  Packaging (if applicable)
 
    -  Most programming languages support a package manager for dependencies such as dep (Go), mvn/Maven (Java), npm (Node.js), pip/PyPI (Python), etc.
+
+-  Graphical user interface (GUI) framework
 
 History
 -------
