@@ -492,6 +492,15 @@ Optionally enable the Copr repository using DNF.
 
 [8]
 
+Development Environments
+------------------------
+
+An application's life-cycle should go through various stages of testing. At a minimum, it is recommended to have 3 different environments. More environments can be added based on the testing requirements of the application. Ideally everything should be automated and promoted via a CI/CD pipeline.
+
+-  Development (Dev) or Sandbox = Developers have little to no restrictions on the environment and can test new features and bug fixes quickly. It should loosely resemble production.
+-  Pre-production (Pre-prod), Quality Assurance (QA), or Staging = Updates from Development are applied to an environment that mirrors production as much as possible but is not public facing.
+-  Production (Prod) or Live = If the update works correctly in pre-production then it is promoted to production as-is. If it does not work, then the update needs to be re-worked in the Development environment again.
+
 Regular Expression
 ------------------
 
