@@ -32,6 +32,24 @@ Each resolution has an optimal monitor size. Below lists the recommended size to
 
 For laptops, 1080p is the ideal resolution. 4K and even 2K resolution makes the text too small and the screen sizes are not big enough to take full advantage of higher resolutions. The higher the resolution, more battery life is also drained. [6]
 
+Panel Technology
+----------------
+
+Every monitor uses a panel technology. This is a large factor in determining the quality and features of the monitor.
+
+
+.. csv-table::
+   :header: Panel Technology, Price\*, Viewing Angles, Contrast Ratio, Color Accuracy, Reponse Time\*
+   :widths: 20, 20, 20, 20, 20, 20
+
+   In Plane Switching (IPS), High, High, Medium, High, High
+   Vertical Alignment (VA), Medium, Medium, High, Medium, Medium
+   Twisted Nematic (TN), Low, Low, Low, Low, Low
+
+\*= Lower is better.
+
+[7]
+
 Color Accuracy
 --------------
 
@@ -65,3 +83,4 @@ Bibliography
 4. "VISTALOGICS DYE SUBLIMATION AND DIGITAL COLOR TECHNOLOGY." VistaLogics. Accessed May 3, 2020. https://www.vistalogics.com/rgb-profiles.html
 5. "Can you see the difference with a 4K monitor?" Puget Systems. November 12, 2015. Accessed May 3, 2020. https://www.pugetsystems.com/labs/articles/Can-you-see-the-difference-with-a-4K-monitor-729/
 6. "4K (UHD) Vs 1080p (Full HD) Laptops: Which One Is Worth It?" tech consumer guide. March 18, 2019. Accessed May 3, 2020. https://www.techconsumerguide.com/4k-vs-1080p-laptop/
+7. "LCD Panel Types: IPS, VA, PLS, AHVA & TN Monitors." PCHardwareHelp.com. 2016. Accessed May 3, 2020. https://www.pchardwarehelp.com/guides/lcd-panel-types.php
