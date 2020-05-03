@@ -20,6 +20,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Computer Hardware
+
+   computer_hardware/index.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: HTTP
 
    http/index.rst
