@@ -1538,7 +1538,7 @@ Cons:
       $ mkdir /home/stack/templates/
       $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py --roles-data /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml --output /home/stack/templates/
 
--  TripleO needs a hostname and port mapping to know what IP addresses to connect to for the deployment. The ``NeutronPublicInterface`` will be converted into a bridge. It will have static IP addressing set to what the ``fixed_ips`` and ``cidr`` are set to. The ``ControlPlaneDefaultRoute`` will set the default route in ``/etc/sysconfig/network-scripts/route-br-ex``.
+-  TripleO needs a hostname and port mapping to know what IP addresses to connect to for the deployment. The ``NeutronPublicInterface`` (eth0 by default) will be converted into a bridge (br-ex by default). It will have static IP addressing set to what the ``fixed_ips`` and ``cidr`` are set to. The ``ControlPlaneDefaultRoute`` will set the default route in ``/etc/sysconfig/network-scripts/route-br-ex``.
 
 -  **Scenario 1: Use the Undercloud control plane network.**
 
@@ -1554,10 +1554,6 @@ Cons:
             ## Open vSwitch
             OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
             OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
-            ## Linux Bridge
-            ### Also include the `-e ~/templates/environments/neutron-linuxbridge.yaml` file
-            #OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-linux-bridge.yaml
-            #OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-linux-bridge.yaml
 
           parameter_defaults:
             # The Overcloud NIC that has a default route.
@@ -2101,11 +2097,169 @@ Overcloud:
 Networks
 ~~~~~~~~
 
-When no network template is defined, VLANs are not used and instead each network will be assigned different subnets. Networks are only created using the ``STACK_CRATE`` phase and will not run during the ``STACK_UPDATE`` phase unless the Heat parameter ``NetworkDeploymentActions: ['CREATE','UPDATE']`` is set.
+When no network template is defined, VLANs are not used and instead each network will be assigned different subnets. Networks are only created using the ``STACK_CREATE`` phase and will not run during the ``STACK_UPDATE`` phase unless the Heat parameter ``NetworkDeploymentActions: ['CREATE','UPDATE']`` is set.
+
+Interfaces (os-net-config)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+os-net-config is developed as part of TripleO and used to configure the network interfaces, DNS nameservers, IP addresses, and routes on all nodes (Undercloud and Overcloud).
+
+Render the TripleO Heat Templates (THT) to view the static net-config files. These provide different layouts and examples for how to configure the networking interfaces.
+
+.. code-block:: sh
+
+    $ cd /usr/share/openstack-tripleo-heat-templates/
+    $ mkdir ~/templates/
+    $ /usr/share/openstack-tripleo-heat-templates/tools/process-templates.py -o ~/templates/
+    $ cd ~/templates/
+    $ ls -1 net-config-*
+    net-config-bond.yaml
+    net-config-bridge.yaml
+    net-config-linux-bridge.yaml
+    net-config-noop.yaml
+    net-config-standalone.yaml
+    net-config-static-bridge-nic-two-only.yaml
+    net-config-static-bridge-two-nics.yaml
+    net-config-static-bridge-with-external-dhcp.yaml
+    net-config-static-bridge.yaml
+    net-config-static.yaml
+    net-config-undercloud.yaml
+
+Set a custom net-config file on a per-role basis by overriding the resource registry for network configuration.
+
+Syntax:
+
+   .. code-block:: yaml
+
+      ---
+      resource_registry:
+        OS::TripleO::<ROLE>::Net::SoftwareConfig: <PATH_TO>/<NIC_CONFIG_TEMPLATE>.yaml
+
+Example:
+
+   .. code-block:: yaml
+
+      ---
+      resource_registry:
+        OS::TripleO::Controller::Net::SoftwareConfig: net-config-bond.yaml
+
+A network environment template can be used to set related TripleO-provided net-config settings for all roles.
+
+.. code-block:: sh
+
+   $ ls -1 environments/net-*
+   environments/net-2-linux-bonds-with-vlans.yaml
+   environments/net-bond-with-vlans-no-external.yaml
+   environments/net-bond-with-vlans.yaml
+   environments/net-dpdkbond-with-vlans.yaml
+   environments/net-multiple-nics-vlans.yaml
+   environments/net-multiple-nics.yaml
+   environments/net-noop.yaml
+   environments/net-single-nic-linux-bridge-with-vlans.yaml
+   environments/net-single-nic-with-vlans-no-external.yaml
+   environments/net-single-nic-with-vlans.yaml
+   $ openstack overcloud deploy -e ~/templates/environments/<NETWORK_ENVIRONMENT>.yaml
+
+The ``$network_config`` dictionary stores the entire os-net-config configuration. The `run-os-net-config.sh <https://opendev.org/openstack/tripleo-heat-templates/src/branch/master/network/scripts/run-os-net-config.sh>`__ script will find and replace all references to ``interface_name`` with the Heat parameter value for ``NeutronPublicInterface`` and also replaces ``bridge_name`` with ``NeutronPhysicalBridge``. The script will default any interface not defined in the os-net-config settings to use DHCP. If DHCP does not work, then the "network" service may fail to restart during the Overcloud deployment leading to an inaccessible Overcloud.
+
+net-config THT template:
+
+.. code-block:: yaml
+
+   resources:
+     OsNetConfigImpl:
+       type: OS::Heat::SoftwareConfig
+       properties:
+         group: script
+         config:
+           str_replace:
+             template:
+               get_file: network/scripts/run-os-net-config.sh
+             params:
+               $network_config:
+
+The configuration file is stored on every node at ``/etc/os-net-config/config.yaml``. Settings from a custom file can be manually applied for testing by running ``os-net-config -c <OS_NET_CONFIG_FILE>.yaml -v --detailed-exit-codes --cleanup``.
+
+Every network object that can be managed is known as a ``type``. Common types include: interface, ovs_bond, ovs_bridge, route_rule, team, and vlan. The full list of valid parameters are listed in the `schema.yaml <https://opendev.org/openstack/os-net-config/src/branch/master/os_net_config/schema.yaml>`__ file of os-net-config.
+
+The ``interface`` type accepts passing nic1 (eth0), nic2 (eth1), etc. as the ``name`` attribute for dynamically associating an interface. Alternatively, the actual name of the network interface, such as eth0 or eth1, can be defined.
+
+Below are sample configurations that can be defined in a net-config THT template. They will render out the Heat parametes during the deployment.
+
+DHCP:
+
+.. code-block:: yaml
+
+   $network_config:
+     network_config:
+       - type: interface
+         name: nic1
+         use_dhcp: true
+
+Static:
+
+.. code-block:: yaml
+
+   $network_config:
+     network_config:
+       - type: interface
+         name: network_interface
+         addresses:
+           - ip_netmask: 192.168.122.101/24
+         dns_servers:
+           get_param: DnsServers
+         domain:
+           get_param: DnsSearchDomains
+
+Control Plane IP Address:
+
+.. code-block:: yaml
+
+   $network_config:
+     network_config:
+       - type: interface
+         name: eth3
+         addresses:
+           - ip_netmask:
+               list_join:
+                 - /
+                 - - get_param: ControlPlaneIp
+                   - get_param: ControlPlaneSubnetCidr
+         routes:
+           - default: true
+             next_hop:
+               get_param: ControlPlaneDefaultRoute
+
+Bridge on a Bond:
+
+.. code-block:: yaml
+
+   $network_config:
+     network_config:
+       - type: ovs_bridge
+         name: bridge_interface
+         use_dhcp: true
+         members:
+           - type: ovs_bond
+             name: bond0
+             ovs_options:
+               get_param: BondInterfaceOvsOptions
+             members:
+               - type: interface
+                 name: nic1
+               - type: interface
+                 name: nic2
+
+[61]
+
+Only Open vSwitch (OVS) and Open Virtual Networking (OVN) are supported for bridge types. Linux Bridge is not tested in CI nor supported by Red Hat. RHEL 8 removed support for the legacy bridge utilities. [62]
+
+VLANs
+^^^^^
 
 There are 6 different types of networks in a standard TripleO deployment using a VLANs template.
 
--  External = The external network that can access the Internet. This is used for the Horizon dashboard, public API endpoints, and floating IP addresses. Default VLAN: 10
+-  External = The external network that can access the Internet. This is used for the Horizon dashboard, public API endpoints, and floating IP addresses. Default VLAN: 10.
 -  Internal = Default VLAN: 20.
 -  Storage = Default VLAN: 30.
 -  StorageMgmt = Default VLAN: 40
@@ -2113,6 +2267,9 @@ There are 6 different types of networks in a standard TripleO deployment using a
 -  Management = Default VLAN: 60.
 
 The VLANs need to be trunked on the switch. A 7th native VLAN should also be configured on the switch for the provisioning network.
+
+IP Addressing
+^^^^^^^^^^^^^
 
 Configure the network CIDRs, IP address ranges to allocation, and VLAN tags.
 
@@ -2131,6 +2288,9 @@ Configure these settings to match the IP address that the Undercloud is configur
    ControlPlaneSubnetCidr: '24'
    ControlPlaneDefaultRoute: <UNDERCLOUD_IP_OR_ROUTER>
    EC2MetadataIp: <UNDERCLOUD_IP>
+
+Public
+^^^^^^
 
 Configure the Overcloud access to the public Internet. Define the default router for the External network, DNS resolvers, and the NTP servers. It is important the DNS is setup correctly because if chronyc fails to resolve the NTP servers then it will not try to resolve them again. DNS is also required to download and install additional TripleO packages.
 
@@ -2152,11 +2312,12 @@ Define the allowed network tag/tunnel types that Neutron networks use. The Neutr
    NeutronTunnelTypes: "vxlan"
    NeutronExternalNetworkBridge: "''"
 
-Define the interface to use for public networks. Optionally, define a VLAN tag for it. If no IP addressing information is configured for this interface, TripleO will default to configuring DHCP.
+Define the interface to use for public networks. The ``NeutronPublicInterface`` (nic1/eth0 by default) will be converted into the an Open vSwitch bridge named based on the value of ``NeutronPhysicalBridge`` (br-ex by default). Optionally, define a VLAN tag for it. If no IP addressing information is configured for this interface, TripleO will default to configuring DHCP.
 
 ::
 
    NeutronPublicInterface: eth1
+   NeutronPhysicalBridge: br0
    NeutronPublicInterfaceTag: 100
 
 Configure bonding interface options, if applicable. Below is an example for LACP.
@@ -2681,3 +2842,5 @@ Bibliography
 58. "Blueprints for tripleo." tripleo Launchpad. Accessed February 17, 2020. https://blueprints.launchpad.net/tripleo
 59. "CHAPTER 7. CONFIGURING A BASIC OVERCLOUD WITH CLI TOOLS." Red hat RHOSP 16 Documentation. Accessed April 21, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/creating-a-basic-overcloud-with-cli-tools
 60. "Building a Single Image." TripleO Documentation. April 20, 2020. Accessed April 21, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/build_single_image.html
+61. "Network Configuration with os-net-config." Ales Nosek - The Software Practitioner. September 28, 2015. Accessed May 4, 2020. http://alesnosek.com/blog/2015/09/28/network-configuration-with-os-net-config/
+62. "Linux Bridge Container Permission Issues. Launchpad Bugs tripleo. May 4, 2020. Accessed May 4, 2020. https://bugs.launchpad.net/tripleo/+bug/1862179
