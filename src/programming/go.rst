@@ -122,6 +122,88 @@ Multiple empty variables can also be initialized at once.
 
 [1][2]
 
+Structs
+~~~~~~~
+
+Structs expose a way handle to handle related data that have different data types.
+
+Syntax:
+
+.. code-block:: go
+
+   type <STRUCT_NAME> struct {
+       <VAR1_NAME> <VAR1_TYPE>
+       <VAR2_NAME> <VAR2_TYPE>
+   }
+
+   func main() {
+       var <VAR0_NAME> <STRUCT_NAME> = <STRUCT_NAME>{<VAR1_VALUE>, <VAR2_VALUE>}
+       <STRUCT_VAR>.<VAR1_NAME> = <NEW_VALUE>
+   }
+
+Example:
+
+.. code-block:: go
+
+   package main
+
+   import "fmt"
+
+   type Car struct {
+       name string
+       mpg int
+   }
+
+   func main() {
+       // truck short declaration.
+       truck := Car{"semitruck", 5}
+       // truck long declaration.
+       //var truck Car = Car{"semitruck", 5}
+       fmt.Printf("The %v gets %v miles per gallon.\n", truck.name, truck.mpg)
+       truck.mpg = 7
+       fmt.Println("The new model coming out will get", truck.mpg, "miles per gallon.")
+   }
+
+::
+
+   The semitruck gets 5 miles per gallon.
+   The new model coming out will get 7 miles per gallon.
+
+[18]
+
+Pointers
+~~~~~~~~
+
+Go supports memory pointers for any data type.
+
+.. code-block:: go
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       x := 7
+       // Create a pointer variable from an existing variable.
+       // `y := &x` is also valid syntax.
+       var y *int := &x
+       fmt.Println("Value of x:", x)
+       fmt.Println("Pointer location of x:", &x)
+       fmt.Println("Deference pointer of x:", *&x)
+       fmt.Println("Dereference y:", *y)
+       fmt.Println("Value of y:", y)
+   }
+
+::
+
+   Value of x: 7
+   Pointer location of x: 0xc000014060
+   Dereference pointer of x: 7
+   Dereference y: 7
+   Value of y: 0xc000014060
+
+[18]
+
 Standard Input and Output
 -------------------------
 
@@ -704,3 +786,4 @@ Bibliography
 15. "Golang basics - writing unit tests." Alex Ellis' Blog. February 9, 2017. Accessed April 30, 2020. https://blog.alexellis.io/golang-writing-unit-tests/
 16. "Go Documentation: godoc, go doc, godoc.org, and go/doc—Which One’s Which?" Whipperstacker. September 30, 2015. Accessed May 1, 2020. http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/
 17. "Effective Go." The Go Programming Language. Accessed May 1, 2020. https://golang.org/doc/effective_go.html
+18. "More Types." A Tour of Go. Accessed May 3, 2020. https://tour.golang.org/moretypes/1
