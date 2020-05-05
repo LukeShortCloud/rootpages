@@ -8,27 +8,33 @@ Introduction
 
 Supported operating systems: RHEL/CentOS >= 7, Fedora
 
-TripleO means "OpenStack on OpenStack." The Undercloud is first deployed in a small, usually all-in-one, environment. That server is then used to create and manage a full production cloud called the Overcloud.
+TripleO means "OpenStack on OpenStack." The Undercloud is first deployed onto a single node with the essential OpenStack services to handle baremetal deployments. That server is then used to create and manage a full production cloud called the Overcloud.
 
-TripleO is a collection of many services. These are the services that are used on the Undercloud [52]:
+TripleO is a collection of many services. As part of the Transformation Squad's goal, Undercloud services are being removed and/or refactored to provide a simpler deployment tool. These are the services that are used on the Undercloud [52]:
 
--  Ansible = Used for deploying the Undercloud/Overcloud services.
--  Ceilometer = Collects information about the Overcloud nodes.
--  Glance = Image management used by Ironic.
--  Heat = Heat parameters define the deployment settings.
--  Horizon = Web dashboard for deploying an Overcloud.
--  Ironic = Manages the bare-metal provisioning.
--  Keystone = Authentication of OpenStack services.
--  Kolla = Provides container images of OpenStack services.
--  MariaDB = Database for OpenStack services.
--  Mistral = Workflows are used to define and execute all of the deployment processes.
--  Neutron = Manages the Overcloud networks.
--  Nova = Manages the Overcloud nodes after provisioning.
--  Paunch = Container state management.
--  Podman = Tool for managing CRI-O containers (previously was docker).
--  Puppet = Configuration management.
--  RabbitMQ = Messaging back-end for OpenStack services.
--  Zaqar = A messaging service used by Mistral.
+.. csv-table::
+   :header: Service, Removed In, Replaced By, Description
+   :widths: 20, 20, 20, 20
+
+   Ansible, "", "", Used for deploying the Undercloud and Overcloud services.
+   Ceilometer, Stein, "", Collects information about the Overcloud nodes.
+   docker, Ussuri, Podman, Container runtime for OpenStack services.
+   Glance, "", "", Image management used by Ironic.
+   Gnocchi, Stein, "", A more efficient alternative to Ceilometer.
+   Heat, "", "", Heat parameters define the deployment settings.
+   Horizon, "Stein", "", Web dashboard for deploying an Overcloud.
+   Ironic, "", "", Manages the bare-metal provisioning.
+   Keystone, "", "", Authentication of OpenStack services.
+   Kolla, "", "", Provides container images of OpenStack services.
+   MariaDB, "", "", Database for OpenStack services.
+   Mistral, "", "", Workflows are used to define and execute all of the deployment processes.
+   Neutron, "", "", Manages the Overcloud networks.
+   Nova, "", "", Manages the Overcloud nodes after provisioning.
+   Paunch, "", "", Container state management.
+   Podman, "", "", Container runtime for OpenStack services.
+   Puppet, "", "", Configuration management.
+   RabbitMQ, "", "", Messaging back-end for OpenStack services.
+   Zaqar, "", "", A messaging service used by Mistral.
 
 In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
