@@ -256,6 +256,7 @@ Downstream
 -  RHOSP 15
 
    -  The first release to support RHEL 8.
+   -  `Telemetry services (aodh, ceilometer, and gnocchi) are deprecated in favor of the Red Hat Service Assurance Framework. <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html-single/release_notes/index#deprecated_functionality>`__
 
 -  RHOSP 16
 
