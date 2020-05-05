@@ -1502,8 +1502,9 @@ Introspection and the operating system provisioning can be skipped if the Overcl
 
 Pros:
 
--  Easier to deploy.
--  Faster to deploy.
+-  Easier to deploy, subjectively.
+-  Faster to deploy if using a pre-configured operating system snapshot.
+-  No Nova or Ironic dependencies.
 
 Cons:
 
@@ -1552,8 +1553,8 @@ Cons:
             OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
             # These role resources will convert the NeutronPublicInterface into the required br-ex bridge interface.
             ## Open vSwitch
-            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
-            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: net-config-static-bridge.yaml
+            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: net-config-static-bridge.yaml
 
           parameter_defaults:
             # The Overcloud NIC that has a default route.
@@ -1631,8 +1632,8 @@ Cons:
 
           ---
           resource_registry:
-            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
-            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: ~/templates/net-config-static-bridge.yaml
+            OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: net-config-static-bridge.yaml
+            OS::TripleO::ComputeDeployedServer::Net::SoftwareConfig: net-config-static-bridge.yaml
             # These resources will allow for a custom control plane virtual IP to be used for controller node services.
             OS::TripleO::DeployedServer::ControlPlanePort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
             OS::TripleO::Network::Ports::ControlPlaneVipPort: /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-neutron-port.yaml
