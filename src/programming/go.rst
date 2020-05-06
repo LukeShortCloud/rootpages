@@ -761,6 +761,41 @@ math
 
 [10]
 
+testing
+^^^^^^^
+
+Some functions are shared between ``type T`` (tests) and ``type B`` (benchmarks). Those are referred to as ``type TB`` functions.
+
+type TB:
+
+-  Error and Errorf = Log output and then Fail.
+-  Fail = The current test is marked as failed but tests will continue to run.
+-  FailNow = The current test is marked as failed and the program stops immediately.
+-  Failed (bool) = If the current function has been marked as failed.
+-  Fatal and Fatalf = Log output and then FailNow.
+-  Helper = Mark a function as a helper function and not an actual test.
+-  Log and Logf = Log output that will be displayed after all tests have succeeded.
+-  Name = The current function that is being executed.
+-  Skip and Skipf = Log output and then SkipNow.
+-  SkipNow = Skip the current function test and continue on with the other tests.
+-  Skipped (bool) = If a test was skipped.
+
+type B:
+
+-  ReportMetric (float64) = Report a custom metric.
+-  StartTimer = Continue a timer after StopTimer was called.
+-  StopTimer = Stop the test timer. When testing is started a timer always starts counting the time until told to stop.
+
+Other ``testing`` functions:
+
+-  Benchmark = Benchmark a single function.
+-  BenchmarkResult (struct) = The full benchmark results.
+-  Coverage (float64) = The percent of test coverage.
+-  Short (bool) = If the ``go test -short`` flag is used.
+-  Verbose (bool) = If the ``go test -v`` flag is used.
+
+[14]
+
 History
 -------
 
@@ -782,7 +817,7 @@ Bibliography
 11. "Getting Started." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/install
 12. "Go Release Cycle." GitHub golang/go. January 18, 2019. Accessed April 28, 2020. https://github.com/golang/go/wiki/Go-Release-Cycle
 13. "Go 1 and the Future of Go Programs." The Go Programming Language. Accessed April 28, 2020. https://golang.org/doc/go1compat
-14. "Package testing." The Go Programming Language. Accessed April 30, 2020. https://golang.org/pkg/testing/
+14. "Package testing." The Go Programming Language. Accessed May 5, 2020. https://golang.org/pkg/testing/
 15. "Golang basics - writing unit tests." Alex Ellis' Blog. February 9, 2017. Accessed April 30, 2020. https://blog.alexellis.io/golang-writing-unit-tests/
 16. "Go Documentation: godoc, go doc, godoc.org, and go/doc—Which One’s Which?" Whipperstacker. September 30, 2015. Accessed May 1, 2020. http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/
 17. "Effective Go." The Go Programming Language. Accessed May 1, 2020. https://golang.org/doc/effective_go.html
