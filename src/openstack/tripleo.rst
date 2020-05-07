@@ -2739,7 +2739,7 @@ Tips
 Errors
 ~~~~~~
 
-"No valid host was found" when running ``openstack overcloud deploy``.
+"**No valid host was found**" when running ``openstack overcloud deploy``.
 
 ::
 
@@ -2778,6 +2778,22 @@ Errors
           $ openstack baremetal node set --property capabilities='profile:<PROFILE_TYPE>,boot_option:local' <BAREMETAL_NODE>
 
 -  Ensure that each ``<ROLE_NAME>Count:`` Heat parameter is correctly set to the number of nodes that are available.
+
+----
+
+"**StackValidationFailed: The Resource Type (OS::TripleO::<ROLE>::<RESOURCE>) could not be found.**" when running ``openstack overcloud deploy``.
+
+-  The <ROLE> needs to be set to a valid role defined in the ``roles_data.yaml`` file.
+-  The ``resource_registry`` mapping must link a resource type to a file ending with the ``.yaml`` extension (``.yml`` will not work). Example:
+
+   .. code-block:: yaml
+
+      ---
+      resource_registry:
+        OS::TripleO::ControllerDeployedServer::Net::SoftwareConfig: net-config-static-bridge.yaml
+
+-  The resource type may be undefined. That means a THT template is missing and needs to be included as part of the deployment.
+-  The resource type may be misspelled.
 
 History
 -------
