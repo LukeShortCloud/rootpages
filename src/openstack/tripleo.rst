@@ -2696,6 +2696,16 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
       -  Pre-deployed: 2GB RAM
       -  Ironic provisioned: 4GB RAM
 
+-  Enable swap. This is especially required for environments with limited RAM.
+
+   .. code-block:: yaml
+
+      ---
+      resource_registry:
+        OS::TripleO::AllNodesExtraConfig: extraconfig/all_nodes/swap.yaml
+      parameter_defaults:
+        swap_size_megabytes: '8192'
+
 -  If using OpenStack as the lab infrastructure, disable port security to allow any MAC and IP address to be used. Also disable security groups to avoid further connection issues.
 
    ::
