@@ -2028,21 +2028,90 @@ These are configurations specific to Overcloud deployments using TripleO. Custom
    parameter_defaults:
      <KEY>: <VALUE>
 
-Services
-~~~~~~~~
+Composable Roles
+~~~~~~~~~~~~~~~~
 
-Overcloud services (both OpenStack and Linux) are defined in TripleO Heat templates. In <= Stein, the services were configured using puppet-tripleo. In >= Train, the services are configured using tripleo-ansible. All of the valid services are defined in the ``/usr/share/openstack-tripleo-heat-templates/roles_data.yaml`` file.
+Roles in TripleO (not to be confused with Ansible roles) are used to define what Linux and OpenStack services will be configured on an Overcloud node. Each Overcloud node is assigned a role based on profile tagging.
+
+View the default roles.
+
+.. code-block:: sh
+
+   $ less /usr/share/openstack-tripleo-heat-templates/roles_data.yaml
+
+View the available roles and see what services are set for each role.
+
+.. code-block:: sh
+
+   $ openstack overcloud roles list
+   $ openstack overcloud roles show <ROLE>
+
+.. code-block:: sh
+
+   $ ls -1 /usr/share/openstack-tripleo-heat-templates/roles/
+   $ less /usr/share/openstack-tripleo-heat-templates/roles/<ROLE>.yaml
+
+Create a roles_data file that contains only the roles that will be used for deployment.
+
+.. code-block:: sh
+
+   $ openstack overcloud roles generate <ROLE1> <ROLE2> > roles_data_custom.yaml
+
+Use a specified roles_data file to generate a new set of TripleO Heat Templates (THT) based on the roles that are defined.
+
+.. code-block:: sh
+
+    $ cd /usr/share/openstack-tripleo-heat-templates/
+    $ ./tools/process-templates.py -r roles_data.yaml -o ~/templates/
 
 Services can be disabled from being deployed and configured on the Overcloud one of two ways.
 
-1. Remove the service entry from the relevant role in the ``roles_data.yaml`` file before processing/generating the Heat templates.
-2. Create a new Heat template file and set the service to ``OS::Heat::None``.
+1. Remove the service entry from the relevant role in the ``roles_data.yaml``. Then run ``process-templates.py`` again to regenerate the TripleO Heat Templates.
+2. Create a new Heat template file and map the service to ``OS::Heat::None``.
 
 .. code-block:: yaml
 
    ---
    resource_registry:
      OS::TripleO::Services::<SERVICE>: OS::Heat::None
+
+Most services are mapped to a THT deployment template in ``/usr/share/openstack-tripleo-heat-templates/deployment/``. Service deployment templates are named ``*-ansible.yaml`` or ``*-puppet.yaml`` based on what configuration management is used to deploy the service.
+
+Even if a role has a service listed, the default may be set to have it be disabled. To re-enable the service, it must be mapped to the deployment template. A ``grep`` can help find the related mapping.
+
+Syntax:
+
+.. code-block:: sh
+
+   $ grep -r OS::TripleO::Services::<SERVICE>: /usr/share/openstack-tripleo-heat-templates/ | grep -v OS::Heat::None
+
+.. code-block:: yaml
+
+   ---
+   resource_registry:
+     OS::TripleO::Services::<SERVICE>: <DEPLOYMENT_TEMPLATE>
+
+Example:
+
+.. code-block:: sh
+
+   $ grep -r OS::TripleO::Services::MySQL: /usr/share/openstack-tripleo-heat-templates/ | grep -v OS::Heat::None
+
+.. code-block:: yaml
+
+   ---
+   resource_registry:
+     OS::TripleO::Services::MySQL: deployment/database/mysql-container-puppet.yaml
+
+Additional service defaults are set in these files:
+
+-  Undercloud: /usr/share/openstack-tripleo-heat-templates/environments/undercloud.yaml
+-  Overcloud: /usr/share/openstack-tripleo-heat-templates/overcloud-resource-registry-puppet.j2.yaml
+
+[63][64]
+
+OpenStack Services
+~~~~~~~~~~~~~~~~~~
 
 Configuration options for OpenStack services can be defined using ExtraConfig.
 
@@ -2867,4 +2936,6 @@ Bibliography
 59. "CHAPTER 7. CONFIGURING A BASIC OVERCLOUD WITH CLI TOOLS." Red hat RHOSP 16 Documentation. Accessed April 21, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/director_installation_and_usage/creating-a-basic-overcloud-with-cli-tools
 60. "Building a Single Image." TripleO Documentation. April 20, 2020. Accessed April 21, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/build_single_image.html
 61. "Network Configuration with os-net-config." Ales Nosek - The Software Practitioner. September 28, 2015. Accessed May 4, 2020. http://alesnosek.com/blog/2015/09/28/network-configuration-with-os-net-config/
-62. "Linux Bridge Container Permission Issues. Launchpad Bugs tripleo. May 4, 2020. Accessed May 4, 2020. https://bugs.launchpad.net/tripleo/+bug/1862179
+62. "Linux Bridge Container Permission Issues." Launchpad Bugs tripleo. May 4, 2020. Accessed May 4, 2020. https://bugs.launchpad.net/tripleo/+bug/1862179
+63. "Deploying with Custom Roles." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/custom_roles.html
+64. "Deploying with Composable Services." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/composable_services.html
