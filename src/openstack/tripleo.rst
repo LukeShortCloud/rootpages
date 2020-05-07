@@ -2874,6 +2874,23 @@ Errors
 -  The resource type may be undefined. That means a THT template is missing and needs to be included as part of the deployment.
 -  The resource type may be misspelled.
 
+----
+
+"**Config download already in progress with execution id <MISTRAL_EXECUTION_ID> for stack overcloud**" when running ``openstack overcloud deploy``.
+
+-  Check the status of the Mistral execution: ``openstack workflow execution show <MISTRAL_EXECUTION_ID>``.
+-  Check if the deployment is still running: ``ps faux | grep ansible-playbook``.
+
+   -  ``kill`` any lingering Ansible processes.
+
+-  Manually set the workflow execution state to ``CANCELLED`` or ``FAILED``.
+
+   .. code-block:: sh
+
+      $ openstack workflow execution update -s FAILED <MISTRAL_EXECUTION_ID>
+
+-  Re-run ``openstack overcloud deploy``.
+
 History
 -------
 
