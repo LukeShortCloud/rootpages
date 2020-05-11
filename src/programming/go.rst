@@ -97,6 +97,7 @@ Data Types
 -  ``nil`` = An empty/null variable.
 -  ``string`` = String. Alphanumeric UTF-8 values. Strings that are written out using double quotes (``"``) only. Single quotes are reserved for defining a rune (single character) data type.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
+-  ``_`` = A null character. Anything assigned to this will be discarded. This is useful for loops because Go does not support creating variables that are not used.
 
 Go will, by default, guess what data type the variable should be based on the value that is assigned to it.
 
@@ -170,6 +171,116 @@ Example:
    The new model coming out will get 7 miles per gallon.
 
 [18]
+
+Arrays, Slices, and Maps
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Arrays have an index, store one data type, and have a fixed length. If the index will be dynamically changed then it is known as a slice. The declaration of a slice is similar to an array except the length is not specified.
+
+Slices support using ``append()`` to add new elements to it. The ``len()`` function can be used to determine how many elements are in an array, slice, or map. [20]
+
+Syntax:
+
+.. code-block:: go
+
+   var <ARRAY_NAME> [<LENGTH>]<DATA_TYPE> = [<LENGTH>]<DATA_TYPE>{<VALUE1>, <VALUE2>}
+   var <SLICE_NAME> []<DATA_TYPE> = []<DATA_TYPE>{<VALUE1>, <VALUE2>}
+   append(<SLICE_NAME>, <VALUE1>, <VALUE2>)
+   len(<ARRAY_SLICE_OR_MAP>)
+
+Example usage of a slice:
+
+.. code-block:: go
+
+   package main
+   
+   import "fmt"
+   
+   func main() {
+        // student_names is created as a slice.
+   	var student_names []string = []string{"bob", "joe"}
+   
+   	fmt.Printf("Student names loops.\nLoop #1:\n")
+   	for index := 0; index < len(student_names); index++ {
+   		fmt.Println(index, student_names[index])
+   	}
+   
+   	student_names[0] = "rob"
+   	fmt.Println("Loop #2:")
+   	for index, name := range student_names {
+   		fmt.Println(index, name)
+   	}
+   
+   	student_names = append(student_names, "sal")
+   	fmt.Println("Loop #3:")
+   	// If the index is not used, it must be assigned to the a null character.
+   	// Go does not allow creating variables that will not be used.
+   	for _, name := range student_names {
+   		fmt.Println("*", name)
+   	}
+   
+        fmt.Println("Length of student_names array:", len(student_names))
+
+::
+
+   Student names loops.
+   Loop #1:
+   0 bob
+   1 joe
+   Loop #2:
+   0 rob
+   1 joe
+   Loop #3:
+   * rob
+   * joe
+   * sal
+   Length of student_names array: 3
+
+Maps/hashes/dictionaries are unordered key-value stores that can mix and match different data types and have a dynamic length. A key and it's related value can be removed from a map using the ``delete()`` function. Maps do not support ``append()``. [19]
+
+Syntax:
+
+.. code-block:: go
+
+   // Maps have to be initialized first so create an empty map like any other variable will not work.
+   // The default value of it will be 'nil'.
+   //var <MAP1_NAME> map[<KEY_DATA_TYPE>]<VALUE_DATA_TYPE>
+   // Use 'make()' instead.
+   var <MAP1_NAME> = make(map[<KEY_DATA_TYPE>]<VALUE_DATA_TYPE>)
+   var <MAP2_NAME> = map[<KEY_DATA_TYPE>]<VALUE_DATA_TYPE>{
+       <KEY1>: <VALUE1>,
+       <KEY2>: <VALUE2>,
+   }
+   // Add a new key-pair to the map.
+   <MAP1_NAME>[<KEY3>] = <VALUE3>
+   // Delete an a key-pair from the map.
+   delete(<MAP_NAME>, <KEY>)
+
+Example:
+
+.. code-block:: go
+
+   var student_grades map[string]rune = map[string]rune{"joe": 'B', "sal": 'C'}
+   student_grades["rob"] = 'A'
+   delete(student_grades, "joe")
+   fmt.Println("student_grades map:", student_grades)
+   for name, grade := range student_grades {
+       fmt.Println(name, "has earned a grade of", string(grade), "in the class.")
+   }
+
+::
+
+   student_grades map: map[rob: 65 sal:67]
+   sal has earned a grade of C in the class.
+   rob has earned a grade of A in the class.
+
+Check if an index exists in an array or map. The second return variable will be a true boolean if it exists.
+
+.. code-block:: go
+
+   name, exists = <MAP_NAME>[<INDEX>]
+
+[21]
 
 Pointers
 ~~~~~~~~
@@ -822,3 +933,6 @@ Bibliography
 16. "Go Documentation: godoc, go doc, godoc.org, and go/doc—Which One’s Which?" Whipperstacker. September 30, 2015. Accessed May 1, 2020. http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/
 17. "Effective Go." The Go Programming Language. Accessed May 1, 2020. https://golang.org/doc/effective_go.html
 18. "More Types." A Tour of Go. Accessed May 3, 2020. https://tour.golang.org/moretypes/1
+19. "proposal: extend the "append" built-in to work with maps #17350." GitHub golang/go Issues. October 31, 2017. Accessed May 10, 2020.  https://github.com/golang/go/issues/17350
+20. "Understanding Arrays and Slices in Go." DigitalOcean. July 16, 2019. Accessed May 10, 2020. https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go
+21. "Golang Maps by Example." CalliCoder. March 20, 2018. Accessed May 10, 2020. https://www.callicoder.com/golang-maps/
