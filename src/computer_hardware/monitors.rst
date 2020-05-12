@@ -74,6 +74,30 @@ Contrast Ratio
 
 Contrast ratios are the difference between the darkest and lightest color a monitor can produce. There are two types: static and dynamic. Static ratios are the most important. It represents the difference with the monitor settings unchanged for checking the darkest and lightest color. Most monitors that do not use OLED cannot reach higher than a 1000:1 static contrast ratio. Manufacturers normally use dynamic ratios in their marketing which provides an inaccurate view. Dynamic ratios unfairly compare the brightness difference with the monitor set at two different settings. [8]
 
+High Dynamic Range (HDR)
+------------------------
+
+HDR provides a standard for color accuracy and high contrast. Only video games and movies created with HDR can fully utilize all of the features of a HDR TV. For official qualification, a TV must meet these requirements: [9]
+
+-  4K Resolution
+-  10-Bit Color Depth
+-  Wide Color Gamut (WCG)
+
+   -  >= 90% of DCI-P3
+
+-  Brightness
+
+   -  Over 1000 nits (and have better whites)
+   -  Or over 540 nits (and have better blacks)
+
+Only mid- to high-end TVs support the brightness and WCG. Most low-end TVs do not meet all of the requirements to display true HDR content. Many companies have their own technology for helping to deliever WCG colors. [10]
+
+Proprietary WCG backlight technologies:
+
+-  Nano Cell (LG)
+-  QLED (Samsung)
+-  Triluminos (Sony)
+
 History
 -------
 
@@ -90,3 +114,5 @@ Bibliography
 6. "4K (UHD) Vs 1080p (Full HD) Laptops: Which One Is Worth It?" tech consumer guide. March 18, 2019. Accessed May 3, 2020. https://www.techconsumerguide.com/4k-vs-1080p-laptop/
 7. "LCD Panel Types: IPS, VA, PLS, AHVA & TN Monitors." PCHardwareHelp.com. 2016. Accessed May 3, 2020. https://www.pchardwarehelp.com/guides/lcd-panel-types.php
 8. "How monitor makers are pixelating the truth to fake you out." Digital Trends. March 28, 2016. Accessed May 11, 2020. https://www.digitaltrends.com/computing/how-monitor-makers-exaggerate-to-sell-more-screens/
+9. "UHD Alliance Defines Premium Home Entertainment Experience." Business Wire. January 4, 2016. Accessed May 11, 2020. https://www.businesswire.com/news/home/20160104006605/en/UHD-Alliance-Defines-Premium-Home-Entertainment-Experience
+10. "'Fake HDR' TVs are giving HDR a bad name." Hardware Zone. February 18, 2018. Accessed May 11, 2020. https://www.hardwarezone.com.sg/blog-fake-hdr-tvs-are-giving-hdr-bad-name
