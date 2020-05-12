@@ -682,6 +682,43 @@ Multiple attributes can be combined using an OR ``|`` statement. The ``os`` file
 
 [7]
 
+With using a scanner from ``bfio``, more control can be had. For example, a file can be read line by line.
+
+.. code-block:: go
+
+   package main
+   
+   import(
+          "bufio"
+          "fmt"
+          "os"
+   )
+   
+   func main() {
+        file := "example.txt"
+   	file_open, err := os.Open(file)
+   
+   	if err != nil {
+                fmt.Println("Error opening file:", file, "\n", err)
+   	}
+   	// Required to prevent an internal Go exception when the open file cannot be opened.
+   	defer file_open.Close()
+   
+   	file_scanner := bufio.NewScanner(file_open)
+  
+        // Print out each line of the file.
+        // Scanner.Scan() has a maximum size of 4096 bytes. Use bufio's ReadLine() instead for longer lines.
+   	for file_scanner.Scan() {
+   		fmt.Println(file_scanner.Text())
+   	}
+   
+   	err = file_scanner.Err()
+   
+   	if err != nil {
+                fmt.Println("Error reading file:", file, "\n", err)
+   	}
+   }
+
 Testing
 -------
 
@@ -936,3 +973,5 @@ Bibliography
 19. "proposal: extend the "append" built-in to work with maps #17350." GitHub golang/go Issues. October 31, 2017. Accessed May 10, 2020.  https://github.com/golang/go/issues/17350
 20. "Understanding Arrays and Slices in Go." DigitalOcean. July 16, 2019. Accessed May 10, 2020. https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go
 21. "Golang Maps by Example." CalliCoder. March 20, 2018. Accessed May 10, 2020. https://www.callicoder.com/golang-maps/
+22. "Package bufio." The Go Programming Language. Accessed May 11, 2020. https://golang.org/pkg/bufio/
+
