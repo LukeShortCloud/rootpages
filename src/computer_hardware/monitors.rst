@@ -29,6 +29,7 @@ Each resolution has an optimal monitor size. Below lists the recommended size to
    1080p, 24, 23
    1440p, 27, 30.5
    2160p, 32, 46
+   4320p, 48, 92
 
 For laptops, 1080p is the ideal resolution. 4K and even 2K resolution makes the text too small and the screen sizes are not big enough to take full advantage of higher resolutions. The higher the resolution, more battery life is also drained. [6]
 
