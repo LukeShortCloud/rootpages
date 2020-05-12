@@ -9,10 +9,10 @@ SQL
 MariaDB
 ~~~~~~~
 
-Configuration
-^^^^^^^^^^^^^
+Installation
+^^^^^^^^^^^^
 
-RHEL Install [1]:
+CentOS [1]:
 
 .. code-block:: sh
 
@@ -23,6 +23,38 @@ RHEL Install [1]:
     gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
     gpgcheck=1
     $ sudo yum install MariaDB-server MariaDB-client
+
+Configuration Tuning
+^^^^^^^^^^^^^^^^^^^^
+
+Here are common optimizations for MariaDB's configuration. [12][13][14]
+
+::
+
+   # Enable query cache.
+   query_cache_type = 1
+   # Increase in increments of 32M.
+   query_cache_size = 128M
+   # Increase temporary table size. Set these two options to the same value.
+   tmp_table_size = 1G
+   max_heap_table_size = 1G
+   # Set to ~85% of available RAM if it is the only major service.
+   innodb_buffer_pool_size = 6.8G
+   # Avoid reverse DNS lookups.
+   skip-name-resolve
+
+
+Adjust the ``thread_cache_size`` until the percentage calculated below is as close to 100% as possible. [15]
+
+::
+
+   mysql> SHOW STATUS LIKE 'Threads_created';
+   mysql> SHOW STATUS LIKE 'Connections';
+   mysql> SELECT 100 - (( <THREADS_CREATED> / <CONNECTIONS> ) * 100) as "Threads_created % of Connections"\G
+
+The `MySQLTuner script <https://github.com/major/MySQLTuner-perl>`__ can also help to automatically find settings that should be changed based on MariaDB's recent utilization.
+
+Use the `MySQL Calculator <https://www.mysqlcalculator.com/>`__ to ensure that the new settings will not use more than the available RAM on the system.
 
 Table Engines
 ^^^^^^^^^^^^^
@@ -285,3 +317,7 @@ Bibliography
 9. "How To Install Cassandra on CentOS 7" liquidweb Knowledgebase. Accessed October 16, 2016. https://www.liquidweb.com/kb/how-to-install-cassandra-on-centos-7/
 10. "Installing the DataStax Distribution of Apache Cassandra 3.x on RHEL-based systems." DataStax Distribution of Apache Cassandra 3 Documentation. October 14, 2016. Accessed October 16, 2016. http://docs.datastax.com/en/cassandra/3.x/cassandra/install/installRHEL.html
 11. "The cassandra.yaml configuration file." DataStax Documentation. Accessed February 8, 2018. http://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/configCassandra\_yaml.html
+12. "Get the Best Out of MariaDB with Performance Tuning." Open Source For You. May 1, 2017. Accessed May 11, 2020. https://opensourceforu.com/2017/05/get-best-mariadb-performance-tuning/
+13. "Calculating InnoDB Buffer Pool Size for your MySQL Server." ScaleGrid Blog. March 28, 2018. Accessed May 11, 2020. https://scalegrid.io/blog/calculating-innodb-buffer-pool-size-for-your-mysql-server/
+14. "skip-name-resolve to speed up MySQL and avoid problems." VION Technology Blog. September 18, 2012. Accessed May 11, 2020. https://www.vionblog.com/skip-name-resolve-to-speed-up-mysql-and-avoid-problems/
+15. "MySQL Optimization Tip - thread_cache_size." Another MySQL DBA. September 2, 2013. http://anothermysqldba.blogspot.com/2013/09/mysql-optimization-tip-threadcachesize.html
