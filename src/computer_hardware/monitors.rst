@@ -69,6 +69,11 @@ For color accuracy, it is recommended for the general consumer to buy a monitor 
 
 [2][3][4]
 
+Contrast Ratio
+--------------
+
+Contrast ratios are the difference between the darkest and lightest color a monitor can produce. There are two types: static and dynamic. Static ratios are the most important. It represents the difference with the monitor settings unchanged for checking the darkest and lightest color. Most monitors that do not use OLED cannot reach higher than a 1000:1 static contrast ratio. Manufacturers normally use dynamic ratios in their marketing which provides an inaccurate view. Dynamic ratios unfairly compare the brightness difference with the monitor set at two different settings. [8]
+
 History
 -------
 
@@ -84,3 +89,4 @@ Bibliography
 5. "Can you see the difference with a 4K monitor?" Puget Systems. November 12, 2015. Accessed May 3, 2020. https://www.pugetsystems.com/labs/articles/Can-you-see-the-difference-with-a-4K-monitor-729/
 6. "4K (UHD) Vs 1080p (Full HD) Laptops: Which One Is Worth It?" tech consumer guide. March 18, 2019. Accessed May 3, 2020. https://www.techconsumerguide.com/4k-vs-1080p-laptop/
 7. "LCD Panel Types: IPS, VA, PLS, AHVA & TN Monitors." PCHardwareHelp.com. 2016. Accessed May 3, 2020. https://www.pchardwarehelp.com/guides/lcd-panel-types.php
+8. "How monitor makers are pixelating the truth to fake you out." Digital Trends. March 28, 2016. Accessed May 11, 2020. https://www.digitaltrends.com/computing/how-monitor-makers-exaggerate-to-sell-more-screens/
