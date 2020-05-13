@@ -5165,6 +5165,11 @@ Stop and delete the AWX docker containers.
 
 The "postgres_data_dir" directory, as defined in the inventory file, will need to be manually deleted.
 
+PostgreSQL Streaming Replication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is important to have a backup of the PostgreSQL database. It contains all of the information used by AWX. The `samdoran/ansible-role-pgsql-replication <https://github.com/samdoran/ansible-role-pgsql-replication>`__ project on GitHub provides playbooks to automate setting up streaming replication for the database. This setups two PostgreSQL servers, one in master mode and the other in replica mode (a hot standby).
+
 Rundeck
 ~~~~~~~
 
