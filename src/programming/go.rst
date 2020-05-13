@@ -909,6 +909,59 @@ math
 
 [10]
 
+strings
+^^^^^^^
+
+This library provides useful functions for manipulating and doing logic checks on strings. [23]
+
+-  Builder = Efficiently create a new string.
+-  Compare
+-  Contains
+-  ContainsAny
+-  ContainsRune
+-  Count
+-  EqualFold
+-  Fields
+-  FieldsFunc
+-  HasPrefix
+-  HasSuffix
+-  Index
+-  IndexAny
+-  IndexByte
+-  IndexFunc
+-  IndexRune
+-  Join
+-  LastIndex
+-  LastIndexAny
+-  LastIndexByte
+-  LastIndexFunc
+-  Map
+-  NewReplacer
+-  Repeat
+-  Replace
+-  ReplaceAll
+-  Split
+-  SplitAfter
+-  SplitAfterN
+-  SplitN
+-  Title
+-  ToLower
+-  ToLowerSpecial
+-  ToTitle
+-  ToTitleSpecial
+-  ToUpper
+-  ToUpperSpecial
+-  Trim
+-  TrimFunc
+-  TrimLeft
+-  TrimLeftFunc
+-  TrimPrefix
+-  TrimRight
+-  TrimRightFunc
+-  TrimSpace
+-  TrimSuffix
+
+
 testing
 ^^^^^^^
 
@@ -974,4 +1027,4 @@ Bibliography
 20. "Understanding Arrays and Slices in Go." DigitalOcean. July 16, 2019. Accessed May 10, 2020. https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go
 21. "Golang Maps by Example." CalliCoder. March 20, 2018. Accessed May 10, 2020. https://www.callicoder.com/golang-maps/
 22. "Package bufio." The Go Programming Language. Accessed May 11, 2020. https://golang.org/pkg/bufio/
-
+23. "Package strings." The Go Programming Language. Accessed May 12, 2020. https://golang.org/pkg/strings
