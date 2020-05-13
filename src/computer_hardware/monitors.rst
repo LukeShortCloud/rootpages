@@ -75,6 +75,11 @@ Contrast Ratio
 
 Contrast ratios are the difference between the darkest and lightest color a monitor can produce. There are two types: static and dynamic. Static ratios are the most important. It represents the difference with the monitor settings unchanged for checking the darkest and lightest color. Most monitors that do not use OLED cannot reach higher than a 1000:1 static contrast ratio. Manufacturers normally use dynamic ratios in their marketing which provides an inaccurate view. Dynamic ratios unfairly compare the brightness difference with the monitor set at two different settings. [8]
 
+Brightness
+----------
+
+The brightness of monitors and TVs are measured in nits (cd/m^2). The higher the nits, the higher it's brightness is. A bright monitor is easier to see in a well-lit room or outdoors. [12] When buying a TV, it is most important to consider the brightness level when seeing if it supports true HDR. That feature usually requires at least 1000 nits. [9]
+
 High Dynamic Range (HDR)
 ------------------------
 
@@ -120,3 +125,4 @@ Bibliography
 9. "UHD Alliance Defines Premium Home Entertainment Experience." Business Wire. January 4, 2016. Accessed May 11, 2020. https://www.businesswire.com/news/home/20160104006605/en/UHD-Alliance-Defines-Premium-Home-Entertainment-Experience
 10. "'Fake HDR' TVs are giving HDR a bad name." Hardware Zone. February 18, 2018. Accessed May 11, 2020. https://www.hardwarezone.com.sg/blog-fake-hdr-tvs-are-giving-hdr-bad-name
 11. "How to Play Games, Watch Videos in HDR on Windows 10." PCMag. March 24, 2020. Accessed May 12, 2020. https://www.pcmag.com/how-to/how-to-play-games-watch-videos-in-hdr-on-windows-10
+12. "What Are Nits of Brightness on a TV or Other Display?" How-To Geek. January 25, 2019. Accessed May 12, 2020.
