@@ -99,6 +99,8 @@ Proprietary WCG backlight technologies:
 -  QLED (Samsung)
 -  Triluminos (Sony)
 
+Computer operating systems have partial support for HDR. Most applications do not natively support it. Windows 10 and Netflix require buying Microsoft's HEVC Video Extension for video playback streaming to work. [11]
+
 History
 -------
 
@@ -117,3 +119,4 @@ Bibliography
 8. "How monitor makers are pixelating the truth to fake you out." Digital Trends. March 28, 2016. Accessed May 11, 2020. https://www.digitaltrends.com/computing/how-monitor-makers-exaggerate-to-sell-more-screens/
 9. "UHD Alliance Defines Premium Home Entertainment Experience." Business Wire. January 4, 2016. Accessed May 11, 2020. https://www.businesswire.com/news/home/20160104006605/en/UHD-Alliance-Defines-Premium-Home-Entertainment-Experience
 10. "'Fake HDR' TVs are giving HDR a bad name." Hardware Zone. February 18, 2018. Accessed May 11, 2020. https://www.hardwarezone.com.sg/blog-fake-hdr-tvs-are-giving-hdr-bad-name
+11. "How to Play Games, Watch Videos in HDR on Windows 10." PCMag. March 24, 2020. Accessed May 12, 2020. https://www.pcmag.com/how-to/how-to-play-games-watch-videos-in-hdr-on-windows-10
