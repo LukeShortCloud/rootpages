@@ -2115,41 +2115,91 @@ OpenStack Services
 
 Configuration options for OpenStack services can be defined using ExtraConfig.
 
--  ExtraConfig = Apply to all nodes.
--  ComputeExtraConfig
--  ControllerExtraConfig
--  BlockStorageExtraConfig
--  ObjectStorageExtraConfig
--  CephStorageExtraConfig
+-  AllNodesExtraConfig or ExtraConfig = Apply the settings to all nodes.
+-  <ROLE>ExtraConfig = Apply the settings to all nodes deployed using the composable role.
 
-Puppet manifests define the default variables that are set. These also show what Puppet dictionary variables are used for each configuration. All of the service manifests can be found here: ``/usr/share/openstack-puppet/modules/$OPENSTACK_SERVICE/manifests/``.
+There are different deployment hooks used for configuration.
+
+-  ExtraConfigPre = Before Puppet.
+-  ExtraConfig = During Puppet. Use this one for changing Puppet settings.
+-  ExtraConfigPost = After Puppet.
+
+The configuration for OpenStack services are handled by Puppet (not Ansible).
+
+.. code-block:: sh
+
+   $ grep -r <VARIABLE> /usr/share/openstack-tripleo-heat-templates/deployment/*/*-puppet.yaml
+   $ grep -r <VARIABLE> /usr/share/openstack-puppet/modules/
+
+This is the order in how to attempt modifying a variable. If it is not possible, then try the next one down. The deployment will fail if there is a duplicate declaration of a variable.
+
+1.  Use a Heat parameter if exposed via a deployment template
+2.  Use the Puppet class to override a value.
+3.  Use the generic Puppet ``config`` class to manually override settings not exposed by Puppet.
+
+Not all of the Puppet variables for OpenStack service configuration are exposed as Heat parameters. These can still be manually set. Puppet manifests define the default variables that are set. These also show what Puppet dictionary variables are used for each configuration.
+
+All of the service manifests can be found here: ``/usr/share/openstack-puppet/modules/${OPENSTACK_SERVICE}/manifests/``. The OpenStack services on `OpenDev.org each have a related puppet-<SERVICE> repository <https://opendev.org/openstack?q=puppet&tab=&sort=recentupdate>`__ that hosts the Puppet manifests. Miscellaneous service configuration are grouped into the `puppet-tripleo <https://opendev.org/openstack/puppet-tripleo>`__ project. Other Puppet dependencies and default settings are provided by the `puppet-openstacklib <https://opendev.org/openstack/puppet-openstacklib>`__ project.
+
+The Puppet class for a service is typically named using the convention ``<OPENSTACK_SERVICE>::<MANIFEST>``. The actual class name will be listed in the manifest files. Below shows how ``awk`` can be used to extract the class names along with the exposed variables that can be modified.
+
+.. code-block:: sh
+
+   $ cd /usr/share/openstack-puppet/modules/${OPENSTACK_SERVICE}/manifests/
+   $ awk '/^class/,/)/' ./*.pp # Search the top-level directory.
+   $ awk '/^class/,/)/' ./*/*.pp # Search in all of the sub-directories.
+
+Once the correct class and variable are found, the setting can be defined in a Heat template.
+
+Syntax:
 
 .. code-block:: yaml
 
    ---
    parameter_defaults:
-     <EXTRACONFIG_SERVICE>ExtraConfig:
-        # The primary manifest handles at least the primary configuration file.
-        <OPENSTACK_SERVICE>::<MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
-        # Some OpenStack services use more than one configuration file which could be handled
-        # by nested manifests.
-        <OPENSTACK_SERVICE>::<MANIFEST>::<MANIFEST_SUB_DIRECTORY>::<SUB_MANIFEST>::<PUPPET_DICTIONARY>: <VALUE>
+     <ROLE>ExtraConfig:
+       # The primary manifest handles at least the primary configuration file.
+       <PUPPET_CLASS>::<VARIABLE>:: <VALUE>
 
-Settings that are not handled by the Puppet modules can be overridden manually. The dictionary name for each configuration file is defined in ``manifests/config.pp`` in the ``<OPENSTACK_SERVICE>::config`` class.
+Example:
 
 .. code-block:: yaml
 
    ---
    parameter_defaults:
-     <EXTRACONFIG_SERVICE>ExtraConfig:
-        <OPENSTACK_SERVICE>::config::<PUPPET_DICTIONARY>:
-            # Configure a value in the [DEFAULT] section.
-            'DEFAULT/<KEY>':
-              value: <VALUE>
-        <OPENSTACK_SERVICE>::config::<PUPPET_DICTIONARY>:
-            # Configure a value in a different section.
-            '<SECTION>/<KEY>':
-              value: <VALUE>
+     # Only apply this configuration to Overcloud nodes deployed using the "Controller" role.
+     ControllerExtraConfig:
+       # The class name is "keystone::wsgi::apache".
+       # The variable exposed by the class is "workers".
+       # The value is overridden and set to "4" (instead of the default "$::os_workers_keystone").
+       keystone::wsgi::apache::workers: 4
+
+Settings that are not handled by Puppet resources can be overridden manually. The dictionary name for each configuration file is defined in ``manifests/config.pp`` in the ``<OPENSTACK_SERVICE>::config`` class. For the main configuration file, the naming convention for the variable to set is ``<OPENSTACK_SERVICE>::config::<OPENSTACK_SERVICE>_config``.
+
+Syntax:
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     <ROLE>ExtraConfig:
+       <PUPPET_CLASS>::<VARIABLE>:
+         '<SECTION>/<KEY>':
+           value: '<VALUE>'
+
+Example:
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     UndercloudExtraConfig:
+       heat::config::heat_config:
+         'DEFAULT/stack_action_timeout':
+           value: '7200'
+       heat::config::heat_api_paste_ini:
+         'filter:authtoken/admin_user':
+           value: 'heat2'
 
 [32]
 
@@ -2890,6 +2940,18 @@ Errors
       $ openstack workflow execution update -s FAILED <MISTRAL_EXECUTION_ID>
 
 -  Re-run ``openstack overcloud deploy``.
+
+----
+
+**ERROR configuring <OPENSTACK_SERVICE>**
+
+-  A configuration section may be misconfigured to use an invalid section or key.
+-  A duplicate configuration entry may exist. This usually means a different Puppet manifest is trying to declare the same value for a specified section and key. When the operator defines the same variable elsewhere, the deployment will error out. The example below showcases that the configuration is already handled by the Puppet class ``oslo::messaging::default``.
+
+.. code-block:: sh
+
+   $ less /var/log/containers/stdouts/container-puppet-<OPENSTACK_SERVICE>.log
+   2020-01-01T16:15:00.000000000-04:00 stderr F <13>Jan 01 16:12:38 puppet-user: Error: Evaluation Error: Error while evaluating a Resource Statement, Evaluation Error: Error while evaluating a Function Call, Duplicate declaration: <OPENSTACK_SERVICE>_config[<SECTION>/<KEY>] is already declared at (file: /etc/puppet/modules/<OPENSTACK_SERVICE>/manifests/config.pp, line: 36); cannot redeclare (file: /etc/puppet/modules/oslo/manifests/messaging/default.pp, line: 47) (file: /etc/puppet/modules/oslo/manifests/messaging/default.pp, line: 47, column: 3) (file: /etc/puppet/modules/<OPENSTACK_SERVICE>/manifests/init.pp, line: 445) on node undercloud.localhost.localdomain
 
 History
 -------
