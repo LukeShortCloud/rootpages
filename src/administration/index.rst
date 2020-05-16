@@ -11,5 +11,5 @@
    mail_servers
    monitoring
    operating_systems
-   packages
+   package_managers
    security

@@ -1,60 +1,10 @@
-Packages
-========
+Packaging
+=========
 
 .. contents:: Table of Contents
 
-DEB
----
-
-Repositories
-~~~~~~~~~~~~
-
-Adding a Repository
-^^^^^^^^^^^^^^^^^^^
-
-Debian repositories can be managed by editing the primary file
-``/etc/apt/sources.list`` or by adding new files to the
-``/etc/apt/sources.list.d/`` directory.
-
-The syntax is:
-
-::
-
-    <SOURCE> <URL> <DEBIAN_RELEASE> <COMPONENT1> <COMPONENT2> <COMPONENT3>
-
-Sources:
-
--  deb = Binary packages.
--  deb-src = Source packages.
-
-The URL is assumed to have the path
-``http://<DOMAIN>/<PATH_TO>/dists/<DEBIAN_RELEASE>`` available. The only
-part of the URL required is the location where the top-level ``dists``
-directory resides.
-
-URL:
-
--  ``http://ftp.debian.org/debian/``
-
-Debian releases (as of 2017-03):
-
--  ``oldstable`` or ``wheezy``
--  ``stable`` or ``jessie``
--  ``testing`` or ``stretch``
--  ``unstable`` or ``sid``
-
-Components:
-
--  main = The primary packages of Debian.
--  contrib = These packages require dependencies that are not in the
-   ``main`` section.
--  non-free = These packages are proprietary packages that are unable to
-   be shipped with Debian due to license conflicts.
-
-[1]
-
-Packaging
-~~~~~~~~~
+DEB (Debian)
+------------
 
 Official guides for building Debian packages:
 
@@ -84,7 +34,7 @@ creating these files and/or directories.
    -  patches/ = Optional. Files for patching the source code.
    -  {preinst\|postinst\|prerm\|postrm} = Optional. These are
       executable scripts that run before installation, after
-      installation, before removable, or after removable. [2]
+      installation, before removable, or after removable. [1]
 
 Install the required packaging dependencies.
 
@@ -148,7 +98,7 @@ actual package will be named
 
      -- Bob Smith <bob@smith.tld>  Mon, 22 Mar 2017 23:12:12 +0100
 
-``control`` File Example [3]:
+``control`` File Example [2]:
 
 ::
 
@@ -171,7 +121,7 @@ actual package will be named
      package in a long-format under 80 characters per line.
 
 Macros
-^^^^^^
+~~~~~~
 
 Many macros exist for helping to build and install Debian packages.
 
@@ -188,149 +138,10 @@ Many macros exist for helping to build and install Debian packages.
 
        make install DESTDIR=/<PATH_TO_>/<PACKAGE>-<VERSION>-revision/debian/<PACKAGE>
 
-[4]
+[3]
 
-RPM
----
-
-Repositories
-~~~~~~~~~~~~
-
-Repositories (sometimes called "repos") are a central location where
-packages can easily be found and installed from.
-
-Adding a Repository
-^^^^^^^^^^^^^^^^^^^
-
-On Red Hat based systems, the repositories are all defined as text files
-with the ".repo" extension in this directory.
-
-.. code-block:: sh
-
-    $ sudo ls /etc/yum.repos.d/
-
-Common options for repository files:
-
--  [] = This should be the first part of a repository, with the name being inside the brackets.
--  name = This should be similar to the name from the brackets. However, this friendly name can be different and is usually ignored.
--  baseurl = The location of the repository. Valid location types include "http://", "ftp://", and "file://" for using the local file system.
--  mirrorlist = Instead of a baseurl, a link to a list of repository mirrors can be given.
--  enabled = Enable or disable a repository with a "1" or "0". The default is value is "1". [5]
--  gpgcheck = Force a GPG encryption check against signed packages. Enable or disable with a "1" or "0".
--  gpgkey = Specify the path to the GPG key.
-
-Variables for repository files:
-
--  ``$releasever`` = The RHEL release version. This is typically the major operating system versioning number such as "6" or "7".
--  ``$basearch`` = The CPU architecture. For most modern PCs this is typically either automatically filled in as "x86\_64" for 64-bit operating systems or "i386" for 32-bit. [6]
-
-At the bare minimum, a repository file needs to include a name and a
-baseurl.
-
-.. code-block:: ini
-
-    [example-repo]
-    name=example-repo
-    baseurl=file:///var/www/html/example-repo/
-
-Here is an example repository file for the official CentOS 7 repository
-using a mirrorlist.
-
-.. code-block:: ini
-
-    [base]
-    name=CentOS-$releasever - Base
-    mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
-    #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
-    gpgcheck=1
-    gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-
-Creating a Repository
-^^^^^^^^^^^^^^^^^^^^^
-
-Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is ``el/$releasever/$basearch/`` where ``$releasever`` is the release version and ``$basearch`` is the CPU architecture. However, any directory can be used.
-
-In this example, a default Apache web server will have the repository
-access via the URL "http://localhost/el/7/x86\_64/." Be sure to
-place your RPMs in this directory. [1]
-
-.. code-block:: sh
-
-    $ sudo yum install createrepo
-    $ sudo mkdir -p /var/www/html/el/7/x86_64/
-
-.. code-block:: sh
-
-    $ sudo createrepo /var/www/html/el/7/x86_64/
-
-The "createrepo" command will create 4 or 5 files.
-
--  repomd.xml = An index for the other repository metadata files.
--  primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc.
--  filelists.xml = Contains the full listing of every directory and file.
--  other.xml = Holds a changelog of all the packages.
--  groups.xml = If a repository has a "group" that should install multiple packages, the group is specified here. By default, this file is not created when running "createrepo"without any arguments. [8]
-
-If new packages are added and/or signed via a GPG key then the
-repository cache needs to be updated again. [7]
-
-.. code-block:: sh
-
-    $ sudo createrepo --update /var/www/html/el/7/x86_64/
-
-Common Repositories
-^^^^^^^^^^^^^^^^^^^
-
-.. csv-table::
-   :header: "Name", "Supported Operating Systems", "Official", "Description", "Links"
-   :widths: 20, 20, 20, 20, 20
-
-   "Enterprise Linux Repository (ELRepo)", "RHEL", "No", "The latest hardware drivers and Linux kernels. [11]", "`RHEL6 <http://www.elrepo.org/elrepo-release-6-8.el6.elrepo.noarch.rpm>`__, `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm>`__"
-   "Extra Packages for Enterprise Linux (EPEL)", "RHEL", "Yes", "Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. These require both the ``extras`` and ``optional`` repositories to be enabled. [9]", "`RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__, `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__"
-   "Inline with Upstream (IUS)", "RHEL", "No", "The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [10]", "`RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,  `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__, `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,  `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__"
-   "Kernel Vanilla", "Fedora", "Yes", "Kernel packages for the latest stable and mainline Linux kernels. [14]", "`Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__"
-   "RPM Fusion", "Fedora, RHEL", "No", "Packages that Fedora does not ship by default (primarily due to license conflicts). [12]", "`Fedora 27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__, `Fedora 28 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm>`__, `RHEL 6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__, `RHEL 7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__"
-   "RPM Sphere", "Fedora", "No", "openSUSE packages that are not available in Fedora. [13]", "`Fedora 27 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_27/home:zhonghuaren.repo>`__, `Fedora 28 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_28/home:zhonghuaren.repo>`__"
-   "Wine", "Fedora", "Yes", "The latest stable and development packages for Wine.", "`Fedora 27 <https://dl.winehq.org/wine-builds/fedora/27/winehq.repo>`__"
-   "Wine-Staging", "Fedora","Yes", "Wine-Staging packages from the official `upstream fork <https://github.com/wine-staging/wine-staging>`__.", "`Fedora 27 <https://repos.wine-staging.com/alesliehughes/fedora/27/alistairs-wine.repo>`__"
-
-Red Hat Repositories
-~~~~~~~~~~~~~~~~~~~~
-
-Red Hat provides different repositories for Red Hat Enterprise Linux operating systems. Many of these provide access to licensed downstream software maintained by the company and obtained through subscriptions.
-
-The "subscription-manager" command is used to manage these repositories.
-
-.. code-block:: sh
-
-    $ sudo subscription-manager repos --enable <RED_HAT_REPOSITORY>
-
-Common repositories:
-
--  rhel-7-server-extras-rpms
--  rhel-7-server-optional-rpms
--  rhel-7-server-devtools-rpms = Developer Tools. Useful packages for software developers. The subscriptions that can enable this are listed `here <https://access.redhat.com/documentation/en-US/Red\_Hat_Developer\_Toolset/1/html/User\_Guide/sect-Red\_Hat_Developer\_Toolset-Subscribe.html>`_.
--  rhel-server-rhscl-7-rpms = Software Collections. Newer versions of software, usually aligning with upstream, are provided. They are installed into a prefix directory that is separate from the operating system libraries. [25]
-
-Fedora
-~~~~~~
-
-Fedy
-^^^^
-
-Fedora, by default, only provides free and open source software (no proprietary packages). The graphical utility ``Fedy`` allows a user to easily install required packages for media codecs, Oracle Java, and other utilities and tweaks. Both the ``free`` and ``non-free`` RPMFusion repositories have to be installed first.
-
-.. code-block:: sh
-
-   $ sudo dnf install "https://dl.folkswithhats.org/fedora/$(rpm -E %fedora)/RPMS/fedy-release.rpm"
-   $ sudo dnf install fedy
-   $ fedy
-
-[26]
-
-Packaging
-~~~~~~~~~
+RPM (Red Hat)
+-------------
 
 An RPM is built from a "spec" file. This modified shell script contains
 all of the information about the program and on how to install and
@@ -408,10 +219,10 @@ Sections:
    -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a
       file or folder to give it custom permissions.
 
-[15]
+[4]
 
 Macros
-^^^^^^
+~~~~~~
 
 Macros are variables in the RPM spec file that are expanded upon
 compilation of the RPM.
@@ -421,10 +232,10 @@ Some useful macros include:
 -  ``%{patches}`` = An array of all of the defined patch files.
 -  ``%{sources}`` = An array of all of the defined source files.
 
-[16]
+[5]
 
 Directories
-'''''''''''
+~~~~~~~~~~~
 
 During the creation of an RPM there are a few important directories that
 can and will be referenced.
@@ -444,10 +255,10 @@ can and will be referenced.
    installed to. This is also set to the ``$RPM_BUILD_ROOT`` shell
    variable.
 
-[17]
+[6]
 
 Users and Groups
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 
 Creating a user or group can be done one of two ways.
 
@@ -457,7 +268,7 @@ Creating a user or group can be done one of two ways.
    for keeping permissions identical on multiple platforms.
 
 The Fedora Project recommends using these standardized blocks of code to
-accomplish these methods. [18]
+accomplish these methods. [7]
 
 Dynamic:
 
@@ -490,7 +301,7 @@ Static:
     exit 0
 
 Patches
-^^^^^^^
+~~~~~~~
 
 Some applications may require patches to work properly. Patches should
 be stored in the ``SOURCES`` directories. At the beginning of the spec
@@ -554,13 +365,13 @@ location of the patch file.
 
     patch < %{_sourcedir}/<FILE_NAME>
 
-[19]
+[8]
 
 Troubleshooting
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 Error Messages
-''''''''''''''
+^^^^^^^^^^^^^^
 
 -  The ``custom_macro`` macro does not exist. Find and install it to ``/usr/lib/rpm/macros.d/``.
 -  Alternatively, if the message complains about a native macro instead, it could be used in the wrong section.
@@ -576,13 +387,10 @@ Error Messages
    /var/tmp/rpm-tmp.0Sev9I: line 324: fg: no job control
    error: Bad exit status from /var/tmp/rpm-tmp.0Sev9I (%prep)
 
-[27]
+[12]
 
-PKGBUILD
---------
-
-Packaging
-~~~~~~~~~
+PKGBUILD (Arch Linux)
+---------------------
 
 Arch Linux packages are design to be simple and easy to create. A
 PKGBUILD file is compressed with a software's contents into a XZ
@@ -613,7 +421,7 @@ Optional Variables:
 -  conflicts = List any conflicting packages.
 -  replaces = List packages that this software should replace.
 
-[20]
+[9]
 
 Functions
 
@@ -654,47 +462,28 @@ Required:
 
           $ make DESTDIR="${pkgdir}" install
 
-[21][22]
-
-Flatpak
--------
-
-Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [23] This package manager is available for most modern Linux distributions. [24]
+[10][11]
 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/packages.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/packaging.rst>`__
+-  `< 2019.07.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/packages.rst>`__
 -  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/packages.rst>`__
 -  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/packages.md>`__
 
 Bibliography
 ------------
 
-1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
-2. "Chapter 7 - Basics of the Debian package management system." The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg\_basics.en.html
-3. "hello-debian README.md." streadway/hello-debian GitHub. March 24, 2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
-4. "Chapter 4. Required files under the debian directory." Debian New Maintainers' Guide. February 25, 2017. Accessed March 24, 2017. https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
-5. "Fedora 24 System Administrator's Guide" Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System\_Administrators\_Guide/sec-Setting\_repository\_Options.html
-6. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf
-7. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
-8. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
-9. "EPEL." Fedora Project. March 1, 2017. Accessed May 14, 2017. https://fedoraproject.org/wiki/EPEL
-10. "IUS Community Project." IUS. May 5, 2017. Accessed May 14, 2017. https://ius.io/
-11. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May 14, 2017. http://elrepo.org/tiki/tiki-index.php
-12. "RPM Fusion." RPM Fusion. March 31, 2017. Accessed May 14, 2017. https://rpmfusion.org/RPM%20Fusion
-13. "RPM Sphere." openSUSE Build Service. Accessed September 4, 2017. https://build.opensuse.org/project/show/home:zhonghuaren
-14. "Kernel Vanilla Repositories." Fedora Project Wiki. February 28, 2017. Accessed September 8, 2017. https://fedoraproject.org/wiki/Kernel\_Vanilla\_Repositories
-15. "How to create an RPM package." Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
-16. https://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
-17. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
-18. "Packaging: Users and Groups" Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups
-19. "How to Create and Use Patch Files for RPM Packages." Bob Cromwell. March 20, 2017. Accessed March 20, 2017. http://cromwell-intl.com/linux/rpm-patch.html
-20. "PKGBUILD." Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD
-21. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating\_packages
-22. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
-23. "About `Flatpak <#flatpak>`__." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/
-24. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html
-25. "Red Hat Developer Tools software repository not available." Red Hat Community Discussions. November 14, 2017. Accessed February 26, 2018. https://access.redhat.com/discussions/3155021
-26. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
-27. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
+1. "Chapter 7 - Basics of the Debian package management system." The Debian GNU/Linux FAQ. August 28, 2016. Accessed March 25, 2017. https://www.debian.org/doc/manuals/debian-faq/ch-pkg\_basics.en.html
+2. "hello-debian README.md." streadway/hello-debian GitHub. March 24, 2014. Accessed May 8, 2017. https://github.com/streadway/hello-debian
+3. "Chapter 4. Required files under the debian directory." Debian New Maintainers' Guide. February 25, 2017. Accessed March 24, 2017. https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+4. "How to create an RPM package." Fedora Project. June 22, 2016. Accessed June 28, 2016. http://fedoraproject.org/wiki/How\_to\_create\_an\_RPM\_package
+5. "Creating RPM packages." Fedora Docs Site. May 16, 2020. Accessed May 16, 2020. https://docs.fedoraproject.org/en-US/quick-docs/creating-rpm-packages/index.html
+6. "Packaging:RPMMacros." Fedora Project Wiki. December 1, 2016. Accessed March 13, 2017. https://fedoraproject.org/wiki/Packaging:RPMMacros?rd=Packaging/RPMMacros
+7. "Packaging: Users and Groups" Fedora Project. September 14, 2016. Accessed February 25, 2017. https://fedoraproject.org/wiki/Packaging:UsersAndGroups
+8. "How to Create and Use Patch Files for RPM Packages." Bob Cromwell. March 20, 2017. Accessed March 20, 2017. http://cromwell-intl.com/linux/rpm-patch.html
+9. "PKGBUILD." Arch Linux Wiki. October 26, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/PKGBUILD
+10. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating\_packages
+11. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
+12. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
