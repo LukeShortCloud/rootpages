@@ -3,6 +3,22 @@ Package Managers
 
 .. contents:: Table of Contents
 
+Commands
+--------
+
+These are the commands used for common operator tasks when handling packages.
+
+.. csv-table::
+   :header: Action, APT (Debian), DNF/YUM (Fedora), Pacman (Arch Linux), Zyyper (openSUSE)
+   :widths: 20, 20, 20, 20, 20
+
+   Install, apt-get install, dnf install, pacman -S, zypper search
+   Uninstall, apt-get remove, dnf remove, pacman -Rns, zypper remove
+   Update, apt-get update && apt-get upgrade, dnf update, pacman -Sy, zypper update
+   Operating system upgrade, apt-get dist-upgrade, dnf distro-sync, pacman -Syyu, zypper dist-upgrade
+   Search for a package based on it's name, apt-cache search, dnf search, pacman -Ss, zypper search
+   Search for a package based on a file it has, apt-file search, dnf whatprovides, pacman -F, zypper --provides --match-exact
+
 DEB
 ---
 
