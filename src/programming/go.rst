@@ -807,6 +807,22 @@ Go also supports special benchmark tests as defined using the syntax ``func Benc
 
 [14][15]
 
+Go test functions that call the ``t.Parallel()`` function will be marked as being able to run in parallel mode. By default, the ``go test`` command will not run any tests in parallel and requires an additional environment variable or flag to be set.
+
+.. code-block:: sh
+
+   $ GOMAXPROCS=8 go test # method 1
+   $ go test -parallel 8 # method 2
+   $ go test -cpu=8 # method 3
+
+Other libraries useful for testing:
+
+-  testing/iotest = Functions for testing Readers and Writers.
+-  testing/quick = Functions for doing assertations.
+-  net/http/httptest = Functions for manipulating and helping test HTTP interactions.
+
+[24]
+
 Libraries
 ---------
 
@@ -961,7 +977,6 @@ This library provides useful functions for manipulating and doing logic checks o
 -  TrimSpace
 -  TrimSuffix
 
-
 testing
 ^^^^^^^
 
@@ -1028,3 +1043,4 @@ Bibliography
 21. "Golang Maps by Example." CalliCoder. March 20, 2018. Accessed May 10, 2020. https://www.callicoder.com/golang-maps/
 22. "Package bufio." The Go Programming Language. Accessed May 11, 2020. https://golang.org/pkg/bufio/
 23. "Package strings." The Go Programming Language. Accessed May 12, 2020. https://golang.org/pkg/strings
+24. "Lesser-Known Features of Go Test." Splice Blog. September 3, 2014. Accessed May 18, 2020. https://splice.com/blog/lesser-known-features-go-test/
