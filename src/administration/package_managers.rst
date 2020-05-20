@@ -165,6 +165,7 @@ Common Repositories
    :header: "Name", "Supported Operating Systems", "Official", "Description", "Links"
    :widths: 20, 20, 20, 20, 20
 
+   CentOS Vault, CentOS, Yes, Old and unmaintained major and minor releases of CentOS, `CentOS <http://vault.centos.org/>`__
    "Enterprise Linux Repository (ELRepo)", "RHEL", "No", "The latest hardware drivers and Linux kernels. [8]", "`RHEL6 <http://www.elrepo.org/elrepo-release-6-8.el6.elrepo.noarch.rpm>`__, `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm>`__"
    "Extra Packages for Enterprise Linux (EPEL)", "RHEL", "Yes", "Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. These require both the ``extras`` and ``optional`` repositories to be enabled. [6]", "`RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__, `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__"
    "Inline with Upstream (IUS)", "RHEL", "No", "The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [7]", "`RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,  `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__, `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,  `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__"
