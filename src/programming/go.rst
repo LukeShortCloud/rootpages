@@ -451,6 +451,28 @@ Certain return variables can be ignored by using "_" as a place holder. In this 
        varOne, _ := returnTwoThings()
    }
 
+Functions cannot specify default parameters/inputs. Instead, logic can be added to a function to see if a parameter is an empty variable. [25]
+
+.. code-block:: go
+
+   package main
+   
+   import "fmt"
+   
+   func main() {
+       var msg string
+       echo(msg)
+   }
+   
+   func echo(msg string) {
+   
+       if msg == "" {
+           msg = "Hello world!"
+       }
+   
+       fmt.Println(msg)
+   }
+
 Conditionals
 ------------
 
@@ -1044,3 +1066,4 @@ Bibliography
 22. "Package bufio." The Go Programming Language. Accessed May 11, 2020. https://golang.org/pkg/bufio/
 23. "Package strings." The Go Programming Language. Accessed May 12, 2020. https://golang.org/pkg/strings
 24. "Lesser-Known Features of Go Test." Splice Blog. September 3, 2014. Accessed May 18, 2020. https://splice.com/blog/lesser-known-features-go-test/
+25. "Default value in Go's method." Stack Overflow. September 7, 2018. Accessed May 19, 2020. https://stackoverflow.com/questions/19612449/default-value-in-gos-method
