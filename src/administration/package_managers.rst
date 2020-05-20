@@ -165,15 +165,14 @@ Common Repositories
    :header: "Name", "Supported Operating Systems", "Official", "Description", "Links"
    :widths: 20, 20, 20, 20, 20
 
-   CentOS Vault, CentOS, Yes, Old and unmaintained major and minor releases of CentOS, `CentOS <http://vault.centos.org/>`__
-   "Enterprise Linux Repository (ELRepo)", "RHEL", "No", "The latest hardware drivers and Linux kernels. [8]", "`RHEL6 <http://www.elrepo.org/elrepo-release-6-8.el6.elrepo.noarch.rpm>`__, `RHEL7 <http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm>`__"
-   "Extra Packages for Enterprise Linux (EPEL)", "RHEL", "Yes", "Packages from Fedora built for Red Hat Enterprise Linux (RHEL) based operating systems. These require both the ``extras`` and ``optional`` repositories to be enabled. [6]", "`RHEL6 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm>`__, `RHEL7 <https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm>`__"
-   "Inline with Upstream (IUS)", "RHEL", "No", "The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [7]", "`RHEL 6 <https://rhel6.iuscommunity.org/ius-release.rpm>`__,  `RHEL 7 <https://rhel7.iuscommunity.org/ius-release.rpm>`__, `CentOS 6 <https://centos6.iuscommunity.org/ius-release.rpm>`__,  `CentOS 7 <https://centos7.iuscommunity.org/ius-release.rpm>`__"
-   "Kernel Vanilla", "Fedora", "Yes", "Kernel packages for the latest stable and mainline Linux kernels. [11]", "`Fedora <https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo>`__"
-   "RPM Fusion", "Fedora, RHEL", "No", "Packages that Fedora does not ship by default (primarily due to license conflicts). [9]", "`Fedora 27 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-27.noarch.rpm>`__, `Fedora 28 <https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm>`__, `RHEL 6 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-6.noarch.rpm>`__, `RHEL 7 <https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm>`__"
-   "RPM Sphere", "Fedora", "No", "openSUSE packages that are not available in Fedora. [10]", "`Fedora 27 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_27/home:zhonghuaren.repo>`__, `Fedora 28 <http://download.opensuse.org/repositories/home:/zhonghuaren/Fedora_28/home:zhonghuaren.repo>`__"
-   "Wine", "Fedora", "Yes", "The latest stable and development packages for Wine.", "`Fedora 27 <https://dl.winehq.org/wine-builds/fedora/27/winehq.repo>`__"
-   "Wine-Staging", "Fedora","Yes", "Wine-Staging packages from the official `upstream fork <https://github.com/wine-staging/wine-staging>`__.", "`Fedora 27 <https://repos.wine-staging.com/alesliehughes/fedora/27/alistairs-wine.repo>`__"
+   CentOS Vault, CentOS, Yes, Old and unmaintained major and minor releases of CentOS, `CentOS Vault <http://vault.centos.org/>`__
+   "Enterprise Linux Repository (ELRepo)", "CentOS, RHEL", "No", "The latest hardware drivers and Linux kernels. [8]", `Get started <http://elrepo.org/tiki/tiki-index.php>`__
+   "Extra Packages for Enterprise Linux (EPEL)", "CentOS, RHEL", "Yes", "Packages from Fedora built for Enterprise Linux (RHEL) based operating systems. On EL <= 7, these require both the ``extras`` and ``optional`` repositories to be enabled. [6]", `Quickstart <https://fedoraproject.org/wiki/EPEL#Quickstart>`__
+   "Inline with Upstream (IUS)", "CentOS, RHEL", "No", "The latest upstream software that is built for RHEL. IUS packages that can safely replace system packages will. IUS packages known to cause conflicts with operating system packages are installed in a separate location. [7]", `Setup <https://ius.io/setup>`__
+   "Kernel Vanilla", "Fedora", "Yes", "Kernel packages for the latest stable and mainline Linux kernels. [11]", `How to use <https://fedoraproject.org/wiki/Kernel_Vanilla_Repositories#How_to_use_these_repos>`__
+   "RPM Fusion", "CentOS, Fedora, RHEL", "No", "Packages that Fedora does not ship by default (primarily due to license conflicts). [9]", `Configuration <https://rpmfusion.org/Configuration>`__
+   "RPM Sphere", "Fedora", "No", "openSUSE packages that are not available in Fedora. [10]", `Install <https://rpmsphere.github.io/>`__
+   "Wine", "Fedora", "Yes", "The latest stable, development, and staging packages for Wine.", `Installing <https://wiki.winehq.org/Fedora>`__
 
 Red Hat Repositories
 ~~~~~~~~~~~~~~~~~~~~
