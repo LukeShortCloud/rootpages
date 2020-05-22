@@ -2953,6 +2953,19 @@ Errors
    $ less /var/log/containers/stdouts/container-puppet-<OPENSTACK_SERVICE>.log
    2020-01-01T16:15:00.000000000-04:00 stderr F <13>Jan 01 16:12:38 puppet-user: Error: Evaluation Error: Error while evaluating a Resource Statement, Evaluation Error: Error while evaluating a Function Call, Duplicate declaration: <OPENSTACK_SERVICE>_config[<SECTION>/<KEY>] is already declared at (file: /etc/puppet/modules/<OPENSTACK_SERVICE>/manifests/config.pp, line: 36); cannot redeclare (file: /etc/puppet/modules/oslo/manifests/messaging/default.pp, line: 47) (file: /etc/puppet/modules/oslo/manifests/messaging/default.pp, line: 47, column: 3) (file: /etc/puppet/modules/<OPENSTACK_SERVICE>/manifests/init.pp, line: 445) on node undercloud.localhost.localdomain
 
+----
+
+**Failed to pull image <CONTAINER_REGISTRY_NAMESPACE>/<CONTAINER_IMAGE_NAME>:<CONTAINER_IMAGE_TAG>**
+
+- Verify that (1) the registry works, (2) the container name exists, and (3) that the container tag exists.
+
+.. code-block:: sh
+
+   $ skopeo inspect --tls-verify=False docker://<CONTAINER_REGISTRY_NAMESPACE>/<CONTAINER_NAME_PERFIX><CONTAINER_IMAGE_NAME>
+   $ skopeo inspect --tls-verify=False docker://<CONTAINER_REGISTRY_NAMESPACE>/<CONTAINER_NAME_PERFIX><CONTAINER_IMAGE_NAME>:<CONTAINER_IMAGE_TAG>
+       "RepoTags": [
+        "latest",
+
 History
 -------
 
