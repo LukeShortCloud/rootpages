@@ -5,8 +5,8 @@ OpenStack-Ansible
 
 OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.
 
--  Supported operating systems: Ubuntu 16.04 or 18.04
--  Experimentally supported operating systems: CentOS 7, openSUSE Leap 42
+-  Supported operating systems: Ubuntu 18.04, Debian 9, or CentOS 7
+-  Experimentally supported operating systems: openSUSE Leap 15
 
 It offers key features that include:
 
@@ -664,7 +664,7 @@ Bibliography
 
 1. "Hosts role should set SELinux into permissive mode." openstack-ansible Launchpad Bugs. January 27, 2017. Accessed July 25, 2018. https://bugs.launchpad.net/openstack-ansible/+bug/1657517
 2. "Quickstart: AIO." OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html
-3. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. https://docs.openstack.org/project-deploy-guide/openstack-ansible/queens/
+3. "OpenStack-Ansible Deployment Guide." OpenStack Documentation. December 10, 2019. Accessed May 22, 2020. https://docs.openstack.org/project-deploy-guide/openstack-ansible/train/
 4. "Nova role for OpenStack-Ansible." OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. https://docs.openstack.org/openstack-ansible-os_nova/queens/
 5. "openstack ansible ceph." OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. https://www.openstackfaq.com/openstack-ansible-ceph/
 6. "Configuring the Ceph client (optional)." OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html
