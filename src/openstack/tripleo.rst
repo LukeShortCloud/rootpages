@@ -321,11 +321,12 @@ If installing on RHEL, it is required to enable additional repositories [40]:
 
 -  **Trunk**
 
-   -  Trunk builds are divided into three different categories [54]:
+   -  Trunk builds are divided into different stages [54][65]:
 
-      -  current = The latest successfully built packages from every individual RDO and OpenStack project.
-      -  consistent = A snapshot of the last current build when all of the packages were successfully built.
-      -  current-tripleo-rdo = A snapshot of the last consistent build that passed all of the `CI promotion jobs <https://ci.centos.org/view/rdo/view/promotion-pipeline/job/rdo_trunk-promote-train-current-tripleo/>`__. This is also known as current-passed-ci.
+      -  current = The latest individually successfully built packages from every RDO and OpenStack project.
+      -  consistent = The ``current`` build passed the tripleo-ci promotion jobs.
+      -  current-tripleo = The ``consistent`` build passed phase 1 CI promotion jobs.
+      -  current-tripleo-rdo = The ``current-tripleo`` build passed `phase 2 CI promotion jobs <https://ci.centos.org/view/rdo/view/promotion-pipeline/job/rdo_trunk-promote-train-current-tripleo/>`__. This is also known as ``current-passed-ci`` because it has passed all of the available CI jobs.
 
    -  RDO repository (current-tripleo-rdo):
 
@@ -3041,3 +3042,4 @@ Bibliography
 62. "Linux Bridge Container Permission Issues." Launchpad Bugs tripleo. May 4, 2020. Accessed May 4, 2020. https://bugs.launchpad.net/tripleo/+bug/1862179
 63. "Deploying with Custom Roles." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/custom_roles.html
 64. "Deploying with Composable Services." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/composable_services.html
+65. "Promotion Stages." TripleO Documentation. August 16, 2019. Accessed May 26, 2020. https://docs.openstack.org/tripleo-docs/latest/ci/stages-overview.html
