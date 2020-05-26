@@ -2722,7 +2722,7 @@ Install the Minion services.
 Scaling (Large Overcloud)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RHOSP 13 supports deploying 500 Overcloud nodes. This requires a few optimization tweaks to the Undercloud. Details about how to accomplish this can be found `here <https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes>`__. Set the ``NodeCreateBatchSize`` Heat parameter to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
+RHOSP 13 (Queens) supports deploying 500 Overcloud nodes. The Undercloud needs resource allocations related directly to how many Overcloude nodes will be deployed: 1 CPU core and 8GB RAM per every 15 nodes. Undercloud services require a few other configuration tweaks to handle the large capacity. [66] Set the ``NodeCreateBatchSize`` Heat parameter to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
 
 Puppet
 ~~~~~~
@@ -3043,3 +3043,4 @@ Bibliography
 63. "Deploying with Custom Roles." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/custom_roles.html
 64. "Deploying with Composable Services." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/composable_services.html
 65. "Promotion Stages." TripleO Documentation. August 16, 2019. Accessed May 26, 2020. https://docs.openstack.org/tripleo-docs/latest/ci/stages-overview.html
+66. "Scaling Red Hat OpenStack Platform to more than 500 Overcloud Nodes." Red Hat Blog. October 28, 2019. Accessed May 26, 2020. https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes
