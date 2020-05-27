@@ -87,6 +87,45 @@ Comments
 
 At least the main package needs to have a comment at the beginning to describe what it is and how it can be used. Package comments should start with ``// Package <PACKAGE>``. Comments for other parts of the code such as functions and variables should start with ``// <FUNCTION_NAME>``. [17]
 
+Variables
+~~~~~~~~~
+
+-  Variables should be named using English words.
+-  Use camelCase and avoid underscores.
+
+   .. code-block:: go
+
+      var foodRating int = 9
+
+-  Constants should be all uppercase characters and use underscores.
+
+   .. code-block:: go
+
+      const MESSAGE_OF_THE_DAY string = "Unauthorized access is not allowed!"
+
+-  Acryonyms should be uppercase.
+
+   .. code-block:: go
+
+      var HTTPToken string = "123"
+
+-  Group related variables together.
+
+   .. code-block:: go
+
+      var (
+          foo := "hello"
+          bar := "world"
+      )
+
+-  One-off temporary variables should have a very simple name of around 3 characters or less.
+
+   .. code-block:: go
+
+      for i, n := range car_names {
+
+[26]
+
 Data Types
 ----------
 
@@ -98,6 +137,9 @@ Data Types
 -  ``string`` = String. Alphanumeric UTF-8 values. Strings that are written out using double quotes (``"``) only. Single quotes are reserved for defining a rune (single character) data type.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
 -  ``_`` = A null character. Anything assigned to this will be discarded. This is useful for loops because Go does not support creating variables that are not used.
+
+Variable Declaration
+~~~~~~~~~~~~~~~~~~~~
 
 Go will, by default, guess what data type the variable should be based on the value that is assigned to it.
 
@@ -1067,3 +1109,4 @@ Bibliography
 23. "Package strings." The Go Programming Language. Accessed May 12, 2020. https://golang.org/pkg/strings
 24. "Lesser-Known Features of Go Test." Splice Blog. September 3, 2014. Accessed May 18, 2020. https://splice.com/blog/lesser-known-features-go-test/
 25. "Default value in Go's method." Stack Overflow. September 7, 2018. Accessed May 19, 2020. https://stackoverflow.com/questions/19612449/default-value-in-gos-method
+26. "Naming Rules." GitHub unknown/go-code-convention. November 6, 2015. Accessed May 26, 2020. https://github.com/unknwon/go-code-convention/blob/master/en-US/naming_rules.md
