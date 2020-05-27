@@ -254,8 +254,32 @@ Common git procedures:
 
 [14]
 
-Git Conflicts
-^^^^^^^^^^^^^
+Messages
+^^^^^^^^
+
+Guidelines for ``git commit -m`` messages [19]:
+
+-  Subject
+
+   -  Use imperative statements that start with "Add", "Change", "Fix", Remove", etc.
+   -  Do not end with a period because it is a title.
+   -  Should be a maximum length of 50 characters.
+
+-  Body
+
+   -  Create a newline between the subject and the body.
+   -  Each line should wrap around at 72 characters.
+
+Common statements used in the body:
+
+-  Resolves ``#<GITHUB_ISSUE>``
+-  Authored-By: <FIRST_NAME> <LAST_NAME> <``<EMAIL>``> = Enclose the e-mail in ``< >``.
+-  Co-Authored-By = The same as Authored-By, except they are not the originally creator of the patch.
+-  Changed-Id: <RANDOM_UUID> = Used by Gerrit. A unique Change ID number associates the patch to a review. The review can then go through more than one revision of the patch based off of CI and user provided feedback.
+-  Depends-On: <GERRIT_UUID> = Used by Gerrit. A patch that is required to merge first.
+
+Conflicts
+^^^^^^^^^^
 
 When doing a ``git`` ``cherry-pick``, ``merge``, or ``rebase`` it is possible that there will be a merge conflict between a commit in the current branch and another commit that is being added in. The developer will have to go in and manually update the code. An example is shown below. In between the ``<<<<<<<`` and ``=======`` section is the code from the original branch. In between the ``=======`` and ``>>>>>>>`` is the code from the commit that is being added that is causing the conflict.
 
@@ -611,3 +635,4 @@ Bibliography
 16. "10 Deep DevOps Thoughts From Chef’s Jez Humble." New Relic Blog. April 28, 2015. Accessed June 10, 2019. https://blog.newrelic.com/technology/devops-jez-humble/
 17. "Using CALMS to Assess an Organization’s DevOps." DevOps.com. May 25, 2018. Accessed June 10, 2019. https://devops.com/using-calms-to-assess-organizations-devops/
 18. "A beginner's guide to Big O notation." Rob-Bell.net. June 23, 2009. Accessed July 9, 2019. https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/
+19. "How to Write a Git Commit Message." Chris Beams. August 31, 2014. Accessed May 26, 2020. https://chris.beams.io/posts/git-commit/
