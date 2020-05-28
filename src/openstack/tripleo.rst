@@ -2979,6 +2979,24 @@ Errors
        "RepoTags": [
         "latest",
 
+----
+
+**Object GET failed: https://192.168.24.2:13808/v1/AUTH_<PROJECT_ID>/overcloud/plan-environment.yaml 404 Not Found  [first 60 chars of response] <html><h1>Not Found</h1><p>The resource could not be found.<**
+
+-  Delete the ``overcloud`` Swift container.
+
+   .. code-block:: sh
+
+      $ openstack container delete --recursive overcloud
+
+-  Re-run the deployment with the ``--templates`` directory. All of the TripleO Heat templates used in the deployment should be stored in that directory.
+
+   .. code-block:: sh
+
+      $ openstack overcloud deploy --templates ~/templates
+
+[67]
+
 History
 -------
 
@@ -3056,3 +3074,4 @@ Bibliography
 64. "Deploying with Composable Services." TripleO Documentation. May 7, 2020. Accessed May 7, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/composable_services.html
 65. "Promotion Stages." TripleO Documentation. August 16, 2019. Accessed May 26, 2020. https://docs.openstack.org/tripleo-docs/latest/ci/stages-overview.html
 66. "Scaling Red Hat OpenStack Platform to more than 500 Overcloud Nodes." Red Hat Blog. October 28, 2019. Accessed May 26, 2020. https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes
+67. "Bug 1607453 - Deployment fails with: Object GET failed: https://.../overcloud/plan-environment.yaml 404 Not Found." Red Hat Bugzilla. November 13, 2019. Accessed May 28, 2020. https://bugzilla.redhat.com/show_bug.cgi?id=1607453
