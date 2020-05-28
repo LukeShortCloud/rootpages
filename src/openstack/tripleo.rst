@@ -2751,10 +2751,11 @@ Lab Tips
 These are trips and tricks for setting up a full, yet basic, TripleO cloud for testing the deployment.
 
 -  Use the Standalone deployment or at least the minimum amount of nodes required for TripleO: 1 Undercloud, 1 Controller, and 1 Compute.
--  Use the most minimal resources required on the Overcloud nodes for a deployment.
+-  Use the most minimally required resources for each node role. These values have been verified on the Train release.
 
-   -  Controller: 4 vCPUs and 16GB RAM
-   -  Compute: 2 vCPUs
+   -  Undercloud: 4 vCPUs and 8GB RAM
+   -  Controller: 2 vCPUs and 12GB RAM
+   -  Compute: 1 vCPU
 
       -  Pre-deployed: 2GB RAM
       -  Ironic provisioned: 4GB RAM
