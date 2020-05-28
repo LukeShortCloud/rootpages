@@ -1155,7 +1155,19 @@ TripleO can provision a full CentOS or RHEL operating system onto a new baremeta
               ]
           }
 
-   -  ``instackenv.yaml`` syntax:
+   -  ``instackenv.yaml`` minimal syntax:
+
+      .. code-block:: yaml
+
+         ---
+         nodes:
+           - name: <DESCRIPTIVE_NAME>
+             pm_type: manual-management
+             mac:
+               - "AA:BB:CC:DD:EE:FF"
+             capabilities: "profile:<FLAVOR>,boot_option:local"
+
+   -  ``instackenv.yaml`` full syntax:
 
       .. code-block:: yaml
 
