@@ -283,6 +283,41 @@ Create a basic template for a Deployment or any object. It can be saved and used
 
 [24]
 
+Imperative and Declarative Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Imperative
+
+   -  `commands <https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-command/>`__ = Using only the CLI (no configuration file) to create and manage resources. Syntax: ``kubectl run`` for Pods and ``kubectl create <RESOURCE_API>`` for most other resources.
+   -  `object configuration <https://kubernetes.io/docs/tasks/manage-kubernetes-objects/imperative-config/>`__ = Using the CLI and an existing configuration file/directory to create and manage resources. Syntax: ``kubectl {create,delete,get,replace} -f <FILE>.yaml``.
+
+-  Declarative
+
+   -  `object configuration <https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/>`__ = Directly apply a configuration and change it's state using a manifest file. Syntax: ``kubectl {apply,diff} -f <FILE>.yaml``.
+
+A YAML file can be used to define an object that will be created using an API resource. This is commonly called a manifest, definition, declarative, or an object configuration file. Once it has been applied it becomes a live object configuration that is stored in Kubernetes back-end database. It is recommended to use declarative objects because they can be easily tracked and updated through a source code management (SCM) such as git. [25]
+
+**Run Generators**
+
+In Kubernetes < 1.18, the imperative command ``kubectl run`` would create a Deployment. It could optionally be used to create a Pod instead.
+
+.. code-block:: sh
+
+   $ kubectl run <DEPLOYMENT_NAME> --image=<IMAGE>
+   kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
+
+.. code-block:: sh
+
+   $ kubectl run --generator=run-pod/v1 <POD_NAME> --image=<IMAGE>
+
+In Kubernetes >= 1.18, the command can only create a Pod. This is to align the command with the functionality of ``docker run``.
+
+.. code-block:: sh
+
+   $ kubectl run <POD_NAME> --image=<IMAGE>
+
+[26]
+
 Installation
 ------------
 
@@ -759,3 +794,5 @@ Bibliography
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
+25. "Declarative Management of Kubernetes Objects Using Configuration Files." Kubernetes Tasks. May 2, 2020. Accessed May 28, 2020. https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
+26. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
