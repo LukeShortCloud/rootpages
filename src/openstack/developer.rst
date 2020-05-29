@@ -64,7 +64,7 @@ Gerrit patches can be downloaded and applied to a localy environment. Find the p
    $ cd /usr/lib/python3.6/site-packages
    $ sudo patch -p1 < <(base64 --decode <(curl -s "https://review.opendev.org/changes/<GERRIT_NUMBER>/revisions/<COMMIT_HASH>/patch?download"))
 
-Git messages
+Git Messages
 ~~~~~~~~~~~~
 
 When submitting a patch, the git commit message (from ``git commit -m``) can contain any of these valid tags:
@@ -94,6 +94,42 @@ When submitting a patch, the git commit message (from ``git commit -m``) can con
       Conflicts:
           path/to/conflicting/file.py
           path/to/conflicting/file2.py
+
+Release Notes
+~~~~~~~~~~~~~
+
+Any major change to an OpenStack project requires a release note. The categories which can be specified in a release note are:
+
+-  critical
+-  deprecations
+-  features
+-  fixes
+-  issues
+-  other
+-  prelude
+-  security
+-  upgrade
+
+Install the required `reno <https://pypi.org/project/reno/>`__ Python library.
+
+.. code-block:: sh
+
+   $ pip install --user reno
+
+Create a new release note using a prefix. The prefix should be either the subject of the change or the Launchpad bug number in the format of ``bug-<LAUNCHPAD_BUG_NUMBER>``.
+
+.. code-block:: sh
+
+   $ reno new <PREFIX>
+   Created new notes file in releasenotes/notes/<PREFIX>-<UUID>.yaml
+
+Edit the release note with contents about the major change.
+
+.. code-block:: sh
+
+   $ vim releasenotes/notes/<PREFIX>-<UUID>.yaml
+
+[6]
 
 Bugs
 ----
@@ -162,3 +198,4 @@ Bibliography
 3. "Bugs." OpenStack Documentation Project Team Guide. June 28, 2018. Accessed January 2, 2020. https://docs.openstack.org/project-team-guide/bugs.html
 4. "Blueprints and specifications." OpenStack Documentation Contributor Guide. January 2, 2020. Accessed January 2, 2020. https://docs.openstack.org/doc-contrib-guide/blueprints-and-specs.html
 5. "Licensing requirements." OpenStack Governance. July 18, 2017. Accessed January 2, 2020. https://governance.openstack.org/tc/reference/licensing.html
+6. "Working with Release Notes." keystone OpenStack Documentation. May 31, 2019. Accessed May 29, 2020. https://docs.openstack.org/keystone/train/contributor/release-notes.html
