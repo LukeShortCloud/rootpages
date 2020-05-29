@@ -314,6 +314,36 @@ Enable the required services and then restart the virtual machine to load the ne
    crosh> vmc stop termina
    crosh> vmc start termina
 
+Nested Virtualization
+^^^^^^^^^^^^^^^^^^^^^
+
+As of Chrome OS 81, nested virtualization is supported in Crostini. This means that KVM accelerated QEMU virtual machines can be created. [21]
+
+Verify that the ``termina`` virtual machine supports nested virtualization.
+
+.. code-block:: sh
+
+   [<CHROME_OS_USER>@penguin ~]$ cat /sys/module/kvm_intel/parameters/nested
+   Y
+
+Install the ``virt-manager`` GUI application:
+
+.. code-block:: sh
+
+   [<CHROME_OS_USER>@penguin ~]$ apt-get install virt-manager
+
+The local user needs to be in the ``libvirt`` group to be able to access and manage system level virtual machines. By default, ``virt-manager`` connections through ``qemu:///system`` to provide the best performance.
+
+.. code-block:: sh
+
+   [<CHROME_OS_USER>@penguin ~]$ sudo usermod -a -G libvirt $(whoami)
+
+Launch the program and then create virtual machines.
+
+.. code-block:: sh
+
+   [<CHROME_OS_USER>@penguin ~]$ virt-manager
+
 Crouton
 ~~~~~~~
 
@@ -414,3 +444,4 @@ Bibliography
 18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
 19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
 20. "dnschneid/crouton." GitHub. January 17, 2020. Accessed March 29, 2020. https://github.com/dnschneid/crouton
+21. "Issue 993253: Support untrusted VMs." Chromium Bugs. January 27, 2020. Accessed May 29, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=993253
