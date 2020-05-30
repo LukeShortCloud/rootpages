@@ -321,6 +321,69 @@ In Kubernetes >= 1.18, the command can only create a Pod. This is to align the c
 API Resources
 -------------
 
+Cluster
+~~~~~~~
+
+Cluster APIs are used by Kubernetes cluster operators to define how it is configured. [21] These are not to be confused with the singular `Cluster API <https://kind.sigs.k8s.io/>`__ that is used to create development Kubernetes clusters using containers.
+
+-  apiregistration.k8s.io
+
+   -  APIService = Add third-party Kubernetes APIs.
+
+-  auditregistration.k8s.io
+
+   -  AuditSink = Audit a Kubernetes cluster dynamically with webhooks.
+
+-  authentication.k8s.io
+
+   -  TokenRequest = Create a token.
+   -  TokenReview = Verify if a token is authenticated.
+
+-  authorization.k8s.io
+
+   -  LocalSubjectAccessReview = Check if a specific action can be used by a user within a namespace.
+   -  SelfSubjectAccessReview = Check if a specific action can be used by the current user.
+   -  SelfSubjectRulesReview = View the actions the current user can do in a namespace.
+   -  SubjectAccessReview = Check if a specific action can be used by a user.
+
+-  certificates.k8s.io
+
+   -  CertificateSigningRequest = Force certificates to be signed either automatically or manually.
+
+-  coordination.k8s.io
+
+   -  Lease = Provides an efficient heartbeat from the kubelet service to let the kube-controller-manager know it is still available.
+
+-  core
+
+   -  Binding = Bind objects together.
+   -  ComponentStatus = Provides the status of Kubernetes cluster services such as etcd, kube-scheduler, and kube-controller-manager.
+   -  Namespace = Create namespaces for developers to isolate their objects.
+   -  Node = Manage attributes of worker nodes.
+   -  PersistentVolume = Manage persistent and stateful volumes. PersistentVolumeClaims can be created from this object.
+   -  ResourceQuota = Manage resource allocations and limits.
+   -  ServiceAccount = Manage Kubernetes accounts used by pods.
+
+-  flowcontrol.apiserver.k8s.io
+
+   -  FlowSchema = Assign priorities to incoming requests.
+   -  PriorityLevelConfiguration = Manage the limit of outstanding and queued requests to the kube-apiserver.
+
+-  networking.k8s.io
+
+   -  NetworkPolicy = Manage pod networks. The network plugin in the Kubernetes cluster has to support this feature (not every plugin does).
+
+-  node.k8s.io
+
+   -  RuntimeClass = Configure containerd or CRI-O runtimes. This can then be used by a pod.
+
+-  rbac.authorization.k8s.io
+
+   -  ClusterRole = Role-based access control (RBAC) for all resources regardless of namespace separation.
+   -  ClusterRoleBinding = A list of users and their permissions for a given ClusterRole.
+   -  Role = RBAC for all namespaced resources.
+   -  RoleBinding = A list of users and their permissions for a given Role.
+
 Workloads
 ~~~~~~~~~
 
@@ -810,7 +873,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed May 29, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed May 30, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
