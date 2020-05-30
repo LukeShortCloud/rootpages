@@ -318,6 +318,26 @@ In Kubernetes >= 1.18, the command can only create a Pod. This is to align the c
 
 [26]
 
+API Resources
+-------------
+
+Workloads
+~~~~~~~~~
+
+Workload APIs [21]:
+
+-  Container = A subset of Pod. Not a usable resource by itself.
+-  CronJob = Schedule pods to run at specific intervals of time.
+-  DaemonSet = Manages Kubernetes pods that run on worker nodes. Objects created using this API are usually for logging or networking.
+-  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
+-  Job = A one-time execution of a pod.
+-  Pod = The smallest API resource that can be used to create containers.
+-  ReplicaSet = New API for manging replicas that has support for label selectors.
+-  ReplicationController = Older API for managing replicas. [27]
+-  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [28]
+
+Most applications should use the Deployment API due to the collection of features it provides.
+
 Installation
 ------------
 
@@ -790,9 +810,11 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed April 15, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed May 29, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
 25. "Declarative Management of Kubernetes Objects Using Configuration Files." Kubernetes Tasks. May 2, 2020. Accessed May 28, 2020. https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
 26. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
+27. "ReplicationController." Kuberntes Concepts. March 28, 2020. May 29, 2020. https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
+28. "Kubernetes Persistent Volumes with Deployment and StatefulSet." Alen Komljen. January 17, 2019. Accessed May 29, 2020. https://akomljen.com/kubernetes-persistent-volumes-with-deployment-and-statefulset/
