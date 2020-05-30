@@ -35,6 +35,74 @@ Images
 
 More containers can be found `here <https://hub.docker.com/explore/>`__.
 
+Bootstrap an Operating System
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using a package manager and the main operating system repositories, it is possible to bootstrap an operating system. It installs all of the operating system packages into a directory. It can then be used as a chroot or for a container image. This can be done on different operating systems but the relevant package manager has to be installed. Arch Linux is one of the few distributions that ships all of the most popular package managers.
+
+**Arch Linux**
+
+.. code-block:: sh
+
+   $ mkdir -p archlinux_bootstrap/var/lib/pacman
+   $ cd archlinux_bootstrap
+   $ sudo pacman -r . -Syy
+   $ sudo pacman -r . -S base
+
+If not using Arch Linux with ``pacman`` installed, `download <https://www.archlinux.org/download/>`__ the ``archlinux-bootstrap-<DATE>-x86_64.tar.gz`` tarball from one of the HTTP Direct Downloads mirror.
+
+**CentOS 8**
+
+.. code-block:: sh
+
+   $ sudo cat <<EOF > /etc/yum/repos.d/centos8.repo
+   [centos8]
+   name=centos8
+   baseurl=http://mirror.centos.org/centos-8/8/BaseOS/x86_64/os/
+   enabled=1
+   EOF
+   $ mkdir ${HOME}/centos8_bootstrap
+   $ sudo yum install centos-release dnf @base --installroot=${HOME}/centos8_bootstrap
+
+**Debian 10**
+
+.. code-block:: sh
+
+   $ mkdir debian10_bootstrap
+   $ sudo debootstrap --arch amd64 buster ./debian10_bootstrap/ https://deb.debian.org/debian/
+
+**Fedora 31**
+
+.. code-block:: sh
+
+   $ mkdir ${HOME}/fedora31_bootstrap
+   $ sudo dnf install --installroot=${HOME}/fedora31_bootstrap --releasever=31 --nogpgcheck fedora-release
+   $ sudo dnf groupinstall --installroot=${HOME}/fedora31_bootstrap --releasever=31 --nogpgcheck minimal-environment
+
+**RHEL 8**
+
+.. code-block:: sh
+
+   $ sudo mount rhel-8.0-x86_64-dvd.iso /mnt
+   $ sudo cat <<EOF > /etc/yum/repos.d/rhel8.repo
+   [rhel8]
+   name=rhel8
+   baseurl=file:///mnt/
+   enabled=1
+   EOF
+   $ sudo yum clean all
+   $ mkdir ${HOME}/rhel8_bootstrap
+   $ sudo yum groupinstall base --installroot=${HOME}/rhel8_bootstrap
+
+**Ubuntu 20.04**
+
+.. code-block:: sh
+
+   $ mkdir ubuntu2004_bootstrap
+   $ sudo debootstrap --no-check-gpg --arch amd64 focal ./ubuntu2004_bootstrap/ http://archive.ubuntu.com/ubuntu
+
+[12]
+
 docker
 ------
 
@@ -228,3 +296,4 @@ Bibliography
 9. "Dockerfile reference." Docker Documentation. 2019. Accessed April 3, 2019. https://docs.docker.com/engine/reference/builder/
 10. "Five Ways to Slim Docker Images." Codacy Blog. December 14, 2017. Accessed March 21, 2020. https://blog.codacy.com/five-ways-to-slim-your-docker-images/
 11. "Best practices for writing Dockerfiles." Docker Documentation. Accessed March 21, 2020. https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+12. "How to Bootstrap different Linux Distribution Under Arch Linux." lukeluo.blogspot.com. September 6, 2015. Accessed May 30, 2020. http://lukeluo.blogspot.com/2015/09/how-to-bootstrap-different-linux.html
