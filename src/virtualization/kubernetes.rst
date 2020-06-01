@@ -384,6 +384,25 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Role = RBAC for all namespaced resources.
    -  RoleBinding = A list of users and their permissions for a given Role.
 
+Config and Storage
+~~~~~~~~~~~~~~~~~~
+
+Config and storage APIs manages key-value stores and persistent data storage. [21]
+
+-  core
+
+   -  ConfigMap = Manage key-value stores.
+   -  Secret = Manage base64 encoded key-value stores.
+   -  PersistentVolumeClaim = Manage persistent storage created from a PersistentVolume.
+   -  Volume = Manage local or network volume mounts.
+
+-  storage.k8s.io
+
+   -  CSIDriver = Define how Kubernetes will interact with the CSI storage back-end.
+   -  CSINode = Define CSI drivers.
+   -  StorageClass = Manage the automatic creation of persistent storage.
+   -  VolumeAttachment = Record when a CSI volume is created. This is used by other resources to then act upon the creation of the object.
+
 Workloads
 ~~~~~~~~~
 
@@ -873,7 +892,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed May 30, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 1, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
