@@ -321,6 +321,25 @@ In Kubernetes >= 1.18, the command can only create a Pod. This is to align the c
 API Resources
 -------------
 
+Each section lists the following information:
+
+-  <API_GROUP>
+
+   -  <API_RESOURCE> = <DESCRIPTION>
+
+A manifest file can be created to use the resource following this format:
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: <GROUP>/<API_VERSION>
+   kind: <API_RESOURCE>
+   metadata:
+     name: <NAME>
+   spec:
+
+Information about every API can be found be using the ``kubectl explain`` command, viewing the `API Reference Docs <https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/>`__, or viewing the `Kubernetes Documentation <https://kubernetes.io/docs/home/>`__.
+
 Cluster
 ~~~~~~~
 
