@@ -466,19 +466,27 @@ Service APIs are used to manage networks for pods. [21]
 Workloads
 ~~~~~~~~~
 
-Workload APIs [21]:
+Workload APIs manage running applications. [21]
 
--  Container = A subset of Pod. Not a usable resource by itself.
--  CronJob = Schedule pods to run at specific intervals of time.
--  DaemonSet = Manages Kubernetes pods that run on worker nodes. Objects created using this API are usually for logging or networking.
--  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
--  Job = A one-time execution of a pod.
--  Pod = The smallest API resource that can be used to create containers.
--  ReplicaSet = New API for manging replicas that has support for label selectors.
--  ReplicationController = Older API for managing replicas. [27]
--  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [28]
+-  apps
 
-Most applications should use the Deployment API due to the collection of features it provides.
+   -  DaemonSet = Manages Kubernetes pods that run on worker nodes. Objects created using this API are usually for logging or networking.
+   -  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
+   -  ReplicaSet = New API for manging replicas that has support for label selectors.
+   -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [28]
+
+-  batch
+
+   -  CronJob = Schedule pods to run at specific intervals of time.
+   -  Job = A one-time execution of a pod.
+
+-  core
+
+   -  Container = A subset of Pod. Not a usable resource by itself.
+   -  Pod = The smallest API resource that can be used to create containers.
+   -  ReplicationController = Older API for managing replicas. [27]
+
+Most applications should use the Deployment or the StatefulSet API due to the collection of features it provides.
 
 Installation
 ------------
