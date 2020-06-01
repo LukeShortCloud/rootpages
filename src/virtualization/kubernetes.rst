@@ -403,6 +403,47 @@ Config and storage APIs manages key-value stores and persistent data storage. [2
    -  StorageClass = Manage the automatic creation of persistent storage.
    -  VolumeAttachment = Record when a CSI volume is created. This is used by other resources to then act upon the creation of the object.
 
+Metadata
+~~~~~~~~
+
+Metadata APIs are used to change the behvaior of other objects. [21]
+
+-  admissionregistration.k8s.io
+
+   -  MutatingWebhookConfiguration = Validate and optionally modify API webhook requests.
+   -  ValidatingWebhookConfiguration = Validate API webhook requests.
+
+-  apiextensions.k8s.io
+
+   -  CustomResourceDefinition = Create a new API resource.
+
+-  apps
+
+   -  ControllerRevision = View the full history of a Deployment.
+   -  PodTemplate = The nested Pod spec for Workloads. Not a usable resource by itself.
+
+-  autoscaling
+
+   -  HorizontalPodAutoscaler = Define metrics to collect for automatic Pod scaling.
+
+-  core
+
+   -  Event = Create a custom event to track and log.
+   -  LimitRange = Define default resource requirements for pods.
+
+-  policy
+
+   -  PodDisruptionBudget = Define the minimum and maximum amount of pods that should be running during special situations such as eviction.
+   -  PodSecurityPolicy = Define pod users and permissions.
+
+-  scheduling.k8s.io
+
+   -  PriorityClass = Define a custom priority to be used by pods.
+
+-  settings.k8s.io
+
+   -  PodPreset = Define default settings that a Pod can use.
+
 Workloads
 ~~~~~~~~~
 
