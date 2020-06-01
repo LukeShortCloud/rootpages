@@ -444,6 +444,25 @@ Metadata APIs are used to change the behvaior of other objects. [21]
 
    -  PodPreset = Define default settings that a Pod can use.
 
+Service
+~~~~~~~
+
+Service APIs are used to manage networks for pods. [21]
+
+-  core
+
+   -  Endpoints = View simple information about the running Kubernetes networking objects.
+   -  Service = Manage internal access to a pod.
+
+-  discovery.k8s.io
+
+   -  EndpointSlice = A more advanced implementation of Endpoints.
+
+-  networking.k8s.io
+
+   -  Ingress = Manage external access to a pod based on an existing Service.
+   -  IngressClass = Configure the Ingress controller back-end.
+
 Workloads
 ~~~~~~~~~
 
