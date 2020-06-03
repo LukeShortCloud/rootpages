@@ -403,6 +403,66 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Role = RBAC for all namespaced resources.
    -  RoleBinding = A list of users and their permissions for a given Role.
 
+PersistentVolume
+^^^^^^^^^^^^^^^^
+
+**spec:**
+
+-  **accessModes** (list) [18]
+
+   -  ReadOnlyMany = More than one pod can only read the data to/from this storage
+   -  ReadWriteOnce = Only one pod can read and write to/from this storage.
+   -  ReadWriteMany = More than one pod can read and write data to/from this storage.
+
+-  **capacity (map)**
+
+   -  **storage (string)** = The capacity, in "Gi", that the PV pool contains.
+
+-  claimRef (map) = A reference to bind this PVC object to a PV object.
+-  mountOptions (list) = Linux mount options for the PVC on a Pod.
+-  nodeAffinity (map) = NodeAffinity settings for selecting what worker nodes this PVC should be used on.
+-  persistentVolumeReclaimPolicy (string) = What to do when the volume is no longer required by a Pod.
+
+   -  Retain = Default for manually provisioned PV.
+   -  Delete = Default for dynamically provisioned PV.
+
+-  **storageClassName (string)** = Any unique name or the name of an existing StorageClass to inherit attributes from. It is used by PVCs to identify the PV to create storage from. Leave blank to use the default StorageClass (if one exists).
+-  volumeMode (string) = The volume type required for the PVC object.
+
+**Storage plugin types (select one and then configure the map of settings):**
+
+-  awsElasticBlockStore
+-  azureDisk
+-  azureFile
+-  cephfs
+-  csi
+-  cinder
+-  fc (Fibre Channel)
+-  flexVolume
+-  flocker
+-  gcePersistentDisk
+-  glusterfs
+-  hostPath = Use a local directory on a worker node to store data. Set a "nodeAffinity" to the worker node that will have the hostPath directory and data available.
+
+   -  path = The file system path to use.
+
+-  iscsi
+-  local
+-  nfs
+
+   -  path
+   -  server
+
+-  photonPersistentDisk
+-  portworxVolume
+-  quobyte
+-  rbd
+-  scaleIO
+-  storageos
+-  vsphereVolume
+
+[21]
+
 Config and Storage
 ~~~~~~~~~~~~~~~~~~
 
@@ -421,6 +481,31 @@ Config and storage APIs manages key-value stores and persistent data storage. [2
    -  CSINode = Define CSI drivers.
    -  StorageClass = Manage the automatic creation of persistent storage.
    -  VolumeAttachment = Record when a CSI volume is created. This is used by other resources to then act upon the creation of the object.
+
+PersistentVolumeClaim
+^^^^^^^^^^^^^^^^^^^^^
+
+**spec:**
+
+-  **accessModes** (list) = The accessModes to allow. The lists values must also be allowed in the PV.
+
+   -  ReadOnlyMany
+   -  ReadWriteOnce
+   -  ReadWriteMany
+
+-  **resources** (map)
+
+   -  limits (map) = The maximum storage allocation.
+
+      -  storage (string) = Specify the requested storage size in the format ``<PVC_STORAGE>Gi``.
+
+   -  **requests** (map) = The minimum storage allocation. This will be the default if ``limits`` is not defined.
+
+      -  **storage** (string)
+
+-  **storageClassName (string)** = The StorageClass to create storage from.
+
+[21]
 
 Metadata
 ~~~~~~~~
@@ -492,7 +577,7 @@ Workload APIs manage running applications. [21]
    -  DaemonSet = Manages Kubernetes pods that run on worker nodes. Objects created using this API are usually for logging or networking.
    -  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
    -  ReplicaSet = New API for manging replicas that has support for label selectors.
-   -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [28]
+   -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [17]
 
 -  batch
 
@@ -506,6 +591,82 @@ Workload APIs manage running applications. [21]
    -  ReplicationController = Older API for managing replicas. [27]
 
 Most applications should use the Deployment or the StatefulSet API due to the collection of features it provides.
+
+Concepts
+--------
+
+Persistent Storage
+~~~~~~~~~~~~~~~~~~
+
+By default, all storage is emphemeral. The PersistentVolume (PV) and PersistentVolumeClaim (PVC) APIs provide a way to persistently store information for use-cases such as databases. A PV defines the available storage and connection details for the Kubernetes cluster to use. A PVC defines the storage allocation for use by a Pod.
+
+The example below shows how to configure static storage for a Pod using a directory on a worker node.
+
+-  Create a PV. Set a unique ``<PV_NAME>``, use any name for storageClassName, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: <PV_NAME>
+   spec:
+     storageClassName: <STORAGE_CLASS_NAME>
+     capacity:
+       storage: <PV_STORAGE_MAX>Gi
+     accessModes:
+       - ReadWriteOnce
+     hostPath:
+       path: "<LOCAL_FILE_SYSTEM_PATH>"
+     nodeAffinity:
+       required:
+         nodeSelectorTerms:
+           - matchExpressions:
+             - key: kubernetes.io/hostname
+               operator: In
+               values:
+                 - <WORKER_NODE_WITH_LOCAL_FILE_SYSTEM_PATH>
+
+-  Create a PVC from the PV pool. Set a unique ``<PVC_NAME>`` and the ``<PVC_STORAGE>`` size. The size should not exceed the maximum available storage from the PV. To bind to the previously created PV, use the same ``<STORAGE_CLASS_NAME>``
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolumeClaim
+   apiVersion: v1
+   metadata:
+     name: <PVC_NAME>
+   spec:
+     storageClassName: <STORAGE_CLASS_NAME>
+     accessModes:
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: <PVC_STORAGE>Gi
+
+-  Create a pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: <POD_NAME>
+   spec:
+     volumes:
+       - name: <POD_VOLUME_NAME>
+         persistentVolumeClaim:
+          claimName: <PVC_NAME>
+     containers:
+       - name: mysql
+         image: mysql:8.0
+         volumeMounts:
+           - mountPath: "/var/lib/mysql"
+             name: <POD_VOLUME_NAME>
+
+[19]
 
 Installation
 ------------
@@ -821,136 +982,6 @@ Uninstall OpenShift services from nodes by specifying them in the inventory and 
 
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/adhoc/uninstall.yml
 
-Persistent Storage
-------------------
-
-Kubernetes storage requires a ``PersistentVolume`` (PV) pool that users can create multiple ``PersistentVolumeClaim`` (PVC) claims from.
-
-Storage is recommended to be dynamic (ephemeral) so that applications can scale and handle failures in a cloudy way. However, databases and legacy applications may require static (persistent) storage.
-
--  PersistentVolume spec [17]:
-
-   -  storageClassName = The storage back-end to use. Leave blank to use the default. Set to a non-existent storage class to manually manage it (for example, "" or "manual").
-   -  **accessModes** [18]
-
-      -  ReadOnlyMany = More than one pod can only read the data to/from this storage
-      -  ReadWriteOnce = Only one pod can read and write to/from this storage.
-      -  ReadWriteMany = More than one pod can read and write data to/from this storage.
-
-   -  **capacity** =
-
-      -  **storage** = The capacity, in "Gi", that the PV pool contains.
-
-   -  mountOptions
-   -  nodeAffinity = A list of worker nodes that can use this storage.
-   -  persistentVolumeReclaimPolicy
-   -  volumeMode
-
-- (Configurable PV dictionaries)
-
-   -  awsElasticBlockStore
-   -  azureDisk
-   -  azureFile
-   -  cephfs
-   -  cinder
-   -  fc
-   -  flexVolume
-   -  flocker
-   -  gcePersistentDisk
-   -  glusterfs
-   -  hostPath = Use a local directory on a worker node to store data. Consider additionally setting the "nodeAffinity" to the node that will store the data. Alternatively, use ``glusterfs`` instead of ``hostPath`` to sync the directory across all of the worker nodes.
-
-      -  path = The file system path to use.
-
-   -  iscis
-   -  local
-   -  nfs
-   -  photonPersistentDisk
-   -  portworxVolume
-   -  quobyte
-   -  rbd
-   -  scaleIO
-   -  storageos
-   -  vsphereVolume
-
-API
-~~~
-
-The example below shows how to configure static storage for a pod using local storage.
-
--  Create a PV. Set a unique ``<PV_NAME>``, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
-
-.. code-block:: yaml
-
-   ---
-   kind: PersistentVolume
-   apiVersion: v1
-   metadata:
-     name: <PV_NAME>
-     labels:
-       type: local
-   spec:
-     storageClassName: manual
-     capacity:
-       storage: <PV_STORAGE_MAX>Gi
-     accessModes:
-       - ReadWriteOnce
-     hostPath:
-       path: "<LOCAL_FILE_SYSTEM_PATH>"
-     # For distributed storage, consider using "nfs" instead of "hostPath".
-     # See: https://docs.okd.io/latest/install_config/persistent_storage/persistent_storage_nfs.html
-     #nfs:
-     #  path: /exports/app
-     #  server: 192.168.1.100
-     nodeAffinity:
-       required:
-         nodeSelectorTerms:
-           - matchExpressions:
-             - key: kubernetes.io/hostname
-               operator: In
-               values:
-                 - <WORKER_NODE_WITH_LOCAL_FILE_SYSTEM_PATH>
-
--  Create a PVC from the PV pool. Set a unique ``<PVC_NAME>`` and the ``<PVC_STORAGE>`` size. The size should not exceed the maximum available storage from the PV.
-
-.. code-block:: yaml
-
-   ---
-   kind: PersistentVolumeClaim
-   apiVersion: v1
-   metadata:
-     name: <PVC_NAME>
-   spec:
-     storageClassName: manual
-     accessModes:
-       - ReadWriteOnce
-     resources:
-       requests:
-         storage: <PVC_STORAGE>Gi
-
--  Create a pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
-
-.. code-block:: yaml
-
-   ---
-   kind: Pod
-   apiVersion: v1
-   metadata:
-     name: task-pv-pod
-   spec:
-     volumes:
-       - name: <POD_VOLUME_NAME>
-         persistentVolumeClaim:
-          claimName: <PVC_NAME>
-     containers:
-       - name: task-pv-container
-         image: mysql
-         volumeMounts:
-           - mountPath: "/var/lib/mysql"
-             name: <POD_VOLUME_NAME>
-
-[19]
-
 History
 -------
 
@@ -975,9 +1006,9 @@ Bibliography
 14. "CHAPTER 5. INSTALLING RED HAT CONTAINER DEVELOPMENT KIT." Red Hat Customer Portal. Accessed February 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_container_development_kit/3.0/html/installation_guide/installing-rhcdk
 15. "Configuring Clusters." OpenShift Container Platform Documentation. Accessed February 5, 2019. https://docs.openshift.com/container-platform/3.11/install_config/index.html
 16. "OpenShift: Container Application Platform by Red Hat." OpenShift. Accessed February 26, 2018. https://www.openshift.com/
-17. "API OVERVIEW." Kubernetes API Reference Docs. Accessed January 29, 2019. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#storageclass-v1-storage
+17. "Kubernetes Persistent Volumes with Deployment and StatefulSet." Alen Komljen. January 17, 2019. Accessed May 29, 2020. https://akomljen.com/kubernetes-persistent-volumes-with-deployment-and-statefulset/
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
-19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. November 6, 2018. Accessed January 29, 2019. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 1, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
@@ -986,4 +1017,3 @@ Bibliography
 25. "Declarative Management of Kubernetes Objects Using Configuration Files." Kubernetes Tasks. May 2, 2020. Accessed May 28, 2020. https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
 26. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
 27. "ReplicationController." Kuberntes Concepts. March 28, 2020. May 29, 2020. https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
-28. "Kubernetes Persistent Volumes with Deployment and StatefulSet." Alen Komljen. January 17, 2019. Accessed May 29, 2020. https://akomljen.com/kubernetes-persistent-volumes-with-deployment-and-statefulset/
