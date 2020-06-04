@@ -27,14 +27,14 @@ TripleO is a collection of many services. As part of the Transformation Squad's 
    Keystone, "", "", Authentication of OpenStack services.
    Kolla, "", "", Provides container images of OpenStack services.
    MariaDB, "", "", Database for OpenStack services.
-   Mistral, "", "", Workflows are used to define and execute all of the deployment processes.
+   Mistral, Victoria, Ansible, Workflows are used to define and execute all of the deployment processes.
    Neutron, "", "", Manages the Overcloud networks.
    Nova, "", "", Manages the Overcloud nodes after provisioning.
-   Paunch, "", "", Container state management.
+   Paunch, Victoria, Ansible, Container state management.
    Podman, "", "", Container runtime for OpenStack services.
    Puppet, "", "", Configuration management.
    RabbitMQ, "", "", Messaging back-end for OpenStack services.
-   Zaqar, "", "", A messaging service used by Mistral.
+   Zaqar, Victoria, Ansible, A messaging service used by Mistral.
 
 In Pike, most of the Overcloud services are deployed as containers built by Kolla. The most notable service that lacked container support was Neutron due to it's complexity. Starting in Queens, all of the Overcloud services are installed as containers. Support for also running the Undercloud services in containers was added as a technology preview in Queens and later became the default configuration for Rocky. Previously, `instack-undercloud <https://opendev.org/openstack/instack-undercloud>`__ was used to setup and install the Undercloud services and now the same deployment method for the Overcloud is used for the Undercloud. [20]
 
