@@ -277,6 +277,9 @@ Common statements used in the body:
 -  Co-Authored-By = The same as Authored-By, except they are not the originally creator of the patch.
 -  Changed-Id: <RANDOM_UUID> = Used by Gerrit. A unique Change ID number associates the patch to a review. The review can then go through more than one revision of the patch based off of CI and user provided feedback.
 -  Depends-On: <GERRIT_UUID> = Used by Gerrit. A patch that is required to merge first.
+-  DNM = Do not merge. Normally this commit is to test something in CI.
+-  RFC = Request for comments from other contributors.
+-  WIP = Work in progress. The patch will continue to get further updates before it should be merged.
 
 Conflicts
 ^^^^^^^^^^
