@@ -524,7 +524,7 @@ Metadata APIs are used to change the behvaior of other objects. [21]
 -  apps
 
    -  ControllerRevision = View the full history of a Deployment.
-   -  PodTemplate = The nested Pod spec for Workloads. Not a usable resource by itself.
+   -  PodTemplate = Create a base template that can be used to create Pods from.
 
 -  autoscaling
 
@@ -586,11 +586,266 @@ Workload APIs manage running applications. [21]
 
 -  core
 
-   -  Container = A subset of Pod. Not a usable resource by itself.
    -  Pod = The smallest API resource that can be used to create containers.
    -  ReplicationController = Older API for managing replicas. [27]
 
 Most applications should use the Deployment or the StatefulSet API due to the collection of features it provides.
+
+Pod
+^^^
+
+``Pod.spec``
+
+-  activeDeadlineSeconds (integer) = The startTime, in seconds, to wait before marking a Pod as failed.
+-  affinity (map) = Define scheduling constraints.
+
+   -  nodeAffinity (map) = Specify NodeAffinity spec values here.
+
+      -  requiredDuringSchedulingIgnoredDuringExecution (map)
+      -  requiredDuringSchedulingRequiredDuringExecution (map)
+      -  preferredDuringSchedulingIgnoredDuringExecution (map)
+
+-  automountServiceAccountToken (boolean) = If the service account token should be available via a mount. The default is true.
+-  **containers** (list of `Containers map <#containers>`_) = The list of containers the Pod should create and manage.
+-  dnsConfig (map) = DNS settings to add to the /etc/resolv.conf file.
+
+   -  nameservers (list) = List of nameservers.
+   -  options (list of maps) = List of options.
+
+      -  name (string)
+      -  value (string) = Optional. A value to bind to the option name.
+
+   -  searches (list) = List of searches.
+
+-  dnsPolicy (string) = DNS resolution settings managed by Kubernetes.
+
+   -  ClusterFirst = Default. Quries for domain names that do not include the Kubernetes cluster hostname will use the resolvers from the worker Node.
+   -  ClusterFirstWithHostNet = ``Pod.spec.dnsPolicy.ClusterFirst`` for Pods using the ``Pod.spec.hostNetwork`` option.
+   -  Default = Use the worker Node's DNS resolution settings.
+   -  None = Only provide DNS settings via ``Pod.spec.dnsConfig``.
+
+-  enableServiceLinks (boolean) = Provide Service information via environment variables.
+-  ephemeralContainers (list of `Containers map <#containers>`_) = Temporary containers for debugging.
+-  hostAliases (map) = Additional /etc/hosts entries.
+
+   -  hostnames (string)
+   -  ip (string)
+
+-  hostIPC (boolean) = Default is false. Use the IPC namespace.
+-  hostPID (boolean) = Default is false. Use the PID namespace.
+-  hostname (string) = Default is "<HOSTNAME>.<SUBDOMAIN>.<POD_NAMESPACE.svc.<CLUSTER_DOMAIN>". The cluster domain default is "cluster.local".  A custom hostname for the Pod.
+-  hostNetwork (boolean) = Default is false. Use the worker nodes' primary namespace (not managed by Kubernetes).
+-  imagePullSecrets (list of maps)
+
+   -  name (string) = The name of the Secret to use.
+
+-  initContainers (list of `Containers map <#containers>`_) = A list of containers to create in order. If any of them fail then the entire Pod is marked as failed.
+-  nodeName (string) = The name of the work Node to schedule the Pod on.
+-  nodeSelector (map) = Key-value pairs on a worker Node that must be matched.
+-  overhead (`map of System Resources <#system-resources>`_) = The amount of resource overhead by having Kubernetes run the Pod. This is added ontop of amounts defined by ``Pod.spec.containers.resources.limits`` and ``Pod.spec.containers.resources.requests``.
+-  preemptionPolicy (string) Defaults to PreemptLowerPriority. Specify a Policy for low priority Pods.
+-  priority (integer) = Specify a high or low priority value for the Pod.
+-  priorityClassName (string) = Specify a PriorityClass object name to use for priority settings.
+-  readinessGates (list of strings) = The readiness gates that need to pass for a Pod to be marked as ready.
+
+   -  conditionType (string) = A valid value from the Pod's condition list.
+
+-  restartPolicy (string) = The policy for when containers stop in a Pod.
+
+   -  Always = Default.
+   -  Never
+   -  OnFailure
+
+-  runtimeClassName (string) = The container RuntimeClass settings to use.
+-  schedulerName (string) = Use a different scheduler besides the default kube-scheduler.
+-  securityContext (map) = Permissions to set for all containers in the Pod.
+
+   -  fsGroup (integer) = A group to use volume mounts.
+   -  fsGroupChangePolicy (string) = The policy for changing the group permission.
+
+      -  Always (default)
+      -  OnRootMismatch
+
+   -  runAsGroup (integer)
+   -  runAsNonRoot (boolean)
+   -  runAsUser (integer)
+   -  seLinuxOptions (map)
+   -  supplementalGroups (list of integers) = Additional GID to assign to the process.
+   -  sysctls (list of maps) = sysctl parameters to set.
+
+      -  name (string)
+      -  value (string)
+
+   -  windowsOptions (map)
+
+-  serviceAccountName (string) = Run the Pod under a different ServiceAccount.
+-  shareProcessNamespace (boolean) = Default is false. Use the same namespace for all containers in the Pod.
+-  subdomain (string) = The subdomain to use in the full hostname of the Pod.
+-  terminationGracePeriodSeconds (integer) = Default is 30. The amount of seconds before forcefully stopping a all containers in the Pod.
+-  tolerations (list of maps) = Specify tolerations to Node taints.
+
+   -  key (string) = Taint key.
+   -  value (string) = Taint value.
+   -  operator (string) = Default is Equal. Alternatively use Exists.
+   -  effect (string) = NoExecute, NoSchedule, or PreferNoSchedule.
+   -  tolerationSeconds (integer) = The amount of seconds to tolerate a taint.
+
+-  toplogySpreadConstraints (map) = Define how to spread Pods across the Kubernetes cluster.
+
+   -  labelSelector (map) = A key-value pair to find similar Pods. Schedule the Pod to run on that worker Node.
+   -  maxSkew (integer) = The number of Pods that can be unevenly distributed.
+   -  toplogyKey (string) = A key label on a worker Node to look for.
+   -  whenUnsatisfiable (string) = Default is DoNotSchedule. Alternatively use ScheduleAnyway.
+
+-  volumes (list of maps) = Volumes to expose to all of the containers.
+
+   -  name (string) = The name of the PVC
+   -  <PV_STORAGE_PLUGIN_TYPE> (map) = Settings for the PVC.
+
+[21]
+
+(Common Reoccuring Fields)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Containers
+^^^^^^^^^^
+
+``Pod.spec.{containers,ephemeralContainers,initContainers}`` (list of maps)
+
+-  args (list of strings) = CMD.
+-  command (list of strings) = ENTRYPOINT.
+-  env (list of maps) = Environment variables to load in the container.
+-  envFrom (list of maps) = Environment variables (from another object) to load in the container.
+
+   -  configMapRef (map)
+
+      -  name (string) = Name of the ConfigMap object to load.
+
+   -  prefix (string) = A prefix to append to each key from the ConfigMap.
+
+-  **image** (string)
+-  imagePullPolicy (string)
+
+   -  Always = Default for "latest" tag.
+   -  IfNotPresent = Default for all other tags.
+   -  Never
+
+-  lifecycle (map)
+
+   -  postStart (map) = Action to take after a container starts.
+
+      -  exec (map)
+
+         -  command (list of strings) = A command to run.
+
+      -  httpGet (map) = A HTTP URL to GET.
+
+         -  httpHeaders (map)
+         -  path (string)
+         -  port (string)
+         -  scheme (string) = Defaults to HTTP. Optionally set to HTTPS.
+
+      -  tcpSocket (map) = A TCP socket to connect to.
+
+         -  port (string)
+
+   -  preStop (map) = Action to take before a container stops.
+
+      -  exec (map)
+      -  httpGet (map)
+      -  tcpSocket (map)
+
+-  livenessProbe (`map of Probe <#probe>`_) = Probe to see if the application in the container is running properly.
+-  **name** (string) = Name of the container.
+-  ports (map) = Manage ports for the container.
+
+   -  containerPort (integer) = The port in the container to open.
+   -  hostIP (string) = The IP address to bind the ``Pod.spec.containers.hostPort`` to.
+   -  hostPort (integer) = The port on the worker node to open.
+   -  name (string) = Optionally provide a name. This can be used by a Service object.
+   -  protocol (string) = Default is TCP. Set to TCP, UDP, or SCTP.
+
+-  readinessProbe (`map of Probe <#probe>`_) = Probe to see if the application is ready to be exposed by a network Service..
+-  resources (map)
+
+   -  limits (`map of System Resources <#system-resources>`_) = Hard resource limits.
+   -  requests (`map of System Resources <#system-resources>`_) = Estimated resource usage. Used by kube-scheduler to help find a suitable worker Node.
+
+-  securityContext (map)
+
+   -  allowPrivilegeEscalation (boolean) = If a user can access higher privileges than it currently has.
+   -  capabilities (map) = The capabilities the container has access to.
+
+      -  add (string)
+      -  remove (string)
+
+   -  privileged (boolean) = Default is false. If the container should run with root privileges.
+   -  procMount (string) = The proc mount type.
+   -  readOnlyRootFilesystem (boolean) = Default is false. If the container should be read-only.
+   -  runAsGroup (integer) = GID.
+   -  runAsNonRoot (boolean) = If the container should not run as the root user.
+   -  runAsUser (integer) = UID.
+   -  seLinuxOptions (map) = SELinux contexts to set for the container.
+
+      -  level (string)
+      -  role (string)
+      -  type (string)
+      -  user (string)
+
+   -  windowsOptions (map) = Windows specific settings.
+
+-  startupProbe (`map of Probe <#probe>`_) = Probe to see if the application in the container has fully started.
+-  stdin (boolean) = Default is false. If stdin should be allowed.
+-  stdinOnce (boolean) = Default is false. If stdin should be sent to the container once.
+-  terminationMessagePath (string) = File path to write the termination message to.
+-  terminationMessagePolicy (string) = Default is File. Alternatively use FallbackToLogsOnError.
+-  tty (boolean) = Default is false. Requires ``Pod.spec.containers.stdin`` to be true. If a TTY should be created for the container.
+-  volumeDevices (map) = Mount a PersistentVolumeClaim.
+
+   -  devicePath (string) = The path in the container to mount to.
+   -  name (string) = The name of the Pod's PVC to mount.
+
+-  volumeMounts (map) = Mount a volume.
+
+   -  mountPath (string) = The path in the container to mount to.
+   -  mountPropagation (string) = Default is MountPropagationNone. How the moutns are propagated to or from the host and container.
+   -  name (string)
+   -  readOnly (boolean) = If the volume should be read-only.
+   -  subPath (string) = Defaults to the root directory (""). The path in the volume to mount.
+   -  subPathExpr (string) = The same as ``Pod.spec.volumeMounts.subPath`` except environment variables can be used.
+
+-  workingDir (string) = The working directory for the ``Pod.spec.containers.command`` (ENTRYPOINT) or ``Pod.spec.containers.args`` (CMD).
+
+[21]
+
+Probe
+^^^^^
+
+``Pod.spec.containers.{liveness,readiness,startup}Probe`` (map)
+
+-  exec (map) = Execute a command.
+
+   -  command (list of strings) = The command and arguments to execute.
+
+-  failureThreshold (integer) = Default is 3. Minimimum number of probe failures allowed.
+-  httpGet (map)
+-  initialDelaySeconds (integer) = Seconds to delay before starting a probe.
+-  periodSeconds (integer) = Default is 10. The interval, in seconds, to run a probe.
+-  successThreshold (integer) = Default is 1. THe amount of times a probe needs to succeed before marking the a previously failed probe check as now passing.
+-  tcpSocket (map)
+-  timeoutSeconds (integer) = Default is 1. The amount of seconds before the probe times out.
+
+[21]
+
+System Resources
+^^^^^^^^^^^^^^^^
+
+``Pod.spec.containers.resources.{limit,requests}``, ``Pod.spec.overhead`` (map)
+
+-  cpu (string) = Specify the CPU load number.
+-  memory (string) = Specify "Mi" or "Gi" of RAM.
+
+[21]
 
 Concepts
 --------
@@ -1010,7 +1265,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 1, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 7, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
