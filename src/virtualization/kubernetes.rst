@@ -15,12 +15,15 @@ Master services:
 
 -  etcd = The most common database for storing all of the Kubernetes configuration data.
 -  kube-apiserver = Handles authentication requests and retrieving/storing data from/to etcd.
--  kube-controller-manager = Monitors Nodes and Pods. It will preform recovery tasks if a failure is detected.
+-  kube-controller-manager = Monitors and controls Kubernetes resources. It will perform recovery tasks if a failure is detected. This binary runs many different controller processes:
+
+   -  attachdetach, bootstrapsigner, cloud-node-lifecycle, clusterrole-aggregation, cronjob, csrapproving, csrcleaner, csrsigning, daemonset, deployment, disruption, endpoint, endpointslice, garbagecollector, horizontalpodautoscaling, job, namespace, nodeipam, nodelifecycle, persistentvolume-binder, persistentvolume-expander, podgc, pv-protection, pvc-protection, replicaset, replicationcontroller, resourcequota, root-ca-cert-publisher, route, service, serviceaccount, serviceaccount-token, statefulset, tokencleaner, ttl, ttl-after-finished [29]
+
 -  kube-scheduler = Determines what Node to schedule a Pod on.
 
 Node services:
 
--  Container runtime = Any service that supports that Container Runtime Interface (CRI). That includes docker, containerd, CRI-O, and others.
+-  Container runtime = Any service that supports that Container Runtime Interface (CRI). That includes docker, containerd, CRI-O, rkt, and others.
 -  kubelet = Manages containers using the container runtime.
 -  kube-proxy = Handles virtual networking connections for internal (containers across different Nodes) and external (Kubernetes Services) use.
 
@@ -1293,3 +1296,4 @@ Bibliography
 26. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
 27. "ReplicationController." Kuberntes Concepts. March 28, 2020. May 29, 2020. https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
 28. "What are the most useful Kubernetes Resources for developers?" www.Dev4Devs.com. October 20, 2019. Accessed June 8, 2020. https://dev4devs.com/2019/10/20/what-are-the-kubernetes-resources-which-are-most-useful-for-developers/
+29. "kube-controller-manager." Kubernetes Reference. April 13, 2020. Accessed June 8, 2020. https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
