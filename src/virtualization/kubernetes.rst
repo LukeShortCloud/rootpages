@@ -850,6 +850,26 @@ System Resources
 Concepts
 --------
 
+Popular APIs
+~~~~~~~~~~~~
+
+These are common Kubernetes APIs used by developers [28]:
+
+-  ConfigMap
+-  CronJob
+-  DaemonSet
+-  Deployment
+-  HorizontalPodAutoscaler
+-  Ingress
+-  Job
+-  PersistentVolumeClaim
+-  Pod
+-  ReplicaSet
+-  Secret
+-  Service
+-  StatefulSet
+-  VerticalPodAutoscaler
+
 Persistent Storage
 ~~~~~~~~~~~~~~~~~~
 
@@ -1272,3 +1292,4 @@ Bibliography
 25. "Declarative Management of Kubernetes Objects Using Configuration Files." Kubernetes Tasks. May 2, 2020. Accessed May 28, 2020. https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
 26. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
 27. "ReplicationController." Kuberntes Concepts. March 28, 2020. May 29, 2020. https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
+28. "What are the most useful Kubernetes Resources for developers?" www.Dev4Devs.com. October 20, 2019. Accessed June 8, 2020. https://dev4devs.com/2019/10/20/what-are-the-kubernetes-resources-which-are-most-useful-for-developers/
