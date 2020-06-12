@@ -949,6 +949,34 @@ The example below shows how to configure static storage for a Pod using a direct
 Installation
 ------------
 
+kubectl (CLI)
+~~~~~~~~~~~~~
+
+The ``kubectl`` command is used to manage Kubernetes objects. The binary version can manage a Kubernetes cluster of the same version and the previous minor release. [30]
+
+Installation:
+
+.. code-block:: sh
+
+   $ cd ~/.local/bin/
+   $ export KUBE_VER="1.18.3"
+   $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBE_VER}/bin/linux/amd64/kubectl
+   $ chmod +x ./kubectl
+   $ kubectl version --client
+
+::
+
+   Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.3", GitCommit:"2e7996e3e2712684bc73f0dec0200d64eec7fe40", GitTreeState:"clean", BuildDate:"2020-05-20T12:52:00Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
+
+By default, the configuration file (provided by the Kubernetes cluster administrator) will be loaded from the file ``~/.kube/config``. This can be set to a different file. [31]
+
+.. code-block:: sh
+
+   $ export KUBECONFIG="<PATH_TO_KUBE_CONFIG>.yml"
+   $ kubectl config view
+   $ kubectl cluster-info
+   $ kubectl version
+
 Minikube
 ~~~~~~~~
 
@@ -974,13 +1002,6 @@ Deploy Kubernetes. Optionally specify the Kubernetes version to use. If using th
 .. code-block:: sh
 
    $ minikube start --vm-driver kvm2 --kubernetes-version ${KUBERNETES_VERSION}
-
-Install kubectl for managing Kubernetes.
-
-.. code-block:: sh
-
-   $ sudo curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
-   $ sudo chomd +x /usr/local/bin/kubectl
 
 [7]
 
@@ -1297,3 +1318,5 @@ Bibliography
 27. "ReplicationController." Kuberntes Concepts. March 28, 2020. May 29, 2020. https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/
 28. "What are the most useful Kubernetes Resources for developers?" www.Dev4Devs.com. October 20, 2019. Accessed June 8, 2020. https://dev4devs.com/2019/10/20/what-are-the-kubernetes-resources-which-are-most-useful-for-developers/
 29. "kube-controller-manager." Kubernetes Reference. April 13, 2020. Accessed June 8, 2020. https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
+30. "Install and Set Up kubectl." Kubernetes Tasks. May 30, 2020. Accessed June 11, 2020.https://kubernetes.io/docs/tasks/tools/install-kubectl/
+31. "Configure Access to Multiple Clusters." Kubernetes Tasks. May 30, 2020. Accessed June 11, 2020. https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
