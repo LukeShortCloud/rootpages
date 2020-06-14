@@ -13,7 +13,7 @@ Common resolution sizes (width x height):
 -  1280 x 720 = 720p or High Definition (HD)
 -  1366 x 768 = 768p
 -  1920 x 1080 = 1080p or Full High Definition (FHD)
--  2560 x 1440 = 1440p
+-  2560 x 1440 = 1440p or 2K
 -  3840 x 2160 = 2160p or 4K
 -  7680 x 4320 = 4320p or 8K
 
