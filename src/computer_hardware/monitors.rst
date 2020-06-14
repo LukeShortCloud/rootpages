@@ -106,6 +106,20 @@ Proprietary WCG backlight technologies:
 
 Computer operating systems have partial support for HDR. Most applications do not natively support it. Windows 10 and Netflix require buying Microsoft's HEVC Video Extension for video playback streaming to work. [11]
 
+Refresh Rate
+------------
+
+Most monitors can display video up to 60 Hz (60 frames per second). A monitor with a high refresh rate will have decreased motion blur and lower input lag. The monitor will look smoother and be more responsive. This is most useful when playing competitive video games. [13]
+
+Common refresh rates (Hz):
+
+-  60
+-  120
+-  144
+-  240
+
+Variable refresh rate (VRR) is when the monitor dynamically changes it's refresh rate to match the content that is being played. This prevents screen tearing and provides even smoother playback. There are two standards for implementing this: FreeSync (AMD) and G-SYNC (NVIDIA). All FreeSync monitors support both AMD and NVIDIA graphics cards. Most G-SYNC monitors from 2020 and beyond are compatible with both AMD and NVIDIA graphics card. [14]
+
 History
 -------
 
@@ -126,3 +140,5 @@ Bibliography
 10. "'Fake HDR' TVs are giving HDR a bad name." Hardware Zone. February 18, 2018. Accessed May 11, 2020. https://www.hardwarezone.com.sg/blog-fake-hdr-tvs-are-giving-hdr-bad-name
 11. "How to Play Games, Watch Videos in HDR on Windows 10." PCMag. March 24, 2020. Accessed May 12, 2020. https://www.pcmag.com/how-to/how-to-play-games-watch-videos-in-hdr-on-windows-10
 12. "What Are Nits of Brightness on a TV or Other Display?" How-To Geek. January 25, 2019. Accessed May 12, 2020.
+13. "Do you need a high refresh gaming monitor?" Digital Trends. May 7, 2020. Accessed June 13, 2020. https://www.digitaltrends.com/computing/do-you-need-a-120hz-or-240-hz-monitor/
+14. "AMD Graphics Cards Will Work With Future G-Sync Monitors." Tom's Hardware. November 25, 2019. Accessed June 13, 2020. https://www.tomshardware.com/news/gsync-monitor-with-amd-graphics-card-nvidia
