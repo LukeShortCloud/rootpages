@@ -128,9 +128,17 @@ Releases:
 -  **RHOSP 16 LL (Train)**
 
    -  Release: 2020-02-06
-   -  EOL: 2025-02-06
+   -  EOL: 2025-05-30
 
-[1]
+Starting with RHOSP 16, each minor release is tied to a specific version of RHEL. [1]
+
+.. csv-table::
+   :header: RHOSP, RHEL
+   :widths: 20, 20
+
+   16.0, 8.1
+   16.1, 8.2
+   16.2, 8.4
 
 RHOSP supports running a virtualized Undercloud on these platforms [3]:
 
@@ -3010,7 +3018,7 @@ History
 Bibliography
 ------------
 
-1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed February 17, 2020. https://access.redhat.com/support/policy/updates/openstack/platform
+1. "Red Hat OpenStack Platform Life Cycle." Red Hat Support. Accessed June 17, 2020. https://access.redhat.com/support/policy/updates/openstack/platform
 2. "Frequently Asked Questions." RDO Project. Accessed December 21, 2017. https://www.rdoproject.org/rdo/faq/
 3. "Director Installation and Usage." Red Hat OpenStack Platform 13 Documentation. September 26, 2018. Accessed September 26, 2018. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/pdf/director_installation_and_usage/Red_Hat_OpenStack_Platform-13-Director_Installation_and_Usage-en-US.pdf
 4. "Packstack: Create a proof of concept cloud." RDO Project. Accessed March 19, 2018. https://www.rdoproject.org/install/packstack/
