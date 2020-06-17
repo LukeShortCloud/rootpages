@@ -155,7 +155,7 @@ Release highlights:
 
 -  `1.17 <https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-release-announcement/>`__
 
-   -  Cloud Prover Labels are now stable.
+   -  Cloud Provider Labels are now stable.
 
 -  `1.18 <https://kubernetes.io/blog/2020/03/25/kubernetes-1-18-release-announcement/>`__
 
