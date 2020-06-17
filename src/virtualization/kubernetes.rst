@@ -946,6 +946,21 @@ The example below shows how to configure static storage for a Pod using a direct
 
 [19]
 
+Helm (Package Manager)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Helm is a package manager for Kubernetes applications. Helm 2 and below required a Tiller server component to be installed on the Kubernetes cluster. This is no longer required as of Helm 3. Helm is now a standalone client-side-only command. [32]
+
+Vocabulary:
+
+-  Chart = A Helm package with all of the related resource manifests to run an application.
+-  Repository = A collection of Charts that can be installed.
+-  Release = A unique name given each time a Chart is installed. This is used to help track different installations and the history of a Helm Chart.
+
+`Helm Hub <https://hub.helm.sh/>`__ is the official repository for Helm Charts. There are currently over one thousand Charts available. Third-party repositories are also supported. Helm can even install Charts from a directory (such as a local git repository). [33]
+
+Each Chart contains a "values.yaml" for manifest settings that can be overridden. It is expected that it contains sane defaults and can be deployed without any modifications. The manifest files are `Go templates <https://golang.org/pkg/text/template/>`__ that get rendered out based on the values provided to Helm. `The Chart Template Developer's Guide <https://helm.sh/docs/chart_template_guide/>`__ explains in more detail how to fully customize templates. It is possible to override values that are not templated, or to add new ones, by using `Kustomize <https://kustomize.io/>`__. The biggest downside to using Kustomize is that Helm no longer has visibility into the release/life-cycle of a Chart. [34]
+
 Installation
 ------------
 
@@ -976,6 +991,20 @@ By default, the configuration file (provided by the Kubernetes cluster administr
    $ kubectl config view
    $ kubectl cluster-info
    $ kubectl version
+
+helm (CLI)
+~~~~~~~~~~
+
+Find the latest version from `Helm's GitHub releases page <https://github.com/helm/helm/releases>`__. [35]
+
+Installation:
+
+.. code-block:: sh
+
+   $ export HELM_VER="3.2.2"
+   $ curl -LO https://get.helm.sh/helm-v${HELM_VER}-linux-amd64.tar.gz
+   $ tar -x -f helm-v${HELM_VER}-linux-amd64.tar.gz
+   $ cp linux-amd64/helm ~/.local/bin/
 
 Minikube
 ~~~~~~~~
@@ -1320,3 +1349,7 @@ Bibliography
 29. "kube-controller-manager." Kubernetes Reference. April 13, 2020. Accessed June 8, 2020. https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
 30. "Install and Set Up kubectl." Kubernetes Tasks. May 30, 2020. Accessed June 11, 2020.https://kubernetes.io/docs/tasks/tools/install-kubectl/
 31. "Configure Access to Multiple Clusters." Kubernetes Tasks. May 30, 2020. Accessed June 11, 2020. https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
+32. "Helm 3.0.0 has been released!" Helm Blog. November 13, 2019. Accessed June 16, 2020. https://helm.sh/blog/helm-3-released/
+33. "Using Helm." Helm Docs. Accessed June 16, 2020. https://helm.sh/docs/intro/using_helm/
+34. "Customizing Upstream Helm Charts with Kustomize." Testing Clouds at 128bpm. July 20, 2018. Accessed June 16, 2020. https://testingclouds.wordpress.com/2018/07/20/844/
+35. "Installing Helm. Helm Docs. Accessed June 16, 2020. https://helm.sh/docs/intro/install/
