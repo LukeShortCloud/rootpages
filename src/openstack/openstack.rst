@@ -113,6 +113,17 @@ Releases:
     -  `New Features <https://www.openstack.org/news/view/438/openstack-train-release-extends-security-and-data-protection-adds-new-ai-and-ml-support>`__
     -  `Release Highlights <https://releases.openstack.org/train/highlights.html>`__
 
+21. Ussuri
+
+    -  Release: 2020-05-13
+    -  Goals [65]:
+
+       -  Python 2.7 support has been fully removed. Python >= 3.5 is required.
+       -  Project Team Lead (PTL) documentation for each project. This will help with the transition of a new PTL taking charge of a given OpenStack project.
+
+    -  `New Feature <https://www.openstack.org/news/view/453/openstack-ussuri-release-lands-today-delivering-automation-for-intelligent-open-infrastructure>`__
+    -  `Release Highlights <https://releases.openstack.org/ussuri/highlights.html>`__
+
 [1]
 
 Services
@@ -2133,7 +2144,7 @@ History
 Bibliography
 ------------
 
-1. "OpenStack Releases." OpenStack Releases. December 23, 2019. Accessed December 29, 2019. https://releases.openstack.org/
+1. "OpenStack Releases." OpenStack Releases. June 17, 2020. Accessed June 17, 2020. https://releases.openstack.org/
 2. "New OpenStack Ocata stabilizes popular open-source cloud." February 22, 2017. Accessed April 10, 2017. http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/
 3. "Ocata [Goals]." OpenStack Governance. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/ocata/index.html
 4. "Pike [Goals]." OpenStack Governance. April 10, 2017. Accessed April 10, 2017. https://governance.openstack.org/tc/goals/pike/index.html
@@ -2197,3 +2208,4 @@ Bibliography
 62. "[Cloud-Init] Documentation." Cloud-Init Documentation. Accessed July 25, 2019. https://cloudinit.readthedocs.io/en/latest/index.html
 63. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
 64. "Train [Goals]." OpenStack Governance. June 27, 2019. Accessed December 29, 2019. https://governance.openstack.org/tc/goals/selected/train/index.html
+65. "Ussuri [Goals]." OpenStack Governance. October 25, 2019. Accessed June 17, 2020. https://governance.openstack.org/tc/goals/selected/ussuri/index.html

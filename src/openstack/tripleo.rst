@@ -210,7 +210,7 @@ Upstream
    -  `The first upstream release to support CentOS 8. <https://blogs.rdoproject.org/2019/10/rdo-centos-stream/>`__
    -  `Minion node support for scaling the Undercloud resources for Heat and Ironic. <https://specs.openstack.org/openstack/tripleo-specs/specs/train/undercloud-minion.html>`__
 
--  Ussuri (work-in-progress)
+-  Ussuri
 
    -  `Replaced Paunch with Ansible for container management. <https://review.opendev.org/#/c/700738/>`__
    -  `Removed Undercloud dependencies on Glance, Neutron, and Nova by having a Nova-less deployment process. <https://blueprints.launchpad.net/tripleo/+spec/nova-less-deploy>`__ `MetalSmith <https://github.com/openstack/metalsmith>`__ can now used to provision the Overcloud nodes separately from the Overcloud deployment. TripleO treats all deployments as pre-deployed servers.
