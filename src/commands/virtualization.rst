@@ -87,6 +87,19 @@ Package: docker
    "run -v /var/run/docker.sock:/var/run/docker.sock ---cap-add=SYS_ADMIN", start a container with support to run nested docker containers
    "run -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /var/run/docker.sock:/var/run/docker.sock --privileged --name fedora28systemd -d unop/fedora-systemd:28 /usr/sbin/init", run a container with systemd and docker support
 
+etcdctl
+~~~~~~~
+
+Manage a ``etcd`` key-value store database (commonly used in Kubernetes).
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   get <KEY>, view the value of a key
+   get / --prefix --keys-only, view the top-level keys
+   set <KEY> <VALUE>, create a new key-value pair
+
 kubeadm
 ~~~~~~~
 
@@ -111,13 +124,16 @@ Manage Kubernetes resources via the API.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "version", "show the Kubernetes version"
+   version, show the Kubernetes client and server version
+   version --client, only show the Kubernetes client version
+   api-resources, "show all of the APIs along with their shortnames, API group, kind, and if it is namespaced"
+   explain --recursive <API>, explain all of the options for creating an object from that API
+   explain <API>.spec, show all of the top-level spec options for the API
    "cluster-info", "show the clustered services and their status"
-   "get nodes", "show all of the nodes in the Kubernetes cluster"
+   "get nodes", "show all of the Nodes in the Kubernetes cluster"
    "run <NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
-   "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/bash", "start a container and enter into it via a Bash shell"
-   "get deployments", "show all of the containers that have been defined"
-   "get pods", "show the actual containers"
+   "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/bash", "start a Pod with a singlecontainer and enter into it via a Bash shell"
+   "get <RESOURCE_API>", show all of the objects created using a specific API
    "describe pods <POD>", describe the settings for a specific pod
    "delete pods <POD>", "delete a pod"
    "proxy", "create a proxy from your hypervisor to be able to access the private network that the containers share"
@@ -128,12 +144,11 @@ Manage Kubernetes resources via the API.
    exec -it <POD> -- /bin/bash, enter into a pod with an interactive Bash shell
    port-forward <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward on the 127.0.0.1 localhost to help with debugging network services
    port-forward --address 0.0.0.0 <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward that listens on all IP addresses
-   get deployments --all-namespaces, show all deployments
-   delete -n <NAMESPACE> deployment <DEPLOYMENT>, delete a deployment (a pod and all of it's replicas)
-   get pvc, show all persistent volume claims
-   get pv, show all persistent volumes
-   delete pvc <PVC>, delete a persistent volume claim
-   delete pv <PV>, delete a persistent volume
+   get <API> --all-namespaces, show all objects created from the specified API
+   get all --all-namespaces, show every object on the Kubernetes cluster
+   delete <API> <OBJECT>, delete an object
+   apply -f <FILE_DIR_OR_URL>, apply a declarative configuration file
+   diff -f <FILE_DIR_OR_URL>, show the difference between the live object configuration and the specified object configuration
 
 minikube
 ~~~~~~~~
