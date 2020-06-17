@@ -416,6 +416,13 @@ Example of installing Debian Sid, with common features enabled, encrypting the c
 
 [20]
 
+Upcoming Features
+-----------------
+
+-  `Official Steam support (unconfirmed). <https://www.androidpolice.com/2020/01/17/exclusive-google-is-working-to-bring-steam-to-chrome-os/>`__
+-  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
+-  `Windows integration provided by Parallels. <https://www.parallels.com/chrome/>`__
+
 History
 -------
 
