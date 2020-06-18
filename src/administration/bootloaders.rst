@@ -240,6 +240,40 @@ Fedora:
 
     $ sudo yum install lvm2
 
+USB Installation with Both Legacy BIOS and UEFI Support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Linux can be installed onto a portable storage device that can boot in both legacy BIOS computers and newer UEFI computers.
+
+-  Partition table requirements:
+
+   -  GPT partition table.
+   -  BIOS boot partition: 1MB unformatted partition with the "BIOS boot" flag/type.
+   -  EFI partition: >= 200MB vfat (fat32) partition mounted at ``/boot/efi``.
+   -  Linux boot partition: 1GB partition with a stable file system (such as ext4) mounted at ``/boot``.
+
+After setting up the partitions and installing the operating system with UEFI support, chroot into the new installation before rebooting. Reinstall the GRUB packages to re-run the installation scripts, rebuild the GRUB configuration file, and then install the legacy BIOS GRUB onto the BIOS boot partition by specifying the block device (not the partition itself).
+
+Arch Linux:
+
+.. code-block:: sh
+
+   $ pacman -S grub
+   # Arch Linux uses the same GRUB configuration file for both legacy BIOS and UEFI boot.
+   $ grub-mkconfig -o /boot/grub/grub.cfg
+   $ grub-install --target=i386-pc <DEVICE>
+
+Fedora:
+
+.. code-block:: sh
+
+   $ dnf reinstall efibootmgr grub2-efi-x64 grub2-pc shim-x64
+   $ grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+   $ grub2-mkconfig -o /boot/grub2/grub.cfg
+   $ grub2-install --target=i386-pc <DEVICE>
+
+[8]
+
 History
 -------
 
@@ -257,3 +291,4 @@ Bibliography
 5. "GRUB2/Setup." Ubuntu Documentation. November 29, 2015. https://help.ubuntu.com/community/Grub2/Setup
 6. "Grub2/Installing." Ubuntu Documentation. March 6, 2015. https://help.ubuntu.com/community/Grub2/Installing
 7. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html
+8. "Is a hybrid Linux USB-Stick for UEFI & legacy BIOS possible?" Super User. March 11, 2018. Accessed June 17, 2020. https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible
