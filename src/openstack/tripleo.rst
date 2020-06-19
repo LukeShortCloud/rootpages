@@ -1805,6 +1805,100 @@ Add the ``--config-download -e ~/templates/environments/config-download-environm
 Operations
 ----------
 
+Updates (Minor)
+~~~~~~~~~~~~~~~
+
+Minor updates keep the cloud at the same major OpenStack version. These provide both bug and security fixes.
+
+**Undercloud:**
+
+-  Update the containers prepare parameters to use the new containers. The template that defines those values should be used for both the Undercloud and Overcloud.
+-  Update the Undercloud.
+
+.. code-block:: sh
+
+   $ openstack undercloud upgrade
+
+**Overcloud:**
+
+-  Regenerate the Heat templates if they were also manually generated for the initial deployment.
+
+.. code-block:: sh
+
+   $ cd /usr/share/openstack-tripleo-heat-templates/
+   $ ./tools/process-templates.py -o ~/templates/
+
+-  Update the Heat stack configuration using the same arguments from ``openstack overcloud deploy``. This will disable tasks that should not run during an update.
+
+.. code-block:: sh
+
+   $ opentack overcloud update prepare <OVERCLOUD_DEPLOYMENT_ARGUMENTS>
+
+-  Run the ``update_tasks`` and ``post_update_tasks`` from config-download.
+
+.. code-block:: sh
+
+   $ openstack overcloud update run
+
+-  Re-enable the tasks that were disabled by the prepare step.
+
+.. code-block:: sh
+
+   $ opentack overcloud upgrade converge <OVERCLOUD_DEPLOYMENT_ARGUMENTS>
+
+[68]
+
+Upgrades (Major)
+~~~~~~~~~~~~~~~~
+
+Both the Undercloud and Overcloud must first be updated to the latest minor release before attempting an upgrade. The upgrade process is very similar to the update process.
+
+**Undercloud:**
+
+-  Update the containers prepare parameters to use the new containers. The template that defines those values should be used for both the Undercloud and Overcloud.
+-  Upgrade the Undercloud.
+
+.. code-block:: sh
+
+   $ openstack undercloud upgrade
+
+**Overcloud:**
+
+-  Regenerate the Heat templates if they were also manually generated for the initial deployment.
+
+.. code-block:: sh
+
+   $ cd /usr/share/openstack-tripleo-heat-templates/
+   $ ./tools/process-templates.py -o ~/templates/
+
+-  Update the Heat stack configuration using the same arguments from ``openstack overcloud deploy``. This will disable tasks that should not run during an upgrade.
+
+.. code-block:: sh
+
+   $ opentack overcloud upgrade prepare <OVERCLOUD_DEPLOYMENT_ARGUMENTS>
+
+-  Upgrade each Controller node, one at a time.
+
+.. code-block:: sh
+
+   $ openstack overcloud upgrade run --limit overcloud-controller-0
+   $ openstack overcloud upgrade run --limit overcloud-controller-1
+   $ openstack overcloud upgrade run --limit overcloud-controller-2
+
+-  Upgrade all of the Compude nodes.
+
+.. code-block:: sh
+
+   $ openstack overcloud upgrade run --limit Compute
+
+-  Re-enable the tasks that were disabled by the prepare step.
+
+.. code-block:: sh
+
+   $ opentack overcloud upgrade converge <OVERCLOUD_DEPLOYMENT_ARGUMENTS>
+
+[69]
+
 Add a Compute Node
 ~~~~~~~~~~~~~~~~~~
 
@@ -3085,3 +3179,5 @@ Bibliography
 65. "Promotion Stages." TripleO Documentation. August 16, 2019. Accessed May 26, 2020. https://docs.openstack.org/tripleo-docs/latest/ci/stages-overview.html
 66. "Scaling Red Hat OpenStack Platform to more than 500 Overcloud Nodes." Red Hat Blog. October 28, 2019. Accessed May 26, 2020. https://www.redhat.com/en/blog/scaling-red-hat-openstack-platform-more-500-overcloud-nodes
 67. "Bug 1607453 - Deployment fails with: Object GET failed: https://.../overcloud/plan-environment.yaml 404 Not Found." Red Hat Bugzilla. November 13, 2019. Accessed May 28, 2020. https://bugzilla.redhat.com/show_bug.cgi?id=1607453
+68. "Minor version update." TripleO Upgrade Developer Documentation. January 20, 2020. Accessed June 19, 2020. https://docs.openstack.org/tripleo-docs/latest/upgrade/developer/upgrades/minor_update.html
+69. "Upgrading to a Next Major Release." TripleO Upgrade Documentation. June 8, 2020. Accessed June 19, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/upgrade/major_upgrade.html
