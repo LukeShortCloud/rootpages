@@ -124,15 +124,22 @@ Manage Kubernetes resources via the API.
    :header: Usage, Explanation
    :widths: 20, 20
 
+   -o name, print out only the name
+   -o wide, print out all of the information
+   -o {json|yaml}, print out the JSON or YAML configuration
+   --v=<VERBOSITY>, set the command verbosity from 0-9
    version, show the Kubernetes client and server version
    version --client, only show the Kubernetes client version
    api-resources, "show all of the APIs along with their shortnames, API group, kind, and if it is namespaced"
+   api-resources --api-group <GROUP>, only show APIs belonging to a specific API group
+   "api-resources --api-group """, show the core APIs
+   api-resources --namespaced={true|false}, show APIs that do (or do not) support being namespaced
+   api-resources --verb={create|delete|deletecollection|get|list|patch|update|watch}, show APIs that support the ``kubectl <VERB>``
    explain --recursive <API>, explain all of the options for creating an object from that API
    explain <API>.spec, show all of the top-level spec options for the API
    "cluster-info", "show the clustered services and their status"
    "get nodes", "show all of the Nodes in the Kubernetes cluster"
    "run <NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
-   "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/bash", "start a Pod with a singlecontainer and enter into it via a Bash shell"
    "get <RESOURCE_API>", show all of the objects created using a specific API
    "describe pods <POD>", describe the settings for a specific pod
    "delete pods <POD>", "delete a pod"
@@ -149,6 +156,12 @@ Manage Kubernetes resources via the API.
    delete <API> <OBJECT>, delete an object
    apply -f <FILE_DIR_OR_URL>, apply a declarative configuration file
    diff -f <FILE_DIR_OR_URL>, show the difference between the live object configuration and the specified object configuration
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/sh", "start a Pod with a single container and enter into it via a Bash shell"
 
 minikube
 ~~~~~~~~
