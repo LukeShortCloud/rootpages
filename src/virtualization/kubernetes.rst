@@ -409,7 +409,13 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
 PersistentVolume
 ^^^^^^^^^^^^^^^^
 
-**spec:**
+-  API group / version (latest): v1
+-  Shortname: pv
+-  Namespaced: false
+
+----
+
+``pv.spec:``
 
 -  **accessModes** (list) [18]
 
@@ -488,7 +494,13 @@ Config and storage APIs manages key-value stores and persistent data storage. [2
 PersistentVolumeClaim
 ^^^^^^^^^^^^^^^^^^^^^
 
-**spec:**
+-  API group / version (latest): v1
+-  Shortname: pvc
+-  Namespaced: true
+
+----
+
+``pvc.spec:``
 
 -  **accessModes** (list) = The accessModes to allow. The lists values must also be allowed in the PV.
 
@@ -597,7 +609,13 @@ Most applications should use the Deployment or the StatefulSet API due to the co
 Pod
 ^^^
 
-``Pod.spec``
+-  API group / version (latest): v1
+-  Shortname: po
+-  Namespaced: true
+
+----
+
+``po.spec:``
 
 -  activeDeadlineSeconds (integer) = The startTime, in seconds, to wait before marking a Pod as failed.
 -  affinity (map) = Define scheduling constraints.
