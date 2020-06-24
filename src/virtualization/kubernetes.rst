@@ -384,7 +384,7 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Node = Manage attributes of worker nodes.
    -  PersistentVolume = Manage persistent and stateful volumes. PersistentVolumeClaims can be created from this object.
    -  ResourceQuota = Manage resource allocations and limits.
-   -  ServiceAccount = Manage Kubernetes accounts used by pods.
+   -  ServiceAccount = Manage Kubernetes accounts used by Pods.
 
 -  flowcontrol.apiserver.k8s.io
 
@@ -393,11 +393,11 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
 
 -  networking.k8s.io
 
-   -  NetworkPolicy = Manage pod networks. The network plugin in the Kubernetes cluster has to support this feature (not every plugin does).
+   -  NetworkPolicy = Manage Pod networks. The network plugin in the Kubernetes cluster has to support this feature (not every plugin does).
 
 -  node.k8s.io
 
-   -  RuntimeClass = Configure containerd or CRI-O runtimes. This can then be used by a pod.
+   -  RuntimeClass = Configure containerd or CRI-O runtimes. This can then be used by a Pod.
 
 -  rbac.authorization.k8s.io
 
@@ -419,9 +419,9 @@ PersistentVolume
 
 -  **accessModes** (list) [18]
 
-   -  ReadOnlyMany = More than one pod can only read the data to/from this storage
-   -  ReadWriteOnce = Only one pod can read and write to/from this storage.
-   -  ReadWriteMany = More than one pod can read and write data to/from this storage.
+   -  ReadOnlyMany = More than one Pod can only read the data to/from this storage
+   -  ReadWriteOnce = Only one Pod can read and write to/from this storage.
+   -  ReadWriteMany = More than one Pod can read and write data to/from this storage.
 
 -  **capacity (map)**
 
@@ -548,16 +548,16 @@ Metadata APIs are used to change the behvaior of other objects. [21]
 -  core
 
    -  Event = Create a custom event to track and log.
-   -  LimitRange = Define default resource requirements for pods.
+   -  LimitRange = Define default resource requirements for Pods.
 
 -  policy
 
-   -  PodDisruptionBudget = Define the minimum and maximum amount of pods that should be running during special situations such as eviction.
-   -  PodSecurityPolicy = Define pod users and permissions.
+   -  PodDisruptionBudget = Define the minimum and maximum amount of Pods that should be running during special situations such as eviction.
+   -  PodSecurityPolicy = Define Pod users and permissions.
 
 -  scheduling.k8s.io
 
-   -  PriorityClass = Define a custom priority to be used by pods.
+   -  PriorityClass = Define a custom priority to be used by Pods.
 
 -  settings.k8s.io
 
@@ -566,12 +566,12 @@ Metadata APIs are used to change the behvaior of other objects. [21]
 Service
 ~~~~~~~
 
-Service APIs are used to manage networks for pods. [21]
+Service APIs are used to manage networks for Pods. [21]
 
 -  core
 
    -  Endpoints = View simple information about the running Kubernetes networking objects.
-   -  Service = Manage internal access to a pod.
+   -  Service = Manage internal access to a Pod.
 
 -  discovery.k8s.io
 
@@ -579,7 +579,7 @@ Service APIs are used to manage networks for pods. [21]
 
 -  networking.k8s.io
 
-   -  Ingress = Manage external access to a pod based on an existing Service.
+   -  Ingress = Manage external access to a Pod based on an existing Service.
    -  IngressClass = Configure the Ingress controller back-end.
 
 Workloads
@@ -589,15 +589,15 @@ Workload APIs manage running applications. [21]
 
 -  apps
 
-   -  DaemonSet = Manages Kubernetes pods that run on worker nodes. Objects created using this API are usually for logging or networking.
+   -  DaemonSet = Manages Kubernetes Pods that run on worker nodes. Objects created using this API are usually for logging or networking.
    -  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
    -  ReplicaSet = New API for manging replicas that has support for label selectors.
-   -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new pod created will have a new persistent volume claim created (if applicable). [17]
+   -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new Pod created will have a new persistent volume claim created (if applicable). [17]
 
 -  batch
 
-   -  CronJob = Schedule pods to run at specific intervals of time.
-   -  Job = A one-time execution of a pod.
+   -  CronJob = Schedule Pods to run at specific intervals of time.
+   -  Job = A one-time execution of a Pod.
 
 -  core
 
@@ -724,6 +724,201 @@ Pod
    -  <PV_STORAGE_PLUGIN_TYPE> (map) = Settings for the PVC.
 
 [21]
+
+----
+
+**Examples:**
+
+Pod with two containers.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: two-apps
+   spec:
+     containers:
+       - name: nginx
+         image: nginx
+       - name: php
+         image: php-fpm
+
+Pod thate overrides the ENTRYPOINT for a container.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: phun
+   spec:
+     containers:
+       - name: php
+         image: php-fpm
+         args:
+           - php-fpm
+           - --nodaemonize
+
+Pod with persistent storage (without a PVC).
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: db-cb
+   spec:
+     containers:
+       - name: couchbase
+         image: couchbase-server:community-6.0.0
+         volumeMounts:
+           - name: local-volume
+             mountPath: /opt/couchbase/var
+       volumes:
+         - name: local-volume
+           hostPath:
+             path: /var/lib/couchbase
+
+Pod with persistent storage (with a PVC).
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: db-mysql
+   spec:
+     containers:
+       - name: mariadb
+         image: mariadb:10.5
+         volumeMounts:
+           - mountPath: /var/lib/mysql
+             name: mariadb-volume
+     volumes:
+       - name: mariadb-volume
+         persistentVolumeClaim:
+           claimName: <PVC_NAME>
+
+Pod with environment variables from different sources.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: all-the-sources
+   spec:
+     containers:
+       - name: nginx
+         image: nginx:1.9.0
+         env:
+           - name: foo
+             value: bar
+           - name: <KEY>
+             valueFrom:
+               configMapKeyRef:
+                 name: <CONFIGMAP_NAME>
+                 key: <CONFIGMAP_KEY>
+         envFrom:
+           - configMapRef:
+               name: <CONFIGMAP_NAME>
+           - secretRef:
+               name: <SECRET_NAME>
+
+Pod with Secret key-values provided as files on an ephemeral volume.
+
+.. code-block:: sh
+
+   $ kubectl create secret generic --from-literal=foo=bar 007
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: webapp
+   spec:
+     containers:
+       - name: nginx
+         image: nginx
+         volumeMounts:
+           - name: secret-volume
+             mountPath: /opt/nginx-config
+             readOnly: true
+     volumes:
+       - name: secret-volume
+         secret:
+           secretName: "007"
+
+.. code-block:: sh
+
+   $ kubectl exec webapp -- ls -1 /opt/nginx-config/
+   foo
+   $ kubectl exec webapp -- cat /opt/nginx-config/foo
+   bar
+
+Pod with common security settings.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: http-secure
+   spec:
+     containers:
+       - name: nginx
+         image: nginx:1.9.0
+         securityContext:
+           runAsUser: 1000
+           capabilities:
+             add: ["NET_ADMIN", "SYS_TIME"]
+           privileged: false
+
+Pod with quotas set (without a ResourceQuota).
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: miniapp
+   spec:
+     containers:
+       - name: nginx
+         image: nginx:1.9.0
+      resources:
+        requests:
+          cpu: 1
+          memory: "256Mi"
+        limits:
+          cpu: 2
+          memory: "512Mi"
+
+Pod running on a specific Node based on the Node's hostname.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: simple-app
+   spec:
+     containers:
+       - name: nginx
+         image: nginx:1.9.0
+     nodeSelector:
+       kubernetes.io/hostname: worker04
 
 (Common Reoccuring Fields)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -898,7 +1093,7 @@ By default, all storage is emphemeral. The PersistentVolume (PV) and PersistentV
 
 The example below shows how to configure static storage for a Pod using a directory on a worker node.
 
--  Create a PV. Set a unique ``<PV_NAME>``, use any name for storageClassName, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
+-  Create a PV. Set a unique ``<PV_NAME>``, use any name for storageClassName, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from Pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
 
 .. code-block:: yaml
 
@@ -941,7 +1136,7 @@ The example below shows how to configure static storage for a Pod using a direct
        requests:
          storage: <PVC_STORAGE>Gi
 
--  Create a pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
+-  Create a Pod using the PVC. Set ``<POD_VOLUME_NAME>`` to a nickname of the PVC volume that will be used by the actual Pod and indicate the ``mountPath`` for where it should be mounted inside of the container.
 
 .. code-block:: yaml
 
@@ -954,7 +1149,7 @@ The example below shows how to configure static storage for a Pod using a direct
      volumes:
        - name: <POD_VOLUME_NAME>
          persistentVolumeClaim:
-          claimName: <PVC_NAME>
+           claimName: <PVC_NAME>
      containers:
        - name: mysql
          image: mysql:8.0
@@ -1074,7 +1269,7 @@ The official ``kubeadm`` utility is used to quickly create production environmen
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
 
-Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
+Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between Pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
 
 Syntax:
 
