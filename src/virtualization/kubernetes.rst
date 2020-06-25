@@ -491,6 +491,43 @@ Config and storage APIs manages key-value stores and persistent data storage. [2
    -  StorageClass = Manage the automatic creation of persistent storage.
    -  VolumeAttachment = Record when a CSI volume is created. This is used by other resources to then act upon the creation of the object.
 
+ConfigMap
+^^^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: cm
+-  Namespaced: true
+
+ConfigMap does not have a ``cm.spec`` section. The ``cm.data:`` field is used the most.
+
+``cm:``
+
+-  binaryData (map) = Define key-value pairs where the value is a base64 encoded string.
+-  data (map) = Define key-value pairs.
+-  immutable (boolean) = If the key-value pairs in the object should be read-only.
+
+[21]
+
+----
+
+**Examples:**
+
+ConfigMap using all of it's available options.
+
+.. code-block:: yaml
+
+   ---
+   kind: ConfigMap
+   apiVersion: v1
+   metadata:
+     name: cm-env
+   immutable: true
+   data:
+     hello: world
+     foo: bar
+   binaryData:
+     goodbye: Y3J1ZWwgd29ybGQ=
+
 PersistentVolumeClaim
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -519,6 +556,58 @@ PersistentVolumeClaim
       -  **storage** (string)
 
 -  **storageClassName (string)** = The StorageClass to create storage from.
+
+[21]
+
+Secret
+^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: (None)
+-  Namespaced: true
+
+Secrets are **not** encrypted. They use base64 encoding. Secret does not have a ``secret.spec`` section. The ``secret.data:`` field is used the most.
+
+``secret:``
+
+-  data (map) = Define key-value pairs with base64 encoded values.
+-  immutable (boolean) = If the key-value pairs in the object should be read-only.
+-  stringData (map) = Define key-value pairs as strings. The values will be converted into base64 and merged into the ``secret.data`` section. The plain-text values will not be displayed by the API.
+-  type (string) = The type of Secret to create. The full list can be found `here <https://github.com/kubernetes/kubernetes/blob/v1.18.0/pkg/apis/core/types.go#L4800-L4886>`__. By default, it is "Opaque" meaning that the key-value pairs are general purpose.
+
+[21]
+
+----
+
+**Examples:**
+
+Secret using all of it's available option.s
+
+.. code-block:: sh
+
+   $ echo -n 'kenobi' | base64
+   a2Vub2Jp
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-http-auth
+   immutable: true
+   type: kubernetes.io/basic-auth
+   stringData:
+     username: obiwan
+   data:
+     password: a2Vub2Jp
+
+.. code-block:: sh
+
+   $ kubectl get secret secret-http-auth -o yaml | grep -A 2 ^data:
+   data:
+     password: a2Vub2Jp
+     username: b2Jpd2Fu
 
 [21]
 
@@ -1551,7 +1640,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 7, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 24, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
