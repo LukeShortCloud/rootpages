@@ -217,7 +217,7 @@ All of the available APIs are categorized into these types:
 Resources
 ~~~~~~~~~
 
-Resource APIs are used to create objects in Kubernetes. They define the desired state of objects. Controllers are used to enforce that state. Every object must be defined using a YAML template file with these fields:
+Resource APIs are used to create objects in Kubernetes. They define the desired state of objects. Controllers are used to enforce that state. Every object manifest has the following fields. Typically these are defined declaratively via a YAML manifest file.
 
 -  **apiVersion (string)** = The version of the API. Normally ``v1`` or ``<APIGROUP>/v1``.
 -  **kind (string)** = Name of the API to create an object from.
@@ -226,7 +226,8 @@ Resource APIs are used to create objects in Kubernetes. They define the desired 
    -  **name (string)** = The unique name of this object. Only one object with this Resoure kind and name can exist in a namespace.
    -  **labels (dictionary)** = Any key-value pair to help identify this object. This is optional but recommended to help find specific or related objects.
 
--  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API.
+-  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API. Not all APIs will have a spec.
+-  status = The current state information for the object. This can be shown via ``kubectl get <RESOURCE_API> <OBJECT> -o yaml``.
 
 .. code-block:: yaml
 
