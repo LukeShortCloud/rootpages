@@ -217,7 +217,7 @@ All of the available APIs are categorized into these types:
 Resources
 ~~~~~~~~~
 
-Resource APIs are used to create objects in Kubernetes. They define the desired state of objects. Controllers are used to enforce that state. Every object must be defined using a YAML template file with these fields:
+Resource APIs are used to create objects in Kubernetes. They define the desired state of objects. Controllers are used to enforce that state. Every object manifest has the following fields. Typically these are defined declaratively via a YAML manifest file.
 
 -  **apiVersion (string)** = The version of the API. Normally ``v1`` or ``<APIGROUP>/v1``.
 -  **kind (string)** = Name of the API to create an object from.
@@ -226,7 +226,8 @@ Resource APIs are used to create objects in Kubernetes. They define the desired 
    -  **name (string)** = The unique name of this object. Only one object with this Resoure kind and name can exist in a namespace.
    -  **labels (dictionary)** = Any key-value pair to help identify this object. This is optional but recommended to help find specific or related objects.
 
--  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API.
+-  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API. Not all APIs will have a spec.
+-  status = The current state information for the object. This can be shown via ``kubectl get <RESOURCE_API> <OBJECT> -o yaml``.
 
 .. code-block:: yaml
 
@@ -444,33 +445,334 @@ PersistentVolume
 -  azureDisk
 -  azureFile
 -  cephfs
+
+   -  **monitors** (list of strings) = Ceph monitors to connect to.
+   -  path (string) = Default is /. The mounted root.
+   -  readOnly (boolean) - If the PV will be read-only.
+   -  secretFile (string) = Default is /etc/ceph/user.secret. The key ring file used for authenticating as the RADOS user.
+   -  secretRef (map)
+
+      -  name (string) = The name of the Secret object that contains the RADOS key ring file. Use "key" as the key name in the Secret.
+
+   -  user (string) = The RADOS user.
+
 -  csi
--  cinder
+-  cinder = OpenStack's Block-Storage-as-a-Service.
+
+   -  fsType (string) = Default is ext4. The file system of the volume.
+   -  readOnly (boolean)
+   -  secretRef (map) = Authentication details for OpenStack.
+   -  **volumeID** (string) = The Cinder volume ID to use.
+
 -  fc (Fibre Channel)
 -  flexVolume
 -  flocker
 -  gcePersistentDisk
 -  glusterfs
+
+   -  **endpoints** (string) = The Endpoint that is tied to all of the GlusterFS server IPs.
+   -  endpointsNamespace (string) = The namespace the Endpoint is in.
+   -  **path** = The GlusterFS network volume/share name.
+   -  readOnly (boolean)
+
 -  hostPath = Use a local directory on a worker node to store data. Set a "nodeAffinity" to the worker node that will have the hostPath directory and data available.
 
-   -  path = The file system path to use.
+   -  **path** (string) = The file system path to use.
+   -  type (string) = How to manage the path.
+
+      -  "" = No operation on the path.
+      -  BlockDevice = Use a block device.
+      -  CharDevice = Use a character device.
+      -  Directory = Use an existing directory.
+      -  DirectoryOrCreate = Create the directory if it does not exist.
+      -  File = Use an existing file.
+      -  FileOrCreate = Create the file if it does not exist.
+      -  Socket = Use a UNIX socket.
 
 -  iscsi
--  local
+
+   -  chapAuthDiscovery (boolean)
+   -  chapAuthSession (boolean)
+   -  fsType (string)
+   -  initiatorName (string) = Set a custom iSCSI Initiator name.
+   -  **iqn** (string) = The iSCSI Target.
+   -  iscsiInterface (string) = Default is default. The iSCSI Interface name.
+   -  **lun** (integer) = The Target LUN number.
+   -  portals (list of strings) = A list of ``<IP>:<PORT>`` strings for each iSCSI Portal.
+   -  readOnly (boolean)
+   -  secretRef (map)
+
+      -  name (string) = The Secret object that contains the CHAP authentication details.
+
+   -  **targetPortal** (string) = The primary iSCSI Target Portal to use.
+
+-  local = Mount a local partition.
+
+   -  fsType (string)
+   -  **path** (string) = The full path to the partition to mount.
+
 -  nfs
 
-   -  path
-   -  server
+   -  **path** (string) = The NFS file share.
+   -  readOnly (boolean)
+   -  **server** (string) = The NFS server address.
 
 -  photonPersistentDisk
 -  portworxVolume
 -  quobyte
 -  rbd
+
+   -  fsType (string)
+   -  **image** (string) = The RADOS image to use.
+   -  **monitors** (list of strings) = The list of Ceph monitors to connect to.
+   -  pool (string) = The RADOS pool to use.
+   -  readOnly (boolean)
+   -  secretRef (map)
+
+      - name (string) = The Secret name to used for authenticating as the RADOS user.
+
+   -  user (string)
+
 -  scaleIO
 -  storageos
 -  vsphereVolume
 
-[21]
+[21][38]
+
+----
+
+**Examples:**
+
+PV with CephFS.
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-cephfs-key
+   data:
+     key: lEhoWAwcyRxurSYkGwizxUtVFagtlPIJEntXmzNyfWaCmCMRRuliOr==
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-cephfs
+   spec:
+     accessModes:
+       - ReadWriteMany
+       - ReadWriteOnce
+     capacity:
+       storage: 100Gi
+     cephfs:
+       monitors:
+         - 10.0.0.101
+         - 10.0.0.102
+         - 10.0.0.103
+        secretRef:
+          name: secret-cephfs-key
+        user: foo
+
+PV with OpenStack's Cinder block storage service. The Kubernetes cluster must first be `configured to work with OpenStack <https://docs.openshift.com/container-platform/3.11/install_config/configuring_openstack.html#install-config-configuring-openstack>`__.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-cinder
+   spec:
+     accessModes:
+       - ReadWriteMany
+       - ReadWriteOnce
+     capacity:
+       storage: 10Gi
+     cinder:
+       fsType: ext4
+       volumeID: d6dac7fb-e17f-44bb-9708-ee27a679273b
+
+PV with GlusterFS. The GlusterFS client utility ``glusterfs-fuse`` needs to be installed on each Node. A Service and Endpoint are required to access the network shares. They both must share the same object name. The "ports" values are not used but are required by the APIs. [37]
+
+.. code-block:: yaml
+
+   ---
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: glusterfs-network
+   spec:
+     ports:
+       - port: 1
+   ---
+   kind: Endpoint
+   apiVersion: v1
+   metadata:
+     name: glusterfs-network
+   subsets:
+     - addresses:
+         - ip: 10.10.10.201
+       ports:
+         - port: 1
+     - addresses:
+         - ip: 10.10.10.202
+       ports:
+         - port: 1
+     - addresses:
+         - ip: 10.10.10.203
+       ports:
+         - port: 1
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-glusterfs
+   spec:
+     accessModes:
+       - ReadWriteMany
+       - ReadWriteOnce
+     capacity:
+       storage: 300Mi
+     glusterfs:
+       endpoints: glusterfs-network
+       path: glusterVol
+
+PV with hostPath.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-hostpath
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     capacity:
+       storage: 50Mi
+     hostPath:
+       path: /var/lib/k8s-hospath
+       type: DirectoryOrCreate
+
+PV with iSCSI.
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-iscsi-chap
+   type: "kubernetes.io/iscsi-chap"
+   data:
+     discovery.sendtargets.auth.username:
+     discovery.sendtargets.auth.password:
+     discovery.sendtargets.auth.username_in:
+     discovery.sendtargets.auth.password_in:
+     node.session.auth.username:
+     node.session.auth.password:
+     node.session.auth.username_in:
+     node.session.auth.password_in:
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-iscsi
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     capacity:
+       storage: 1Ti
+     iscsi:
+       chapAuthDiscovery: true
+       chapAuthSession: true
+       fsType: xfs
+       iqn: iqn.food.bar.tld:example
+       lun: 0
+       readOnly: true
+       secretRef:
+         name: secret-iscsi-chap
+       targetPortal: 192.168.1.15
+
+PV with a local mount.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-local
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     capacity:
+       storage: 500Gi
+     local:
+       fsType: xfs
+       path: /dev/vd3
+
+PV with Network File Share (NFS)
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-nfs
+   spec:
+     accessModes:
+       - ReadWriteOnce
+     capacity:
+       storage: 1Gi
+     nfs:
+       path: "/"
+       server: nfs.server.tld
+
+PVC with RADOS Block Device (RBD).
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-rbd-key
+   data:
+     key: eFuBtFpciHkPQBSrJXVpZnsfluklbDYnPRaLrfjoqGbnZfcfunlSyB==
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolume
+   apiVersion: v1
+   metadata:
+     name: pv-rbd
+   spec:
+     capacity:
+       storage: 150Gi
+     rbd:
+       monitors:
+         - 10.0.0.201
+         - 10.0.0.202
+         - 10.0.0.203
+        secretRef:
+          name: secret-rbd-key
+        user: fu
+
+[36]
 
 Config and Storage
 ~~~~~~~~~~~~~~~~~~
@@ -490,6 +792,43 @@ Config and storage APIs manages key-value stores and persistent data storage. [2
    -  CSINode = Define CSI drivers.
    -  StorageClass = Manage the automatic creation of persistent storage.
    -  VolumeAttachment = Record when a CSI volume is created. This is used by other resources to then act upon the creation of the object.
+
+ConfigMap
+^^^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: cm
+-  Namespaced: true
+
+ConfigMap does not have a ``cm.spec`` section. The ``cm.data:`` field is used the most.
+
+``cm:``
+
+-  binaryData (map) = Define key-value pairs where the value is a base64 encoded string.
+-  data (map) = Define key-value pairs.
+-  immutable (boolean) = If the key-value pairs in the object should be read-only.
+
+[21]
+
+----
+
+**Examples:**
+
+ConfigMap using all of it's available options.
+
+.. code-block:: yaml
+
+   ---
+   kind: ConfigMap
+   apiVersion: v1
+   metadata:
+     name: cm-env
+   immutable: true
+   data:
+     hello: world
+     foo: bar
+   binaryData:
+     goodbye: Y3J1ZWwgd29ybGQ=
 
 PersistentVolumeClaim
 ^^^^^^^^^^^^^^^^^^^^^
@@ -519,6 +858,58 @@ PersistentVolumeClaim
       -  **storage** (string)
 
 -  **storageClassName (string)** = The StorageClass to create storage from.
+
+[21]
+
+Secret
+^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: (None)
+-  Namespaced: true
+
+Secrets are **not** encrypted. They use base64 encoding. Secret does not have a ``secret.spec`` section. The ``secret.data:`` field is used the most.
+
+``secret:``
+
+-  data (map) = Define key-value pairs with base64 encoded values.
+-  immutable (boolean) = If the key-value pairs in the object should be read-only.
+-  stringData (map) = Define key-value pairs as strings. The values will be converted into base64 and merged into the ``secret.data`` section. The plain-text values will not be displayed by the API.
+-  type (string) = The type of Secret to create. The full list can be found `here <https://github.com/kubernetes/kubernetes/blob/v1.18.0/pkg/apis/core/types.go#L4800-L4886>`__. By default, it is "Opaque" meaning that the key-value pairs are general purpose.
+
+[21]
+
+----
+
+**Examples:**
+
+Secret using all of it's available options.
+
+.. code-block:: sh
+
+   $ echo -n 'kenobi' | base64
+   a2Vub2Jp
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-http-auth
+   immutable: true
+   type: kubernetes.io/basic-auth
+   stringData:
+     username: obiwan
+   data:
+     password: a2Vub2Jp
+
+.. code-block:: sh
+
+   $ kubectl get secret secret-http-auth -o yaml | grep -A 2 ^data:
+   data:
+     password: a2Vub2Jp
+     username: b2Jpd2Fu
 
 [21]
 
@@ -1047,7 +1438,7 @@ Probe
 -  httpGet (map)
 -  initialDelaySeconds (integer) = Seconds to delay before starting a probe.
 -  periodSeconds (integer) = Default is 10. The interval, in seconds, to run a probe.
--  successThreshold (integer) = Default is 1. THe amount of times a probe needs to succeed before marking the a previously failed probe check as now passing.
+-  successThreshold (integer) = Default is 1. The amount of times a probe needs to succeed before marking the a previously failed probe check as now passing.
 -  tcpSocket (map)
 -  timeoutSeconds (integer) = Default is 1. The amount of seconds before the probe times out.
 
@@ -1551,7 +1942,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 7, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 24, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
@@ -1566,3 +1957,6 @@ Bibliography
 33. "Using Helm." Helm Docs. Accessed June 16, 2020. https://helm.sh/docs/intro/using_helm/
 34. "Customizing Upstream Helm Charts with Kustomize." Testing Clouds at 128bpm. July 20, 2018. Accessed June 16, 2020. https://testingclouds.wordpress.com/2018/07/20/844/
 35. "Installing Helm. Helm Docs. Accessed June 16, 2020. https://helm.sh/docs/intro/install/
+36. "examples." GitHub kubernetes/examples. May 21, 2020. Accessed June 25, 2020.  https://github.com/kubernetes/examples
+37. "Complete Example Using GlusterFS." OpenShift Container Platform 3.11 Documentation. June 21, 2020. Accessed June 25, 2020. https://docs.openshift.com/container-platform/3.11/install_config/storage_examples/gluster_example.html
+38. "Volumes." Kubernetes Concepts. May 15, 2020. Accessed June 25, 2020. https://kubernetes.io/docs/concepts/storage/volumes/
