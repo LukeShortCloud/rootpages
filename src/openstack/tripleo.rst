@@ -170,7 +170,11 @@ Upstream
 
 -  Icehouse
 
-   -  `The last release of Spinal Stack before it was rebranded to TripleO (OpenStack-on-OpenStack) for the Juno release. <https://spinal-stack.readthedocs.io/en/latest/changelog/icehouse/index.html>`__
+   -  `The last release of Spinal Stack. The usage of OpenStack to deploy OpenStack was used as inspiration for TripleO. <https://spinal-stack.readthedocs.io/en/latest/changelog/icehouse/index.html>`__
+
+-  Juno
+
+   -  TripleO (OpenStack-on-OpenStack) was released as the spiritual successor to Spinal Stack.
 
 -  Mitaka
 
