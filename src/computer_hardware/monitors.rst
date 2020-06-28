@@ -8,14 +8,20 @@ Resolution
 
 The resolution is the amount of pixels displayed onto a screen. The higher the resolution, the more that can be displayed.
 
-Common resolution sizes (width x height):
+Common resolution sizes [15]:
 
--  1280 x 720 = 720p or High Definition (HD)
--  1366 x 768 = 768p
--  1920 x 1080 = 1080p or Full High Definition (FHD)
--  2560 x 1440 = 1440p or 2K
--  3840 x 2160 = 2160p or 4K
--  7680 x 4320 = 4320p or 8K
+.. csv-table::
+   :header: Abbreviation, Width x Height, Megapixels (MP), Name
+   :widths: 20, 20, 20, 20
+
+   720p, 1280 x 720, 0.9, High Definition (HD)
+   768p, 1366 x 768, 1
+   1080p, 1920 x 1080, 2.1, Full HD (FHD)
+   1440p, 2560 x 1440, 4, 2K
+   2160p, 3840 x 2160, 8.5, 4K Ultra HD (UHD)
+   4320p, 7680 x 4320, 33.2, 8K UHD
+
+The full human eye can see up to 576 megapixels. [16] However, a human can actually only consciously comprehend up to 15 megapixels. [17]
 
 Size
 ~~~~
@@ -120,6 +126,8 @@ Common refresh rates (Hz):
 
 Variable refresh rate (VRR) is when the monitor dynamically changes it's refresh rate to match the content that is being played. This prevents screen tearing and provides even smoother playback. There are two standards for implementing this: FreeSync (AMD) and G-SYNC (NVIDIA). All FreeSync monitors support both AMD and NVIDIA graphics cards. Most G-SYNC monitors from 2020 and beyond are compatible with both AMD and NVIDIA graphics card. [14]
 
+The human eye can identify objects at 220 Hz. Above that frequency, a human can at least notice flickers. [18] Theoretically, a human can perceive beyond 1000 Hz. [19]
+
 History
 -------
 
@@ -142,3 +150,8 @@ Bibliography
 12. "What Are Nits of Brightness on a TV or Other Display?" How-To Geek. January 25, 2019. Accessed May 12, 2020.
 13. "Do you need a high refresh gaming monitor?" Digital Trends. May 7, 2020. Accessed June 13, 2020. https://www.digitaltrends.com/computing/do-you-need-a-120hz-or-240-hz-monitor/
 14. "AMD Graphics Cards Will Work With Future G-Sync Monitors." Tom's Hardware. November 25, 2019. Accessed June 13, 2020. https://www.tomshardware.com/news/gsync-monitor-with-amd-graphics-card-nvidia
+15. "What Is an 8K Camera?" Lifewire. March 2, 2020. Accessed June 28, 2020. https://www.lifewire.com/what-is-an-8k-camera-4587731#:~:text=8K%20resolution%20consists%20of%207680,times%20the%20pixels%20of%201080p.
+16. "Notes on the Resolution and Other Details of the Human Eye." Clark Vision Photography. December 28, 2018. Accessed June 28, 2020. https://clarkvision.com/articles/eye-resolution.html
+17. "CAMERAS VS. THE HUMAN EYE." Cambridge in Colour. Accessed June 28, 2020. https://www.cambridgeincolour.com/tutorials/cameras-vs-human-eye.htm
+18. "How many frames per second can the human eye see?" 100fps. Accessed June 28, 2020. http://www.100fps.com/how_many_frames_can_humans_see.htm
+19. "Frames Per Second and Refresh Rates: Understanding the Tech." Scholarly Gamers. June 18, 2019. Accessed June 28, 2020. https://www.scholarlygamers.com/top-news/2019/06/18/frames-per-second-and-refresh-rates-understanding-the-tech/
