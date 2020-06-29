@@ -973,6 +973,134 @@ Service APIs are used to manage networks for Pods. [21]
    -  Ingress = Manage external access to a Pod based on an existing Service.
    -  IngressClass = Configure the Ingress controller back-end.
 
+Service
+^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: svc
+-  Namespaced: true
+
+----
+
+``svc.spec:``
+
+-  clusterIP (string) = Define a static IP address to use for a ClusterIP, LoadBalancer, or Node type.
+-  externalIPs (list of strings) = Static IP addresses of from an external unmanaged load balancer.
+-  externalName (string) = The domain name to use for routing internal traffic.
+-  externalTrafficPolicy (string)
+
+   -  Cluster = Clustered sessions are slower but equally distributed.
+   -  Local = Local sessions are faster and more reliable but may not be equally distributed.
+
+-  healthCheckNodePort (integer) = The port to use for health checks. This only works when these two settings are in use: ``svc.spec.type: LoadBalancer`` and ``svc.spec.externalTrafficPolicy: Local``
+-  ipFamily (string) = The IP version to use. ``IPv4`` or ``IPv6``.
+-  loadBalancerIP (string) = If supported by the cloud-provider, specify an IP address for the load balancer.
+-  loadBalancerSourceRanges (list of strings) = If supported by the cloud-provider, only allow incoming connects from these IP addresses.
+-  ports (list of maps) = Ports to expose/open.
+-  publishNotReadyAddresses (boolean) = Default is false. Publish IP address information to the internal Kubernetes DNS server before a Pod is in a ready state.
+-  selector (map of strings) = Bind this Service object to a Pod based on the provided labels.
+-  sessionAffinity (map) = Default is None.
+
+   -  ClientIP = Keep the same session for a client connecting to a Pod.
+   -  None = Do not keep the same session. A client reconnecting may connect to a new Pod.
+
+-  sessionAffinityConfig (map) = Additional settings for the sessionAffinity.
+
+   -  clientIP (map)
+
+      -  timeoutSeconds (integer) = Default is 3 hours. The sticky session timeout in seconds.
+
+-  topologyKeys (list of strings) = A list of Endpoint labels to bind to. The first Endpoint found from the list will be used.
+-  **type** (string) = Default is ClusterIP. The type of Service to create.
+
+   -  ClusterIP = Create an internal IP address that load balances requests to a specific Pod.
+   -  ExternalName = The same as ClusterIP except it relies on a domain name instead of an IP address.
+   -  LoadBalancer = If the cloud provider has an external load balancer offering, this Service object will create a new load balancer.
+   -  NodePort = Open a port on every Node and map it to a specific Pod.
+
+----
+
+**Examples:**
+
+SVC with ClusterIP and a static IP address.
+
+.. code-block:: yaml
+
+   ---
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: svc-clusterip
+   spec:
+     clusterIP: 10.0.0.222
+     ports:
+       - port: 80
+         protocol: TCP
+         targetPort: 80
+     selector:
+       <POD_LABEL_KEY>: <POD_LABEL_VALUE>
+
+SVC with ExternalName.
+
+.. code-block:: yaml
+
+   ---
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: svc-externalname
+   spec:
+     type: ExternalName
+     externalName: foo.bar.com
+     ports:
+       - port: 50000
+         protocol: TCP
+         targetPort: 50000
+     selector:
+       <POD_LABEL_KEY>: <POD_LABEL_VALUE>
+
+SVC with LoadBalancer.
+
+.. code-block:: yaml
+
+   ---
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: svc-loadbalancer
+   spec:
+     type: LoadBalancer
+     externalTrafficPolicy: Local
+     loadBalancerSourceRanges:
+       - 172.80.0.0/16
+       - 130.100.20.0/24
+     ports:
+       - port: 80
+         protocol: TCP
+         targetPort: 8080
+     selector:
+       <POD_LABEL_KEY>: <POD_LABEL_VALUE>
+
+SVC with NodePort.
+
+.. code-block:: yaml
+
+   ---
+   kind: Service
+   apiVersion: v1
+   metadata:
+     name: svc-nodeport
+   spec:
+     type: NodePort
+     ports:
+       - port: 3000
+         protocol: TCP
+         targetPort: 3000
+     selector:
+       <POD_LABEL_KEY>: <POD_LABEL_VALUE>
+
+[21]
+
 Workloads
 ~~~~~~~~~
 
@@ -1984,7 +2112,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 24, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 29, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
