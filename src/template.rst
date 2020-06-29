@@ -14,7 +14,7 @@ Syntax:
 
     $ examplecommand
 
-Common options [2]:
+Common options shown via an unordered list [2]:
 
 -  foo = Print out the word ``foo``.
 -  bar = This will pour you a drink.
@@ -24,10 +24,19 @@ Common options [2]:
   -  char = Print out characters.
   -  root = Print out the word ``foo`` only when ran the root user. Example:
 
+-  This is a really realy really really reall really really really really really
+   really long line for a list item.
+
    .. code-block:: sh
 
        $ sudo examplecommand test root
        foo
+
+Ordered list:
+
+1. open
+2. source
+3. wins
 
 Header 3
 ~~~~~~~~
