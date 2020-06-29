@@ -151,7 +151,7 @@ Manage Kubernetes resources via the API.
    exec -it <POD> -- /bin/bash, enter into a pod with an interactive Bash shell
    port-forward <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward on the 127.0.0.1 localhost to help with debugging network services
    port-forward --address 0.0.0.0 <POD> <LOCAL_PORT>:<POD_PORT>, create a port forward that listens on all IP addresses
-   get <API> --all-namespaces, show all objects created from the specified API
+   get <API> [--all-namespaces|-A], show all objects created from the specified API
    get all --all-namespaces, show every object on the Kubernetes cluster
    delete <API> <OBJECT>, delete an object
    apply -f <FILE_DIR_OR_URL>, apply a declarative configuration file
