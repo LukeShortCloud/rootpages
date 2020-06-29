@@ -666,6 +666,7 @@ The new BlueStore back-end was released as a technology preview in the Ceph Jewe
 The optimal number of PGs is found be using this equation (replacing the number of OSD daemons and how many replicas are set). This number should be rounded up to the next power of 2. `PGCalc <https://ceph.io/pgcalc/>`__ is an online utility/calculator to help automatically determine this value.
 
 ::
+
     Total PGs = (<NUMBER_OF_OSDS> * 100) / <REPLICA_COUNT> / <NUMBER_OF_POOLS>
 
 Example:
