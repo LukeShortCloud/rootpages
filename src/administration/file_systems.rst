@@ -794,10 +794,10 @@ separated from the OSD storage nodes.
 
 [22]
 
-ceph-ansible
-''''''''''''
+ceph-ansible (<= Octopus)
+'''''''''''''''''''''''''
 
-The ceph-ansible project is used to help deploy and automate updates.
+The ceph-ansible project is used to deploy and update Ceph clusters using Ansible. It is deprecated and replaced by `cephadm <https://docs.ceph.com/docs/master/cephadm/>`__.
 
 .. code-block:: sh
 
