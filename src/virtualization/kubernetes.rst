@@ -1550,6 +1550,48 @@ The example below shows how to configure static storage for a Pod using a direct
 
 [19]
 
+Service and Ingress (Public Networking)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are two APIs for managing networking in Kubernetes: Service (internal) and Ingress (external). A Service by itself is used to expose access to a Pod and ports in it for development and testing purposes. There are various different types of services. Most can be managed by ``kubectl expose``.
+
+ServiceTypes [39]:
+
+-  ClusterIP = Opens a port and exposes it on an internal IP that can only be accessed on Nodes (no external connectivity). Internally in Kubernetes, requests to ``<SERVICE>.default.svc.cluster.local`` will be redirected to this IP address. The port is only open on the Nodes which have the related Pod running.
+-  NodePort = Opens a port on every Node (even if a Pod it is tied to is not on it). Connectivity can be made through the IP address of the Nodes that have the Pod running.
+-  LoadBalancer = Use a third-party cloud provider's load balancing service.
+-  ExternalName = Similar to a ClusterIP except a domain name can be given. ``kubectl expose --type=ExternalName`` currently `does not work <https://github.com/kubernetes/kubernetes/issues/87398>`__ because there is no argument for the external name.
+
+Ingress is used to publicily expose a Pod and it's ports. It can redirect traffic based on domain names and HTTP paths. It also supports creating load balancers and handling SSL/TLS termination. It requires a Service to bind to. [40]
+
+Ingress Controllers are different back-ends that handle the Ingress API. They use different technologies and generally have their own use-cases. The only ones that are officially supported are NGINX and Google's Compute Engine (GCE).
+
+Top 5 Ingress Controllers and their use-cases [41]:
+
+-  Ambassador = API gateway.
+-  HAProxy = Load balancing.
+-  Istio Ingress Gateway = Fast performance.
+-  NGINX = Default.
+-  Traefik = Let's Encrypt SSL/TLS generation.
+
+A Kubernetes cluster can have more than one Ingress Controller installed. In an object's manifest, the one to use can be specified. [42]
+
+Kubernetes < 1.18:
+
+.. code-block:: yaml
+
+   metadata:
+     annotations:
+       kubernetes.io/ingress.class: <INGRESS_CONTROLLER>
+
+Kubernetes >= 1.18:
+
+.. code-block:: yaml
+
+   metadata:
+     annontations:
+       ingressClassName: <INGRESS_CONTROLLER>
+
 Helm (Package Manager)
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1960,3 +2002,7 @@ Bibliography
 36. "examples." GitHub kubernetes/examples. May 21, 2020. Accessed June 25, 2020.  https://github.com/kubernetes/examples
 37. "Complete Example Using GlusterFS." OpenShift Container Platform 3.11 Documentation. June 21, 2020. Accessed June 25, 2020. https://docs.openshift.com/container-platform/3.11/install_config/storage_examples/gluster_example.html
 38. "Volumes." Kubernetes Concepts. May 15, 2020. Accessed June 25, 2020. https://kubernetes.io/docs/concepts/storage/volumes/
+39. "Service." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/service/
+40. "Ingress." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress/
+41. "Comparison of Kubernetes Top Ingress Controllers." caylent. May 9, 2019. Accessed June 28, 2020. https://caylent.com/kubernetes-top-ingress-controllers
+42. "Ingress Controllers." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
