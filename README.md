@@ -152,8 +152,6 @@ Every three months, Root Pages is tagged as a milestone release. The four releas
 
 ### Yearly Updates
 
-The bibliography sections need to be reorganized to be in numerical order. These can get out-of-sync due to the removable of unused sources.
-
 The copyright year in `src/conf.py` needs to be updated.
 
 ## Legal
