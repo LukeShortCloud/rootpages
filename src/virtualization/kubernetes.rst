@@ -1439,6 +1439,121 @@ Pod running on a specific Node based on the Node's hostname.
      nodeSelector:
        kubernetes.io/hostname: worker04
 
+Third-Party
+~~~~~~~~~~~
+
+These APIs are not available on a default installation of upstream Kubernetes.
+
+Ingress
+^^^^^^^
+
+-  API group / version (latest): networking.k8s.io/v1beta1
+-  Shortname: ing
+-  Namespaced: true
+
+----
+
+``ing.spec:``
+
+-  backend (map) = The default backend for when no rule is matched.
+
+   -  resource (map) = Use this OR serviceName and servicePort.
+
+      -  apiGroup (string) = The object API group.
+      -  **kind** (string) = The object API kind.
+      -  **name** (string) = The object name.
+
+   -  serviceName (string) = The Service name to use.
+   -  servicePort (string) = The Service port to use.
+
+-  ingressClassName (string) = The Ingress Controller to use.
+-  rules (list of maps) = Rules to define when and where to route public traffic to.
+
+   -  host (string) = The domain name (not an IP address) to accept requests on. This domain should resolve an IP address on one of the Master Nodes in the Kubernetes cluster.
+   -  http (map)
+
+      -  paths (list of maps)
+
+         -  **backend** (map) = Backend details specific to this path.
+
+            -  resource (map)
+
+               -  apiGroup (string)
+               -  **kind** (string)
+               -  **name** (string)
+
+            -  serviceName (string)
+            -  servicePort (string)
+
+         -  path (string) = The HTTP path to use. Pathes must begin with ``/``.
+         -  pathType (string) = How to find a match for the path. Default is ImplementationSpecific.
+
+            -  Exact = Match the exact path.
+            -  Prefix = Split the path by the ``/`` character and find a matching path from that ordered list.
+            -  ImplementationSpecific = The IngressClass can determine how to interpret the path.
+
+-  tls (list of maps) = List of all of the SSL/TLS certificates.
+
+   -  hosts (list of strings) = A list of hosts to bind the SSL/TLS certificate to.
+   -  secretName (string) = The Secret object name that contains the SSL/TLS certificate.
+
+----
+
+**Examples:**
+
+ING with domain name.
+
+.. code-block:: yaml
+
+   ---
+   kind: Ingress
+   apiVersion: extensions/v1beta1
+   metadata:
+     name: ing-domain
+   spec:
+     rules:
+       - host: app.example.com
+         http:
+           paths:
+             - path: /app
+               backend:
+                 serviceName: svc-foo
+                 servicePort: 80
+
+ING with an existing TLS certificate.
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-tls
+   type: kubernetes.io/tls
+   data:
+     tls.crt: <CERTIFICATE_BASE64_ENCODED>
+     tls.key: <KEY_BASE64_ENCODED>
+   ---
+   kind: Ingress
+   apiVersion: extensions/v1beta1
+   metadata:
+     name: ing-tls
+   spec:
+     rules:
+       - host: login.example.com
+         http:
+           paths:
+             - path: /
+               backend:
+                 serviceName: svc-bar
+                 servicePort: 80
+     tls:
+       - hosts:
+           - login.example.com
+         secretName: secret-tls
+
+[21]
+
 (Common Reoccuring Fields)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1716,9 +1831,8 @@ Kubernetes >= 1.18:
 
 .. code-block:: yaml
 
-   metadata:
-     annontations:
-       ingressClassName: <INGRESS_CONTROLLER>
+   spec:
+     ingressClassName: <INGRESS_CONTROLLER>
 
 Helm (Package Manager)
 ~~~~~~~~~~~~~~~~~~~~~~
