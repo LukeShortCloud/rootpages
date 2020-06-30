@@ -3105,6 +3105,25 @@ Errors
 
 [67]
 
+----
+
+**Error: mistralclient.api.base.APIException: Duplicate entry for WorkbookDefinition [\\\\\\'name\\\\\\', \\\\\\'namespace\\\\\\', \\\\\\'project_id\\\\\\']: tripleo.deployment.v1, , None\\\\n\\'\\n[2020-01-23 00:00:00,000]**
+
+-  There is a duplicate Mistral workflow on the Undercloud. In this example, it is ``tripleo.deployment.v1``.
+-  Look for files that may have been copied and/or renamed.
+
+   .. code-block:: sh
+
+      $ find /usr/share/tripleo-common/workbooks/ ! -name "*.yaml"
+
+-  Look for files containing the workflow definition.
+
+   .. code-block:: sh
+
+      $ grep -rl 'name: tripleo.deployment.v1' /usr/share/tripleo-common/workbooks/
+
+-  Delete any files found based on the previous two commands or at least move them out of the "workbooks" directory.
+
 History
 -------
 
