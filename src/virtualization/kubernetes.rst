@@ -407,6 +407,49 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Role = RBAC for all namespaced resources.
    -  RoleBinding = A list of users and their permissions for a given Role.
 
+Namespace
+^^^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: ns
+-  Namespaced: false
+
+----
+
+``ns.spec:``
+
+-  finalizers (list of strings) = This list must be empty before a namespace can be deleted. It can contain any arbitrary values.
+
+----
+
+**Examples:**
+
+NS example.
+
+.. code-block:: yaml
+
+   ---
+   kind: Namespace
+   apiVersion: v1
+   metadata:
+     name: new-namespace
+
+NS with finalizers.
+
+.. code-block:: yaml
+
+   ---
+   kind: Namespace
+   apiVersion: v1
+   metadata:
+     name: my-namespace
+   spec:
+     finalizers:
+       - foo
+       - bar
+
+[21]
+
 PersistentVolume
 ^^^^^^^^^^^^^^^^
 
@@ -1720,6 +1763,26 @@ These are common Kubernetes APIs used by developers [28]:
 -  StatefulSet
 -  VerticalPodAutoscaler
 
+Namespaces
+~~~~~~~~~~
+
+Namespaces help to isolate objects. Common use cases include having one application per Namespace or one team per Namespace.
+
+View what APIs do and do not support being created inside a Namespace. Any resource that does not support a Namespace is globally accessible [43], such as a PersistentVolume.
+
+.. code-block:: sh
+
+   $ kubectl api-resource --namespace=true
+   $ kubectl api-resource --namespace=false
+
+An object can declaratively bind itself to a Namespace by specifying it in the metadata.
+
+.. code-block:: yaml
+
+   ---
+   metadata:
+     namespace: <NAMESPACE_NAME>
+
 Persistent Storage
 ~~~~~~~~~~~~~~~~~~
 
@@ -2226,7 +2289,7 @@ Bibliography
 18. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 19. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 20. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 29, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+21. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 22. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 23. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 24. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
@@ -2248,3 +2311,4 @@ Bibliography
 40. "Ingress." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress/
 41. "Comparison of Kubernetes Top Ingress Controllers." caylent. May 9, 2019. Accessed June 28, 2020. https://caylent.com/kubernetes-top-ingress-controllers
 42. "Ingress Controllers." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
+43. "Namespaces." Kubernetes Concepts. June 22, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
