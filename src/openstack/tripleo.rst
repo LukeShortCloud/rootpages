@@ -3124,6 +3124,26 @@ Errors
 
 -  Delete any files found based on the previous two commands or at least move them out of the "workbooks" directory.
 
+OpenShift on OpenStack
+----------------------
+
+Red Hat provides a way to install the Red Hat OpenShift Container Platform (RHOCP, their Kubernetes product) using infrastructure from a RHOSP Overcloud.
+
+OpenStack integration:
+
+-  Ceilometer = Provides metrics of OpenShift resources.
+-  Cinder = Block storage can be used for persistent storage on OpenShift.
+-  Desginate = Native DNS integration between OpenStack and OpenShift.
+-  Heat = Automatic scaling of OpenShift Nodes based on capacity and usage.
+-  Keystone = Authentication providers used in OpenStack, such as LDAP, can be used in OpenShift.
+-  Load-Balancing-as-a-Service (Octavia) = A public load balancer than can be used by OpenShift.
+-  Neutron = Kuryr is a networking plugin for Kubernetes that allows it to natively use Neutron. This removes the double overhead of having a Kubernetes overlay network ontop of OpenStack's overlay network.
+-  Nova = OpenShift Nodes can be deployed as virtual machines or on baremetal.
+
+The first tool to accomplish this was `openshift-openstack-1-2-3 <https://github.com/ktenzer/openshift-on-openstack-123>`__ which was an unofficial tool written by a Red Hat employee. All of the infrastructure is defined via Heat templates. Then the official `openshift-ansible <https://github.com/openshift/openshift-ansible>`__ tool is used to install OpenShift. [70] Much of that work has been integrated into the openshift-ansible project for the 3.11 release.
+
+OpenShift 4 now uses the concept of User Provisioned Infrastructure (UPI). [71] This means that the infrastructure is no longer managed by OpenShift but reference architecture material is available. [72] However, Ansible content is being developed to automate those steps (without Heat) in the new `openshift/installer project <https://github.com/openshift/installer/tree/master/upi/openstack>`__. The deployment is highly opinionated to provide an out-of-the-box solution following best practices. It supports deploying infrastracture on RHOSP 13 and 16 and installing OpenShift 4 ontop of it. [73]
+
 History
 -------
 
@@ -3204,3 +3224,7 @@ Bibliography
 67. "Bug 1607453 - Deployment fails with: Object GET failed: https://.../overcloud/plan-environment.yaml 404 Not Found." Red Hat Bugzilla. November 13, 2019. Accessed May 28, 2020. https://bugzilla.redhat.com/show_bug.cgi?id=1607453
 68. "Minor version update." TripleO Upgrade Developer Documentation. January 20, 2020. Accessed June 19, 2020. https://docs.openstack.org/tripleo-docs/latest/upgrade/developer/upgrades/minor_update.html
 69. "Upgrading to a Next Major Release." TripleO Upgrade Documentation. June 8, 2020. Accessed June 19, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/post_deployment/upgrade/major_upgrade.html
+70. "OpenShift on OpenStack 1-2-3: Bringing IaaS and PaaS Together." Red Hat OpenShift Blog. March 12, 2018. Accessed June 30, 2020. https://www.openshift.com/blog/openshift-openstack-1-2-3-bringing-iaas-paas-together
+71. "Deploying a UPI environment for OpenShift 4.1 on VMs and Bare Metal." Red Hat OpenShift Blog. July 15, 2019. Accessed June 30, 2020. https://www.openshift.com/blog/deploying-a-upi-environment-for-openshift-4-1-on-vms-and-bare-metal
+72. "OpenStack UPI." GitHub openshift/enhancements. September 18, 2019. Accessed June 30, 2020. https://github.com/openshift/enhancements/blob/master/enhancements/installer/openstack-upi.md
+73. "Reference Architectures 2020 Deploying Red Hat OpenShift Container Platform 4.4 on Red Hat OpenStack Platform 13 and 16.0." Red Hat OpenShift Resources. Accessed June 30, 2020. https://www.redhat.com/cms/managed-files/cl-openshift-container-platform-4-4-on-openstack-platform-13-16-reference-architecture-f23768-202005-en.pdf
