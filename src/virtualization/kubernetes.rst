@@ -385,7 +385,7 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Node = Manage attributes of worker nodes.
    -  PersistentVolume = Manage persistent and stateful volumes. PersistentVolumeClaims can be created from this object.
    -  ResourceQuota = Manage resource allocations and limits.
-   -  ServiceAccount = Manage Kubernetes accounts used by Pods.
+   -  ServiceAccount = Manage Kubernetes accounts that are used by automation tools (not humans).
 
 -  flowcontrol.apiserver.k8s.io
 
@@ -816,6 +816,63 @@ PVC with RADOS Block Device (RBD).
         user: fu
 
 [36]
+
+ServiceAccount
+^^^^^^^^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: sa
+-  Namespaced: true
+
+----
+
+There is no ``spec`` section for ServiceAccounts.
+
+``sa:``
+
+-  automountServiceAccountToken (boolean) = If the ServiceAccount token should be automatically mounted on Pods.
+-  imagePullSecrets (list of maps) = A list of Secrets to use for pulling container images from a remote source.
+
+   -  name (string) = The name of the Secret object.
+
+-  secrets (list of maps) = A list of Secret objects that can be used for authenticating to the ServiceAccount.
+
+   -  apiVersion (string)
+   -  fieldPath (string)
+   -  kind (string)
+   -  **name** (string) = The name of the Secret object to use.
+   -  namespace (string)
+   -  resourceVersion (string)
+   -  uid (string)
+
+----
+
+**Examples:**
+
+ServiceAccount example. A random Secret token will automatically be generated.
+
+.. code-block:: sh
+
+   ---
+   kind: ServiceAccount
+   apiVersion: v1
+   metadata:
+     name: sa-bot
+     namespace: ci-automation
+
+ServiceAccount using an existing Secret token.
+
+.. code-block:: sh
+
+   ---
+   kind: ServiceAccount
+   apiVersion: v1
+   metadata:
+     name: sa-example
+   secrets:
+     - name: secret-foo-bar
+
+[21]
 
 Config and Storage
 ~~~~~~~~~~~~~~~~~~
