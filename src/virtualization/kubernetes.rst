@@ -882,13 +882,21 @@ PersistentVolumeClaim
 
 ----
 
+Use either ``pvc.spec.storageClassName`` or ``pvc.spec.volumeName`` to define what PersistentVolume to bind to.
+
 ``pvc.spec:``
 
--  **accessModes** (list) = The accessModes to allow. The lists values must also be allowed in the PV.
+-  **accessModes** (list of strings) = The accessModes to allow. The lists values must also be allowed in the PV.
 
    -  ReadOnlyMany
    -  ReadWriteOnce
    -  ReadWriteMany
+
+-  dataSource (map) An existing object to create a new PVC object from.
+
+   -  apiGroup (string) = The API group for the kind. Do not define this key if using PersistentVolume. Use "snapshot.storage.k8s.io" as the value for VolumeSnapshot.
+   -  **kind** (string) = PersistentVolumeClaim or VolumeSnapshot.
+   -  **name** (string) = The object name.
 
 -  **resources** (map)
 
@@ -900,7 +908,40 @@ PersistentVolumeClaim
 
       -  **storage** (string)
 
--  **storageClassName (string)** = The StorageClass to create storage from.
+-  selector (map)
+
+   -  matchExpressions (map)
+   -  matchLabels (map) = Match the exact key-value labels pair.
+
+-  **storageClassName** (string) = The StorageClass to create a PVC from.
+-  volumeMode (string) = How to manage the PVC when attaching it to a Pod.
+
+   -  Block = The block device will be formatted and then mounted.
+   -  Filesystem = The filesystem will be mounted.
+
+-  **volumeName** (string) = The PersistentVolume name to create a PVC from.
+
+----
+
+**Examples:**
+
+PVC example.
+
+.. code-block:: yaml
+
+   ---
+   kind: PersistentVolumeClaim
+   apiVersion: v1
+   metadata:
+     name: pvc-app
+   spec:
+     accessModes:
+       - ReadWriteMany
+       - ReadWriteOnce
+     resources:
+       requests:
+         storage: 5Gi
+     volumeName: <PERSISTENTVOLUME_NAME>
 
 [21]
 
