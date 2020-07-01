@@ -1168,6 +1168,73 @@ Workload APIs manage running applications. [21]
 
 Most applications should use the Deployment or the StatefulSet API due to the collection of features it provides.
 
+Deployment
+^^^^^^^^^^
+
+-  API group / version (latest): apps/v1
+-  Shortname: deploy
+-  Namespaced: true
+
+----
+
+``deploy.spec:``
+
+-  minReadySeconds (integer) = Default is 0 seconds. The amount of seconds to wait for a Pod to put into the "ready" state.
+-  paused (boolean) = If the deployment is paused.
+-  progressDeadlineSeconds (integer) = The amount of seconds before a non-ready Deployment is considered to be in the "failed" state.
+-  replicas (integer) = Default is 1. The number of Pods to create.
+-  revisionHistoryLimit (integer) = Default is 10. The amount of ReplicaSets from a previous Deployment to keep for the purpose of a rollback.
+-  **selector** (map) = The ReplicaSet will match Pods with these labels.
+
+   -  matchExpressions (list of maps) = Do a logical lookup for labels.
+
+      -  **key** (string) = The label key.
+      -  **operator** = DoesNotExist, Exists, In, or NotIn. The operator will analyze the key-value pair.
+      -  values (list of strings) = A list of possible values.
+
+   -  matchLabels (map) = Specify any exact key-value label pair to match.
+
+-  strategy (map) = The Deployment strategy when updating and rolling back a Deployment.
+-  **template** (map of a Pod manifest) = The Pod definition to manage as a Deployment.
+
+   -  metadata (map) = Specify any non-``name`` value here.
+   -  spec (map)
+
+----
+
+**Examples:**
+
+Deployment example.
+
+.. code-block:: yaml
+
+   ---
+   kind: Deployment
+   apiVersion: apps/v1
+   metadata:
+     name: deploy-website
+   spec:
+     replicas: 5
+     selector:
+       matchLabels:
+         foo: bar
+     template:
+       metadata:
+         labels:
+           foo: bar
+       spec:
+         containers:
+           - name: nginx
+             image: nginx:1.7.0
+             ports:
+               - containerPort: 80
+           - name: php-fpm
+             image: php-fpm:7.0
+             ports:
+               - containerPort: 8080
+
+[21]
+
 Pod
 ^^^
 
