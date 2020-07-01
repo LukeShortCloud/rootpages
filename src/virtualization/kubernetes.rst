@@ -1320,6 +1320,55 @@ Deployment example.
 
 [21]
 
+Job
+^^^
+
+-  API group / version (latest): batch/v1
+-  Shortname: (None)
+-  Namespaced: true
+
+----
+
+``job.spec:``
+
+-  activeDeadlineSeconds (integer) = The amount of time, in seconds, to wait for a Job to be finished before terminating the Pods.
+-  backoffLimit (integer) = Default is 6. The amount of retries before marking a Job as failed.
+-  completions (integer) = How many times the Job should complete before being marked as a success.
+-  manualSelector (boolean) = Set to true to manually manage the ``job.spec.selector``.
+-  parallelism (integer) = The number of Pods that can run at the same time.
+-  selector (`map of Selector <#selector>`_) = By default, this is managed automatically. The number of Pods managed by the Job should match the labels provided.
+-  **template** (`map of a Pod manifest <#pod>`_) = The Pod definition to manage as a Job.
+-  ttlSecondsAfterFinished (integer) = The time to wait before deleting Pods from a Job.
+
+----
+
+**Examples:**
+
+Job example.
+
+.. code-block:: yaml
+
+   ---
+   kind: Job
+   apiVersion: batch/v1
+   metadata:
+     name: job-calculate
+   spec:
+     backoffLimit: 10
+     completions: 2
+     parallelism: 4
+     template:
+       spec:
+         containers:
+           - name: calculus-equation
+             image: clculus-equation:1.0.0
+             args:
+               - scenario17
+               - --verbose
+     ttlSecondsAfterFinished: 3600
+
+[21]
+
 Pod
 ^^^
 
