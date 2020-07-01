@@ -882,7 +882,7 @@ PersistentVolumeClaim
 
 ----
 
-Use either ``pvc.spec.storageClassName`` or ``pvc.spec.volumeName`` to define what PersistentVolume to bind to.
+Use either ``pvc.spec.selector``, ``pvc.spec.storageClassName``, or ``pvc.spec.volumeName`` to define what PersistentVolume to bind to.
 
 ``pvc.spec:``
 
@@ -908,11 +908,7 @@ Use either ``pvc.spec.storageClassName`` or ``pvc.spec.volumeName`` to define wh
 
       -  **storage** (string)
 
--  selector (map)
-
-   -  matchExpressions (map)
-   -  matchLabels (map) = Match the exact key-value labels pair.
-
+-  **selector** (`map of Selector <#selector>`_) = The key-value label pairs to find a PV to bind to.
 -  **storageClassName** (string) = The StorageClass to create a PVC from.
 -  volumeMode (string) = How to manage the PVC when attaching it to a Pod.
 
@@ -1082,7 +1078,7 @@ Service
 -  loadBalancerSourceRanges (list of strings) = If supported by the cloud-provider, only allow incoming connects from these IP addresses.
 -  ports (list of maps) = Ports to expose/open.
 -  publishNotReadyAddresses (boolean) = Default is false. Publish IP address information to the internal Kubernetes DNS server before a Pod is in a ready state.
--  selector (map of strings) = Bind this Service object to a Pod based on the provided labels.
+-  **selector** (`map of Selector <#selector>`_) = Bind this Service object to a Pod based on the provided labels.
 -  sessionAffinity (map) = Default is None.
 
    -  ClientIP = Keep the same session for a client connecting to a Pod.
@@ -1225,18 +1221,9 @@ Deployment
 -  progressDeadlineSeconds (integer) = The amount of seconds before a non-ready Deployment is considered to be in the "failed" state.
 -  replicas (integer) = Default is 1. The number of Pods to create.
 -  revisionHistoryLimit (integer) = Default is 10. The amount of ReplicaSets from a previous Deployment to keep for the purpose of a rollback.
--  **selector** (map) = The ReplicaSet will match Pods with these labels.
-
-   -  matchExpressions (list of maps) = Do a logical lookup for labels.
-
-      -  **key** (string) = The label key.
-      -  **operator** = DoesNotExist, Exists, In, or NotIn. The operator will analyze the key-value pair.
-      -  values (list of strings) = A list of possible values.
-
-   -  matchLabels (map) = Specify any exact key-value label pair to match.
-
+-  **selector** (`map of Selector <#selector>`_) = The ReplicaSet will match Pods with these labels.
 -  strategy (map) = The Deployment strategy when updating and rolling back a Deployment.
--  **template** (map of a Pod manifest) = The Pod definition to manage as a Deployment.
+-  **template** (`map of a Pod manifest <#pod>`_) = The Pod definition to manage as a Deployment.
 
    -  metadata (map) = Specify any non-``name`` value here.
    -  spec (map)
@@ -1837,6 +1824,19 @@ Probe
 -  timeoutSeconds (integer) = Default is 1. The amount of seconds before the probe times out.
 
 [21]
+
+Selector
+^^^^^^^^
+
+``deploy.spec.selector``, ``pvc.spec.selector``, ``svc.spec.selector`` (map)
+
+-  matchExpressions (list of maps) = Do a logical lookup for labels.
+
+   -  **key** (string) = The label key.
+   -  **operator** = DoesNotExist, Exists, In, or NotIn. The operator will analyze the key-value pair.
+   -  values (list of strings) = A list of possible values.
+
+-  matchLabels (map) = Specify any exact key-value label pair to match.
 
 System Resources
 ^^^^^^^^^^^^^^^^
