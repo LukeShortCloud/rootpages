@@ -1262,6 +1262,65 @@ Workload APIs manage running applications. [21]
 
 Most applications should use the Deployment or the StatefulSet API due to the collection of features it provides.
 
+CronJob
+^^^^^^^
+
+-  API group / version (latest): batch/v1beta1
+-  Shortname: cj
+-  Namespaced: true
+
+----
+
+``cj.spec:``
+
+-  concurrencyPolicy (string) = What action to take if a CronJob object is running again overlapping with itself.
+
+   -  Allow = Default. Allow the CronJob to start even if another CronJob is running.
+   -  Forbid = Skip this scheduled CronJob if the last one has not completed yet.
+   -  Replace = Stop the last CronJob and then start a new one.
+
+-  failedJobsHistoryLimit (integer) = Default is 1. The number of failed Jobs to keep logged.
+-  **jobTemplate** (`map of Job <#job>`_) = The Job definition to run.
+-  **schedule** (string) = The `cron <https://crontab.guru/>`__ schedule/interval.
+-  startingDeadlineSeconds (integer) = The amount of time to wait before marking the Job as failed if a CronJob misses it's scheduled time.
+-  successfulJobHistoryLimit (integer) = Default is 3. The number of successful Jobs to keep logged.
+-  suspend (boolean) = Default is false. Only run the CronJob once. Do not run it again.
+
+----
+
+**Examples:**
+
+CronJob example.
+
+.. code-block:: yaml
+
+   ---
+   kind: CronJob
+   apiVersion: batch/v1beta11
+   metadata:
+     name: cj-calculate
+   spec:
+     concurrencyPolicy: Forbid
+     failedJobsHistoryLimit: 10
+     jobTemplate:
+       spec:
+         backoffLimit: 10
+         completions: 2
+         parallelism: 4
+         template:
+           spec:
+             containers:
+               - name: calculus-equation
+                 image: clculus-equation:1.0.0
+                 args:
+                   - scenario17
+                   - --verbose
+             restartPolicy: OnFailure
+         ttlSecondsAfterFinished: 3600
+     schedule: "0 * * * *"
+
+[21]
+
 Deployment
 ^^^^^^^^^^
 
@@ -1337,7 +1396,7 @@ Job
 -  manualSelector (boolean) = Set to true to manually manage the ``job.spec.selector``.
 -  parallelism (integer) = The number of Pods that can run at the same time.
 -  selector (`map of Selector <#selector>`_) = By default, this is managed automatically. The number of Pods managed by the Job should match the labels provided.
--  **template** (`map of a Pod manifest <#pod>`_) = The Pod definition to manage as a Job.
+-  **template** (`map of a Pod manifest <#pod>`_) = The Pod definition to manage as a Job. In that definition the default restartPolicy of "Always" is not allowed. Use "OnFailure" or "Never" instead.
 -  ttlSecondsAfterFinished (integer) = The time to wait before deleting Pods from a Job.
 
 ----
@@ -1365,6 +1424,7 @@ Job example.
              args:
                - scenario17
                - --verbose
+         restartPolicy: OnFailure
      ttlSecondsAfterFinished: 3600
 
 [21]
