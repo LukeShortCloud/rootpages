@@ -1871,6 +1871,34 @@ These are common Kubernetes APIs used by developers [28]:
 -  StatefulSet
 -  VerticalPodAutoscaler
 
+Labels and Annotations
+~~~~~~~~~~~~~~~~~~~~~~
+
+Labels and annotations both provide a way to assign a key-value pair to an object. This can later be looked up by other objects and by administrators. Labels help to organize related objects and perform actions on them. Many APIs support using a selector to lookup and bind to objects with labels that are found. Helm has a variety of labels that it recommends. [44] Annotations are similar except they are meant for non-human processing.
+
+Define labels and annotations in the metadata section of a manifest.
+
+.. code-block:: yaml
+
+   ---
+   metadata:
+     annontations:
+       <KEY>: <VALUE>
+     labels:
+       <KEY>: <VALUE>
+
+View all labels in use.
+
+.. code-block:: sh
+
+   $ kubectl get all --show-labels
+
+View all objects with a specific label.
+
+.. code-block:: sh
+
+   $ kubectl get all -l "<KEY>=<VALUE>"
+
 Namespaces
 ~~~~~~~~~~
 
@@ -2420,3 +2448,4 @@ Bibliography
 41. "Comparison of Kubernetes Top Ingress Controllers." caylent. May 9, 2019. Accessed June 28, 2020. https://caylent.com/kubernetes-top-ingress-controllers
 42. "Ingress Controllers." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
 43. "Namespaces." Kubernetes Concepts. June 22, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+44. "Labels and Annotations." Helm Docs. Accessed June 30, 2020. https://helm.sh/docs/chart_best_practices/labels/
