@@ -17,6 +17,10 @@ after_success:
   - mv ./build/html/* ./
   - rm -rf ./build
   - touch .nojekyll
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - ./kubectl --insecure-skip-tls-verify --kubeconfig="/dev/null" --server=https://k8s.ekultails.com:6443 --token=$SA_TRAVIS_CI_TOKEN -n ns-rootpages delete pod -l 'app=rootpages' || true
+  - ./kubectl --insecure-skip-tls-verify --kubeconfig="/dev/null" --server=https://k8s.ekultails.com:6443 --token=$SA_TRAVIS_CI_TOKEN apply -f k8s/app/
 deploy:
   provider: pages
   skip-cleanup: true
