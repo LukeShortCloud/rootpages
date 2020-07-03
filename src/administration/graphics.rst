@@ -211,6 +211,11 @@ The Flatpak for Steam can mount external devices into the isolated environment. 
 
    $ flatpak override --user --filesystem=<STEAM_LIBRARY_PATH> com.valvesoftware.Steam
 
+Proton (Steam Play)
+^^^^^^^^^^^^^^^^^^^
+
+Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__.
+
 History
 -------
 
