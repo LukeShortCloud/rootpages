@@ -214,7 +214,7 @@ The Flatpak for Steam can mount external devices into the isolated environment. 
 Proton (Steam Play)
 ^^^^^^^^^^^^^^^^^^^
 
-Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__.
+Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__. Proton can be enabled for all games by going to ``Settings > Steam Play > Enable Steam Play for all other titles``. Compatibility will vary. [11]
 
 History
 -------
@@ -235,3 +235,4 @@ Bibliography
 8. "SDB:AMDGPU-PRO." openSUSE Wiki. July 17, 2019. Accessed December 10, 2019. https://en.opensuse.org/SDB:AMDGPU-PRO
 9. "AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel." Phoronix. November 16, 2019. Accessed December 10, 2019. https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.5-AMD-Navi-Overclocking
 10. "Frequently asked questions." flathub/com.valvesoftware.Steam. April 12, 2020. Accessed July 3, 2020. https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions
+11. "A simple guide to Steam Play, Valve's technology for playing Windows games on Linux." GamingOnLinux. July 12, 2019. Accessed July 3, 2020. https://www.gamingonlinux.com/articles/14552
