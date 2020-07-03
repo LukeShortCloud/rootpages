@@ -196,6 +196,21 @@ Installation:
 -  Debian (automatic): ``$ sudo apt-get install task-xfce-desktop``
 -  Fedora: ``$ sudo dnf groupinstall "Xfce Desktop"``
 
+Gaming
+------
+
+Steam
+~~~~~
+
+Flatpak
+^^^^^^^
+
+The Flatpak for Steam can mount external devices into the isolated environment. Mount points are not exposed in the Flatpak by default. [10]
+
+.. code-block:: sh
+
+   $ flatpak override --user --filesystem=<STEAM_LIBRARY_PATH> com.valvesoftware.Steam
+
 History
 -------
 
@@ -214,3 +229,4 @@ Bibliography
 7. "Radeo Software for Linux 19.30 Release Notes." AMD. November 5, 2019. Accessed December 10, 2019. https://www.amd.com/en/support/kb/release-notes/rn-rad-lin-19-30-unified
 8. "SDB:AMDGPU-PRO." openSUSE Wiki. July 17, 2019. Accessed December 10, 2019. https://en.opensuse.org/SDB:AMDGPU-PRO
 9. "AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel." Phoronix. November 16, 2019. Accessed December 10, 2019. https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.5-AMD-Navi-Overclocking
+10. "Frequently asked questions." flathub/com.valvesoftware.Steam. April 12, 2020. Accessed July 3, 2020. https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions
