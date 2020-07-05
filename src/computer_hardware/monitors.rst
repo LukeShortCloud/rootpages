@@ -89,7 +89,7 @@ The brightness of monitors and TVs are measured in nits (cd/m^2). The higher the
 High Dynamic Range (HDR)
 ------------------------
 
-HDR provides a standard for color accuracy and high contrast. Only video games and movies created with HDR can fully utilize all of the features of a HDR TV. For official qualification, a TV must meet these requirements: [9]
+HDR provides a standard for color accuracy and high contrast. Only video games and movies created with HDR can fully utilize all of the features of a HDR TV. For official qualification, a TV must at least meet these minimum requirements: [9]
 
 -  4K Resolution
 -  10-Bit Color Depth
@@ -109,6 +109,16 @@ Proprietary WCG backlight technologies:
 -  Nano Cell (LG)
 -  QLED (Samsung)
 -  Triluminos (Sony)
+
+There are different certification standards for HDR. The color bit depth determines how many colors can be displayed. Having dynamic metadata allows for different HDR settings on each individual frame or scene for a better optimized viewing experience. Static metadata sets the HDR settings once for the entire video. [20]
+
+.. csv-table::
+   :header: Standard, Stanard Type, Industry Support, Color Bit Depth, Metadata, Brightness Minimum, Brightness Maximum
+   :widths: 20, 20, 20, 20, 20, 20, 20
+
+   HDR10, Open, High, 10, Static, 1000 nits, 4000 nits
+   HDR10+, Open and royalty-free, Low, 10, Dynamic, 1000 nits, 4000 nits
+   Dolby Vision, Proprietary, Medium, 12, Dynamic, 4000 nits, 10000 nits
 
 Computer operating systems have partial support for HDR. Most applications do not natively support it. Windows 10 and Netflix require buying Microsoft's HEVC Video Extension for video playback streaming to work. [11]
 
@@ -155,3 +165,4 @@ Bibliography
 17. "CAMERAS VS. THE HUMAN EYE." Cambridge in Colour. Accessed June 28, 2020. https://www.cambridgeincolour.com/tutorials/cameras-vs-human-eye.htm
 18. "How many frames per second can the human eye see?" 100fps. Accessed June 28, 2020. http://www.100fps.com/how_many_frames_can_humans_see.htm
 19. "Frames Per Second and Refresh Rates: Understanding the Tech." Scholarly Gamers. June 18, 2019. Accessed June 28, 2020. https://www.scholarlygamers.com/top-news/2019/06/18/frames-per-second-and-refresh-rates-understanding-the-tech/
+20. "HDR10 vs HDR10+ vs Dolby Vision Which is better?" RTINGS.com. March 20, 2019. Accessed July 5, 2020.  https://www.rtings.com/tv/learn/hdr10-vs-dolby-vision
