@@ -38,6 +38,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Observation
+
+   observation/index.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: OpenStack
 
    openstack/index.rst

@@ -233,7 +233,8 @@ Event Types:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/monitoring.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/observation/monitoring.rst>`__
+-  `< 2020.10.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/monitoring.rst>`__
 -  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/monitoring.rst>`__
 -  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/monitoring.md>`__
 

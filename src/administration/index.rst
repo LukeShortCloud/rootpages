@@ -9,7 +9,6 @@
    graphics
    linux
    mail_servers
-   monitoring
    operating_systems
    package_managers
    security
