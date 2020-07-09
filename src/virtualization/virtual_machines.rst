@@ -604,6 +604,110 @@ Common commands:
 
 An example of a basic Kickstart file can be found here: https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file.
 
+Terraform
+~~~~~~~~~
+
+Terraform provides infrastructure automation.
+
+Find and download the latest version of Terraform from `here <https://www.terraform.io/downloads.html>`__.
+
+.. code-block:: sh
+
+   $ cd ~/.local/bin/
+   $ TERRAFORM_VERSION=0.12.28
+   $ curl -LO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+   $ unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+   $ terraform --version
+   Terraform v0.12.28
+
+Optionally install tab completion support for bash and zsh.
+
+.. code-block:: sh
+
+   $ terraform -install-autocomplete
+
+[42]
+
+Modules
+^^^^^^^
+
+A Terraform Module consists of at least a single ``main.tf`` file that defines the ``provider`` (plugin) to use and what ``resources`` to apply. In addition, ``variables.tf`` can be used to define related variables used by ``main.tf`` and a ``outputs.tf`` file can be used to define what outputs to save (such as generated SSH keys). [44]
+
+Providers
+^^^^^^^^^
+
+Common cloud providers:
+
+-  AWS
+-  Azure
+-  Cloud-init
+-  DigitalOcean
+-  Google Cloud Platform
+-  Helm
+-  Kubernetes
+-  OpenStack
+-  Packet
+-  VMWare Cloud
+-  Vultr
+
+Database providers:
+
+-  InfluxDB
+-  MongoDB Atlas
+-  MySQL
+-  PostgreSQL
+
+DNS providers:
+
+-  DNS
+-  DNSimple
+-  DNSMadeEasy
+-  PowerDNS
+-  UltraDNS
+
+Git providers:
+
+-  Bitbucket
+-  GitHub
+-  GitLab
+
+Logging and monitoring:
+
+-  Auth0
+-  Circonus
+-  Datadog
+-  Dyn
+-  Grafana
+-  Icinga2
+-  LaunchDarkly
+-  Librato
+-  Logentries
+-  LogicMonitor
+-  New Relic
+-  OpsGenie
+-  PagerDuty
+-  Runscope
+-  SignalFx
+-  StatusCake
+-  Sumo Logic
+-  Wavefront
+
+Common miscellaneous providers:
+
+-  Chef
+-  Cobbler
+-  Docker
+-  HTTP
+-  Local
+-  Rundeck
+-  RabbitMQ
+-  Time
+-  Terraform
+-  TLS
+-  Vault
+
+[43]
+
 Vagrant
 ~~~~~~~
 
@@ -1178,4 +1282,6 @@ Bibliography
 39. "oVirt Architecture." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/architecture/architecture/
 40. "Deploying Self-Hosted Engine." oVirt Documentation. Accessed March 20, 2018. https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/
 41. "[ovirt-users] Fresh install - unable to web gui login." oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. http://lists.ovirt.org/pipermail/users/2018-January/086223.html
-
+42. "Install Terraform." HashiCorp Learn. Accessed July 8, 2020.https://learn.hashicorp.com/terraform/getting-started/install
+43. "Providers." Terraform CLI. Accessed July 8, 2020. https://www.terraform.io/docs/providers/index.html
+44. "Create a Terraform Module." Linode Guides & Tutorials. May 1, 2020. Accessed July 8, 2020. https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/

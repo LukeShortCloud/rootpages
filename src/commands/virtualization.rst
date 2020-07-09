@@ -456,6 +456,25 @@ Validate a libvirt XML configuration for a virtual machine.
 
    "<LIBVIRT_XML_FILE>", "provide the path to a libvirt XML file"
 
+Terraform
+---------
+
+terraform
+~~~~~~~~~
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   help, show the help output
+   help <COMMAND>, show the help output for a specific command
+   version, show the Terraform binary version
+   -install-autocomplete, install shell argument completions for Terraform
+   init, add Terraform configuration files and download missing plugins
+   apply, deploy the infrastructure
+   destroy, remove/cleanup the infrastructure
+   workspace [delete|list|new|select|show], manage different workspaces
+
 Vagrant
 -------
 
