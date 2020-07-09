@@ -2230,6 +2230,26 @@ Additional service defaults are set in these files:
 
 [63][64]
 
+Some variables, such as RhsmVars, can be set on a per-role basis. These will override defaults values set by the service templates. These can be set in the composable role definition file or a Heat environment template.
+
+Role:
+
+.. code-block:: yaml
+
+   ---
+   - name: <COMPOSABLE_ROLE_NAME>
+     RoleParametersDefault:
+       <KEY>: <VALUE>
+
+Heat:
+
+.. code-block:: yaml
+
+   ---
+   parameter_defaults:
+     <COMPOSABLE_ROLE_NAME>Parameters:
+       <KEY>: <VALUE>
+
 OpenStack Services
 ~~~~~~~~~~~~~~~~~~
 
