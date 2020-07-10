@@ -8,6 +8,18 @@ Overview
 
 Logging is the process of collecting metrics from a server and logging them. For managing a large number of server deployments, these logs should be sent to a database server. The database can be queried by a monitoring program to help track down issues and optionally visualize the data.
 
+::
+
+[Log collector] --> [Database] --> [Monitoring dashboard with API and/or UI]
+
+Collectors:
+
+-  `Apache Flume <https://flume.apache.org/>`__
+-  `collectd <https://collectd.org/>`__
+-  `fluentd <https://www.fluentd.org/>`__
+-  `Logstash <https://www.elastic.co/logstash>`__
+-  `Telegraf <https://www.influxdata.com/time-series-platform/telegraf/>`__
+
 collectd
 --------
 
