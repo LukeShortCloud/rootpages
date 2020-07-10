@@ -8,7 +8,7 @@ Monit
 
 Monit is a complete service monitoring software. It has a web interface
 that is available by default on the localhost interface via port 2812.
-It can detect if a service is down and restart it. Automatically alerts
+It can detect if a service is down and restart it. Automatic alerts
 can also be configured.
 
 Configuration
