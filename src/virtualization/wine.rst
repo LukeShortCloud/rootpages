@@ -168,6 +168,21 @@ Steam Play
 
 Steam reports the operating system in use for each sale of a developer's game. For counting as a Linux purchase, it can be bought on the Steam client for Linux and not played. Alternatively, it has to be played on Linux (even with Proton/Steam Play) more than any other platform in the first two weeks. The operating system reported after the end of the two weeks is final and will never change. [7]
 
+Game Bans
+---------
+
+Some video games will ban players if they are using Wine due to false-positive reports from their anti-cheat software. Here are a few lists of games that have been known to ban players who use Wine on Linux.
+
+Bans still being created:
+
+-  `Battlefield V <https://www.gamingonlinux.com/articles/15706>`__
+-  `Destiny 2 <https://www.bungie.net/en/Forums/Post/249217461>`__
+
+Previous bans that have now been addressed:
+
+-  `Diablo III <https://www.cinemablend.com/games/Blizzard-Admits-Linux-User-Was-Wrongly-Banned-Offers-Refund-49339.html>`__
+-  `Overwatch <https://www.reddit.com/r/linux_gaming/comments/9fkuq9/overwatch_avoid_async_option_for_dxvk_banned_for/>`__
+
 History
 -------
 
