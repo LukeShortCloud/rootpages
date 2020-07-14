@@ -267,6 +267,60 @@ NS with finalizers.
 
 [5]
 
+NetworkPolicy
+^^^^^^^^^^^^^
+
+-  API group / version (latest): networking.k8s.io/v1
+-  Shortname: netpol
+-  Namespaced: true
+
+----
+
+``netpol.spec:``
+
+-  egress (map)
+
+   -  ports (list of maps)
+
+      -  port (string)
+      -  protocol (string)
+
+   -  to (list of maps)
+
+      -  ipBlock (map) = IP addresses that are allowed.
+
+         -  **cidr** (string) = A CIDR of IP addresses to allow.
+         -  except (list of strings) = A CIDR of IP addresses to exclude from the ``cidr`` range.
+
+      -  namespaceSelector (`map of Selector <#selector>`_) = The Namespace to apply the NetworkPolicy for. By default, it is the Namespace that the Pod is in. If this field is empty, it will apply the NetworkPolicy to all Namespaces.
+      -  podSelector (`map of Selector <#selector>`_) = The Pod to apply the NetworkPolicy to. If this field is empty, the NetworkPolicy will apply to all Pods.
+
+-  ingress (map)
+
+   -  ports (list of maps)
+
+      -  port (string)
+      -  protocol (string)
+
+   -  from (list of maps)
+
+      -  ipBlock (map)
+
+         -  **cidr** (string)
+         -  except (list of strings)
+
+      -  namespaceSelector (`map of Selector <#selector>`_)
+      -  podSelector (`map of Selector <#selector>`_)
+
+-  **podSelector** (`map of Selector <#selector>`_)
+-  policyTypes (list of strings) = Optionally explicitly define the NetworkPolicy type. If not defined, it will be determined based on if ``netpol.spec.egress`` and/or ``netpol.spec.ingress`` are defined. By defining only "Ingress" or "Egress", the opposite traffic type will be completely disallowed.
+
+    -  Ingress
+    -  Egress
+    -  "Ingress,Egress"
+
+[5]
+
 PersistentVolume
 ^^^^^^^^^^^^^^^^
 
@@ -1811,7 +1865,7 @@ Probe
 Selector
 ^^^^^^^^
 
-``deploy.spec.selector``, ``pvc.spec.selector``, ``svc.spec.selector`` (map)
+``deploy.spec.selector``, ``netpol.spec.podSelector``, ``netpol.spec.{egress,ingress}.{to,from}.{namespaceSelector,podSelector}``, ``pvc.spec.selector``, ``svc.spec.selector`` (map)
 
 -  matchExpressions (list of maps) = Do a logical lookup for labels.
 
@@ -2089,7 +2143,7 @@ Bibliography
 2. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 3. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 4. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-5. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+5. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed July 13, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
 6. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 7. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 8. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
