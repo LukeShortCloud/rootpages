@@ -493,6 +493,33 @@ Uninstall OpenShift services from nodes by specifying them in the inventory and 
 
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/adhoc/uninstall.yml
 
+Concepts
+--------
+
+Container Network Interface (CNI) Plugins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage the network connections between Pods. The cloud operator must pick one plugin. For using more than one plugin, use the `Multus CNI project <https://github.com/intel/multus-cni>`__.
+
+.. csv-table::
+   :header: Plugin, Arm Support, Ease of Configuration, Resource Usage, Network Layer, Encryption, NetworkPolicy Support, Use Case
+   :widths: 20, 20, 20, 20, 20, 20, 20, 20
+
+   Calico, Yes, Medium, Low, 3, No, Yes, Highly configurable
+   Canal, Yes, Medium, Low, 3, No, Yes, Combine the easiness of Flannel and the NetworkPolicy support of Calico
+   Cilium, No, Easy, High, 3, No, Yes, BPF Linux kernel integration
+   Flannel, Yes, Easy, Low, 2, No, No, Simple overlay network management
+   kubenet, Yes, Easy,  Low, 2, No, No, Very basic Linux bridge management
+   kube-router, Yes, Medium, Low, 3, No, Yes, Feature rich
+   Weave Net, Yes, Hard, Medium, 3, No, Yes, Manage mesh networks
+   Weave Net (Encrypted), Yes, Hard, High, 3, Yes, Yes, Secure networks
+
+Legacy plugins that are no longer maintained:
+
+-  Romana
+
+[19][20]
+
 History
 -------
 
@@ -522,3 +549,5 @@ Bibliography
 16. "OpenShift: Container Application Platform by Red Hat." OpenShift. Accessed February 26, 2018. https://www.openshift.com/
 17. "How to run AWX on Minishift." opensource.com. October 26, 2018. Accessed July 3, 2020. https://opensource.com/article/18/10/how-run-awx-minishift
 18. "kube-controller-manager." Kubernetes Reference. April 13, 2020. Accessed June 8, 2020. https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
+19. "Comparing Kubernetes CNI Providers: Flannel, Calico, Canal, and Weave." Rancher Lab's Kubernetes Blog. December 4, 2019. Accessed July 14, 2020. https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/
+20. "Benchmark results of Kubernetes network plugins (CNI) over 10Gbit/s network (Updated: April 2019)." ITNEXT. April 12, 2019. Accessed July 14, 2020. https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
