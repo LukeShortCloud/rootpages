@@ -25,7 +25,7 @@ TripleO is a collection of many services. As part of the Transformation Squad's 
    Horizon, "Stein", "", Web dashboard for deploying an Overcloud.
    Ironic, "", "", Manages the bare-metal provisioning.
    Keystone, "", "", Authentication of OpenStack services.
-   Kolla, "", "", Provides container images of OpenStack services.
+   Kolla, Victoria, "Ansible (`TCIB <https://opendev.org/openstack/tripleo-ansible/src/branch/master/tripleo_ansible/roles/tripleo_container_image_build>`__)", Provides container images of OpenStack services.
    MariaDB, "", "", Database for OpenStack services.
    Mistral, Victoria, Ansible, Workflows are used to define and execute all of the deployment processes.
    Neutron, "", "", Manages the Overcloud networks.
@@ -220,6 +220,10 @@ Upstream
    -  `Removed Undercloud dependencies on Glance, Neutron, and Nova by having a Nova-less deployment process. <https://blueprints.launchpad.net/tripleo/+spec/nova-less-deploy>`__ `MetalSmith <https://github.com/openstack/metalsmith>`__ can now used to provision the Overcloud nodes separately from the Overcloud deployment. TripleO treats all deployments as pre-deployed servers.
    -  `Removed Mistral and Zaqar from the Undercloud. The Overcloud deployment workflow now uses Ansible. <https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/mistral-to-ansible.html>`__
    -  `Provided standardized Ansible playbooks and roles for operators to manage their TripleO clouds. <https://specs.openstack.org/openstack/tripleo-specs/specs/ussuri/tripleo-operator-ansible.html>`__
+
+-  Victoria
+
+   -  Kolla container images are no longer used. `TripleO Container Image Build (TCIB) <https://specs.openstack.org/openstack/tripleo-specs/specs/victoria/simple-container-generation.html>`__ is a new Ansible wrapper for creating smaller container images based on the RHEL Universal Base Image (UBI) 8 image.
 
 [57][58]
 
