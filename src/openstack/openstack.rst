@@ -1478,15 +1478,16 @@ was designed for (using the release date as the version) and enclose all
 resources in a "resources" dictionary. The version indicates that all
 features up until that specific release are used. This is for backwards
 compatibility reasons. Since the Newton release, the release name can be used instead of a date for the version.
+The last update to Heat templating features was in the Rocky release. [66]
 
 .. code-block:: yaml
 
     ---
-    heat_template_version: 2017-02-24
-
+    heat_template_version: rocky
     resources:
+      <RESOURCE>
 
-Valid Heat template versions include [39]:
+All valid Heat template versions [39]:
 
 -  ``2018-08-31`` or ``rocky``
 -  ``2018-03-02`` or ``queens``
@@ -2182,7 +2183,7 @@ Bibliography
 36. "Upgrades." OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. http://docs.openstack.org/ops-guide/ops-upgrades.html
 37. "OpenStack Command Line." OpenStack Documentation. Accessed October 16, 2016. http://docs.openstack.org/developer/python-openstackclient/man/openstack.html
 38. "OpenStack Orchestration In Depth, Part I: Introduction to Heat." Accessed September 24, 2016. November 7, 2014. https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/
-39. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. February 15, 2019. Accessed October 28, 2019. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
+39. "Heat Orchestration Template (HOT) specification." OpenStack Documentation. February 15, 2019. Accessed July 16, 2020. https://docs.openstack.org/heat/latest/template_guide/hot_spec.html
 40. "ggiamarchi/vagrant-openstack-provider." GitHub. January 30, 2017. Accessed April 3, 2017. https://github.com/ggiamarchi/vagrant-openstack-provider
 41. "Tempest Configuration Guide." Sep 14th, 2016. http://docs.openstack.org/developer/tempest/configuration.html
 42. "Stable branches." OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. https://docs.openstack.org/project-team-guide/stable-branches.html
@@ -2209,3 +2210,4 @@ Bibliography
 63. "Oslo." OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. https://wiki.openstack.org/wiki/Oslo
 64. "Train [Goals]." OpenStack Governance. June 27, 2019. Accessed December 29, 2019. https://governance.openstack.org/tc/goals/selected/train/index.html
 65. "Ussuri [Goals]." OpenStack Governance. October 25, 2019. Accessed June 17, 2020. https://governance.openstack.org/tc/goals/selected/ussuri/index.html
+66. "Bug 1783215 - The 'heat_template_version' in RHOSP15 is still 'Rocky'." Red Hat Bugzilla. December 16, 2019. Accessed July 16, 2020. https://bugzilla.redhat.com/show_bug.cgi?id=1783215
