@@ -168,7 +168,7 @@ OpenShift
 
 The Red Hat OpenShift Container Platform (OCP) is an enterprise product based on Google's Kubernetes. [16] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [3]
 
-The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [4]
+The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [4] OKD 4.5 was the first stable release for the 4.Y series. [21] It supports being deployed ontop of Red Hat CoreOS and Fedora CoreOS. [21]
 
 Below is a list of RHOCP and OKD versions that correspond with the upstream Kubernetes release. The RHOCP 4.0 release was skipped and used for internal testing only. RHOCP 4 introduced Operators and OperatorHub. It also requires all Master nodes to be installed on Red Hat CoreOS. [5]
 
@@ -176,6 +176,7 @@ Below is a list of RHOCP and OKD versions that correspond with the upstream Kube
    :header: RHOCP/OKD, Kubernetes
    :widths: 20, 20
 
+   4.5, 1.18
    4.4, 1.17
    4.3, 1.16
    4.2, 1.14
@@ -551,3 +552,5 @@ Bibliography
 18. "kube-controller-manager." Kubernetes Reference. April 13, 2020. Accessed June 8, 2020. https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
 19. "Comparing Kubernetes CNI Providers: Flannel, Calico, Canal, and Weave." Rancher Lab's Kubernetes Blog. December 4, 2019. Accessed July 14, 2020. https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/
 20. "Benchmark results of Kubernetes network plugins (CNI) over 10Gbit/s network (Updated: April 2019)." ITNEXT. April 12, 2019. Accessed July 14, 2020. https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
+21. "OKD4 is now Generally Available." Red Hat OpenShift Blog. July 15, 2020. Accessed July 16, 2020. https://www.openshift.com/blog/okd4-is-now-generally-available
+22. "Guide to Installing an OKD 4.4 Cluster on your Home Lab." Red Hat OpenShift Blog. March 24, 2020. July 16, 2020. https://openshift.com/blog/guide-to-installing-an-okd-4-4-cluster-on-your-home-lab
