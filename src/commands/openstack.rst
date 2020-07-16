@@ -451,6 +451,9 @@ openstack undercloud
 
    install, install the Undercloud using the ~/undercloud.conf configuration file
    minion install, (>= Train) install Minion services (minimal Heat and Ironic) on another Undercloud node
+   upgrade, update the Undercloud to the latest minor version or upgrade to the latest major version (based on which packages are available)
+   upgrade --skip-package-updates, do not update the RPM packages (in case they have already been updated manually)
+   upgrade --no-validations, do not run upgrade validations
 
 openstack overcloud
 ~~~~~~~~~~~~~~~~~~~
@@ -496,6 +499,44 @@ openstack overcloud deploy
    :widths: 20, 20
 
    --stack production --templates /home/stack/templates -e /home/stack/templates/environments/low-memory.yaml, deploy an Overcloud stack named production that will use the default settings and low memory settings for the services
+
+openstack overcloud update
+''''''''''''''''''''''''''
+
+Handle minor version updates.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   prepare, Update the Heat stack based on the latest TripleO Heat templates.
+   run --limit <NODE>, Run the minor update Ansible tasks.
+   converge, Re-enable all of the original (non-update) Ansible tasks for the deployment.
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   run --limit all, Run the update on every node.
+
+openstack overcloud upgrade
+'''''''''''''''''''''''''''
+
+Handle major version upgrades.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   prepare, Update the Heat stack based on the latest TripleO Heat templates.
+   run --limit <NODE>, Run the major upgrade Ansible tasks.
+   converge, Re-enable all of the original (non-upgrade) Ansible tasks for the deployment.
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   run --limit Compute, Run the upgrade on all of the Compute nodes.
 
 openstack tripleo
 ~~~~~~~~~~~~~~~~~
