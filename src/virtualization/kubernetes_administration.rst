@@ -6,6 +6,9 @@ Kubernetes Administration
 Architecture
 ------------
 
+Kubernetes
+~~~~~~~~~~
+
 Kubernetes, also known as k8s, is an open-source container management platform. It handles the life-cycle of Pods which are a collection of related containers required to run an application. Kubernetes clusters contain two types of servers:
 
 -  Master = Manages the state of the Nodes and their Pods.
@@ -28,6 +31,66 @@ Node services:
 -  kube-proxy = Handles virtual networking connections for internal (containers across different Nodes) and external (Kubernetes Services) use.
 
 [1]
+
+OpenShift
+~~~~~~~~~
+
+The Red Hat OpenShift Container Platform (OCP) is an enterprise product based on Google's Kubernetes. [16] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [3]
+
+The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [4] OKD 4.5 was the first stable release for the 4.Y series. [21] It supports being deployed ontop of Red Hat CoreOS and Fedora CoreOS. [21]
+
+OpenShift has 3 primary architectures:
+
+-  Single Node (OKD only) = Proof-of-concept deployments with all OpenShift services running on a single Node.
+-  Three Node = Edge deployments using multiple Single Nodes.
+-  Full = Production deployments (recommended minimum requirements). [23]
+
+   -  x3 Control Nodes
+   -  x2 Logging and monitoring Nodes
+   -  x3 Routing Nodes
+   -  x2 Worker Nodes
+
+Node types and services:
+
+-  Control = These Nodes have to be deployed using Red Hat CoreOS (RHOCP) or Fedora CoreOS (OKD). [24] All other Nodes can use RHEL (RHOCP) or Fedora (OKD).
+
+   -  etcd
+   -  kube-api
+   -  kube-controller-manager
+
+-  Logging and Monitoring [25]
+
+   -  EFK stack
+
+      -  Fluentd = Log collection.
+      -  Elasticsearch = Log storage.
+      -  Kibana = Visualization.
+
+   -  Curator = Log filtering (based on timestamps) in OpenShift < 4.5.
+
+-  Router = This Node is optional and is combined with the Control Node by default. [26]
+
+   -  Ingress = HAProxy and/or F5 BIG-IP.
+
+-  Worker/Compute = The life-cycle of these Nodes are handled by the MachineSet API. Master nodes do not use the MachineSet API as to prevent accidental deletion of the control plane. [24]
+
+   -  CRI-O (container runtime)
+   -  kubelet
+
+Supported infrastructure for installing OpenShift on [27]:
+
+-  Public cloud
+
+   -  Amazon Web Services (AWS)
+   -  Google Compute Platform (GCP)
+   -  Microsoft Azure
+
+-  On-site
+
+   -  Bare metal
+   -  OpenStack
+   -  Red Hat Virtualization (RHV)
+   -  VMWare vSphere
 
 Releases
 --------
@@ -165,10 +228,6 @@ Release highlights:
 
 OpenShift
 ~~~~~~~~~
-
-The Red Hat OpenShift Container Platform (OCP) is an enterprise product based on Google's Kubernetes. [16] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [3]
-
-The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [4] OKD 4.5 was the first stable release for the 4.Y series. [21] It supports being deployed ontop of Red Hat CoreOS and Fedora CoreOS. [21]
 
 Below is a list of RHOCP and OKD versions that correspond with the upstream Kubernetes release. The RHOCP 4.0 release was skipped and used for internal testing only. RHOCP 4 introduced Operators and OperatorHub. It also requires all Master nodes to be installed on Red Hat CoreOS. [5]
 
@@ -554,3 +613,8 @@ Bibliography
 20. "Benchmark results of Kubernetes network plugins (CNI) over 10Gbit/s network (Updated: April 2019)." ITNEXT. April 12, 2019. Accessed July 14, 2020. https://itnext.io/benchmark-results-of-kubernetes-network-plugins-cni-over-10gbit-s-network-36475925a560
 21. "OKD4 is now Generally Available." Red Hat OpenShift Blog. July 15, 2020. Accessed July 16, 2020. https://www.openshift.com/blog/okd4-is-now-generally-available
 22. "Guide to Installing an OKD 4.4 Cluster on your Home Lab." Red Hat OpenShift Blog. March 24, 2020. July 16, 2020. https://openshift.com/blog/guide-to-installing-an-okd-4-4-cluster-on-your-home-lab
+23. "OpenShift 4.0 Infrastructure Deep Dive." YouTube - Rob Szumski. January 23, 2019. Accessed July 16, 2020. https://www.youtube.com/watch?v=Wi3QNi4zi_4
+24. "The OpenShift Container Platform control plane." Red Hat OpenShift Container Platform 4.5 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/architecture/control-plane.html
+25. "Understanding cluster logging." Red Hat OpenShift Container Platform 4.5 Documentation. Accessed July 16. https://docs.openshift.com/container-platform/4.5/logging/cluster-logging.html
+26. "Router Overview." Red Hat OpenShift Container Platform 3.11 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/3.11/install_config/router/index.html
+27. "Installation methods for different platforms." Red Hat OpenShift Container Platform 4.5. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/installing/install_config/installation-types.html
