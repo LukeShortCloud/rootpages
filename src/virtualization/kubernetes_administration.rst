@@ -35,7 +35,7 @@ Node services:
 OpenShift
 ~~~~~~~~~
 
-The Red Hat OpenShift Container Platform (OCP) is an enterprise product based on Google's Kubernetes. [16] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality. Only NFS is officially supported as the storage back-end. Other storage providers are marked as a "Technology Preview." [3]
+The Red Hat OpenShift Container Platform (RHOCP) is an enterprise product based on Google's Kubernetes. [16] It has a stronger focus on security with support for having access control lists (ACLs) for managing containers in separate projects and full SELinux support. It also provides more features to extend Kubernetes functionality.
 
 The Origin Kubernetes Distribution (OKD), originally known as OpenShift Origin, is the free and open source community edition of RHOCP. [4] OKD 4.5 was the first stable release for the 4.Y series. [21] It supports being deployed ontop of Red Hat CoreOS and Fedora CoreOS. [21]
 
@@ -91,6 +91,22 @@ Supported infrastructure for installing OpenShift on [27]:
    -  OpenStack
    -  Red Hat Virtualization (RHV)
    -  VMWare vSphere
+
+PersistentVolume support [3]:
+
+-  AWS Elastic Block Store (EBS)
+-  Azure Disk
+-  Azure File
+-  Cinder
+-  Container Storage Interface (CSI) = Any storage provider that uses CSI as a front-end can be used with OpenShift.
+-  Fibre Channel
+-  Google Compute Engine (GCE) Persistent Disk
+-  HostPath
+-  iSCSI
+-  Local volume
+-  NFS
+-  Red Hat OpenShift Container Storage (Ceph RBD)
+-  VMWare vSphere
 
 Releases
 --------
@@ -593,7 +609,7 @@ Bibliography
 
 1. "Kubernetes Components." Kubernetes Concepts. January 16, 2020. Accessed April 8, 2020. https://kubernetes.io/docs/concepts/overview/components/
 2. "The History of Kubernetes on a Timeline." RisingStack Blog. June 20, 2018. Accessed April 8, 2020. https://blog.risingstack.com/the-history-of-kubernetes/
-3. "Persistent Storage." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.com/enterprise/3.0/architecture/additional_concepts/storage.html
+3. "Understanding persistent storage." Red Hat OpenShift Container Platform 4.5 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/storage/understanding-persistent-storage.html
 4. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
 5. "Releases Notes. OpenShift Container Platform 4.1 Documentation. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/release_notes/index
 6. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed March 9, 2020. https://access.redhat.com/support/policy/updates/openshift
