@@ -708,6 +708,66 @@ Common miscellaneous providers:
 
 [43]
 
+OpenStack
+'''''''''
+
+Authentication via an existing `clouds.yaml <https://docs.openstack.org/python-openstackclient/train/configuration/index.html>`__:
+
+::
+
+   provider "openstack" {
+      cloud = "<CLOUD>"
+   }
+
+Authentication via Terraform configuration for Keystone v3:
+
+::
+
+   provider "openstack" {
+      project_name = "<PROJECT>"
+      project_domain_name = "<PROJECT_DOMAIN_NAME>"
+      user_name = "<USER>"
+      user_domain_name = "<USER_DOMAIN_NAME>"
+      password = "<PASSWORD>"
+      auth_url = "https://<CLOUD_HOSTNAME>:5000/v3"
+      region = "<REGION>"
+   }
+
+Common resources:
+
+-  openstack_blockstorage_volume_v3
+-  openstack_compute_flavor_v2
+-  openstack_compute_floatingip_associate_v2
+-  openstack_compute_instance_v2
+-  openstack_compute_keypair_v2
+-  openstack_compute_secgroup_v2
+-  openstack_compute_volume_attach_v2
+-  openstack_identity_project_v3
+-  openstack_identity_role_v3
+-  opentsack_identity_role_assignment_v3
+-  openstack_identity_user_v3
+-  openstack_images_image_v2
+-  openstack_networking_floatingip_v2
+-  openstack_networking_network_v2
+-  openstack_networking_router_v2
+-  openstack_networking_subnet_v2
+-  openstack_lb_loadbalancer_v2
+-  openstack_lb_listener_v2
+-  openstack_lb_pool_v2
+-  openstack_lb_member_v2
+-  openstack_fw_firewall_v1
+-  openstack_fw_policy_v1
+-  openstack_fw_rule_v1
+-  openstack_objectstorage_container_v1
+-  openstack_objectstorage_object_v1
+-  openstack_objectstorage_tempurl_v1
+-  openstack_sharedfilesystem_securityservice_v2
+-  openstack_sharedfilesystem_sharenetwork_v2
+-  openstack_sharedfilesystem_share_v2
+-  openstack_sharedfilesystem_access_v2
+
+[45]
+
 Vagrant
 ~~~~~~~
 
@@ -1285,3 +1345,4 @@ Bibliography
 42. "Install Terraform." HashiCorp Learn. Accessed July 8, 2020.https://learn.hashicorp.com/terraform/getting-started/install
 43. "Providers." Terraform CLI. Accessed July 8, 2020. https://www.terraform.io/docs/providers/index.html
 44. "Create a Terraform Module." Linode Guides & Tutorials. May 1, 2020. Accessed July 8, 2020. https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/
+45. "OpenStack Provider." Terraform Docs. Accessed July 18, 2020. https://www.terraform.io/docs/providers/openstack/index.html
