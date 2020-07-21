@@ -2275,6 +2275,12 @@ The configuration for OpenStack services are handled by Puppet (not Ansible).
    $ grep -r <VARIABLE> /usr/share/openstack-tripleo-heat-templates/deployment/*/*-puppet.yaml
    $ grep -r <VARIABLE> /usr/share/openstack-puppet/modules/
 
+The variables defined in TripleO Heat templates will be rendered as Puppet Hieradata to this location inside the OpenStack service's container and then applied by Puppet:
+
+::
+
+   /var/lib/config-data/<OPENSTACK_SERVICE>/etc/puppet/hieradata/service_configs.json
+
 This is the order in how to attempt modifying a variable. If it is not possible, then try the next one down. The deployment will fail if there is a duplicate declaration of a variable.
 
 1.  Use a Heat parameter if exposed via a deployment template
