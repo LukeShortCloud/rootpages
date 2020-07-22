@@ -354,17 +354,31 @@ If installing on RHEL, it is required to enable additional repositories [40]:
 
    -  Or ``tripleo-repos`` [22]:
 
-      .. code-block:: sh
+      -  CentOS 7 (<= Train):
 
-          $ sudo yum install "https://trunk.rdoproject.org/centos7/current/$(curl -k https://trunk.rdoproject.org/centos7/current/ | grep python2-tripleo-repos- | cut -d\" -f8)"
-          $ sudo tripleo-repos -b ${OPENSTACK_RELEASE} current-tripleo-rdo
+         .. code-block:: sh
+
+             $ sudo yum install "https://trunk.rdoproject.org/centos7/current-tripleo-rdo/$(curl -k https://trunk.rdoproject.org/centos7/current-tripleo-rdo/ | grep python2-tripleo-repos- | cut -d\" -f8)"
+
+      -  CentOS 8 (>= Train):
+
+         .. code-block:: sh
+
+            $ sudo yum install "https://trunk.rdoproject.org/centos8-${OPENSTACK_RELEASE}/component/tripleo/current-tripleo-rdo/$(curl -k  https://trunk.rdoproject.org/centos8-${OPENSTACK_RELEASE}/component/tripleo/current-tripleo-rdo/ | grep "python3-tripleo-repos" | cut -d\" -f8)"
+
+      -  Setup the TripleO repositories:
+
+         .. code-block:: sh
+
+            $ sudo tripleo-repos -b ${OPENSTACK_RELEASE} current-tripleo-rdo
 
    -  Or manually:
 
       .. code-block:: sh
 
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/current-tripleo-rdo/delorean.repo
-          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos7-${OPENSTACK_RELEASE}/delorean-deps.repo
+          $ EL_VER="8"
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos${EL_VER}-${OPENSTACK_RELEASE}/current-tripleo-rdo/delorean.repo
+          $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos${EL_VER}-${OPENSTACK_RELEASE}/delorean-deps.repo
 
    -  Create a container image prepare file that uses the ``current-tripleo`` (default) or ``current-tripleo-rdo`` tag. Configure the ``undercloud.conf`` to use this file via the ``container_images_file`` parameter. Configure the Overcloud to use it by adding it as another Heat environment template: ``openstack overcloud deploy --templates -e ~/containers-prepare-parameters.yaml``.
 
