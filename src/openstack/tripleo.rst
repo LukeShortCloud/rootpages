@@ -298,13 +298,27 @@ The upstream TripleO project has three main repositories for each OpenStack rele
    "Testing, Test, or Buildlogs", Medium, Pre-production
    "Trunk, Current, Consistent, or Untested", Low, Development
 
-If installing on RHEL, it is required to enable additional repositories [40]:
+If installing on RHEL, it is required to enable additional repositories:
 
-   -  RHEL 7:
+   -  RHEL 7 [40]:
 
       .. code-block:: sh
 
+         $ sudo subscription-manager repos --disable=*
          $ sudo subscription-manager repos --enable rhel-7-server-rpms --enable rhel-7-server-rh-common-rpms --enable rhel-7-server-extras-rpms
+
+   -  RHEL 8 [74]:
+
+      .. code-block:: sh
+
+         $ sudo subscription-manager repos --disable=*
+         $ sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-eus-rpms --enable=rhel-8-for-x86_64-appstream-eus-rpms --enable=rhel-8-for-x86_64-highavailability-eus-rpms --enable=ansible-2-for-rhel-8-x86_64-rpms --enable=fast-datapath-for-rhel-8-x86_64-rpms
+
+If installing on CentOS 8, it is required to enable the high availability repository.
+
+.. code-block:: sh
+
+   $ sudo dnf config-manager --set-enabled  HighAvailability
 
 -  **GA**:
 
@@ -3272,3 +3286,4 @@ Bibliography
 71. "Deploying a UPI environment for OpenShift 4.1 on VMs and Bare Metal." Red Hat OpenShift Blog. July 15, 2019. Accessed June 30, 2020. https://www.openshift.com/blog/deploying-a-upi-environment-for-openshift-4-1-on-vms-and-bare-metal
 72. "OpenStack UPI." GitHub openshift/enhancements. September 18, 2019. Accessed June 30, 2020. https://github.com/openshift/enhancements/blob/master/enhancements/installer/openstack-upi.md
 73. "Reference Architectures 2020 Deploying Red Hat OpenShift Container Platform 4.4 on Red Hat OpenStack Platform 13 and 16.0." Red Hat OpenShift Resources. Accessed June 30, 2020. https://www.redhat.com/cms/managed-files/cl-openshift-container-platform-4-4-on-openstack-platform-13-16-reference-architecture-f23768-202005-en.pdf
+74. "Quick Start Guide Red Hat OpenStack Platform 16.1-Beta." Red Hat Documentation. Accessed July 23, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.1-beta/html-single/quick_start_guide/index
