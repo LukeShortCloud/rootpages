@@ -415,6 +415,144 @@ Common formats:
 
 [3]
 
+Templating
+----------
+
+Go provides it's own templating domain specific language (DSL). These templates can be manipulated and rendered using the `text/template <https://golang.org/pkg/text/template/>`__ package.
+
+Functions
+~~~~~~~~~
+
+Data interpretation:
+
+-  call = Execute a specified function and optionally provide arugments to it.
+-  index = Provide the value of a variable at a specified index.
+-  len = Provide the length of a list or map variable.
+-  slice = Provide the value of a variable slice.
+
+Print:
+
+-  html = Provide a HTML-escaped string.
+-  js = Provide a JSON-escaped string.
+-  urlquery = Provide a HTML-escaped URL string.
+-  print = Print using ``fmt.Sprint()``.
+-  printf = Print with formatting using ``fmt.Sprintf()``.
+-  println = Print with newline characters using ``fmt.Sprintln()``.
+
+Operators:
+
+-  Binary/Comparison
+
+   -  eq = Equal to.
+   -  ne = Neither to.
+   -  lt = Less than.
+   -  le = Less than or equal to.
+   -  gt = Greater than.
+   -  ge = Greater than or equal to.
+
+-  Logical
+
+   -  and
+   -  not
+   -  or
+
+[27]
+
+Usage and Examples
+~~~~~~~~~~~~~~~~~~
+
+Create a no-operation comment.
+
+::
+
+   {{ /* <COMMENT> */ }}
+
+Reference the value provided to the template.
+
+::
+
+   {{ . }}
+
+Reference the value of a variable in a map provided to the template.
+
+::
+
+   {{ .<VARIABLE> }}
+   {{ .<VARIABLE>.<KEY1>.<KEY2> }}
+
+Use a binary or logical operator.
+
+::
+
+   {{ if <OPERATOR> <VARIABLE_1> <VARIABLE_2> }}
+
+Check if a variable is defined (not ``nil``).
+
+::
+
+   {{ if .<VARIABLE> }}
+
+Use an ``if`` conditional statement.
+
+::
+
+   {{ if <LOGIC> }}
+   {{ else if <LOGIC> }}
+   {{ else }}
+   {{ end }}
+
+Reference the value of the map, slice, or array at the specified index.
+
+::
+
+   {{ index .<VARIABLE> <INDEX> }}
+
+Find the length of a variable.
+
+::
+
+   {{ len .<VARIABLE_LIST> }}
+
+Save the length to a variable to be used later.
+
+::
+
+   {{ $var_length := len .<VARIABLE_LIST> }}
+
+See if the length of the variable is 10.
+
+::
+
+   {{ if eq $var_length 10 }}
+
+Loop through a list.
+
+::
+
+   {{ with .<VARIABLE_LIST> }}
+       {{ range . }}
+       {{ .Name }}
+   {{ end }}
+
+Define a template in one file and then use it in another.
+
+::
+
+  {{ define "<NESTED_TEMPLATE_NAME>" }}
+  {{ end }}
+
+::
+
+   {{ template "<NESTED_TEMPLATE_NAME>" }}
+
+Use a variable from another template.
+
+::
+
+   {{ template "<NESTED_TEMPLATE_NAME>" .<VARIABLE> }}
+
+[27][28][29]
+
 Arithmetic Math
 ---------------
 
@@ -1110,3 +1248,6 @@ Bibliography
 24. "Lesser-Known Features of Go Test." Splice Blog. September 3, 2014. Accessed May 18, 2020. https://splice.com/blog/lesser-known-features-go-test/
 25. "Default value in Go's method." Stack Overflow. September 7, 2018. Accessed May 19, 2020. https://stackoverflow.com/questions/19612449/default-value-in-gos-method
 26. "Naming Rules." GitHub unknown/go-code-convention. November 6, 2015. Accessed May 26, 2020. https://github.com/unknwon/go-code-convention/blob/master/en-US/naming_rules.md
+27. "Package template." The Go Programming Language. Accessed July 30, 2020. https://golang.org/pkg/text/template/
+28. "Using Go Templates." Gopher Academy Blog. December 27, 2017. Accessed July 30, 2020. https://blog.gopheracademy.com/advent-2017/using-go-templates/
+29. "Golang Templates Cheatsheet." Curtis Vermeeren. September 14, 2017. Accessed July 30, 2020. https://curtisvermeeren.github.io/2017/09/14/Golang-Templates-Cheatsheet
