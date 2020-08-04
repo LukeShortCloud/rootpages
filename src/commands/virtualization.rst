@@ -69,7 +69,9 @@ Package: docker
    "stop", "shutdown a container"
    "stop $(docker ps -aq)", "stop all containers"
    "logs", "view the standard output from a running docker container"
-   logs -f, tail the current standard output stream in real-time
+   logs -c <CONTAINER> <POD>, show the logs from a specific container
+   logs -p <POD>, show the logs from the previously terminated container
+   logs -f <POD>, tail the current standard output stream in real-time
    "{-v,--volume} <SOURCE>:<DESTINATION>", "bind mount a folder from the host node to a folder inside of the container for persistent storage"
    "{images|ps} {-q,--quiet,--quiet=true}", "list only IDs for images or running containers"
    "{-f,--force}", "force an action"
@@ -137,12 +139,19 @@ Manage Kubernetes resources via the API.
    api-resources --verb={create|delete|deletecollection|get|list|patch|update|watch}, show APIs that support the ``kubectl <VERB>``
    explain --recursive <API>, explain all of the options for creating an object from that API
    explain <API>.spec, show all of the top-level spec options for the API
+   edit <API> <OBJECT>, edit an existing object's YAML manifest
    "cluster-info", "show the clustered services and their status"
    "get nodes", "show all of the Nodes in the Kubernetes cluster"
-   "run <NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
+   "run <POD_NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
    "get <RESOURCE_API>", show all of the objects created using a specific API
+   get <API> -w, watch/refresh the output of getting all objects from an API
+   get <API> --show-kind, show the kind of each object
+   get <API> --show-labels, show all of the labels for each object
+   "{annotate,label} <API> <OBJECT> <KEY>=<VALUE>", add an annotation or label to an existing object
+   "{annotate,label} <API> <OBJECT> <KEY>-", remove an annotation or label key-value pair
    "describe pods <POD>", describe the settings for a specific pod
    "delete pods <POD>", "delete a pod"
+   delete pod <POD> --wait=0, start the deletion of a Pod and then return to the command prompt
    "proxy", "create a proxy from your hypervisor to be able to access the private network that the containers share"
    "attach <NAME> -i", "attach to a already running container"
    logs <POD> <CONTAINER>, show logs for a specific container
@@ -155,15 +164,23 @@ Manage Kubernetes resources via the API.
    get <API> --show-labels, show all labels in use
    get <API> [--selector|-l] "<KEY>=<VALUE>", lookup all objects with the specified label
    get all --all-namespaces, show every object on the Kubernetes cluster
+   get <API> --sort-by=.metadata.name, list resources by name
+   get <API> --sort-by=.metadata.creationTimestamp, list resources by creation date and time
    delete <API> <OBJECT>, delete an object
+   delete <API> --all, delete all objects from a specific API
    apply -f <FILE_DIR_OR_URL>, apply a declarative configuration file
    diff -f <FILE_DIR_OR_URL>, show the difference between the live object configuration and the specified object configuration
+   "scale {deploy,rs,sc,sts} <OBJECT> --replicas=<REPLICAS>", change the amount of replicas
+   "rollout {history,pause,restart,resume,status,undo} {deploy,ds,sts} <OBJECT>", view or change a deployment rollout
+   taint node <NODE> <KEY>=<VALUE>:<EFFECT>, add a taint to a Node
+   taint nodes -l <LABEL_KEY>=<LABEL_VALUE> <TAINT_KEY>=<TAINT_VALUE>:<EFFECT>, add a taint to Nodes that have the specified label
 
 .. csv-table::
    :header: Example, Explanation
    :widths: 20, 20
 
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/sh", "start a Pod with a single container and enter into it via a Bash shell"
+   run <POD_NAME> --restart=Never --rm -it -- <COMMAND> <ARG1>, run a container once and then delete it
 
 minikube
 ~~~~~~~~
