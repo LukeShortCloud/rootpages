@@ -480,6 +480,18 @@ For storage, k3s supports all of the stable Container Storage Interface (CSI) an
 Minishift
 ~~~~~~~~~
 
+Requirements:
+
+-  Minimum
+
+   -  2 CPU cores
+   -  4 GB RAM
+
+-  `Recommended <https://github.com/minishift/minishift/issues/3217#issuecomment-533769748>`__
+
+   -  4 CPU cores
+   -  8 GB RAM
+
 Minishift deploys a virtual machine with OpenShift pre-installed as a test environment for developers. This is only supported on x86_64 processors.
 
 **Install (Fedora):**
@@ -491,18 +503,24 @@ Minishift deploys a virtual machine with OpenShift pre-installed as a test envir
     $ MINISHIFT_VER=1.34.2
     $ wget https://github.com/minishift/minishift/releases/download/v${MINISHIFT_VER}/minishift-${MINISHIFT_VER}-linux-amd64.tgz
     $ tar -v -x -f minishift-${MINISHIFT_VER}-linux-amd64.tgz
-    $ curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
+    $ sudo curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 -o /usr/local/bin/docker-machine-driver-kvm
     $ sudo chmod 0755 /usr/local/bin/docker-machine-driver-kvm
     $ wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
-    $ tar -v -x -f openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz$
+    $ tar -v -x -f openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
     $ sudo cp openshift-origin-client-tools-v3.11.0*/oc /usr/local/bin/
     $ cd ./minishift-${MINISHIFT_VER}-linux-amd64/
     $ ./minishift openshift version list
     $ ./minishift start --openshift-version v3.11.0
 
+-  Optionally access the virtual machine.
+
+.. code-block:: sh
+
+   $ ./minishift ssh
+
 [12][13]
 
-**Install (RHEL):**
+**Install (RHEL 7):**
 
 Enable the Red Hat Developer Tools repository first. Then Minishift can be installed.
 
