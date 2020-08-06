@@ -741,6 +741,16 @@ Requirements:
 -  8GB RAM
 -  50GB storage
 
+OpenStack services:
+
+-  Cinder
+-  Glance
+-  Keystone
+-  Neutron
+-  Nova
+-  Placement
+-  Swift
+
 Starting with Rocky, an all-in-one cloud can be deployed without the need of an Undercloud. This is known as a Standalone deployment and it is almost exactly the same as an Undercloud deployment. It deploys a fully functional Overcloud onto the local server. Unlike a typical Overcloud deployment, Mistral is not used. Instructions on how to setup a Standalone cloud are documented `here <https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/standalone.html>`__.
 
 After the installation, the config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``. The Standalone deployment does not support being scaled out and is designed specifically for developers as an alternative to `devstack <https://docs.openstack.org/devstack/latest/>`__.
