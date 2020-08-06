@@ -755,6 +755,17 @@ Starting with Rocky, an all-in-one cloud can be deployed without the need of an 
 
 After the installation, the config-download Ansible playbooks will be available in the home directory as ``undercloud-ansible-<UUID>``. The Standalone deployment does not support being scaled out and is designed specifically for developers as an alternative to `devstack <https://docs.openstack.org/devstack/latest/>`__.
 
+By default, some services, such as Heat, are disabled. Use this template to re-enable it.
+
+.. code-block:: yaml
+
+   ---
+   resource_registry:
+     OS::TripleO::Services::HeatApi: /usr/share/openstack-tripleo-heat-templates/deployment/heat/heat-api-container-puppet.yaml
+     OS::TripleO::Services::HeatApiCfn: /usr/share/openstack-tripleo-heat-templates/deployment/heat/heat-api-cfn-container-puppet.yaml
+     OS::TripleO::Services::HeatApiCloudwatch: /usr/share/openstack-tripleo-heat-templates/deployment/heat/heat-api-cloudwatch-disabled-puppet.yaml
+     OS::TripleO::Services::HeatEngine: /usr/share/openstack-tripleo-heat-templates/deployment/heat/heat-engine-container-puppet.yaml
+
 **Updates**
 
 These steps apply to both Undercloud and Standalone cloud deployments.
