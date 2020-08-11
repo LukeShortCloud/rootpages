@@ -28,7 +28,7 @@ SCRUM
 -  Kanban board = A board of tasks organized into three categories: "to do", "in progress", and "completed." Tasks in the "in progress" category have to be actively worked on. A major goal should be sorted into many small tasks that need to be accomplished to reach it.
 
 Technical Design Document
---------------------------
+-------------------------
 
 A technical design document verbosely explains exactly how a program will work (in the present tense) and why the program is needed and precisely how it will be created. This also helps to define unit tests. The document should describe:
 
@@ -44,8 +44,8 @@ A technical design document verbosely explains exactly how a program will work (
 
 [2]
 
-Integrated Development Environments
------------------------------------
+Integrated Development Environments (IDEs)
+------------------------------------------
 
 Integrated development environments are text editors that assist with programming. These usually provide syntax highlighting, styling recommendations, function recommendations/auto-complete, and shortcuts to quickly build and test applications.
 
@@ -64,6 +64,111 @@ Common IDEs:
 -  Python
 
    -  `PyCharm <https://www.jetbrains.com/pycharm/>`__
+
+code-server
+~~~~~~~~~~~
+
+Minimum requirements:
+
+-  2 CPU cores
+-  1 GB RAM
+
+code-server is a service developed by Coder that hosts a remote session of Microsoft Visual Studio Code. This allows developers to install their dependencies for their application development in a remote environment and are able to access it from anywhere.
+
+Installation
+^^^^^^^^^^^^
+
+-  Package Manager
+
+   -  Set a version to download from code-server's `GitHub release page <https://github.com/cdr/code-server/releases>`__.
+
+      .. code-block:: sh
+
+         $ export CODE_SERVER_VER="3.4.1"
+
+   -  Fedora and EL:
+
+      .. code-block:: sh
+
+         $ curl -LO https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VER}/code-server-${CODE_SERVER_VER}-amd64.rpm
+
+   -  Debian and Ubuntu:
+
+      .. code-block:: sh
+
+         $ curl -LO https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VER}/code-server_${CODE_SERVER_VER}_amd64.deb
+
+-  Container
+
+   -  The official code-server 3.4.Z containers are based on Debian 10 Buster.
+
+      .. code-block:: sh
+
+         $ {docker,podman} run --network host -it -p 127.0.0.1:8080:8080 -v "$PWD:/home/coder/project" -u "$(id -u):$(id -g)"codercom/code-server:latest
+
+-  Ansible
+
+   -  The `testcab/ansible-role-code-server <https://github.com/testcab/ansible-role-code-server>`__ project provides the most complete and up-to-date Ansible role for installing and configuring code-server.
+
+[20]
+
+Configuration
+^^^^^^^^^^^^^
+
+All of the configuration is handled via the ``coder-server`` binary.
+
+Server process arguments:
+
+-  --auth {password,none} = The password authentication to use for the web dashboard.
+-  --bind-addr <IP>:<PORT> = Default: ``127.0.0.1:8080``. The address and port to bind to.
+-  --cert = Default is ``false`` which will generate a self-signed certificate. The TLS certificate to use.
+-  --cert-key = The TLS certificate key to use.
+-  --config = The configuration file to use.
+-  --open = Open the web browser when the server is started.
+-  --password = Password for the web dashboard.
+-  --proxy-domain = The domain to proxy ports through.
+-  --socket = Create and use a UNIX socket instead of a network address and port.
+-  --verbose
+-  --version
+
+Visual Studio Code arguments:
+
+-  --disable-telemetry = Prevent metrics and usage from being sent to Microsoft.
+-  --extensions-dir = The directory of where extensions will be installed to.
+-  --force = Automatically accept all prompts for extension installations.
+-  --install-extension <ID> = Install a new extension.
+-  --list-extensions = List all of the installation extensions.
+-  --show-versions = Show the extension versions.
+-  --uninstall-extension <ID> = Uninstall an extension.
+-  --user-data-dir = The directory that should store the user configuration settings for VS Code.
+
+The default location for the configuration file at ``~/.config/code-server/config.yaml``. YAML key-value pairs can be provided for any of the ``code-server --help`` arguments. An example configuration file is provided below.
+
+.. code-block:: yaml
+
+   ---
+   bind-addr: 127.0.0.1:8080
+   auth: password
+   password: 1746aeeb3c463b9aaa925fce
+   cert: false
+
+By default, code-server only listens to 127.0.0.1 (localhost) on port 8080. This can be changed to listen on all IP addresses on the system.
+
+.. code-block:: sh
+
+   $ code-server --bind-addr 0.0.0.0:8080
+
+A password can be configured a few different ways.
+
+.. code-block:: sh
+
+   $ export PASSWORD='<PASSWORD>'
+
+.. code-block:: sh
+
+   $ code-server --password='<PASSWORD>'
+
+[20]
 
 Source Control Management
 -------------------------
@@ -639,3 +744,4 @@ Bibliography
 17. "Using CALMS to Assess an Organization’s DevOps." DevOps.com. May 25, 2018. Accessed June 10, 2019. https://devops.com/using-calms-to-assess-organizations-devops/
 18. "A beginner's guide to Big O notation." Rob-Bell.net. June 23, 2009. Accessed July 9, 2019. https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/
 19. "How to Write a Git Commit Message." Chris Beams. August 31, 2014. Accessed May 26, 2020. https://chris.beams.io/posts/git-commit/
+20. "cdr/code-server." GitHub. August 10, 2020. Accessed August 10, 2020. https://github.com/cdr/code-server
