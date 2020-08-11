@@ -551,6 +551,15 @@ Use a variable from another template.
 
    {{ template "<NESTED_TEMPLATE_NAME>" .<VARIABLE> }}
 
+Loop through every field in each list item.
+
+::
+
+   {{ range .<VARIABLE_LIST> }}
+       {{ .<KEY1> }}
+       {{ .<KEY2> }}
+   {{ end }}
+
 [27][28][29]
 
 Arithmetic Math
