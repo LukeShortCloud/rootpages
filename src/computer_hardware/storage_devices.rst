@@ -21,6 +21,11 @@ HDD Magnetic Recording
 
 Magnetic hard drives use one of two different technologies for writing data: Conventional Magnetic Recording (CMR) or Shingled Magnetic Recording (SMR). CMR provides lower storage space but signifcantly faster write speeds. This is ideal for most use cases. SMR provides higher storage space but signifcantly slower write speeds. It should only be used for long-term storage. It is known to be extremely slow for RAID and NAS usage. [1]
 
+NAND Flash Types
+----------------
+
+All SSDs (including NVMe) use a specific type of NAND flash: single-level cell (SLC), multi-level cell (MLC), triple-level (TLC), quad-level cell (QLC), or penta-level cell (PLC). These describe how many bits are stored in each cell. A higher amount of bits leads to higher storage capacity, lower the reliability (if a cell dies then more bits are lost), lower life span (more writes happen on each cell), and slower speed (more bits need to be written to store data). The most common type in 2019 is TLC. [2]
+
 History
 -------
 
@@ -30,3 +35,4 @@ Bibliography
 ------------
 
 1. "Buyer beware—that 2TB-6TB “NAS” drive you’ve been eyeing might be SMR." Ars Technica. April 17, 2020. Accessed August 12, 2020. https://arstechnica.com/gadgets/2020/04/caveat-emptor-smr-disks-are-being-submarined-into-unexpected-channels/
+2. "Multi-Layer SSDs: What Are SLC, MLC, TLC, QLC, and PLC?." How-To Geek. October 28, 2019. Accessed August 12, 2020. https://www.howtogeek.com/444787/multi-layer-ssds-what-are-slc-mlc-tlc-qlc-and-mlc/
