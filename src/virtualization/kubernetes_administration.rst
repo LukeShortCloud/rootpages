@@ -546,6 +546,52 @@ For installing newer versions of Minishift, the old environment must be wiped fi
 
 [17]
 
+CodyReady Containers
+~~~~~~~~~~~~~~~~~~~~
+
+Requirements:
+
+-  4 CPU cores
+-  9 GB RAM
+-  35 GB of storage
+-  Operating system: Enterprise Linux >= 7.5 or Fedora
+
+`Red Hat CodyReady Containers (CRC) <https://github.com/code-ready/crc>`__ deploys a minimal RHOCP 4 environment into a virtual machine without machine-config and monitoring services. It requires a free developer account from Red Hat to download the ``crc`` binary and copy the pull secret from `here <https://cloud.redhat.com/openshift/install/crc/installer-provisioned>`__.
+
+.. code-block:: sh
+
+    $ tar -x -v -f ~/Downloads/crc-linux-amd64.tar.xz
+    $ mv ~/Downloads/crc-linux-*-amd64/crc ~/.local/bin/
+
+Delete any existing CRC virtual machines if they exist, prepare the hypervisor, and then start a new OpenShift virtual machine. All installation files are stored in ``~/.crc``.
+
+.. code-block:: sh
+
+   $ crc delete
+   $ crc setup
+   $ crc start
+   ? Image pull secret <PASTE_PULL_SECRET_HERE>
+
+Find the path to the ``oc`` binary to use.
+
+.. code-block:: sh
+
+   $ crc oc-env
+
+Optionally log into the virtual machine.
+
+.. code-block:: sh
+
+   $ crc console
+
+Stop the virtual machine at any time.
+
+.. code-block:: sh
+
+   $ crc stop
+
+[28]
+
 OpenShift Ansible
 ~~~~~~~~~~~~~~~~~
 
@@ -652,3 +698,4 @@ Bibliography
 25. "Understanding cluster logging." Red Hat OpenShift Container Platform 4.5 Documentation. Accessed July 16. https://docs.openshift.com/container-platform/4.5/logging/cluster-logging.html
 26. "Router Overview." Red Hat OpenShift Container Platform 3.11 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/3.11/install_config/router/index.html
 27. "Installation methods for different platforms." Red Hat OpenShift Container Platform 4.5. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/installing/install_config/installation-types.html
+28. "Getting Started Guide." crc. Accessed August 13, 2020. https://code-ready.github.io/crc/
