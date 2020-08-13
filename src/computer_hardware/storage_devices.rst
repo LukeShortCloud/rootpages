@@ -1,6 +1,8 @@
 Storage Devices
 ===============
 
+.. contents:: Table of Contents
+
 Types and Speed
 ---------------
 
