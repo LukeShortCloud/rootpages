@@ -1614,6 +1614,126 @@ Pod running on a specific Node based on the Node's hostname.
      nodeSelector:
        kubernetes.io/hostname: worker04
 
+OpenShift
+~~~~~~~~~
+
+These APIs are only available on OpenShift. [28]
+
+-  Alertmanager monitoring.coreos.com/v1
+-  APIServer config.openshift.io/v1
+-  AppliedClusterResourceQuota quota.openshift.io/v1
+-  Authentication config.openshift.io/v1
+-  Authentication operator.openshift.io/v1
+-  BrokerTemplateInstance template.openshift.io/v1
+-  Build build.openshift.io/v1
+-  Build config.openshift.io/v1
+-  BuildConfig build.openshift.io/v1
+-  CatalogSource operators.coreos.com/v1alpha1
+-  ClusterAutoscaler autoscaling.openshift.io/v1
+-  ClusterOperator config.openshift.io/v1
+-  ClusterResourceQuota quota.openshift.io/v1
+-  ClusterRole authorization.openshift.io/v1
+-  ClusterRoleBinding authorization.openshift.io/v1
+-  ClusterServiceVersion operators.coreos.com/v1alpha1
+-  ClusterVersion config.openshift.io/v1
+-  Config imageregistry.operator.openshift.io/v1
+-  Config operator.openshift.io/v1
+-  Config samples.operator.openshift.io/v1
+-  Console config.openshift.io/v1
+-  Console operator.openshift.io/v1
+-  ConsoleCLIDownload console.openshift.io/v1
+-  ConsoleExternalLogLink console.openshift.io/v1
+-  ConsoleLink console.openshift.io/v1
+-  ConsoleNotification console.openshift.io/v1
+-  ConsoleYAMLSample console.openshift.io/v1
+-  ContainerRuntimeConfig machineconfiguration.openshift.io/v1
+-  ControllerConfig machineconfiguration.openshift.io/v1
+-  CredentialsRequest cloudcredential.openshift.io/v1
+-  CSISnapshotController operator.openshift.io/v1
+-  DeploymentConfig apps.openshift.io/v1
+-  DNS config.openshift.io/v1
+-  DNS operator.openshift.io/v1
+-  DNSRecord ingress.operator.openshift.io/v1
+-  EgressNetworkPolicy network.openshift.io/v1
+-  Etcd operator.openshift.io/v1
+-  FeatureGate config.openshift.io/v1
+-  Group user.openshift.io/v1
+-  HostSubnet network.openshift.io/v1
+-  Identity user.openshift.io/v1
+-  Image config.openshift.io/v1
+-  Image image.openshift.io/v1
+-  ImageContentSourcePolicy operator.openshift.io/v1alpha1
+-  ImagePruner imageregistry.operator.openshift.io/v1
+-  ImageSignature image.openshift.io/v1
+-  ImageStream image.openshift.io/v1
+-  ImageStreamImage image.openshift.io/v1
+-  ImageStreamImport image.openshift.io/v1
+-  ImageStreamMapping image.openshift.io/v1
+-  ImageStreamTag image.openshift.io/v1
+-  ImageTag image.openshift.io/v1
+-  Infrastructure config.openshift.io/v1
+-  Ingress config.openshift.io/v1
+-  IngressController operator.openshift.io/v1
+-  InstallPlan operators.coreos.com/v1alpha1
+-  KubeAPIServer operator.openshift.io/v1
+-  KubeControllerManager operator.openshift.io/v1
+-  KubeletConfig machineconfiguration.openshift.io/v1
+-  KubeScheduler operator.openshift.io/v1
+-  KubeStorageVersionMigrator operator.openshift.io/v1
+-  LocalResourceAccessReview authorization.openshift.io/v1
+-  LocalSubjectAccessReview authorization.openshift.io/v1
+-  Machine machine.openshift.io/v1beta1
+-  MachineAutoscaler autoscaling.openshift.io/v1beta1
+-  MachineConfig machineconfiguration.openshift.io/v1
+-  MachineConfigPool machineconfiguration.openshift.io/v1
+-  MachineHealthCheck machine.openshift.io/v1beta1
+-  MachineSet machine.openshift.io/v1beta1
+-  NetNamespace network.openshift.io/v1
+-  Network config.openshift.io/v1
+-  Network operator.openshift.io/v1
+-  OAuth config.openshift.io/v1
+-  OAuthAccessToken oauth.openshift.io/v1
+-  OAuthAuthorizeToken oauth.openshift.io/v1
+-  OAuthClient oauth.openshift.io/v1
+-  OAuthClientAuthorization oauth.openshift.io/v1
+-  OpenShiftAPIServer operator.openshift.io/v1
+-  OpenShiftControllerManager operator.openshift.io/v1
+-  OperatorGroup operators.coreos.com/v1
+-  OperatorHub config.openshift.io/v1
+-  OperatorSource operators.coreos.com/v1
+-  PackageManifest packages.operators.coreos.com/v1
+-  PodMonitor monitoring.coreos.com/v1
+-  PodSecurityPolicyReview security.openshift.io/v1
+-  PodSecurityPolicySelfSubjectReview security.openshift.io/v1
+-  PodSecurityPolicySubjectReview security.openshift.io/v1
+-  Profile tuned.openshift.io/v1
+-  Project config.openshift.io/v1
+-  Project project.openshift.io/v1
+-  ProjectRequest project.openshift.io/v1
+-  Prometheus monitoring.coreos.com/v1
+-  PrometheusRule monitoring.coreos.com/v1
+-  Proxy config.openshift.io/v1
+-  RangeAllocation security.openshift.io/v1
+-  ResourceAccessReview authorization.openshift.io/v1
+-  Role authorization.openshift.io/v1
+-  RoleBinding authorization.openshift.io/v1
+-  RoleBindingRestriction authorization.openshift.io/v1
+-  Route route.openshift.io/v1
+-  Scheduler config.openshift.io/v1
+-  SecurityContextConstraints security.openshift.io/v1
+-  SelfSubjectRulesReview authorization.openshift.io/v1
+-  ServiceCA operator.openshift.io/v1
+-  ServiceMonitor monitoring.coreos.com/v1
+-  SubjectAccessReview authorization.openshift.io/v1
+-  SubjectRulesReview authorization.openshift.io/v1
+-  Subscription operators.coreos.com/v1alpha1
+-  Template template.openshift.io/v1
+-  TemplateInstance template.openshift.io/v1
+-  ThanosRuler monitoring.coreos.com/v1
+-  Tuned tuned.openshift.io/v1
+-  User user.openshift.io/v1
+-  UserIdentityMapping user.openshift.io/v1
+
 Third-Party
 ~~~~~~~~~~~
 
@@ -2166,3 +2286,4 @@ Bibliography
 25. "Ingress Controllers." Kubernetes Concepts. May 30, 2020. Accessed June 28, 2020. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
 26. "Namespaces." Kubernetes Concepts. June 22, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 27. "Labels and Annotations." Helm Docs. Accessed June 30, 2020. https://helm.sh/docs/chart_best_practices/labels/
+28. "API List." OpenShift Container Platform 4.5 Documentation. Accessed August 12, 2020. https://docs.openshift.com/container-platform/4.5/rest_api/index.html
