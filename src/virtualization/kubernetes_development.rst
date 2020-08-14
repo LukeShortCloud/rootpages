@@ -1844,6 +1844,39 @@ These APIs are only available on OpenShift. [28]
 -  User user.openshift.io/v1
 -  UserIdentityMapping user.openshift.io/v1
 
+Template
+^^^^^^^^
+
+-  API group / version (latest): v1
+-  Shortname: (None)
+-  Namespaced: true
+
+A Template provides a way to create more than one object using a single manifest. It also supports being passed parameters to customize the Template. This API is similar in scope to Helm in the sense that it is a package manager for OpenShift.
+
+----
+
+``template:``
+
+-  metadata
+
+   -  annotations (map of strings)
+
+      -  openshift.io/display-name (string) = The human friendly name of the Template to display.
+      -  description (string)  = A short description of the Template.
+      -  openshift.io/long-description = A long description of the Template.
+      -  tags (string) = A comma-separated list of descriptive tags for what the Template provides.
+      -  iconClass (string) = The name of the icon to use for the Template.
+      -  openshift.io/provider-display-name (string) = The name of the developer or company that created the Template.
+      -  openshift.io/documentation-url (string) = The documentation URL.
+      -  openshift.io/support-url (string) = The support URL.
+      -  message (string) = The message to display after the Template has been created.
+
+-  labels (map of strings) = Key-value pair labels to apply to all objects created from this Template.
+-  objects (list of maps) = A list of manifests to create. Variables can be set in here.
+-  parameters (list of maps) = A list of variables that can be set by end-users and replaced in the ``template.objects`` section.
+
+[29]
+
 (Common Reoccuring Fields)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2282,3 +2315,4 @@ Bibliography
 26. "Namespaces." Kubernetes Concepts. June 22, 2020. Accessed June 30, 2020. https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 27. "Labels and Annotations." Helm Docs. Accessed June 30, 2020. https://helm.sh/docs/chart_best_practices/labels/
 28. "API List." OpenShift Container Platform 4.5 Documentation. Accessed August 12, 2020. https://docs.openshift.com/container-platform/4.5/rest_api/index.html
+29. "Templates." OpenShift Container Platform 3.11 Documentation. Accessed August 14, 2020.  https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html
