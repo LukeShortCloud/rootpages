@@ -200,7 +200,7 @@ oc
 
 Package: origin-clients (upstream)
 
-Create and manage OpenShift clusters.
+Create and manage OpenShift clusters. Many arguments are inherited from ``kubectl``. Unique OpenShift arguments are documented below.
 
 .. csv-table::
    :header: Usage, Explanation
@@ -209,6 +209,23 @@ Create and manage OpenShift clusters.
    "cluster up", "spin up OpenShift Origin"
    "cluster up --public-hostname <IP>", "specify the IP to bind to for OpenShift Origin"
    "cluster down", "remove OpenShift Origin"
+   new-project, create a new Project object
+   new-app --docker-image=<IMAGE>, create a new Pod using an existing container image
+   new-app <GIT_URL>#docker-build --context-dir <DOCKERFILE_DIRECTORY>, build a container image from a git repository using the ``Dockerfile`` found in the specified context directory and then create a Pod using that new image
+   rsh <POD> <COMMAND>, run a command inside of a Pod
+   rsh -t <POD>, open an interactive shell inside of a Pod
+   process -f <TEMPLATE_MANIFEST>, show all of the objects that would be created from the Template
+   process --parameters -f <TEMPLATE_MANIFEST>, show all of the parameters that can be set in a Template
+   process -p <KEY>=<VALUE> -f <TEMPLATE_MANIFEST>, use the specified parameter
+   process --param-file=<PARAM_FILE> -f <TEMPLATE_MANIFEST>, use key-value pair parameters that are defined in a separate file
+   export all, "display all objects from the following APIs: BuildConfig, Build, DeploymentConfig, ImageStream, Pod, ReplicaSet, Route, and Service"
+   export all --as-template=<TEMPLATE_NAME> <TEMPLATE_MANIFEST_FILE>, export all objects as a Template manifest
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   oc process -p foo=bar -f example_template.yaml | oc create -f -, process a Template with a parameter and then create all of the objects from it
 
 podman
 ~~~~~~
