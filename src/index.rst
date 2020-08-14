@@ -56,6 +56,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Storage
+
+   storage/index.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: Virtualization
 
    virtualization/index.rst

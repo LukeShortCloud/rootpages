@@ -5,7 +5,6 @@
    authentication
    bootloaders
    chromebook
-   file_systems
    graphics
    linux
    mail_servers
