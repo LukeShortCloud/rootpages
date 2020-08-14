@@ -133,6 +133,17 @@ File: /etc/ceph/ceph.conf
     auth service required = none
     auth client required = none
 
+Releases
+--------
+
+Starting with the Luminous 12 release, all versions are supported for two years. A new release comes out every year. [13]
+
+-  ``<RELEASE_NAME> <RELEASE_NUMBER> = <RELEASE_DATE>``
+-  Luminous 12 = 2017-02
+-  Mimic 13 = 2018-05
+-  Nautilus 14 = 2019-03
+-  Octopus 15 = 2020-03
+
 Installation
 ------------
 
@@ -721,3 +732,4 @@ Bibliography
 10. "USING LIBVIRT WITH CEPH RBD." Ceph Documentation. Accessed January 27, 2017. http://docs.ceph.com/docs/master/rbd/libvirt/
 11. "Secret XML." libvirt. Accessed January 27, 2017. https://libvirt.org/formatsecret.html
 12. "USING CEPHFS." Ceph Documentation. Accessed January 15, 2017. http://docs.ceph.com/docs/master/cephfs/
+13. "Ceph Releases (general)". Ceph Documentation. July 27, 2020. Accessed August 13, 2020. https://docs.ceph.com/docs/master/releases/general/
