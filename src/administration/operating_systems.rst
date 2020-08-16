@@ -169,18 +169,23 @@ This is an extremely biased list of the best distribution for each use case.
 -  CPU architectures supported = Debian
 -  Customizable = Gentoo
 -  Customizable (easy) = Arch Linux
--  Desktop (slow updates) = Debian
--  Desktop (moderate updates) = openSUSE Leap
--  Desktop (fast updates) = Fedora
 -  Easiest = Zorion OS
 -  Free and open source software (FOSS) = Fedora
--  Gaming = 1. Pop!_OS 2. Manjaro
+-  Gaming = 1. GamerOS 2. Pop!_OS 3. Manjaro 4. SteamOS
 -  Hardest = Linux From Scratch
 -  Hardware support = Arch Linux
 -  Lightweight = Tiny Core Linux
--  Longest support = RHEL
--  Old Computer = Linux Lite
+-  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. CentOS 4. Ubuntu LTS (free)
+-  Old computer = Linux Lite
+-  Oldest Linux distribution = 1. Slackware 2. Debian
 -  Packages available = Ubuntu
+-  Release cycle
+
+   -  Slow = Debian
+   -  Moderate = openSUSE Leap
+   -  Fast = Fedora
+   -  Latest = Arch Linux
+
 -  Security penetration testing = Kali Linux
 -  Server = 1. RHEL 2. CentOS 3. Debian
 -  Stable = 1. RHEL 2. CentOS 3. Debian
