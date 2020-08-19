@@ -86,6 +86,26 @@ Record (MBR). If you are using a GPT partition then it uses the first
 a safe and recommended option to create your first partition 1MB after
 the start of the drive, especially if GPT is in use.
 
+Install the GRUB 2 packages:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ pacman -S efibootmgr efivar grub os-prober
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ apt-get install efibootmgr grub-common grub-efi-amd64-bin grub-efi-amd64-signed grub-gfxpayload-lists grub-pc grub-pc-bin libefiboot1 libefivar1 os-prober shim shim-signed
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ dnf install efibootmgr efi-filesystem grub2-common grub2-efi-x64 grub2-pc grub2-tools grub2-tools-efi grub2-tools-extra grub2-tools-minimal grubby os-prober shim-x64
+
 Install GRUB to a drive (replace "X") and then generate a boot menu
 configuration file. This will create the menu file that loads up to the
 end-user upon boot.
