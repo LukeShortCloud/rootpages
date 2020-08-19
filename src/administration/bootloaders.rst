@@ -272,25 +272,20 @@ Linux can be installed onto a portable storage device that can boot in both lega
    -  EFI partition: >= 200MB vfat (fat32) partition mounted at ``/boot/efi``.
    -  Linux boot partition: 1GB partition with a stable file system (such as ext4) mounted at ``/boot``.
 
-After setting up the partitions and installing the operating system with UEFI support, chroot into the new installation before rebooting. Reinstall the GRUB packages to re-run the installation scripts, rebuild the GRUB configuration file, and then install the legacy BIOS GRUB onto the BIOS boot partition by specifying the block device (not the partition itself).
+After setting up the partitions and installing the operating system with UEFI support, chroot into the new installation before rebooting. On Fedora only, create the legacy BIOS boot GRUB configuration file. Then install GRUB using the legacy BIOS boot by specifying the block device (not the partition itself).
 
-Arch Linux:
+Arch Linux and Debian:
 
 .. code-block:: sh
 
-   $ pacman -S grub
-   # Arch Linux uses the same GRUB configuration file for both legacy BIOS and UEFI boot.
-   $ grub-mkconfig -o /boot/grub/grub.cfg
-   $ grub-install --target=i386-pc <DEVICE>
+   $ sudo grub-install --target=i386-pc /dev/<DEVICE>
 
 Fedora:
 
 .. code-block:: sh
 
-   $ dnf reinstall efibootmgr grub2-efi-x64 grub2-pc shim-x64
-   $ grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
-   $ grub2-mkconfig -o /boot/grub2/grub.cfg
-   $ grub2-install --target=i386-pc <DEVICE>
+   $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+   $ sudo grub2-install --target=i386-pc /dev/<DEVICE>
 
 [8]
 
