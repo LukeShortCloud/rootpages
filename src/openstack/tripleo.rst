@@ -2997,18 +2997,25 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
         CinderEnableIscsiBackend: false
         CinderEnableNfsBackend: true
         CinderEnableRbdBackend: false
-        CinderNfsMountOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:cinder_var_lib_t:s0'
+        # docker (Queens)
+        #CinderNfsMountOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:cinder_var_lib_t:s0'
+        # Podman (Train)
+        CinderNfsMountOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:container_file_t:s0'
         CinderNfsServers: '<NFS_SERVER_IP>:/exports/cinder'
         # Glance
         GlanceBackend: file
         GlanceNfsEnabled: true
-        GlanceNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:glance_var_lib_t:s0'
+        # docker (Queens)
+        #GlanceNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:glance_var_lib_t:s0'
+        # Podman (Train)
+        GlanceNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:container_file_t:s0'
         GlanceNfsShare: '<NFS_SERVER_IP>:/exports/glance'
         # Gnocchi
         GnocchiBackend: file
         # Nova
         NovaNfsEnabled: true
         NovaEnableRbdBackend: false
+        # docker and Podman
         NovaNfsOptions: 'rw,sync,vers=4,minorversion=2,nosharecache,context=system_u:object_r:nfs_t:s0'
         NovaNfsShare: '<NFS_SERVER_IP>:/exports/nova'
 
