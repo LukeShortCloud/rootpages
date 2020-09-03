@@ -4,4 +4,5 @@
 
    laptops
    monitors
+   processors
    storage_devices
