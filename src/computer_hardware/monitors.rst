@@ -138,6 +138,16 @@ Variable refresh rate (VRR) is when the monitor dynamically changes it's refresh
 
 The human eye can identify objects at 220 Hz. Above that frequency, a human can at least notice flickers. [18] Theoretically, a human can perceive beyond 1000 Hz. [19]
 
+Human Vision
+------------
+
+With modern day technology, it is almost possible to reproduce the image quality that human eyes can comprehend. The specifications for a theoretical monitor would be:
+
+-  8K resolution
+-  100% of the Rec. 2020 color spectrum
+-  10,000 nit brightness
+-  240 Hz
+
 History
 -------
 
