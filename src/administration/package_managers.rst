@@ -69,6 +69,18 @@ Components:
 
 [1]
 
+Ubuntu
+~~~~~~
+
+ubuntu-drivers
+^^^^^^^^^^^^^^
+
+The ``ubuntu-drivers`` package provides a user-friendly way to install proprietary drivers, view what devices need those drivers, and what drivers are available.
+
+.. code-block:: sh
+
+   $ sudo ubuntu-drivers {autoinstall,devices,list}
+
 RPM
 ---
 
