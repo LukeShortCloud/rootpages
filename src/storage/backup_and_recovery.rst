@@ -17,6 +17,35 @@ The principles of the 3-2-1 backup philosophy help to effectively backup data. T
 
 These are the absolute minimum. More backups can be used as needed. [1]
 
+Btrfs
+-----
+
+grub-btrfs
+~~~~~~~~~~
+
+The `Antynea/grub-btrfs <https://github.com/Antynea/grub-btrfs>`__ project will automatically generate GRUB entries for every Btrfs snapshot.
+
+Install:
+
+.. code-block:: sh
+
+   $ git clone https://github.com/Antynea/grub-btrfs.git
+   $ cd grub-btrfs
+   $ sudo make install
+
+It can now be configured. Change the GRUB submenu entry name to an agnostic name (by default, it will say "ArchLinux Snapshots").
+
+.. code-block:: sh
+
+   $ sudo ${EDITOR} /etc/default/grub-btrfs/config
+   GRUB_BTRFS_SUBMENUNAME="Btrfs Snapshots"
+
+Now, whenever the GRUB configuration is re-generated, the Btrfs snapshots will be shown on boot.
+
+.. code-block:: sh
+
+   $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 History
 -------
 
