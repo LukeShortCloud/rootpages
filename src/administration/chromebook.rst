@@ -55,8 +55,8 @@ Use the command ``chromeos-setdevpasswd`` to enable the sudo password for the ``
 ::
 
    crosh> shell
-   crosh> ssh -l root 127.0.0.1
-   chronos@loclahost / $ chromeos-setdevpasswd
+   chronos@localhost / $ ssh -l root 127.0.0.1
+   localhost ~ # chromeos-setdevpasswd
 
 -  Using the tty2 console by pressing ``CTRL`` + ``ALT`` + ``-->``:
 
@@ -73,9 +73,25 @@ When booting a Chromebook in developer mode, there are a few options to choose f
 
 -  Internal storage = ``CTRL`` + ``d``.
 -  External storage = ``CTRL`` + ``u``.
--  Legacy boot loader (SeaBIOS) = ``CTRL`` + ``l`` (L).
+-  Legacy bootloader (SeaBIOS) = ``CTRL`` + ``l`` (L).
+
+   -  This is not installed by default. Refer to the `Bootloaders <#bootloaders>`__ section on how to set it up.
 
 [7]
+
+Bootloaders
+~~~~~~~~~~~
+
+The `MrChromebox/scripts <https://github.com/MrChromebox/scripts>`__ project provides a useful utility for modifying the bootloader firmware on Chromebooks. All Chromebooks can run a legacy SeaBIOS bootloader to allow USB-booting. Some Chromebooks support the full UEFI Tianocore bootloader so that it can install a different operating system such as Linux, mac OS, or Windows. A full list of what devices are compatible can be found `here <https://mrchromebox.tech/#devices>`__. [22]
+
+Download and run the interactive script.
+
+::
+
+   crosh> shell
+   chronos@localhost / $ curl -LO mrchromebox.tech/firmware-util.sh && sudo bash ./firmware-util.sh
+
+The white Chrome OS ``OS verification is OFF`` screen that starts with 100% brightness can be replaced by a black screen by selecting the ``Remove ChromeOS Bitmaps`` option.
 
 Terminal
 ~~~~~~~~
@@ -452,3 +468,4 @@ Bibliography
 19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
 20. "dnschneid/crouton." GitHub. January 17, 2020. Accessed March 29, 2020. https://github.com/dnschneid/crouton
 21. "Issue 993253: Support untrusted VMs." Chromium Bugs. January 27, 2020. Accessed May 29, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=993253
+22. "ChromeOS Firmware Utility Script." MrChromebox.tech. Accessed September 5, 2020. https://mrchromebox.tech/#fwscript
