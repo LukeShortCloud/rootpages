@@ -69,6 +69,16 @@ Components:
 
 [1]
 
+Automatic Updates
+~~~~~~~~~~~~~~~~~
+
+The latest versions of both Debian and Ubuntu will automatically update the list of available updates and also upgrade those packages. This can be disabled by modifying the ``/etc/apt/apt.conf.d/10periodic`` and ``/etc/apt/apt.conf.d/20auto-upgrades`` configuration files. [16]
+
+::
+
+   APT::Periodic::Update-Package-Lists "0";
+   APT::Periodic::Unattended-Upgrade "0";
+
 Ubuntu
 ~~~~~~
 
@@ -251,3 +261,4 @@ Bibliography
 13. "Getting Flatpak." Flatpak. March 18, 2017. Accessed March 19, 2017. http://flatpak.org/getting.html
 14. "Red Hat Developer Tools software repository not available." Red Hat Community Discussions. November 14, 2017. Accessed February 26, 2018. https://access.redhat.com/discussions/3155021
 15. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
+16. "UnattendedUpgrades." Debian Wiki. August 19, 2019. Accessed September 5, 2020. https://wiki.debian.org/UnattendedUpgrades
