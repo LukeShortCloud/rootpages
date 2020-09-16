@@ -248,6 +248,7 @@ The libpod library provides a utility to manage and run containers with CRI-O an
    rm --all, Remove all stopped containers
    rmi --all, Remove all images
    --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registries
+   system reset, "delete all build cache, containers, images, and pods; this is an alias for `podman unshare rm -rf ~/.local/share/container ~/.config/containers`"
 
 oVirt
 -----
