@@ -235,6 +235,16 @@ Flatpak
 
 Flatpak is a sandbox solution that provides a universal application packaging format. It was first started by an employee from Red Hat in their spare time. Flatpak has a strong focus on portability, security, and effective space usage. [12] This package manager is available for most modern Linux distributions. [13]
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+**Error: Invalid version flag: if** when running a ``yum [install|update]`` command.
+
+-  This is due to a difference between EL 7 and 8 repositories. Check which major version of EL is configured for all of the YUM/DNF repositories. [17]
+
 History
 -------
 
@@ -262,3 +272,4 @@ Bibliography
 14. "Red Hat Developer Tools software repository not available." Red Hat Community Discussions. November 14, 2017. Accessed February 26, 2018. https://access.redhat.com/discussions/3155021
 15. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
 16. "UnattendedUpgrades." Debian Wiki. August 19, 2019. Accessed September 5, 2020. https://wiki.debian.org/UnattendedUpgrades
+17. "Need to set up yum repository for locally-mounted DVD on Red Hat Enterprise Linux 7." Red Hat Knowledgebase. August 20, 2019. Accessed September 16, 2020. https://access.redhat.com/solutions/1355683#comment-1514411
