@@ -786,6 +786,26 @@ grub-update
 
 Update the GRUB bootloader data on the start of the storage device.
 
+grubby
+~~~~~~
+
+Update the GRUB configuration with new settings.
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   --info=ALL, show information about all of the GRUB menu entries
+   --default-kernel, show the default kernel that will boot
+   --set-default <KERNEL_PATH_OR_MENU_ENTRY_NAME_OR_MENU_ENTRY_INDEX>, set a new default kernel
+   --add-kernel <KERNEL_PATH>, add a GRUB entry for the new kernel
+   --remove-kernel <KERNEL_PATH_OR_MENU_ENTRY_NAME_OR_MENU_ENTRY_INDEX>, remove the GRUB entry for the specified kernel
+   --args=<ARGS>, add new kernel boot arguments
+   --remove-args=<ARGS>, remove existing kernel boot arguments if found
+   --update-kernel=ALL, make changes to all GRUB entries
+   --update-kernel <KERNEL_PATH_OR_MENU_ENTRY_NAME_OR_MENU_ENTRY_INDEX>, make changes to a specific kernel GRUB entry
+   --[grub|lilo|silo|yaboot|zipl], specify the bootloader configuration to modify (default is GRUB)
+
 (GRUB Rescue Prompt)
 ~~~~~~~~~~~~~~~~~~~~
 
