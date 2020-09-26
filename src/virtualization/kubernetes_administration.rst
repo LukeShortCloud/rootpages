@@ -242,6 +242,25 @@ Release highlights:
    -  `kubectl alpha debug <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#ephemeral-container>`__ argument introduced to attach a temporary container to a running container for troubleshooting purposes.
    -  Windows CSI now supports privileged storage configurations.
 
+-  `1.19 <https://kubernetes.io/blog/2020/08/26/kubernetes-release-1.19-accentuate-the-paw-sitive/>`__
+
+   -  Each major Kubernetes release is now supported for 12 months (up from 9).
+   -  APIs that are in-development must reach the next tier of stability during the next Kubernetes release. If not, they will be deprecated and removed from the project.
+   -  New APIs:
+
+      -  EndpointSlice
+      -  CSIStorageCapacity = An object is automatically created for a supported CSI driver to report back the available storage.
+
+   -  Stable APIs:
+
+      -  CertificateSigningRequest
+      -  Event
+      -  Ingress
+
+   -  TLS 1.3 support.
+   -  Ephemeral PVCs.
+   -  Consistent log format for all Kubernetes control plane logs.
+
 OpenShift
 ~~~~~~~~~
 
