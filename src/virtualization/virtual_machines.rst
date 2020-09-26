@@ -850,17 +850,17 @@ Common Vagrant boxes to use with ``vagrant init``:
 
 -  Debian
 
-   -  debian/stretch64 (Debian 9)
-   -  ubuntu/bionic64 (Ubuntu 18.04)
+   -  debian/buster64 (Debian 10)
+   -  ubuntu/focal64 (Ubuntu 20.04)
 
 -  Fedora
 
-   -  centos/7
-   -  fedora/28-cloud-base
+   -  centos/8
+   -  fedora/33-cloud-base
 
 -  openSUSE
 
-   -  opensuse/openSUSE-15.0-x86_64
+   -  opensuse/openSUSE-15.2-x86_64
    -  opensuse/openSUSE-Tumbleweed-x86_64
 
 Vagrantfile

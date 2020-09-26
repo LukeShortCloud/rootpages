@@ -3272,7 +3272,7 @@ Bibliography
 29. "Use an external Ceph cluster with the Overcloud." TripleO Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_external.html
 30. "TRIPLEO AND ANSIBLE: CONFIG-DOWNLOAD WITH ANSIBLE TOWER (PART 3)." Slagle's Blog. June 1, 2018. Accessed October 3, 2018. https://blogslagle.wordpress.com/2018/06/01/tripleo-and-ansible-config-download-with-ansible-tower-part-3/
 31. "Configuring Network Isolation." TripleO Documentation. January 30, 2020. Accessed February 5, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/network_isolation.html
-32. "Modifying default node configuration." TripleO Documentation. Accessed October 28, 2019. http://tripleo.org/install/advanced_deployment/node_config.html
+32. "Modifying default node configuration." TripleO Documentation. September 21, 2020. Accessed September 23, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/node_config.html
 33. "Containers based Overcloud Deployment." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/overcloud.html
 34. CHAPTER 12. REBOOTING NODES." Red Hat OpenStack Platform 13 Documentation. Accessed January 28, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/sect-rebooting_the_overcloud
 35. "Bootstrap." InfraRed Documentation. Accessed February 8, 2019. https://infrared.readthedocs.io/en/stable/bootstrap.html

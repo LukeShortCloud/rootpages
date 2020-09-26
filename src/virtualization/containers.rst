@@ -124,7 +124,7 @@ Dockerfile
 
 docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it's started.
 
-**Dockerfile Commands**
+**Dockerfile Instructions**
 
 -  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
 -  ADD <SOURCE> <DESTINATION> = Similar in functionality to ``COPY``. This should only be used to download URLs or extract archives.
@@ -139,12 +139,25 @@ docker containers are built by using a template called ``Dockerfile``. This file
 
    -  Use ``LABEL maintainer=<EMAIL_ADDRESS>`` instead.
 
+-  ONBUILD <INSTRUCTION> <ARGS> = Define instructions to only execute during the build process. This is specific to docker and by default does not apply to images being built with OCI tools such as Buildah.
 -  RUN = A command that can be ran once in the container. Use the ``CMD <COMMAND> <ARG1> <ARG2>`` format to open a shell or ``CMD ['<COMMAND>', '<ARG1>', '<ARG2>']`` to execute without a shell.
 -  USER <UID>:<GID> = Configure a UID and/or GID to run the container as.
 -  VOLUME <PATH> = A list of paths inside the container that can mount to an external persistent storagedevice (for example, for storing a database).
 -  WORKDIR = The working directory where commands will be executed from.
 
 [9]
+
+**OpenShift Instructions**
+
+Some instructions in the Dockerfile have special uses in regards to OpenShift.
+
+-  LABEL
+
+   -  io.openshift.tags = A comma-separated list of keywords that help categorize the usage of the image.
+   -  io.k8s.description = A detailed description of what the container image does.
+   -  io.openshift.expose-services = Syntax is ``<PORT>/<PROTOCOL>:<NAME>``. A description of the ports defined via ``EXPOSE``.
+
+-  USER = This value is ignored on OpenShift as a random UID will be used instead.
 
 **Storage Space**
 
