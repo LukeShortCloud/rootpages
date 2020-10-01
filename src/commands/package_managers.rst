@@ -732,6 +732,25 @@ Python package manager.
    "TMPDIR=<DIR>", "set this as an environment variable) use a different directory, other than /tmp, for building Pip packages"
    "--user", "install or remove Python packages for the current user from ~/.local"
 
+python setup.py
+'''''''''''''''
+
+Manually install a Python package from its source code.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --help-commands, show all of the available subcommands
+   --help, show help information only for the main command
+   develop, install the dependencies only and use the library in its existing location (do not fully install it)
+   install, install the package to the system
+   install --prefix=/usr, change the installation prefix
+   register, register a new Python package with PyPi
+   upload, upload the new Python package to PyPi
+   upload --sign, sign and upload the new Python package to PyPi
+   --build, build the package in the "build" directory
+
 virtualenv (python3 -m virtualenv)
 ''''''''''''''''''''''''''''''''''
 
