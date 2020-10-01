@@ -220,6 +220,11 @@ Create and manage OpenShift clusters. Many arguments are inherited from ``kubect
    process --param-file=<PARAM_FILE> -f <TEMPLATE_MANIFEST>, use key-value pair parameters that are defined in a separate file
    export all, "display all objects from the following APIs: BuildConfig, Build, DeploymentConfig, ImageStream, Pod, ReplicaSet, Route, and Service"
    export all --as-template=<TEMPLATE_NAME> <TEMPLATE_MANIFEST_FILE>, export all objects as a Template manifest
+   adm top [nodes|pods], show the current resource usage of all Nodes or Pods (equivalent to ``kubectl top``)
+   adm node-logs -u [crio|kubelet] <NODE>, view the logs of a systemd service such as CRI-O or Kubelet logs on a specified Node
+   debug [node|pod]/<NAME>, attach to a running Node or Pod by using a side-car container using the EL operating system; use ``chroot /host`` to access the file system
+   project <PROJECT>, change the current Project/Namespace context
+   status, view the status of all objects within a Project/Namespace
 
 .. csv-table::
    :header: Example, Explanation
