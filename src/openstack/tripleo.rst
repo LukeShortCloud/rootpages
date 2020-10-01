@@ -1145,7 +1145,7 @@ TripleO can provision a full CentOS or RHEL operating system onto a new baremeta
         $ mkdir images
         $ cd images
         $ sudo yum install rhosp-director-images rhosp-director-images-ipa
-        $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-${OS_RELEEASE}.tar
+        $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-${OS_RELEASE}.tar
         $ tar -v -x -f /usr/share/rhosp-director-images/ironic-python-agent-latest-${OS_RELEASE}.tar
 
 -  These files are extracted from the tar archives:
