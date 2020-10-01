@@ -251,6 +251,7 @@ Steam requires a handful of dependencies. Enable the proprietary repository to i
    deb http://deb.debian.org/debian buster main contrib non-free
    deb http://security.debian.org/ buster/updates main contrib non-free
    user@penguin~$ sudo dpkg --add-architecture i386
+   user@penguin~$ sudo apt-get update
    user@penguin~$ sudo apt-get install --install-recommends wine
    user@penguin~$ sudo apt-get install libgl1-mesa-dri:i386 libgl1-mesa-glx:i386 libglapi-mesa:i386 steam
 

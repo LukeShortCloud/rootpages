@@ -80,6 +80,8 @@ Package: docker
    image build -f <DOCKERFILE>, build an image using a Dockerfile in a different directory (the current working directory will be used by the build instead of where the Dockerfile is located)
    "network create --subnet <CIDR> <NETWORK_NAME>", "create a new docker network using a specific network CIDR and name"
    cp <SRC> <CONTAINER>:<DEST>, copy a file or directory from the hypervisor to a container
+   login <REGISTRY>, log into a container registry
+   logout <REGISTRY>, log out of a container registry
 
 .. csv-table::
    :header: Example, Explanation
@@ -174,6 +176,8 @@ Manage Kubernetes resources via the API.
    "rollout {history,pause,restart,resume,status,undo} {deploy,ds,sts} <OBJECT>", view or change a deployment rollout
    taint node <NODE> <KEY>=<VALUE>:<EFFECT>, add a taint to a Node
    taint nodes -l <LABEL_KEY>=<LABEL_VALUE> <TAINT_KEY>=<TAINT_VALUE>:<EFFECT>, add a taint to Nodes that have the specified label
+   create secret docker-registry <SECRET_NAME> --docker-server=<DOCKER_SERVER>> --docker-username=<DOCKER_USER> --docker-password=<DOCKER_PASSWORD> --docker-email=<DOCKER_EMAIL>, create a Secret with registry login information
+   create secret generic <SECRET_NAME> --type=kubernetes.io/dockerconfigjson --from-file=.dockerconfigjson=<path/to/.docker/config.json, create a Secret with registry login information from an existing configuration file
 
 .. csv-table::
    :header: Example, Explanation
@@ -253,6 +257,7 @@ The libpod library provides a utility to manage and run containers with CRI-O an
    rm --all, Remove all stopped containers
    rmi --all, Remove all images
    --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registries
+   logout --all, logout of all container registires
    system reset, "delete all build cache, containers, images, and pods; this is an alias for `podman unshare rm -rf ~/.local/share/container ~/.config/containers`"
 
 oVirt
