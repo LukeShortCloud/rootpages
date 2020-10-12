@@ -19,6 +19,11 @@ Arch Linux is a 64-bit operating system whose motto is "Keep it Simple." There i
 - Package Manager:
     - Pacman (CLI)
 
+- Release branches [14]:
+   - stable = Rolling release of packages that have passed quality assurance from the testing repository.
+   - testing = Packages marked for testing before being promoted to the stable branch.
+   - staging = For developers only. An unstable rolling release of the latest package versions.
+
 - Popular derivatives [2]:
     - Antergos
     - ArchLabs
@@ -43,6 +48,11 @@ Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD
 
 [3]
 
+- Release branches [15]:
+   - stable = Released every two years, based on a freeze of testing a few months before the stable release.
+   - testing = A snapshot of packages that have been in unstable and bug-free for 10 days.
+   - unstable = For developers only. An unstable rolling release of the latest package versions.
+
 - Popular derivatives [2]:
     - elementary
     - Linux Mint
@@ -64,6 +74,12 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
 - Package Managers:
     - dnf (CLI)
     - dnfdragora (GUI)
+
+- Release branches [16]:
+   - updates = The release of minor update packages for the major stable release.
+   - updates-testing = Updates to stable packages that are staged for testing.
+   - stable = Released every six months, based on a freeze of rawhide a few months before the stable release.
+   - rawhide = For developers only. An unstable rolling release of the latest package versions.
 
 - Popular derivatives [2]:
     - Community Enterprise Linux (CentOS)
@@ -103,6 +119,10 @@ Gentoo is designed to be very configurable and optimized. Most packages need to 
 
 - Package Manager:
     - Portage (CLI)
+
+- Release branches [17]:
+   - stable = Stable rolling releases of every package.
+   - testing/unstable = For developers only. An unstable version of specific packages.
 
 - Popular derivatives [2][7]:
     - Calculate Linux
@@ -146,6 +166,11 @@ openSUSE Leap is a upstream community operating system that is sponsored by SUSE
 - Package Manager:
     - zypper (CLI)
     - YaST (GUI)
+
+- Release branches [18]:
+   - stable = Packages that have been fully tested for release.
+   - devel = Packages that are constantly being updated and are in a usable state.
+   - staging = For developers only. New packages that are likely to break other packages.
 
 - Popular derivatives [2][12]:
     - FyreLinux
@@ -225,3 +250,8 @@ Bibliography
 11. "About Debian." Debian. June 6, 2017. Accessed January 2, 2018. https://www.debian.org/intro/about
 12. "Derivatives." OpenSUSE Wiki. Accessed March 20, 2018. https://en.opensuse.org/Derivatives
 13. "What is Silverblue?" Fedora Magazine. July 12, 2019. Accessed July 29, 2019. https://fedoramagazine.org/what-is-silverblue/
+14. "Official repositories." ArchWiki. June 8, 2020. Accessed October 11, 2020. https://wiki.archlinux.org/index.php/official_repositories
+15. "DebianUnstable." Debian Wiki. September 29, 2020. Accessed October 11, 2020. https://wiki.debian.org/DebianUnstable
+16. "Repositories." Fedora Docs Site. October 11, 2020. Accessed October 11, 2020. https://docs.fedoraproject.org/en-US/quick-docs/repositories/
+17. "Stable request." Gentoo Wiki. April 13, 2020. Accessed October 11, 2020. https://wiki.gentoo.org/wiki/Stable_request
+18. "openSUSE:Factory development model." openSUSE Wiki. October 25, 2019. Accessed October 11, 2020. https://en.opensuse.org/openSUSE:Factory_development_model
