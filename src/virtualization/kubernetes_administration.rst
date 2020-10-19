@@ -763,7 +763,7 @@ Concepts
 Container Network Interface (CNI) Plugins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage the network connections between Pods. The cloud operator must pick one plugin. For using more than one plugin, use the `Multus CNI project <https://github.com/intel/multus-cni>`__.
+The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage the network connections between Pods. The cloud operator must pick at least one plugin. For using more than one plugin, use the `Multus CNI project <https://github.com/intel/multus-cni>`__. Canal (both Calico and Flannel combined into a single plugin) is recommended for most use cases.
 
 .. csv-table::
    :header: Plugin, Arm Support, Ease of Configuration, Resource Usage, Network Layer, Encryption, NetworkPolicy Support, Use Case
