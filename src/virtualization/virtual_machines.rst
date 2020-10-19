@@ -839,8 +839,11 @@ The default username and password should be ``vagrant``.
 This guide can be followed for creating custom Vagrant boxes:
 https://www.vagrantup.com/docs/boxes/base.html.
 
-Images
-^^^^^^
+Boxes (Images)
+^^^^^^^^^^^^^^
+
+Usage
+'''''
 
 Common Vagrant boxes to use with ``vagrant init``:
 
@@ -862,6 +865,108 @@ Common Vagrant boxes to use with ``vagrant init``:
 
    -  opensuse/openSUSE-15.2-x86_64
    -  opensuse/openSUSE-Tumbleweed-x86_64
+
+Creation
+''''''''
+
+Custom Vagrant boxes can be created from scratch and used.
+
+-  Virtual machine setup (for an automated setup, use the `ansible_role_vagrant_box <https://github.com/ekultails/ansible_role_vagrant_box>`__ project):
+
+   -  Create a ``vagrant`` user with password-less sudo access.
+
+      .. code-block:: sh
+
+         $ sudo useradd vagrant
+         $ echo 'vagrant ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/vagrant
+         $ sudo chmod 0440 /etc/sudoers.d/vagrant
+
+   -  Install and enable the SSH service.
+
+      .. code-block:: sh
+
+         # Debian
+         $ sudo apt-get install openssh-server
+
+      .. code-block:: SH
+
+         # Fedora
+         $ sudo dnf install openssh-server
+
+   -  Add the Vagrant SSH public key.
+
+      .. code-block:: sh
+
+         $ sudo mkdir /home/vagrant/.ssh/
+         $ sudo chmod 0700 /home/vagrant/.ssh/
+         $ curl https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub | sudo tee -a /home/vagrant/.ssh/authorized_keys
+         $ sudo chmod 0600 /home/vagrant/.ssh/authorized_keys
+         $ sudo chown -R vagrant.vagrant /home/vagrant/.ssh
+
+   -  Disable SSH password authentication.
+
+      .. code-block:: sh
+
+         $ sudo vi /etc/ssh/sshd_config
+         PasswordAuthentication no
+         PubKeyAuthentication yes
+
+   -  Enable the SSH service.
+
+      .. code-block:: sh
+
+         # Debian
+         $ sudo systemctl enable ssh
+
+      .. code-block:: sh
+
+         # Fedora
+         $ sudo systemctl enable sshd
+
+   -  Shutdown the virtual machine.
+
+      .. code-block:: sh
+
+         $ sudo shutdown now
+
+-  Hypervisor steps:
+
+   -  Create a ``metadata.json`` file with information about the virtual machine.
+
+      ::
+
+         {
+             "provider"     : "libvirt",
+             "format"       : "qcow2",
+             "virtual_size" : <SIZE_IN_GB>
+         }
+
+   -  Rename the virtual machine to be ``box.img``.
+
+      .. code-block:: sh
+
+         $ mv <VM_IMAGE>.qcow2 box.img
+
+   -  Create the tarball for the Vagrant-compatible box.
+
+      .. code-block:: sh
+
+         $ tar -c -z -f <BOX_NAME>.box ./metadata.json ./box.img
+
+   -  Import the new box.
+
+      .. code-block:: sh
+
+         $ vagrant box add --name <BOX_NAME> <BOX_NAME>.box
+
+   -  Test the new box.
+
+      .. code-block:: sh
+
+         $ vagrant init <BOX_NAME>
+         $ vagrant up --provider=libvirt
+
+[46]
 
 Vagrantfile
 ^^^^^^^^^^^
@@ -1021,6 +1126,8 @@ Example:
     end
 
 [25]
+
+Boxes for libvirt are cached by Vagrant at: ``~/.local/share/libvirt/images/``.
 
 Provisioning
 ''''''''''''
@@ -1346,3 +1453,4 @@ Bibliography
 43. "Providers." Terraform CLI. Accessed July 8, 2020. https://www.terraform.io/docs/providers/index.html
 44. "Create a Terraform Module." Linode Guides & Tutorials. May 1, 2020. Accessed July 8, 2020. https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/
 45. "OpenStack Provider." Terraform Docs. Accessed July 18, 2020. https://www.terraform.io/docs/providers/openstack/index.html
+46. "How to create a vagrant VM from a libvirt vm/image." openATTIC. January 11, 2018. Accessed October 19, 2020. https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/
