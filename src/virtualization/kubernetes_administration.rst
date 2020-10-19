@@ -655,6 +655,18 @@ Uninstall OpenShift services from nodes by specifying them in the inventory and 
 Upgrade
 -------
 
+Introduction
+~~~~~~~~~~~~
+
+Upgrades can be done from one minor or patch release to another. Minor version upgrades cannot skip a version. For example, upgrading from 1.17.0 to 1.18.4 can be done but from 1.17.0 to 1.19.0 will not work. [30]
+
+Compatibility guarantees differ between services [31]:
+
+-  kube-apiserver = No other component in the cluster can have a minor version higher than this.
+-  kubelet and kube-proxy = Supports two versions behind the kube-apiserver.
+-  cloud-controller-manager, kube-controller-manager, and kube-scheduler = Supports one version behind kube-apiserver.
+-  kubectl (client) = Supports one version older than, later than, or equal to the kube-apiserver.
+
 Minikube
 ~~~~~~~~
 
@@ -664,6 +676,86 @@ Minikube can be upgraded by starting with a specified Kubernetes version (or use
 
    $ minikube stop
    $ minikube start --kubernetes-version=<VERSION>
+
+kubeadm
+~~~~~~~
+
+Control Plane Nodes
+^^^^^^^^^^^^^^^^^^^
+
+Check for a newer version of ``kubeadm``.
+
+.. code-block:: sh
+
+   $ apt update
+   $ apt-cache madison kubeadm
+
+Update ``kubeadm`` to the desired Kubernetes version to upgrade to.
+
+.. code-block:: sh
+
+   $ sudo apt-get install -y --allow-change-held-packages kubeadm=<KUBERNETES_PACKAGE_VERSION>
+
+View the modifications that a ``kubeadm upgrade`` would make.
+
+.. code-block:: sh
+
+   $ sudo kubeadm upgrade plan
+
+Upgrade to the specified ``X.Y.Z`` version on the first Control Plane Node
+
+.. code-block:: sh
+
+   $ sudo kubeadm upgrade apply vX.Y.Z
+
+Log into the other Control Plane Nodes and upgrade those.
+
+.. code-block:: sh
+
+   $ sudo kubeadm upgrade node vX.Y.Z
+
+Upgrade the ``kubelet`` service on all of the Control Plane Nodes.
+
+.. code-block:: sh
+
+   $ apt-get install -y --allow-change-held-packages kubelet=<KUBERNETES_PACKAGE_VERSION> kubectl=<KUBERNETES_PACKAGE_VERSION>
+   $ sudo systemctl daemon-reload
+   $ sudo systemctl restart kubelet
+
+[30]
+
+Worker Nodes
+^^^^^^^^^^^^
+
+Update ``kubeadm``.
+
+Drain all objects from one of the Worker Nodes.
+
+.. code-block:: sh
+
+    $ sudo kubectl drain --ignore-daemonsets <NODE>
+
+Upgrade the Worker Node.
+
+.. code-block:: sh
+
+   $ sudo kubeadm upgrade node
+
+Upgrade the ``kubelet`` service.
+
+Allow objects to be scheduled onto the Node again.
+
+.. code-block:: sh
+
+   $ kubectl uncordon <NODE>
+
+Verify that all Nodes have the "READY" status.
+
+.. code-block:: sh
+
+   $ kubectl get nodes
+
+[30]
 
 Concepts
 --------
@@ -732,3 +824,5 @@ Bibliography
 27. "Installation methods for different platforms." Red Hat OpenShift Container Platform 4.5. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/installing/install_config/installation-types.html
 28. "Getting Started Guide." crc. Accessed August 13, 2020. https://code-ready.github.io/crc/
 29. "Basic controls." minikube Documentation. April 7, 2020. Accessed October 18, 2020. https://minikube.sigs.k8s.io/docs/handbook/controls/
+30. "Upgrading kubeadm clusters." Kubenretes Documentation. August 7, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
+31. "Kubernetes version and version skew support policy." Kubernetes Documentation. August 15, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/setup/release/version-skew-policy/
