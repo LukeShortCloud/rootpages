@@ -147,7 +147,7 @@ Release highlights:
 
 -  `1.4 <https://kubernetes.io/blog/2016/09/kubernetes-1-4-making-it-easy-to-run-on-kuberentes-anywhere/>`__
 
-   -   `kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/>`__` introduced for installing Kubernetes clusters.
+   -   `kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/>`__ introduced for installing Kubernetes clusters.
    -  ScheduledJob objects (later named to `CronJob <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/>`__) added to run an application during a regularyly scheduled time.
    -  `PodSecurityPolicies <https://kubernetes.io/docs/concepts/policy/pod-security-policy/>`__ object added for setting the security context of containers.
    -  `Anti- and Inter-Affinity <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>`__ for helping to select which Nodes a Pod will be deployed on.
