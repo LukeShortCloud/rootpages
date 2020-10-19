@@ -652,6 +652,19 @@ Uninstall OpenShift services from nodes by specifying them in the inventory and 
 
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/adhoc/uninstall.yml
 
+Upgrade
+-------
+
+Minikube
+~~~~~~~~
+
+Minikube can be upgraded by starting with a specified Kubernetes version (or use "latest"). [29]
+
+.. code-block:: sh
+
+   $ minikube stop
+   $ minikube start --kubernetes-version=<VERSION>
+
 Concepts
 --------
 
@@ -718,3 +731,4 @@ Bibliography
 26. "Router Overview." Red Hat OpenShift Container Platform 3.11 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/3.11/install_config/router/index.html
 27. "Installation methods for different platforms." Red Hat OpenShift Container Platform 4.5. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/installing/install_config/installation-types.html
 28. "Getting Started Guide." crc. Accessed August 13, 2020. https://code-ready.github.io/crc/
+29. "Basic controls." minikube Documentation. April 7, 2020. Accessed October 18, 2020. https://minikube.sigs.k8s.io/docs/handbook/controls/
