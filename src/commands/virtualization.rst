@@ -197,7 +197,20 @@ Deploy an all-in-one Kubernetes cluster.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "start", "deploy a Kubernetes cluster to the local machine"
+   "start", "deploy a Kubernetes cluster (by default as a virtual machine)"
+   start --kubernetes-version=latest, start or upgrade to the latest version
+   start --kubenretes-version=<VERSION, start or upgrade to the specified version
+   start -p <NAME>, start a separate Kubernetes cluster
+   stop, stop the virtual machine
+   delete, delete the virtual machine
+   delete --all, delete all Minikube-managed virtual machines
+   ssh, log into the virtual machine
+   dashboard, open the Kubernetes dashboard
+   dashboard --url, provie the URL to the Kubernetes dashboard
+   kubectl -- <ARGS>, run `kubectl` commands
+   service --url <SERVICE_NAME>, provide the URL to access the specified Kubernetes Service object
+   tunnel, create a network tunnel to the virtual machine to access internal IPs
+   tunnel --cleanup, remove old routes
 
 oc
 ~~
