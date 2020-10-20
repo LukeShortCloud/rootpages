@@ -406,28 +406,6 @@ Worker:
    $ K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 ./install.sh
    $ sudo systemctl enable k3s-agent
 
-**Upgrade**
-
-Either update the local git repository and checkout the desired version tag to upgrade to or curl the latest installer script and specify the version using an environment variable.
-
-Master:
-
-.. code-block:: sh
-
-   $ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
-
-Agent:
-
-.. code-block:: sh
-
-   $ curl -sfL https://get.k3s.io | K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
-
-Verify that the upgrade worked.
-
-.. code-block:: sh
-
-   $ k3s --version
-
 **Uninstall**
 
 Master:
@@ -756,6 +734,31 @@ Verify that all Nodes have the "READY" status.
    $ kubectl get nodes
 
 [30]
+
+k3s
+~~~
+
+Either update the local git repository and checkout the desired version tag to upgrade to or curl the latest installer script and specify the version using an environment variable.
+
+Master:
+
+.. code-block:: sh
+
+   $ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
+
+Agent:
+
+.. code-block:: sh
+
+   $ curl -sfL https://get.k3s.io | K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
+
+Verify that the upgrade worked.
+
+.. code-block:: sh
+
+   $ k3s --version
+
+[10]
 
 Concepts
 --------
