@@ -645,6 +645,20 @@ Compatibility guarantees differ between services [31]:
 -  cloud-controller-manager, kube-controller-manager, and kube-scheduler = Supports one version behind kube-apiserver.
 -  kubectl (client) = Supports one version older than, later than, or equal to the kube-apiserver.
 
+Common upgrade scenarios (for a Kubernetes and/or operating system upgrade), in order of recommendation:
+
+1.  Upgrade one Node at a time. Workloads will be migrated off the Node.
+
+    -  Use ``kubectl drain`` to remove all workloads from the Node.
+    -  Once the upgrade is complete, use ``kubectl uncordon`` to allow workloads to be scheduled on the Node again.
+
+2.  Upgrade one Node at a time to new hardware. Workloads will be migrated off the Node.
+
+    -  Use ``kubectl drain`` to remove all workloads from the old Node.
+    -  Use ``kubectl delete node`` to delete the old Node.
+
+3.  Upgrade all Nodes at the same time. This will cause downtime.
+
 Minikube
 ~~~~~~~~
 
