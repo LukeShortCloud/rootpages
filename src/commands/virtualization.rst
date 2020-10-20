@@ -151,6 +151,9 @@ Manage Kubernetes resources via the API.
    get <API> --show-labels, show all of the labels for each object
    "{annotate,label} <API> <OBJECT> <KEY>=<VALUE>", add an annotation or label to an existing object
    "{annotate,label} <API> <OBJECT> <KEY>-", remove an annotation or label key-value pair
+   drain <NODE>, remove all objects from the Node; this will also cordon the Node
+   cordon <NODE>, prevent new objects from being created on this Node
+   uncordon <NODE>, allow new objects to be created on this Node again
    "describe pods <POD>", describe the settings for a specific pod
    "delete pods <POD>", "delete a pod"
    delete pod <POD> --wait=0, start the deletion of a Pod and then return to the command prompt
