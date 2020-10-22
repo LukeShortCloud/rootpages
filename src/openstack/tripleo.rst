@@ -3032,6 +3032,33 @@ These are trips and tricks for setting up a full, yet basic, TripleO cloud for t
 Troubleshooting
 ---------------
 
+Service Telemetry Framework
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Red Hat Service Telemetry Framework (STF) provides a standardized way to log and monitor all of the services in RHOSP. This was previously known as the Service Assurance Framework (SAF). STF is hosted on the Red Hat OpenShift Container Platform (RHOCP).
+
+Services:
+
+-  RHOSP nodes:
+
+   -  ceilometer = Collects metrics and events from OpenStack services.
+   -  collectd = Collects metrics and events from the infrastructure and non-OpenStack services.
+   -  Red Hat AMQ = Sends metrics and events to AMQ Interconnect on RHOCP.
+
+-  RHOCP operators:
+
+   -  AMQ Interconnect = Recieves metrics and events from Red Hat AMQ on RHOSP. These are then sent to the Smart Gateway.
+   -  Smart Gateway = Routes metrics to Prometheus and events to ElasticSearch.
+   -  Prometheus = Stores all of the time-series metrics onto a persistent storage backend. Provides a dashboard and API to search the data.
+   -  AlertManager = Waits for an alert rule to be triggered by Prometheus. Once an alert is recieved, the AlertManager sends communication to the system administrators about possible issues.
+   -  ElasticSearch = Stores all of the events onto a persistent storage backend. Provides a dashboard and API to search the data.
+
+-  Visual dashboard:
+
+    -  Grafana = Not officially part of the STF. Available as a useful community plugin to visualize the data.
+
+[75]
+
 Tips
 ~~~~
 
@@ -3315,3 +3342,4 @@ Bibliography
 72. "OpenStack UPI." GitHub openshift/enhancements. September 18, 2019. Accessed June 30, 2020. https://github.com/openshift/enhancements/blob/master/enhancements/installer/openstack-upi.md
 73. "Reference Architectures 2020 Deploying Red Hat OpenShift Container Platform 4.4 on Red Hat OpenStack Platform 13 and 16.0." Red Hat OpenShift Resources. Accessed June 30, 2020. https://www.redhat.com/cms/managed-files/cl-openshift-container-platform-4-4-on-openstack-platform-13-16-reference-architecture-f23768-202005-en.pdf
 74. "Quick Start Guide Red Hat OpenStack Platform 16.1-Beta." Red Hat Documentation. Accessed July 23, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.1-beta/html-single/quick_start_guide/index
+75. "SERVICE TELEMETRY FRAMEWORK." Red Hat OpenStack Platform 16.0 Service Telemetry Framework. Accessed October 21, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html-single/service_telemetry_framework/index
