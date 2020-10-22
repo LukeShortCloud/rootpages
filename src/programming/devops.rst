@@ -465,6 +465,33 @@ Common OOP Languages:
 -  PHP
 -  Python
 
+Twelve-Factor App Methodology
+-----------------------------
+
+The twelve-factor metholody defines a set of standards to create cloud-native applications. These are microservices that can easily scale on cloud platforms.
+
+Principles:
+
+1. Codebase = All code is stored in a source control management (SCM) repository. There is only one application per SCM repository.
+2. Dependencies = All dependencies and versions are clearly defined.
+3. Config = Configuration are handled by a file or environment variables. Settings are not be hard-coded into the application.
+4. Backing services = External applications that need to access this application should not rely on the source code. This application is treated as a service. For example, it could instead communicate via a RESTful HTTP endpoint.
+5. Build, release, run = There are three distinct phases:
+
+   -  Build = From the SCM repository, build the application.
+   -  Release = Release the application packaged with its dependencies, documentation, and configurations.
+   -  Run = Run the application after being configured.
+
+6. Process = Do not store information in the application itself. Using a database backend for persistent storage. This allows the application to be stateless.
+7. Port binding = The application binds itself to a network port and controls all incoming and outgoing data. There is no external web server, such as Apache, handling the requests.
+8. Concurrency = Scalability is not bound to the hardware. It scales vertically on the cloud by handling requests spread out across many instances of the same application.
+9. Disposability = The application can start and shutdown both quickly and gracefully.
+10. Dev/prod parity = The development, staging, and production environments that the application runs in must be identical. Variations can lead to issues missed during testing.
+11. Logs = Do not log to a file. Logs are sent to stdout/stderr to eventually be streamed to a dedicated logging service. This helps parse the information at scale.
+12. Admin proces = Separate code for administrative tasks from the application itself. This new related code scan reside in the same SCM as the application itself.
+
+[21]
+
 Big O Notation
 --------------
 
@@ -745,3 +772,4 @@ Bibliography
 18. "A beginner's guide to Big O notation." Rob-Bell.net. June 23, 2009. Accessed July 9, 2019. https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/
 19. "How to Write a Git Commit Message." Chris Beams. August 31, 2014. Accessed May 26, 2020. https://chris.beams.io/posts/git-commit/
 20. "cdr/code-server." GitHub. August 10, 2020. Accessed August 10, 2020. https://github.com/cdr/code-server
+21. "The Twelve-Factor App." 12factor.net. 2017. Accessed October 21, 2020. https://12factor.net/
