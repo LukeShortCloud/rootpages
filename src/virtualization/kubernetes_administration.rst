@@ -108,6 +108,11 @@ PersistentVolume support [3]:
 -  Red Hat OpenShift Container Storage (Ceph RBD)
 -  VMWare vSphere
 
+Tanzu
+~~~~~
+
+Tanzu (pronouced tawn-zoo) is developed by VMWare as a deployment tool for upstream Kubernetes. It first deploys an all-in-one Tanzu Kubernetes Grid Management Cluster using `kind <https://kind.sigs.k8s.io/>`__ on-top of virtual infrastructure provided by Amazon EC2 or VMWare vSphere. This is also referred to as TKG or Management Cluster for short. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
+
 Releases
 --------
 
@@ -280,6 +285,19 @@ Below is a list of RHOCP and OKD versions that correspond with the upstream Kube
    3.9, 1.9
 
 Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> + 3`` is released, the ``<RHOCP_RELEASE>`` soon becomes end-of-life. [6]
+
+Tanzu
+~~~~~
+
+Tanzu supports a few of the versions of Kubernetes. Listed below is the minimum Tanzu Kubernetes Grid (TKG) version to deploy the specified Kubernetes version. [33]
+
+.. csv-table::
+   :header: TKG, Kubernetes
+   :widths: 20, 20
+
+   1.2.0, "1.19.1, 1.18.8, and 1.17.11"
+   1.1.0, "1.18.6 and 1.17.9"
+   1.0.0, 1.17.3
 
 Installation
 ------------
@@ -630,6 +648,80 @@ Uninstall OpenShift services from nodes by specifying them in the inventory and 
 
    $ sudo ansible-playbook -i <INVENTORY_FILE> playbooks/adhoc/uninstall.yml
 
+Tanzu
+~~~~~
+
+Before installing a Kubernetes cloud with Tanzu, the ``tkg`` utility has to be set up.
+
+-  Install both ``docker`` and ``kubectl``.
+-  Download the Tanzu-related binaries from `here <https://www.vmware.com/go/get-tkg>`__. A VMWare account is required to login and download it.
+-  Extract the binaries:  ``tar -v -x -f tkg-linux-amd64-v${TKG_VERSION}-vmware.1.tar.gz``
+-  Move them into an executable location in ``$PATH``: ``chmod +x ./tkg/* && mv ./tkg/* ~/.local/bin/``
+-  Symlink the ``tkg`` binary: ``ln -s ~/.local/bin/tkg-linux-amd64-v${TKG_VERSION}+vmware.1 ~/.local/bin/tkg``
+-  Verify that ``tkg`` works: ``tkg-linux-amd64-<VERSION>+vmware.1 version``.
+-  Create the configuration files in ``~/.tkg/`` by running: ``tkg get management-cluster``
+
+[34]
+
+Amazon TKG
+^^^^^^^^^^
+
+Setup a TKG Management Cluster and then the production Kubernetes cluster using infrastructure provided by Amazon Web Services (AWS).
+
+-  Install ``jq``.
+-  Install the dependencies for the ``aws`` command: ``glibc``, ``groff``, and ``less``.
+-  Install the ``aws`` utility and verify it works. Find the latest version from `here <https://github.com/aws/aws-cli/blob/v2/CHANGELOG.rst>`__. [35]
+
+   .. code-block:: sh
+
+      $ export AWS_CLI_VERSION="2.0.59"
+      $ curl -O "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip"
+      $ unzip awscli-*.zip
+      $ sudo ./aws/install
+      $ aws --version
+
+-  Generate a SSH key pair: ``aws ec2 create-key-pair --key-name default --output json | jq .KeyMaterial -r > default.pem``
+-  Kubernetes installation:
+
+    -  Creat the AWS CloudFormation stack and then initialize/create the TKG Management Cluster. [36]
+
+       .. code-block:: sh
+
+          # CLI setup.
+          $ export AWS_REGION=<REGION>
+          $ export AWS_SSH_KEY_NAME="default"
+          $ tkg config permissions aws
+          $ tkg init --infrastructure aws --plan [dev|prod]
+
+       .. code-block:: sh
+
+          # Alternatively, use the web dashboard setup.
+          $ tkg init --ui
+
+   -  Optionally create a configuration file for the production Kubernetes cluster. By default, the "dev" plan will create one control plane node and the "prod" plan will create three. Both will create one worker node.
+
+      .. code-block:: sh
+
+         $ tkg config cluster <KUBERNETES_CLUSTER_NAME> --plan [dev|prod] --controlplane-machine-count <CONTROLPLANE_COUNT> --worker-machine-count <WORKER_COUNT> --namespace <NAMESPACE> > ~/.tkg/cluster_config.yaml
+
+   -  Deploy the production Kubernetes cluster and give it a unique and descriptive name. [37]
+
+      .. code-block:: sh
+
+         $ tkg create cluster <KUBERNETES_CLUSTER_NAME> --plan [dev|prod] --kubernetes-version=v1.19.1
+
+   -  Verify that the production Kubernetes cluster can now be accessed. [38]
+
+      .. code-block:: sh
+
+         $ tkg get cluster
+         $ tkg get credentials <KUBERNETES_CLUSTER_NAME>
+         Credentials of workload cluster '<KUBERNETES_CLUSTER_NAME>' have been saved
+         You can now access the cluster by running 'kubectl config use-context <KUBERNETES_CLUSTER_NAME>-admin@<KUBERNETES_CLUSTER_NAME>'
+         $ kubectl config use-context <KUBERNETES_CLUSTER_NAME>-admin@<KUBERNETES_CLUSTER_NAME>
+         $ kubectl get nodes -o wide
+         $ kubectl get -n kube-system pods
+
 Upgrade
 -------
 
@@ -843,3 +935,10 @@ Bibliography
 29. "Basic controls." minikube Documentation. April 7, 2020. Accessed October 18, 2020. https://minikube.sigs.k8s.io/docs/handbook/controls/
 30. "Upgrading kubeadm clusters." Kubenretes Documentation. August 7, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 31. "Kubernetes version and version skew support policy." Kubernetes Documentation. August 15, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/setup/release/version-skew-policy/
+32. "Deploying Tanzu Kubernetes Clusters and Managing their Lifecycle." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-index.html
+33. "VMware Tanzu Kubernetes Grid 1.2 Release Notes." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/rn/VMware-Tanzu-Kubernetes-Grid-12-Release-Notes.html
+34. "Download and Install the Tanzu Kubernetes Grid CLI." VMware Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-install-tkg-set-up-tkg.html
+35. "AWS Command Line Interface User Guide." AWS Documentation. May 19, 2020. Accessed October 27, 2020. https://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf
+36. "Deploy Management Clusters to Amazon EC2 with the CLI." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-aws-cli.html
+37. "Create Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-create.html
+38. "Connect to and Examine Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-connect.html
