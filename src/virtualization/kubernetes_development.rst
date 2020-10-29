@@ -2203,7 +2203,7 @@ Top 5 Ingress Controllers and their use-cases [24]:
 
 A Kubernetes cluster can have more than one Ingress Controller installed. In an object's manifest, the one to use can be specified. [25]
 
-Kubernetes < 1.18:
+Kubernetes < 1.18 ``ingress.metadata.annotations.kubernetes.io/ingress.class``:
 
 .. code-block:: yaml
 
@@ -2211,10 +2211,15 @@ Kubernetes < 1.18:
      annotations:
        kubernetes.io/ingress.class: <INGRESS_CONTROLLER>
 
-Kubernetes >= 1.18:
+Kubernetes >= 1.18 ``ingress.spec.ingressClassName``:
 
 .. code-block:: yaml
 
+   metadata:
+     annotations:
+       # Some Ingress Controllers still require the legacy
+       # annotation to process special rules.
+       kubernetes.io/ingress.class: <INGRESS_CONTROLLER>
    spec:
      ingressClassName: <INGRESS_CONTROLLER>
 
