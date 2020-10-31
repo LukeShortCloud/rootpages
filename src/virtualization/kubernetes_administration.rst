@@ -722,6 +722,40 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
          $ kubectl get nodes -o wide
          $ kubectl get -n kube-system pods
 
+Uninstall
+---------
+
+Tanzu
+~~~~~
+
+-  First, uninstall the production Kubernetes cluster(s). [39]
+
+   .. code-block:: sh
+
+      $ tkg delete cluster <TKG_CLUSTER>
+
+-  Finally, delete the Management Cluster. [40]
+
+   .. code-block:: sh
+
+      $ tkg delete management-cluster <TKG_MANAGEMENT_CLUSTER>
+
+   -  This error may occur. Workaround the issue by setting the environment variable ``AWS_B64ENCODED_CREDENTIALS`` to any value. [41]
+
+      ::
+
+         Logs of the command execution can also be found at: /tmp/tkg-20201031T164426485425119.log
+         Verifying management cluster...
+         
+         Error: : unable to delete management cluster: unable to get management cluster provider information: error verifying config variables: value for variables [AWS_B64ENCODED_CREDENTIALS] is not set. Please set the value using os environment variables or the tkg config file
+         
+         Detailed log about the failure can be found at: /tmp/tkg-20201031T164426485425119.log
+
+      .. code-block:: sh
+
+         $ export AWS_B64ENCODED_CREDENTIALS=foobar
+         $ tkg delete management-cluster <TKG_MANAGEMENT_CLUSTER>
+
 Upgrade
 -------
 
@@ -942,3 +976,6 @@ Bibliography
 36. "Deploy Management Clusters to Amazon EC2 with the CLI." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-aws-cli.html
 37. "Create Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-create.html
 38. "Connect to and Examine Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-connect.html
+39. "Delete Tanzu Kubernetes Clusters." VMWare Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-delete-cluster.html
+40. "Delete Management Clusters." VMWare Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-delete-management-cluster.html
+41. "[clusterctl] "clusterctl config provider" fails to show AWS, VSphere, and Azure info #2876." GitHub kubernetes-sigs/cluster-api. April 20, 2020. Accessed October 31, 2020.
