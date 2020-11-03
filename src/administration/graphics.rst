@@ -176,6 +176,15 @@ Installation:
 -  Debian (automatic): ``$ sudo apt-get install task-gnome-desktop``
 -  Fedora: ``$ sudo dnf groupinstall "GNOME Desktop Environment"``
 
+The `gnome-tweaks <https://gitlab.gnome.org/GNOME/gnome-tweaks>`__ package provides access to useful advanced settings of the GNOME desktop environment via the ``Tweaks`` application.
+
+Suggested tweaks:
+
+-  Extensions > Applications menu > On
+-  Keyboard & Mouse > Mouse > Pointer Location > On
+-  Top Bar > Battery Percentage > On
+-  Window Titlebars > Titlebar Buttons > [Maximize|Minimize] > On
+
 KDE
 ~~~
 
