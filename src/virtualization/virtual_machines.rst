@@ -1397,6 +1397,18 @@ Nested virtualization also requires MAC spoofing to be enabled.
 
 [30]
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+**"Error starting domain: Requested operation is not valid: network '<LIBVIRT_NETWORK>' is not active"** when starting a libvirt virtual machine.
+
+-  View the status of all libvirt networks: ``sudo virsh net-list --all``.
+-  Start the network: ``sudo virsh net-start <LIBVIRT_NETWORK>``
+-  Optionally, enable the network to start automatically when the ``libvirtd`` service starts: ``sudo virsh net-autostart <LIBVIRT_NETWORK>``
+
 History
 -------
 
