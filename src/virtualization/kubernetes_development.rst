@@ -1038,7 +1038,7 @@ Ingress
 
 **Examples:**
 
-ING with domain name.
+Ingress with domain name.
 
 .. code-block:: yaml
 
@@ -1057,7 +1057,7 @@ ING with domain name.
                  serviceName: svc-foo
                  servicePort: 80
 
-ING with an existing TLS certificate.
+Ingress with an existing TLS certificate.
 
 .. code-block:: yaml
 
@@ -1090,6 +1090,32 @@ ING with an existing TLS certificate.
          secretName: secret-tls
 
 [5]
+
+Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the root path ``/``. In this example, a HTTP request to ``http://foo.bar.com/`` will load up the contents of ``http://foo.bar.com/some/path/here/``.
+
+.. code-block:: yaml
+
+   ---
+   kind: Ingress
+   apiVersion: extensions/v1beta1
+   metadata:
+     name: ing-rewrite-target-example
+   annotations:
+     # NGINX
+     kubernetes.io/ingress.class: nginx
+     nginx.ingress.kubernetes.io/rewrite-target: /
+     # Traefik
+     #kubernetes.io/ingress.class: traefik
+     #traefik.ingress.kubernetes.io/rewrite-target: /
+   spec:
+     rules:
+       - host: foo.bar.com
+         http:
+           paths:
+             - path: /some/path/here
+               backend:
+                 serviceName: svc-rewrite-target-example
+                 servicePort: 80
 
 Service
 ^^^^^^^
