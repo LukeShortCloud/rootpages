@@ -1044,7 +1044,7 @@ Ingress with domain name.
 
    ---
    kind: Ingress
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    metadata:
      name: ing-domain
    spec:
@@ -1072,7 +1072,7 @@ Ingress with an existing TLS certificate.
      tls.key: <KEY_BASE64_ENCODED>
    ---
    kind: Ingress
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    metadata:
      name: ing-tls
    spec:
@@ -1097,7 +1097,7 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
 
    ---
    kind: Ingress
-   apiVersion: extensions/v1beta1
+   apiVersion: networking.k8s.io/v1
    metadata:
      name: ing-rewrite-target-example
    annotations:
@@ -1108,6 +1108,10 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
      #kubernetes.io/ingress.class: traefik
      #traefik.ingress.kubernetes.io/rewrite-target: /
    spec:
+     # NGINX
+     ingressClassName: nginx
+     # Traefik
+     #ingressClassName: traefik
      rules:
        - host: foo.bar.com
          http:
