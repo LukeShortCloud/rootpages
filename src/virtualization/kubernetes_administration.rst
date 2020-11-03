@@ -561,8 +561,8 @@ For installing newer versions of Minishift, the old environment must be wiped fi
 
 [17]
 
-CodyReady Containers
-~~~~~~~~~~~~~~~~~~~~
+CodyReady Containers (CRC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Requirements:
 
@@ -724,6 +724,18 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
 
 Uninstall
 ---------
+
+CodyReady Containers (CRC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Stop CRC, delete the virtual machine, and cleanup system-wide configuration changes the installer made. Then delete all of the CRC files or at least remove the ``~/.crc/cache/`` directory to free up storage space.
+
+.. code-block:: sh
+
+   $ crc stop
+   $ crc delete
+   $ crc cleanup
+   $ rm -rf ~/.crc/
 
 Tanzu
 ~~~~~
