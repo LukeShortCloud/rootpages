@@ -1781,7 +1781,7 @@ Cons:
 
          $ openstack overcloud deploy --disable-validations --templates ~/templates \
              -e ~/templates/environments/deployed-server-environment.yaml \
-             -e ~/templates/environments/deployed-server-bootstrap-environment-rhel.yaml \
+             -e ~/templates/environments/deployed-server-bootstrap-environment-[centos|rhel].yaml \
              -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
              -r /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml
 
