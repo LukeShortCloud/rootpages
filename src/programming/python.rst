@@ -990,6 +990,42 @@ External
 
 External libraries are not available on a default Python installation and must be installed via a package manager such as ``pip``.
 
+PIL (Pillow)
+^^^^^^^^^^^^
+
+The `Python Image Library (PIL) <https://pillow.readthedocs.io/en/stable/>`__ provides a way to manage image files in Python. Pillow is the Python 3 fork of the original PIL project that was created for Python 2. It can be imported and used the same way.
+
+----
+
+**Examples:**
+
+Gamma correction. This example lowers the gamma by a factor of 1.22 which will brighten the image slightly. [41] The full math and explaination behind this can be found `here <https://www.pyimagesearch.com/2015/10/05/opencv-gamma-correction/>`__.
+
+.. code-block:: python
+
+    import numpy
+    from PIL import Image
+    
+    
+    # Open the image and convert each row of pixels into an array of numbers.
+    image = numpy.array(Image.open('foobar.jpg'))
+   
+    # Encode the image array with gamma corrected values.
+    # Equations:
+    #     Decrease the gamma (brighten the image) = 255 * ((IMAGE_ORIGINAL / 255) ^ (1 / GAMMA_FACTOR))
+    #     Find the original gamma = 255 * ((IMAGE_DECREASED_GAMMA_ENCODED / 255) ^ GAMMA_FACTOR)
+    #
+    #     Increase the gamma (darken the image) = 255 * ((IMAGE_ORIGINAL / 255) ^ GAMMA_FACTOR
+    #     Find the original gamma = 255 * ((IMAGE_INCREASED_GAMMA_ENCODED / 255) ^ (1 / GAMMA_FACTOR)
+    # https://stackoverflow.com/a/16521337
+    gamma_correction_factor = 1.22
+    image_gamma_encoded = 255.0 * (image / 255.0)**(1 / gamma_correction_factor)
+    
+    # Convert the array back into a usable Image object.
+    image_new = Image.fromarray(numpy.uint8(image_gamma_encoded))
+    # Save the new image file.
+    image_new.save('foobar_gamma_corrected.jpg')
+
 requests
 ^^^^^^^^
 
@@ -1707,3 +1743,4 @@ Bibliography
 38. "Threading in Python." Linux Journal. January 24, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/threading-python
 39. "Multiprocessing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
 40. "pdb - The Python Debugger." Python 3 Documentation. Jul 19, 2019. Accessed July 19, 2019. https://docs.python.org/3/library/pdb.html
+41. "Image processing with Python, NumPy." note.nkmk.me. October 20, 2020. Accessed November 3, 2020. https://note.nkmk.me/en/python-numpy-image-processing/
