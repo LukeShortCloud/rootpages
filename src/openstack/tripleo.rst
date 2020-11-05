@@ -1785,13 +1785,20 @@ Cons:
              -e ~/templates/environments/deployed-server-pacemaker-environment.yaml \
              -r /usr/share/openstack-tripleo-heat-templates/deployed-server/deployed-server-roles-data.yaml
 
-   -  >= Train:
+   -  >= Train (the default composable roles data can now be used):
 
       .. code-block:: sh
 
          $ openstack overcloud deploy --disable-validations --templates ~/templates \
              -e ~/templates/environments/deployed-server-environment.yaml \
              -r /usr/share/openstack-tripleo-heat-templates/roles_data.yaml
+
+   -  >= Victoria:
+
+      .. code-block:: sh
+
+         $ openstack overcloud deploy --disable-validations --templates ~/templates \
+             --deployed-server
 
 **config-download (>= Rocky)**
 
