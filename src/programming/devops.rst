@@ -492,6 +492,29 @@ Principles:
 
 [21]
 
+RESTful APIs
+------------
+
+HTTP Verbs
+~~~~~~~~~~
+
+These are the valid HTTP verbs that can be used when interacting with a HTTP web server. [22] The most common ones used in regards to RESTful APIs are DELETE, GET, PATCH, POST, and PUT. [23]
+
+Read-only operations:
+
+-  CONNECT = Connect to a tunnel or proxy server. Commonly used for HTTPS (SSL/TLS) connections.
+-  GET = Retrieve data from the server.
+-  HEAD = Only retrieve the header information (not the full data) from the server.
+-  OPTIONS = Retrieve the support HTTP verbs from the server.
+-  TRACE = View all of the additional request data that was sent and processed by the server.
+
+Write operations:
+
+-  DELETE = Delete data from the server.
+-  PATCH = Partially modify existing data on the server.
+-  POST = Append new data to the server. This is not idempotent as new data is always stored.
+-  PUT = Replace existing data, or add new data if it does not exist, with this data. This is idempotent as the same data will not result in any change.
+
 Big O Notation
 --------------
 
@@ -773,3 +796,5 @@ Bibliography
 19. "How to Write a Git Commit Message." Chris Beams. August 31, 2014. Accessed May 26, 2020. https://chris.beams.io/posts/git-commit/
 20. "cdr/code-server." GitHub. August 10, 2020. Accessed August 10, 2020. https://github.com/cdr/code-server
 21. "The Twelve-Factor App." 12factor.net. 2017. Accessed October 21, 2020. https://12factor.net/
+22. "HTTP request methods." MDN web docs. Accessed November 6, 2020 https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+23. "Using HTTP Methods for RESTful Services." REST API Tutorial. Accessed November 6, 2020. https://www.restapitutorial.com/lessons/httpmethods.html
