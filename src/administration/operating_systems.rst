@@ -185,7 +185,7 @@ Top Distributions
 This is an extremely biased list of the best distribution for each use case.
 
 -  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. GalliumOS
--  Alternative to macOS = elementary OS
+-  Alternative to macOS = 1. elementary OS 2. Fedora 3. Xubuntu
 -  Alternative to Windows = Zorion OS
 -  Arm single-board computer (SBC) = Debian
 -  Bleeding edge (stable) = Manjaro
@@ -195,7 +195,7 @@ This is an extremely biased list of the best distribution for each use case.
 -  Customizable = Gentoo
 -  Customizable (easy) = Arch Linux
 -  Easiest = Zorion OS
--  Free and open source software (FOSS) = Fedora
+-  Free and open source software (FOSS) = 1. Fedora 2. Debian
 -  Gaming = 1. GamerOS 2. Pop!_OS 3. Manjaro 4. SteamOS
 -  Hardest = Linux From Scratch
 -  Hardware support = Arch Linux
@@ -203,17 +203,18 @@ This is an extremely biased list of the best distribution for each use case.
 -  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. CentOS 4. Ubuntu LTS (free)
 -  Old computer = Linux Lite
 -  Oldest Linux distribution = 1. Slackware 2. Debian
+-  Operating system of the future = 1. Fedora Silverblue 2. Clear Linux 3. GamerOS
 -  Packages available = Ubuntu
 -  Release cycle
 
    -  Slow = Debian
    -  Moderate = openSUSE Leap
-   -  Fast = Fedora
+   -  Fast = 1. Fedora 2. Ubuntu
    -  Latest = Arch Linux
 
 -  Security penetration testing = Kali Linux
--  Server = 1. RHEL 2. CentOS 3. Debian
--  Stable = 1. RHEL 2. CentOS 3. Debian
+-  Server = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS
+-  Stable = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS
 -  Touchscreen = Fedora
 -  USB drive = Puppy Linux
 -  Desktop environments:
