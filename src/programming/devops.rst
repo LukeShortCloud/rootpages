@@ -495,6 +495,38 @@ Principles:
 RESTful APIs
 ------------
 
+Principles
+~~~~~~~~~~
+
+REpresentational State Transfer (REST) is a programming design on how to abstract client and server interactions. A program that implments the REST API design is considered to be a RESTful API. The most common protocol used for RESTful APIs is HTTP but the design principles are not limited to HTTP. An application that follows the REST principles will have improved "performance, scalability, simplicity, modifiability, visibility, portability and reliability." [25]
+
+REST API interactions normally have three different components:
+
+::
+
+   Client <---> API (Server) <---> Database
+
+Principles:
+
+-  **Client-server** = The client and server components are completely separate programs.
+-  **Stateless** = The client handles the session state and the database stores the application state. The API by itself does not have any knowledge of any states. The API also does not need to care about other requests, each request is handled independently/separately.
+-  **Cacheable** = All requests sent back from the server need to be marked as cacheable or non-cacheable. Clients can re-use cacheable content as to lower the load on the server.
+-  **Uniform interface** = Rules for how the client and server interact. [25]
+
+   -  **Resource-based** = The resource the client interacts with is determined by the URI.
+   -  **Modifications of resources through representations** = The client can retrieve enough information from the server to be able to modify existing data.
+   -  **Self-descriptive message** = Everything required for the API to process the request is provided via a message from the client.
+   -  **Hypermedia as the engine of applicaiton state** = The client and server separately ask for and send the state via different means.
+
+      -  **Client** = Body contents, query-string parameters, requests headers, and/or the requested URI.
+      -  **Server** = Body, response codes, and/or response headers.
+
+-  **Microservices (or layered systems)** = Each component is isolated. The client cannot directly communicate with the database. It has to communicate with the API to retrieve and modify data.
+-  **Versioning** = Determine how and why the API version would change. When making a breaking change, allow the original API version to be accessed and used (via a header or URI) for backwards compatibility. [25]
+-  **Code on demand (optional)** = The server can provide executable code to the client to provide more feature temporarily.
+
+[24]
+
 HTTP Verbs
 ~~~~~~~~~~
 
@@ -798,3 +830,5 @@ Bibliography
 21. "The Twelve-Factor App." 12factor.net. 2017. Accessed October 21, 2020. https://12factor.net/
 22. "HTTP request methods." MDN web docs. Accessed November 6, 2020 https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 23. "Using HTTP Methods for RESTful Services." REST API Tutorial. Accessed November 6, 2020. https://www.restapitutorial.com/lessons/httpmethods.html
+24. "What is REST." REST API Tutorial. Accessed November 6, 2020. https://restfulapi.net/
+25. "RESTful API Basic Guidelines." RestCase. September 6, 2016. Accessed November 6, 2020. https://blog.restcase.com/restful-api-basic-guidelines/
