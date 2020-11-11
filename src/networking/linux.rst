@@ -297,6 +297,43 @@ Common:
 
 [6]
 
+Bridging
+^^^^^^^^
+
+Syntax for /etc/network/interfaces:
+
+::
+
+   iface <BRIDGE_NAME> inet static
+     bridge_ports <PORT1> <PORT2>
+     address <IP_ADDRESS>
+     netmask <NETMASK>
+     gateway <DEFAULT_GATEWAY>
+     <BRIDGE_OPTION_KEY> <BRIDGE_OPTION_VALUE>
+
+Bridge options:
+
+-  bridge_stp [on|off] = Turn the Spanning Tree Protocol (STP) on or off.
+-  bridge_waitport <DELAY> = The number of seconds to delay before turning on the virtual interface.
+-  bridge_fd <DELAY> = The number of seconds to delay before forwarding a packet.
+-  bridge_ports <PORT1> <PORT2> = The ethernet port(s) to create a bridge on.
+-  bridge_ports regex eth* = Define a regular expression of the the ethernet ports to create a bridge on.
+
+Example of ``eth0`` converted into a bridge ``br0`` with a static IP address:
+
+::
+
+   iface br0 inet static
+     bridge_ports eth0
+     address 192.168.1.123
+     netmask 255.255.255.0
+     gateway 192.168.1.1
+     bridge_stp on
+     brdige_waitport 30
+     bridge_fd 1
+
+[17]
+
 RHEL
 ~~~~~
 
@@ -643,3 +680,4 @@ Bibliography
 14. "RHEL: Linux Bond / Team Multiple Network Interfaces (NIC) Into a Single Interface." nixCraft. March 27, 2016. Accessed January 7, 2016. https://www.cyberciti.biz/tips/linux-bond-or-team-multiple-network-interfaces-nic-into-single-interface.html
 15. "Bonding Interfaces." CentOS Tips and Tricks. January 22, 2013. Accessed January 7, 2016. https://wiki.centos.org/TipsAndTricks/BondingInterfaces
 16. "How to install Fail2Ban on CentOS 7." HowtoForge. Accessed June 10, 2018. https://www.howtoforge.com/tutorial/how-to-install-fail2ban-on-centos/
+17. "Bridging Network Connections." Debian Wiki. April 24, 2020. Accessed November 10, 2020. https://wiki.debian.org/BridgeNetworkConnections
