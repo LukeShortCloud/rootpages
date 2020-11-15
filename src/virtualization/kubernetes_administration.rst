@@ -26,7 +26,7 @@ Master services:
 
 Node services:
 
--  Container runtime = Any service that supports that Container Runtime Interface (CRI). That includes docker, containerd, CRI-O, rkt, and others.
+-  Container runtime = Any service for executing containers that supports the Container Runtime Interface (CRI). Kubernetes officially supports containerd, CRI-O, and docker. [42]
 -  kubelet = Manages containers using the container runtime.
 -  kube-proxy = Handles virtual networking connections for internal (containers across different Nodes) and external (Kubernetes Services) use.
 
@@ -991,3 +991,4 @@ Bibliography
 39. "Delete Tanzu Kubernetes Clusters." VMWare Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-delete-cluster.html
 40. "Delete Management Clusters." VMWare Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-delete-management-cluster.html
 41. "[clusterctl] "clusterctl config provider" fails to show AWS, VSphere, and Azure info #2876." GitHub kubernetes-sigs/cluster-api. April 20, 2020. Accessed October 31, 2020.
+42. "Container runtimes." Kubernetes Documentation. October 28, 2020. Accessed November 14, 2020. https://kubernetes.io/docs/setup/production-environment/container-runtimes/
