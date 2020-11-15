@@ -650,6 +650,42 @@ Unblock a legitimate IP address:
 
 [16]
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when starting the ``sshd`` service and trying to connect to it via a remote host:
+
+::
+
+   $ sudo journalctl -u ssh
+   Nov 15 00:12:09 debian.example.com systemd[1]: Starting OpenBSD Secure Shell server...
+   Nov 15 00:12:09 debian.example.com sshd[324]: Could not load host key: /etc/ssh/ssh_host_rsa_key
+   Nov 15 00:12:09 debian.example.com sshd[324]: Could not load host key: /etc/ssh/ssh_host_ecdsa_key
+   Nov 15 00:12:09 debian.example.com sshd[324]: Could not load host key: /etc/ssh/ssh_host_ed25519_key
+   Nov 15 00:12:09 debian.example.com sshd[336]: Could not load host key: /etc/ssh/ssh_host_rsa_key
+   Nov 15 00:12:09 debian.example.com sshd[336]: Could not load host key: /etc/ssh/ssh_host_ecdsa_key
+   Nov 15 00:12:09 debian.example.com sshd[336]: Could not load host key: /etc/ssh/ssh_host_ed25519_key
+   Nov 15 00:12:09 debian.example.com sshd[336]: Server listening on 0.0.0.0 port 22.
+   Nov 15 00:12:09 debian.example.com sshd[336]: Server listening on :: port 22.
+   Nov 15 00:12:09 debian.example.com systemd[1]: Started OpenBSD Secure Shell server.
+   Nov 15 00:13:19 debian.example.com sshd[398]: error: Could not load host key: /etc/ssh/ssh_host_rsa_key
+   Nov 15 00:13:19 debian.example.com sshd[398]: error: Could not load host key: /etc/ssh/ssh_host_ecdsa_key
+   Nov 15 00:13:19 debian.example.com sshd[398]: error: Could not load host key: /etc/ssh/ssh_host_ed25519_key
+   Nov 15 00:13:19 debian.example.com sshd[398]: fatal: No supported key exchange algorithms [preauth]
+
+Solution:
+
+-  Create the host key files on the ``sshd`` server [18]:
+
+   .. code-block:: sh
+
+      $ sudo ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+      $ sudo ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key
+      $ sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key
+
 History
 -------
 
@@ -681,3 +717,4 @@ Bibliography
 15. "Bonding Interfaces." CentOS Tips and Tricks. January 22, 2013. Accessed January 7, 2016. https://wiki.centos.org/TipsAndTricks/BondingInterfaces
 16. "How to install Fail2Ban on CentOS 7." HowtoForge. Accessed June 10, 2018. https://www.howtoforge.com/tutorial/how-to-install-fail2ban-on-centos/
 17. "Bridging Network Connections." Debian Wiki. April 24, 2020. Accessed November 10, 2020. https://wiki.debian.org/BridgeNetworkConnections
+18. "sshd shuts down with “No supported key exchange algorithms” error." serverfault.com. August 8, 2019. Accessed November 14, 2020. https://serverfault.com/questions/158151/sshd-shuts-down-with-no-supported-key-exchange-algorithms-error
