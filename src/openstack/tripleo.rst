@@ -394,7 +394,7 @@ If installing on CentOS 8, it is required to enable the high availability reposi
           $ sudo curl -L -o /etc/yum.repos.d/delorean-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos${EL_VER}-${OPENSTACK_RELEASE}/current-tripleo-rdo/delorean.repo
           $ sudo curl -L -o /etc/yum.repos.d/delorean-deps-${OPENSTACK_RELEASE}.repo https://trunk.rdoproject.org/centos${EL_VER}-${OPENSTACK_RELEASE}/delorean-deps.repo
 
-   -  Create a container image prepare file that uses the ``current-tripleo`` (default) or ``current-tripleo-rdo`` tag. Configure the ``undercloud.conf`` to use this file via the ``container_images_file`` parameter. Configure the Overcloud to use it by adding it as another Heat environment template: ``openstack overcloud deploy --templates -e ~/containers-prepare-parameters.yaml``.
+   -  Create a container image prepare file that uses the ``current-tripleo`` (default), ``current-tripleo-rdo``, or a Delorean hash tag. Container images are not built for ``current``. Configure the ``undercloud.conf`` to use this file via the ``container_images_file`` parameter. Configure the Overcloud to use it by adding it as another Heat environment template: ``openstack overcloud deploy --templates -e ~/containers-prepare-parameters.yaml``. [76]
 
       .. code-block:: sh
 
@@ -407,7 +407,14 @@ If installing on CentOS 8, it is required to enable the high availability reposi
          parameter_defaults:
            ContainerImagePrepare:
               - set:
+                  namespace: docker.io/tripleo<OPENSTACK_RELEASE>
                   tag: current-tripleo-rdo
+                  # Alternatively, to prevent unforeseen updates, the tag can be a Delorean hash.
+                  # For example, for
+                  # https://trunk.rdoproject.org/centos8-victoria/current-tripleo-rdo/7f/97/7f974e10d7184d5fc45445a3073333bd/
+                  # this tag can be used:
+                  #namespace: docker.io/tripleovictoria
+                  #tag: 7f974e10d7184d5fc45445a3073333bd
 
 [53]
 
@@ -3350,3 +3357,4 @@ Bibliography
 73. "Reference Architectures 2020 Deploying Red Hat OpenShift Container Platform 4.4 on Red Hat OpenStack Platform 13 and 16.0." Red Hat OpenShift Resources. Accessed June 30, 2020. https://www.redhat.com/cms/managed-files/cl-openshift-container-platform-4-4-on-openstack-platform-13-16-reference-architecture-f23768-202005-en.pdf
 74. "Quick Start Guide Red Hat OpenStack Platform 16.1-Beta." Red Hat Documentation. Accessed July 23, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.1-beta/html-single/quick_start_guide/index
 75. "SERVICE TELEMETRY FRAMEWORK." Red Hat OpenStack Platform 16.0 Service Telemetry Framework. Accessed October 21, 2020. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html-single/service_telemetry_framework/index
+76. "Container Image Prepare." TripleO Documentation. October 30, 2020. Accessed November 16, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/container_image_prepare.html
