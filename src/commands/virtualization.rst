@@ -55,6 +55,8 @@ Package: docker
    "rmi", "remove image files"
    "rm", "delete a container"
    "ps", "list active containers"
+   --format="{{json .}}", list the JSON output and also see which values can be used as part of a JSON query output
+   ps --format "{{.Names}}", only show active container names
    "ps -a", "list all active and stopped containers"
    ps {-f|--filter} status={created|dead|exited|paused|removing|restarting|running}, filter containers by their current (docker supported) state
    ps -f ""status=exited"", show stopped containers
