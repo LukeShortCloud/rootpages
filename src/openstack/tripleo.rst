@@ -2694,6 +2694,7 @@ Containers
    parameter_defaults:
      DockerInsecureRegistryAddress:
        - 192.168.24.1:8787
+       - undercloud.ctlplane.localdomain:8787
      ContainerImagePrepare:
        - push_destination: true
 
