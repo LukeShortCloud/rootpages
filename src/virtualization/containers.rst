@@ -12,7 +12,7 @@ possible to use separate kernels with this approach.
 Images
 ------
 
-`Docker Hub <https://hub.docker.com/>`__ provides a central location to find, download, and upload container docker and CRI-O compatible images. Here is a list of common operating system images for each family of distributions:
+`Docker Hub <https://hub.docker.com/>`__ provides a central location to find, download, and upload container docker and OCI compatible images. Here is a list of common operating system images for each family of distributions:
 
 -  Arch Linux
 
@@ -103,14 +103,124 @@ If not using Arch Linux with ``pacman`` installed, `download <https://www.archli
 
 [12]
 
-docker
-------
+Container Runtimes
+------------------
 
-The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.
+Container runtimes handle launching, stopping, and removing containers. Typically a container runtime will be used as a library for implementing a CRI and optionally a Container Engine on-top of the CRI. End-users do not need to interact directly with a container runtime. [13]
+
+An OCI compliant container runtime reads metadata about a container from a config.json file. This describes everything about the container. It will then handle overlay mounts, creating cgroups for process isolation, configuring AppArmor or SELinux, and starting the container process. [20]
+
+runC and crun
+~~~~~~~~~~~~~
+
+runC was originally developed by Docker as one of the first modern container runtimes and is written in Go. crun is developed by Red Hat as a re-implementation of runC in the C programming language. It is twice as fast as runC. [14] Legacy container runtimes that are no longer maintained include railcar and rkt. Both runC and crun follow the Open Container Initiative (OCI) for providing a standardized container runtime. [13]
+
+Container Runtime Interfaces (CRIs)
+-----------------------------------
+
+CRIs are wrappers around container runtimes that provide a standard API for Kubernetes and other container management platforms to interact with. [13]
+
+containerd (docker)
+~~~~~~~~~~~~~~~~~~~
+
+containerd is a cross-platform (Linux and Windows) CRI built on-top of runC. It is what the Docker Engine uses in the back-end. [15]
+
+Installation
+^^^^^^^^^^^^
+
+Supported operating systems:
+
+-  CentOS/RHEL >= 7
+-  Debian >= 9
+-  Ubuntu >= 16.04
+-  Windows
+
+Debian and Ubuntu:
+
+-  Install the required dependencies:
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
+-  Add the repository and its GPG key.
+
+   .. code-block:: sh
+
+      $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(lsb_release -is | awk '{print tolower($0)}') $(lsb_release -cs) stable"
+      $ curl -fsSL https://download.docker.com/linux/$(lsb_release -is | awk '{print tolower($0)}')/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
+
+-  Install containerd.
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install containerd.io
+
+-  Pick to either use containerd by itself or the Docker Engine.
+
+   -  containerd:
+
+      -  Create default configuration file and restart containerd to reload the new configuration file.
+
+         .. code-block:: sh
+
+            $ sudo mkdir -p /etc/containerd
+            $ sudo containerd config default > /etc/containerd/config.toml
+            $ sudo systemctl restart containerd
+
+   -  Docker Engine:
+
+      -  Install the Docker Engine.
+
+         .. code-block:: sh
+
+            $ sudo apt-get install docker-ce docker-ce-cli
+
+      -  Configure it.
+
+         .. code-block:: sh
+
+            $ cat <<EOF | sudo tee /etc/docker/daemon.json
+            {
+              "exec-opts": ["native.cgroupdriver=systemd"],
+              "log-driver": "json-file",
+              "log-opts": {
+                "max-size": "100m"
+              },
+              "storage-driver": "overlay2"
+            }
+            EOF
+            $ sudo mkdir -p /etc/systemd/system/docker.service.d
+            $ sudo systemctl daemon-reload
+
+      -  Restart it to load the new configuration. Also ensure it will start on boot.
+
+         .. code-block:: sh
+
+            $ sudo systemctl restart docker
+            $ sudo systemctl enable docker
+
+[16]
+
+CRI-O
+~~~~~
+
+CRI-O is a lightweight CRI created by Red Hat and is specifically for Kubernetes only. It supports both runC (cgroups v1) and crun (cgroups v2). [17] In OpenShift 4, CRI-O is the default CRI. [18]
+
+Container Engines
+-----------------
+
+A Container Engine provides a set of tools for end-users to interact with and manage containers. [13]
+
+Docker Engine
+~~~~~~~~~~~~~
+
+The Docker Engine provides a single binary ``docker`` that can build and run containers as well as manage image repositories. It uses the CRI containerd which uses the container runtime runC. Legacy versions of the Docker Engine relied on the LXC kernel module.
 
 A command is ran to start a daemon in the container. As long as that process is still running in the foreground, the container will remain active. Some processes may spawn in the background. A workaround for this is to append ``&& tail -f /dev/null`` to the command. If the daemon successfully starts, then a never-ending task can be run instead (such as viewing the never ending file of /dev/null). [1]
 
-The docker software (with a lowercase "d") was created by the Docker company to manage and create containers using the LXC kernel module on Linux.$
 By default, only the "root" user has access to manage docker containers. Users assigned to a "docker" group will have the necessary privileges. However, they will then have administrator access to the system. If the "docker" group is newly created then the daemon needs to be restarted for the change to load up. The docker user may also have to run the ``newgrp docker`` command to reload their groups. [2]
 
 .. code-block:: sh
@@ -120,7 +230,7 @@ By default, only the "root" user has access to manage docker containers. Users a
     $ sudo systemctl restart docker
 
 Dockerfile
-~~~~~~~~~~
+^^^^^^^^^^
 
 docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it's started.
 
@@ -173,7 +283,7 @@ Lower space usage by [10]:
 A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
 
 Networking
-~~~~~~~~~~
+^^^^^^^^^^
 
 Networking is automatically bridged to the public interface and set up
 with a NAT. This allows full communication to/from the container,
@@ -236,7 +346,7 @@ restart the docker service for it to be properly recreated.
 [4]
 
 Java
-~~~~
+^^^^
 
 Java <= 9, by default, will try to allocate a large amount of memory for the runtime and garbage collection. This can lead to resource exhaustion of RAM on a hypervisor. The maximum memory allocation should be specified to Java applications using ``-Xmx<SIZE_IN_MB>m``. [7] This is no longer an issue in Java >= 10 as it is now aware of when it is being containerized. [8]
 
@@ -246,8 +356,19 @@ Example Java <=9 usage in a docker compose file that utilizes an environment var
 
    CMD java -XX:+PrintFlagsFinal $JAVA_OPTS -jar app.jar
 
+Container Tools (buildah, podman, and skopeo)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `Container Tools project <https://github.com/containers>`__ bundles a set of fully-featured programs to replicate the functionality of the ``docker`` command using the OCI standard. [19] No daemon or CRI is used and instead the tools communicate directly with crun or runC. The `podman codebase <https://github.com/containers/podman>`__ (previously known as libpod) is shared between the Container Tools and CRI-O projects. However, the two projects are not able to manage containers created from the other.
+
+Container Tools:
+
+-  ``buildah`` = Build container images.
+-  ``podman`` = Run containers. Designed as a drop-in CLI replacement for ``docker``. It has a focus on adding additional functional to replicate the Pod API from Kubernetes. Containers will run as a non-privileged user by default.
+-  ``skopeo`` = Manage container image registries.
+
 LXC
----
+~~~
 
 Linux Containers (LXC) utilizes the Linux kernel to natively run
 containers.
@@ -310,3 +431,11 @@ Bibliography
 10. "Five Ways to Slim Docker Images." Codacy Blog. December 14, 2017. Accessed March 21, 2020. https://blog.codacy.com/five-ways-to-slim-your-docker-images/
 11. "Best practices for writing Dockerfiles." Docker Documentation. Accessed March 21, 2020. https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 12. "How to Bootstrap different Linux Distribution Under Arch Linux." lukeluo.blogspot.com. September 6, 2015. Accessed May 30, 2020. http://lukeluo.blogspot.com/2015/09/how-to-bootstrap-different-linux.html
+13. "A Comprehensive Container Runtime Comparison." Capital One Tech Cloud. June 10, 2020. Accessed November 22, 2020. https://www.capitalone.com/tech/cloud/container-runtime/
+14. "containers/crun." GitHub. November 16, 2020. Accessed November 22, 2020. https://github.com/containers/crun
+15. "containerd." containerd. 2020. Accessed November 22, 2020. https://containerd.io/
+16. "Container runtimes." Kubernetes Documentation. October 28, 2020. Accessed November 22, 2020. https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+17. "cri-o." cri-o. Accessed November 22, 2020. https://cri-o.io/
+18. "The OpenShift Container Platform control plane." OpenShift Container Platform 4.6 Documentation. Accessed November 22, 2020. https://docs.openshift.com/container-platform/4.6/architecture/control-plane.html
+19. "podman." podman. November 13, 2020. Accessed November 22, 2020. https://podman.io/
+20. "A Practical Introduction to Container Terminology." Red Hat Developer. February 22, 2018. Accessed November 22, 2020. https://developers.redhat.com/blog/2018/02/22/container-terminology-practical-introduction/
