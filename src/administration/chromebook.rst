@@ -433,12 +433,22 @@ Example of installing Debian Sid, with common features enabled, encrypting the c
 
 [20]
 
+Features
+--------
+
+Chrome OS versions:
+
+-  85
+
+   -  `Windows virtual machine integration provided by Parallels. <https://www.parallels.com/products/desktop/chrome/>`__
+
 Upcoming Features
 -----------------
 
--  `Official Steam support (unconfirmed). <https://www.androidpolice.com/2020/01/17/exclusive-google-is-working-to-bring-steam-to-chrome-os/>`__
+-  `Crostini on removable storage devices. <https://bugs.chromium.org/p/chromium/issues/detail?id=827705>`__
+-  `Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming. <https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager>`__
+-  `Recycle bin for recovering deleted files. <https://chromeunboxed.com/chromebook-files-app-trash-recycle-bin-chrome-os>`__
 -  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
--  `Windows integration provided by Parallels. <https://www.parallels.com/chrome/>`__
 
 History
 -------
