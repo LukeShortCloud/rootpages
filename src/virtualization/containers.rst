@@ -209,6 +209,51 @@ CRI-O
 
 CRI-O is a lightweight CRI created by Red Hat and is specifically for Kubernetes only. It supports both runC (cgroups v1) and crun (cgroups v2). [17] In OpenShift 4, CRI-O is the default CRI. [18]
 
+Installation
+^^^^^^^^^^^^
+
+Supported operating systems:
+
+-  CentOS >= 7
+-  Debian Testing or Unstable (currently Debian 11)
+-  Fedora
+-  openSUSE Tumbleweed
+-  Ubuntu >= 18.04
+
+Debian and Ubuntu:
+
+-  Install the required dependencies:
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
+-  Add the CRI-O repository and its GPG key.
+
+   .. code-block:: sh
+
+      $ export OS="xUbuntu_20.04" # Or use "Debian_Testing" for Debian.
+      $ cat <<EOF | sudo -E tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+      deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /
+      EOF
+      $ cat <<EOF | sudo -E tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
+      deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/ /
+      EOF
+      $ curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/libcontainers.gpg add -
+      $ curl -L https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:$VERSION/$OS/Release.key | sudo apt-key --keyring /etc/apt/trusted.gpg.d/libcontainers-cri-o.gpg add -
+
+-  Install CRI-O and start the service.
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install cri-o cri-o-runc
+      $ sudo systemctl daemon-reload
+      $ sudo systemctl start crio
+
+[16]
+
 Container Engines
 -----------------
 
