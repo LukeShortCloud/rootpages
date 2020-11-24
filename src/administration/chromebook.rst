@@ -438,9 +438,41 @@ Features
 
 Chrome OS versions:
 
+-  87
+
+   -  `The PDF viewer has been completely redesigned with more features. <https://www.androidpolice.com/2020/11/18/chrome-87/>`__
+
 -  85
 
    -  `Windows virtual machine integration provided by Parallels. <https://www.parallels.com/products/desktop/chrome/>`__
+
+-  81
+
+   -  `Nested virtualization support inside of Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=993253>`__
+
+-  76
+
+   -  `OpenGL passthrough to Crostini via Virgl. <https://www.xda-developers.com/chrome-os-76-gpu-support-linux-apps/>`__
+
+-  75
+
+   - `USB device passthrough of any device to Crostini. <https://www.aboutchromebooks.com/news/chrome-os-75-adds-usb-device-adb-android-support-linux-project-crostini/>`__
+
+-  73
+
+   -  `Initial USB device passthrough of select supported devices to Crostini. <https://www.aboutchromebooks.com/news/chrome-os-73-dev-channel-adds-google-drive-play-files-mount-in-linux-usb-device-management-and-crostini-backup-flag/>`__
+
+-  72
+
+   -  `USB storage passthrough to Crostini. <https://www.aboutchromebooks.com/news/chrome-os-72-dev-channel-usb-sd-card-support-project-crostini-chromebooks-android-9-pie/>`__
+
+-  66
+
+   -  `Linux support via Crostini. <https://www.xda-developers.com/linux-apps-chrome-os-overview-crostini/>`__
+
+-  59
+
+   -  `Native printer support via CUPS. <https://www.engadget.com/2017-06-10-chrome-os-native-print.html>`__
 
 Upcoming Features
 -----------------
