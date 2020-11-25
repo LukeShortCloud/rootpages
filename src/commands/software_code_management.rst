@@ -26,6 +26,7 @@ Git is used for version controlling files.
    "reset --hard", "deletes all local changes"
    "status -v", "shows files that have been modified and not pushed yet"
    "diff <BRANCH_OR_COMMIT>", "shows deletions and inserts of the actual changes between this branch and a specified branch"
+   diff --staged, show the patch/difference of commits that are staged to be committed
    "fetch --tags", "pull the latest tags"
    "grep", "search for specific strings in all of the files"
    "blame", "show who made a specific commit"
@@ -113,6 +114,7 @@ git commit
    :widths: 20, 20
 
    "-m '<USEFUL_COMMENT>'", "provide a commit comment"
+   -s, automatically sign off on the commit (add the git name and email address)
    "--amend", "change the last commit message"
    --amend --no-edit, update the current commit and keep the same message
 
@@ -266,6 +268,7 @@ git show
    :widths: 20, 20
 
    <COMMIT_HASH>, show the patch/diff of a specific commit
+   HEAD, show the newest commit
    --pretty=full, "show the patch with the commit hash, author, and committer"
    --pretty=email, "show the patch with the required information to use git over e-mail (commit hash, author, author date, and subject line)"
 
