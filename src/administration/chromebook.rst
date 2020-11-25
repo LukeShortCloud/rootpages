@@ -446,6 +446,10 @@ Chrome OS versions:
 
    -  `Windows virtual machine integration provided by Parallels. <https://www.parallels.com/products/desktop/chrome/>`__
 
+-  84
+
+   -  `Port forwarding to access network ports in Crostini from Chrome OS. <https://chromeos.dev/en/web-environment/port-forwarding>`__
+
 -  81
 
    -  `Nested virtualization support inside of Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=993253>`__
