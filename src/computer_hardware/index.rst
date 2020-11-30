@@ -7,3 +7,4 @@
    monitors
    processors
    storage_devices
+   webcams
