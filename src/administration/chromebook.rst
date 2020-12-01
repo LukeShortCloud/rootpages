@@ -443,6 +443,10 @@ Chrome OS versions:
 
    -  `The PDF viewer has been completely redesigned with more features. <https://www.androidpolice.com/2020/11/18/chrome-87/>`__
 
+-  86
+
+   -  `HDR photo and video playback support. <https://www.aboutchromebooks.com/news/chrome-os-86-stable-channel-arrives-on-chromebooks-what-you-need-to-know/>`__
+
 -  85
 
    -  `Windows virtual machine integration provided by Parallels. <https://www.parallels.com/products/desktop/chrome/>`__
