@@ -912,6 +912,23 @@ Verify that the upgrade worked.
 
 [10]
 
+Ingress Controllers
+-------------------
+
+Traefik
+~~~~~~~
+
+Traefik provides features such as advancing routing, SSL/TLS certificate management, and LetsEncrypt support for automatically creating and signing new certificates. [43]
+
+Installation [44]:
+
+.. code-block:: sh
+
+   $ helm repo add traefik https://helm.traefik.io/traefik
+   $ helm repo update
+   $ helm install traefik traefik/traefik
+   $ helm history traefik
+
 Concepts
 --------
 
@@ -992,3 +1009,5 @@ Bibliography
 40. "Delete Management Clusters." VMWare Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-delete-management-cluster.html
 41. "[clusterctl] "clusterctl config provider" fails to show AWS, VSphere, and Azure info #2876." GitHub kubernetes-sigs/cluster-api. April 20, 2020. Accessed October 31, 2020.
 42. "Container runtimes." Kubernetes Documentation. October 28, 2020. Accessed November 14, 2020. https://kubernetes.io/docs/setup/production-environment/container-runtimes/
+43. "Traefik & Kubernetes." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/providers/kubernetes-ingress/
+44. "Install Traefik." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/getting-started/install-traefik/
