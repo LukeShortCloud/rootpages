@@ -153,7 +153,9 @@ Linux
 Crostini
 ~~~~~~~~
 
-Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require developer mode. Enable it by going into Chrome OS settings and selecting ``Linux (Beta)``. [1]
+Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require developer mode.
+
+Enable it by going into Chrome OS settings and selecting ``Linux (Beta)``. [1] A new ``Terminal`` app will appear to access the terminal of the container. Alternatively, the Chrome web browser can be used to access the terminal by going to ``chrome-untrusted://terminal/html/terminal.html``.
 
 Container Management
 ^^^^^^^^^^^^^^^^^^^^
