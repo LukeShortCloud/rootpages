@@ -1693,6 +1693,48 @@ Commands can also be executed directly from the virtual environment without any 
 
 [32]
 
+Troubleshooting
+---------------
+
+Error Messages
+~~~~~~~~~~~~~~
+
+Error when using the ``requests`` library from packages installed via ``pip`` and/or in virtual environment:
+
+::
+
+   requests.exceptions.SSLError: HTTPSConnectionPool(host='<IP_OR_HOSTNAME>', port=<PORT>): Max retries exceeded with url: /<URL_PATH> (Caused by SSLError(SSLError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:897)'),))
+
+Solutions:
+
+1.  Modify the code. [42]
+
+    1.  Add the parameter ``verify=False`` to the requests method to disable it.
+
+      .. code-block:: python
+
+         requests.get(url, verify=False)
+
+   2. Or set ``verify=`` to the path of a certificate authority (CA) bundle file to load.
+
+      .. code-block:: python
+
+         requests.get(url, verify="/etc/ssl/certs/custom-ca.crt")
+
+2.  Or set the CA bundle via an environment variable. By default, Python applications use the ``requests`` libraries CA bundle ``cacert.pem`` which is missing some popular CAs.
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ export REQUESTS_CA_BUNDLE="/etc/pki/tls/certs/ca-bundle.crt"
+
 History
 -------
 
@@ -1744,3 +1786,4 @@ Bibliography
 39. "Multiprocessing in Python." Linux Journal. April 16, 2018. Accessed July 10, 2019. https://www.linuxjournal.com/content/multiprocessing-python
 40. "pdb - The Python Debugger." Python 3 Documentation. Jul 19, 2019. Accessed July 19, 2019. https://docs.python.org/3/library/pdb.html
 41. "Image processing with Python, NumPy." note.nkmk.me. October 20, 2020. Accessed November 3, 2020. https://note.nkmk.me/en/python-numpy-image-processing/
+42. "Python Requests - How to use system ca-certificates (debian/ubuntu)?" Stack Overflow. November 12, 2020. Accessed December 1, 2020. https://stackoverflow.com/questions/42982143/python-requests-how-to-use-system-ca-certificates-debian-ubuntu
