@@ -2223,12 +2223,12 @@ Ingress is used to publicily expose a Pod and it's ports. It can redirect traffi
 
 Ingress Controllers are different back-ends that handle the Ingress API. They use different technologies and generally have their own use-cases. The only ones that are officially supported are NGINX and Google's Compute Engine (GCE).
 
-Top 5 Ingress Controllers and their use-cases [24]:
+Top 5 Ingress Controllers and their top use-cases [24]:
 
 -  Ambassador = API gateway.
 -  HAProxy = Load balancing.
 -  Istio Ingress Gateway = Fast performance.
--  NGINX = Default.
+-  NGINX = Automatic public cloud integration.
 -  Traefik = Let's Encrypt SSL/TLS generation.
 
 A Kubernetes cluster can have more than one Ingress Controller installed. In an object's manifest, the one to use can be specified. [25]
