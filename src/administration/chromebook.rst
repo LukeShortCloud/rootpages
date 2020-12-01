@@ -89,7 +89,8 @@ Download and run the interactive script.
 ::
 
    crosh> shell
-   chronos@localhost / $ curl -LO mrchromebox.tech/firmware-util.sh && sudo bash ./firmware-util.sh
+   chronos@localhost / $ cd ~
+   chronos@localhost ~ $ curl -LO mrchromebox.tech/firmware-util.sh && sudo bash ./firmware-util.sh
 
 The white Chrome OS ``OS verification is OFF`` screen that starts with 100% brightness can be replaced by a black screen by selecting the ``Remove ChromeOS Bitmaps`` option.
 
