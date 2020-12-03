@@ -314,11 +314,12 @@ If installing on RHEL, it is required to enable additional repositories:
          $ sudo subscription-manager repos --disable=*
          $ sudo subscription-manager repos --enable=rhel-8-for-x86_64-baseos-eus-rpms --enable=rhel-8-for-x86_64-appstream-eus-rpms --enable=rhel-8-for-x86_64-highavailability-eus-rpms --enable=ansible-2-for-rhel-8-x86_64-rpms --enable=fast-datapath-for-rhel-8-x86_64-rpms
 
-If installing on CentOS 8, it is required to enable the high availability repository.
+If installing on CentOS 8, it is required to enable both the high availability (for Pacemaker packages) and PowerTools (for Ruby packages) repositories.
 
 .. code-block:: sh
 
-   $ sudo dnf config-manager --set-enabled  HighAvailability
+   $ sudo dnf config-manager --set-enabled HighAvailability
+   $ sudo dnf config-manager --set-enabled PowerTools
 
 -  **GA**:
 
@@ -1127,18 +1128,46 @@ TripleO can provision a full CentOS or RHEL operating system onto a new baremeta
 
    -  GA releases do not have pre-built Overcloud image files. They must be manually created. [60]
 
-      .. code-block:: sh
+      -  Make and switch into an "images" directory.
 
-        $ The openstack overcloud image build --all
+         .. code-block:: sh
 
-   -  RDO Trunk (current-tripleo-rdo):
+            $ mkdir ~/images
+            $ cd ~/images
+
+      -  Set the environment variable for the RDO repositories so all necessary packages can be installed. Then build all of the required images. [13]
+
+         -  <= Ocata
+
+            .. code-block:: sh
+
+               $ export DIB_YUM_REPO_CONF="/etc/yum.repos.d/delorean*"
+               $ openstack overcloud image build --all
+
+         -  >= Pike
+
+            .. code-block:: sh
+
+               $ export DIB_YUM_REPO_CONF="/etc/yum.repos.d/delorean*"
+               $ openstack overcloud image build
+
+         -  >= Train (CentOS 8)
+
+            .. code-block:: sh
+
+               $ sudo dnf config-manager --set-enabled HighAvailability
+               $ sudo dnf config-manager --set-enabled PowerTools
+               $ export DIB_YUM_REPO_CONF="/etc/yum.repos.d/delorean* /etc/yum.repos.d/CentOS-HA.repo /etc/yum.repos.d/CentOS-PowerTools.repo"
+               $ openstack overcloud image build
+
+   -  RDO Trunk (current-tripleo-rdo)
 
       .. code-block:: sh
 
         $ export OS_RELEASE="train"
         $ export TRUNK_BRANCH="current-tripleo-rdo"
-        $ mkdir images
-        $ cd images
+        $ mkdir ~/images
+        $ cd ~/images
         $ curl -O https://images.rdoproject.org/${OS_RELEASE}/rdo_trunk/${TRUNK_BRANCH}/ironic-python-agent.tar
         $ curl -O https://images.rdoproject.org/${OS_RELEASE}/rdo_trunk/${TRUNK_BRANCH}/overcloud-full.tar
         $ tar -v -x -f ironic-python-agent.tar
@@ -1149,13 +1178,13 @@ TripleO can provision a full CentOS or RHEL operating system onto a new baremeta
       .. code-block:: sh
 
         $ export OS_RELEASE="13.0"
-        $ mkdir images
-        $ cd images
+        $ mkdir ~/images
+        $ cd ~/images
         $ sudo yum install rhosp-director-images rhosp-director-images-ipa
         $ tar -v -x -f /usr/share/rhosp-director-images/overcloud-full-latest-${OS_RELEASE}.tar
         $ tar -v -x -f /usr/share/rhosp-director-images/ironic-python-agent-latest-${OS_RELEASE}.tar
 
--  These files are extracted from the tar archives:
+-  These are the default image files that will be used.
 
    -  ironic-python-agent.initramfs
    -  ironic-python-agent.kernel
@@ -3295,7 +3324,7 @@ Bibliography
 10. "[TripleO] Virtual Environment." TripleO Documentation. Accessed September 28, 2017. http://tripleo-docs.readthedocs.io/en/latest/environments/virtual.html
 11. "Getting started with TripleO-Quickstart." OpenStack Documentation. Accessed December 20, 2017. https://docs.openstack.org/tripleo-quickstart/latest/getting-started.html
 12. "TripleO Documentation." OpenStack Documentation. Accessed September 12, 2017. https://docs.openstack.org/tripleo-docs/latest/
-13. "Basic Deployment (CLI)." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/install_overcloud.html
+13. "Basic Deployment (CLI)." TripleO Documentation. November 23, 2020. Accessed December 3, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/install_overcloud.html
 14. "Bug 1466744 - Include docker.yaml and docker-ha.yaml environment files by default." Red Hat Bugzilla. December 13, 2017. Accessed January 12, 2018. https://bugzilla.redhat.com/show_bug.cgi?id=1466744
 15. "Baremetal Environment." TripleO OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/environments/baremetal.html
 16. "Does Red Hat Ceph support migration from FileStore to BlueStore with the release of RHCS 3.2?" Red Hat Customer Portal. May 23, 2019. Accessed October 28, 2019. https://access.redhat.com/articles/3793241
