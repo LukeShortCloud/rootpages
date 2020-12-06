@@ -146,21 +146,19 @@ Debian:
       $ export OPENZFS_VER="2.0.0"
       $ wget https://github.com/openzfs/zfs/releases/download/zfs-${OPENZFS_VER}/zfs-${OPENZFS_VER}.tar.gz
 
--  Build the kernel module. [24]
+-  Build the DKMS packages so that the kernel module will be automatically rebuilt upon kernel updates.
 
    .. code-block:: sh
 
       $ tar -z -x -v -f zfs-${OPENZFS_VER}.tar.gz
       $ cd ./zfs-${OPENZFS_VER}
-      $ ./autogen.sh
-      $ ./configure
-      $ make -s -j $(nproc)
+      $ ./configure --enable-systemd
+      $ make -j $(nproc) deb-utils deb-dkms
 
--  Create the Debian package files and then install them.
+-  Install the Debian package files. [24]
 
    .. code-block:: sh
 
-      $ make deb
       $ sudo dpkg -i ./.*deb
 
 -  Load the ZFS kernel module and verify it works.
@@ -923,7 +921,7 @@ Bibliography
 21. "Main Page." OpenZFS Wiki. October 15, 2020. Accessed December 4, 2020. https://openzfs.org/wiki/Main_Page
 22. "ZFS." Debian Wiki. November 4, 2020. Accessed December 4, 2020. https://wiki.debian.org/ZFS
 23. "ZFS." Ubuntu Wiki. January 22, 2019. Accessed December 4, 2020. https://wiki.ubuntu.com/ZFS
-24. "Building ZFS." OpenZFS Documentation. 2020. Accessed December 4, 2020. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html
+24. "Custom Packages." OpenZFS Documentation. 2020. Accessed December 6, 2020. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Custom%20Packages.html
 25. "ZFS on Ubuntu: Create ZFS pool with NVMe L2ARC and share via SMB." ServeTheHome. October 25, 2015. Accessed December 5, 2020. https://www.servethehome.com/zfs-on-ubuntu-create-zfs-pool-with-nvme-l2arc-and-share-via-smb/
 26. "Error: no pools available." Reddit /r/zfs. March 7, 2020. Accessed December 5, 2020. https://www.reddit.com/r/zfs/comments/ff5ea5/error_no_pools_available/
 27. "Sharing ZFS Datasets Via NFS." Programster's Blog. July 6, 2019. Accessed December 6, 2020. https://blog.programster.org/sharing-zfs-datasets-via-nfs
