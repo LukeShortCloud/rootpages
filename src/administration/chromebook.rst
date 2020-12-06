@@ -364,6 +364,29 @@ Launch the program and then create virtual machines.
 
    [<CHROME_OS_USER>@penguin ~]$ virt-manager
 
+Virtual Machine External Storage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Untrusted virtual machines (only available in developer mode) can use external storage devices. [23]
+
+View the available devices that can be used for external storage. These are the same that will appear in the ``Files`` app.
+
+.. code-block:: sh
+
+   chronos@localhost / $ ls -1 /media/removable/
+
+Create a new data image for the virtual machine.
+
+.. code-block:: sh
+
+   crosh> vmc create-extra-disk --size=<SIZE>G --removable-media "USB Drive/<IMAGE_NAME>.img"
+
+Start the Crostini virtual machine with the new data image. It will be available within the virtual machine as a Btrfs file system mounted at ``/mnt/external/0/``.
+
+.. code-block:: sh
+
+   crosh> vmc start --untrusted --extra-disk "/media/removable/USB Drive/<IMAGE_NAME>.img termina"
+
 Crouton
 ~~~~~~~
 
@@ -441,6 +464,10 @@ Features
 
 Chrome OS versions:
 
+-  88
+
+   -  `Crostini on removable storage devices. <https://bugs.chromium.org/p/chromium/issues/detail?id=827705>`__
+
 -  87
 
    -  `The PDF viewer has been completely redesigned with more features. <https://www.androidpolice.com/2020/11/18/chrome-87/>`__
@@ -488,7 +515,6 @@ Chrome OS versions:
 Upcoming Features
 -----------------
 
--  `Crostini on removable storage devices. <https://bugs.chromium.org/p/chromium/issues/detail?id=827705>`__
 -  `Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming. <https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager>`__
 -  `Recycle bin for recovering deleted files. <https://chromeunboxed.com/chromebook-files-app-trash-recycle-bin-chrome-os>`__
 -  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
@@ -523,3 +549,4 @@ Bibliography
 20. "dnschneid/crouton." GitHub. January 17, 2020. Accessed March 29, 2020. https://github.com/dnschneid/crouton
 21. "Issue 993253: Support untrusted VMs." Chromium Bugs. January 27, 2020. Accessed May 29, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=993253
 22. "ChromeOS Firmware Utility Script." MrChromebox.tech. Accessed September 5, 2020. https://mrchromebox.tech/#fwscript
+23. "service.cc" vm_tools - chromiumos/platform2 - Git at Google. November 14, 2020. Accessed December 5, 2020. https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc
