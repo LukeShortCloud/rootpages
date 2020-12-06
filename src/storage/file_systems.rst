@@ -123,6 +123,190 @@ Mount options:
    up the space from a deleted file for use with new files.
 -  nodiscard = Disables TRIM. [9]
 
+OpenZFS
+~~~~~~~
+
+OpenZFS is a unified project aimed at providing support for the ZFS file system on FreeBSD, Linux, macOS, and Windows operating systems. [21] It is not included in most Linux distributions due to licensing issues with the kernel. Debian and Ubuntu are the only Linux distribution that provide the Linux kernel module for ZFS in their official repositories. [22][23]
+
+Installation (Source)
+^^^^^^^^^^^^^^^^^^^^^
+
+Debian:
+
+-  Install the build dependencies:
+
+   .. code-block:: sh
+
+      $ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-$(uname -r) python3 python3-dev python3-cffi python3-setuptools uuid-dev zlib1g-dev
+
+-  View and download an OpenZFS release from `here <https://github.com/openzfs/zfs/releases>`__.
+
+   .. code-block:: sh
+
+      $ export OPENZFS_VER="2.0.0"
+      $ wget https://github.com/openzfs/zfs/releases/download/zfs-${OPENZFS_VER}/zfs-${OPENZFS_VER}.tar.gz
+
+-  Build the kernel module. [24]
+
+   .. code-block:: sh
+
+      $ tar -z -x -v -f zfs-${OPENZFS_VER}.tar.gz
+      $ cd ./zfs-${OPENZFS_VER}
+      $ ./autogen.sh
+      $ ./configure
+      $ make -s -j $(nproc)
+
+-  Create the Debian package files and then install them.
+
+   .. code-block:: sh
+
+      $ make deb
+      $ sudo dpkg -i ./.*deb
+
+-  Load the ZFS kernel module and verify it works.
+
+   .. code-block:: sh
+
+      $ sudo modprobe zfs
+      $ lsmod | grep zfs
+
+-  Start and enable these services so any zpools that are created and/or changed will be persistent upon reboots.
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now zfs-import-cache.service
+      $ sudo systemctl enable --now zfs-import.target
+
+-  Start and enable these services so that the ZFS mounts will be persistent upon reboots. [28]
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now zfs-mount.service
+      $ sudo systemctl enable --now zfs.target
+
+Usage
+^^^^^
+
+ZFS manages multiple devices as a single "pool" of devices. The pool can have several "datasets" (the equivalent to subvolumes in Btrfs) which can have their own settings, mount points, and separate snapshots.
+
+Create a pool and then a dataset within the pool. Verify it was created.
+
+.. code-block:: sh
+
+   $ sudo zpool create <POOL_NAME> <DEVICE_NAME>
+   $ sudo zfs create <POOL_NAME>/<DATASET_NAME>
+   $ sudo zfs list
+
+Mount points:
+
+-  Pool = /<POOL_NAME>
+-  Dataset = /<POOL_NAME>/<DATASET_NAME>
+
+Change the mountpoint.
+
+.. code-block:: sh
+
+   $ sudo zfs set mountpoint=/mnt <POOL_NAME>/<DATASET_NAME>
+
+View all of the available properties that can be set for the pool and/or datasets.
+
+.. code-block:: sh
+
+   $ man zfsprops
+
+View the current value of a property and set a new one.
+
+.. code-block:: sh
+
+   $ sudo zfs get <PROPERTY> <POOL_NAME>/<DATASET_NAME>
+   $ sudo zfs set <PROPERTY>=<VALUE> <POOL_NAME>/<DATASET_NAME>
+
+Adapative Replacement Cache (ARC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+ARC is the name for the automatic file caching of frequently accessed files by ZFS. Level 1 ARC (L1ARC) stores the cache in RAM. Level 2 ARC (L2ARC) can be configured to use a faster storage device (such as a SSD) as an extra layer of cache for slower devices (such as a HDD). Files stored in L1ARC will be downgraded to L2ARC if they are not used. If L2ARC cache becomes unavailable when the same file is accessed again, it will be accessed directly from the storage device again and placed back into L1ARC.
+
+Life cycle of a file in relation to ARC:
+
+::
+
+   File is accessed from the disk --> Stored in L1ARC (RAM) --> Stored in L2ARC (SSD) --> Uncached
+
+ARC usage:
+
+-  Add a L2ARC device to an existing ZFS pool. [25]
+
+   .. code-block:: sh
+
+      $ sudo zpool add <POOL> cache <STORAGE_DEVICE>
+
+-  View a summary of the ARC cache statistics.
+
+   .. code-block:: sh
+
+      $ sudo arc_summary
+
+-  View real-time statistics for ARC cache. [29]
+
+   .. code-block:: sh
+
+      $ sudo arcstat
+
+NFS and Samba Support
+^^^^^^^^^^^^^^^^^^^^^
+
+OpenZFS supports automatically configuring pools and datasets for both the NFS and Samba (CIFS) network file systems.
+
+NFS [27]:
+
+-  Install the NFS service.
+
+   .. code-block:: sh
+
+      $ sudo apt install nfs-kernel-server
+
+-  Configure a Samba CIFS share using ZFS.
+
+   .. code-block:: sh
+
+      $ sudo zfs set sharenfs=on <POOL>/<DATASET>
+
+-  Test the NFS mount.
+
+   .. code-block:: sh
+
+      $ sudo apt install nfs-common
+      $ sudo mount -t nfs 127.0.0.1:/<POOL>/<DATASET> /mnt
+
+Samba [25]:
+
+-  Install the Samba service.
+
+   .. code-block:: sh
+
+      $ sudo apt install samba
+
+-  Configure a Samba CIFS share using ZFS.
+
+   .. code-block:: sh
+
+      $ sudo zfs set sharesmb=on <POOL>/<DATASET>
+
+-  Configure a user for Samba and correct the permissions.
+
+   .. code-block:: sh
+
+      $ sudo useradd <SAMBA_USER>
+      $ sudo chown -r <SAMBA_USER>:<SAMBA_GROUP> <POOL>/<DATASET>
+      $ sudo smbpasswd -a <SAMBA_USER>
+
+-  Test the CIFS mount.
+
+   .. code-block:: sh
+
+      $ sudo apt install cifs-utils
+      $ sudo mount -t cifs -o username=foo,password=foobar //127.0.0.1/<POOL>_<DATASET> /mnt
+
 Swap
 ~~~~
 
@@ -669,6 +853,42 @@ Full:
    - ~/.bashrc = Non-interactive and interactive shells will source aliases and functions from here.
    - ~/.local/share/applications/ = Desktop application shortcuts.
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when looking up ZFS pools.
+
+.. code-block:: sh
+
+   $ sudo zpool list
+   no pools available
+
+Temporary solutions [26]:
+
+1. Import the pool automatically. This will search for available ZFS devices with the defined pool name.
+
+   .. code-block:: sh
+
+      $ sudo zpool import <POOL>
+
+2.  Or explicitly import a specific device and name.
+
+   .. code-block:: sh
+
+      $ sudo zpool import -d /dev/<DEVICE> <POOL>
+
+Permanent solution [28]:
+
+1.  Start and enable these services so any zpools that are created and/or changed will be persistent upon reboots. Existing zpools will be loaded immediately.
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable zfs-import-cache
+      $ sudo systemctl enable zfs-import.target
+
 History
 -------
 
@@ -700,3 +920,12 @@ Bibliography
 18. "FilesystemHierarchyStandard." Debian Wiki. April 21, 2017. Accessed December 5, 2018. https://wiki.debian.org/FilesystemHierarchyStandard
 19. "Split brain and the ways to deal with it." Gluster Docs. Accessed February 12, 2019. https://docs.gluster.org/en/latest/Administrator%20Guide/Split%20brain%20and%20ways%20to%20deal%20with%20it/
 20. "Setting up GlusterFS Volumes." Gluster Docs. Accessed February 12, 2019. https://docs.gluster.org/en/latest/Administrator%20Guide/Setting%20Up%20Volumes/
+21. "Main Page." OpenZFS Wiki. October 15, 2020. Accessed December 4, 2020. https://openzfs.org/wiki/Main_Page
+22. "ZFS." Debian Wiki. November 4, 2020. Accessed December 4, 2020. https://wiki.debian.org/ZFS
+23. "ZFS." Ubuntu Wiki. January 22, 2019. Accessed December 4, 2020. https://wiki.ubuntu.com/ZFS
+24. "Building ZFS." OpenZFS Documentation. 2020. Accessed December 4, 2020. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html
+25. "ZFS on Ubuntu: Create ZFS pool with NVMe L2ARC and share via SMB." ServeTheHome. October 25, 2015. Accessed December 5, 2020. https://www.servethehome.com/zfs-on-ubuntu-create-zfs-pool-with-nvme-l2arc-and-share-via-smb/
+26. "Error: no pools available." Reddit /r/zfs. March 7, 2020. Accessed December 5, 2020. https://www.reddit.com/r/zfs/comments/ff5ea5/error_no_pools_available/
+27. "Sharing ZFS Datasets Via NFS." Programster's Blog. July 6, 2019. Accessed December 6, 2020. https://blog.programster.org/sharing-zfs-datasets-via-nfs
+28. "ZFS." ArchWiki. November 23, 2020. Accessed December 5, 2020. https://wiki.archlinux.org/index.php/ZFS
+29. "25. Command Line Interface." FreeNAS 11.3-RELEASE User Guide. https://www.ixsystems.com/documentation/freenas/11.3-RELEASE/cli.html
