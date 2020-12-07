@@ -2233,6 +2233,51 @@ Force re-running tasks that only run during the initial deployment by using the 
 
    $ ansible-playbook -i inventory.yaml --become --tags facts,post_deploy_steps deploy_steps_playbook.yaml -e force=true
 
+Manual
+^^^^^^
+
+The deployment of OpenStack services can be done manually outside of TripleO. The Ansible playbooks are generated, the inventory file is created, SSH keys are configured, and then the playbooks can be run to do the actual deployment. This is useful for debugging the deployment or running it on a server that is not the Undercloud.
+
+-  Generate the Ansible playbooks by rendering the Overcloud Heat stack.
+
+   .. code-block:: sh
+
+      $ openstack overcloud deploy --stack-only ...
+
+-  Download the deployment playbooks. Then change into the directory it creates.
+
+   .. code-block:: sh
+
+      $ openstack overcloud config download
+      $ cd /home/stack/tripleo-config/overcloud/
+
+-  Generate a static inventory file.
+
+   .. code-block:: sh
+
+      $ tripleo-ansible-inventory --static-yaml-inventory tripleo-ansible-inventory.yaml
+
+-  Copy the private key used to access the “tripleo-admin” user on the Overcloud.
+
+   .. code-block:: sh
+
+      $ sudo cp /var/lib/mistral/overcloud/ssh_private_key ./
+      $ sudo chown stack.stack ssh_private_key
+
+-  Setup the authorized SSH keys for the "tripleo-admin" user on the Overcloud nodes.
+
+   .. code-block:: sh
+
+      $ openstack overcloud admin authorize
+
+-  Run the Overcloud deployment. The “deploy_steps_playbook.yaml” is the primary playbook that combines all of the other playbooks into one.
+
+   .. code-block:: sh
+
+      $ ansible-playbook --inventory tripleo-ansible-inventory.yaml --key-file ssh_private_key --become deploy_steps_playbook.yaml
+
+[41]
+
 Configurations
 --------------
 
@@ -3352,7 +3397,7 @@ Bibliography
 38. "CHAPTER 4. INSTALLING THE UNDERCLOUD." Red Hat Documentation. Accessed April 1, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/installing-the-undercloud
 39. "CHAPTER 10. CONFIGURING THE OVERCLOUD WITH ANSIBLE." Red Hat Documentation. Accessed May 14, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/director_installation_and_usage/configuring-the-overcloud-with-ansible
 40. "Evaluating OpenStack: Single-Node Deployment." Red Hat Knowledgebase. October 5, 2018. Accessed May 15, 2019. https://access.redhat.com/articles/1127153
-41. "TripleO config-download User’s Guide: Deploying with Ansible." OpenStack Documentation. October 25, 2019. Accessed October 28, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
+41. "TripleO config-download User’s Guide: Deploying with Ansible." TripleO Documentation. November 23, 2020. Accessed December 8, 2020. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/deployment/ansible_config_download.html
 42. "CHAPTER 3. PREPARING FOR DIRECTOR INSTALLATION." Red Hat RHOSP 15 Documentation. Accessed September 26, 2019. https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/15/html/director_installation_and_usage/preparing-for-director-installation
 43. "The road ahead for the Red Hat OpenStack Platform." Red Hat Blog. August 20, 2019. Accessed September 26, 2019. https://www.redhat.com/en/blog/road-ahead-red-hat-openstack-platform
 44. "Installing a Undercloud Minion." OpenStack Documentation. October 29, 2019. Accessed November 1, 2019. https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/undercloud_minion.html
