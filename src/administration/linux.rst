@@ -284,6 +284,47 @@ File: /etc/dracut.conf
 
 [11]
 
+Install
+-------
+
+Debian
+~~~~~~
+
+The latest Linux kernels for both Debian and Ubuntu are provided by the Ubuntu project.
+
+-  These are the required DEB packages that need to be downloaded and installed:
+
+    -  linux-headers (all) = The full Linux kernel source code.
+    -  linux-headers (generic) = The source code specific to a CPU architecture.
+    -  linux-image-unsigned = The Linux kernel image.
+    -  linux-modules = Additional/useful Linux kernel modules.
+
+-  Find the desired Linux kernel version from `here <https://kernel.ubuntu.com/~kernel-ppa/mainline/>`__. Set these variables based on the built packages. This example is for Linux ``5.10.0``.
+
+   .. code-block:: sh
+
+      $ export KERNEL_VERSION_SHORT="5.10"
+      $ export KERNEL_VERSION_FULL="5.10.0-051000"
+      $ export KERNEL_DATE="202012132330"
+      $ export KERNEL_ARCHITECTURE="amd64" # Or use "arm64" or "ppc64el".
+
+-  Download the required packages.
+
+   .. code-block:: sh
+
+      $ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v${KERNEL_VERSION_SHORT}/amd64/linux-image-unsigned-${KERNEL_VERSION_FULL}-generic_${KERNEL_VERSION_FULL}.${KERNEL_DATE}_${KERNEL_ARCHITECTURE}.deb
+      $ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v${KERNEL_VESION_SHORT}/amd64/linux-modules-${KERNEL_VERSION_FULL}-generic_${KERNEL_VERSION_FULL}.${KERNEL_DATE}_${KERNEL_ARCHITECTURE}.deb
+      $ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v${KERNEL_VERSION_SHORT}/amd64/linux-headers-${KERNEL_VERSION_FULL}-generic_${KERNEL_VERSION_FULL}.${KERNEL_DATE}_${KERNEL_ARCHITECTURE}.deb
+      $ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v${KERNEL_VERSION_SHORT}/amd64/linux-headers-${KERNEL_VERSION_FULL}_${KERNEL_VERSION_FULL}.${KERNEL_DATE}_all.deb
+
+-  Install the packages.
+
+   .. code-block:: sh
+
+      $ sudo dpkg -i ./*.deb
+
+[14]
+
 Troubleshooting
 ---------------
 
@@ -320,3 +361,4 @@ Bibliography
 11. "Dracut." The Linux Kernel Archives. October, 2013. Accessed November 19, 2016. https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html
 12. "Which Linux Kernel Version Is 'Stable'?" Linux.com. February 3, 2018. Accessed September 25, 2018. https://www.linux.com/blog/learn/2018/2/which-linux-kernel-version-stable
 13. "Linux Kernel 5.0 to Be Released When We Hit 6M Git Objects, Says Linus Torvalds." Softpedia News. October 9, 2016. Accessed September 25, 2018. https://news.softpedia.com/news/linux-kernel-5-0-to-be-released-when-we-hit-6m-git-objects-says-linus-torvalds-509108.shtml
+14. "How to install Linux 5.8 Kernel on Ubuntu 20.04 LTS." Linux Shout. August 5, 2020. Accessed December 13, 2020. https://www.how2shout.com/linux/install-linux-5-8-kernel-on-ubuntu-20-04-lts/
