@@ -225,6 +225,21 @@ Proton (Steam Play)
 
 Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__. Proton can be enabled for all games by going to ``Settings > Steam Play > Enable Steam Play for all other titles``. Compatibility will vary. [11]
 
+Image Processing
+----------------
+
+-  Remove all metadata from an image.
+
+   .. code-block:: sh
+
+      $ mogrify -strip <IMAGE_FILE_NAME>
+
+-  Compress an image to a specified size.
+
+   .. code-block:: sh
+
+      $ [jpegoptim|optipng] --size=500K <IMAGE_FILE_NAME>
+
 History
 -------
 
