@@ -500,12 +500,6 @@ Principles
 
 REpresentational State Transfer (REST) is a programming design on how to abstract client and server interactions. A program that implments the REST API design is considered to be a RESTful API. The most common protocol used for RESTful APIs is HTTP but the design principles are not limited to HTTP. An application that follows the REST principles will have improved "performance, scalability, simplicity, modifiability, visibility, portability and reliability." [25]
 
-REST API interactions normally have three different components:
-
-::
-
-   Client <---> API (Server) <---> Database
-
 Principles:
 
 -  **Client-server** = The client and server components are completely separate programs.
@@ -525,7 +519,25 @@ Principles:
 -  **Versioning** = Determine how and why the API version would change. When making a breaking change, allow the original API version to be accessed and used (via a header or URI) for backwards compatibility. [25]
 -  **Code on demand (optional)** = The server can provide executable code to the client to provide more feature temporarily.
 
+REST API interactions normally have three different components:
+
+::
+
+   Client <---> API Server <---> Database
+
 [24]
+
+Common text-based document Content-Type headers for MIME [26]:
+
+-  ``application/json``
+-  ``application/msword``
+-  ``application/sql``
+-  ``application/vnd.openxmlformats-officedocument.wordprocessingml.document``
+-  ``application/xml``
+-  ``text/css``
+-  ``text/html``
+-  ``text/javascript``
+-  ``text/plain``
 
 HTTP Verbs
 ~~~~~~~~~~
@@ -832,3 +844,4 @@ Bibliography
 23. "Using HTTP Methods for RESTful Services." REST API Tutorial. Accessed November 6, 2020. https://www.restapitutorial.com/lessons/httpmethods.html
 24. "What is REST." REST API Tutorial. Accessed November 6, 2020. https://restfulapi.net/
 25. "RESTful API Basic Guidelines." RestCase. September 6, 2016. Accessed November 6, 2020. https://blog.restcase.com/restful-api-basic-guidelines/
+26. "Common MIME types." MDN Web Docs. September 15, 2020. Accessed December 29, 2020. https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
