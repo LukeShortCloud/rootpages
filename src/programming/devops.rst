@@ -500,6 +500,33 @@ Principles
 
 REpresentational State Transfer (REST) is a programming design on how to abstract client and server interactions. A program that implments the REST API design is considered to be a RESTful API. The most common protocol used for RESTful APIs is HTTP but the design principles are not limited to HTTP. An application that follows the REST principles will have improved "performance, scalability, simplicity, modifiability, visibility, portability and reliability." [25]
 
+Keywords [27]:
+
+-  Resource = An API object that exposes one or more methods.
+-  Resource identifier = The name used to access the resource via an API.
+-  Resource representation = The text (typically in a JSON format) with detailed information about what the resource should do.
+-  Hypermedia = A response that provides detailed information about the resource method. [28]
+-  MIME = Multi-Purpose Internet Mail Extensions. A standard of headers for transferring different types of data. [29]
+
+    -  MIME-Version = The version of MIME to use.
+
+        -  Content-Type = A HTTP header that specifies what the format of the resource representation.
+        -  Content-Disposition = Specify if an attachment will be shown automatically (inline) or shown as a separate attachment (attachtment).
+        -  Content-Transfer-Encoding = The encoding for the data.
+
+-  Headers = The metadata of a message that describe details of how it should be processed.
+-  Request = A request from the client for information from the server.
+-  Response = The response from the server replying back to a client request.
+-  Content/media type or Multipurpose Internet Mail Extensions (MIME) = The type of content in the the request or response.
+-  Hypertext = A HTTP link.
+-  Session = Data stored about a specific client user which allows them to make unique requests.
+-  Uniform Resource Identifier (URI) = The URI specifies what data to pull from a URL and/or a URN. [30]
+-  Uniform Resource Locator (URL) = The URL is the connection type (typically HTTP) and path to the content to access. Example: ``http://foo.bar/example.html``.
+-  Uniform Resource Name (URN) = The URN is the URL without the connection type and includes the resource. Example: ``foo.bar/example.html#blog``.
+-  Query string = A query in an HTTP URI. The query is denoted by a ``?`` symbol. It provides an easy means of providing key-values to the API.
+-  API version = The version of the API to use. This is commonly set via the use of a Header with ``API-Version`` specified.
+
+
 Principles:
 
 -  **Client-server** = The client and server components are completely separate programs.
@@ -845,3 +872,7 @@ Bibliography
 24. "What is REST." REST API Tutorial. Accessed November 6, 2020. https://restfulapi.net/
 25. "RESTful API Basic Guidelines." RestCase. September 6, 2016. Accessed November 6, 2020. https://blog.restcase.com/restful-api-basic-guidelines/
 26. "Common MIME types." MDN Web Docs. September 15, 2020. Accessed December 29, 2020. https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+27. "Resources." Thoughts on RESTful API Design. 2011. Accessed December 29, 2020. https://restful-api-design.readthedocs.io/en/latest/resources.html
+28. "What Is Hypermedia?" SmartBeat. 2020. Accessed December 29, 2020. https://smartbear.com/learn/api-design/what-is-hypermedia/
+29. "What is MIME ( Multi-Purpose Internet Mail Extensions )." InterServer Tips. September 22, 2016. Accessed December 29, 2020. https://www.interserver.net/tips/kb/mime-multi-purpose-internet-mail-extensions/
+30. Difference between URL, URI and URN - Interview Questions." Java 67. Accessed December 29, 2020. https://www.java67.com/2013/01/difference-between-url-uri-and-urn.html
