@@ -58,6 +58,8 @@ Manage the local settings for git repositories and users.
    :widths: 20, 20
 
    "--global", "modify the global configuration"
+   --edit, edit the local configuration file interactively
+   --global --edit, edit the global configuration file interactively
    "--list", "shows current Git user information"
    "--get <KEY>.<VALUE>", "shows what a specific variable is set to"
    "user.name", "change username"
@@ -117,6 +119,7 @@ git commit
    -s, automatically sign off on the commit (add the git name and email address)
    "--amend", "change the last commit message"
    --amend --no-edit, update the current commit and keep the same message
+   --amend --reset-author, update the author name and email on the current commit
 
 git push
 ~~~~~~~~
