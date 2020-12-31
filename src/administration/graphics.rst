@@ -240,6 +240,19 @@ Image Processing
 
       $ [jpegoptim|optipng] --size=500K <IMAGE_FILE_NAME>
 
+-  Resize an image.
+
+   .. code-block:: sh
+
+      $ convert <IMAGE_ORIGINAL> -resize <PERCENTAGE>% <IMAGE_NEW>
+      $ convert <IMAGE_ORIGINAL> -resize <PIXELS_LENGTH>x<PIXELS_WIDTH> <IMAGE_NEW>
+
+-  Rotate an image.
+
+   .. code-block:: sh
+
+      $ convert <IMAGE_ORIGINAL> -rotate <DEGRESS> <IMAGE_NEW>
+
 History
 -------
 
