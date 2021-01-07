@@ -57,7 +57,7 @@ Gerrit
 
    -  It is preferred to backport sequentially from one release to the next (instead of directly from master) to help avoid merge conflicts.
 
-Gerrit patches can be downloaded and applied to a localy environment. Find the patch to download by going to: ``Download`` > ``Patch-File`` > Copy and use the link to the base64 file.
+Gerrit patches can be downloaded and applied to a local environment. Find the patch to download by going to: ``Download`` > ``Patch-File`` > Copy and use the link to the base64 file.
 
 .. code-block:: sh
 

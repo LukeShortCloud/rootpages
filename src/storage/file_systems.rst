@@ -219,8 +219,8 @@ View the current value of a property and set a new one.
    $ sudo zfs get <PROPERTY> <POOL_NAME>/<DATASET_NAME>
    $ sudo zfs set <PROPERTY>=<VALUE> <POOL_NAME>/<DATASET_NAME>
 
-Adapative Replacement Cache (ARC)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adaptive Replacement Cache (ARC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ARC is the name for the automatic file caching of frequently accessed files by ZFS. Level 1 ARC (L1ARC) stores the cache in RAM. Level 2 ARC (L2ARC) can be configured to use a faster storage device (such as a SSD) as an extra layer of cache for slower devices (such as a HDD). Files stored in L1ARC will be downgraded to L2ARC if they are not used. If L2ARC cache becomes unavailable when the same file is accessed again, it will be accessed directly from the storage device again and placed back into L1ARC.
 

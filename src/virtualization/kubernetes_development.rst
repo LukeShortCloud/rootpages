@@ -1545,11 +1545,11 @@ Pod
    -  effect (string) = NoExecute, NoSchedule, or PreferNoSchedule.
    -  tolerationSeconds (integer) = The amount of seconds to tolerate a taint.
 
--  toplogySpreadConstraints (map) = Define how to spread Pods across the Kubernetes cluster.
+-  topologySpreadConstraints (map) = Define how to spread Pods across the Kubernetes cluster.
 
    -  labelSelector (map) = A key-value pair to find similar Pods. Schedule the Pod to run on that worker Node.
    -  maxSkew (integer) = The number of Pods that can be unevenly distributed.
-   -  toplogyKey (string) = A key label on a worker Node to look for.
+   -  topologyKey (string) = A key label on a worker Node to look for.
    -  whenUnsatisfiable (string) = Default is DoNotSchedule. Alternatively use ScheduleAnyway.
 
 -  volumes (list of maps) = Volumes to expose to all of the containers.
@@ -2097,7 +2097,7 @@ Define labels and annotations in the metadata section of a manifest.
 
    ---
    metadata:
-     annontations:
+     annotations:
        <KEY>: <VALUE>
      labels:
        <KEY>: <VALUE>

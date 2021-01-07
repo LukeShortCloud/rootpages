@@ -685,6 +685,8 @@ DeployedServerPortMap
 deployer
 DeploymentSteps
 depmod
+deprecation
+Deprecation
 deprecations
 Deprecations
 deprovision
@@ -729,7 +731,6 @@ dict
 DigitalOcean
 dir
 DirectoryIndex
-directoy
 DirectX
 DIRS
 disableexcludes
@@ -1189,7 +1190,7 @@ HostPath
 hostvars
 hotfix
 HOTPLUG
-HOTSNAME
+HOSTNAME
 Howto
 HowTo
 HOWTO

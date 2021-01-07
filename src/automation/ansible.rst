@@ -1305,7 +1305,7 @@ Example:
 
     - name: Authenticating against the API
       uri:
-        metod: POST
+        method: POST
         url: http://example.org/v1/auth
         body: "{{ auth_body }}"
       register: auth_response
@@ -2293,7 +2293,7 @@ Common options:
 -  job = Provide a command to run when the cron reaches the correct
 -  minute
 -  hour
--  weeekday = Specify the weekday as a number 0 through 6 where 0 is
+-  weekday = Specify the weekday as a number 0 through 6 where 0 is
    Sunday and 6 is Saturday.
 -  month
 -  day = Specify the day number in the 30 day month.

@@ -103,7 +103,7 @@ Variables
 
       const MESSAGE_OF_THE_DAY string = "Unauthorized access is not allowed!"
 
--  Acryonyms should be uppercase.
+-  Acronyms should be uppercase.
 
    .. code-block:: go
 
@@ -425,7 +425,7 @@ Functions
 
 Data interpretation:
 
--  call = Execute a specified function and optionally provide arugments to it.
+-  call = Execute a specified function and optionally provide arguments to it.
 -  index = Provide the value of a variable at a specified index.
 -  len = Provide the length of a list or map variable.
 -  slice = Provide the value of a variable slice.

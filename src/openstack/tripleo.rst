@@ -2598,7 +2598,7 @@ Every network object that can be managed is known as a ``type``. Common types in
 
 The ``interface`` type accepts passing nic1 (eth0), nic2 (eth1), etc. as the ``name`` attribute for dynamically associating an interface. Alternatively, the actual name of the network interface, such as eth0 or eth1, can be defined.
 
-Below are sample configurations that can be defined in a net-config THT template. They will render out the Heat parametes during the deployment.
+Below are sample configurations that can be defined in a net-config THT template. They will render out the Heat parameters during the deployment.
 
 DHCP:
 
@@ -3335,7 +3335,7 @@ OpenStack integration:
 
 -  Ceilometer = Provides metrics of OpenShift resources.
 -  Cinder = Block storage can be used for persistent storage on OpenShift.
--  Desginate = Native DNS integration between OpenStack and OpenShift.
+-  Designate = Native DNS integration between OpenStack and OpenShift.
 -  Heat = Automatic scaling of OpenShift Nodes based on capacity and usage.
 -  Keystone = Authentication providers used in OpenStack, such as LDAP, can be used in OpenShift.
 -  Load-Balancing-as-a-Service (Octavia) = A public load balancer than can be used by OpenShift.

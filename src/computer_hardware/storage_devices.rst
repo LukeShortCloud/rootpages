@@ -21,7 +21,7 @@ Types and Speed
 HDD Magnetic Recording
 ----------------------
 
-Magnetic hard drives use one of two different technologies for writing data: Conventional Magnetic Recording (CMR) or Shingled Magnetic Recording (SMR). CMR provides lower storage space but signifcantly faster write speeds. This is ideal for most use cases. SMR provides higher storage space but signifcantly slower write speeds. It should only be used for long-term storage. It is known to be extremely slow for RAID and NAS usage. [1]
+Magnetic hard drives use one of two different technologies for writing data: Conventional Magnetic Recording (CMR) or Shingled Magnetic Recording (SMR). CMR provides lower storage space but significantly faster write speeds. This is ideal for most use cases. SMR provides higher storage space but significantly slower write speeds. It should only be used for long-term storage. It is known to be extremely slow for RAID and NAS usage. [1]
 
 NAND Flash Types
 ----------------

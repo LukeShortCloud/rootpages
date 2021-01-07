@@ -999,7 +999,7 @@ The `Python Image Library (PIL) <https://pillow.readthedocs.io/en/stable/>`__ pr
 
 **Examples:**
 
-Gamma correction. This example lowers the gamma by a factor of 1.22 which will brighten the image slightly. [41] The full math and explaination behind this can be found `here <https://www.pyimagesearch.com/2015/10/05/opencv-gamma-correction/>`__.
+Gamma correction. This example lowers the gamma by a factor of 1.22 which will brighten the image slightly. [41] The full math and explanation behind this can be found `here <https://www.pyimagesearch.com/2015/10/05/opencv-gamma-correction/>`__.
 
 .. code-block:: python
 
@@ -1586,7 +1586,7 @@ The ``setup.py`` file defines attributes for a package and how it will be instal
 
 -  author = The author's full name.
 -  author_email = The author's e-mail address.
--  classifers = A list of custom classifers used by PyPI as defined `here <https://pypi.org/classifiers/>`__.
+-  classifiers = A list of custom classifers used by PyPI as defined `here <https://pypi.org/classifiers/>`__.
 
    -  ``"Programming Language :: Python :: 3 :: Only"`` = This package only supports Python 3.
    -  ``"Topic :: Documentation"`` = This package provides documentation focused functions.

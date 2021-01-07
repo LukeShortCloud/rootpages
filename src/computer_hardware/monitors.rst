@@ -113,7 +113,7 @@ Proprietary WCG backlight technologies:
 There are different certification standards for HDR. The color bit depth determines how many colors can be displayed. Having dynamic metadata allows for different HDR settings on each individual frame or scene for a better optimized viewing experience. Static metadata sets the HDR settings once for the entire video. [20]
 
 .. csv-table::
-   :header: Standard, Stanard Type, Industry Support, Color Bit Depth, Metadata, Brightness Minimum, Brightness Maximum
+   :header: Standard, Standard Type, Industry Support, Color Bit Depth, Metadata, Brightness Minimum, Brightness Maximum
    :widths: 20, 20, 20, 20, 20, 20, 20
 
    HDR10, Open, High, 10, Static, 1000 nits, 4000 nits
@@ -158,7 +158,7 @@ Bibliography
 
 1. "Understanding CIE 1931 and CIE 1976." YUJILEDS. April 19, 2019. Accessed May 3, 2020. https://www.yujiintl.com/blogs/understanding-cie1931-and-cie-1976.html
 2. "Color spaces and gamut." Color Management Guide. October 31, 2019. Accessed May 3, 2020. https://www.color-management-guide.com/color-spaces.html
-3. What is Color Gamut?" Samsung Display Public Information Display (PID). Accesed May 3, 2020. https://pid.samsungdisplay.com/en/learning-center/white-papers/wide-color-gamut-displays
+3. What is Color Gamut?" Samsung Display Public Information Display (PID). Accessed May 3, 2020. https://pid.samsungdisplay.com/en/learning-center/white-papers/wide-color-gamut-displays
 4. "VISTALOGICS DYE SUBLIMATION AND DIGITAL COLOR TECHNOLOGY." VistaLogics. Accessed May 3, 2020. https://www.vistalogics.com/rgb-profiles.html
 5. "Can you see the difference with a 4K monitor?" Puget Systems. November 12, 2015. Accessed May 3, 2020. https://www.pugetsystems.com/labs/articles/Can-you-see-the-difference-with-a-4K-monitor-729/
 6. "4K (UHD) Vs 1080p (Full HD) Laptops: Which One Is Worth It?" tech consumer guide. March 18, 2019. Accessed May 3, 2020. https://www.techconsumerguide.com/4k-vs-1080p-laptop/

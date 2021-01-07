@@ -656,7 +656,7 @@ Create a logical volume.
    :widths: 20, 20
 
    --name <NAME> --size <SIZE>G <VOLUME_GROUP>, create a new logical volume
-   -l 100%FREE --thinpool <LOGICAL_VOLUME> <VOLUME_GROUP>, create a thin provisioning pool to allow for more efficent snapshots
+   -l 100%FREE --thinpool <LOGICAL_VOLUME> <VOLUME_GROUP>, create a thin provisioning pool to allow for more efficient snapshots
    -s <VOLUME_GROUP>/<LOGICAL_NAME>, create a snapshot of a logical volume (this can be restored at a later point in time)
 
 .. csv-table::

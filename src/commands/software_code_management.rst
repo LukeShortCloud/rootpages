@@ -105,7 +105,7 @@ Stage commits.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   ".", "add all changes to files in the currently working directoy and below to be committed"
+   ".", "add all changes to files in the currently working directory and below to be committed"
    "<FILE>", "add all changes to a specific file to be committed"
 
 git commit

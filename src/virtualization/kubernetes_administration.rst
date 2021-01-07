@@ -111,7 +111,7 @@ PersistentVolume support [3]:
 Tanzu
 ~~~~~
 
-Tanzu (pronouced tawn-zoo) is developed by VMWare as a deployment tool for upstream Kubernetes. It first deploys an all-in-one Tanzu Kubernetes Grid Management Cluster using `kind <https://kind.sigs.k8s.io/>`__ on-top of virtual infrastructure provided by Amazon EC2 or VMWare vSphere. This is also referred to as TKG or Management Cluster for short. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
+Tanzu (pronounced tawn-zoo) is developed by VMWare as a deployment tool for upstream Kubernetes. It first deploys an all-in-one Tanzu Kubernetes Grid Management Cluster using `kind <https://kind.sigs.k8s.io/>`__ on-top of virtual infrastructure provided by Amazon EC2 or VMWare vSphere. This is also referred to as TKG or Management Cluster for short. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
 
 Releases
 --------
@@ -125,7 +125,7 @@ Release highlights:
 
 -  `1.0 <https://www.zdnet.com/article/google-releases-kubernetes-1-0/>`__
 
-   -  First stable public release of Kuberenetes.
+   -  First stable public release of Kubernetes.
 
 -  `1.1 <https://kubernetes.io/blog/2015/11/kubernetes-1-1-performance-upgrades-improved-tooling-and-a-growing-community/>`__
 
@@ -243,7 +243,7 @@ Release highlights:
 
 -  `1.18 <https://kubernetes.io/blog/2020/03/25/kubernetes-1-18-release-announcement/>`__
 
-   -  Toplogy Manager API now supports NUMA CPU pinning.
+   -  Topology Manager API now supports NUMA CPU pinning.
    -  `kubectl alpha debug <https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/#ephemeral-container>`__ argument introduced to attach a temporary container to a running container for troubleshooting purposes.
    -  Windows CSI now supports privileged storage configurations.
 
@@ -996,7 +996,7 @@ Bibliography
 27. "Installation methods for different platforms." Red Hat OpenShift Container Platform 4.5. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/installing/install_config/installation-types.html
 28. "Getting Started Guide." crc. Accessed August 13, 2020. https://code-ready.github.io/crc/
 29. "Basic controls." minikube Documentation. April 7, 2020. Accessed October 18, 2020. https://minikube.sigs.k8s.io/docs/handbook/controls/
-30. "Upgrading kubeadm clusters." Kubenretes Documentation. August 7, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
+30. "Upgrading kubeadm clusters." Kubernetes Documentation. August 7, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 31. "Kubernetes version and version skew support policy." Kubernetes Documentation. August 15, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/setup/release/version-skew-policy/
 32. "Deploying Tanzu Kubernetes Clusters and Managing their Lifecycle." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-index.html
 33. "VMware Tanzu Kubernetes Grid 1.2 Release Notes." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/rn/VMware-Tanzu-Kubernetes-Grid-12-Release-Notes.html

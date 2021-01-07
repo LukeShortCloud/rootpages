@@ -468,7 +468,7 @@ Common OOP Languages:
 Twelve-Factor App Methodology
 -----------------------------
 
-The twelve-factor metholody defines a set of standards to create cloud-native applications. These are microservices that can easily scale on cloud platforms.
+The twelve-factor methodology defines a set of standards to create cloud-native applications. These are microservices that can easily scale on cloud platforms.
 
 Principles:
 
@@ -498,7 +498,7 @@ RESTful APIs
 Principles
 ~~~~~~~~~~
 
-REpresentational State Transfer (REST) is a programming design on how to abstract client and server interactions. A program that implments the REST API design is considered to be a RESTful API. The most common protocol used for RESTful APIs is HTTP but the design principles are not limited to HTTP. An application that follows the REST principles will have improved "performance, scalability, simplicity, modifiability, visibility, portability and reliability." [25]
+REpresentational State Transfer (REST) is a programming design on how to abstract client and server interactions. A program that implements the REST API design is considered to be a RESTful API. The most common protocol used for RESTful APIs is HTTP but the design principles are not limited to HTTP. An application that follows the REST principles will have improved "performance, scalability, simplicity, modifiability, visibility, portability and reliability." [25]
 
 Keywords [27]:
 
@@ -537,7 +537,7 @@ Principles:
    -  **Resource-based** = The resource the client interacts with is determined by the URI.
    -  **Modifications of resources through representations** = The client can retrieve enough information from the server to be able to modify existing data.
    -  **Self-descriptive message** = Everything required for the API to process the request is provided via a message from the client.
-   -  **Hypermedia as the engine of applicaiton state** = The client and server separately ask for and send the state via different means.
+   -  **Hypermedia as the engine of application state** = The client and server separately ask for and send the state via different means.
 
       -  **Client** = Body contents, query-string parameters, requests headers, and/or the requested URI.
       -  **Server** = Body, response codes, and/or response headers.

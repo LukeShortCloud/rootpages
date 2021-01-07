@@ -688,7 +688,7 @@ Bibliography
 5. "Preventing Memory Leaks in C++ Code." Department of Radio Engineering K 13137 CTU FEE Prague. Accessed May 21, 2017. http://radio.feld.cvut.cz/Docs4Soft/ptolemy/prog\_man.html/ptlang.doc7.html
 6. "C++ Arrays." Tutorials Point. Accessed May 21, 2017. https://www.tutorialspoint.com/cplusplus/cpp\_arrays.htm
 7. "C++ Vectors." Cal-linux Tutorials. Accessed May 21, 2017. https://cal-linux.com/tutorials/vectors.html
-8. "Pointers, References and Dynamic Memory Allocation." Nanyang Technoligcal University. Accessed May 21, 2017. https://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp4\_PointerReference.html
+8. "Pointers, References and Dynamic Memory Allocation." Nanyang Technological University. Accessed May 21, 2017. https://www3.ntu.edu.sg/home/ehchua/programming/cpp/cp4\_PointerReference.html
 9. "GCC \*is\* wonderful: a better ARRAY\_SIZE macro." Zubplot. January 4, 2015. Accessed December 3, 2017. http://zubplot.blogspot.com/2015/01/gcc-is-wonderful-better-arraysize-macro.html
 10. "Difference between a Structure and a Union." Stack Overflow. July 13, 2014. Accessed January 2, 2018. https://stackoverflow.com/questions/346536/difference-between-a-structure-and-a-union
 11. "Variables in C++." Studytonight. Accessed May 21, 2017. http://www.studytonight.com/cpp/variables-scope-details.php

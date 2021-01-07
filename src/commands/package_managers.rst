@@ -849,7 +849,7 @@ Build and install software using a provided ``Makefile``.
    :widths: 20, 20
 
    "-j <PROCESSES>", "spawn the specified number of child <PROCESSES> child processes for more efficient and faster compiling; recommended to use the number of CPU threads on the system"
-   "-mtune=native", "compiles the code specifically for your CPU, making programs more efficent and faster"
+   "-mtune=native", "compiles the code specifically for your CPU, making programs more efficient and faster"
    "k, --keep-going", disregard errors and keep compiling until a fatal error occurs
    "clean", "remove previously compiled source code"
    "dist", "build a tarball that can be used for building an RPM"

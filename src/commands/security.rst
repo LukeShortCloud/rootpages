@@ -82,7 +82,7 @@ kadmin (Interactive)
 
    "?", "view the available commands"
    "addprinc <USER>", "create a new principal for a user"
-   "addprinc host/<HOTSNAME>", "create a new principal to allow authentication from a server"
+   "addprinc host/<HOSTNAME>", "create a new principal to allow authentication from a server"
    "addprinc nfs/<HOSTNAME>", "create an NFS principal"
    "addprinc cifs/<HOSTNAME>", "create a CIFS/SMB principal"
    "addprinc ftp/<HOSTNAME>", "create a FTP principal"

@@ -1673,7 +1673,7 @@ Syntax:
                 - range: { min: <MINIMUM_NUMBER>, max: <MAXIMUM_NUMBER> }
                 - allowed_values: [ <VALUE1>, <VALUE2>, <VALUE3> ]
                 - allowed_pattern: <REGULAR_EXPRESSION>
-                - custom_constrant: <CONSTRAINT>
+                - custom_constraint: <CONSTRAINT>
             hidden: <BOOLEAN>
             immutable: <BOOLEAN>
 
