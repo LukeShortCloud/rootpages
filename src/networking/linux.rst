@@ -650,6 +650,27 @@ Unblock a legitimate IP address:
 
 [16]
 
+SSH
+---
+
+Keys
+~~~~
+
+SSH keys are the most common way to authenticate to a UNIX-like server. A public and private key-pair are generated on the client side. For a successful authentication, the server knows of a public key and then a connecting client offers a private key that must go through an algorithm to see if it matches with the public key.
+
+Secure algorithms:
+
+1.  Ed25519
+2.  ECDSA
+3.  RSA >= 4096-bit
+
+Insecure algorithms:
+
+-  DSA
+-  RSA < 4096-bit
+
+[19]
+
 Troubleshooting
 ---------------
 
@@ -718,3 +739,4 @@ Bibliography
 16. "How to install Fail2Ban on CentOS 7." HowtoForge. Accessed June 10, 2018. https://www.howtoforge.com/tutorial/how-to-install-fail2ban-on-centos/
 17. "Bridging Network Connections." Debian Wiki. April 24, 2020. Accessed November 10, 2020. https://wiki.debian.org/BridgeNetworkConnections
 18. "sshd shuts down with “No supported key exchange algorithms” error." serverfault.com. August 8, 2019. Accessed November 14, 2020. https://serverfault.com/questions/158151/sshd-shuts-down-with-no-supported-key-exchange-algorithms-error
+19. "Upgrade Your SSH Key to Ed25519." RISAN A journal of a passionate coder. January 9, 2018. Accessed January 12, 2021. https://medium.com/risan/upgrade-your-ssh-key-to-ed25519-c6e8d60d3c54
