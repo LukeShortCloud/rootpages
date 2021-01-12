@@ -7,6 +7,7 @@
    chromebook
    graphics
    linux
+   macs
    mail_servers
    operating_systems
    package_managers
