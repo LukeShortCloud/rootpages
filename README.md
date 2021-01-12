@@ -62,6 +62,12 @@ HTML:
 $ make html
 ```
 
+HTML via the Docker Engine (all operating systems):
+
+```
+$ docker run --rm -v ${PWD}:/docs sphinxdoc/sphinx /bin/sh -c 'pip install sphinx_rtd_theme && make html'
+```
+
 PDF:
 ```
 $ make latexpdf
