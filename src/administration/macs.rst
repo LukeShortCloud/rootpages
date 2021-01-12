@@ -3,6 +3,29 @@ Macs
 
 .. contents:: Table of Contents
 
+Window Positioning
+------------------
+
+ShiftIt
+~~~~~~~
+
+`ShiftIt <https://github.com/fikovnik/ShiftIt>`__ is one of the few free window positioning/tiling software for macOS. Once started, it will appear in the menu bar. A drop list is provided of the default shortcuts.
+
+Activate ShiftIt:
+
+-  Mac: ``CONTROL`` + ``OPTION`` + ``COMMAND``
+-  Windows: ``CTRL`` + ``ALT`` + ``WINDOWS``
+
+Immediately after that, press additional keys for the desired usage:
+
+-  ``1``, ``2``, ``3``, or ``4`` = Move a window to the desired quadrant.
+-  ``UP_ARROW``, ``DOWN_ARROW``, ``LEFT_ARROW``, or ``RIGHT_ARROW`` = Move a window to align with the specified part of the screen.
+-  ``p`` (previous) or ``n`` (next) = Move a window to the next monitor.
+-  ``=`` or ``-`` = Increase or decrease the size of a window.
+-  ``c`` = Center the window.
+-  ``m`` = Maximize a window.
+-  ``f`` - Fullscreen a window.
+
 Xcode
 -----
 
