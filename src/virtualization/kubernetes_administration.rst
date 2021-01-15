@@ -11,10 +11,10 @@ Kubernetes
 
 Kubernetes, also known as k8s, is an open-source container management platform. It handles the life-cycle of Pods which are a collection of related containers required to run an application. Kubernetes clusters contain two types of servers:
 
--  Master = Manages the state of the Nodes and their Pods.
--  Node, Worker, or Minion = Run user applications in containers and respond to requests from the Masters.
+-  Control Plane Node (previously known as Master Node) = Manages the state of the Nodes and their Pods.
+-  Worker Node (previously known as Node, Worker, Worker Machines, or Minion) = Run user applications in containers and respond to requests from the Control Plane Nodes.
 
-Master services:
+Control Plane Node services:
 
 -  etcd = The most common database for storing all of the Kubernetes configuration data.
 -  kube-apiserver = Handles authentication requests and retrieving/storing data from/to etcd.
@@ -24,7 +24,7 @@ Master services:
 
 -  kube-scheduler = Determines what Node to schedule a Pod on.
 
-Node services:
+Worker Node services:
 
 -  Container runtime = Any service for executing containers that supports the Container Runtime Interface (CRI). Kubernetes officially supports containerd, CRI-O, and docker. [42]
 -  kubelet = Manages containers using the container runtime.
@@ -72,7 +72,7 @@ Node types and services:
 
    -  Ingress = HAProxy and/or F5 BIG-IP.
 
--  Worker/Compute = The life-cycle of these Nodes are handled by the MachineSet API. Master nodes do not use the MachineSet API as to prevent accidental deletion of the control plane. [24]
+-  Worker/Compute = The life-cycle of these Nodes are handled by the MachineSet API. Control Plane Nodes do not use the MachineSet API as to prevent accidental deletion of the control plane. [24]
 
    -  CRI-O (container runtime)
    -  kubelet
@@ -269,7 +269,7 @@ Release highlights:
 OpenShift
 ~~~~~~~~~
 
-Below is a list of RHOCP and OKD versions that correspond with the upstream Kubernetes release. The RHOCP 4.0 release was skipped and used for internal testing only. RHOCP 4 introduced Operators and OperatorHub. It also requires all Master nodes to be installed on Red Hat CoreOS. [5]
+Below is a list of RHOCP and OKD versions that correspond with the upstream Kubernetes release. The RHOCP 4.0 release was skipped and used for internal testing only. RHOCP 4 introduced Operators and OperatorHub. It also requires all Control Plane Nodes to be installed on Red Hat CoreOS. [5]
 
 .. csv-table::
    :header: RHOCP/OKD, Kubernetes
@@ -352,7 +352,7 @@ The official ``kubeadm`` utility is used to quickly create production environmen
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
 
-Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between Pods across all of the worker nodes. A CIDR needs to be defined and can be any network.
+Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between Pods across all of the Worker Nodes. A CIDR needs to be defined and can be any network.
 
 Syntax:
 
@@ -387,7 +387,7 @@ Look-up the discovery token hash by using the certificate authority file.
 
    $ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 
-On the app/worker nodes, add them to the cluster by running:
+On the Worker Nodes, add them to the cluster by running:
 
 .. code-block:: sh
 
@@ -400,7 +400,7 @@ k3s
 
 k3s was created by Rancher Labs as a simple way to deploy small Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
 
-Master:
+Control Plane Nodes:
 
 .. code-block:: sh
 
@@ -409,13 +409,13 @@ Master:
    $ sudo ./install.sh
    $ sudo systemctl enable k3s
 
-Find the token on the master:
+Find the token:
 
 .. code-block:: sh
 
    $ sudo cat /var/lib/rancher/k3s/server/node-token
 
-Worker:
+Worker Nodes:
 
 .. code-block:: sh
 
@@ -426,13 +426,13 @@ Worker:
 
 **Uninstall**
 
-Master:
+Control Plane Nodes:
 
 .. code-block:: sh
 
    $ sudo /usr/local/bin/k3s-uninstall.sh
 
-Worker:
+Worker Nodes:
 
 .. code-block:: sh
 
@@ -446,7 +446,7 @@ Access the ``kubectl`` command through ``k3s`` to manage resources on the cluste
 
    $ sudo k3s kubectl --help
 
-For using the ``kubectl`` command on other systems, copy the configuration from the master node.
+For using the ``kubectl`` command on other systems, copy the configuration from the Control Plane Node.
 
 .. code-block:: sh
 
@@ -642,7 +642,7 @@ The container registry is ephemeral so after a reboot the data will be wiped. Al
 
 Persistent container application storage can also be configured after installation by using one of the configurations from `here <https://docs.openshift.com/container-platform/3.11/install_config/persistent_storage/index.html>`__.
 
-Uninstall OpenShift services from nodes by specifying them in the inventory and using the uninstall playbook.
+Uninstall OpenShift services from Nodes by specifying them in the inventory and using the uninstall playbook.
 
 .. code-block:: sh
 
@@ -698,7 +698,7 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
           # Alternatively, use the web dashboard setup.
           $ tkg init --ui
 
-   -  Optionally create a configuration file for the production Kubernetes cluster. By default, the "dev" plan will create one control plane node and the "prod" plan will create three. Both will create one worker node.
+   -  Optionally create a configuration file for the production Kubernetes cluster. By default, the "dev" plan will create one Control Plane Node and the "prod" plan will create three. Both will create one Worker Node.
 
       .. code-block:: sh
 
@@ -892,13 +892,13 @@ k3s
 
 Either update the local git repository and checkout the desired version tag to upgrade to or curl the latest installer script and specify the version using an environment variable.
 
-Master:
+Control Plane Nodes:
 
 .. code-block:: sh
 
    $ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=<GITHUB_VERSION_TAG> sh -a
 
-Agent:
+Work Nodes:
 
 .. code-block:: sh
 

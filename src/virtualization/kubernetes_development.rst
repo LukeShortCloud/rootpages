@@ -199,7 +199,7 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Binding = Bind objects together.
    -  ComponentStatus = Provides the status of Kubernetes cluster services such as etcd, kube-scheduler, and kube-controller-manager.
    -  Namespace = Create namespaces for developers to isolate their objects.
-   -  Node = Manage attributes of worker nodes.
+   -  Node = Manage attributes of any Node (Control Plane or Worker).
    -  PersistentVolume = Manage persistent and stateful volumes. PersistentVolumeClaims can be created from this object.
    -  ResourceQuota = Manage resource allocations and limits.
    -  ServiceAccount = Manage Kubernetes accounts that are used by automation tools (not humans).
@@ -344,7 +344,7 @@ PersistentVolume
 
 -  claimRef (map) = A reference to bind this PVC object to a PV object.
 -  mountOptions (list) = Linux mount options for the PVC on a Pod.
--  nodeAffinity (map) = NodeAffinity settings for selecting what worker nodes this PVC should be used on.
+-  nodeAffinity (map) = NodeAffinity settings for selecting what Worker Nodes this PVC should be used on.
 -  persistentVolumeReclaimPolicy (string) = What to do when the volume is no longer required by a Pod.
 
    -  Retain = Default for manually provisioned PV.
@@ -389,7 +389,7 @@ PersistentVolume
    -  **path** = The GlusterFS network volume/share name.
    -  readOnly (boolean)
 
--  hostPath = Use a local directory on a worker node to store data. Set a "nodeAffinity" to the worker node that will have the hostPath directory and data available.
+-  hostPath = Use a local directory on a Worker Node to store data. Set a "nodeAffinity" to the Worker Node that will have the hostPath directory and data available.
 
    -  **path** (string) = The file system path to use.
    -  type (string) = How to manage the path.
@@ -1006,7 +1006,7 @@ Ingress
 -  ingressClassName (string) = The Ingress Controller to use.
 -  rules (list of maps) = Rules to define when and where to route public traffic to.
 
-   -  host (string) = The domain name (not an IP address) to accept requests on. This domain should resolve an IP address on one of the Master Nodes in the Kubernetes cluster.
+   -  host (string) = The domain name (not an IP address) to accept requests on. This domain should resolve an IP address on one of the Control Plane Nodes in the Kubernetes cluster.
    -  http (map)
 
       -  paths (list of maps)
@@ -1964,7 +1964,7 @@ Containers
 
    -  containerPort (integer) = The port in the container to open.
    -  hostIP (string) = The IP address to bind the ``Pod.spec.containers.hostPort`` to.
-   -  hostPort (integer) = The port on the worker node to open.
+   -  hostPort (integer) = The port on the Work Node to open.
    -  name (string) = Optionally provide a name. This can be used by a Service object.
    -  protocol (string) = Default is TCP. Set to TCP, UDP, or SCTP.
 
@@ -2139,9 +2139,9 @@ Persistent Storage
 
 By default, all storage is emphemeral. The PersistentVolume (PV) and PersistentVolumeClaim (PVC) APIs provide a way to persistently store information for use-cases such as databases. A PV defines the available storage and connection details for the Kubernetes cluster to use. A PVC defines the storage allocation for use by a Pod.
 
-The example below shows how to configure static storage for a Pod using a directory on a worker node.
+The example below shows how to configure static storage for a Pod using a directory on a Worker Node.
 
--  Create a PV. Set a unique ``<PV_NAME>``, use any name for storageClassName, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from Pods should be stored on the worker nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the worker node that has the local storage.
+-  Create a PV. Set a unique ``<PV_NAME>``, use any name for storageClassName, configure the ``<PV_STORAGE_MAX>`` gigabytes that the PV can allocate, and define the ``<LOCAL_FILE_SYSTEM_PATH>`` where the data from Pods should be stored on the Worker Nodes. In this scenario, it is also recommended to configure a ``nodeAffinity`` that restricts the PV from only being used by the Worker Node that has the local storage.
 
 .. code-block:: yaml
 
