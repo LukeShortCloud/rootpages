@@ -38,6 +38,23 @@ Common utilities [1]:
 -  Terminal 2 = An advanced Termanial app that supports more colors, additional tabs, and full Unicode support.
 -  Xcode IDE = A custom IDE tailored for development of apps on Apple products.
 
+Homebrew
+-------
+
+Homebrew is an unofficial package manager for macOS.
+
+-  Install: ``/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"``
+-  Search for a program to see if it can be installed: ``brew search <PACKAGE>``
+-  Update cached repository metadata: ``brew update``
+-  Install a CLI utility: ``brew install <APP>``
+-  Install a GUI app: ``brew install --cask <APP>``
+-  Upgrade a package: ``brew upgrade <PACKAGE>``
+-  Upgrade all packages: ``brew upgrade``
+-  View all programs, and their dependencies, installed by Homebrew: ``brew list``
+-  View only the programs, not their dependencies, that were installed by Homebrew: ``brew leaves``
+
+[2]
+
 History
 -------
 
@@ -47,3 +64,4 @@ Bibliography
 ------------
 
 1. "Xcode - Features." Apple Developer. Accessed January 12, 2021. https://developer.apple.com/xcode/features/
+2. "Homebrew The Missing Package Manager for macOS (or Linux)." Homebrew. Accessed January 13, 2021. https://brew.sh/
