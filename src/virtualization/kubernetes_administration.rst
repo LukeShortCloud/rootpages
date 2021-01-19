@@ -607,6 +607,47 @@ Stop the virtual machine at any time.
 
 [28]
 
+kind
+~~~~
+
+kind is a tool written in Go that is used by the upstream Kubernetes developers. It simulates different Kubernetes nodes via the use of containers on a single local workstation.
+
+Installation:
+
+-  All operating systems:
+
+   .. code-block:: sh
+
+      $ GO111MODULE="on" go get sigs.k8s.io/kind@v0.9.0
+
+-  macOS specific:
+
+   .. code-block:: sh
+
+      $ brew install kind
+
+Usage:
+
+-  Create a cluster:
+
+   .. code-block:: sh
+
+      $ kind create cluster
+
+-  Or create a cluster using a specific tag from `here <https://hub.docker.com/r/kindest/node/tags?page=1&ordering=last_updated>`__:
+
+   .. code-block:: sh
+
+      $ kind create cluster --image kindest/node:<TAG>
+
+-  Configure kubectl to use the cluster by default:
+
+   .. code-block:: sh
+
+      $ kubectl cluster-info --context kind-kind
+
+[45]
+
 OpenShift Ansible
 ~~~~~~~~~~~~~~~~~
 
@@ -736,6 +777,15 @@ Stop CRC, delete the virtual machine, and cleanup system-wide configuration chan
    $ crc delete
    $ crc cleanup
    $ rm -rf ~/.crc/
+
+kind
+~~~~
+
+Remove all kind containers by running this command [45]
+
+.. code-block:: sh
+
+   $ kind delete cluster
 
 Tanzu
 ~~~~~
@@ -1011,3 +1061,4 @@ Bibliography
 42. "Container runtimes." Kubernetes Documentation. October 28, 2020. Accessed November 14, 2020. https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 43. "Traefik & Kubernetes." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/providers/kubernetes-ingress/
 44. "Install Traefik." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/getting-started/install-traefik/
+45. "Quick Start." kind. December 3, 2020. Accessed January 19, 2021. https://kind.sigs.k8s.io/docs/user/quick-start
