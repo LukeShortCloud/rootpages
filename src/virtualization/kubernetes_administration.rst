@@ -561,7 +561,7 @@ For installing newer versions of Minishift, the old environment must be wiped fi
 
 [17]
 
-CodyReady Containers (CRC)
+CodeReady Containers (CRC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Requirements:
@@ -571,7 +571,7 @@ Requirements:
 -  35 GB of storage
 -  Operating system: Enterprise Linux >= 7.5 or Fedora
 
-`Red Hat CodyReady Containers (CRC) <https://github.com/code-ready/crc>`__ deploys a minimal RHOCP 4 environment into a virtual machine without machine-config and monitoring services. It requires a free developer account from Red Hat to download the ``crc`` binary and copy the pull secret from `here <https://cloud.redhat.com/openshift/install/crc/installer-provisioned>`__.
+`Red Hat CodeReady Containers (CRC) <https://github.com/code-ready/crc>`__ deploys a minimal RHOCP 4 environment into a virtual machine without machine-config and monitoring services. It requires a free developer account from Red Hat to download the ``crc`` binary and copy the pull secret from `here <https://cloud.redhat.com/openshift/install/crc/installer-provisioned>`__.
 
 .. code-block:: sh
 
@@ -725,7 +725,7 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
 Uninstall
 ---------
 
-CodyReady Containers (CRC)
+CodeReady Containers (CRC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Stop CRC, delete the virtual machine, and cleanup system-wide configuration changes the installer made. Then delete all of the CRC files or at least remove the ``~/.crc/cache/`` directory to free up storage space.
