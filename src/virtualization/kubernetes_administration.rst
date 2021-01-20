@@ -962,6 +962,11 @@ Verify that the upgrade worked.
 
 [10]
 
+kind
+~~~~
+
+kind does not officially support upgrades. It was designed for developers to spin up new Kubernetes clusters temporarily for testing. However, it is technically possible to use ``kubeadm`` to upgrade each Node. [46]
+
 Ingress Controllers
 -------------------
 
@@ -1062,3 +1067,4 @@ Bibliography
 43. "Traefik & Kubernetes." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/providers/kubernetes-ingress/
 44. "Install Traefik." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/getting-started/install-traefik/
 45. "Quick Start." kind. December 3, 2020. Accessed January 19, 2021. https://kind.sigs.k8s.io/docs/user/quick-start
+46. "Upgrading underlying kubernetes version #1972." GitHub kubernetes-sigs/kind. December 9, 2020. Accessed January 19, 2021. https://github.com/kubernetes-sigs/kind/issues/1972
