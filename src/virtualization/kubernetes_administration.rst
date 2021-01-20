@@ -1005,6 +1005,13 @@ The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage t
    Weave Net, Yes, Hard, Medium, 3, No, Yes, Manage mesh networks
    Weave Net (Encrypted), Yes, Hard, High, 3, Yes, Yes, Secure networks
 
+Recommended CNI plugins for each use case:
+
+-  Proof-of-concept = kubenet. It is built into Kubernetes and does not require any additional setup.
+-  Home lab = Flannel. Easy to setup and provides container network separation.
+-  Work lab = Canal. It expands upond Flannel by adding support for other features such as the  NetworkPolicy API.
+-  Encryption = Weave Net. Designed to be scalable and secure.
+
 Legacy plugins that are no longer maintained:
 
 -  Romana
