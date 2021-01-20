@@ -1754,6 +1754,77 @@ Pod running on a specific Node based on the Node's hostname.
      nodeSelector:
        kubernetes.io/hostname: worker04
 
+Third-Party
+~~~~~~~~~~~
+
+Cluster
+^^^^^^^
+
+-  API group / version (latest): kind.x-k8s.io/v1alpha4
+-  Shortname: (None)
+-  Namespaced: false
+
+``Cluster`` is an API desgined by the ``kind`` special interest group. It is designed to help configure development Kubernetes clusters.
+
+----
+
+``Cluster:``
+
+-  featureGates (map)
+
+   -  ``<FEATURE>`` (boolean) = Enable or disable experimental Kubernetes features. The full list of features gates is provided `here <https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/>`__.
+
+-  runtimeConfig (map)
+
+   -  ``<API_GROUP>/<API_VERSION>`` (boolean) = Enable or disable API groups. Validation options can be found `here <https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/>`__ and includes: ``api/[all|ga|beta|alpha]: [true|false]``.
+
+-  networking (map)
+
+   -  apiServerAddress (string) = ``127.0.0.1`` by default. The IP address to listen to for internal Kubernetes Nodes to communicate with each other.
+   -  apiServerPort (string) = ``6443`` by default. The port to listen on for internal Kubernetes Nodes to communicate with each other.
+   -  disableDefaultCNI (boolean) = By default, the custom "kindnetd" CNI is installed. Disable this to allow installing a different CNI plugin after the new cluster is created.
+   -  ipFamily (string) = ``ipv4`` (default) or ``ipv6``. Dual-stack IP addressing is not supported in the Cluset API yet.
+   -  kubeProxyMode (string) = ``iptables`` (default) or ``ipvs``.
+   -  podSubnet (string) = ``10.244.0.0/16`` by default. The IP range to use for Pod networking (internal access).
+   -  serviceSubnet (string) = ``10.96.0.0/12`` by default. The public IP range to use for Service networking (external access).
+
+-  nodes (list of maps)
+
+   -  role (string) = The Nodes that should be deployed. Use ``control-plane`` and ``worker``. List the same type of Node more than once to deploy more Nodes.
+   -  extraMounts (list of maps)
+
+      -  containerPath (string) = The mount point for ``Cluster.nodes.role.extraMounts.hostPath``.
+      -  hostPath (string) = A directory on the host to share with the container.
+
+   -  extraPortMappings (list of maps)
+
+      -  containerPort (integer) = The port inside the containers to expose.
+      -  hostPort (integer) = The port on the host to use to connect to the ``Cluster.nodes.extraPortMappings.containerPort``.
+      -  listenAddress (string) = Default is ``0.0.0.0``.
+      -  protocol (string) = ``SCTP``, ``TCP`` (default), or ``UDP``.
+
+   -  kubeadmConfigPatches (list of strings) = Provide additional `configurations for kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/#config-file>`__.
+
+----
+
+**Examples:**
+
+x3 Control Plane Nodes and x2 Worker Nodes.
+
+.. code-block:: yaml
+
+   ---
+   kind: Cluster
+   apiVersion: kind.x-k8s.io/v1alpha4
+   nodes:
+     - role: control-plane
+     - role: control-plane
+     - role: control-plane
+     - role: worker
+     - role: worker
+
+[30]
+
 OpenShift
 ~~~~~~~~~
 
@@ -2351,3 +2422,4 @@ Bibliography
 27. "Labels and Annotations." Helm Docs. Accessed June 30, 2020. https://helm.sh/docs/chart_best_practices/labels/
 28. "API List." OpenShift Container Platform 4.5 Documentation. Accessed August 12, 2020. https://docs.openshift.com/container-platform/4.5/rest_api/index.html
 29. "Templates." OpenShift Container Platform 3.11 Documentation. Accessed August 14, 2020.  https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html
+30. "Configuration." kind. January 3, 2021. Accessed January 20, 2021. https://kind.sigs.k8s.io/docs/user/configuration/
