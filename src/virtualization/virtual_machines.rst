@@ -239,6 +239,8 @@ libvirt:
 Storage
 '''''''
 
+**virtio**
+
 Raw disk partitions have the greatest speeds with the "virtio" driver, cache disabled, and the I/O mode set to "native." If a sparsely allocated storage device is used for the virtual machine (such as a thin-provisioned QCOW2 image) then the I/O mode of "threads" is preferred. This is because with "native" some writes may be temporarily blocked as the sparsely allocated storage needs to first grow before committing the write. [20]
 
 QEMU:
@@ -257,12 +259,28 @@ libvirt:
 
 [6][7]
 
+**QCOW2**
+
 When using the QCOW2 image format, create the image using metadata
 preallocation or else there could be up to a x5 performance penalty. [8]
 
 .. code-block:: sh
 
     $ qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata <NEW_IMAGE_NAME>
+
+If using a file system with copy-on-write capabilities, either (1) disable copy-on-write functionality of the QCOW2 when creating the file or (2) prevent the QCOW2 file from being part of the copy-on-write for the underlying file system.
+
+1. Create a QCOW2 file without copy-on-write.
+
+   .. code-block::
+
+      $ qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata,nocow=on <NEW_IMAGE_NAME>
+
+2. Or prevent the file system from using its copy-on-write functionality for the QCOW2 file or directory where the QCOW2 files are stored.
+
+   .. code-block::
+
+      $ chattr +C <FILE_OR_DIRECTORY>
 
 PCI
 '''
