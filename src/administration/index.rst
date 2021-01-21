@@ -3,7 +3,6 @@
    :caption: Administration
 
    authentication
-   bootloaders
    chromebook
    graphics
    linux
