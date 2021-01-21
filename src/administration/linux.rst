@@ -137,6 +137,53 @@ File: /etc/modprobe.d/blacklist.conf
 
 [3]
 
+Configuration
+~~~~~~~~~~~~~
+
+**Options**
+
+View all of the available options for a kernel module [15]:
+
+.. code-block:: sh
+
+   $ modinfo --parameters <KERNEL_MODULE> # Method 1
+   $ ls -1 /sys/module/<KERNEL_MODULE>/parameters/ # Method 2
+
+Temporarily set module parameters:
+
+.. code-block:: sh
+
+   $ sudo modprobe -r <KERNEL_MODULE>
+   $ sudo modprobe <KERNEL_MODULE> <PARAMETER>=<VALUE>
+
+There are two ways to permanently set options: (1) modprobe configuration or (2) GRUB configuration.
+
+1. modprobe:
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/modprobe.d/<MODPROBE_FILENAME>.conf
+      options <KERNEL_MODULE> <PARAMETER>=<VALUE>
+
+2. GRUB:
+
+   .. code-block:: sh
+
+      $ vim /etc/default/grub
+      GRUB_CMDLINE_LINUX="<PARAMETER>=<VALUE>"
+      $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+**Alias**
+
+Create a short and/or memorable alias name for the kernel module:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/modprobe.d/<MODPROBE_FILENAME>.conf
+   alias <ALIAS> <KERNEL_MODULE>
+
+[16]
+
 Schedulers
 ----------
 
@@ -362,3 +409,5 @@ Bibliography
 12. "Which Linux Kernel Version Is 'Stable'?" Linux.com. February 3, 2018. Accessed September 25, 2018. https://www.linux.com/blog/learn/2018/2/which-linux-kernel-version-stable
 13. "Linux Kernel 5.0 to Be Released When We Hit 6M Git Objects, Says Linus Torvalds." Softpedia News. October 9, 2016. Accessed September 25, 2018. https://news.softpedia.com/news/linux-kernel-5-0-to-be-released-when-we-hit-6m-git-objects-says-linus-torvalds-509108.shtml
 14. "How to install Linux 5.8 Kernel on Ubuntu 20.04 LTS." Linux Shout. August 5, 2020. Accessed December 13, 2020. https://www.how2shout.com/linux/install-linux-5-8-kernel-on-ubuntu-20-04-lts/
+15. "How can I know/list available options for kernel modules?" Ask Ubuntu. December 13, 2017. Accessed January 21, 2021. https://askubuntu.com/questions/59135/how-can-i-know-list-available-options-for-kernel-modules
+16. "Kernel module." Arch Wiki. October 14, 2020. Accessed January 21, 2021. https://wiki.archlinux.org/index.php/Kernel_module
