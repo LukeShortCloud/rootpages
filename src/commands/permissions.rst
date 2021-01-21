@@ -293,7 +293,7 @@ Change file attributes.
    :widths: 20, 20
 
    "+a", "makes the file appendable only"
-   "+C", "disables copy-on-write (CoW) on a file, if CoW is available on the file system"
+   "+C", "disables copy-on-write (CoW) file system operations on a file or directory"
    "+i", "makes a file immutable; it cannot be modified or deleted"
    "+u", "makes a file undeletable"
    "-R", "recursively through multiple files"
