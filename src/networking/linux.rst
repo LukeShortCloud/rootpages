@@ -660,9 +660,9 @@ SSH keys are the most common way to authenticate to a UNIX-like server. A public
 
 Secure algorithms:
 
-1.  Ed25519
+1.  Ed25519 = The most secure.
 2.  ECDSA
-3.  RSA >= 4096-bit
+3.  RSA >= 4096-bit = The most widely supported format.
 
 Insecure algorithms:
 
@@ -670,6 +670,12 @@ Insecure algorithms:
 -  RSA < 4096-bit
 
 [19]
+
+Generate a new SSH key using the following command:
+
+.. code-block:: sh
+
+   $ ssh-keygen -t <ALGORITHM> -b <BIT_SIZE>
 
 Troubleshooting
 ---------------
