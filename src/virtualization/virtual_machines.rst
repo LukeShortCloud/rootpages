@@ -29,21 +29,21 @@ AMD has two subtypes of virtualization:
 -  AMD-V = Basic hardware virtualization and host separation support.
 -  AMD-Vi = I/O pass-through support.
 
-Check for Intel or AMD virtualization support:
+Check for Intel or AMD virtualization support. If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.
 
 .. code-block:: sh
 
-    $ grep vmx /proc/cpuinfo #Intel
+    $ grep -m 1 --color vmx /proc/cpuinfo # Intel
 
 .. code-block:: sh
 
-    $ grep svm /proc/cpuinfo #AMD
+    $ grep -m 1 --color svm /proc/cpuinfo # AMD
 
 Verify the exact subtype of virtualization:
 
 .. code-block:: sh
 
-    $ lscpu | grep ^Virtualization #Intel or AMD
+    $ lscpu | grep ^Virtualization # Intel or AMD
 
 KVM
 ~~~
@@ -301,20 +301,19 @@ KVM supports nested virtualization. This allows a virtual machine full
 access to the processor to run another virtual machine in itself. This
 is disabled by default.
 
-Verify that the computer's processor supports nested hardware virtualization.
-[11]
+Verify that the computers' processor supports nested hardware virtualization. [11] If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.
 
 -  Intel:
 
    .. code-block:: sh
 
-       $ grep -m 1 vmx /proc/cpuinfo
+       $ grep -m 1 --color vmx /proc/cpuinfo
 
 -  AMD:
 
    .. code-block:: sh
 
-       $ grep -m 1 svm /proc/cpuinfo
+       $ grep -m 1 --color svm /proc/cpuinfo
 
 Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processor and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]
 
