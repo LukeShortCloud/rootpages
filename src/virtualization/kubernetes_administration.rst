@@ -640,6 +640,12 @@ Usage:
 
       $ kind create cluster --image kindest/node:<TAG>
 
+-  Or create a cluster using a Kubernetes manifest file for the Cluster API:
+
+   .. code-block:: sh
+
+      $ kind create cluster --config=<CLUSTER_MANIFEST>.yaml
+
 -  Configure kubectl to use the cluster by default:
 
    .. code-block:: sh
