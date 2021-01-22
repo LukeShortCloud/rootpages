@@ -294,6 +294,26 @@ QEMU:
 
     $ sudo qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
 
+Networking
+^^^^^^^^^^
+
+Different models of virtual network interface cards (NICs) are available for the purposes of compatibility with the virtualized operating system. This can be set using the follow syntax:
+
+.. code-block:: sh
+
+   $ sudo qemu -net nic,model=<MODEL>
+
+.. code-block:: sh
+
+   $ sudo virt-install --network network=default,model=<MODEL>
+
+Supported virtual device models [47]:
+
+-  e1000 = The default NIC. It emulates a 1 Gbps Intel NIC.
+-  virtio = High-performance device for operating systems with the driver available. Most Linux distributions has this driver available by default.
+-  rtl8139 = An old NIC for older operating systems. It emulates a 100 Mbps Realtek 8139 card.
+-  vmxnet3 = Use for VMware virtual machines and the VMware ESXi hypervisor. It emulates a virtual VMware NSXi NIC.
+
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -1483,3 +1503,4 @@ Bibliography
 44. "Create a Terraform Module." Linode Guides & Tutorials. May 1, 2020. Accessed July 8, 2020. https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/
 45. "OpenStack Provider." Terraform Docs. Accessed July 18, 2020. https://www.terraform.io/docs/providers/openstack/index.html
 46. "How to create a vagrant VM from a libvirt vm/image." openATTIC. January 11, 2018. Accessed October 19, 2020. https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/
+47. "Qemu/KVM Virtual Machines." Proxmox VE Wiki. November 26, 2020. Accessed January 21, 2021. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
