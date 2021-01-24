@@ -2,18 +2,18 @@
    :maxdepth: 1
    :caption: Commands
 
-   clustering.rst
-   compression.rst
-   configuration_management.rst
-   firewalls.rst
-   hardware.rst
-   openstack.rst
-   package_managers.rst
-   permissions.rst
-   phones.rst
-   security.rst
-   software_code_management.rst
-   storage.rst
-   text_editors.rst
-   virtualization.rst
+   clustering
+   compression
+   configuration_management
+   firewalls
+   hardware
+   openstack
+   package_managers
+   permissions
+   phones
+   security
+   software_code_management
+   storage
+   text_editors
+   virtualization
 

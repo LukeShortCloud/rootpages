@@ -10,61 +10,61 @@ Welcome to Root Pages!
    :maxdepth: 1
    :caption: Administration
 
-   administration/index.rst
+   administration/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Automation
 
-   automation/index.rst
+   automation/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Computer Hardware
 
-   computer_hardware/index.rst
+   computer_hardware/index
 
 .. toctree::
    :maxdepth: 1
    :caption: HTTP
 
-   http/index.rst
+   http/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Networking
 
-   networking/index.rst
+   networking/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Observation
 
-   observation/index.rst
+   observation/index
 
 .. toctree::
    :maxdepth: 1
    :caption: OpenStack
 
-   openstack/index.rst
+   openstack/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Programming
 
-   programming/index.rst
+   programming/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Storage
 
-   storage/index.rst
+   storage/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Virtualization
 
-   virtualization/index.rst
+   virtualization/index
 
 -----
 
@@ -72,7 +72,7 @@ Welcome to Root Pages!
    :maxdepth: 1
    :caption: Commands
 
-   commands/index.rst
+   commands/index
 
 
 `Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__

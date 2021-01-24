@@ -2,8 +2,8 @@
    :maxdepth: 1
    :caption: Virtualization
 
-   containers.rst
-   kubernetes_administration.rst
-   kubernetes_development.rst
-   virtual_machines.rst
-   wine.rst
+   containers
+   kubernetes_administration
+   kubernetes_development
+   virtual_machines
+   wine
