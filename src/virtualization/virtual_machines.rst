@@ -272,13 +272,13 @@ If using a file system with copy-on-write capabilities, either (1) disable copy-
 
 1. Create a QCOW2 file without copy-on-write.
 
-   .. code-block::
+   .. code-block:: sh
 
       $ qemu-img create -f qcow2 -o size=<SIZE>G,preallocation=metadata,nocow=on <NEW_IMAGE_NAME>
 
 2. Or prevent the file system from using its copy-on-write functionality for the QCOW2 file or directory where the QCOW2 files are stored.
 
-   .. code-block::
+   .. code-block:: sh
 
       $ chattr +C <FILE_OR_DIRECTORY>
 
