@@ -39,7 +39,7 @@ Common utilities [1]:
 -  Xcode IDE = A custom IDE tailored for development of apps on Apple products.
 
 Homebrew
--------
+--------
 
 Homebrew is an unofficial package manager for macOS.
 
