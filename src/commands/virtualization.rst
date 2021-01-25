@@ -465,7 +465,8 @@ Installation utility for virtual machines.
    "--name", "create guest vm name"
    "--memory", "specify the amount of RAM to allocate, in MBs, and options to use"
    "--memorybacking hugepages=on", "enable Huge Pages allocation"
-   "--vcpus", "allocate CPUs"
+   "--vcpus <COUNT>", "allocate CPUs"
+   "--vcpus <COUNT>,cpuset=<RANGE>", "allocate specific CPU cores and threads"
    "--cpu", "the CPU model and options to use"
    "--cpu host-passthrough", "passthrough the CPU settings from the hypervisor"
    "--disk", "specify the partition to use for the vm"
@@ -473,6 +474,7 @@ Installation utility for virtual machines.
    "--network bridge=<BRIDGE_DEVICE>,<OPTIONS>", "connect the VM to an existing network bridge"
    "--network network=<LIBVIRT_NETWORK>,<OPTIONS>", "connect the VM to an existing libvirt network (""default"" by default)"
    "--network <BRIDGE_OR_NETWORK>,model=[virtio|e1000|rtl8139|vmxnet3]", "configure the virtual network interface card model to use via the ""model"" option"
+   --cdrom <PATH_TO_ISO>, Specify the ISO to use for the installation of the operating system. It will be detacted after the installation is complete / the VM reboots.
    "--location", "network location of the tree file for the OS installation information"
    "--nographics", "install via a CLI console"
    "--graphics {vnc,listen=<ADDRESS>,port=<PORT>,password=<PASS>}", "use VNC to install the OS via a GUI; other specific options can also be defined such as to listen on all IPs with the 0.0.0.0 wildcard"
@@ -487,6 +489,7 @@ Installation utility for virtual machines.
    :widths: 20, 20
 
    "--cpu core2duo", "set the processor to use the Intel Core 2 Duo profile"
+   "--vcpus 16,cputset=1-8,16-24", "allocate 16 vcpus, 8 of them are real cores, the other 8 are their related threads (from a 16/32 core/thread processor) and save the first core/thread 0/15 for the hypervisor"
    "--connect=qemu:///system --network=bridge=br0,model=virtio --extra-args='ks=console=tty0 console=ttyS0,115200' --name=centos7 --disk /var/lib/libvirt/images/centos7.qcow2,bus=virtio,cache=none,io=native --ram 2048 --vcpus=2 --check-cpu --location=http://mirror.centos.org/centos/7/os/x86_64/ --graphics vnc,listen=0.0.0.0,port=5999,password=<PASSWORD>", "do a network install of CentOS 7 via a VNC connection"
 
 virt-resize
