@@ -686,6 +686,8 @@ View valid versions of TKC that can be upgraded to from the specified version:
 
 [62]
 
+VMware vSphere 7 provides support for the Tanzu Kubernetes Grid Service (TKGS). This is a graphical interface and framework for managing Kubernetes on vSphere. It is recommended to only use TKG for vSphere <= 6. [54]
+
 Installation
 ------------
 
@@ -1353,6 +1355,54 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
          $ kubectl config use-context <KUBERNETES_CLUSTER_NAME>-admin@<KUBERNETES_CLUSTER_NAME>
          $ kubectl get nodes -o wide
          $ kubectl get -n kube-system pods
+
+VMware vSphere
+''''''''''''''
+
+Prerequisites:
+
+-  Library
+-  Cluster with HA and fully automated DRS [11]
+
+Configure the vSphere credentials either via environment variables or the TKG configuration file.
+
+.. code-block:: yaml
+
+   ---
+   # File: ~/.tkg/config.yaml
+   VSPHERE_SERVER:
+   VSPHERE_USERNAME:
+   VSPHERE_PASSWORD:
+   VSPHERE_DATACENTER:
+   VSPHERE_DATASTORE:
+   VSPHERE_NETWORK:
+   VSPHERE_RESOURCE_POOL:
+   VSPHERE_FOLDER:
+   VSPHERE_SSH_AUTHORIZED_KEY:
+   SERVICE_CIDR:
+   CLUSTER_CIDR:
+   VSPHERE_WORKER_DISK_GIB:
+   VSPHERE_WORKER_NUM_CPUS:
+   VSPHERE_WORKER_MEM_MIB:
+   VSPHERE_CONTROL_PLANE_DISK_GIB:
+   VSPHERE_CONTROL_PLANE_NUM_CPUS:
+   VSPHERE_CONTROL_PLANE_MEM_MIB:
+
+Settings for small nodes:
+
+.. code-block:: yaml
+
+   ---
+   SERVICE_CIDR: 100.64.0.0/13
+   CLUSTER_CIDR: 100.96.0.0/11
+   VSPHERE_WORKER_DISK_GIB: "20"
+   VSPHERE_WORKER_NUM_CPUS: "2"
+   VSPHERE_WORKER_MEM_MIB: "2048"
+   VSPHERE_CONTROL_PLANE_DISK_GIB: "20"
+   VSPHERE_CONTROL_PLANE_NUM_CPUS: "2"
+   VSPHERE_CONTROL_PLANE_MEM_MIB: "2048"
+
+[111]
 
 Tanzu Application Platform (TAP)
 ''''''''''''''''''''''''''''''''
@@ -2756,7 +2806,7 @@ Bibliography
 51. "Properly Resetting Your kubeadm-bootstrapped Cluster Nodes — #HeptioProTip." Heptio Blog. January 3, 2018. March 2, 2021. https://blog.heptio.com/properly-resetting-your-kubeadm-bootstrapped-cluster-nodes-heptioprotip-473bd0b824aa
 52. "coredns been in Pending state." Programmer Sought. Accessed March 3, 2021.  https://www.programmersought.com/article/23693305901/
 53. "certificate expired and rotate #1621." GitHub k3s-io/k3s. February 8, 2021. Accessed March 10, 2021. https://github.com/k3s-io/k3s/issues/1621
-54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed March 11, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
+54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed February 21, 2023. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
 55. "Welcome to Cloud Foundry BOSH." Cloud Foundry BOSH. Accessed March 11, 2021. https://bosh.io/docs/
 56. "Common issues with a vSphere with Tanzu Cluster deployment stuck in Configuring state (83060)." VMware Customer Connect. July 27, 2021. Accessed August 27, 2021. https://kb.vmware.com/s/article/83060
 57. "Comparing Ingress controllers for Kubernetes." Flant Blog. October 12, 2019. Accessed March 26, 2021. https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
@@ -2812,3 +2862,5 @@ Bibliography
 107. "Configuration." kind. October 2, 2022. Accessed October 28, 2022. https://kind.sigs.k8s.io/docs/user/configuration/
 108. "Creating a Kind Cluster With Calico Networking." alexbrand's blog. September 30, 2019. Accessed October 28, 2022. https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/
 109. "Falco." GitHub falcosecurity/charts. February 20, 2023. Accessed February 21, 2023. https://github.com/falcosecurity/charts/tree/master/falco
+110. "VMware HA and DRS Explained." BDRSuite. May 9, 2022. Accessed February 21, 2023. https://www.bdrsuite.com/blog/ha-vs-drs-in-vmware-vsphere/
+111. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-vsphere-cli.html
