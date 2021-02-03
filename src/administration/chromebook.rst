@@ -464,6 +464,10 @@ Features
 
 Chrome OS versions:
 
+-  89
+
+   -  `"Trash" in the Files app for recovering deleted files. <https://www.aboutchromebooks.com/news/chrome-os-89-adds-media-annotations-photo-filters-and-a-working-trash-can-for-chromebooks/>`__
+
 -  88
 
    -  `Crostini on removable storage devices. <https://bugs.chromium.org/p/chromium/issues/detail?id=827705>`__
@@ -517,7 +521,6 @@ Upcoming Features
 
 -  `Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming. <https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager>`__
 -  `Phone Hub for integration with Android phones. <https://www.androidpolice.com/2020/12/14/this-is-phone-hub-for-chrome-os-googles-effort-to-tightly-link-android-and-chromebooks/>`__
--  `Recycle bin for recovering deleted files. <https://chromeunboxed.com/chromebook-files-app-trash-recycle-bin-chrome-os>`__
 -  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
 
 History
