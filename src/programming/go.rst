@@ -930,6 +930,81 @@ With using a scanner from ``bfio``, more control can be had. For example, a file
    	}
    }
 
+Logging
+-------
+
+The ``log`` package in Go provides a standardized way to manage logs. They are sent to standard error and each log is separated by a newline. Go has three main logging types by default: Print, Fatal, and Panic. [30]
+
+-  Print = The standard call to output a log line.
+-  Fatal = After logging, the program will execute ``os.Exit(1)`` which will exit immediately and return an error code of 1.
+-  Panic = After logging, the program will execute ``panic()`` and try as much as possible to end all of its processes gracefully.
+
+The default logger will use the format flag ``log.LstdFlags`` which is actually ``log.Ldate|log.Ltime`` to display the date and the time.
+
+.. code-block:: go
+
+   package main
+   
+   import (
+           "log"
+   )
+   
+   func main() {
+           log.Println("Hello world")
+   }
+
+::
+
+    2021/02/08 11:42:09 Hello world
+
+Consider creating new and separate loggers for ``debug``, ``info``, ``warning``, ``error``, and ``critical``. Those are the log levels that Python uses. [31]
+
+.. code-block:: go
+
+   package main
+   
+   import (
+           "log"
+           "os"
+   )
+   
+   func main() {
+           warnLog := log.New(os.Stderr, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
+           warnLog.Println("This is a test.")
+   }
+
+::
+
+   WARNING: 2021/02/08 10:45:39 main.go:15: This is a test.
+
+Log to a file by setting the output stream to an ``os.OpenFile()`` object.
+
+.. code-block:: go
+
+   package main
+   
+   import (
+           "log"
+           "os"
+   )
+   
+   func main() {
+           logFile, error := os.OpenFile("example.log",
+                   os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
+           if error != nil {
+                   log.Println(error)
+           }
+           defer logFile.Close()
+   
+           exampleLogger := log.New(logFile, "", log.LUTC|log.Ldate|log.Ltime|log.Lshortfile)
+           exampleLogger.Print("This text will only appear in the example.log file.")
+   }
+
+.. code-block:: sh
+
+   $ cat example.log
+   2021/02/08 18:21:06 main.go:25: This text will only appear in the example.log file.
+
 Testing
 -------
 
@@ -1119,6 +1194,44 @@ These are `methods <https://golang.org/pkg/os/#File>`__ that are valid for a ``F
 -  WriteAt
 -  WriteString
 
+log
+^^^
+
+-  Print[f|ln] = Log message. ``Print()`` will automatically add a newline after a log message if there is not one
+-  Fatal[f|ln] = Log message and then ``os.Exit(1)``.
+-  Panic[f|ln] = Log message and then ``panic()``.
+-  SetFlags = Change the flags for the logger.
+-  SetOutput = Change the I/O stream for the logger.
+-  SetPrefix = Change the prefix for the logger.
+-  Flags = Return the value of the flags.
+-  Output = Return the value of the output.
+-  Prefix = Return the value of the prefix.
+
+[30]
+
+(Logger Object)
+'''''''''''''''
+
+These are `methods <https://golang.org/pkg/log/#Logger>`__ that are valid for a ``Logger`` object type.
+
+-  New = Create a new ``Logger()`` object.
+
+   -  out io.Writer = The I/O stream to send logs to. Common values include ``os.Stderr`` or an object of ``os.OpenFile()``.
+   -  prefix string = A prefix to use for every log message. This comes before the flags that are set.
+   -  flag int = The ``log.<CONSTANT>`` flags to use for standardized date, time, and file name formatting. All of the available constants are listed `here <https://golang.org/pkg/log/#pkg-constants>`__. Common values include ``log.LstdFlags`` and ``log.LUTC|log.Ldate|log.Ltime|log.Lshortfile``.
+
+-  Print[f|ln]
+-  Fatal[f|ln]
+-  Panic[f|ln]
+-  SetFlags
+-  SetOutput
+-  SetPrefix
+-  Flags
+-  Output
+-  Prefix
+
+[30]
+
 math
 ^^^^
 
@@ -1260,3 +1373,5 @@ Bibliography
 27. "Package template." The Go Programming Language. Accessed July 30, 2020. https://golang.org/pkg/text/template/
 28. "Using Go Templates." Gopher Academy Blog. December 27, 2017. Accessed July 30, 2020. https://blog.gopheracademy.com/advent-2017/using-go-templates/
 29. "Golang Templates Cheatsheet." Curtis Vermeeren. September 14, 2017. Accessed July 30, 2020. https://curtisvermeeren.github.io/2017/09/14/Golang-Templates-Cheatsheet
+30. "Package log." The Go Programming Language. Accessed February 8, 2021. https://golang.org/pkg/log/
+31. "Logging HOWTO." Python documentation. February 8, 2021. Accessed February 8, 2021. https://docs.python.org/3/howto/logging.html
