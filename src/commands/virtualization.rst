@@ -142,12 +142,14 @@ Manage Kubernetes resources via the API.
    api-resources --namespaced={true|false}, show APIs that do (or do not) support being namespaced
    api-resources --verb={create|delete|deletecollection|get|list|patch|update|watch}, show APIs that support the ``kubectl <VERB>``
    explain --recursive <API>, explain all of the options for creating an object from that API
+   explain <KIND> --api-version=<APIVERSION_NAME>/<APIVERSION_VERSION>, explain a specific version of an API
    explain <API>.spec, show all of the top-level spec options for the API
    edit <API> <OBJECT>, edit an existing object's YAML manifest
    "cluster-info", "show the clustered services and their status"
    "get nodes", "show all of the Nodes in the Kubernetes cluster"
    "run <POD_NAME> --image=<PATH_TO_IMAGE>:<VERSION> --port=<PORT>", "create a container from the specific version of the image, listening on the specified port, and give it the specified name"
    "get <RESOURCE_API>", show all of the objects created using a specific API
+   get <KIND>.<APIVERSION_VERSION>.<APIVERSION_NAME>, show all of the objects created using a specific version of an API
    get <API> -w, watch/refresh the output of getting all objects from an API
    get <API> --show-kind, show the kind of each object
    get <API> --show-labels, show all of the labels for each object
@@ -190,6 +192,8 @@ Manage Kubernetes resources via the API.
 
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/sh", "start a Pod with a single container and enter into it via a Bash shell"
    run <POD_NAME> --restart=Never --rm -it -- <COMMAND> <ARG1>, run a container once and then delete it
+   get ingress.v1beta1.extensions, "show all of the (now deprecated) resources from the "Ingress" API from apiVersion "extesnions/v1beta""
+   explain ingress --api-version=extensions/v1beta1, explain the beta version of the Ingress API
 
 minikube
 ~~~~~~~~
