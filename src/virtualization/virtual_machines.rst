@@ -1055,26 +1055,31 @@ Defining the amount of resources a virtual machine has access to is different fo
      vm_provider.<KEY> = <VALUE>
    end
 
-Common options:
-
--  vcpus (integer) = The number of CPU cores to allocate.
--  memory (integer) = The size of RAM, in MB, to allocate.
-
 Provider specific options:
 
 -  libvirt [25]
 
    -  cpu_mode (string) = The CPU mode to use.
-   -  volume_cache (string) = The disk cache mode to use.
+   -  cpus (string) = The number of vCPU cores to allocate.
+   -  memory (string) = The size, in MiB, of RAM to allocate.
    -  storage (dictionary of strings) = Create additional disks.
+   -  volume_cache (string) = The disk cache mode to use.
 
--  virtualbox
+-  virtualbox [17]
 
+   -  cpus (string) = The number of vCPU cores to allocate.
+   -  customize (list of strings) = Run custom commands after the virtual machine has been created.
    -  gui (boolean) = Launch the VirtualBox GUI console.
    -  linked_clone (boolean) = Use a thin provisioned virtual machine image.
-   -  customize (list of strings) = Run custom commands after the virtual machine has been created.
+   -  memory (string) = The size, in MiB, of RAM to allocate.
 
-[17]
+-  vmware_desktop (VMware Fusion and VMware Workstation) [48]
+
+   -  gui (boolean) = Launch the VirtualBox GUI console.
+   -  memsize (string) = The size, in MiB, of RAM to allocate.
+   -  numvcpus (string) = The number of vCPU cores to allocate.
+
+The ``vmware_desktop`` provider requries a license from Vagrant. It can be used on two different computers. A new license is required when there is a new major version of the provider plugin. [49]
 
 Networks
 ''''''''
@@ -1473,7 +1478,7 @@ Bibliography
 14. "Xen Definition." TechTarget. March, 2009. Accessed December 18, 2016. http://searchservervirtualization.techtarget.com/definition/Xen
 15. "Nested Virtualization in Xen." Xen Project Wiki. November 2, 2017. Accessed December 22, 2017. https://wiki.xenproject.org/wiki/Nested\_Virtualization\_in\_Xen
 16. "UEFI Kickstart failed to find a suitable stage1 device." Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. https://access.redhat.com/discussions/1534853
-17. "[Vagrant] Configuration." Vagrant Documentation. Accessed October 2, 2018. https://www.vagrantup.com/docs/virtualbox/configuration.html
+17. "Providers VirtualBox Configuration." Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. https://www.vagrantup.com/docs/virtualbox/configuration.html
 18. "APIC Virtualization Performance Testing and Iozone." Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone
 19. "Intel x2APIC and APIC Virtualization (APICv or vAPIC)." Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html
 20. "QEMU Disk IO Which perfoms Better: Native or threads?" SlideShare. February, 2016. Accessed May 13, 2018. https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads
@@ -1504,3 +1509,5 @@ Bibliography
 45. "OpenStack Provider." Terraform Docs. Accessed July 18, 2020. https://www.terraform.io/docs/providers/openstack/index.html
 46. "How to create a vagrant VM from a libvirt vm/image." openATTIC. January 11, 2018. Accessed October 19, 2020. https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/
 47. "Qemu/KVM Virtual Machines." Proxmox VE Wiki. November 26, 2020. Accessed January 21, 2021. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
+48. "Providers VMware Configuration." Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. https://www.vagrantup.com/docs/providers/vmware/configuration
+49. "VMware Integration." Vagrant by HashiCorp. Accessed February 10, 2021. https://www.vagrantup.com/vmware
