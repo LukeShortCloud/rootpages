@@ -197,7 +197,7 @@ Manage Kubernetes resources via the API.
 
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/sh", "start a Pod with a single container and enter into it via a Bash shell"
    run <POD_NAME> --restart=Never --rm -it -- <COMMAND> <ARG1>, run a container once and then delete it
-   get ingress.v1beta1.extensions, "show all of the (now deprecated) resources from the "Ingress" API from apiVersion "extesnions/v1beta""
+   get ingress.v1beta1.extensions, "show all of the (now deprecated) resources from the ""Ingress"" API from apiVersion ""extesnions/v1beta"""
    explain ingress --api-version=extensions/v1beta1, explain the beta version of the Ingress API
 
 minikube
