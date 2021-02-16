@@ -115,9 +115,14 @@ Manage Kubernetes infrastructure.
    :header: Usage, Explanation
    :widths: 20, 20
 
+   init, install the first Kubernetes node as a control plane node
+   init --upload-certs, kubeadm will automatically manage copying over certifications for control-plane nodes
+   init --control-plane-endpoint <DOMAIN_OR_IP>:6443, the load balanced address for accessing the control plane API
    init --pod-network-cidr <CIDR>, create a new Kubernetes cluster with a valid network CIDR to allow pod network add-ons to be installed
    token create, create a new temporary token that will expire in 24 hours
    token list, list all active and expired tokens
+   join, setup a Kubernetes worker node
+   join --control-plane, setup a Kubernetes control plane node
 
 kubectl
 ~~~~~~~
