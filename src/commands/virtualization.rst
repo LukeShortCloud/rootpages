@@ -515,6 +515,26 @@ Automatically increase partitions in virtual machine images.
    "--expand /dev/sd<XY> <SOURCEIMAGE> <BLANK_DESTINATION_IMAGE>", "increase the size of the partition /dev/sdXX to be the maximum available"
    "--expand /dev/sd<XX> --LV-expand /dev/<VOLUMEGROUP>/<LOGICALVOLUME> <SOURCEIMAGE> <BLANK_DESTINATION_IMAGE>", increase the size of a logical volume"
 
+virt-sysprep
+~~~~~~~~~~~~
+
+Reset virtual machine settings inside the virtual file system so that it can be cloned.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   -a <IMAGE>, specify the file image to modify
+   -d, specify a libvirt virtual machine to modify
+   --list-operations, view all available operations (by default all of these will run)
+   "--operations <OPERATION1>,<OPERATION2>", specify the only operations that should run
+
+.. csv-table::
+   :header: Example, Explanation
+   :widths: 20, 20
+
+   "-d examplevm --operations dhcp-client-state,dhcp-server-state,mail-spool,net-hostname,net-hwaddr,ssh-hostkeys,ssh-userdir,udev-persistent-net", run all of the networking related operations
+
 virt-xml
 ~~~~~~~~
 
