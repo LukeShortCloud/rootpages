@@ -11,6 +11,35 @@ different virtualization hypervisors. This Root Pages' guide assumes
 that libvirt is used for managing Quick Emulator (QEMU) virtual
 machines. [1]
 
+VNC
+~~~
+
+Any virtual machine can be accessed remotely via a VNC GUI. Shutdown the virtual machine with ``virsh shutdown`` and then run ``virsh edit ${VM}``.
+
+Examples:
+
+Automatically assign a VNC port number (starting at 5900/TCP) and listen on every IP address.
+
+.. code-block:: xml
+
+   <domain>
+       <devices>
+           <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0'/>
+       </devices>
+   </domain>
+
+Assign a static port number, listen only on localhost, and password protect the VNC console. The password will be stored in plaintext on the file system.
+
+.. code-block:: xml
+
+   <domain>
+       <devices>
+           <graphics type='vnc' port='5987' autoport='no' listen='127.0.0.1' passwd='securepasswordhere'/>
+       </devices>
+   </domain>
+
+[50]
+
 Hardware Virtualization
 -----------------------
 
@@ -1511,3 +1540,4 @@ Bibliography
 47. "Qemu/KVM Virtual Machines." Proxmox VE Wiki. November 26, 2020. Accessed January 21, 2021. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
 48. "Providers VMware Configuration." Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. https://www.vagrantup.com/docs/providers/vmware/configuration
 49. "VMware Integration." Vagrant by HashiCorp. Accessed February 10, 2021. https://www.vagrantup.com/vmware
+50. "KVM Virtualization: Start VNC Remote Access For Guest Operating Systems." nixCraft. May 6, 2017. Accessed February 18, 2021. https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/
