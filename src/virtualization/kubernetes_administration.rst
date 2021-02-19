@@ -32,6 +32,53 @@ Worker Node services:
 
 [1]
 
+Networking
+^^^^^^^^^^
+
+Ports
+'''''
+
+Depending on the role of the Node and what Container Network Interface (CNI) plugin is used, different ports need to be opened in the firewall.
+
+Control Plane Nodes:
+
+.. csv-table::
+   :header: Port, Description
+   :widths: 20, 20
+
+   2379/TCP, etcd client.
+   2380/TCP, etcd server.
+   6443/TCP, kube-api-server.
+   10250/TCP, kubelet.
+   10251/TCP, kube-scheduler.
+   10252/TCP, kube-controller-manager.
+   10254/TCP, Ingress Controller probes.
+   30000-32767/TCP+UDP, Default NodePort ports when a port is not specified.
+
+Worker Nodes:
+
+.. csv-table::
+   :header: Port, Description
+   :widths: 20, 20
+
+   10250/TCP, kubelet.
+   30000-32767/TCP+UDP, Default NodePort ports when a port is not specified.
+
+CNI Ports (All Nodes):
+
+.. csv-table::
+   :header: Port, Description
+   :widths: 20, 20
+
+   179/TCP, Calico BGP.
+   8472/UDP, Flannel VXLAN overlay network (Linux).
+   4789/UDP, Flannel VXLAN overlay network (Windows).
+   9099/TCP, Flannel probes.
+   6783/TCP, Weave.
+   6783-6784/UDP, Weave.
+
+[47]
+
 OpenShift
 ~~~~~~~~~
 
@@ -1081,3 +1128,4 @@ Bibliography
 44. "Install Traefik." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/getting-started/install-traefik/
 45. "Quick Start." kind. December 3, 2020. Accessed January 19, 2021. https://kind.sigs.k8s.io/docs/user/quick-start
 46. "Upgrading underlying kubernetes version #1972." GitHub kubernetes-sigs/kind. December 9, 2020. Accessed January 19, 2021. https://github.com/kubernetes-sigs/kind/issues/1972
+47. "Port Requirements." Rancher Docs: Port Requirements. November 17, 2020. Accessed February 19, 2021. https://rancher.com/docs/rancher/v2.x/en/installation/requirements/ports/
