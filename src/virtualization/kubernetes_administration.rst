@@ -79,6 +79,43 @@ CNI Ports (All Nodes):
 
 [47]
 
+k3s
+~~~
+
+Networking
+^^^^^^^^^^
+
+Ports
+'''''
+
+Control Plane Nodes:
+
+.. csv-table::
+   :header: Port, Description
+   :widths: 20, 20
+
+   22/TCP, SSH for the Node Driver.
+   80/TCP, Proxy to use with an external SSL/TLS termination app.
+   443/TCP, Rancher UI and API. Rancher Catalogs.
+   2376/TCP, Docker TLS port for Docker Machine.
+   6443/TCP, kube-api-server.
+   8472/UDP, Flannel VXLAN overlay network (Linux).
+   10250/TCP, kubelet.
+
+Worker Nodes:
+
+.. csv-table::
+   :header: Port, Description
+   :widths: 20, 20
+
+   22/TCP, SSH for the Node Driver.
+   443/TCP, Rancher Catalogs.
+   2376/TCP, Docker TLS port for Docker Machine.
+   8472/UDP, Flannel VXLAN overlay network (Linux).
+   10250/TCP, kubelet.
+
+[47]
+
 OpenShift
 ~~~~~~~~~
 
