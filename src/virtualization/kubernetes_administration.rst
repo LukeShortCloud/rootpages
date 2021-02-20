@@ -419,10 +419,11 @@ kubeadm
 
 Supported operating systems:
 
--  Debian 9, Ubuntu >= 16.04
--  RHEL/CentOS 7
--  HypriotOS
--  Container Linux
+-  Debian >= 9, Ubuntu >= 16.04
+-  Fedora >= 25
+-  Flatcar Container Linux
+-  HypriotOS >= 1.0.1
+-  RHEL/CentOS >= 7
 
 The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [8] Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with kubeadm.
 
