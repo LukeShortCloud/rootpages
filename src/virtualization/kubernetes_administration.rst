@@ -450,13 +450,32 @@ Example (Flannel):
 
    $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
-Install a network add-on based on the Container Network Interface (CNI) protocols following the instructions `here <https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network>`__.
-
-Example (Flannel):
+Load the administrator Kubernetes configuration file as root and continue. Otherwise, copy the configuration file to the local user.
 
 .. code-block:: sh
 
-   $ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+   $ su -
+   # export KUBECONFIG=/etc/kubernetes/admin.conf
+
+.. code-block:: sh
+
+   $ mkdir -p $HOME/.kube
+   $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Install the Canal (Flannel and Calico) Container Network Interface (CNI) plugins. Otherwise, the first Control Plane Node will be stuck in the "NotReady" state as seen by ``kubectl get nodes``.
+
+Flannel [48]:
+
+.. code-block:: sh
+
+   $ sudo kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
+
+Calico [49]:
+
+.. code-block:: sh
+
+   $ kubectl apply -f https://docs.projectcalico.org/manifests/canal.yaml
 
 Create an authentication token if the original deployment token expired.
 
@@ -1166,3 +1185,5 @@ Bibliography
 45. "Quick Start." kind. December 3, 2020. Accessed January 19, 2021. https://kind.sigs.k8s.io/docs/user/quick-start
 46. "Upgrading underlying kubernetes version #1972." GitHub kubernetes-sigs/kind. December 9, 2020. Accessed January 19, 2021. https://github.com/kubernetes-sigs/kind/issues/1972
 47. "Port Requirements." Rancher Docs: Port Requirements. November 17, 2020. Accessed February 19, 2021. https://rancher.com/docs/rancher/v2.x/en/installation/requirements/ports/
+48. "kubeadm." GitHub flannel-io/flannel. October 25, 2020. Accessed February 19, 2021. https://github.com/flannel-io/flannel/blob/master/Documentation/kubernetes.md
+49. "Install Calico for policy and flannel (aka Canal) for networking." Project Calico Documentation. April 17, 2020. Accessed February 19, 2021. https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel
