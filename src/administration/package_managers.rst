@@ -82,6 +82,25 @@ The latest versions of both Debian and Ubuntu will automatically update the list
 Ubuntu
 ~~~~~~
 
+Hardware Enablement
+^^^^^^^^^^^^^^^^^^^
+
+Hardware Enablement (HWE), or Ubuntu LTS enablement, provides select backports from newer Ubuntu releases to allow newer hardware to work. Starting with Ubuntu Desktop 20.04.1 (not Server), the HWE packages are installed by default in each minor relese.
+
+Ubuntu 18.04:
+
+.. code-block:: sh
+
+   $ sudo apt-get install linux-generic-hwe-18.04 linux-headers-generic-hwe-18.04 xserver-xorg-hwe-18.04
+
+Ubuntu 20.04 (there is no longer an Xorg HWE package):
+
+.. code-block:: sh
+
+   $ sudo apt-get install linux-generic-hwe-20.04 linux-headers-generic-hwe-20.04
+
+[18]
+
 ubuntu-drivers
 ^^^^^^^^^^^^^^
 
@@ -273,3 +292,4 @@ Bibliography
 15. "Install codecs, software, and more…" Fedy - Tweak your Fedora. Accessed March 18, 2019. https://www.folkswithhats.org/
 16. "UnattendedUpgrades." Debian Wiki. August 19, 2019. Accessed September 5, 2020. https://wiki.debian.org/UnattendedUpgrades
 17. "Need to set up yum repository for locally-mounted DVD on Red Hat Enterprise Linux 7." Red Hat Knowledgebase. August 20, 2019. Accessed September 16, 2020. https://access.redhat.com/solutions/1355683#comment-1514411
+18. "LTSEnablementStack." Ubuntu Wiki. January 27, 2021. Accessed February 23, 2021. https://wiki.ubuntu.com/Kernel/LTSEnablementStack
