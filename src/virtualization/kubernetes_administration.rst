@@ -35,6 +35,11 @@ Worker Node services:
 Networking
 ^^^^^^^^^^
 
+Pod Networking
+''''''''''''''
+
+Kubernetes requires a Container Network Interface (CNI) plugin to create an overlay network for inter-communication between Pods across all of the Control Plane and Worker Nodes. The default Pod network CIDR (as configured by ``kubeadm --pod-network-cidr``) is 10.244.0.0/16.
+
 Ports
 '''''
 
@@ -437,19 +442,21 @@ The official ``kubeadm`` utility is used to quickly create production environmen
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
 
-Kubernetes requires a network provider, Flannel by default, to create an overlay network for inter-communication between Pods across all of the Worker Nodes. A CIDR needs to be defined and can be any network.
+Install Kubernetes. This will bootstrap a ``kubelet`` container which will read manifest files to create all of the other required services as containers.
 
-Syntax:
-
-.. code-block:: sh
-
-   $ sudo kubeadm init --pod-network-cidr <OVERLAY_NETWORK_CIDR>
-
-Example (Flannel):
+Syntax for a single Control Plane Node:
 
 .. code-block:: sh
 
-   $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+   $ sudo kubeadm init
+
+Syntax for the first of many Control Plane Nodes (take note of the ``[upload-certs] Using certificate key`` message that will appear as it will be required later):
+
+.. code-block:: sh
+
+   $ sudo kubeadm init --upload-certs --control-plane-endpoint <LOAD_BALANCED_IP>:6443
+
+Although it is `possible to change the Control Plane endpoint <https://blog.scottlowe.org/2019/08/12/converting-kubernetes-to-ha-control-plane/>`__ for a highly available cluster, it is not recommended. Ensure it is configured to a load balanced IP address and not just a single IP address of one of the Control Plane Nodes.
 
 Load the administrator Kubernetes configuration file as root and continue. Otherwise, copy the configuration file to the local user.
 
@@ -470,7 +477,7 @@ Flannel [48]:
 
 .. code-block:: sh
 
-   $ sudo kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
+   $ kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
 
 Calico [49]:
 
@@ -496,6 +503,12 @@ On the Worker Nodes, add them to the cluster by running:
 .. code-block:: sh
 
    $ sudo kubeadm join --token <TOKEN> <MASTER_IP_ADDRESS>:6443 --discovery-token-ca-cert-hash sha256:<HASH>
+
+Optionally allow Control Plane Nodes to also run Pods.
+
+.. code-block:: sh
+
+   $ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 [9]
 
@@ -1023,7 +1036,7 @@ Drain all objects from one of the Worker Nodes.
 
 .. code-block:: sh
 
-    $ sudo kubectl drain --ignore-daemonsets <NODE>
+    $ kubectl drain --ignore-daemonsets <NODE>
 
 Upgrade the Worker Node.
 
@@ -1147,7 +1160,7 @@ Bibliography
 6. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed March 9, 2020. https://access.redhat.com/support/policy/updates/openshift
 7. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
 8. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
-9. "Creating a single master cluster with kubeadm." Kubernetes Setup. November 24, 2018. Accessed November 26, 2018. https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+9. "Creating a cluster with kubeadm." Kubernetes Documentation. February 4, 2021. Accessed February 19, 2021. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 10. "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
 11. "Drivers." Kubernetes CSI Developer Documentation. Accessed April 11, 2019. https://kubernetes-csi.github.io/docs/drivers.html
 12. "Minishift Quickstart." OpenShift Documentation. Accessed February 26, 2018. https://docs.openshift.org/latest/minishift/getting-started/quickstart.html
