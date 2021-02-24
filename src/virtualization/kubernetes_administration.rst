@@ -541,20 +541,6 @@ Worker Nodes:
    $ K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 ./install.sh
    $ sudo systemctl enable k3s-agent
 
-**Uninstall**
-
-Control Plane Nodes:
-
-.. code-block:: sh
-
-   $ sudo /usr/local/bin/k3s-uninstall.sh
-
-Worker Nodes:
-
-.. code-block:: sh
-
-   $ sudo /usr/local/bin/k3s-agent-uninstall.sh
-
 **Commands**
 
 Access the ``kubectl`` command through ``k3s`` to manage resources on the cluster.
@@ -900,6 +886,21 @@ Stop CRC, delete the virtual machine, and cleanup system-wide configuration chan
    $ crc delete
    $ crc cleanup
    $ rm -rf ~/.crc/
+
+k3s
+~~~
+
+Control Plane Nodes:
+
+.. code-block:: sh
+
+   $ sudo /usr/local/bin/k3s-uninstall.sh
+
+Worker Nodes:
+
+.. code-block:: sh
+
+   $ sudo /usr/local/bin/k3s-agent-uninstall.sh
 
 kind
 ~~~~
