@@ -200,7 +200,12 @@ PersistentVolume support [3]:
 Tanzu
 ~~~~~
 
-Tanzu (pronounced tawn-zoo) is developed by VMWare as a deployment tool for upstream Kubernetes. It first deploys an all-in-one Tanzu Kubernetes Grid Management Cluster using `kind <https://kind.sigs.k8s.io/>`__ on-top of virtual infrastructure provided by Amazon EC2 or VMWare vSphere. This is also referred to as TKG or Management Cluster for short. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
+Tanzu (pronounced tawn-zoo) Kubernetes Grid (TKG) is developed by VMware as a collection of different products to install upstream Kubernetes.
+
+TKGm
+^^^^
+
+TKGm stands for TKG Multicloud. It is a product for installing Kubernetes on-top of virtual infrastructure provided by AWS, Azure, GCE, or VMware vSphere. It first deploys an all-in-one TKG Management Cluster using `kind <https://kind.sigs.k8s.io/>`__. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
 
 Releases
 --------
@@ -377,6 +382,9 @@ Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> 
 
 Tanzu
 ~~~~~
+
+TKGm
+^^^^
 
 Tanzu supports a few of the versions of Kubernetes. Listed below is the minimum Tanzu Kubernetes Grid (TKG) version to deploy the specified Kubernetes version. [33]
 
@@ -814,6 +822,9 @@ Uninstall OpenShift services from Nodes by specifying them in the inventory and 
 Tanzu
 ~~~~~
 
+TKGm
+^^^^
+
 Before installing a Kubernetes cloud with Tanzu, the ``tkg`` utility has to be set up.
 
 -  Install both ``docker`` and ``kubectl``.
@@ -826,8 +837,8 @@ Before installing a Kubernetes cloud with Tanzu, the ``tkg`` utility has to be s
 
 [34]
 
-Amazon TKG
-^^^^^^^^^^
+AWS
+'''
 
 Setup a TKG Management Cluster and then the production Kubernetes cluster using infrastructure provided by Amazon Web Services (AWS).
 
@@ -926,6 +937,9 @@ Remove all kind containers by running this command [45]
 
 Tanzu
 ~~~~~
+
+TKGm
+^^^^
 
 -  First, uninstall the production Kubernetes cluster(s). [39]
 
