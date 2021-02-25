@@ -274,19 +274,56 @@ Raw disk partitions have the greatest speeds with the "virtio" driver, cache dis
 
 QEMU:
 
-.. code-block:: sh
+-  Block:
 
-    $ sudo qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,aio=threads,if=virtio ...
+   .. code-block:: sh
+
+       $ sudo qemu -drive file=<PATH_TO_STORAGE_DEVICE>,cache=none,aio=threads,if=virtio ...
+
+-  CDROM:
+
+   .. code-block:: sh
+
+      $ sudo qemu -cdrom <PATH_TO_CDROM>
 
 libvirt:
 
-.. code-block:: xml
+-  Block:
 
-    <disk type='...' device='disk'>
-      <target dev='<DEVICE_NAME>' bus='virtio'/>
-    </disk>
+   .. code-block:: xml
 
-[6][7]
+      <disk type='block' device='disk'>
+            <driver name='qemu' type='raw' cache='none'/>
+            <source dev='/dev/sr0'/>
+            <target dev='vdb' bus='virtio'/>
+      </disk>
+
+-  CDROM:
+
+   .. code-block:: xml
+
+      <disk type='block' device='cdrom'>
+        <driver name='qemu' type='raw'/>
+        <source dev='/dev/sr0'/>
+        <target dev='hdc' bus='ide'/>
+        <readonly/>
+      </disk>
+
+Virsh:
+
+-  Block:
+
+   .. code-block:: sh
+
+      $ virsh attach-disk <VM_NAME> --source <SOURCE_BLOCK_DEVICE> --target <DESTINATION_BLOCK_DEVICE> --cache none --persistent
+
+-  CDROM:
+
+   .. code-block:: sh
+
+      $ virsh attach-disk <VM_NAME> /dev/sr0 vdb --config --type cdrom --mode readonly
+
+[6][7][51]
 
 **QCOW2**
 
@@ -1541,3 +1578,4 @@ Bibliography
 48. "Providers VMware Configuration." Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. https://www.vagrantup.com/docs/providers/vmware/configuration
 49. "VMware Integration." Vagrant by HashiCorp. Accessed February 10, 2021. https://www.vagrantup.com/vmware
 50. "KVM Virtualization: Start VNC Remote Access For Guest Operating Systems." nixCraft. May 6, 2017. Accessed February 18, 2021. https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/
+51. "CHAPTER 11. MANAGING STORAGE FOR VIRTUAL MACHINES." Red Hat Customer Portal. Accessed February 25, 2021. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#understanding-virtual-machine-storage_managing-storage-for-virtual-machines
