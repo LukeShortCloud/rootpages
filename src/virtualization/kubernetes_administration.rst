@@ -517,14 +517,30 @@ k3s
 
 k3s was created by Rancher Labs as a simple way to deploy small Kubernetes clusters quickly. It supports both x86 and ARM processors. It uses the ``containerd`` runtime by default, CoreDNS for hostname resolution and management, and Flannel for networking. All of the tools and resources are provided in a single ``k3s`` binary. All beta and alpha features of Kubernetes have been removed to keep the binary small.
 
-Control Plane Nodes:
+Pre-requisites:
+
+`cgroupsv2 were not supported until v1.20.4+ks1 <https://github.com/k3s-io/k3s/issues/1825>`__. For older releases, force the use of cgroupsv1 and then reboot the Node.
 
 .. code-block:: sh
 
-   $ git clone https://github.com/rancher/k3s.git
-   $ cd k3s
-   $ sudo ./install.sh
-   $ sudo systemctl enable k3s
+   $ sudo vim /etc/default/grub
+   GRUB_CMDLINE_LINUX_DEFAULT="quiet cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory"
+   $ sudo update-grub
+
+Common installation environment variables [50]:
+
+-  INSTALL_K3S_VERSION = The version of k3s to install. Specify a `k3s tag from GitHub <https://github.com/k3s-io/k3s/tags>`__.
+-  INSTALL_K3S_CHANNEL = ``stable`` (default), ``latest``, or ``testing``. The current version tied to the channel is listed `here <https://update.k3s.io/v1-release/channels>`__.
+-  K3S_URL = The Control Plane endpoint URL to connect to. The URL is provided after a successful installation of the first Control Plane Node. This variable will also set the Node to become a Worker Node.
+-  K3S_TOKEN = Required for the Worker Node. The token credential to connect to the Kubernetes cluster.
+
+The installation script will download the ``k3s`` binary, setup the systemd unit file, enable the service (``k3s`` for Control Plane Nodes and ``k3s-agent`` for Worker Nodes), then start the service.
+
+Control Plane Node:
+
+.. code-block:: sh
+
+   $ curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=latest sh -
 
 Find the token:
 
@@ -536,10 +552,7 @@ Worker Nodes:
 
 .. code-block:: sh
 
-   $ git clone https://github.com/rancher/k3s.git
-   $ cd k3s
-   $ K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 ./install.sh
-   $ sudo systemctl enable k3s-agent
+   $ curl -sfL https://get.k3s.io | K3S_TOKEN=<TOKEN> K3S_URL=https://<MASTER_HOST>:6443 INSTALL_K3S_CHANNEL=latest sh -
 
 **Commands**
 
@@ -1202,3 +1215,4 @@ Bibliography
 47. "Port Requirements." Rancher Docs: Port Requirements. November 17, 2020. Accessed February 19, 2021. https://rancher.com/docs/rancher/v2.x/en/installation/requirements/ports/
 48. "kubeadm." GitHub flannel-io/flannel. October 25, 2020. Accessed February 19, 2021. https://github.com/flannel-io/flannel/blob/master/Documentation/kubernetes.md
 49. "Install Calico for policy and flannel (aka Canal) for networking." Project Calico Documentation. April 17, 2020. Accessed February 19, 2021. https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel
+50. "Installation Options." Rancher Docs. Accessed February 24, 2021. https://rancher.com/docs/k3s/latest/en/installation/install-options/
