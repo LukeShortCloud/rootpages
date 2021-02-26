@@ -20,6 +20,50 @@ It is important to note that every DNS record has to be associated with
 a state of authority (SOA) record. This provides the primary
 nameserver/resolver along with time to live (TTL) related information.
 
+Record Types
+~~~~~~~~~~~~
+
+These are the most common types of DNS records. [6]
+
+-  SOA = Start of Authority. Required for all domain names. This record is handled by the domain hosting provider and it indicates that they control the domain name.
+-  NS = Name server. A DNS server that handles setting and providing DNS entries for the domain.
+-  A = IPv4 address.
+-  AAAA = IPv6 address.
+-  ALIAS = An alias to a completely different domain name. The A record of the domain name  is resolved instantly but losses geographical information.
+-  CNAME = A canonical name. An alias to another domain name (including part of the same domain name, if desired). First the CNAME is resolved and then the A record is resolved.
+-  MX = Mail exchange. Used for configuring e-mail with the domain.
+-  PTR = Pointer. Associate an IP address with a domain name. Specify an IP address in the nibble address format (a reserved order).
+-  TXT = Descriptive text. Commonly used to verify that the domain is valid.
+
+PTR
+^^^
+
+PTR records require that the IP address be defined in the nibble format and end with a period. This special format is basically the IP address in reverse with special suffixes added. For helping to quickly get the format for long IPv6 addresses, use the ``ipv6calc`` command or `this site <http://rdns6.com/hostRecord>`__.
+
+::
+
+    <NIBBLE_IP4>.in-addr.arpa.
+
+::
+
+    <NIBBLE_IP6>.ip6.arpa.
+
+Here is an example of converting addresses to nibble.
+
+-  IPv4
+
+   -  Address = 192.168.0.10
+   -  Nibble address = 10.0.168.192.in-addr.arpa.
+
+-  IPv6
+
+   -  Address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)
+   -  Nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.
+
+      .. code-block:: sh
+
+          $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
+
 PowerDNS
 --------
 
@@ -206,35 +250,6 @@ In this example, NS records and an A record is added for the domain
     mysql> INSERT INTO records (domain_id, name, content, type, ttl)
     VALUES (1, 'www.test.tld', '192.168.0.10', 'A', 3600);
 
-PTR records require that the IP address be defined in the nibble format
-and end with a period. This special format is basically the IP address
-in reverse with special suffixes added to the end. For helping to
-quickly get the format for long IPv6 addresses, use the "ipv6calc"
-command or the site http://rdns6.com/hostRecord.
-
-::
-
-    <NIBBLE_IP4>.in-addr.arpa.
-    <NIBBLE_IP6>.ip6.arpa.
-
-Here is an example of converting addresses to nibble.
-
--  IPv4
-
-   -  address = 192.168.0.10
-   -  nibble address = 10.0.168.192.in-addr.arpa.
-
--  IPv6
-
-   -  address = FE8::56:CC7A:129B:7AAA
-      (FE80:0000:0000:0000:056:CC7A:129B:7AAA)
-   -  nibble address =
-      a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.
-
-      .. code-block:: sh
-
-          $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
-
 History
 -------
 
@@ -252,3 +267,4 @@ Bibliography
 3. "PowerDNS How To's" PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/authoritative/howtos/
 4. "Supported Record Types. PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/types/
 5. "Start of Authority Resource Record (SOA RR)." zytrax open. Accessed July 7, 2016. http://www.zytrax.com/books/dns/ch8/soa.html
+6. "Simple DNS Plus." DNS Record types. Accessed February 25, 2021. https://simpledns.plus/help/dns-record-types
