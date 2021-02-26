@@ -6,11 +6,11 @@ DNS
 Introduction to DNS
 -------------------
 
-Domain Name Servers (DNS) provide friendly domain names that are
+A Domain Name System (DNS) provides human-friendly domain names that are
 generally associated with an IP address or a string of text. There are
 two types of DNS servers:
 
--  Authoritative = Serves it's own DNS records. Generally most
+-  Authoritative = Serves its own DNS records. Generally most
    authoritative servers will rely on a recursive component to provide
    missing DNS records.
 -  Recursive = Queries an external DNS server for records. These are
@@ -92,6 +92,184 @@ Here is an example of converting addresses to nibble.
       .. code-block:: sh
 
           $ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
+
+CoreDNS
+-------
+
+CoreDNS is a cloud native DNS service that provides many plugins. It can be used as both an authoritative and recursive DNS server. It supports DNS ``dns://``, DNS over TLS ``tls://``, DNS over HTTPS ``https://``, and DNS over gRPC ``grpc://``.
+
+All settings are configured via a configuration file named ``Corefile``. Different server blocks can be used for configuring different DNS zones. The default zone is ``.`` which is actually ``.:53`` to indicate that it will listen on port 53.
+
+Global settings set for a zone ``.:<PORT>`` will apply to all server blocks listening on that same port. This means that two or more ports can be configured and they can all have different default global settings.
+
+Global settings:
+
+::
+
+   . {
+      <PLUGIN> <PLUGIN_OPTIONS>
+    }
+
+Logging:
+
+::
+
+   . {
+      health
+      prometheus
+      log
+      errors
+   }
+
+Snippets can be defined by using ``(<SNIPPET_NAME>)`` and then imported into other server blocks.
+
+::
+
+   (logging) {
+       log
+       errors
+   }
+
+   . {
+       import logging
+   }
+
+Foward DNS requests syntax:
+
+::
+
+   . {
+      ; Forward requests to the specified DNS resolvers.
+      forward <DOMAIN_NAME> <RESOLVER_IP_1> <RESOLVER_IP_2>
+      ; Forward requests to resolvers specified in /etc/resolv.conf
+      forward <DOMAIN_NAME> /etc/resolv.conf
+      ; Forward all other requests to the specified resolvers.
+      forward . <RESOLVER_IP_1> <RESOLVER_IP_2>
+   }
+
+Example forwarding to CloudFlare [9]:
+
+::
+
+   . {
+       forward . tls://1.1.1.1 tls://1.0.0.1 {
+           tls_servername tls.cloudflare-dns.com
+           health_check 10s
+       }
+       log
+       errors
+   }
+
+[10]
+
+Authoratitive Server
+~~~~~~~~~~~~~~~~~~~~
+
+Use a separate file for each DNS zone. Define the file to use in the main ``Corefile``.
+
+::
+
+   <SLD>.<TLD> {
+       file <DNS_ZONE_FILE>
+   }
+
+DNS zone file SOA syntax:
+
+::
+
+    $ORIGIN <SLD>.<TLD>.
+    @    IN    SOA    <DNS_SERVER_FQDN>.    <EMAIL_USER>.<EMAIL_FQDN>. (
+        <SERIAL_DATE>
+        <SOA_REFRESH_SECONDS>
+        <RETRY_DNS_RECORD_SECONDS>
+        <RETRY_SOA_SECONDS>
+        <TTL>
+    )
+
+Example:
+
+::
+
+   $ORIGIN foo.bar.
+   ; <EMAIL_USER>.<EMAIL_FQDN> = joe@gmail.com, <SERIAL_DATE> = 2021-02-28 23:99, <SOA_REFRESH_SECONDS> = 2 hours, <RETRY_DNS_RECORDSECONDS> = 1 hour, <RETRY_SOA_SECONDS> = 2 weeks, <TTL> = 1 hour
+   @    IN    SOA    coredns.example.com.    joe.gmail.com. (
+       202102282399
+       7200
+       3600
+       1209600
+       3600
+   )
+
+DNS records can now be set using these values as a minimum.
+
+Syntax:
+
+::
+
+   <SUBDOMAIN>    IN    <RECORD_TYPE>    <RECORD_VALUE>
+
+Example:
+
+::
+
+   www    IN    A    192.168.1.1
+
+[10]
+
+Recursive Server
+~~~~~~~~~~~~~~~~
+
+CoreDNS does not natively support being a recursive/caching DNS server. For this functionality, recompile CoreDNS with the ``unbound`` plugin and then enable it in the configuration. The Unbound plugin requires using CGO which makes the binary non-portable across different operating system distributions.
+
+Download CoreDNS and its dependencies for the Unbound plugin:
+
+.. code-block:: sh
+
+   $ sudo apt-get install golang libunbound-dev make
+   $ export COREDNS_VER=1.8.3
+   $ wget https://github.com/coredns/coredns/archive/v${COREDNS_VER}.tar.gz
+   $ tar -x -v -f v${COREDNS_VER}.tar.gz
+   $ cd coredns-${COREDNS_VER}
+
+There is a `bug with the Unbound plugin <https://github.com/miekg/unbound/issues/13>`__ that prevents it from being compiled with newer versions of CoreDNS. Modify the ``Makefile`` and remove any mention of "CGO_ENABLED".
+
+.. code-block:: sh
+
+   $ vim Makefile
+
+Compile CoreDNS with the Unbound plugin:
+
+.. code-block:: sh
+
+   $ echo "unbound:github.com/coredns/unbound" >> plugin.cfg
+   $ go generate
+   $ export CGO_ENABLED=1
+   $ make
+
+Verify that the recursive server works:
+
+.. code-block:: sh
+
+   $ vim Corefile
+
+::
+
+   . {
+      unbound
+      cache
+      forward . 8.8.8.8 8.4.4.8
+   }
+
+.. code-block:: sh
+
+   $ ./coredns &
+   $ sudo apt-get install dnsutils
+   $ dig @127.0.0.1 google.com | grep "Query time"
+   ;; Query time: 34 msec
+   $ dig @127.0.0.1 google.com | grep "Query time"
+   ;; Query time: 1 msec
+
+[11]
 
 PowerDNS
 --------
@@ -299,3 +477,6 @@ Bibliography
 6. "Simple DNS Plus." DNS Record types. Accessed February 25, 2021. https://simpledns.plus/help/dns-record-types
 7. "What’s in a Domain Name: Sub, Second-Level, Top-Level and Country Code Domains." Hover Blog. December 24, 2020. Accessed February 26, 2021. https://hover.blog/whats-a-domain-name-subdomain-top-level-domain/
 8. "What is DNS and the DNS Hierarchy." Interserver Tips. August 22, 2016. Accessed February 26, 2021. https://www.interserver.net/tips/kb/dns-dns-hierarchy/
+9. "forward." CoreDNS Plugins. January 28, 2021. Accessed March 1, 2021. https://coredns.io/plugins/forward/
+10. "CoreDNS Manual." CoreDNS: DNS and Service Discovery. September 28, 2019. Accessed March 1, 2021. https://coredns.io/manual/toc/
+11. "unbound." CoreDNS External Plugins. April 27, 2018. Accessed March 1, 2021. https://coredns.io/explugins/unbound/
