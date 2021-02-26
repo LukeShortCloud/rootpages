@@ -238,7 +238,8 @@ Here is an example of converting addresses to nibble.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/dns_servers.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/networking/dns_servers.rst>`__
+-  `< 2021.04.01 <https://github.com/ekultails/rootpages/commits/master/src/http/dns_servers.rst>`__
 -  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/dns_servers.rst>`__
 -  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/dns_servers.rst>`__
 -  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/dns_servers.md>`__

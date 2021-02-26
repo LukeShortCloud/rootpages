@@ -5,5 +5,4 @@
    clustering
    cms
    databases
-   dns_servers
    http_servers
