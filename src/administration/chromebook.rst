@@ -84,11 +84,17 @@ Bootloaders
 
 The `MrChromebox/scripts <https://github.com/MrChromebox/scripts>`__ project provides a useful utility for modifying the bootloader firmware on Chromebooks. All Chromebooks can run a legacy SeaBIOS bootloader to allow USB-booting. Some Chromebooks support the full UEFI Tianocore bootloader so that it can install a different operating system such as Linux, mac OS, or Windows. A full list of what devices are compatible can be found `here <https://mrchromebox.tech/#devices>`__. [22]
 
-Download and run the interactive script.
+Enable USB booting in Chrome OS. [24]
 
 ::
 
    crosh> shell
+   chronos@localhost / $ sudo crossystem dev_boot_usb=1
+
+Then download and run the interactive script.
+
+::
+
    chronos@localhost / $ cd ~
    chronos@localhost ~ $ curl -LO mrchromebox.tech/firmware-util.sh && sudo bash ./firmware-util.sh
 
@@ -554,3 +560,4 @@ Bibliography
 21. "Issue 993253: Support untrusted VMs." Chromium Bugs. January 27, 2020. Accessed May 29, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=993253
 22. "ChromeOS Firmware Utility Script." MrChromebox.tech. Accessed September 5, 2020. https://mrchromebox.tech/#fwscript
 23. "service.cc" vm_tools - chromiumos/platform2 - Git at Google. November 14, 2020. Accessed December 5, 2020. https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc
+24. "How to Enable USB Booting on Chromebook." wikiHow. November 30, 2020. Accessed February 25, 2021. https://www.wikihow.com/Enable-USB-Booting-on-Chromebook
