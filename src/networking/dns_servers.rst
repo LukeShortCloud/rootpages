@@ -20,6 +20,35 @@ It is important to note that every DNS record has to be associated with
 a state of authority (SOA) record. This provides the primary
 nameserver/resolver along with time to live (TTL) related information.
 
+Domain Names
+~~~~~~~~~~~~
+
+Example of a Fully Qualified Domain Name (FQDN): ``www.google.com``
+
+-  Top-level domain (TLD) = The end part of a domain name. Example: ``com``.
+-  Second-level domain (SLD) = The name before the TLD. Example: ``google``.
+-  Subdomain or third-level domain = The name before the SLD. Custom subdomains can be configured by the person who owns a domain name. Example: ``www``.
+
+[7]
+
+A person can buy a domain name which is a unique SLD determined by the person and is associated with a TLD that already exists. The full list of available TLD names can be found `here <https://data.iana.org/TLD/tlds-alpha-by-domain.txt>`__. A domain name is bought from a registrar. Any number of subdomains can be configured by the person who owns the domain name. A subdomain combined with a domain name is known as a FQDN.
+
+**DNS Lookup Flow**
+
+1. An end-user requests information for a FQDN by trying to visit the website in their web browser. Example: ``www.google.com``
+2. A DNS resolver from ``/etc/resolv.conf`` is asked for information about it. Example resolvers: CloudFlare ``1.1.1.1`` or Google ``8.8.8.8``.
+3. If the DNS resolver does not have the required information cached, it asks one of the 12 root level DNS servers (such as one from ICANN). The root level DNS server provides the name servers for the TLD DNS server.
+4. The TLD DNS server provides the authoritative name server for the domain name. This is directed to the registrar that manages the domain name.
+5. The authoritative name server provides the A or AAAA record (IP address) for ``www.google.com``.
+6. The web browser connects to the IP address to load up the website.
+
+::
+
+   (1) End-user --> (2) Resolver DNS Server --> (3) Root Level DNS Server (ICANN)
+       --> (4) TLD DNS Server --> (5) Registrar Authoritative DNS Server
+
+[8]
+
 Record Types
 ~~~~~~~~~~~~
 
@@ -268,3 +297,5 @@ Bibliography
 4. "Supported Record Types. PowerDNS Docs. Accessed July 7, 2016. https://doc.powerdns.com/md/types/
 5. "Start of Authority Resource Record (SOA RR)." zytrax open. Accessed July 7, 2016. http://www.zytrax.com/books/dns/ch8/soa.html
 6. "Simple DNS Plus." DNS Record types. Accessed February 25, 2021. https://simpledns.plus/help/dns-record-types
+7. "What’s in a Domain Name: Sub, Second-Level, Top-Level and Country Code Domains." Hover Blog. December 24, 2020. Accessed February 26, 2021. https://hover.blog/whats-a-domain-name-subdomain-top-level-domain/
+8. "What is DNS and the DNS Hierarchy." Interserver Tips. August 22, 2016. Accessed February 26, 2021. https://www.interserver.net/tips/kb/dns-dns-hierarchy/
