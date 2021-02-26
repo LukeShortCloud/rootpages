@@ -123,7 +123,7 @@ The app will beep if a command or file cannot be auto-completed. This can be dis
 Chromebrew
 ----------
 
-Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires ``Developer Mode`` to be enabled.
+Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires ``Developer Mode`` to be enabled and that Chrome OS is on the ``Stable`` channel.
 
 Install:
 
