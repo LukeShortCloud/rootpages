@@ -120,6 +120,28 @@ Open a full shell terminal in developer mode to access more commands.
 
 The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: ``CTRL`` + ``SHIFT`` + ``p``. Go to ``Sounds`` > ``Alert bell sound (URI)`` and then remove the string.
 
+Writable and Executable File Systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.
+
+-  Remove both the root file system and boot verifications. Then reboot Chrome OS.
+
+   .. code-block:: sh
+
+       chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions 4
+       chronos@localhost / $ sudo crossystem dev_boot_signed_only=0
+
+-  Remount all of the locked down Chrome OS partitions with full read, write, and execute (rwx) permissions.
+
+   .. code-block:: sh
+
+      chronos@localhost / $ sudo mount -o remount,rw /
+      chronos@localhost / $ sudo mount -o remount,exec /mnt/stateful_partition
+      chronos@localhost / $ sudo mount -o remount,exec remount,exec /home/chronos/user
+
+[25][26]
+
 Chromebrew
 ----------
 
@@ -561,3 +583,5 @@ Bibliography
 22. "ChromeOS Firmware Utility Script." MrChromebox.tech. Accessed September 5, 2020. https://mrchromebox.tech/#fwscript
 23. "service.cc" vm_tools - chromiumos/platform2 - Git at Google. November 14, 2020. Accessed December 5, 2020. https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc
 24. "How to Enable USB Booting on Chromebook." wikiHow. November 30, 2020. Accessed February 25, 2021. https://www.wikihow.com/Enable-USB-Booting-on-Chromebook
+25. "Remove RootFS Verification & make Read/Write." Cr-48ite. January 4, 2012. Accessed Feburary 28, 2021. https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write
+26. "Chromebook writable root." Way of the nix's - Computer Security & Full Stack Development. Accessed February 28, 2021. https://xn--1ca.se/chromebook-writable-root/
