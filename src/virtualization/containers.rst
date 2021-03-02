@@ -12,7 +12,7 @@ possible to use separate kernels with this approach.
 Images
 ------
 
-`Docker Hub <https://hub.docker.com/>`__ provides a central location to find, download, and upload container docker and OCI compatible images. Here is a list of common operating system images for each family of distributions:
+`Docker Hub <https://hub.docker.com/>`__ is a container registry that provides a central location to find, download, and upload container images. Here is a list of common operating system images for each family of distributions:
 
 -  Arch Linux
 
@@ -102,6 +102,39 @@ If not using Arch Linux with ``pacman`` installed, `download <https://www.archli
    $ sudo debootstrap --no-check-gpg --arch amd64 focal ./ubuntu2004_bootstrap/ http://archive.ubuntu.com/ubuntu
 
 [12]
+
+Registries
+----------
+
+A container registry stores Open Container Initiative (OCI) formatted images. These can universally be used across any modern cloud-native platform.
+
+By default, the ``docker`` command manages container images on the `Docker Hub <https://hub.docker.com/>`__ registry.
+
+.. code-block:: sh
+
+   $ docker login
+   $ docker push <NAMESPACE_NAME>/<CONTAINER_NAME>:<TAG>
+
+Other registries can also be used by specifying the fully qualified domain name of the registry.
+
+.. code-block:: sh
+
+   $ docker login <REGISTRY>
+   $ docker push <REGISTRY>/<NAMESPACE_NAME>/<CONTAINER_NAME>:<TAG>
+
+Registries:
+
+-  registry.redhat.io = Red Hat customer.
+-  quay.io = Red Hat Quay.
+
+It may be required to first create a new image with a name of the alternative registry.
+
+.. code-block:: sh
+
+   $ docker tag <CONTAINER_IMAGE_ID> <REGISTRY>/<NAMESPACE_NAME>/<CONTAINER_NAME>:<TAG>
+   $ docker push <REGISTRY>/<NAMESPACE_NAME>/<CONTAINER_NAME>:<TAG>
+
+[21]
 
 Container Runtimes
 ------------------
@@ -488,3 +521,4 @@ Bibliography
 18. "The OpenShift Container Platform control plane." OpenShift Container Platform 4.6 Documentation. Accessed November 22, 2020. https://docs.openshift.com/container-platform/4.6/architecture/control-plane.html
 19. "podman." podman. November 13, 2020. Accessed November 22, 2020. https://podman.io/
 20. "A Practical Introduction to Container Terminology." Red Hat Developer. February 22, 2018. Accessed November 22, 2020. https://developers.redhat.com/blog/2018/02/22/container-terminology-practical-introduction/
+21. "docker push." Docker Documentation. Accessed March 2, 2021. https://docs.docker.com/engine/reference/commandline/push/
