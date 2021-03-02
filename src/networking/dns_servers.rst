@@ -191,9 +191,9 @@ Example:
 ::
 
    $ORIGIN foo.bar.
-   ; <EMAIL_USER>.<EMAIL_FQDN> = joe@gmail.com, <SERIAL_DATE> = 2021-02-28 23:99, <SOA_REFRESH_SECONDS> = 2 hours, <RETRY_DNS_RECORDSECONDS> = 1 hour, <RETRY_SOA_SECONDS> = 2 weeks, <TTL> = 1 hour
+   # <DNS_SERVER_FQDN> = coredns.example.com., <EMAIL_USER>.<EMAIL_FQDN> = joe@gmail.com, <SERIAL_DATE> = 2021-02-28 23:00, <SOA_REFRESH_SECONDS> = 2 hours, <RETRY_DNS_RECORD_SECONDS> = 1 hour, <RETRY_SOA_SECONDS> = 2 weeks, <TTL> = 1 hour
    @    IN    SOA    coredns.example.com.    joe.gmail.com. (
-       202102282399
+       2021022823
        7200
        3600
        1209600
