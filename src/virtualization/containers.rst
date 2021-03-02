@@ -323,6 +323,10 @@ Lower space usage by [10]:
 -  Using a small image such as `alpine <https://hub.docker.com/_/alpine>`__.
 -  Combining all ``RUN`` commands into one statement. Chain them together with ``&&`` to ensure that each command succeeds before moving onto the next one.
 -  Cleaning package manager cache (if applicable).
+
+   -  Debian: ``RUN apt-get clean``
+   -  Fedora:  ``RUN dnf clean all``
+
 -  Using the `docker image build --squash <https://docs.docker.com/engine/reference/commandline/image_build/>`__  or `buildah bud --squash <https://github.com/containers/buildah/blob/master/docs/buildah-bud.md>`__ command to consolidate all additional layers when creating a new image. Use `docker-squash <https://github.com/goldmann/docker-squash>`__ to consolidate an existing image.
 
 A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
