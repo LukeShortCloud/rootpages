@@ -104,7 +104,7 @@ $ make gettext
 $ sphinx-intl update -p build/gettext -l <LOCALE>
 ```
 
-* Translate the `*.po` files using the [Google Translator Toolkit](http://translate.google.com/toolkit/list?hl=en#translations/active) or another utility.
+* Translate the `*.po` files.
 * Build the translated documentations.
 
 ```
