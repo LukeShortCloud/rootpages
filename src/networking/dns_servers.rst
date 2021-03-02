@@ -221,6 +221,16 @@ Recursive Server
 
 CoreDNS does not natively support being a recursive/caching DNS server. For this functionality, recompile CoreDNS with the ``unbound`` plugin and then enable it in the configuration. The Unbound plugin requires using CGO which makes the binary non-portable across different operating system distributions.
 
+**Container Image**
+
+A CoreDNS build with the Unbound plugin is provided in a container from the `ekultails/container-coredns-unbound <https://github.com/ekultails/container-coredns-unbound>`__ GitHub project.
+
+.. code-block:: sh
+
+   $ docker pull ekultails/coredns-unbound
+
+**Manual Install**
+
 Download CoreDNS and its dependencies for the Unbound plugin:
 
 .. code-block:: sh
