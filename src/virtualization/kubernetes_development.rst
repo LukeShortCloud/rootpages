@@ -2361,6 +2361,20 @@ Vocabulary:
 
 Each Chart contains a "values.yaml" for manifest settings that can be overridden. It is expected that it contains sane defaults and can be deployed without any modifications. The manifest files are `Go templates <https://golang.org/pkg/text/template/>`__ that get rendered out based on the values provided to Helm. `The Chart Template Developer's Guide <https://helm.sh/docs/chart_template_guide/>`__ explains in more detail how to fully customize templates. It is possible to override values that are not templated, or to add new ones, by using `Kustomize <https://kustomize.io/>`__. The biggest downside to using Kustomize is that Helm no longer has visibility into the release/life-cycle of a Chart. [17]
 
+Best Practices
+~~~~~~~~~~~~~~
+
+Probes
+^^^^^^
+
+There are three types of health probes for a Pod. At a minimum, a liveness probe should be configured for every Pod.
+
+-  liveness = Determine if the application is still working as expected. If this probe fails, the Pod is restarted.
+-  readiness = Determine if the application is available and should accept connections. If this probe fails, network connections to the Pod will be temporarily paused.
+-  startup = Determine if the application has fully started (once at startup). If this probe fails, the Pod is marked as failed.
+
+For a full list of configuration options, see the `Probe <#probe>`_ section.
+
 Installation
 ------------
 
