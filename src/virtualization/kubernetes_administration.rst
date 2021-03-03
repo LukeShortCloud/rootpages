@@ -911,6 +911,26 @@ Stop CRC, delete the virtual machine, and cleanup system-wide configuration chan
    $ crc cleanup
    $ rm -rf ~/.crc/
 
+kubeadm
+~~~~~~~
+
+Any Node provisioned with ``kubeadm init`` or ``kubeadm join`` can uninstall Kubernetes.
+
+.. code-block:: sh
+
+   $ sudo kubeadm reset
+   $ sudo rm -f /etc/cni/net.d/*
+   $ sudo ipvsadm --clear
+
+Reset the ``iptables`` rules [51]:
+
+.. code-block:: sh
+
+   $ sudo iptables -F
+   $ sudo iptables -t nat -F
+   $ sudo iptables -t mangle -F
+   $ sudo iptables -X
+
 k3s
 ~~~
 
@@ -1230,3 +1250,4 @@ Bibliography
 48. "kubeadm." GitHub flannel-io/flannel. October 25, 2020. Accessed February 19, 2021. https://github.com/flannel-io/flannel/blob/master/Documentation/kubernetes.md
 49. "Install Calico for policy and flannel (aka Canal) for networking." Project Calico Documentation. April 17, 2020. Accessed February 19, 2021. https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel
 50. "Installation Options." Rancher Docs. Accessed February 24, 2021. https://rancher.com/docs/k3s/latest/en/installation/install-options/
+51. "Properly Resetting Your kubeadm-bootstrapped Cluster Nodes — #HeptioProTip." Heptio Blog. January 3, 2018. March 2, 2021. https://blog.heptio.com/properly-resetting-your-kubeadm-bootstrapped-cluster-nodes-heptioprotip-473bd0b824aa
