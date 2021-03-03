@@ -371,7 +371,11 @@ The Network File System (NFS) aims to universally provide a way to
 remotely mount directories between servers. All subdirectories from a
 shared directory will also be available.
 
-NFS ports:
+NFSv4 port:
+
+-  2049 TCP
+
+NFSv3 ports:
 
 -  111 TCP/UDP
 -  2049 TCP/UDP
