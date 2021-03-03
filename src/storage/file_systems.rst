@@ -168,19 +168,11 @@ Debian:
       $ sudo modprobe zfs
       $ lsmod | grep zfs
 
--  Start and enable these services so any zpools that are created and/or changed will be persistent upon reboots.
+-  Start and enable these services so that the ZFS pools and mounts will be persistent upon reboots. [28]
 
    .. code-block:: sh
 
-      $ sudo systemctl enable --now zfs-import-cache.service
-      $ sudo systemctl enable --now zfs-import.target
-
--  Start and enable these services so that the ZFS mounts will be persistent upon reboots. [28]
-
-   .. code-block:: sh
-
-      $ sudo systemctl enable --now zfs-mount.service
-      $ sudo systemctl enable --now zfs.target
+      $ sudo systemctl enable --now zfs-import-cache.service zfs-import-scan.service zfs-mount.service zfs-share.service zfs-zed.service zfs.target zfs-import.target
 
 Usage
 ^^^^^
