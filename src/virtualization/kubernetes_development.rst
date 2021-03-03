@@ -1489,7 +1489,7 @@ Pod
 -  hostIPC (boolean) = Default is false. Use the IPC namespace.
 -  hostPID (boolean) = Default is false. Use the PID namespace.
 -  hostname (string) = Default is "<HOSTNAME>.<SUBDOMAIN>.<POD_NAMESPACE.svc.<CLUSTER_DOMAIN>". The cluster domain default is "cluster.local".  A custom hostname for the Pod.
--  hostNetwork (boolean) = Default is false. Use the worker nodes' primary namespace (not managed by Kubernetes).
+-  hostNetwork (boolean) = Default is false. Expose the ``po.spec.containers.ports.containerPort`` directly on the Node it is running on. Unlike a Service, this will create a 1:1 mapping of the port used by the containers to the exact same port number on the Node.
 -  imagePullSecrets (list of maps)
 
    -  name (string) = The name of the Secret to use.
@@ -1753,6 +1753,28 @@ Pod running on a specific Node based on the Node's hostname.
          image: nginx:1.9.0
      nodeSelector:
        kubernetes.io/hostname: worker04
+
+Pod with ports exposed on the Node it is running on.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: dns-app
+   spec:
+     hostNetwork: True
+     containers:
+       - name: coredns
+         image: coredns
+         ports:
+           - containerPort: 53
+             protocol: TCP
+             name: coredns-tcp
+           - containerPort: 53
+             protocol: UDP
+             name: coredns-udp
 
 Third-Party
 ~~~~~~~~~~~
