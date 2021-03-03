@@ -381,6 +381,38 @@ NFSv3 ports:
 -  2049 TCP/UDP
 -  4045 TCP/UDP
 
+**Client**
+
+Install:
+
+-  Debian
+
+   .. code-block:: sh
+
+      $ sudo apt-get install nfs-common
+
+-  Fedora
+
+   .. code-block:: sh
+
+      $ sudo dnf install nfs-utils
+
+**Server**
+
+Install:
+
+-  Debian
+
+   .. code-block:: sh
+
+      $ sudo apt-get install nfs-kernel-system
+
+-  Fedora
+
+   .. code-block:: sh
+
+      $ sudo dnf install nfs-utils
+
 On the server, the /etc/exports file is used to manage NFS exports. Here
 a directory can be specified to be shared via NFS to a specific IP
 address or CIDR range. After adjusting the exports, the NFS daemon will
