@@ -38,7 +38,7 @@ Networking
 Pod Networking
 ''''''''''''''
 
-Kubernetes requires a Container Network Interface (CNI) plugin to create an overlay network for inter-communication between Pods across all of the Control Plane and Worker Nodes. The default Pod network CIDR (as configured by ``kubeadm --pod-network-cidr``) is 10.244.0.0/16.
+Kubernetes requires a Container Network Interface (CNI) plugin to create an overlay network for inter-communication between Pods across all of the Control Plane and Worker Nodes. The default Pod network CIDR (as configured by ``kubeadm --pod-network-cidr``) is normally assumed to be 10.244.0.0/16.
 
 Ports
 '''''
@@ -456,13 +456,13 @@ Syntax for a single Control Plane Node:
 
 .. code-block:: sh
 
-   $ sudo kubeadm init
+   $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 Syntax for the first of many Control Plane Nodes (take note of the ``[upload-certs] Using certificate key`` message that will appear as it will be required later):
 
 .. code-block:: sh
 
-   $ sudo kubeadm init --upload-certs --control-plane-endpoint <LOAD_BALANCED_IP>:6443
+   $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --upload-certs --control-plane-endpoint <LOAD_BALANCED_IP>:6443
 
 Although it is `possible to change the Control Plane endpoint <https://blog.scottlowe.org/2019/08/12/converting-kubernetes-to-ha-control-plane/>`__ for a highly available cluster, it is not recommended. Ensure it is configured to a load balanced IP address and not just a single IP address of one of the Control Plane Nodes.
 
@@ -1188,6 +1188,23 @@ Legacy plugins that are no longer maintained:
 -  Romana
 
 [19][20]
+
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when installing Flannel with ``kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml``:
+
+.. code-block:: sh
+
+   $ kubectl -n kube-system describe pod kube-flannel-ds-rgzpn
+   E0304 04:04:44.958281       1 main.go:292] Error registering network: failed to acquire lease: node "<NODE_HOSTNAME>" pod cidr not assigned
+
+Solution:
+
+-  Kubernetes was not installed with a Pod network CIDR assigned. For kubeadm, uninstall the cluster and reinstall with the argument: ``kubeadm --pod-network-cidr=10.244.0.0/16``.
 
 History
 -------
