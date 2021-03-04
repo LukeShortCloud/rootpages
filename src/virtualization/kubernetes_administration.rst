@@ -1206,6 +1206,28 @@ Solution:
 
 -  Kubernetes was not installed with a Pod network CIDR assigned. For kubeadm, uninstall the cluster and reinstall with the argument: ``kubeadm --pod-network-cidr=10.244.0.0/16``.
 
+----
+
+CoreDNS container is stuck in the ``STATUS`` of ``ContainerCreating`` with the error message ``failed to find plugin "<PLUGIN>" in path [<PATH>]``.
+
+.. code-block:: sh
+
+   $ kubectl -n kube-system describe pod coredns-f9fd979d6-cr7p6
+     Warning  FailedCreatePodSandBox  69s (x17 over 4m40s)  kubelet            (combined from similar events): Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for sandbox "76c5c21331dd5998d9a6efd5ac6d74c45b10386db7d34555c7e0f22f5969ee13": failed to find plugin "loopback" in path [/usr/lib/cni]
+
+Solutions:
+
+-  The CNI plugins might be installed to a different path such as ``/opt/cni/bin/`` instead of ``/usr/lib/cni/``. Run this command to create a symlink to it: ``ln -s /opt/cni/bin /usr/lib/cni``.
+-  If the CNI plugins are missing from the system, then download the source code, compile the plugins, and then copy them to the correct directory. [52]
+
+   .. code-block:: sh
+
+      $ git clone https://github.com/containernetworking/plugins.git
+      $ cd plugins
+      $ ./build_linux.sh
+      $ sudo mkdir -p /usr/lib/cni/ # Or use '/opt/cni/bin/'.
+      $ sudo cp ./bin/* /usr/lib/cni/
+
 History
 -------
 
@@ -1268,3 +1290,4 @@ Bibliography
 49. "Install Calico for policy and flannel (aka Canal) for networking." Project Calico Documentation. April 17, 2020. Accessed February 19, 2021. https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel
 50. "Installation Options." Rancher Docs. Accessed February 24, 2021. https://rancher.com/docs/k3s/latest/en/installation/install-options/
 51. "Properly Resetting Your kubeadm-bootstrapped Cluster Nodes — #HeptioProTip." Heptio Blog. January 3, 2018. March 2, 2021. https://blog.heptio.com/properly-resetting-your-kubeadm-bootstrapped-cluster-nodes-heptioprotip-473bd0b824aa
+52. "coredns been in Pending state." Programmer Sought. Accessed March 3, 2021.  https://www.programmersought.com/article/23693305901/
