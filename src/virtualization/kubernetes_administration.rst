@@ -1228,6 +1228,23 @@ Solutions:
       $ sudo mkdir -p /usr/lib/cni/ # Or use '/opt/cni/bin/'.
       $ sudo cp ./bin/* /usr/lib/cni/
 
+----
+
+CoreDNS container is stuck in ``STATUS`` of ``ContainerCreating`` with the error message ``error getting ClusterInformation: connection is unauthorized: Unauthorized``:
+
+.. code-block:: sh
+
+   $ kubectl -n kube-system describe pod coredns-f9fd979d6-72lh2
+     Warning  FailedCreatePodSandBox  3m3s (x17 over 6m33s)  kubelet            (combined from similar events): Failed to create pod sandbox: rpc error: code = Unknown desc = failed to setup network for sandbox "dcc4d29a213211977d0aa11195980a11533d722cfcd9ef11cf7b1385ef9dde10": error getting ClusterInformation: connection is unauthorized: Unauthorized
+
+Solution:
+
+-  Calico/Canal or another CNI plugin was uninstalled. CNI plugins usually leave configuration files on the system. Manually delete those files.
+
+   .. code-block:: sh
+
+      $ sudo rm -f /etc/cni/net.d/10-canal.conflist /etc/cni/net.d/calico-kubeconfig
+
 History
 -------
 
