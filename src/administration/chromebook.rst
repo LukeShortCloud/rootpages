@@ -84,16 +84,22 @@ Bootloaders
 
 The `MrChromebox/scripts <https://github.com/MrChromebox/scripts>`__ project provides a useful utility for modifying the bootloader firmware on Chromebooks. All Chromebooks can run a legacy SeaBIOS bootloader to allow USB-booting. Some Chromebooks support the full UEFI Tianocore bootloader so that it can install a different operating system such as Linux, mac OS, or Windows. A full list of what devices are compatible can be found `here <https://mrchromebox.tech/#devices>`__. [22]
 
-Enable USB booting in Chrome OS. [24]
+Enable USB UEFI booting in Chrome OS. [24]
 
-::
+.. code-block:: sh
 
    crosh> shell
    chronos@localhost / $ sudo crossystem dev_boot_usb=1
 
+Optionally enable USB legacy BIOS booting in Chrome OS.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo crossystem dev_boot_legacy=1
+
 Then download and run the interactive script.
 
-::
+.. code-block:: sh
 
    chronos@localhost / $ cd ~
    chronos@localhost ~ $ curl -LO mrchromebox.tech/firmware-util.sh && sudo bash ./firmware-util.sh
