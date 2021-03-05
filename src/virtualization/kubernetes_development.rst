@@ -984,7 +984,7 @@ Service APIs are used to manage networks for Pods. [5]
 Ingress
 ^^^^^^^
 
--  API group / version (latest): networking.k8s.io/v1beta1
+-  API group / version (latest): networking.k8s.io/v1
 -  Shortname: ing
 -  Namespaced: true
 
@@ -1019,11 +1019,15 @@ Ingress
                -  **kind** (string)
                -  **name** (string)
 
-            -  serviceName (string)
-            -  servicePort (string)
+            -  service (map)
+
+               -  name (string) = The name of the Service object to use as a backend.
+               -  port (map)
+
+                  -  number (integer)
 
          -  path (string) = The HTTP path to use. Pathes must begin with ``/``.
-         -  pathType (string) = How to find a match for the path. Default is ImplementationSpecific.
+         -  **pathType** (string) = How to find a match for the path. Default is ImplementationSpecific. This field is required if the Ingress Controller does not have a default.
 
             -  Exact = Match the exact path.
             -  Prefix = Split the path by the ``/`` character and find a matching path from that ordered list.
@@ -1053,9 +1057,12 @@ Ingress with domain name.
          http:
            paths:
              - path: /app
+               pathType: Prefix
                backend:
-                 serviceName: svc-foo
-                 servicePort: 80
+                 service:
+                   name: svc-foo
+                   port:
+                     number: 80
 
 Ingress with an existing TLS certificate.
 
@@ -1081,9 +1088,12 @@ Ingress with an existing TLS certificate.
          http:
            paths:
              - path: /
+               pathType: Prefix
                backend:
-                 serviceName: svc-bar
-                 servicePort: 80
+                 service:
+                   name: svc-bar
+                   port:
+                     number: 80
      tls:
        - hosts:
            - login.example.com
@@ -1102,10 +1112,8 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
      name: ing-rewrite-target-example
    annotations:
      # NGINX
-     kubernetes.io/ingress.class: nginx
      nginx.ingress.kubernetes.io/rewrite-target: /
      # Traefik
-     #kubernetes.io/ingress.class: traefik
      #traefik.ingress.kubernetes.io/rewrite-target: /
    spec:
      # NGINX
@@ -1117,9 +1125,12 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
          http:
            paths:
              - path: /some/path/here
+               pathType: Prefix
                backend:
-                 serviceName: svc-rewrite-target-example
-                 servicePort: 80
+                 service:
+                   name: svc-rewrite-target-example
+                   port:
+                     number: 80
 
 Service
 ^^^^^^^
