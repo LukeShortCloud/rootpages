@@ -129,8 +129,6 @@ The app will beep if a command or file cannot be auto-completed. This can be dis
 Writable and Executable File Systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**WARNING: Mounting the root file system with write permissions will permanently disable Chrome OS updates. A recovery of Chrome OS will be required to return to a normal state. [5]**
-
 By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.
 
 -  Remove both the root file system and boot verifications. Then reboot Chrome OS.
@@ -571,7 +569,7 @@ Bibliography
 2. "Issue 878324: Share Downloads with crostini container." Chromium Bugs. May 6, 2019. Accessed March 2, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=878324
 3. "Issue 930901: crostini: support buster as the default container." Chromium Bugs. February 7, 2020. Accessed March 2, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=930901
 4. "Chromebook keyboard shortcuts." Chromebook Help. Accessed March 2, 2020. https://support.google.com/chromebook/answer/183101?hl=en
-5. "Developer Mode." Chromium OS Docs. Accessed March 3, 2021. https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md
+5. "Developer Mode." Chromium OS Docs. Accessed March 4, 2020. https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md
 6. "Turn on debugging features." Chromebook Help. Accessed March 4, 2020. https://support.google.com/chromebook/answer/6204310?hl=en
 7. "Debug Button Shortcuts." Chromium OS Docs. Accessed March 4, 2020. https://chromium.googlesource.com/chromiumos/docs/+/master/debug_buttons.md
 8. "Debugging Features." Chromium OS. Accessed March 4, 2020. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
