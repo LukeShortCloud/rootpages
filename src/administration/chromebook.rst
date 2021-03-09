@@ -17,6 +17,8 @@ There are three update channels to choose from for Chrome OS updates. This can b
 -  Beta = Minor updates every week. Major upgrades every 6 weeks.
 -  Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with ``Developer Mode`` which is different.
 
+Check `here <https://chromereleases.googleblog.com/search/label/Chrome%20OS>`__ for information on the latest channel updates for Chrome OS.
+
 Keyboard Shortcuts
 ------------------
 
