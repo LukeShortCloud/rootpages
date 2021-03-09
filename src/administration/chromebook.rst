@@ -8,6 +8,9 @@ Support
 
 Chromebooks receive anywhere between 5 and 8 years of Chrome OS updates [14]. When it becomes end-of-life, the operating system will continue to work but will also become vulnerable to unpatched security flaws. A list of every Chromebooks' update expiration date can be found `here <https://support.google.com/chrome/a/answer/6220366?hl=en>`__.
 
+Update Channels
+~~~~~~~~~~~~~~~
+
 There are three update channels to choose from for Chrome OS updates. This can be changed by going to: ``Settings`` > ``About Chrome OS`` > ``Additional details`` > ``Channel`` > ``Change channel`` [15].
 
 -  Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.
@@ -147,6 +150,31 @@ By default, the root file system is not writable and both the stateful_partition
       chronos@localhost / $ sudo mount -o remount,exec remount,exec /home/chronos/user
 
 [25][26]
+
+Updates
+~~~~~~~
+
+Change Update Channel
+^^^^^^^^^^^^^^^^^^^^^
+
+Channels can be changed on any Chromebook not in developer mode by going to ``Settings > About Chrome OS > Additional Details > Channel > Change channel`` and selecting ``Stable``, ``Beta``, or ``Developer - unstable``. However, this will require a Powerwash which will factory reset the Chromebook.
+
+With Developer Mode enabled, it is possible to change channels on the CLI without a Powerwash. If going from a newer channel to an older one (Dev to Beta, Dev to Stable, or Beta to Stable), Chrome OS will automatically update when that channel catches up to your version.
+
+Syntax:
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel={stable,beta,dev}-channel
+
+Example:
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel=stable-channel
+   chronos@localhost / $ update_engine_client --show_channel
+   [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
+   [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
 
 Chromebrew
 ----------
