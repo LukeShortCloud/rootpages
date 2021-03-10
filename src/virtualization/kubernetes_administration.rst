@@ -1245,6 +1245,57 @@ Solution:
 
       $ sudo rm -f /etc/cni/net.d/10-canal.conflist /etc/cni/net.d/calico-kubeconfig
 
+----
+
+``k3s`` keeps reporting the error ``x509: certificate has expired or is not yet valid``:
+
+.. code-block:: sh
+
+   $ sudo cat /var/log/syslog
+   Mar 10 21:11:18 kube0 k3s[438]: E0310 21:11:18.648950     438 reflector.go:153] k8s.io/client-go/informers/factory.go:135: Failed to list *v1beta1.Event: Unauthorized
+   Mar 10 21:11:18 kube0 k3s[438]: E0310 21:11:18.664390     438 authentication.go:104] Unable to authenticate the request due to an error: x509: certificate has expired or is not yet valid
+   Mar 10 21:11:18 kube0 k3s[438]: I0310 21:11:18.665009     438 log.go:172] http: TLS handshake error from 127.0.0.1:45154: remote error: tls: bad certificate
+   Mar 10 21:11:18 kube0 k3s[438]: E0310 21:11:18.666361     438 reflector.go:153] k8s.io/client-go/informers/factory.go:135: Failed to list *v1beta1.CSIDriver: Get https://127.0.0.1:6443/apis/storage.k8s.io/v1beta1/csidrivers?limit=500&resourceVersion=0: x509: certificate has expired or is not yet valid
+   Mar 10 21:11:18 kube0 k3s[438]: E0310 21:11:18.667607     438 reflector.go:153] k8s.io/client-go/informers/factory.go:135: Failed to list *v1.Pod: Unauthorized
+   Mar 10 21:11:18 kube0 k3s[438]: E0310 21:11:18.696824     438 authentication.go:104] Unable to authenticate the request due to an error: x509: certificate has expired or is not yet valid
+
+Solutions:
+
+-  The system time is set incorrectly.
+-  Upgrade to >= ``v1.19.1+k3s1`` where certificate rotation was fixed.
+-  Restart the ``k3s`` service. Once it starts, if it detects that a certificate is going to expire within 90 days or less, it will recreate the certificates.
+
+   .. code-block:: sh
+
+      # Control-plane Node
+      $ sudo systemctl restart k3s
+      # Worker Node
+      $ sudo systemctl restart k3s-agent
+
+-  The certificate has already expired. ``k3s`` will only rotate certificates that are about to expire (not ones that have expired). Manually set the date back to force the certificates to be regenerated.
+
+   .. code-block:: sh
+
+      $ kubectl get nodes
+      Unable to connect to the server: x509: certificate has expired or is not yet valid: current time 2021-03-10T21:34:56Z is after 2021-02-27T21:54:59Z
+
+   .. code-block:: sh
+
+      # Stop the 'k3s' (Control Plane) or 'k3s-agent' (Worker Node) service.
+      $ sudo systemctl stop k3s
+      # Manually set the date to be within 90 days before the certificate has expired.
+      $ sudo date -s 20210220
+      # Start k3s to rotate the certificates.
+      $ sudo systemctl start k3s
+      # Verify it works now.
+      $ kubectl get nodes
+      # Stop k3s.
+      $ sudo systemctl stop k3s
+      # Set the date back manually. Or use a time synchornization program such as 'chronyd' or 'ntpd'.
+      $ sudo date -s 20210310
+
+[53]
+
 History
 -------
 
@@ -1308,3 +1359,4 @@ Bibliography
 50. "Installation Options." Rancher Docs. Accessed February 24, 2021. https://rancher.com/docs/k3s/latest/en/installation/install-options/
 51. "Properly Resetting Your kubeadm-bootstrapped Cluster Nodes — #HeptioProTip." Heptio Blog. January 3, 2018. March 2, 2021. https://blog.heptio.com/properly-resetting-your-kubeadm-bootstrapped-cluster-nodes-heptioprotip-473bd0b824aa
 52. "coredns been in Pending state." Programmer Sought. Accessed March 3, 2021.  https://www.programmersought.com/article/23693305901/
+53. "certificate expired and rotate #1621." GitHub k3s-io/k3s. February 8, 2021. Accessed March 10, 2021. https://github.com/k3s-io/k3s/issues/1621
