@@ -192,7 +192,16 @@ Mount points:
 -  Pool = /<POOL_NAME>
 -  Dataset = /<POOL_NAME>/<DATASET_NAME>
 
-Change the mountpoint.
+If a dataset is accidently created over an existing directory it will be mounted on top. This means that the data is still there but is inaccessible. Either unmount the dataset and rename the existing directory or permanently change the mount point.
+
+Unmount and then re-mount a dataset:
+
+.. code-block:: sh
+
+   $ sudo zfs unmount <POOL_NAME>/<DATASET_NAME>
+   $ sudo zfs mount <POOL_NAME>/<DATASET_NAME>
+
+Change the mountpoint:
 
 .. code-block:: sh
 
