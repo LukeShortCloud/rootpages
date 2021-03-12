@@ -530,6 +530,8 @@ Chrome OS versions:
 
 -  89
 
+   -  `"Phone Hub" provides tight integration between an Android device and a Chromebook. <https://chromeunboxed.com/chrome-os-89-arrives-10th-birthday-new-features#screen-capture>`__
+   -  `"Screen capture" is a new app added to the settings menu that allows taking screenshots and screen recordings natively. <https://chromeunboxed.com/chrome-os-89-arrives-10th-birthday-new-features#screen-capture>`__
    -  `"Trash" in the Files app for recovering deleted files. <https://www.aboutchromebooks.com/news/chrome-os-89-adds-media-annotations-photo-filters-and-a-working-trash-can-for-chromebooks/>`__
 
 -  88
@@ -584,7 +586,6 @@ Upcoming Features
 -----------------
 
 -  `Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming. <https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager>`__
--  `Phone Hub for integration with Android phones. <https://www.androidpolice.com/2020/12/14/this-is-phone-hub-for-chrome-os-googles-effort-to-tightly-link-android-and-chromebooks/>`__
 -  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
 
 History
