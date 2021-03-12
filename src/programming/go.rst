@@ -129,6 +129,7 @@ Variables
 Data Types
 ----------
 
+-  ``const`` = Constant. This declares that a variable value will never change. The variable can be of any data type.
 -  ``bool`` = Boolean. Valid values: ``true`` or ``false``.
 -  ``complex64``, ``complex128`` = Complex. A float that supports imaginary numbers.
 -  ``float32``, ``float64`` = Float. Large decimal numbers.
@@ -136,7 +137,41 @@ Data Types
 -  ``nil`` = An empty/null variable.
 -  ``string`` = String. Alphanumeric UTF-8 values. Strings that are written out using double quotes (``"``) only. Single quotes are reserved for defining a rune (single character) data type.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
+-  ``iota`` = An integer that starts at zero. In a variable block decleration, each new ``iota`` variable adds one to the count. This is commonly used as a value for many variables in a ``const`` block. [32]
 -  ``_`` = A null character. Anything assigned to this will be discarded. This is useful for loops because Go does not support creating variables that are not used.
+
+Example ``iota`` usage:
+
+.. code-block:: go
+
+   package main
+   
+   import "fmt"
+   
+   const (
+       foo = iota
+       bar
+   )
+
+   const (
+       _ = iota + 10
+       oof
+       rab
+   )
+   
+   func main() {
+       fmt.Printf("%v\n", foo)
+       fmt.Printf("%v\n", bar)
+       fmt.Printf("%v\n", oof)
+       fmt.Printf("%v\n", rab)
+   }
+
+::
+
+   0
+   1
+   11
+   12
 
 Variable Declaration
 ~~~~~~~~~~~~~~~~~~~~
@@ -1375,3 +1410,4 @@ Bibliography
 29. "Golang Templates Cheatsheet." Curtis Vermeeren. September 14, 2017. Accessed July 30, 2020. https://curtisvermeeren.github.io/2017/09/14/Golang-Templates-Cheatsheet
 30. "Package log." The Go Programming Language. Accessed February 8, 2021. https://golang.org/pkg/log/
 31. "Logging HOWTO." Python documentation. February 8, 2021. Accessed February 8, 2021. https://docs.python.org/3/howto/logging.html
+32. "iota - Create Effective Constants in Golang." Medium. September 5, 2020. Accessed March 11, 2021. https://medium.com/swlh/iota-create-effective-constants-in-golang-b399f94aac31
