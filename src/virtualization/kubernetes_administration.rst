@@ -202,6 +202,12 @@ Tanzu
 
 Tanzu (pronounced tawn-zoo) Kubernetes Grid (TKG) is developed by VMware as a collection of different products to install upstream Kubernetes.
 
+There are currently three offerings for TKG [54]:
+
+-  **TKG Multicloud (TKGm)** = TKGm supports creating and managing infrastructure on Amazon Web Services, Microsoft Azure, and VMware vSphere 6. For VMware vSphere 7, TKGm can be used but TKGS is recommended instead.
+-  **TKG Services (TKGS)** = VMware vSphere 7 creates and manages the Kubernetes cluster.
+-  **TKG Integrated Edition (TKGI)** = Previosuly Enterprise PKS. Uses BOSH to deploy and manage virtual machines for the Kubernetes cluster. BOSH supports creating infrastructure on Alibaba Cloud, Amazon Web Services, Google Cloud Platform, Microsoft Azure, OpenStack, and VMware vSphere. [55]
+
 TKGm
 ^^^^
 
@@ -1360,3 +1366,5 @@ Bibliography
 51. "Properly Resetting Your kubeadm-bootstrapped Cluster Nodes — #HeptioProTip." Heptio Blog. January 3, 2018. March 2, 2021. https://blog.heptio.com/properly-resetting-your-kubeadm-bootstrapped-cluster-nodes-heptioprotip-473bd0b824aa
 52. "coredns been in Pending state." Programmer Sought. Accessed March 3, 2021.  https://www.programmersought.com/article/23693305901/
 53. "certificate expired and rotate #1621." GitHub k3s-io/k3s. February 8, 2021. Accessed March 10, 2021. https://github.com/k3s-io/k3s/issues/1621
+54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed March 11, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
+55. "Welcome to Cloud Foundry BOSH." Cloud Foundry BOSH. Accessed March 11, 2021. https://bosh.io/docs/
