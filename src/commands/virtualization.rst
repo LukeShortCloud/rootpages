@@ -141,6 +141,7 @@ Manage Kubernetes resources via the API.
    --v=<VERBOSITY>, set the command verbosity from 0-9
    version, show the Kubernetes client and server version
    version --client, only show the Kubernetes client version
+   version --short, only show the Kubernetes version and not the extra information
    api-resources, "show all of the APIs along with their shortnames, API group, kind, and if it is namespaced"
    api-resources --api-group <GROUP>, only show APIs belonging to a specific API group
    "api-resources --api-group """, show the core APIs
