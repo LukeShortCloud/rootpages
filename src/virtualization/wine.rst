@@ -166,7 +166,19 @@ Important directories:
 Steam Play
 ~~~~~~~~~~
 
+Linux Sales
+^^^^^^^^^^^
+
 Steam reports the operating system in use for each sale of a developer's game. For counting as a Linux purchase, it can be bought on the Steam client for Linux and not played. Alternatively, it has to be played on Linux (even with Proton/Steam Play) more than any other platform in the first two weeks. The operating system reported after the end of the two weeks is final and will never change. [7]
+
+Manual Proton
+^^^^^^^^^^^^^
+
+Games can be run with Proton manually outside of Steam. This requires both the ``STEAM_COMPAT_DATA_PATH`` and ``WINEPREFIX`` variables to be set. Other executables from the game can also be ran this way. [8] It is not recommended to use Proton to run non-Steam games due to runtime compatibility issues.
+
+.. code-block:: sh
+
+   STEAM_COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/<STEAM_GAME_ID>" WINEPREFIX="$HOME/.steam/steam/steamapps/compatdata/<STEAM_GAME_ID>/pfx" "$HOME/.steam/root/compatibilitytools.d/<PROTON_VERSION>/proton" run "$HOME/steam/steamapps/common/<GAME_NAME>/<GAME_EXE>"
 
 Game Bans
 ---------
@@ -201,3 +213,4 @@ Bibliography
 5. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Debug\_Channels
 6. "Lutris Wine Versions." PlayOnLinux Forum. April 3, 2018. Accessed June 16, 2018. https://www.playonlinux.com/en/topic-15838-Lutris\_Wine\_Versions.html
 7. "Valve officially confirm a new version of 'Steam Play' which includes a modified version of Wine." GamingOnLinux. August 21, 2018. Accessed March 8, 2020. https://www.gamingonlinux.com/articles/valve-officially-confirm-a-new-version-of-steam-play-which-includes-a-modified-version-of-wine.12400
+8. "How to run another .exe in an existing proton wine prefix." GitHub michaelbutler/Steam_Proton_Exe.md. September 11, 2020. Accessed March 12, 2021. https://gist.github.com/michaelbutler/f364276f4030c5f449252f2c4d960bd2
