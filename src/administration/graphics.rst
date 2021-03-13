@@ -253,6 +253,23 @@ Image Processing
 
       $ convert <IMAGE_ORIGINAL> -rotate <DEGRESS> <IMAGE_NEW>
 
+Troubleshooting
+---------------
+
+Error Messages
+~~~~~~~~~~~~~~
+
+Missing libraries when starting the Steam runtime:
+
+.. code-block:: sh
+
+   $ steam-runtime
+   Error: You are missing the following 32-bit libraries, and Steam may not run: <LIBRARY_FILE>
+
+Solution:
+
+-  Run ``steam-runtime --reset`` to redownload the runtime libraries.
+
 History
 -------
 
