@@ -924,6 +924,19 @@ Permanent solution [28]:
       $ sudo systemctl enable zfs-import-cache
       $ sudo systemctl enable zfs-import.target
 
+----
+
+Mounting a CIFS share states that it is read-only.
+
+.. code-block:: sh
+
+   $ sudo mount -t cifs //<SAMBA_SERVER_ADDRESS>/<SAMBA_SHARE> /mnt
+   mount: /mnt: cannot mount //<SAMBA_SERVER_ADDRESS>/<SAMBA_SHARE> read-only.
+
+Solution:
+
+-  Install the package for CIFS client tools: ``cifs-utils``.
+
 History
 -------
 
