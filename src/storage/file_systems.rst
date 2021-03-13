@@ -546,31 +546,89 @@ SMB Ports:
 -  139 TCP
 -  445 TCP
 
-Configuration - Global:
+Samba
+^^^^^
 
--  [global]
+Samba is a CIFS server created for UNIX servers. The default configuration file is located at ``/etc/samba/smb.conf`` and is in an "ini" format. Samba share settings can be set at the ``[global]`` or in a ``[<SHARE_NAME>]``. Global settings cannot be defined in a ``[<SHARE_NAME>]``. [14] Boolean settings can have a value of ``false``/``no`` or ``true``/``yes``.
 
-   -  workgroup = Define a WORKGROUP name.
-   -  interfaces = Specify the interfaces to listen on.
-   -  hosts allow = Specify hosts allowed to access any of the shares.
-      Wildcard IP addresses can be used by omitting different octets.
-      For example, "127." would be a wildcard for anything in the
-      127.0.0.0/8 range.
+.. code-block:: ini
 
-Configuration - Share:
+   [global]
+   <GLOBAL_CONFIG_KEY> = <GLOBAL_CONFIG_VALUE>
+   <SHARE_CONFIG_KEY> = <SHARE_CONFIG_VALUE>
 
--  [smb] = The share can be named anything.
+   [<SHARE_NAME>]
+   <SHARE_CONFIG_KEY> = <SHARE_CONFIG_VALUE>
 
-   -  path = The path to the directory to share (required).
-   -  writable = Use "yes" or "no." This specifies if the folder share
-      is writable.
-   -  read only = Use "yes" or "no." This is the opposite of the
-      writable option. Only one or the other option should be used. If
-      set to no, the share will have write permissions.
-   -  write list = Specify users that can write to the share, separated
-      by spaces. Groups can also be specified using by appending a "+"
-      to the front of the name.
-   -  comment = Place a comment about the share. [14]
+Global:
+
+-  interfaces (string) = Specify the interfaces to listen on.
+-  unix extensions (boolean) = This only works for the NT1 protocol. Samba developers are working on adding support to the SMB3 protocol. [30] It enables UNIX file system capabilities such as symbolic and hard links. Default: ``yes``.
+-  workgroup (string) = Define a workgroup name. Default: ``MYGROUP``.
+
+Share:
+
+-  acl allow execute always (boolean) = If all files should be executable by Windows (not UNIX) clients. Default: ``no``.
+-  allocation roundup size (integer) = The number of bytes for rounding up. This used to be set to ``1048576`` bytes (which is 1 MiB). Using ``0`` will not round up and provide an accurate size. Default: ``0``.
+-  [client|server] [max|min] protocol (string) = The protocol restrictions that should be set. Common protocols: ``NT1``, ``SMB2``, and ``SMB3``. All protocols: ``CORE``, ``COREPLUS``, ``LANMAN1``, ``LANMAN2``, ``NT1``, ``SMB2_02``, ``SMB2_10``, ``SMB2_22``, ``SMB2_24``, ``SMB3_00``, ``SMB3_02``, ``SMB3_10``, ``SMB3_11`` (``SMB3``), or ``SMB2_FF``.
+
+   -  client max protocol = Default: ``SMB3_11``.
+   -  client min protocol = Default: ``SMB2_02``.
+   -  server max protocol = Default: ``SMB3_11``.
+   -  server min protocol = Default: ``SMB2_02``.
+
+-  comment (string) = Place a comment about the share. Default: none.
+-  create mask, create mode (integer) = The maximum permissions a file can have when it is created. Default: ``0744``.
+-  directory mask (integer) = The maximum permissions a directory can have when it is created.: Default: ``0755``.
+-  force create mode (integer) = The minimum permissions a file can have when it is created. Default: ``0000``.
+-  force directory mode (integer) = The minimum permissions a directory can have when it is created. Default: ``0000``.
+-  hosts allow (string) = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octets. For example, "127." would be a wildcard for anything in the 127.0.0.0/8 range. Default: all hosts are allowed.
+-  **path** (string) = The path to the directory to share. Default is what the ``root directory`` value is set to.
+-  read only (boolean) = This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions. Default: ``yes``.
+-  root directory (string) = The primary directory for Samba to share. Default: none.
+-  writeable, writable, and write ok (boolean) = This specifies if the folder share is writable. Default: ``no``.
+-  write list (string) = Specify users that can write to the share, separated by spaces. Groups can also be specified using by appending a "+" to the front of the name. Default: none.
+
+Deprecated and removed settings:
+
+-  Share:
+
+   -  directory security mask (integer) = Removed in Samba 4. The maximum Windows permissions for a directory.
+   -  force security mode (integer) = Removed in Samba 4. The minimum Windows permissions for a file.
+   -  force directory security mode (integer) = Removed in Samba 4. The minimum Windows permissions for a directory.
+   -  security mask (integer) = Removed in Samba 4. The maximum Windows permissions for a file.
+
+[14][31]
+
+Example configurations:
+
+-  Force specific permissions for all files and directories.
+
+   .. code-block:: ini
+
+      [share]
+      create mask = 0664
+      force create mode = 0664
+      directory mask = 0775
+      force directory mode = 0775
+
+-  Force all files to be executable.
+
+   .. code-block:: ini
+
+      [share]
+      acl allow execute always = yes
+      create mask = 0775
+      force create mode = 0775
+
+-  Enable UNIX extensions for soft and hard links to work.
+
+   .. code-block:: ini
+
+      [global]
+      client min protocol = NT1
+      server min protocol = NT1
+      unix extensions = yes
 
 Verify the Samba configuration.
 
@@ -961,7 +1019,7 @@ Bibliography
 11. "RAID." Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. https://wiki.archlinux.org/index.php/RAID
 12. "NFS SERVER CONFIGURATION." Red Hat Documentation. Accessed September 19, 2016.  https://access.redhat.com/documentation/en-US/Red\_Hat\_Enterprise\_Linux/7/html/Storage\_Administration\_Guide/nfs-serverconfig.html
 13. "The Difference between CIFS and SMB." VARONIS. February 14, 1024. Accessed September 18th, 2016. https://blog.varonis.com/the-difference-between-cifs-and-smb/
-14. "The Samba Configuration File." SAMBA. September 26th, 2003. Accessed September 18th, 2016. https://www.samba.org/samba/docs/using\_samba/ch06.html
+14. "Chapter 6. The Samba Configuration File." Samba Docs Using Samba. April 26, 2018. Accessed March 13, 2021. https://www.samba.org/samba/docs/using_samba/ch06.html
 15. "RHEL7: Provide SMB network shares to specific clients." CertDepot. August 25, 2016. Accessed September 18th, 2016. https://www.certdepot.net/rhel7-provide-smb-network-shares/
 16. "RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target." CertDepot. July 30, 2016. Accessed August 13, 2016. https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/
 17. "Btrfs." Fedora Project Wiki. March 9, 2017. Accessed May 11, 2018. https://fedoraproject.org/wiki/Btrfs
@@ -977,3 +1035,5 @@ Bibliography
 27. "Sharing ZFS Datasets Via NFS." Programster's Blog. July 6, 2019. Accessed December 6, 2020. https://blog.programster.org/sharing-zfs-datasets-via-nfs
 28. "ZFS." ArchWiki. November 23, 2020. Accessed December 5, 2020. https://wiki.archlinux.org/index.php/ZFS
 29. "25. Command Line Interface." FreeNAS 11.3-RELEASE User Guide. https://www.ixsystems.com/documentation/freenas/11.3-RELEASE/cli.html
+30. "unix extensions not working?" Ubuntu Bugs samba package. June 12, 2020. Accessed March 13, 2021. https://bugs.launchpad.net/ubuntu/+source/samba/+bug/1883234
+31. "smb.conf - The configuration file for the Samba suite." Samba Docs. Accessed March 13, 2021. https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
