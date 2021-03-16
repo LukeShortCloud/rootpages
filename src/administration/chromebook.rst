@@ -178,6 +178,57 @@ Example:
    [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
    [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
 
+emerge Package Manager
+~~~~~~~~~~~~~~~~~~~~~~~
+
+``emerge`` is the official package manager for Gentoo and, by extension, Chrome OS. Installing emerge, along with a few other developer packages, will first delete everything in ``/usr/local/``. For a more useful package manager, use `Chromebrew <#id1>`_.
+
+Install:
+
+.. code-block:: sh
+
+   chronos@localhost / $ dev_install
+
+Reinstall:
+
+.. code-block:: sh
+
+   chronos@localhost / $ dev_install --reinstall
+
+Uninstall:
+
+.. code-block:: sh
+
+   chronos@localhost / $ dev_install --uninstall
+
+[29]
+
+By default, only a few local packages can be installed.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo find /usr/local/portage/packages/ | grep tbz2
+   /usr/local/portage/packages/dev-lang/python-exec-2.0.1-r1.tbz2
+   /usr/local/portage/packages/dev-lang/python-3.6.5-r5.tbz2
+   /usr/local/portage/packages/dev-lang/python-2.7.15-r5.tbz2
+   /usr/local/portage/packages/dev-python/pyblake2-1.1.2-r1.tbz2
+   /usr/local/portage/packages/dev-python/pyxattr-0.6.0-r1.tbz2
+   /usr/local/portage/packages/sys-libs/gdbm-1.11.tbz2
+   /usr/local/portage/packages/net-misc/rsync-3.1.3.tbz2
+   /usr/local/portage/packages/app-misc/mime-types-9.tbz2
+   /usr/local/portage/packages/app-misc/pax-utils-1.2.3.tbz2
+   /usr/local/portage/packages/sys-apps/install-xattr-0.5.tbz2
+   /usr/local/portage/packages/sys-apps/portage-2.3.75-r56.tbz2
+   /usr/local/portage/packages/sys-apps/less-487.tbz2
+   /usr/local/portage/packages/sys-apps/sandbox-2.11-r6.tbz2
+   /usr/local/portage/packages/app-eselect/eselect-python-20140125-r1.tbz2
+
+View the packages that are installed:
+
+.. code-block:: sh
+
+   chronos@localhost / $ ls -1 /usr/local/var/db/pkg/sys-apps/
+
 Building a Custom Kernel and Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -725,3 +776,4 @@ Bibliography
 26. "Chromebook writable root." Way of the nix's - Computer Security & Full Stack Development. Accessed February 28, 2021. https://xn--1ca.se/chromebook-writable-root/
 27. "Build chrome os kernel and kernel modules." GitHub dnschneid/crouton. March 22, 2018. Accessed March 15, 2021. https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules
 28. "Custom Kernel Modules for Chromebook." The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/
+29. "Dev-Install: Installing Developer and Test packages onto a Chrome OS device." Chromium OS How Tos and Troubleshooting. Accessed March 16, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images
