@@ -178,6 +178,107 @@ Example:
    [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
    [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
 
+Building a Custom Kernel and Modules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is recommended to build a Linux kernel and/or modules on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility. The kernel and/or modules can be compiled regardless of the CPU architecture required.
+
+Create and use a working directory.
+
+.. code-block:: sh
+
+   $ mkdir chromiumos
+   $ cd chromiumos
+
+Download and load-up the ``repo`` command. This can later be loaded up from the ``./src/chromium/depot_tools/`` directory instead.
+
+.. code-block:: sh
+
+   $ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+   $ export PATH="$(pwd)/depot_tools/:$PATH"
+
+Use the ``repo`` command to download all of the > 200 git repositories for Chromium OS.
+
+.. code-block:: sh
+
+   $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git
+   $ repo sync
+
+Setup the Chromium OS SDK. Once complete, this will change the prompt as it changes into a chroot of Gentoo. In the future, use this command to re-enter the chroot.
+
+.. code-block:: sh
+
+   $ export PATH="$(pwd)/chromite/bin/:$PATH"
+   $ cros_sdk
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $
+
+Find the board name for the Chromebook from `here <https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices>`__. Alternatively, visit ``chrome://version`` on the Chromebook and look for "Platform:". The board name is the last word on that line. Use it to setup the Gentoo packages that mirror what is being used by the latest version of that Chromebook.
+
+.. code-block:: sh
+
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ export BOARD=amd64-generic
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ setup_board --board=<CHROMEBOOK_BOARD_NAME>
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=<CHROMEBOOK_BOARD_NAME>
+
+On the Chromebook, find the major ``X.Y`` kernel version.
+
+.. code-block:: sh
+
+   chronos@localhost / $ uname -a
+
+On the Chromebook, save the current kernel build configuration. [27]
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo modprobe configs
+   chronos@localhost / $ cat /proc/config.gz | gunzip > ~/Downloads/config
+
+Copy the configuration to the computer that is building the Linux kernel and into the correct kernel version directory. Edit it to adjust the kernel and/or module build.
+
+.. code-block:: sh
+
+   $ cp config chromiumos/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/
+
+In the cros_sdk chroot, change into the directory of the kernel source code.
+
+.. code-block:: sh
+
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ cd ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/
+
+On the Chromebook, take note of the ``chrome://version`` "Platform:" details.
+
+::
+
+   Platform: 13729.41.0 (Official Build) beta-channel samus
+
+Using the major release number (13729 in this example), the kernel version, and optionally the Chrome OS release, it is possible to track down the exact kernel source code branch for the running kernel on the Chromebook. This is important to match because building generic kernel modules will not work. The versions have to match exactly. Even if the intent is to replace the running kernel with a customized one, this branch will contain backports specific to the Chromebook board.
+
+.. code-block:: sh
+
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git branch -a | egrep "release-.*13729.*-chromeos-4.14"
+   remotes/cros/release-R89-13729.B-chromeos-4.14
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git checkout cros/release-R89-13729.B-chromeos-4.14
+
+Build the kernel or just the modules.
+
+.. code-block:: sh
+
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make
+
+.. code-block:: sh
+
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make modules
+
+[28]
+
+Cleanup:
+
+If the development environment is no longer required, clean it up using this command:
+
+.. code-block:: sh
+
+   $ cros_sdk --delete
+
 Chromebrew
 ----------
 
@@ -622,3 +723,5 @@ Bibliography
 24. "How to Enable USB Booting on Chromebook." wikiHow. November 30, 2020. Accessed February 25, 2021. https://www.wikihow.com/Enable-USB-Booting-on-Chromebook
 25. "Remove RootFS Verification & make Read/Write." Cr-48ite. January 4, 2012. Accessed Feburary 28, 2021. https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write
 26. "Chromebook writable root." Way of the nix's - Computer Security & Full Stack Development. Accessed February 28, 2021. https://xn--1ca.se/chromebook-writable-root/
+27. "Build chrome os kernel and kernel modules." GitHub dnschneid/crouton. March 22, 2018. Accessed March 15, 2021. https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules
+28. "Custom Kernel Modules for Chromebook." The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/
