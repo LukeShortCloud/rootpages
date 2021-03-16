@@ -178,10 +178,46 @@ Example:
    [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
    [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
 
-emerge Package Manager
-~~~~~~~~~~~~~~~~~~~~~~~
+Package Managers
+~~~~~~~~~~~~~~~~
 
-``emerge`` is the official package manager for Gentoo and, by extension, Chrome OS. Installing emerge, along with a few other developer packages, will first delete everything in ``/usr/local/``. For a more useful package manager, use `Chromebrew <#id1>`_.
+Chromebrew
+^^^^^^^^^^
+
+Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires ``Developer Mode`` to be enabled and that Chrome OS is on the ``Stable`` channel.
+
+Install:
+
+.. code-block:: sh
+
+   $ curl -Ls git.io/vddgY | bash
+
+Usage:
+
+.. code-block:: sh
+
+   $ crew {build,const,download,files,help,install,list,postinstall,reinstall,remove,search,update,upgrade,whatprovides}
+   $ crew help <ARGUMENT>
+
+Find and install a package. The `full list of packages <https://github.com/skycocker/chromebrew/tree/master/packages>`__ is listed in it's GitHub repository. Over one thousand packages are available.
+
+.. code-block:: sh
+
+   $ crew search <PACKAGE>
+   $ crew install [--build-from-source] <PACKAGE>
+
+Installing a package will remove other packages that are already installed. Use the ``--keep`` argument to prevent uninstalling them:
+
+.. code-block:: sh
+
+   $ crew install --keep <INSTALLED_PACKAGE> <NEW_PACKAGE>
+
+[19]
+
+emerge
+^^^^^^
+
+``emerge`` is the official package manager for Gentoo and, by extension, Chrome OS. Installing emerge, along with a few other developer packages, will first delete everything in ``/usr/local/``. For a more useful package manager, use `Chromebrew <#chromebrew>`_.
 
 Install:
 
@@ -329,39 +365,6 @@ If the development environment is no longer required, clean it up using this com
 .. code-block:: sh
 
    $ cros_sdk --delete
-
-Chromebrew
-----------
-
-Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires ``Developer Mode`` to be enabled and that Chrome OS is on the ``Stable`` channel.
-
-Install:
-
-.. code-block:: sh
-
-   $ curl -Ls git.io/vddgY | bash
-
-Usage:
-
-.. code-block:: sh
-
-   $ crew {build,const,download,files,help,install,list,postinstall,reinstall,remove,search,update,upgrade,whatprovides}
-   $ crew help <ARGUMENT>
-
-Find and install a package. The `full list of packages <https://github.com/skycocker/chromebrew/tree/master/packages>`__ is listed in it's GitHub repository. Over one thousand packages are available.
-
-.. code-block:: sh
-
-   $ crew search <PACKAGE>
-   $ crew install [--build-from-source] <PACKAGE>
-
-Installing a package will remove other packages that are already installed. Use the ``--keep`` argument to prevent uninstalling them:
-
-.. code-block:: sh
-
-   $ crew install --keep <INSTALLED_PACKAGE> <NEW_PACKAGE>
-
-[19]
 
 Linux
 -----
