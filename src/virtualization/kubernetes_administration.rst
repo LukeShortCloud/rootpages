@@ -1195,6 +1195,56 @@ Legacy plugins that are no longer maintained:
 
 [19][20]
 
+Role-Based Access Control (RBAC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+RBAC is enabled by default on a Kubernetes cluster by the ``kube-apiserver``.
+
+.. code-block:: sh
+
+   $ kube-apiserver --authorization-mode=RBAC
+
+There are four APIs that configure RBAC. Roles define what verbs (actions) are allowed. RoleBindings assign a Role to a user or, group or service account.
+
+Namespaced APIs:
+
+-  Role
+-  RoleBinding
+
+Non-namespaced APIs:
+
+-  ClusterRole
+-  ClusterRoleBinding
+
+Common verbs:
+
+-  create
+-  delete
+-  get (read)
+-  update
+
+Find out if the current user, or a different user, can run a specific command.
+
+.. code-block:: sh
+
+   $ kubectl auth can-i <VERB> <API>
+
+.. code-block:: sh
+
+   $ kubectl auth can-i <VERB> <API> --as=<USER>
+
+Commands can be run as a specific user or group:
+
+.. code-block:: sh
+
+   $ kubectl --as=<USER>
+
+.. code-block:: sh
+
+   $ kubectl --as-group=<GROUP>
+
+[56]
+
 Troubleshooting
 ---------------
 
@@ -1368,3 +1418,4 @@ Bibliography
 53. "certificate expired and rotate #1621." GitHub k3s-io/k3s. February 8, 2021. Accessed March 10, 2021. https://github.com/k3s-io/k3s/issues/1621
 54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed March 11, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
 55. "Welcome to Cloud Foundry BOSH." Cloud Foundry BOSH. Accessed March 11, 2021. https://bosh.io/docs/
+56. "Authenticating." Kubernetes Documentation. February 27, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authentication/
