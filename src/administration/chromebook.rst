@@ -366,8 +366,8 @@ If the development environment is no longer required, clean it up using this com
 
    $ cros_sdk --delete
 
-Linux
------
+Linux (Beta)
+------------
 
 Crostini
 ~~~~~~~~
