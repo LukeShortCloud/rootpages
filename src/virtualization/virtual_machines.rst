@@ -1505,6 +1505,28 @@ Nested virtualization also requires MAC spoofing to be enabled.
 
 [30]
 
+VMware vSphere
+~~~~~~~~~~~~~~
+
+VMware vSphere is a collection of VMware virtualization products including ESXi hypervisors, vSphere, and vCenter Server Add-on products include NSX-T, vROps, vSAN, and more. VMware Cloud Foundation = VMware vSphere with most of the add-ons included.
+
+Terminology:
+
+-  ESXi hypervisor = Previously Linux based, now a proprietary UNIX-like operating system. This is the base operating system and hypervisor software suite that is installed onto a node.
+-  vSphere = Has two meanings. (1) The entire collection of VMware virtualization products or (2) a management dashboard for a single region of ESXi hypervisors.
+-  vCenter Server = Manange and operate vSphere infrastructure such as clusters, NSX-T, DRS, vSANs, and more.
+-  vSAN = Storage from each ESXi hypervisor can be pooled together in as a virtual storage area network (vSAN) device. This is a hyperconverged infrastructure.
+-  vSphere cluster = A group of two or more ESXi hypervisors that typically share a common vSAN back-end.
+-  NSX-T = A fork of Open vSwitch. Used for virtual networking across nodes.
+-  VSS = vSphere Standard Switch. A virtual switch that is manually managed across a cluster. Each ESXi hypervisor requires a VSS to be created if VDS is not being used. This is provided for free in VMware vSphere.
+-  VDS = vSphere Distributed Switch. A virtual switch that is automatically managed across a cluster by NSX-T.
+-  vSwitch = A virtual switch that is either a VSS or VDS..
+-  Port group = A virtual VLAN interface on a vSwitch. It can be a single VLAN or have various trunked VLANs.
+-  Content library = Local virtual machines templates/images.
+-  vROps = vRealize Operations. An observability tool for vSphere.
+-  DRS = Distributed Resource Scheduler. Used to manage and monitor virtual machines across a vSphere cluster.
+-  Predictive DRS = Requires vROps. This can predict when to reallocate virtual machines to different hypervisors based on load and usage. Moving virtual machines will happen automatically.
+
 Troubleshooting
 ---------------
 
