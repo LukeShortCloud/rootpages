@@ -224,6 +224,24 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Role = RBAC for all namespaced resources.
    -  RoleBinding = A list of users and their permissions for a given Role.
 
+ClusterRole
+^^^^^^^^^^^
+
+-  API group / version (latest): rbac.authorization.k8s.io/v1
+-  Shortname: (None)
+-  Namespaced: false
+
+View the `Role API <#role>`_ documentation. The spec is exactly the same except ClusterRole does not support being namespaced.
+
+ClusterRoleBinding
+^^^^^^^^^^^^^^^^^^
+
+-  API group / version (latest): rbac.authorization.k8s.io/v1
+-  Shortname: (None)
+-  Namespaced: false
+
+View the `RoleBinding API <#rolebinding>`_ documentation. The spec is exactly the same except ClusterRoleBinding does not support being namespaced.
+
 Namespace
 ^^^^^^^^^
 
@@ -687,6 +705,186 @@ PVC with RADOS Block Device (RBD).
         user: fu
 
 [19]
+
+Role
+^^^^
+
+-  API group / version (latest): rbac.authorization.k8s.io/v1
+-  Shortname: (None)
+-  Namespaced: true
+
+----
+
+-  rules (list of maps)
+
+   -  apiGroups (list of strings) = The API groups that can be accessed.
+
+      -  ``""`` = Use two double quotes to indicate the core API group.
+
+   -  resourceNames (list of strings) = The name of specific objects that can be managed. By default, all objects from a resource API can be managed.
+   -  resource (list of strings) = The API resources that can be accessed.
+   -  verbs (list of strings) = The actions that can be taken on the specified API resources. [31]
+
+      -  bind = Used for Role and ClusterRole APIs only. Associate a Role or ClusterRole to a RoleBinding or ClusterRoleBinding.
+      -  create = Create new objects.
+      -  delete = Delete a single object.
+      -  deletecollection = Delete one or more objects at the same time.
+      -  escalate = Used for Role and ClusterRole API only.
+      -  get = View one or more existing objects.
+      -  impersonate = Used for User, Group, and ServiceAccount APIs only. Use the API as a different account.
+      -  list = View all existing objects.
+      -  patch = Patch an object.
+      -  update = Update and object.
+      -  use = Used for the PodSecurityPolicy API only. Use a specific policy with an object.
+      -  watch = Watch an object for updates.
+
+[32]
+
+----
+
+**Examples:**
+
+A role for read-only access of the Pod API.
+
+.. code-block:: yaml
+
+   ---
+   kind: Role
+   apiVersion: rbac.authorization.k8s.io/v1
+   metadata:
+     name: role-ro-pods
+     namespace: default
+   rules:
+     - apiGroups:
+         - ""
+       resources:
+         - pods
+       verbs:
+         - get
+         - list
+         - watch
+
+A role for full access to the Ingress and Service APIs.
+
+.. code-block:: yaml
+
+   ---
+   kind: Role
+   apiVersion: rbac.authorization.k8s.io/v1
+   metadata:
+     name: role-rw-network
+     namespace: default
+   rules:
+     - apiGroups:
+         - ""
+         - networking.k8s.io
+       resources:
+         - ingresses
+         - services
+       verbs:
+         - create
+         - delete
+         - deletecollection
+         - get
+         - list
+         - patch
+         - update
+         - watch
+
+A role for creating and modifying, but not deleting, PersistentVolume and PersistentVolumeClaim objects.
+
+.. code-block:: yaml
+
+   ---
+   kind: Role
+   apiVersion: rbac.authorization.k8s.io/v1
+   metadata:
+     name: role-create-volumes
+     namespace: default
+   rules:
+     - apiGroups:
+         - ""
+       resources:
+         - persistentvolumes
+         - persistentvolumeclaims
+       verbs:
+         - create
+         - get
+         - list
+         - patch
+         - update
+         - watch
+
+A role for managining specific existing Deployment objects.
+
+.. code-block:: yaml
+
+   ---
+   kind: Role
+   apiVersion: rbac.authorization.k8s.io/v1
+   metadata:
+     name: role-devteam2
+     namespace: default
+   rules:
+     - apiGroups:
+         - "apps/v1"
+       resourceNames:
+         - "deployment-frontend"
+         - "deployment-backend"
+       resources:
+         - deployments
+       verbs:
+         - create
+         - get
+         - list
+         - patch
+         - update
+         - watch
+
+RoleBinding
+^^^^^^^^^^^
+
+-  API group / version (latest): rbac.authorization.k8s.io/v1
+-  Shortname: (None)
+-  Namespaced: true
+
+----
+
+-  **roleRef** (map) = The Role to use.
+
+   -  **apiGroup** (string) = ``rbac.authorization.k8s.io``.
+   -  **kind** (string) = ``Role`` or ``ClusterRole``.
+   -  **name** (string) = The name of the Role object.
+
+-  subjects (list of maps) = The account(s) to bind the Role to.
+
+   -  apiGroup (string) = ``rbac.authorization.k8s.io``.
+   -  **kind** (string) = The type of account: ``User``, ``Group``, or ``ServiceAccount``.
+   -  **name** (string) = The name of the account object.
+   -  namespace (string) = The namespace the account is in.
+
+----
+
+**Examples:**
+
+Bind the role ``role-dev`` to the user ``annie``.
+
+.. code-block:: yaml
+
+   ---
+   kind: RoleBinding
+   apiVersion: rbac.authorization.k8s.io/v1
+   metadata:
+     name: rolebinding-dev
+     namespace: default
+   roleRef:
+     apiGroup: rbac.authorization.k8s.io
+     kind: Role
+     name: role-dev
+   subjects:
+     - apiGroup: rbac.authorization.k8s.io
+       kind: User
+       name: annie
 
 ServiceAccount
 ^^^^^^^^^^^^^^
@@ -2470,3 +2668,5 @@ Bibliography
 28. "API List." OpenShift Container Platform 4.5 Documentation. Accessed August 12, 2020. https://docs.openshift.com/container-platform/4.5/rest_api/index.html
 29. "Templates." OpenShift Container Platform 3.11 Documentation. Accessed August 14, 2020.  https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html
 30. "Configuration." kind. January 3, 2021. Accessed January 20, 2021. https://kind.sigs.k8s.io/docs/user/configuration/
+31. "Authorization Overview." Kubernetes Documentation. January 7, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authorization/
+32. "Using RBAC Authorization." Kubernetes Documentation. January 14, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
