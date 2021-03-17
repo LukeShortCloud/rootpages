@@ -136,12 +136,17 @@ Writable and Executable File Systems
 
 By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.
 
--  Remove both the root file system and boot verifications. Then reboot Chrome OS.
+-  Remove the root file system verification on both partitions 2 and 4. Depending on the last A/B system update that was applied and in use, the current root file system could be either be on partition 2 or 4.
 
    .. code-block:: sh
 
-       chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions 4
-       chronos@localhost / $ sudo crossystem dev_boot_signed_only=0
+      chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions "2 4"
+
+-  Remove the boot verification. Then reboot Chrome OS.
+
+   .. code-block:: sh
+
+      chronos@localhost / $ sudo crossystem dev_boot_signed_only=0
 
 -  Remount all of the locked down Chrome OS partitions with full read, write, and execute (rwx) permissions.
 
