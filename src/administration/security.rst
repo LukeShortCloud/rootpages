@@ -217,6 +217,46 @@ Verify that the authentication works.
 
 [2][4]
 
+SSL/TLS Certificates
+--------------------
+
+SSL/TLS certificates provide a symmetric key-pair, similar to SSH keys. SSL is an older protocol that is vulnerable and no longer supported. It was succeeded by TLS.
+
+A TLS cipher suite consist of 4 different alogirthms: (1) the key exchange, (2) the authentication, (3) the bulk encyrption, and (4) message authentication code (MAC). A server defines what cipher suite it supports. A client that connects to a server negotiates for a cipher suite that it is compatible with and then uses that for securely connecting. [6]
+
+-  Key exchange = Encrypt both of the symmetric keys.
+-  Authentication = Sign and verify certificates.
+-  Bulk encyrption = Encrypt data to and from a server. A key generated with this alogrithm requires a password.
+-  MAC = Checks the integrity of the data being sent and received.
+
+Top alogithms [7]:
+
+-  Key exchange:
+
+   1. ECDHE
+   2. RSA
+
+-  Authentication:
+
+   1. ECDSA
+   2. RSA
+
+-  Bulk encryption:
+
+   1. AES256-GCM
+   2. CHACHA20
+   3. AES128-GCM
+   4. AES256
+   5. AES128
+
+-  MAC:
+
+   1. SHA384
+   2. POLY1305
+   3. SHA256
+
+Self-signed certificates and keys can be manually created. Web browsers and tools will show these as unverified since a trusted certificate authority (CA) did not sign the certificate. The benefit is that secure TLS connections can still be used.
+
 History
 -------
 
@@ -232,3 +272,5 @@ Bibliography
 3. "Configuring Your Firewall to Work With Kerberos V5." Accessed September 25, 2016. https://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-admin/Configuring-Your-Firewall-to-Work-With-Kerberos-V5.html
 4. "CentOS 7 Configure Kerberos KDC and Client." theurbanpengiun. September 5, 2016. Accessed September 25, 2016. https://www.youtube.com/watch?v=7Q-Xx0I8PXc
 5. "Principal names and DNS." MIT Kerberos Documentation. Accessed October 22, 2016. https://web.mit.edu/kerberos/krb5-1.13/doc/admin/princ\_dns.html
+6. "A Beginner’s Guide to TLS Cipher Suites." Namecheap Blog. December 22, 2020. Accessed March 21, 2021. https://www.namecheap.com/blog/beginners-guide-to-tls-cipher-suites/
+7. "Recommendations for TLS/SSL Cipher Hardening." The Acunetix Blog. April 10, 2019. Accessed March 21, 2021. https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/
