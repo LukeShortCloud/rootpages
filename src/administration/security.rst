@@ -257,6 +257,56 @@ Top alogithms [7]:
 
 Self-signed certificates and keys can be manually created. Web browsers and tools will show these as unverified since a trusted certificate authority (CA) did not sign the certificate. The benefit is that secure TLS connections can still be used.
 
+-  Create a CA key.
+
+   .. code-block:: sh
+
+      $ openssl genrsa -out ca.key 4096
+
+-  Create a root certificate.
+
+   .. code-block:: sh
+
+      $ openssl req -x509 -new -nodes -key ca.key -days 365 -out ca.crt -subj "/C=<COUNTRY_CODE>/ST=<STATE_NAME>/L=<CITY_NAME>/O=<ORGANIZATION_NAME>/OU=<ORGANIZATIONAL_UNIT_NAME>/CN=<FQDN>"
+
+[8]
+
+-  Create a symmetric key-pair. This file will be used as the private key file.
+
+   .. code-block:: sh
+
+      $ openssl genrsa -out cert.key 4096
+
+-  Optionally, extract the public key from it.
+
+   .. code-block:: sh
+
+      $ openssl rsa -in cert.key -pubout -out cert.pub
+
+-  Create a certificate signing request (CSR). This will be used by a CA to sign the certificate.
+
+   .. code-block:: sh
+
+      $ openssl req -new -key cert.key -out cert.csr -subj "/C=<COUNTRY_CODE>/ST=<STATE_NAME>/L=<CITY_NAME>/O=<ORGANIZATION_NAME>/OU=<ORGANIZATIONAL_UNIT_NAME>/CN=<FQDN>"
+
+[9]
+
+-  Create a self-signed certificate signed by the CA.
+
+   .. code-block:: sh
+
+      $ openssl x509 -req -in cert.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out cert.crt -days 365
+
+[8]
+
+-  Verify that the information for the certificate is correct.
+
+   .. code-block:: sh
+
+      $ openssl x509 -noout -text -in cert.crt
+
+[9]
+
 History
 -------
 
@@ -274,3 +324,5 @@ Bibliography
 5. "Principal names and DNS." MIT Kerberos Documentation. Accessed October 22, 2016. https://web.mit.edu/kerberos/krb5-1.13/doc/admin/princ\_dns.html
 6. "A Beginner’s Guide to TLS Cipher Suites." Namecheap Blog. December 22, 2020. Accessed March 21, 2021. https://www.namecheap.com/blog/beginners-guide-to-tls-cipher-suites/
 7. "Recommendations for TLS/SSL Cipher Hardening." The Acunetix Blog. April 10, 2019. Accessed March 21, 2021. https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/
+8. "How to Create Your Own SSL Certificate Authority for Local HTTPS Development." WP Migrate DB Pro. June 23, 2020. Accessed March 21, 2021. https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/
+9. "OpenSSL Quick Reference Guide." DigiCert. Accessed March 21, 2021. https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
