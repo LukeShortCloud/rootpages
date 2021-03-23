@@ -613,6 +613,116 @@ CI/CD pipelines provide an automated workflow for deploying software updates. Wh
 CI
 ~~
 
+GitHub Actions
+^^^^^^^^^^^^^^
+
+GitHub Actions is a CI/CD platform hosted by GitHub. It runs all workflows defined in ``.github/workflows/*.yaml`` files in a git repository. The primary workflow file is normally named ``.github/workflows/main.yaml``. A workflow file can define one or more jobs. The workflow runs when at least one event is matched.
+
+Workflow file syntax:
+
+.. code-block:: yaml
+
+   ---
+   name: <WORKFLOW_NAME>
+   on:
+     - <EVENT_1>:
+     - <EVENT_2>:
+   jobs:
+     <JOB_1>:
+     <JOB_2>:
+
+Common events:
+
+-  on (map)
+
+   -  create = When a branch or tag is created.
+   -  page_build = When code is pushed to the GitHub Pages "gh-pages" branch.
+   -  pull (map)
+
+      -  branches (list of strings) = A list of branches.
+
+   -  pull_request (map)
+
+      -  types (list of strings) = The event taken on the pull request (PR).
+
+         -  assigned
+         -  edited
+         -  labeled
+         -  opened
+         -  ready_for_review
+
+   -  push (map) = When code is pushed to a branch or tag. Wildcards ``**`` and negative ``!`` expressions can be used.
+
+      -  branches (list of strings)
+      -  branchs-ignore (list of strings)
+      -  tags (list of strings)
+      -  tags-ignore (list of strings)
+
+   -  release
+   -  schedule (list)
+
+      -  cron (string) = A crontab string to use for the schedule.
+
+[31]
+
+Common job attributes:
+
+-  jobs (map)
+
+   -  ``<JOB_NAME>`` (map) = Provide a name for the job.
+
+      -  container (map) = Specify a container to run the CI job in.
+
+         -  defaults (map) = Default settings.
+         -  env (map) = Shell environment variables.
+
+            -  ``<KEY>`` (string) = ``<VALUE>``
+
+         -  image (string)
+         -  options (string)
+         -  ports (list of integers)
+         -  volumes (list of strings)
+
+      -  needs (list of strings) = List other jobs that must be completed before this job starts.
+      -  **runs-on** (string)
+
+         -  macos-[10.15|11.0]
+         -  self-hosted = A custom CI environment can be setup and used.
+         -  ubuntu-[16.04|18.04|20.04]
+         -  windows-2019
+
+      -  services (map) = Specify one or more containers to run. Refer to ``jobs.<JOB_NAME>.container`` for the usage.
+      -  steps (list of maps)
+
+          -  env (string)
+          -  name (string) = Describe what the step is doing.
+          -  run (string) = The command(s) to run.
+          -  uses (string) = An action to use from another file, branch, container, or git repository.
+
+[32]
+
+----
+
+**Examples:**
+
+A job running in a container:
+
+.. code-block:: yaml
+
+   jobs:
+     container-example:
+       runs-on: ubuntu-20.04
+       container:
+         image: busybox:latest
+
+A job running in a virtual machine:
+
+.. code-block:: yaml
+
+   jobs:
+     virtual-machine-example:
+       runs-on: ubuntu-20.04
+
 Travis CI
 ^^^^^^^^^
 
@@ -876,3 +986,5 @@ Bibliography
 28. "What Is Hypermedia?" SmartBeat. 2020. Accessed December 29, 2020. https://smartbear.com/learn/api-design/what-is-hypermedia/
 29. "What is MIME ( Multi-Purpose Internet Mail Extensions )." InterServer Tips. September 22, 2016. Accessed December 29, 2020. https://www.interserver.net/tips/kb/mime-multi-purpose-internet-mail-extensions/
 30. Difference between URL, URI and URN - Interview Questions." Java 67. Accessed December 29, 2020. https://www.java67.com/2013/01/difference-between-url-uri-and-urn.html
+31. "Events that trigger workflows." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+32. "Workflow syntax for GitHub Actions." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
