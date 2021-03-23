@@ -135,6 +135,7 @@ Manage Kubernetes resources via the API.
    :header: Usage, Explanation
    :widths: 20, 20
 
+   --insecure-skip-tls-verify, ignore self-signed certificates
    -o name, print out only the name
    -o wide, print out all of the information
    -o {json|yaml}, print out the JSON or YAML configuration
@@ -147,9 +148,24 @@ Manage Kubernetes resources via the API.
    "api-resources --api-group """, show the core APIs
    api-resources --namespaced={true|false}, show APIs that do (or do not) support being namespaced
    api-resources --verb={create|delete|deletecollection|get|list|patch|update|watch}, show APIs that support the ``kubectl <VERB>``
+   --as=<USER>, run a 'kubectl' command as a different user
+   --as-group=<GROUP>, run a 'kubectl' command as a different group
+   auth can-i --list, view all actions the current user can do
+   auth can-i <VERB> <API>, view if the current user can do a specific action against an API
+   auth can-i <VERB> <API> --as=<USER>, view if a different user can do a specific action against an API
+   auth can-i <VERB> <API> --as-group=<GROUP>, view if a different group can do a specific action against an API
    explain --recursive <API>, explain all of the options for creating an object from that API
    explain <KIND> --api-version=<APIVERSION_NAME>/<APIVERSION_VERSION>, explain a specific version of an API
    explain <API>.spec, show all of the top-level spec options for the API
+   config view, view the current Kubernetes config that is in use
+   config get-contexts, view all available Kubernetes clusters from the config file
+   config current-context, display the current Kubernetes cluster in use
+   config use-context <CONTEXT>, temporarily manage a different Kubernetes cluster
+   config use-context <CONTEXT> --namespace <NAMESPACE>, temporarily manage a different Kubernetes cluster and a different namespace
+   config set-context --current, permanently manage a different Kubernetes cluster
+   config set-context --cluster=<HOST>, set the cluster IP address or FQDN hostname to connect to for the current context
+   config set-context --user<USER>, set the username for the current context
+   config delete-context <CONTEXT>, delete login info to a specific cluster
    edit <API> <OBJECT>, edit an existing object's YAML manifest
    "cluster-info", "show the clustered services and their status"
    "get nodes", "show all of the Nodes in the Kubernetes cluster"
@@ -169,6 +185,9 @@ Manage Kubernetes resources via the API.
    delete pod <POD> --wait=0, start the deletion of a Pod and then return to the command prompt
    "proxy", "create a proxy from your hypervisor to be able to access the private network that the containers share"
    "attach <NAME> -i", "attach to a already running container"
+   logs <POD>, show logs for a Pod if there is only one container in the Pod
+   logs -f <POG>, trail/follow the logs of a Pod
+   "logs {-p,--previous}", show logs from the previously deployed Pod with the same name
    logs <POD> <CONTAINER>, show logs for a specific container
    exec <POD> -- <COMMAND>, run a command on all containers in a pod
    exec <POD> -c <CONTAINER> -- <COMMAND>, run a command on a specific container in a pod
