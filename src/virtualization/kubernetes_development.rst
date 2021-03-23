@@ -339,6 +339,121 @@ NetworkPolicy
 
 [5]
 
+----
+
+**Examples**:
+
+Deny all incoming traffic to all Pods in a namespace.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-deny-in
+     namespace: foobar
+   spec:
+     podSelector: {}
+     policyTypes:
+       - Ingress
+
+Allow all incoming traffic to all Pods in a namespace.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-allow-in
+     namespace: foobar
+   spec:
+     podSelector: {}
+     policyTypes:
+       - Ingress
+     ingress:
+       - {}
+
+Only allow outgoing traffic to access port 443.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-https-out
+   spec:
+     podSelector:
+       matchLabels:
+         app: my-new-app
+     policyTypes:
+       - Egress
+     egress:
+       - ports:
+         - protocol: TCP
+           port: 443
+
+Only allow incoming traffic to access port 53 via TCP and UDP.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-dns-in
+   spec:
+     podSelector:
+       matchLabels:
+         app: dns
+     policyTypes:
+       - Ingress
+     ingress:
+       - ports:
+         - protocol: TCP
+           port: 53
+         - protocol: UDP
+           port: 53
+
+Only allow incoming traffic from a specified CIDR range.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-internal-in
+   spec:
+     podSelector:
+       matchLabels:
+         app: foobar
+     ingress:
+       - from:
+         - ipBlock:
+             cidr: 10.0.0.0/24
+
+Only allow incoming traffic from a specific namespace.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-ns-in
+   spec:
+     podSelector:
+       matchLabels:
+         app: foobar
+     ingress:
+       - from:
+         - namespaceSelector:
+             matchLabels:
+               foo: bar
+
 PersistentVolume
 ^^^^^^^^^^^^^^^^
 
