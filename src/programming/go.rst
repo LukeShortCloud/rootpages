@@ -260,10 +260,26 @@ Syntax:
 
 .. code-block:: go
 
-   var <ARRAY_NAME> [<LENGTH>]<DATA_TYPE> = [<LENGTH>]<DATA_TYPE>{<VALUE1>, <VALUE2>}
+   var <ARRAY_NAME> [<LENGTH>]<DATA_TYPE> = [<LENGTH>]<DATA_TYPE>{<VALUE_1>, <VALUE_2>}
    var <SLICE_NAME> []<DATA_TYPE> = []<DATA_TYPE>{<VALUE1>, <VALUE2>}
    append(<SLICE_NAME>, <VALUE1>, <VALUE2>)
    len(<ARRAY_SLICE_OR_MAP>)
+
+Define an array and automatically determine the number of elements in it by using ``[...]``:
+
+.. code-block:: go
+
+   var <ARRAY_NAME> [...]<DATA_TYPE> = [...]<DATA_TYPE>{<VALUE_1>, <VALUE_2>}
+
+Valid ways to define a slice:
+
+.. code-block:: go
+
+   // Has a default value of "nil".
+   var <SLICE_NAME> []<DATA_TYPE>
+   // These two are empty.
+   <SLICE_NAME> := []<DATA_TYPE>{}
+   <SLICE_NAME> := make([]<DATA_TYPE>, 0)
 
 Example usage of a slice:
 
