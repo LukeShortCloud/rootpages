@@ -270,8 +270,11 @@ View the packages that are installed:
 
    chronos@localhost / $ ls -1 /usr/local/var/db/pkg/sys-apps/
 
-Building a Custom Kernel and Modules
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Custom Linux Kernel and Modules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Building
+^^^^^^^^
 
 It is recommended to build a Linux kernel and/or modules on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility. The kernel and/or modules can be compiled regardless of the CPU architecture required.
 
@@ -370,6 +373,28 @@ If the development environment is no longer required, clean it up using this com
 .. code-block:: sh
 
    $ cros_sdk --delete
+
+Installing Kernel Modules
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Mount the root file system as writable, copy the kernel module, and then load it to ensure it works.
+
+Example of installing the ``cifs`` module after building it:
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo mount -o remount,rw /
+   chronos@localhost / $ sudo mkdir /lib/modules/4.14.214-17103-g887e64348b2b/kernel/fs/cifs/
+   chronos@localhost / $ sudo cp ~/Downloads/cifs.ko /lib/modules/4.14.214-17103-g887e64348b2b/kernel/fs/cifs/
+   chronos@localhost / $ sudo depmod
+   chronos@localhost / $ sudo modprobe cifs
+
+If the module fails to load with this error, it is possible that it was compiled for the wrong kernel or CPU architecture. It needs to be built against the exact kernel that is currently installed on the system.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo modprobe <KERNEL_MODULE>
+   modprobe: ERROR: could not insert '<KERNEL_MODULE>': Exec format error
 
 Linux (Beta)
 ------------
