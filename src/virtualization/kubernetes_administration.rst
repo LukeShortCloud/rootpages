@@ -1264,6 +1264,92 @@ Commands can be run as a specific user or group:
 
 [56]
 
+User Accounts
+^^^^^^^^^^^^^
+
+A user is defined using the "common name" (CN) subject in a TLS certificate. The certificate is used instead of a password to authenticate to a Kubernetes cluster. Basic/password authentication was removed in Kubernetes 1.19. [61] The certificate must be signed by the Kubernetes certificate authority (CA).
+
+-  Create a public and private key-pair for a new user.
+
+   .. code-block:: sh
+
+      $ openssl genrsa -out <USER>.key 4096
+
+-  Create a certificate signing request for the new user.
+
+   -  Normal user:
+
+      .. code-block:: sh
+
+         $ openssl req -new -key <USER>.key -subj "/CN=<USER>" -out <USER>.csr
+
+   -  Administrative user. Only use this if the certificate will be manually signed. The ``CertificateSigningRequest`` (CSR) API does not allow creating objects with the organization field set to "system:masters". Instead, create a normal user above and apply administrative privileges as part of the CSR and [Cluster]RoleBinding objects.
+
+      .. code-block:: sh
+
+         $ openssl req -new -key <USER>.key -subj "/CN=<USER>/O=system:masters" -out <USER>.csr
+
+-  Create and sign the certificate either manually using the Kubernetes certificate authority (found on the Control Plane Nodes) or using the Kubernetes CSR API.
+
+   -  Manually:
+
+      .. code-block:: sh
+
+         $ openssl x509 -req -in <USER>.csr -CA ca.crt -CAkey ca.key -out <USER>.crt
+
+   -  CSR API:
+
+      -  Use ``base64`` to encode the certificate key file into a string.
+
+         .. code-block:: sh
+
+            $ base64 -w 0 <USER>.csr
+
+      -  Create a CSR object. Refer to `examples from the Kubernetes Development documentation about CSR <kubernetes_development.html#certificatesigningrequest>`__.
+      -  The CSR will be in a ``Pending`` state until manually approved by an administrator user.
+
+         .. code-block:: sh
+
+            $ kubectl get csr <CSR_OBJECT_NAME>
+            $ kubectl certificate approve <CSR_OBJECT_NAME>
+
+      -  Extract the certificate file. If the CSR was valid, a ``csr.status.certificate`` field will be populated with the ``base64`` encoded certificate file.
+
+         .. code-block:: sh
+
+            $ kubectl get csr <CSR_OBJECT_NAME> --template={{.status.certificate}} | base64 -d > <USER>.crt
+
+-  Unless the certificate was created manually with the ``/O=system:masters`` privileges, a [Cluster]Role and [Cluster]RoleBinding must be created for the user to assign permissions.
+-  Find or create a role to use that will define the permissions the user has to the cluster.
+
+    -  Find and use an existing ClusterRole (this can be used for a RoleBinding, not just a ClusterRoleBinding). For an administrator account, use ``cluster-admin`` for full access to everything or ``admin`` for full access only to the default APIs.
+
+       .. code-block:: sh
+
+          $ kubectl get clusterroles
+
+   -  Or create a new [Cluster]Role.
+
+      .. code-block:: sh
+
+         $ kubectl create [cluster]role <ROLE_NAME> --verb=<VERB_1>,<VERB_2> --resource=<API_1>,<API_2>
+
+-  Create a [Cluster]RoleBinding to grant the user those permissions.
+
+   .. code-block:: sh
+
+      $ kubectl create [cluster]rolebinding --[cluster]role=<ROLE_NAME> --user=<USER> <ROLEBINDING_NAME>
+
+[56][62]
+
+-  Finally a user can authenticate to the cluster either via ``kubectl`` or manually via an HTTP request through a tool such as ``curl``. Verify that the new account is working as expected.
+
+   1.  ``$HOME/.kube/config`` file.
+   2.  ``curl``:
+
+      2a.  Syntax: ``curl --cert <USER>.crt --key <USER>.key --cacert ca.crt https://<CONTROL_PLANE_IP>:6443/``
+      2b.  Example: ``curl --cert <USER>.crt --key <USER>.key -k https://127.0.0.1:6443/api/v1/namespaces/default/pods/``
+
 TLS Certificate Creation (cert-manager)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1405,6 +1491,20 @@ Solutions:
 
 [53]
 
+----
+
+Error ``use of <SIGNER_NAME> signer with system:masters group is not allowed`` when creating a CertificateSigningRequest object:
+
+.. code-block:: sh
+
+   $ kubectl apply -f csr-user-foobar.yaml
+   Error from server (Forbidden): error when creating "csr-user-foobar.yaml": certificatesigningrequests.certificates.k8s.io "csr-user-foobar" is forbidden: use of kubernetes.io/kube-apiserver-client signer with system:masters group is not allowed
+
+Solutions:
+
+-  Manually create/sign the certificate with ``openssl`` and the Kubernetes CA.
+-  Or use ``openssl`` to generate a new certificate signing request that does not include ``/O=system:masters``.
+
 History
 -------
 
@@ -1471,8 +1571,10 @@ Bibliography
 53. "certificate expired and rotate #1621." GitHub k3s-io/k3s. February 8, 2021. Accessed March 10, 2021. https://github.com/k3s-io/k3s/issues/1621
 54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed March 11, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
 55. "Welcome to Cloud Foundry BOSH." Cloud Foundry BOSH. Accessed March 11, 2021. https://bosh.io/docs/
-56. "Authenticating." Kubernetes Documentation. February 27, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+56. "Authenticating." Kubernetes Documentation. February 27, 2021. Accessed March 31, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authentication/
 57. "Comparing Ingress controllers for Kubernetes." Flant Blog. October 12, 2019. Accessed March 26, 2021. https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
 58. "Ingress Controllers." Kubernetes Documentation. February 13, 2021. Accessed March 30, 2021. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers
 59. "Kubernetes." cert-manager Documentation. March 8, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/installation/kubernetes/
 60. "API reference docs." cert-manager Documentation. January 1, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/reference/api-docs/
+61. "basic auth is deprecated." Kubernetes Master Charm Bugs. October 2, 2021. Accessed March 31, 2021. https://bugs.launchpad.net/charm-kubernetes-master/+bug/1841226
+62. "Using RBAC Authentication." Kubernetes Documentation. February 11, 2021. Accessed March 31, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/

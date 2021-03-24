@@ -312,13 +312,13 @@ A CSR for a new end-user account that will have administrator access.
      name: csr-harry
    spec:
      request: <BASE64_ENCODED_CERTIFICATE>
-     signerName: kubernetes.io/kubelet-apiserver-client
+     signerName: kubernetes.io/kube-apiserver-client
      groups:
        - system:authenticated
      usages:
+       - client auth
        - digital signature
        - key encipherment
-       - server auth
 
 A CSR for a Kubernetes component added to the cluster.
 
