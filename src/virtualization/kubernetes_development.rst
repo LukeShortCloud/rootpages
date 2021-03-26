@@ -224,6 +224,121 @@ Cluster APIs are used by Kubernetes cluster operators to define how it is config
    -  Role = RBAC for all namespaced resources.
    -  RoleBinding = A list of users and their permissions for a given Role.
 
+CertificateSigningRequest
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-  API group / version (latest): certificates.k8s.io/v1
+-  Shortname: csr
+-  Namespaced: false
+
+----
+
+``csr.spec:``
+
+-  extras (map of strings) = Additional settings for the user.
+-  groups (list of strings) [32] = Specify the type of account that this certificate can be used as for authentication.
+
+   -  system:authenticated = Human.
+   -  system:serviceaccounts = Non-human.
+
+-  **request** (string) = Base64-encoded PEM/certificate file content.
+-  **signerName** (string) [33] = The CA that will sign the certificate.
+
+   -  ``kubernetes.io/kube-apiserver-client`` = Certificates will be valid for interfacing directly with the kube-apiserver as an end-user client. ``csr.spec.usages`` must include ``["client auth"]`` and can also add ``["digital signature", "key encipherment"]``. Subjects can be anything.
+   -  ``kubernetes.io/kube-apiserver-client-kubelet`` = Similar to ``kubernetes.io/kube-apiserver-client`` except this certificate should be used for Kubernetes components and not end-users. ``csr.spec.usages`` must be set to ``["client auth", "digital signature", "key encipherment"]``. Subjects must be ``["system:<COMPONENT_NAME>"]``.
+   -  ``kubernetes.io/kubelet-serving`` = Certificates will be valid for kubelet processes only. ``csr.spec.usages`` must be set to ``["digital signature", "key encipherment", "server auth"]``. Subjects must be ``["system:<COMPONENT_NAME>"]``.
+   -  ``kubernetes.io/legacy-unknown`` = Used by legacy third-party Kubernetes distrubtions. Not supported by upstream Kubernetes.
+
+-  uid (string) = A unique identifer for the user that will be tied to this certificate. This way, the same username can be used more than once without conflict.
+-  usages (list of strings) = The purpose of the certificate.
+
+   -  any
+   -  cert sign
+   -  client auth
+   -  code signing
+   -  content commitment
+   -  crl sign
+   -  data encipherment
+   -  decipher only
+   -  digital signature
+   -  email protection
+   -  encipher only
+   -  ipsec end system
+   -  ipsec tunnel
+   -  ipsec user
+   -  key agreement
+   -  key encipherment
+   -  microsoft sgc
+   -  netscape sgc
+   -  ocsp signing
+   -  s/mime
+   -  server auth
+   -  signing
+   -  timestamping
+
+-  username (string) = The name of the user that will be tied to this certificate.
+
+[5]
+
+----
+
+**Examples:**
+
+A CSR for a new end-user account.
+
+.. code-block:: yaml
+
+   ---
+   kind: CertificateSigningRequest
+   apiVersion: certificates.k8s.io/v1
+   metadata:
+     name: csr-henry
+   spec:
+     request: <BASE64_ENCODED_CERTIFICATE>
+     signerName: kubernetes.io/kube-apiserver-client
+     groups:
+       - system:authenticated
+     usages:
+       - client auth
+
+A CSR for a new end-user account that will have administrator access.
+
+.. code-block:: yaml
+
+   ---
+   kind: CertificateSigningRequest
+   apiVersion: certificates.k8s.io/v1
+   metadata:
+     name: csr-harry
+   spec:
+     request: <BASE64_ENCODED_CERTIFICATE>
+     signerName: kubernetes.io/kubelet-apiserver-client
+     groups:
+       - system:authenticated
+     usages:
+       - digital signature
+       - key encipherment
+       - server auth
+
+A CSR for a Kubernetes component added to the cluster.
+
+.. code-block:: yaml
+
+   ---
+   kind: CertificateSigningRequest
+   apiVersion: certificates.k8s.io/v1
+   metadata:
+     name: csr-kube-new-operator
+   spec:
+     request: <BASE64_ENCODED_CERTIFICATE>
+     signerName: kubernetes.io/kubelet-serving
+     groups:
+       - system:serviceaccount
+     usages:
+       - digital signature
+       - key encipherment
+       - server auth
+
 ClusterRole
 ^^^^^^^^^^^
 
@@ -853,7 +968,7 @@ Role
       -  use = Used for the PodSecurityPolicy API only. Use a specific policy with an object.
       -  watch = Watch an object for updates.
 
-[32]
+[5][32]
 
 ----
 
@@ -2757,7 +2872,7 @@ Bibliography
 2. "Persistent Volumes." Kubernetes Concepts. January 16, 2019. Accessed January 29, 2019. https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 3. "Configure a Pod to Use a PersistentVolume for Storage." Kubernetes Tasks. December 20, 2019. Accessed June 3, 2020. https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 4. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
-5. "[Kubernetes 1.18] API OVERVIEW." Kubernetes API Reference Docs. April 13, 2020. Accessed July 13, 2020. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/
+5. "[Kubernetes 1.19] API OVERVIEW." Kubernetes API Reference Docs. October 19, 2020. Accessed March 25, 2021. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/
 6. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
 7. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
 8. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
@@ -2784,4 +2899,5 @@ Bibliography
 29. "Templates." OpenShift Container Platform 3.11 Documentation. Accessed August 14, 2020.  https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html
 30. "Configuration." kind. January 3, 2021. Accessed January 20, 2021. https://kind.sigs.k8s.io/docs/user/configuration/
 31. "Authorization Overview." Kubernetes Documentation. January 7, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authorization/
-32. "Using RBAC Authorization." Kubernetes Documentation. January 14, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+32. "Using RBAC Authorization." Kubernetes Documentation. January 14, 2021. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+33. "Certificate Signing Requests." Kubernetes Documentation. October 20, 2020. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/
