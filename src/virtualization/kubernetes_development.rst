@@ -120,7 +120,7 @@ A YAML file can be used to define an object that will be created using an API re
 
 **Run Generators**
 
-In Kubernetes < 1.18, the imperative command ``kubectl run`` would create a Deployment. It could optionally be used to create a Pod instead.
+In Kubernetes < 1.19, the imperative command ``kubectl run`` would create a Deployment. It could optionally be used to create a Pod instead.
 
 .. code-block:: sh
 
@@ -131,7 +131,7 @@ In Kubernetes < 1.18, the imperative command ``kubectl run`` would create a Depl
 
    $ kubectl run --generator=run-pod/v1 <POD_NAME> --image=<IMAGE>
 
-In Kubernetes >= 1.18, the command can only create a Pod. This is to align the command with the functionality of ``docker run``.
+In Kubernetes >= 1.19, the command can only create a Pod. This is to align the command with the functionality of ``docker run``.
 
 .. code-block:: sh
 
@@ -2765,7 +2765,7 @@ Top 5 Ingress Controllers and their top use-cases [24]:
 
 A Kubernetes cluster can have more than one Ingress Controller installed. In an object's manifest, the one to use can be specified. [25]
 
-Kubernetes < 1.18 ``ingress.metadata.annotations.kubernetes.io/ingress.class``:
+Kubernetes < 1.19 ``ingress.metadata.annotations.kubernetes.io/ingress.class``:
 
 .. code-block:: yaml
 
@@ -2773,7 +2773,7 @@ Kubernetes < 1.18 ``ingress.metadata.annotations.kubernetes.io/ingress.class``:
      annotations:
        kubernetes.io/ingress.class: <INGRESS_CONTROLLER>
 
-Kubernetes >= 1.18 ``ingress.spec.ingressClassName``:
+Kubernetes >= 1.19 ``ingress.spec.ingressClassName``:
 
 .. code-block:: yaml
 
