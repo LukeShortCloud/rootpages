@@ -131,33 +131,6 @@ Open a full shell terminal in developer mode to access more commands.
 
 The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: ``CTRL`` + ``SHIFT`` + ``p``. Go to ``Sounds`` > ``Alert bell sound (URI)`` and then remove the string.
 
-Writable and Executable File Systems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.
-
--  Remove the root file system verification on both partitions 2 and 4. Depending on the last A/B system update that was applied and in use, the current root file system could be either be on partition 2 or 4.
-
-   .. code-block:: sh
-
-      chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions "2 4"
-
--  Remove the boot verification. Then reboot Chrome OS.
-
-   .. code-block:: sh
-
-      chronos@localhost / $ sudo crossystem dev_boot_signed_only=0
-
--  Remount all of the locked down Chrome OS partitions with full read, write, and execute (rwx) permissions.
-
-   .. code-block:: sh
-
-      chronos@localhost / $ sudo mount -o remount,rw /
-      chronos@localhost / $ sudo mount -o remount,exec /mnt/stateful_partition
-      chronos@localhost / $ sudo mount -o remount,exec remount,exec /home/chronos/user
-
-[25][26]
-
 Updates
 ~~~~~~~
 
@@ -270,11 +243,38 @@ View the packages that are installed:
 
    chronos@localhost / $ ls -1 /usr/local/var/db/pkg/sys-apps/
 
+Writable and Executable File Systems
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.
+
+-  Remove the root file system verification on both partitions 2 and 4. Depending on the last A/B system update that was applied and in use, the current root file system could be either be on partition 2 or 4.
+
+   .. code-block:: sh
+
+      chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions "2 4"
+
+-  Remove the boot verification. Then reboot Chrome OS.
+
+   .. code-block:: sh
+
+      chronos@localhost / $ sudo crossystem dev_boot_signed_only=0
+
+-  Remount all of the locked down Chrome OS partitions with full read, write, and execute (rwx) permissions.
+
+   .. code-block:: sh
+
+      chronos@localhost / $ sudo mount -o remount,rw /
+      chronos@localhost / $ sudo mount -o remount,exec /mnt/stateful_partition
+      chronos@localhost / $ sudo mount -o remount,exec remount,exec /home/chronos/user
+
+[25][26]
+
 Custom Linux Kernel and Modules
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Building
-^^^^^^^^
+''''''''
 
 It is recommended to build a Linux kernel and/or modules on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility. The kernel and/or modules can be compiled regardless of the CPU architecture required.
 
@@ -375,7 +375,7 @@ If the development environment is no longer required, clean it up using this com
    $ cros_sdk --delete
 
 Installing Kernel Modules
-^^^^^^^^^^^^^^^^^^^^^^^^^
+'''''''''''''''''''''''''
 
 Mount the root file system as writable, copy the kernel module, and then load it to ensure it works.
 
