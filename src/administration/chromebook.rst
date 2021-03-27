@@ -270,6 +270,25 @@ By default, the root file system is not writable and both the stateful_partition
 
 [25][26]
 
+Disable Updates
+^^^^^^^^^^^^^^^
+
+Remove the executable permissions from the ``update_engine`` binary.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo chmod -x /usr/sbin/update_engine
+
+Then either reboot the Chromebook or kill the running ``update_enigne`` process to stop Chrome OS from updating.
+
+Re-enable updates by deleting the old log file so it will be recreated, make the ``update_engine`` binary executable again, and then start the update daemon.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo rm /var/log/update_engine.log
+   chronos@localhost / $ sudo chmod +x /usr/sbin/update_engine
+   chronos@localhost / $ sudo /usr/sbin/update_engine
+
 Custom Linux Kernel and Modules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
