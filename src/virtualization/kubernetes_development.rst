@@ -1538,11 +1538,11 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
    apiVersion: networking.k8s.io/v1
    metadata:
      name: ing-rewrite-target-example
-   annotations:
-     # NGINX
-     nginx.ingress.kubernetes.io/rewrite-target: /
-     # Traefik
-     #traefik.ingress.kubernetes.io/rewrite-target: /
+     annotations:
+       # NGINX
+       nginx.ingress.kubernetes.io/rewrite-target: /
+       # Traefik
+       #traefik.ingress.kubernetes.io/rewrite-target: /
    spec:
      # NGINX
      ingressClassName: nginx
