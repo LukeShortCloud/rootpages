@@ -184,7 +184,7 @@ Top Distributions
 
 This is an extremely biased list of the best distribution for each use case.
 
--  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. GalliumOS
+-  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. Ubuntu Web Remix 4. GalliumOS
 -  Alternative to macOS = 1. elementary OS 2. Fedora 3. Xubuntu
 -  Alternative to Windows = Zorion OS
 -  Arm single-board computer (SBC) = Debian
