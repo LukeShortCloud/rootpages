@@ -1147,6 +1147,25 @@ kind does not officially support upgrades. It was designed for developers to spi
 Ingress Controllers
 -------------------
 
+The ``Ingress`` API requires at least one Ingress Controller to be installed. That controller creates a ``Service`` of type ``LoadBalancer`` using an external IP address that is available on all of the Nodes. Domain names should have their DNS resolve to that IP address.
+
+The Ingress Controller will handle all incoming HTTP connections on port 80. It also supports handling TLS termination for incoming HTTPS connections on port 443. Custom layer 7 routing rules for the HTTP/S traffic can be defined via the API.
+
+Other ports and protocols are not supported. Use a ``Service`` of type ``LoadBalancer`` or ``NodePort`` instead for applications that do not use HTTP or require a custom port. [58]
+
+Popular Ingress controllers [57]:
+
+-  Ambassador
+-  Contour
+-  HAProxy
+-  Istio
+-  Kong
+-  NGINX
+-  Traefik
+-  Voyager
+
+A full list of Ingress Controllers can be found `here <https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/>`__.
+
 Traefik
 ~~~~~~~
 
@@ -1419,3 +1438,5 @@ Bibliography
 54. "VMware Tanzu Kubernetes Grid Documentation." VMware Docs. Accessed March 11, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/index.html
 55. "Welcome to Cloud Foundry BOSH." Cloud Foundry BOSH. Accessed March 11, 2021. https://bosh.io/docs/
 56. "Authenticating." Kubernetes Documentation. February 27, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+57. "Comparing Ingress controllers for Kubernetes." Flant Blog. October 12, 2019. Accessed March 26, 2021. https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
+58. "Ingress Controllers." Kubernetes Documentation. February 13, 2021. Accessed March 30, 2021. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers
