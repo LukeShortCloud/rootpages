@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: sphinx
-          image: sphinxdoc/sphinx:3.1.1
+          image: sphinxdoc/sphinx:3.4.3
           command:
             - /bin/sh
             - -c
