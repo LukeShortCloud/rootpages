@@ -1264,6 +1264,40 @@ Commands can be run as a specific user or group:
 
 [56]
 
+TLS Certificate Creation (cert-manager)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+cert-manager provides a set of APIs that assist in the manual and automatic creation of TLS certificates.
+
+cert-manager.io/v1 APIs:
+
+-  Certificate = Create a CertificateRequest and, if it processes correctly, a Secret object will be created containing the TLS certificate.
+-  CertificateRequest = A request to cert-manager (either manually from the Certificate API or automatically by specifying ``ingress.metadata.annotations: cert-manager.io/clusterissuer: <CLUSTER_ISSUER>``) to automatically create a certificate.
+-  ClusterIssuer = A cluster-wide provider of certificates. Common Issuers include selfSigned, CA, and ACME (Let's Encrypt).
+-  Issuer = Namespaced Issuers.
+
+acme.cert-manager.io/v1 APIs (used automatically by the CertificateRequest API):
+
+-  Challenge = A DNS or HTTP challenge for ACME to prove that the domain is owned by the person making the request for a signed certificate.
+-  Order = A request to ACME for a new certificate.
+
+[60]
+
+cert-manager installation [59]:
+
+.. code-block:: sh
+
+   $ helm repo add jetstack https://charts.jetstack.io
+   $ helm repo update
+   $ helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.2.0 --create-namespace --set installCRDs=true
+   $ kubectl --namespace cert-manager get pods
+
+The process of managing certificates:
+
+1.  Create a [Cluster]Issuer object once.
+2.  Create a Certificate object using a [Cluster]Issuer for each domain that requires TLS encryption.
+3.  Use the Certificate(s) in an Ingress or Gateway object(s).
+
 Troubleshooting
 ---------------
 
@@ -1440,3 +1474,5 @@ Bibliography
 56. "Authenticating." Kubernetes Documentation. February 27, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authentication/
 57. "Comparing Ingress controllers for Kubernetes." Flant Blog. October 12, 2019. Accessed March 26, 2021. https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
 58. "Ingress Controllers." Kubernetes Documentation. February 13, 2021. Accessed March 30, 2021. https://kubernetes.io/docs/concepts/services-networking/ingress-controllers
+59. "Kubernetes." cert-manager Documentation. March 8, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/installation/kubernetes/
+60. "API reference docs." cert-manager Documentation. January 1, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/reference/api-docs/
