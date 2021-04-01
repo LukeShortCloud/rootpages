@@ -2286,6 +2286,151 @@ x3 Control Plane Nodes and x2 Worker Nodes.
 
 [30]
 
+ClusterIssuer
+^^^^^^^^^^^^^
+
+-  API group / version (latest): cert-manager.io/v1
+-  Shortname: (None)
+-  Namespaced: false
+
+The ClusterIssuer API is used to create TLS certificates.
+
+----
+
+**Examples:**
+
+ClusterIssuer that creates basic self-signed certificates. [34]
+
+.. code-block:: yaml
+
+   ---
+   kind: ClusterIssuer
+   apiVersion: cert-manager.io/v1
+   metadata:
+     name: clusterissuer-self-signed
+   spec:
+     selfSigned: {}
+
+ClusterIssuer with a certificate authority to sign certificates with. [35]
+
+.. code-block:: yaml
+
+   ---
+   kind: Secret
+   apiVersion: v1
+   metadata:
+     name: secret-tls-ca
+     # This secret has to exist in the same namespace where
+     # cert-manager is installed in.
+     namespace: <CERT-MANAGER_NAMESPACE>
+   data:
+     tls.crt: <BASE64_ENCODED_CA_CERTIFICATE>
+     # The private key cannot be password encrypted.
+     tls.key: <BASE64_ENCODED_CA_PRIVAYE_KEY>
+   ---
+   kind: ClusterIssuer
+   apiVersion: cert-manager.io/v1
+   metadata:
+     name: clusterissuer-certificate-authority
+   spec:
+     ca:
+       secretName: secret-tls-ca
+
+Create a certificate using a ClusterIssuer with a certificate authority. [37]
+
+.. code-block:: yaml
+
+   ---
+   kind: Certificate
+   apiVersion: cert-manager.io/v1
+   metadata:
+     name: certificate-<FQDN>
+     namespace: default
+   spec:
+     # The Secret object will be created with the
+     # certificate file, key, and CA certificate.
+     secretName: secret-tls-<FQDN>
+     issuerRef:
+       name: clusterissuer-certificate-authority
+       kind: ClusterIssuer
+     commonName: <FQDN>
+     dnsNames:
+     - <FQDN>
+
+ClusterIssuer that uses Let's Encrypt (ACME) to create free signed certificates. Use the staging ClusterIssuer for testing as that API endpoint is not ratelimited. Use the production ClusterIssuer once it is verified to be working. If switching from staging to production, delete the existing certificate Secret(s) so that cert-manager will automatically generate new certificates. [36]
+
+.. code-block:: yaml
+
+   ---
+   kind: ClusterIssuer
+   apiVersion: cert-manager.io/v1
+   metadata:
+     name: clusterissuer-letsencrypt-staging
+   spec:
+     acme:
+       server: https://acme-staging-v02.api.letsencrypt.org/directory
+       email: <EMAIL_ADDRESS>
+       privateKeySecretRef:
+         name: letsencrypt-staging
+       solvers:
+       - http01:
+           ingress:
+             class:  <INGRESS_CLASS>
+   ---
+   kind: ClusterIssuer
+   apiVersion: cert-manager.io/v1
+   metadata:
+     name: clusterissuer-letsencrypt-production
+   spec:
+     acme:
+       server: https://acme-v02.api.letsencrypt.org/directory
+       email: <EMAIL_ADDRESS>
+       privateKeySecretRef:
+         name: letsencrypt-staging
+       solvers:
+       - http01:
+           ingress:
+             class:  <INGRESS_CLASS>
+
+Use the Let's Encrypt ClusterIssuer in an Ingress object to automatically create a certificate and save it to a new Secret object. [36]
+
+.. code-block:: yaml
+
+   ---
+   kind: Ingress
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: ing-with-letsencrypt
+     annotations:
+       cert-manager.io/clusterissuer: "clusterissuer-letsencrypt-staging"
+   spec:
+     tls:
+     - hosts:
+       - <FQDN>
+       # Set this to any name. cert-manager will automatically create this
+       # because of the annotation that was set.
+       secretName: <SECRET_NAME>
+     rules:
+     - host: <FQDN>
+       http:
+         paths:
+         - path: /
+           pathType: Exact
+           backend:
+             service:
+               name: <SERVICE_NAME>
+               port:
+                 number: 80
+
+Issuer
+^^^^^^
+
+-  API group / version (latest): cert-manager.io/v1
+-  Shortname: (None)
+-  Namespaced: true
+
+View the `ClusterIssuer API <#clusterissuer>`_ documentation. The spec is exactly the same except the ClusterIssuer does not support being namespaced.
+
 OpenShift
 ~~~~~~~~~
 
@@ -2901,3 +3046,7 @@ Bibliography
 31. "Authorization Overview." Kubernetes Documentation. January 7, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authorization/
 32. "Using RBAC Authorization." Kubernetes Documentation. January 14, 2021. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 33. "Certificate Signing Requests." Kubernetes Documentation. October 20, 2020. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/
+34. "SelfSigned." cert-manager Docuemtnation. August 27, 2020. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/selfsigned/
+35. "CA." cert-manager Documentation. February 4, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/ca/
+36. "Securing NGINX-ingress." cert-manager Documentation. March 14, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/tutorials/acme/ingress/
+37. "Setting up CA Issuers." cert-manager Documentation. 2018. Accessed March 31, 2021. https://docs.cert-manager.io/en/release-0.11/tasks/issuers/setup-ca.html
