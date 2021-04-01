@@ -131,6 +131,33 @@ Open a full shell terminal in developer mode to access more commands.
 
 The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: ``CTRL`` + ``SHIFT`` + ``p``. Go to ``Sounds`` > ``Alert bell sound (URI)`` and then remove the string.
 
+SSH Server
+~~~~~~~~~~
+
+Start the openssh-server and open port 22.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo /usr/sbin/sshd
+   chronos@localhost / $ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+Add authorized SSH public keys to the ``chronos`` account.
+
+.. code-block:: sh
+
+   chronos@localhost / $ vim /home/chronos/user/.ssh/authorized_keys
+   chronos@localhost / $ chmod 0600 /home/chronos/user/.ssh/authorized_keys
+
+Authorized SSH public keys can be added to the ``root`` account if the `root file system is writable <#writable-and-executable-file-systems>`_.
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo mount -o remount,rw /
+   chronos@localhost / $ sudo mkdir /root/.ssh/
+   chronos@localhost / $ sudo chmod 0750 /root/.ssh
+   chronos@localhost / $ sudo vim /root/.ssh/authorized_keys
+   chronos@localhost / $ sudo chmod 0600 /root/.ssh/authorized_keys
+
 Updates
 ~~~~~~~
 
