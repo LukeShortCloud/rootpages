@@ -1,0 +1,31 @@
+---
+language: python
+python:
+  - "3.6"
+sudo: required
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install make hunspell hunspell-en-us
+# Travis CI instances are unreliable. The misspelled words are different on every CI run.
+#  - bad_words=$(hunspell -l -d en_US -p ./hunspell_dictionary_root_pages.txt src/*/*.rst); if [[ "${bad_words}" != "" ]]; then echo -e "${bad_words}\nSpelling errors found."; exit 1; fi
+install:
+  - pip install Sphinx sphinx-rtd-theme
+script:
+  - make html
+after_success:
+  - rm -rf ./src ./roles Makefile ./*.md
+  - mv ./build/html/* ./
+  - rm -rf ./build
+  - touch .nojekyll
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.12/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  # Update the Deployment manifest to force a rolling update.
+  - ./kubectl --insecure-skip-tls-verify --kubeconfig="/dev/null" --server=https://k8s.ekultails.com:6443 --token=$SA_TRAVIS_CI_TOKEN -n ns-rootpages patch deployment deploy-rootpages -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date --utc --iso-8601=ns`\"}}}}}"
+  - ./kubectl --insecure-skip-tls-verify --kubeconfig="/dev/null" --server=https://k8s.ekultails.com:6443 --token=$SA_TRAVIS_CI_TOKEN apply -f k8s/app/
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $SUPERSECRET
+  keep-history: false
+  on:
+    tags: true

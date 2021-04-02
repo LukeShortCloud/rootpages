@@ -1,0 +1,23 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ing-rootpages
+  namespace: ns-rootpages
+  labels:
+    app: rootpages
+  annotations:
+    traefik.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: k8s.ekultails.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: svc-rootpages
+                port:
+                  number: 80
+            path: /rp
+            pathType: Prefix

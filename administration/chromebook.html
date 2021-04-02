@@ -1,0 +1,1144 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Chromebook &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Graphics" href="graphics.html" />
+    <link rel="prev" title="Authentication" href="authentication.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chromebook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#support">Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-channels">Update Channels</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#developer-mode">Developer Mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#boot">Boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bootloaders">Bootloaders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminal">Terminal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-server">SSH Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updates">Updates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#change-update-channel">Change Update Channel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#package-managers">Package Managers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chromebrew">Chromebrew</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emerge">emerge</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#writable-and-executable-file-systems">Writable and Executable File Systems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#disable-updates">Disable Updates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-linux-kernel-and-modules">Custom Linux Kernel and Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#linux-beta">Linux (Beta)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crostini">Crostini</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#container-management">Container Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-sharing">File Sharing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gpu-acceleration">GPU Acceleration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#change-the-default-operating-system">Change the Default Operating System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nested-virtualization">Nested Virtualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virtual-machine-external-storage">Virtual Machine External Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#crouton">Crouton</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chroot-management">Chroot Management</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upcoming-features">Upcoming Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Chromebook</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/administration/chromebook.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="chromebook">
+<h1><a class="toc-backref" href="#id2">Chromebook</a><a class="headerlink" href="#chromebook" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#chromebook" id="id2">Chromebook</a></p>
+<ul>
+<li><p><a class="reference internal" href="#support" id="id3">Support</a></p>
+<ul>
+<li><p><a class="reference internal" href="#update-channels" id="id4">Update Channels</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#keyboard-shortcuts" id="id5">Keyboard Shortcuts</a></p></li>
+<li><p><a class="reference internal" href="#developer-mode" id="id6">Developer Mode</a></p>
+<ul>
+<li><p><a class="reference internal" href="#boot" id="id7">Boot</a></p></li>
+<li><p><a class="reference internal" href="#bootloaders" id="id8">Bootloaders</a></p></li>
+<li><p><a class="reference internal" href="#terminal" id="id9">Terminal</a></p></li>
+<li><p><a class="reference internal" href="#ssh-server" id="id10">SSH Server</a></p></li>
+<li><p><a class="reference internal" href="#updates" id="id11">Updates</a></p>
+<ul>
+<li><p><a class="reference internal" href="#change-update-channel" id="id12">Change Update Channel</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#package-managers" id="id13">Package Managers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#chromebrew" id="id14">Chromebrew</a></p></li>
+<li><p><a class="reference internal" href="#emerge" id="id15">emerge</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#writable-and-executable-file-systems" id="id16">Writable and Executable File Systems</a></p>
+<ul>
+<li><p><a class="reference internal" href="#disable-updates" id="id17">Disable Updates</a></p></li>
+<li><p><a class="reference internal" href="#custom-linux-kernel-and-modules" id="id18">Custom Linux Kernel and Modules</a></p>
+<ul>
+<li><p><a class="reference internal" href="#building" id="id19">Building</a></p></li>
+<li><p><a class="reference internal" href="#installing-kernel-modules" id="id20">Installing Kernel Modules</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#linux-beta" id="id21">Linux (Beta)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#crostini" id="id22">Crostini</a></p>
+<ul>
+<li><p><a class="reference internal" href="#container-management" id="id23">Container Management</a></p></li>
+<li><p><a class="reference internal" href="#file-sharing" id="id24">File Sharing</a></p></li>
+<li><p><a class="reference internal" href="#gpu-acceleration" id="id25">GPU Acceleration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#steam" id="id26">Steam</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#change-the-default-operating-system" id="id27">Change the Default Operating System</a></p></li>
+<li><p><a class="reference internal" href="#nested-virtualization" id="id28">Nested Virtualization</a></p></li>
+<li><p><a class="reference internal" href="#virtual-machine-external-storage" id="id29">Virtual Machine External Storage</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#crouton" id="id30">Crouton</a></p>
+<ul>
+<li><p><a class="reference internal" href="#chroot-management" id="id31">Chroot Management</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#features" id="id32">Features</a></p></li>
+<li><p><a class="reference internal" href="#upcoming-features" id="id33">Upcoming Features</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id34">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id35">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="support">
+<h2><a class="toc-backref" href="#id3">Support</a><a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>Chromebooks receive anywhere between 5 and 8 years of Chrome OS updates [14]. When it becomes end-of-life, the operating system will continue to work but will also become vulnerable to unpatched security flaws. A list of every Chromebooks’ update expiration date can be found <a class="reference external" href="https://support.google.com/chrome/a/answer/6220366?hl=en">here</a>.</p>
+<div class="section" id="update-channels">
+<h3><a class="toc-backref" href="#id4">Update Channels</a><a class="headerlink" href="#update-channels" title="Permalink to this headline">¶</a></h3>
+<p>There are three update channels to choose from for Chrome OS updates. This can be changed by going to: <code class="docutils literal notranslate"><span class="pre">Settings</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">Chrome</span> <span class="pre">OS</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Additional</span> <span class="pre">details</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Channel</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Change</span> <span class="pre">channel</span></code> [15].</p>
+<ul class="simple">
+<li><p>Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.</p></li>
+<li><p>Beta = Minor updates every week. Major upgrades every 6 weeks.</p></li>
+<li><p>Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">Mode</span></code> which is different.</p></li>
+</ul>
+<p>Check <a class="reference external" href="https://chromereleases.googleblog.com/search/label/Chrome%20OS">here</a> for information on the latest channel updates for Chrome OS.</p>
+</div>
+</div>
+<div class="section" id="keyboard-shortcuts">
+<h2><a class="toc-backref" href="#id5">Keyboard Shortcuts</a><a class="headerlink" href="#keyboard-shortcuts" title="Permalink to this headline">¶</a></h2>
+<p>Chromebooks come with modified keyboards that do not include the traditional layout of keys. These are shortcuts that replace some of those dedicated keys and also improve the experience of using Chrome OS. Note that the <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> key is located where the <code class="docutils literal notranslate"><span class="pre">&lt;CAPS_LOCK&gt;</span></code> key normally is.</p>
+<ul class="simple">
+<li><p>(View keyboard shortcuts): <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + (<code class="docutils literal notranslate"><span class="pre">?</span></code> OR <code class="docutils literal notranslate"><span class="pre">/</span></code>)</p></li>
+<li><p>Page Up: <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;UP_ARROW&gt;</span></code></p></li>
+<li><p>Page Down: <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;DOWN_ARROW&gt;</span></code></p></li>
+<li><p>Home (start of line): <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;LEFT_ARROW&gt;</span></code></p></li>
+<li><p>End (end of line): <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;RIGHT_ARROW&gt;</span></code></p></li>
+<li><p>Delete (backspace in reverse): <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">backspace</span></code></p></li>
+<li><p>Caps Lock: <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;ALT&gt;</span></code></p></li>
+<li><p>Function keys 1 through 12: <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + (<code class="docutils literal notranslate"><span class="pre">1</span></code> THROUGH <code class="docutils literal notranslate"><span class="pre">=</span></code>)</p></li>
+<li><p>(Move to the next word): <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> + <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + (<code class="docutils literal notranslate"><span class="pre">&lt;LEFT_ARROW&gt;</span></code> OR <code class="docutils literal notranslate"><span class="pre">&lt;RIGHT_ARROW&gt;</span></code>)</p></li>
+<li><p>(Dock a window to the left or right): <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + (<code class="docutils literal notranslate"><span class="pre">[</span></code> OR <code class="docutils literal notranslate"><span class="pre">]</span></code>)</p></li>
+<li><p>(Dock a window to the top or bottom)*: <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> + (<code class="docutils literal notranslate"><span class="pre">&lt;UP_ARROW&gt;</span></code> OR <code class="docutils literal notranslate"><span class="pre">&lt;DOWN_ARROW&gt;</span></code>)</p></li>
+<li><p>(Adjust the keyboard backlight): <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + (<code class="docutils literal notranslate"><span class="pre">&lt;BRIGHTNESS_DOWN&gt;</span></code> OR <code class="docutils literal notranslate"><span class="pre">&lt;BRIGHTNESS_UP&gt;</span></code>)</p></li>
+<li><p>(View all windows and virtual desks): <code class="docutils literal notranslate"><span class="pre">[]||</span></code></p></li>
+<li><p>(Create a new virtual desk): <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">+</span></code></p></li>
+<li><p>(Close a virtual desk. All windows will be moved to the next available virtual desk): <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">-</span></code></p></li>
+<li><p>(Move to the next virtual desk): <code class="docutils literal notranslate"><span class="pre">&lt;SEARCH&gt;</span></code> + (<code class="docutils literal notranslate"><span class="pre">[</span></code> OR <code class="docutils literal notranslate"><span class="pre">]</span></code>)</p></li>
+<li><p>(Move to the next word): <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + (<code class="docutils literal notranslate"><span class="pre">&lt;LEFT_ARROW&gt;</span></code> OR <code class="docutils literal notranslate"><span class="pre">&lt;RIGHT_ARROW&gt;</span></code>)</p></li>
+</ul>
+<p>[4]</p>
+<p>*Requires the <a class="reference external" href="https://chrome.google.com/webstore/detail/windows-manager-for-googl/gophpkegccafhjahoijdembdkbjpiflb">Windows Manager for Google Chrome</a> extension.</p>
+</div>
+<div class="section" id="developer-mode">
+<h2><a class="toc-backref" href="#id6">Developer Mode</a><a class="headerlink" href="#developer-mode" title="Permalink to this headline">¶</a></h2>
+<p>Chromebooks have an optional developer mode that unlocks additional features of Chrome OS. It allows the usage of a shell, <code class="docutils literal notranslate"><span class="pre">root</span></code> user access, and the ability to install and boot custom operating systems. [5]</p>
+<p>Enabling this mode will powerwash (reset) the device. Start the Chromebook in Recovery mode by pressing <code class="docutils literal notranslate"><span class="pre">ESC</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;REFRESH&gt;</span></code> + <code class="docutils literal notranslate"><span class="pre">&lt;POWER&gt;</span></code>. Once booted, press <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">d</span></code> to boot into developer mode. Optionally select to enable debugging features to allow writing to the root file system, booting to external storage devices, and changing the root password. [6][8] After completion, whenever booting up the Chromebook, use <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">d</span></code> to boot Chrome OS.</p>
+<p>Use the command <code class="docutils literal notranslate"><span class="pre">chromeos-setdevpasswd</span></code> to enable the sudo password for the <code class="docutils literal notranslate"><span class="pre">chronos</span></code> user in the <code class="docutils literal notranslate"><span class="pre">Secure</span> <span class="pre">Shell</span> <span class="pre">App</span></code>. Use the password that was set when enabling debugging features to access the <code class="docutils literal notranslate"><span class="pre">root</span></code> account.</p>
+<ul class="simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">Secure</span> <span class="pre">Shell</span> <span class="pre">App</span></code> by pressing <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + <code class="docutils literal notranslate"><span class="pre">t</span></code>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>crosh&gt; shell
+chronos@localhost / $ ssh -l root 127.0.0.1
+localhost ~ # chromeos-setdevpasswd
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Using the tty2 console by pressing <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + <code class="docutils literal notranslate"><span class="pre">--&gt;</span></code>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">localhost</span> <span class="n">login</span><span class="p">:</span> <span class="n">root</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">localhost</span> <span class="o">~</span> <span class="c1"># chromeos-setdevpasswd</span>
+</pre></div>
+</div>
+<div class="section" id="boot">
+<h3><a class="toc-backref" href="#id7">Boot</a><a class="headerlink" href="#boot" title="Permalink to this headline">¶</a></h3>
+<p>When booting a Chromebook in developer mode, there are a few options to choose from. By default, a screen will appear for 30 seconds saying <code class="docutils literal notranslate"><span class="pre">OS</span> <span class="pre">verification</span> <span class="pre">is</span> <span class="pre">OFF</span></code>. It will beep and continue to boot into local storage if no boot option is specified via keyboard shortcuts. Pressing the <code class="docutils literal notranslate"><span class="pre">&lt;SPACE&gt;</span></code> bar will powerwash the Chromebook.</p>
+<ul class="simple">
+<li><p>Internal storage = <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">d</span></code>.</p></li>
+<li><p>External storage = <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">u</span></code>.</p></li>
+<li><p>Legacy bootloader (SeaBIOS) = <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">l</span></code> (L).</p>
+<ul>
+<li><p>This is not installed by default. Refer to the <a class="reference external" href="#bootloaders">Bootloaders</a> section on how to set it up.</p></li>
+</ul>
+</li>
+</ul>
+<p>[7]</p>
+</div>
+<div class="section" id="bootloaders">
+<h3><a class="toc-backref" href="#id8">Bootloaders</a><a class="headerlink" href="#bootloaders" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://github.com/MrChromebox/scripts">MrChromebox/scripts</a> project provides a useful utility for modifying the bootloader firmware on Chromebooks. All Chromebooks can run a legacy SeaBIOS bootloader to allow USB-booting. Some Chromebooks support the full UEFI Tianocore bootloader so that it can install a different operating system such as Linux, mac OS, or Windows. A full list of what devices are compatible can be found <a class="reference external" href="https://mrchromebox.tech/#devices">here</a>. [22]</p>
+<p>Enable USB UEFI booting in Chrome OS. [24]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>crosh&gt; shell
+chronos@localhost / $ sudo crossystem <span class="nv">dev_boot_usb</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>Optionally enable USB legacy BIOS booting in Chrome OS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo crossystem <span class="nv">dev_boot_legacy</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>Then download and run the interactive script.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ <span class="nb">cd</span> ~
+chronos@localhost ~ $ curl -LO mrchromebox.tech/firmware-util.sh <span class="o">&amp;&amp;</span> sudo bash ./firmware-util.sh
+</pre></div>
+</div>
+<p>The white Chrome OS <code class="docutils literal notranslate"><span class="pre">OS</span> <span class="pre">verification</span> <span class="pre">is</span> <span class="pre">OFF</span></code> screen that starts with 100% brightness can be replaced by a black screen by selecting the <code class="docutils literal notranslate"><span class="pre">Remove</span> <span class="pre">ChromeOS</span> <span class="pre">Bitmaps</span></code> option.</p>
+</div>
+<div class="section" id="terminal">
+<h3><a class="toc-backref" href="#id9">Terminal</a><a class="headerlink" href="#terminal" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Secure</span> <span class="pre">Shell</span> <span class="pre">App</span></code> is the official way to access a shell terminal from within Chrome OS. With the Google Chrome web browser open, press <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + <code class="docutils literal notranslate"><span class="pre">t</span></code> to open the app. It will start in <code class="docutils literal notranslate"><span class="pre">crosh</span></code> (the Chrome Shell).</p>
+<p>View all of the available commands in <code class="docutils literal notranslate"><span class="pre">crosh</span></code> and their help descriptions.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crosh</span><span class="o">&gt;</span> <span class="n">help</span>
+<span class="n">crosh</span><span class="o">&gt;</span> <span class="n">help_advanced</span>
+</pre></div>
+</div>
+<p>Open a full shell terminal in developer mode to access more commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crosh</span><span class="o">&gt;</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<p>The app will beep if a command or file cannot be auto-completed. This can be disabled. Open preferences: <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> + <code class="docutils literal notranslate"><span class="pre">p</span></code>. Go to <code class="docutils literal notranslate"><span class="pre">Sounds</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Alert</span> <span class="pre">bell</span> <span class="pre">sound</span> <span class="pre">(URI)</span></code> and then remove the string.</p>
+</div>
+<div class="section" id="ssh-server">
+<h3><a class="toc-backref" href="#id10">SSH Server</a><a class="headerlink" href="#ssh-server" title="Permalink to this headline">¶</a></h3>
+<p>Start the openssh-server and open port 22.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo /usr/sbin/sshd
+chronos@localhost / $ sudo iptables -A INPUT -p tcp --dport <span class="m">22</span> -j ACCEPT
+</pre></div>
+</div>
+<p>Add authorized SSH public keys to the <code class="docutils literal notranslate"><span class="pre">chronos</span></code> account.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ vim /home/chronos/user/.ssh/authorized_keys
+chronos@localhost / $ chmod <span class="m">0600</span> /home/chronos/user/.ssh/authorized_keys
+</pre></div>
+</div>
+<p>Authorized SSH public keys can be added to the <code class="docutils literal notranslate"><span class="pre">root</span></code> account if the <a class="reference external" href="#writable-and-executable-file-systems">root file system is writable</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo mount -o remount,rw /
+chronos@localhost / $ sudo mkdir /root/.ssh/
+chronos@localhost / $ sudo chmod <span class="m">0750</span> /root/.ssh
+chronos@localhost / $ sudo vim /root/.ssh/authorized_keys
+chronos@localhost / $ sudo chmod <span class="m">0600</span> /root/.ssh/authorized_keys
+</pre></div>
+</div>
+</div>
+<div class="section" id="updates">
+<h3><a class="toc-backref" href="#id11">Updates</a><a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="change-update-channel">
+<h4><a class="toc-backref" href="#id12">Change Update Channel</a><a class="headerlink" href="#change-update-channel" title="Permalink to this headline">¶</a></h4>
+<p>Channels can be changed on any Chromebook not in developer mode by going to <code class="docutils literal notranslate"><span class="pre">Settings</span> <span class="pre">&gt;</span> <span class="pre">About</span> <span class="pre">Chrome</span> <span class="pre">OS</span> <span class="pre">&gt;</span> <span class="pre">Additional</span> <span class="pre">Details</span> <span class="pre">&gt;</span> <span class="pre">Channel</span> <span class="pre">&gt;</span> <span class="pre">Change</span> <span class="pre">channel</span></code> and selecting <code class="docutils literal notranslate"><span class="pre">Stable</span></code>, <code class="docutils literal notranslate"><span class="pre">Beta</span></code>, or <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">-</span> <span class="pre">unstable</span></code>. However, this will require a Powerwash which will factory reset the Chromebook.</p>
+<p>With Developer Mode enabled, it is possible to change channels on the CLI without a Powerwash. If going from a newer channel to an older one (Dev to Beta, Dev to Stable, or Beta to Stable), Chrome OS will automatically update when that channel catches up to your version.</p>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo update_engine_client --nopowerwash --channel<span class="o">={</span>stable,beta,dev<span class="o">}</span>-channel
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo update_engine_client --nopowerwash --channel<span class="o">=</span>stable-channel
+chronos@localhost / $ update_engine_client --show_channel
+<span class="o">[</span><span class="m">0304</span>/220556.325714:INFO:update_engine_client.cc<span class="o">(</span><span class="m">447</span><span class="o">)]</span> Current Channel: beta-channel
+<span class="o">[</span><span class="m">0304</span>/220556.325824:INFO:update_engine_client.cc<span class="o">(</span><span class="m">450</span><span class="o">)]</span> Target Channel <span class="o">(</span>pending update<span class="o">)</span>: stable-channel
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="package-managers">
+<h3><a class="toc-backref" href="#id13">Package Managers</a><a class="headerlink" href="#package-managers" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="chromebrew">
+<h4><a class="toc-backref" href="#id14">Chromebrew</a><a class="headerlink" href="#chromebrew" title="Permalink to this headline">¶</a></h4>
+<p>Chromebrew is an unofficial package manager for Chromium OS written in Ruby. It works on all processor architectures that Chromium OS supports. It requires <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">Mode</span></code> to be enabled and that Chrome OS is on the <code class="docutils literal notranslate"><span class="pre">Stable</span></code> channel.</p>
+<p>Install:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ curl -Ls git.io/vddgY <span class="p">|</span> bash
+</pre></div>
+</div>
+<p>Usage:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ crew <span class="o">{</span>build,const,download,files,help,install,list,postinstall,reinstall,remove,search,update,upgrade,whatprovides<span class="o">}</span>
+$ crew <span class="nb">help</span> &lt;ARGUMENT&gt;
+</pre></div>
+</div>
+<p>Find and install a package. The <a class="reference external" href="https://github.com/skycocker/chromebrew/tree/master/packages">full list of packages</a> is listed in it’s GitHub repository. Over one thousand packages are available.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ crew search &lt;PACKAGE&gt;
+$ crew install <span class="o">[</span>--build-from-source<span class="o">]</span> &lt;PACKAGE&gt;
+</pre></div>
+</div>
+<p>Installing a package will remove other packages that are already installed. Use the <code class="docutils literal notranslate"><span class="pre">--keep</span></code> argument to prevent uninstalling them:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ crew install --keep &lt;INSTALLED_PACKAGE&gt; &lt;NEW_PACKAGE&gt;
+</pre></div>
+</div>
+<p>[19]</p>
+</div>
+<div class="section" id="emerge">
+<h4><a class="toc-backref" href="#id15">emerge</a><a class="headerlink" href="#emerge" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">emerge</span></code> is the official package manager for Gentoo and, by extension, Chrome OS. Installing emerge, along with a few other developer packages, will first delete everything in <code class="docutils literal notranslate"><span class="pre">/usr/local/</span></code>. For a more useful package manager, use <a class="reference external" href="#chromebrew">Chromebrew</a>.</p>
+<p>Install:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ dev_install
+</pre></div>
+</div>
+<p>Reinstall:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ dev_install --reinstall
+</pre></div>
+</div>
+<p>Uninstall:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ dev_install --uninstall
+</pre></div>
+</div>
+<p>[29]</p>
+<p>By default, only a few local packages can be installed.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo find /usr/local/portage/packages/ <span class="p">|</span> grep tbz2
+/usr/local/portage/packages/dev-lang/python-exec-2.0.1-r1.tbz2
+/usr/local/portage/packages/dev-lang/python-3.6.5-r5.tbz2
+/usr/local/portage/packages/dev-lang/python-2.7.15-r5.tbz2
+/usr/local/portage/packages/dev-python/pyblake2-1.1.2-r1.tbz2
+/usr/local/portage/packages/dev-python/pyxattr-0.6.0-r1.tbz2
+/usr/local/portage/packages/sys-libs/gdbm-1.11.tbz2
+/usr/local/portage/packages/net-misc/rsync-3.1.3.tbz2
+/usr/local/portage/packages/app-misc/mime-types-9.tbz2
+/usr/local/portage/packages/app-misc/pax-utils-1.2.3.tbz2
+/usr/local/portage/packages/sys-apps/install-xattr-0.5.tbz2
+/usr/local/portage/packages/sys-apps/portage-2.3.75-r56.tbz2
+/usr/local/portage/packages/sys-apps/less-487.tbz2
+/usr/local/portage/packages/sys-apps/sandbox-2.11-r6.tbz2
+/usr/local/portage/packages/app-eselect/eselect-python-20140125-r1.tbz2
+</pre></div>
+</div>
+<p>View the packages that are installed:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ ls -1 /usr/local/var/db/pkg/sys-apps/
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="writable-and-executable-file-systems">
+<h3><a class="toc-backref" href="#id16">Writable and Executable File Systems</a><a class="headerlink" href="#writable-and-executable-file-systems" title="Permalink to this headline">¶</a></h3>
+<p>By default, the root file system is not writable and both the stateful_partition and user directory do not support executable permissions. These can be modified to allow experimentation with the Chrome OS operating system.</p>
+<ul>
+<li><p>Remove the root file system verification on both partitions 2 and 4. Depending on the last A/B system update that was applied and in use, the current root file system could be either be on partition 2 or 4.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo /usr/share/vboot/bin/make_dev_ssd.sh --remove_rootfs_verification --partitions <span class="s2">&quot;2 4&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Remove the boot verification. Then reboot Chrome OS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo crossystem <span class="nv">dev_boot_signed_only</span><span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+</li>
+<li><p>Remount all of the locked down Chrome OS partitions with full read, write, and execute (rwx) permissions.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo mount -o remount,rw /
+chronos@localhost / $ sudo mount -o remount,exec /mnt/stateful_partition
+chronos@localhost / $ sudo mount -o remount,exec remount,exec /home/chronos/user
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[25][26]</p>
+<div class="section" id="disable-updates">
+<h4><a class="toc-backref" href="#id17">Disable Updates</a><a class="headerlink" href="#disable-updates" title="Permalink to this headline">¶</a></h4>
+<p>Remove the executable permissions from the <code class="docutils literal notranslate"><span class="pre">update_engine</span></code> binary.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo chmod -x /usr/sbin/update_engine
+</pre></div>
+</div>
+<p>Then either reboot the Chromebook or kill the running <code class="docutils literal notranslate"><span class="pre">update_enigne</span></code> process to stop Chrome OS from updating.</p>
+<p>Re-enable updates by deleting the old log file so it will be recreated, make the <code class="docutils literal notranslate"><span class="pre">update_engine</span></code> binary executable again, and then start the update daemon.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo rm /var/log/update_engine.log
+chronos@localhost / $ sudo chmod +x /usr/sbin/update_engine
+chronos@localhost / $ sudo /usr/sbin/update_engine
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-linux-kernel-and-modules">
+<h4><a class="toc-backref" href="#id18">Custom Linux Kernel and Modules</a><a class="headerlink" href="#custom-linux-kernel-and-modules" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="building">
+<h5><a class="toc-backref" href="#id19">Building</a><a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h5>
+<p>It is recommended to build a Linux kernel and/or modules on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility. The kernel and/or modules can be compiled regardless of the CPU architecture required.</p>
+<p>Create and use a working directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mkdir chromiumos
+$ <span class="nb">cd</span> chromiumos
+</pre></div>
+</div>
+<p>Download and load-up the <code class="docutils literal notranslate"><span class="pre">repo</span></code> command. This can later be loaded up from the <code class="docutils literal notranslate"><span class="pre">./src/chromium/depot_tools/</span></code> directory instead.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/depot_tools/:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">repo</span></code> command to download all of the &gt; 200 git repositories for Chromium OS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git
+$ repo sync
+</pre></div>
+</div>
+<p>Setup the Chromium OS SDK. Once complete, this will change the prompt as it changes into a chroot of Gentoo. In the future, use this command to re-enter the chroot.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/chromite/bin/:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+$ cros_sdk
+<span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/scripts $
+</pre></div>
+</div>
+<p>Find the board name for the Chromebook from <a class="reference external" href="https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices">here</a>. Alternatively, visit <code class="docutils literal notranslate"><span class="pre">chrome://version</span></code> on the Chromebook and look for “Platform:”. The board name is the last word on that line. Use it to setup the Gentoo packages that mirror what is being used by the latest version of that Chromebook.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/scripts $ <span class="nb">export</span> <span class="nv">BOARD</span><span class="o">=</span>amd64-generic
+<span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/scripts $ setup_board --board<span class="o">=</span>&lt;CHROMEBOOK_BOARD_NAME&gt;
+<span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/scripts $ ./build_packages --board<span class="o">=</span>&lt;CHROMEBOOK_BOARD_NAME&gt;
+</pre></div>
+</div>
+<p>On the Chromebook, find the major <code class="docutils literal notranslate"><span class="pre">X.Y</span></code> kernel version.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ uname -a
+</pre></div>
+</div>
+<p>On the Chromebook, save the current kernel build configuration. [27]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo modprobe configs
+chronos@localhost / $ cat /proc/config.gz <span class="p">|</span> gunzip &gt; ~/Downloads/config
+</pre></div>
+</div>
+<p>Copy the configuration to the computer that is building the Linux kernel and into the correct kernel version directory. Edit it to adjust the kernel and/or module build.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ cp config chromiumos/src/third_party/kernel/v&lt;KERNEL_VERSION_MAJOR&gt;.&lt;KERNEL_VERSION_MINOR&gt;/
+</pre></div>
+</div>
+<p>In the cros_sdk chroot, change into the directory of the kernel source code.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/scripts $ <span class="nb">cd</span> ~/trunk/src/third_party/kernel/v&lt;KERNEL_VERSION_MAJOR&gt;.&lt;KERNEL_VERSION_MINOR&gt;/
+</pre></div>
+</div>
+<p>On the Chromebook, take note of the <code class="docutils literal notranslate"><span class="pre">chrome://version</span></code> “Platform:” details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Platform</span><span class="p">:</span> <span class="mf">13729.41</span><span class="o">.</span><span class="mi">0</span> <span class="p">(</span><span class="n">Official</span> <span class="n">Build</span><span class="p">)</span> <span class="n">beta</span><span class="o">-</span><span class="n">channel</span> <span class="n">samus</span>
+</pre></div>
+</div>
+<p>Using the major release number (13729 in this example), the kernel version, and optionally the Chrome OS release, it is possible to track down the exact kernel source code branch for the running kernel on the Chromebook. This is important to match because building generic kernel modules will not work. The versions have to match exactly. Even if the intent is to replace the running kernel with a customized one, this branch will contain backports specific to the Chromebook board.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/third_party/kernel/v4.14/ $ git branch -a <span class="p">|</span> egrep <span class="s2">&quot;release-.*13729.*-chromeos-4.14&quot;</span>
+remotes/cros/release-R89-13729.B-chromeos-4.14
+<span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/third_party/kernel/v4.14/ $ git checkout cros/release-R89-13729.B-chromeos-4.14
+</pre></div>
+</div>
+<p>Build the kernel or just the modules.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/third_party/kernel/v&lt;KERNEL_VERSION_MAJOR&gt;.&lt;KERNEL_VERSION_MINOR&gt;/ $ make
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>cr<span class="o">)</span> <span class="o">(</span>main/<span class="o">(</span>&lt;COMMIT&gt;...<span class="o">))</span> &lt;USER&gt;@&lt;HOTSNAME&gt; ~/trunk/src/third_party/kernel/v&lt;KERNEL_VERSION_MAJOR&gt;.&lt;KERNEL_VERSION_MINOR&gt;/ $ make modules
+</pre></div>
+</div>
+<p>[28]</p>
+<p>Cleanup:</p>
+<p>If the development environment is no longer required, clean it up using this command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ cros_sdk --delete
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-kernel-modules">
+<h5><a class="toc-backref" href="#id20">Installing Kernel Modules</a><a class="headerlink" href="#installing-kernel-modules" title="Permalink to this headline">¶</a></h5>
+<p>Mount the root file system as writable, copy the kernel module, and then load it to ensure it works.</p>
+<p>Example of installing the <code class="docutils literal notranslate"><span class="pre">cifs</span></code> module after building it:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo mount -o remount,rw /
+chronos@localhost / $ sudo mkdir /lib/modules/4.14.214-17103-g887e64348b2b/kernel/fs/cifs/
+chronos@localhost / $ sudo cp ~/Downloads/cifs.ko /lib/modules/4.14.214-17103-g887e64348b2b/kernel/fs/cifs/
+chronos@localhost / $ sudo depmod
+chronos@localhost / $ sudo modprobe cifs
+</pre></div>
+</div>
+<p>If the module fails to load with this error, it is possible that it was compiled for the wrong kernel or CPU architecture. It needs to be built against the exact kernel that is currently installed on the system.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo modprobe &lt;KERNEL_MODULE&gt;
+modprobe: ERROR: could not insert <span class="s1">&#39;&lt;KERNEL_MODULE&gt;&#39;</span>: Exec format error
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="linux-beta">
+<h2><a class="toc-backref" href="#id21">Linux (Beta)</a><a class="headerlink" href="#linux-beta" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="crostini">
+<h3><a class="toc-backref" href="#id22">Crostini</a><a class="headerlink" href="#crostini" title="Permalink to this headline">¶</a></h3>
+<p>Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called <code class="docutils literal notranslate"><span class="pre">termina</span></code> that then starts a LXC container named <code class="docutils literal notranslate"><span class="pre">penguin</span></code>.  By default, the <code class="docutils literal notranslate"><span class="pre">penguin</span></code> container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require developer mode.</p>
+<p>Enable it by going into Chrome OS settings and selecting <code class="docutils literal notranslate"><span class="pre">Linux</span> <span class="pre">(Beta)</span></code>. [1] A new <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> app will appear to access the terminal of the container. Alternatively, the Chrome web browser can be used to access the terminal by going to <code class="docutils literal notranslate"><span class="pre">chrome-untrusted://terminal/html/terminal.html</span></code>.</p>
+<div class="section" id="container-management">
+<h4><a class="toc-backref" href="#id23">Container Management</a><a class="headerlink" href="#container-management" title="Permalink to this headline">¶</a></h4>
+<p>With developer mode enabled, the <code class="docutils literal notranslate"><span class="pre">termina</span></code> VM can be manually edited with the <code class="docutils literal notranslate"><span class="pre">vmc</span></code> command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.</p>
+<ul class="simple">
+<li><p>Manually start and connect to the <code class="docutils literal notranslate"><span class="pre">termina</span></code> VM.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>crosh&gt; vmc start termina
+(termina) chronos@localhost ~ $
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Manually connect to an already running <code class="docutils literal notranslate"><span class="pre">termina</span></code> VM.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>crosh&gt; vsh termina
+(termina) chronos@localhost ~ $
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>View all of the created containers. By default, there should only be the <code class="docutils literal notranslate"><span class="pre">penguin</span></code> container.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc ls
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>A list of all LXC images can be found <a class="reference external" href="https://us.images.linuxcontainers.org/">here</a> or by running:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc image list images:
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create new containers:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc launch images:&lt;IMAGE_NAME&gt;/&lt;IMAGE_VERSION&gt;/amd64 &lt;CONTAINER_NAME&gt;
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc launch images:centos/8/amd64 centos8
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Enter a container [9]:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc exec &lt;CONTAINER_NAME&gt; /bin/bash
+[root@&lt;CONTAINER_NAME&gt; ~]# cat /etc/os-release
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The VM can be reset by stopping, deleting, and then starting it again. If the <code class="docutils literal notranslate"><span class="pre">termina</span></code> VM does not exist, <code class="docutils literal notranslate"><span class="pre">vmc</span></code> will create it. [10]</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crosh</span><span class="o">&gt;</span> <span class="n">vmc</span> <span class="n">stop</span> <span class="n">termina</span>
+<span class="n">crosh</span><span class="o">&gt;</span> <span class="n">vmc</span> <span class="n">destroy</span> <span class="n">termina</span>
+<span class="n">crosh</span><span class="o">&gt;</span> <span class="n">vmc</span> <span class="n">start</span> <span class="n">termina</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-sharing">
+<h4><a class="toc-backref" href="#id24">File Sharing</a><a class="headerlink" href="#file-sharing" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Files</span></code> app will list <code class="docutils literal notranslate"><span class="pre">Linux</span> <span class="pre">files</span></code>. That will load the visible contents of the <code class="docutils literal notranslate"><span class="pre">/home/$USER/</span></code> directory in the container. Directories from the Chrome OS hypervisor, such as <code class="docutils literal notranslate"><span class="pre">Downloads</span></code>, can also be shared with the container. In the <code class="docutils literal notranslate"><span class="pre">Files</span></code> app, right-click on the directory and select <code class="docutils literal notranslate"><span class="pre">Share</span> <span class="pre">with</span> <span class="pre">Linux</span></code>. It will be available in the container at <code class="docutils literal notranslate"><span class="pre">/mnt/chromeos/MyFiles/</span></code>. [2]</p>
+</div>
+<div class="section" id="gpu-acceleration">
+<h4><a class="toc-backref" href="#id25">GPU Acceleration</a><a class="headerlink" href="#gpu-acceleration" title="Permalink to this headline">¶</a></h4>
+<p>Crostini supports OpenGL graphics hardware acceleration via the use of <a class="reference external" href="https://virgil3d.github.io/">Virgil 3d</a>. This allows the passthrough of OpenGL calls from the virtual machine <code class="docutils literal notranslate"><span class="pre">termina</span></code> to the host system. Vulkan passthrough support is planned to be released in 2020. [11] For gaming, it is recommended to enable these flags:</p>
+<ul class="simple">
+<li><p>chrome://flags#crostini-gpu-support = Enable Virgil 3d support. It is enabled by default as of Chrome OS 80 [12].</p></li>
+<li><p>chrome://flags#scheduler-configuration = Enable hyper-threading on Chrome OS (if available on the processor). This will help improve the performance of games by allowing the virtual machine to use more processing power.</p></li>
+<li><p>chrome://flags#exo-pointer-lock = Lock the mouse pointer to any application running in Crostini. Games that use the mouse for movement require this.</p></li>
+</ul>
+<p>Verify that the processor count has doubled.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@penguin:~$ grep -c ^processor /proc/cpuinfo
+4
+</pre></div>
+</div>
+<p>Verify that Virgil 3d is being recognized by OpenGL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@penguin:~$ sudo apt-get install mesa-utils
+user@penguin:~$ glxinfo | grep &quot;OpenGL renderer&quot;
+OpenGL renderer string: virgl
+</pre></div>
+</div>
+<div class="section" id="steam">
+<h5><a class="toc-backref" href="#id26">Steam</a><a class="headerlink" href="#steam" title="Permalink to this headline">¶</a></h5>
+<p>Steam requires a handful of dependencies. Enable the proprietary repository to install Steam, enable 32-bit packages, and install recommended dependencies for Wine. These will be required to run native Linux games or Windows games running with Proton (Valve’s forked version of Wine) [13].</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@penguin~$ sudo usermod -a -G video,audio $USER
+user@penguin~$ sudo nano /etc/apt/sources.list.d/non-free.list
+deb http://deb.debian.org/debian buster main contrib non-free
+deb http://security.debian.org/ buster/updates main contrib non-free
+user@penguin~$ sudo dpkg --add-architecture i386
+user@penguin~$ sudo apt-get update
+user@penguin~$ sudo apt-get install --install-recommends wine
+user@penguin~$ sudo apt-get install libgl1-mesa-dri:i386 libgl1-mesa-glx:i386 libglapi-mesa:i386 steam
+</pre></div>
+</div>
+<p>Proton uses DXVK to translate DirectX 9, 10, and 11 to Vulkan. Because there is currently no Vulkan hardware acceleration, start Steam and have it use the WineD3D translation layer for DirectX 9, 10, 11 to OpenGL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user@penguin:~$ PROTON_USE_WINED3D=1 steam
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="change-the-default-operating-system">
+<h4><a class="toc-backref" href="#id27">Change the Default Operating System</a><a class="headerlink" href="#change-the-default-operating-system" title="Permalink to this headline">¶</a></h4>
+<p>The default Linux container <code class="docutils literal notranslate"><span class="pre">penguin</span></code> can be changed to use a different operating system other than Debian. The container requires <a class="reference external" href="https://chromium.googlesource.com/chromiumos/containers/cros-container-guest-tools/">cros-container-guest-tools</a> which provides a set of tools and services for Crostini integration. Wayland is optionally required to run graphical applications.</p>
+<p><strong>All</strong></p>
+<p>Stop and rename the original container.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>crosh&gt; vsh termina
+(termina) chronos@localhost ~ $ lxc stop penguin
+(termina) chronos@localhost ~ $ lxc rename penguin penguin-original
+(termina) chronos@localhost ~ $ lxc launch images:&lt;IMAGE_NAME&gt;/&lt;IMAGE_VERSION&gt; penguin
+</pre></div>
+</div>
+<p>Create a user using the same username as the Chrome OS user (which is normally the first part of the e-mail address used to log in: <code class="docutils literal notranslate"><span class="pre">&lt;CHROME_OS_USER&gt;&#64;gmail.com</span></code>). This user should have privileged access via the use of <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(termina) chronos@localhost ~ $ lxc exec penguin /bin/bash
+[root@penguin ~]# useradd &lt;CHROME_OS_USER&gt;
+[root@penguin ~]# mkdir /etc/sudoers.d/
+[root@penguin ~]# echo &#39;&lt;CHROME_OS_USER&gt; ALL=(root) NOPASSWD:ALL&#39; &gt; /etc/sudoers.d/&lt;CHROME_OS_USER&gt;
+[root@penguin ~]# chmod 0440 /etc/sudoers.d/&lt;CHROME_OS_USER&gt;
+</pre></div>
+</div>
+<p><strong>archlinux/current</strong></p>
+<p>First install a package manager such as <a class="reference external" href="https://github.com/Jguer/yay">yay</a>. This is required to install packages from the Arch Linux User Repository (AUR).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># yay -S cros-container-guest-tools-git</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pacman -S sudo wayland xorg-server-xwayland</span>
+</pre></div>
+</div>
+<p>[16]</p>
+<p><strong>centos/8</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># dnf install epel-release sudo xorg-x11-server-Xwayland</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># dnf install cros-guest-tools --enablerepo=epel-testing</span>
+</pre></div>
+</div>
+<p>[17]</p>
+<p><strong>fedora/31</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># dnf install sudo xorg-x11-server-Xwayland</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@penguin</span> <span class="o">~</span><span class="p">]</span><span class="c1"># dnf install cros-guest-tools sudo --enablerepo=updates-testing</span>
+</pre></div>
+</div>
+<p>[18]</p>
+<p><strong>All</strong></p>
+<p>Enable the required services and then restart the virtual machine to load the new <code class="docutils literal notranslate"><span class="pre">penguin</span></code> container integration.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@penguin ~]# systemctl enable cros-sftp
+[root@penguin ~]# su - &lt;CHROME_OS_USER&gt;
+[&lt;CHROME_OS_USER&gt;@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommlier@1 sommelier-x@1 cros-garcon cros-pulse-config
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">crosh</span><span class="o">&gt;</span> <span class="n">vmc</span> <span class="n">stop</span> <span class="n">termina</span>
+<span class="n">crosh</span><span class="o">&gt;</span> <span class="n">vmc</span> <span class="n">start</span> <span class="n">termina</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nested-virtualization">
+<h4><a class="toc-backref" href="#id28">Nested Virtualization</a><a class="headerlink" href="#nested-virtualization" title="Permalink to this headline">¶</a></h4>
+<p>As of Chrome OS 81, nested virtualization is supported in Crostini. This means that KVM accelerated QEMU virtual machines can be created. [21]</p>
+<p>Verify that the <code class="docutils literal notranslate"><span class="pre">termina</span></code> virtual machine supports nested virtualization.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>&lt;CHROME_OS_USER&gt;@penguin ~<span class="o">]</span>$ cat /sys/module/kvm_intel/parameters/nested
+Y
+</pre></div>
+</div>
+<p>Install the <code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> GUI application:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>&lt;CHROME_OS_USER&gt;@penguin ~<span class="o">]</span>$ apt-get install virt-manager
+</pre></div>
+</div>
+<p>The local user needs to be in the <code class="docutils literal notranslate"><span class="pre">libvirt</span></code> group to be able to access and manage system level virtual machines. By default, <code class="docutils literal notranslate"><span class="pre">virt-manager</span></code> connections through <code class="docutils literal notranslate"><span class="pre">qemu:///system</span></code> to provide the best performance.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>&lt;CHROME_OS_USER&gt;@penguin ~<span class="o">]</span>$ sudo usermod -a -G libvirt <span class="k">$(</span>whoami<span class="k">)</span>
+</pre></div>
+</div>
+<p>Launch the program and then create virtual machines.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>&lt;CHROME_OS_USER&gt;@penguin ~<span class="o">]</span>$ virt-manager
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtual-machine-external-storage">
+<h4><a class="toc-backref" href="#id29">Virtual Machine External Storage</a><a class="headerlink" href="#virtual-machine-external-storage" title="Permalink to this headline">¶</a></h4>
+<p>Untrusted virtual machines (only available in developer mode) can use external storage devices. [23]</p>
+<p>View the available devices that can be used for external storage. These are the same that will appear in the <code class="docutils literal notranslate"><span class="pre">Files</span></code> app.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ ls -1 /media/removable/
+</pre></div>
+</div>
+<p>Create a new data image for the virtual machine.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>crosh&gt; vmc create-extra-disk --size<span class="o">=</span>&lt;SIZE&gt;G --removable-media <span class="s2">&quot;USB Drive/&lt;IMAGE_NAME&gt;.img&quot;</span>
+</pre></div>
+</div>
+<p>Start the Crostini virtual machine with the new data image. It will be available within the virtual machine as a Btrfs file system mounted at <code class="docutils literal notranslate"><span class="pre">/mnt/external/0/</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>crosh&gt; vmc start --untrusted --extra-disk <span class="s2">&quot;/media/removable/USB Drive/&lt;IMAGE_NAME&gt;.img termina&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="crouton">
+<h3><a class="toc-backref" href="#id30">Crouton</a><a class="headerlink" href="#crouton" title="Permalink to this headline">¶</a></h3>
+<p>Crouton allows installing Debian based operating systems into a chroot directory. It supports better integration with Chrome OS via the <a class="reference external" href="https://chrome.google.com/webstore/detail/crouton-integration/gcpneefbbnfalgjniomfjknbcgkbijom">crouton integration extension</a>.</p>
+<p>Advantages of Crouton over Crostini:</p>
+<ul>
+<li><p>Complete OpenGL and Vulkan hardware-accelerated support.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Virgil, used by Crostini for OpenGL acceleration, is <a class="reference external" href="https://lwn.net/Articles/767970/">limited to OpenGL 4.3</a> and older versions. OpenGL 4.6 is the current latest version. Virgil also lacks Vulkan support.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Lower disk space usage.</p></li>
+<li><p>No virtualization overhead.</p></li>
+<li><p>Optional installation to an external storage device.</p></li>
+<li><p>Chroot Linux installations can be encrypted.</p></li>
+<li><p>Support for all processor architectures. Crostini only works on 64-bit Chrome OS devices.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Insecure compared to Crostini. Resources are not isolated from the Chrome OS operating system.</p></li>
+<li><p>Requires <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">Mode</span></code> to be enabled.</p></li>
+<li><p>Installs an old operating system by default (Ubuntu 16.04).</p></li>
+</ul>
+<p>Download and install the <code class="docutils literal notranslate"><span class="pre">crouton</span></code> script to a location found in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>. Alternatively, it can be executed from any user directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>crosh&gt; shell
+chronos@localhost / $ cd ~/Downloads/
+chronos@localhost ~/Downloads $ wget https://goo.gl/fd3zc -O crouton
+chronos@localhost ~/Downloads $ sudo install -Dt /usr/local/bin -m 755 ~/Downloads/crouton
+</pre></div>
+</div>
+<div class="section" id="chroot-management">
+<h4><a class="toc-backref" href="#id31">Chroot Management</a><a class="headerlink" href="#chroot-management" title="Permalink to this headline">¶</a></h4>
+<p>Supported configurations:</p>
+<ul class="simple">
+<li><p>Desktop environments:</p>
+<ul>
+<li><p>gnome</p></li>
+<li><p>kde</p></li>
+<li><p>lxde</p></li>
+<li><p>unity</p></li>
+<li><p>xfce</p></li>
+</ul>
+</li>
+<li><p>Operating systems:</p>
+<ul>
+<li><p>Debian</p></li>
+<li><p>Kali Linux</p></li>
+<li><p>Ubuntu</p></li>
+</ul>
+</li>
+</ul>
+<p>View available operating system versions that can be installed along with the types of packages than can be automatically configured. By default, Ubuntu 16.04 is installed with the XFCE desktop environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ crouton -r list
+chronos@localhost / $ crouton -t list
+</pre></div>
+</div>
+<p>Example of creating a minimal chroot.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo crouton -t core
+</pre></div>
+</div>
+<p>Example of installing Debian Sid, with common features enabled, encrypting the chroot, and naming the chroot “debian_sid_crouton”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>chronos@localhost / $ sudo crouton -r sid -t core,audio,touch,keyboard,extension,xorg,xfce -e -n debian_sid_crouton
+</pre></div>
+</div>
+<p>[20]</p>
+</div>
+</div>
+</div>
+<div class="section" id="features">
+<h2><a class="toc-backref" href="#id32">Features</a><a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>Chrome OS versions:</p>
+<ul class="simple">
+<li><p>89</p>
+<ul>
+<li><p><a class="reference external" href="https://chromeunboxed.com/chrome-os-89-arrives-10th-birthday-new-features#screen-capture">“Phone Hub” provides tight integration between an Android device and a Chromebook.</a></p></li>
+<li><p><a class="reference external" href="https://chromeunboxed.com/chrome-os-89-arrives-10th-birthday-new-features#screen-capture">“Screen capture” is a new app added to the settings menu that allows taking screenshots and screen recordings natively.</a></p></li>
+<li><p><a class="reference external" href="https://www.aboutchromebooks.com/news/chrome-os-89-adds-media-annotations-photo-filters-and-a-working-trash-can-for-chromebooks/">“Trash” in the Files app for recovering deleted files.</a></p></li>
+</ul>
+</li>
+<li><p>88</p>
+<ul>
+<li><p><a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=827705">Crostini on removable storage devices.</a></p></li>
+</ul>
+</li>
+<li><p>87</p>
+<ul>
+<li><p><a class="reference external" href="https://www.androidpolice.com/2020/11/18/chrome-87/">The PDF viewer has been completely redesigned with more features.</a></p></li>
+</ul>
+</li>
+<li><p>86</p>
+<ul>
+<li><p><a class="reference external" href="https://www.aboutchromebooks.com/news/chrome-os-86-stable-channel-arrives-on-chromebooks-what-you-need-to-know/">HDR photo and video playback support.</a></p></li>
+</ul>
+</li>
+<li><p>85</p>
+<ul>
+<li><p><a class="reference external" href="https://www.parallels.com/products/desktop/chrome/">Windows virtual machine integration provided by Parallels.</a></p></li>
+</ul>
+</li>
+<li><p>84</p>
+<ul>
+<li><p><a class="reference external" href="https://chromeos.dev/en/web-environment/port-forwarding">Port forwarding to access network ports in Crostini from Chrome OS.</a></p></li>
+</ul>
+</li>
+<li><p>81</p>
+<ul>
+<li><p><a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=993253">Nested virtualization support inside of Crostini.</a></p></li>
+</ul>
+</li>
+<li><p>76</p>
+<ul>
+<li><p><a class="reference external" href="https://www.xda-developers.com/chrome-os-76-gpu-support-linux-apps/">OpenGL passthrough to Crostini via Virgl.</a></p></li>
+</ul>
+</li>
+<li><p>75</p>
+<ul>
+<li><p><a class="reference external" href="https://www.aboutchromebooks.com/news/chrome-os-75-adds-usb-device-adb-android-support-linux-project-crostini/">USB device passthrough of any device to Crostini.</a></p></li>
+</ul>
+</li>
+<li><p>73</p>
+<ul>
+<li><p><a class="reference external" href="https://www.aboutchromebooks.com/news/chrome-os-73-dev-channel-adds-google-drive-play-files-mount-in-linux-usb-device-management-and-crostini-backup-flag/">Initial USB device passthrough of select supported devices to Crostini.</a></p></li>
+</ul>
+</li>
+<li><p>72</p>
+<ul>
+<li><p><a class="reference external" href="https://www.aboutchromebooks.com/news/chrome-os-72-dev-channel-usb-sd-card-support-project-crostini-chromebooks-android-9-pie/">USB storage passthrough to Crostini.</a></p></li>
+</ul>
+</li>
+<li><p>66</p>
+<ul>
+<li><p><a class="reference external" href="https://www.xda-developers.com/linux-apps-chrome-os-overview-crostini/">Linux support via Crostini.</a></p></li>
+</ul>
+</li>
+<li><p>59</p>
+<ul>
+<li><p><a class="reference external" href="https://www.engadget.com/2017-06-10-chrome-os-native-print.html">Native printer support via CUPS.</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="upcoming-features">
+<h2><a class="toc-backref" href="#id33">Upcoming Features</a><a class="headerlink" href="#upcoming-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager">Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming.</a></p></li>
+<li><p><a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=996591">Vulkan support in Crostini.</a></p></li>
+</ul>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id34">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/chromebook.rst">Latest</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id35">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Running Custom Containers Under Chrome OS.” Chromium OS Docs. Accessed March 2, 2020. <a class="reference external" href="https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md">https://chromium.googlesource.com/chromiumos/docs/+/master/containers_and_vms.md</a></p></li>
+<li><p>“Issue 878324: Share Downloads with crostini container.” Chromium Bugs. May 6, 2019. Accessed March 2, 2020. <a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=878324">https://bugs.chromium.org/p/chromium/issues/detail?id=878324</a></p></li>
+<li><p>“Issue 930901: crostini: support buster as the default container.” Chromium Bugs. February 7, 2020. Accessed March 2, 2020. <a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=930901">https://bugs.chromium.org/p/chromium/issues/detail?id=930901</a></p></li>
+<li><p>“Chromebook keyboard shortcuts.” Chromebook Help. Accessed March 2, 2020. <a class="reference external" href="https://support.google.com/chromebook/answer/183101?hl=en">https://support.google.com/chromebook/answer/183101?hl=en</a></p></li>
+<li><p>“Developer Mode.” Chromium OS Docs. Accessed March 4, 2020. <a class="reference external" href="https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md">https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md</a></p></li>
+<li><p>“Turn on debugging features.” Chromebook Help. Accessed March 4, 2020. <a class="reference external" href="https://support.google.com/chromebook/answer/6204310?hl=en">https://support.google.com/chromebook/answer/6204310?hl=en</a></p></li>
+<li><p>“Debug Button Shortcuts.” Chromium OS Docs. Accessed March 4, 2020. <a class="reference external" href="https://chromium.googlesource.com/chromiumos/docs/+/master/debug_buttons.md">https://chromium.googlesource.com/chromiumos/docs/+/master/debug_buttons.md</a></p></li>
+<li><p>“Debugging Features.” Chromium OS. Accessed March 4, 2020. <a class="reference external" href="https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features">https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features</a></p></li>
+<li><p>“LXD Getting started - command line.” Linux containers. Accessed March 7, 2020. <a class="reference external" href="https://linuxcontainers.org/lxd/getting-started-cli/">https://linuxcontainers.org/lxd/getting-started-cli/</a></p></li>
+<li><p>“Crostini Setup Guide.” Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. <a class="reference external" href="https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide">https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide</a></p></li>
+<li><p>“Issue 996591: Vulkan does not appear to be working in Crostini.” Chromium Bugs. February 12, 2020. Accessed March 11, 2020. <a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=996591">https://bugs.chromium.org/p/chromium/issues/detail?id=996591</a></p></li>
+<li><p>“CHROME OS 80 MAKES GRAPHIC INTENSIVE LINUX APPS SO MUCH BETTER.” Chrome Unboxed. March 10, 2020. Accessed March 11, 2020. <a class="reference external" href="https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/">https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/</a></p></li>
+<li><p>“How to install Steam.” Reddit r/Crostini. November 2, 2018. Accessed March 11, 2020. <a class="reference external" href="https://www.reddit.com/r/Crostini/wiki/howto/install-steam">https://www.reddit.com/r/Crostini/wiki/howto/install-steam</a></p></li>
+<li><p>“Auto Update Policy.” Google Chrome Enterprise Help. Accessed March 13, 2020. <a class="reference external" href="https://support.google.com/chrome/a/answer/6220366?hl=en">https://support.google.com/chrome/a/answer/6220366?hl=en</a></p></li>
+<li><p>“Switch between stable, beta &amp; dev software.” Google Chrome Enterprise Help. Accessed March 13, 2020. <a class="reference external" href="https://support.google.com/chromebook/answer/1086915?hl=en">https://support.google.com/chromebook/answer/1086915?hl=en</a></p></li>
+<li><p>“Chrome OS devices/Crostini.” Arch Linux Wiki. February 17, 2020. Accessed March 14, 2020. <a class="reference external" href="https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini">https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini</a></p></li>
+<li><p>“How to run CentOS instead of Debian.” Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. <a class="reference external" href="https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux">https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux</a></p></li>
+<li><p>“How to run Fedora instead of Debian.” Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. <a class="reference external" href="https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux">https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux</a></p></li>
+<li><p>“skycocker/chromebrew.” GitHub. March 28, 2020. Accessed March 28, 2020. <a class="reference external" href="https://github.com/skycocker/chromebrew">https://github.com/skycocker/chromebrew</a></p></li>
+<li><p>“dnschneid/crouton.” GitHub. January 17, 2020. Accessed March 29, 2020. <a class="reference external" href="https://github.com/dnschneid/crouton">https://github.com/dnschneid/crouton</a></p></li>
+<li><p>“Issue 993253: Support untrusted VMs.” Chromium Bugs. January 27, 2020. Accessed May 29, 2020. <a class="reference external" href="https://bugs.chromium.org/p/chromium/issues/detail?id=993253">https://bugs.chromium.org/p/chromium/issues/detail?id=993253</a></p></li>
+<li><p>“ChromeOS Firmware Utility Script.” MrChromebox.tech. Accessed September 5, 2020. <a class="reference external" href="https://mrchromebox.tech/#fwscript">https://mrchromebox.tech/#fwscript</a></p></li>
+<li><p>“service.cc” vm_tools - chromiumos/platform2 - Git at Google. November 14, 2020. Accessed December 5, 2020. <a class="reference external" href="https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc">https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc</a></p></li>
+<li><p>“How to Enable USB Booting on Chromebook.” wikiHow. November 30, 2020. Accessed February 25, 2021. <a class="reference external" href="https://www.wikihow.com/Enable-USB-Booting-on-Chromebook">https://www.wikihow.com/Enable-USB-Booting-on-Chromebook</a></p></li>
+<li><p>“Remove RootFS Verification &amp; make Read/Write.” Cr-48ite. January 4, 2012. Accessed Feburary 28, 2021. <a class="reference external" href="https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write">https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write</a></p></li>
+<li><p>“Chromebook writable root.” Way of the nix’s - Computer Security &amp; Full Stack Development. Accessed February 28, 2021. <a class="reference external" href="https://xn--1ca.se/chromebook-writable-root/">https://xn–1ca.se/chromebook-writable-root/</a></p></li>
+<li><p>“Build chrome os kernel and kernel modules.” GitHub dnschneid/crouton. March 22, 2018. Accessed March 15, 2021. <a class="reference external" href="https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules">https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules</a></p></li>
+<li><p>“Custom Kernel Modules for Chromebook.” The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. <a class="reference external" href="https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/">https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/</a></p></li>
+<li><p>“Dev-Install: Installing Developer and Test packages onto a Chrome OS device.” Chromium OS How Tos and Troubleshooting. Accessed March 16, 2021. <a class="reference external" href="https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images">https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="graphics.html" class="btn btn-neutral float-right" title="Graphics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="authentication.html" class="btn btn-neutral float-left" title="Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

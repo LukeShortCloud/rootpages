@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenStack Developer &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Kolla" href="kolla.html" />
+    <link rel="prev" title="OpenStack" href="openstack.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="openstack.html">OpenStack</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">OpenStack Developer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#new-contributor">New Contributor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#irc">IRC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#git">Git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gerrit">Gerrit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#git-messages">Git Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#release-notes">Release Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bugs">Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specification-and-blueprint">Specification and Blueprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#licenses">Licenses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>OpenStack Developer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/developer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack-developer">
+<h1><a class="toc-backref" href="#id1">OpenStack Developer</a><a class="headerlink" href="#openstack-developer" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#openstack-developer" id="id1">OpenStack Developer</a></p>
+<ul>
+<li><p><a class="reference internal" href="#new-contributor" id="id2">New Contributor</a></p></li>
+<li><p><a class="reference internal" href="#irc" id="id3">IRC</a></p></li>
+<li><p><a class="reference internal" href="#git" id="id4">Git</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gerrit" id="id5">Gerrit</a></p></li>
+<li><p><a class="reference internal" href="#git-messages" id="id6">Git Messages</a></p></li>
+<li><p><a class="reference internal" href="#release-notes" id="id7">Release Notes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bugs" id="id8">Bugs</a></p></li>
+<li><p><a class="reference internal" href="#resources" id="id9">Resources</a></p></li>
+<li><p><a class="reference internal" href="#specification-and-blueprint" id="id10">Specification and Blueprint</a></p></li>
+<li><p><a class="reference internal" href="#licenses" id="id11">Licenses</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id12">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id13">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="new-contributor">
+<h2><a class="toc-backref" href="#id2">New Contributor</a><a class="headerlink" href="#new-contributor" title="Permalink to this headline">¶</a></h2>
+<p>These are the steps required to sign up as a new OpenStack developer:</p>
+<ul class="simple">
+<li><p>Sign up for an <a class="reference external" href="https://login.ubuntu.com/">Ubuntu One account</a>.</p></li>
+<li><p>Log into the <a class="reference external" href="https://review.opendev.org/">OpenDev Gerrit portal</a>.</p></li>
+<li><p>Agree to the <a class="reference external" href="https://review.opendev.org/#/settings/agreements">Individual Contributor License Agreement</a> (ICLA).</p></li>
+<li><p>Add a <a class="reference external" href="https://review.opendev.org/#/settings/ssh-keys">public SSH key to Gerrit</a>.</p></li>
+</ul>
+<p>[1]</p>
+</div>
+<div class="section" id="irc">
+<h2><a class="toc-backref" href="#id3">IRC</a><a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h2>
+<p>IRC is one of the few ways that OpenStack developers communicate with each other. The connection details to the Freenode service used by OpenStack are listed below.</p>
+<ul class="simple">
+<li><p>Username: <code class="docutils literal notranslate"><span class="pre">&lt;LAUNCHPAD_USERNAME&gt;</span></code></p></li>
+<li><p>Host: irc.freenode.net</p></li>
+<li><p>SSL: Yes</p></li>
+<li><p>Port: 6697</p></li>
+</ul>
+<p>Once logged in for the first time, connect to an OpenStack channel such as <code class="docutils literal notranslate"><span class="pre">#openstack</span></code> to register an IRC account. [2]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">msg</span> <span class="n">nickserv</span> <span class="n">register</span> <span class="o">&lt;</span><span class="n">NEW_IRC_PASSWORD</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">EMAIL</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Useful links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wiki.openstack.org/wiki/IRC">IRC Channels</a>. Most channels are named <code class="docutils literal notranslate"><span class="pre">#openstack-&lt;PROJECT&gt;</span></code>.</p></li>
+<li><p><a class="reference external" href="http://eavesdrop.openstack.org/irclogs/">IRC Logs</a></p></li>
+<li><p><a class="reference external" href="http://eavesdrop.openstack.org/">Scheduled project meeting times and channels.</a></p></li>
+</ul>
+</div>
+<div class="section" id="git">
+<h2><a class="toc-backref" href="#id4">Git</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gerrit">
+<h3><a class="toc-backref" href="#id5">Gerrit</a><a class="headerlink" href="#gerrit" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Install the <code class="docutils literal notranslate"><span class="pre">git-review</span></code> via a system package or <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p></li>
+<li><p>Clone an <a class="reference external" href="https://opendev.org/openstack">OpenStack repository from OpenDev</a> with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://opendev.org/openstack/&lt;PROJECT&gt;</span></code>.</p></li>
+<li><p>Add the registered Gerrit username with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">--global</span> <span class="pre">gitreview.username</span> <span class="pre">&lt;GERRIT_USER&gt;</span></code></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">review</span> <span class="pre">-s</span></code> to configure Gerrit for the repository and to ensure the local workstation can connect to it.</p></li>
+<li><p>All reviews are posted on <a class="reference external" href="https://review.opendev.org">review.opendev.org</a>.</p></li>
+<li><p>Re-run all CI tests if there is a failure by posting a comment on the review with the word <code class="docutils literal notranslate"><span class="pre">recheck</span></code> in it.</p>
+<ul>
+<li><p>For the RDO/TripleO community, RDO specific CI jobs can be re-ran by commenting with <code class="docutils literal notranslate"><span class="pre">check-rdo</span></code>.</p></li>
+</ul>
+</li>
+<li><p>For a patch to merge, it needs at least <code class="docutils literal notranslate"><span class="pre">+2</span></code> from Code-Reviews, a Verified label from CI, and a <code class="docutils literal notranslate"><span class="pre">+1</span></code> to Workflow from a core contributor.</p></li>
+<li><p>Once a patch is merged into master, consider backporting it to previous stable branches with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cherry-pick</span> <span class="pre">-x</span></code>.</p>
+<ul>
+<li><p>It is preferred to backport sequentially from one release to the next (instead of directly from master) to help avoid merge conflicts.</p></li>
+</ul>
+</li>
+</ul>
+<p>Gerrit patches can be downloaded and applied to a local environment. Find the patch to download by going to: <code class="docutils literal notranslate"><span class="pre">Download</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Patch-File</span></code> &gt; Copy and use the link to the base64 file.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /usr/lib/python3.6/site-packages
+$ sudo patch -p1 &lt; &lt;<span class="o">(</span>base64 --decode &lt;<span class="o">(</span>curl -s <span class="s2">&quot;https://review.opendev.org/changes/&lt;GERRIT_NUMBER&gt;/revisions/&lt;COMMIT_HASH&gt;/patch?download&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-messages">
+<h3><a class="toc-backref" href="#id6">Git Messages</a><a class="headerlink" href="#git-messages" title="Permalink to this headline">¶</a></h3>
+<p>When submitting a patch, the git commit message (from <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span></code>) can contain any of these valid tags:</p>
+<ul>
+<li><p>DNM = Do not merge. This is normally used to manually run CI jobs.</p></li>
+<li><p>WIP = Work-in-progress. This patch is not complete and possibly not working yet. It is not ready for reviews yet.</p></li>
+<li><p>[Queens-only]</p></li>
+<li><p>Closes-Bug: <code class="docutils literal notranslate"><span class="pre">#&lt;BUG_NUMBER&gt;</span></code></p></li>
+<li><p>Resolves: <code class="docutils literal notranslate"><span class="pre">rhbz#&lt;BUG_NUMBER&gt;</span></code></p>
+<ul class="simple">
+<li><p>List a Red Hat Bugzilla that the patch resolves.</p></li>
+</ul>
+</li>
+<li><p>Partial-Bug:</p></li>
+<li><p>Related-Bug:</p></li>
+<li><p>Task:</p></li>
+<li><p>Story:</p></li>
+<li><p>Implements: blueprint <code class="docutils literal notranslate"><span class="pre">&lt;BLUEPRINT_NAME&gt;</span></code></p></li>
+<li><p>Co-Authored-By: <code class="docutils literal notranslate"><span class="pre">&lt;FULL_NAME&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;E_MAIL&gt;</span></code></p></li>
+<li><p>Change-Id: <code class="docutils literal notranslate"><span class="pre">&lt;CHANGE_ID&gt;</span></code></p></li>
+<li><p>Depends-On: <code class="docutils literal notranslate"><span class="pre">&lt;CHANGE_ID&gt;</span></code></p></li>
+<li><p>Conflicts:</p>
+<ul class="simple">
+<li><p>Specify the path to each file that had a merge conflict that was manually resolved.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Conflicts</span><span class="p">:</span>
+    <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">conflicting</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">conflicting</span><span class="o">/</span><span class="n">file2</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="release-notes">
+<h3><a class="toc-backref" href="#id7">Release Notes</a><a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h3>
+<p>Any major change to an OpenStack project requires a release note. The categories which can be specified in a release note are:</p>
+<ul class="simple">
+<li><p>critical</p></li>
+<li><p>deprecations</p></li>
+<li><p>features</p></li>
+<li><p>fixes</p></li>
+<li><p>issues</p></li>
+<li><p>other</p></li>
+<li><p>prelude</p></li>
+<li><p>security</p></li>
+<li><p>upgrade</p></li>
+</ul>
+<p>Install the required <a class="reference external" href="https://pypi.org/project/reno/">reno</a> Python library.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install --user reno
+</pre></div>
+</div>
+<p>Create a new release note using a prefix. The prefix should be either the subject of the change or the Launchpad bug number in the format of <code class="docutils literal notranslate"><span class="pre">bug-&lt;LAUNCHPAD_BUG_NUMBER&gt;</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ reno new &lt;PREFIX&gt;
+Created new notes file <span class="k">in</span> releasenotes/notes/&lt;PREFIX&gt;-&lt;UUID&gt;.yaml
+</pre></div>
+</div>
+<p>Edit the release note with contents about the major change.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vim releasenotes/notes/&lt;PREFIX&gt;-&lt;UUID&gt;.yaml
+</pre></div>
+</div>
+<p>[6]</p>
+</div>
+</div>
+<div class="section" id="bugs">
+<h2><a class="toc-backref" href="#id8">Bugs</a><a class="headerlink" href="#bugs" title="Permalink to this headline">¶</a></h2>
+<p>The bug tracker system used is Canonical’s Launchpad. Generic OpenStack issues can be reported to <code class="docutils literal notranslate"><span class="pre">https://bugs.launchpad.net/openstack</span></code>. Project specific issues can be found at <code class="docutils literal notranslate"><span class="pre">https://bugs.launchpad.net/&lt;OPENSTACK_PROJECT&gt;</span></code>.</p>
+<p>Each bug has specific attributes:</p>
+<ul class="simple">
+<li><p>Affects = The OpenStack project that is affected.</p></li>
+<li><p>Status = The current status of the bug.</p>
+<ul>
+<li><p>Confirmed</p></li>
+<li><p>Fix Committed</p></li>
+<li><p>Fix Released</p></li>
+<li><p>In Progress</p></li>
+<li><p>Incomplete</p></li>
+<li><p>Invalid</p></li>
+<li><p>New</p></li>
+<li><p>Opinion</p></li>
+<li><p>Triaged</p></li>
+<li><p>Won’t Fix</p></li>
+</ul>
+</li>
+<li><p>Importance = The importance/priority of the bug.</p>
+<ul>
+<li><p>Critical</p></li>
+<li><p>High</p></li>
+<li><p>Medium</p></li>
+<li><p>Low</p></li>
+<li><p>Wishlist</p></li>
+</ul>
+</li>
+<li><p>Assigned to = The owner of the bug.</p></li>
+<li><p>Milestone = The next development release that this is targeted to be fixed in.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="resources">
+<h2><a class="toc-backref" href="#id9">Resources</a><a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<p>These are various services that are helpful for collaboration and sharing.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://storyboard.openstack.org/">Story Board</a> = Project planning.</p></li>
+<li><p><a class="reference external" href="http://paste.openstack.org/">Paste</a> = Paste large code blocks. <a class="reference external" href="https://docs.openstack.org/infra/system-config/paste.html">Back-end documentation</a>.</p></li>
+<li><p><a class="reference external" href="https://etherpad.openstack.org/">Etherpad</a> = Collaborative online document. <a class="reference external" href="https://docs.openstack.org/infra/system-config/etherpad.html">Back-end documentation</a>.</p></li>
+<li><p><a class="reference external" href="https://opendev.org/openstack">OpenDev Git Repositories</a> = All of the OpenStack services source code.</p></li>
+</ul>
+</div>
+<div class="section" id="specification-and-blueprint">
+<h2><a class="toc-backref" href="#id10">Specification and Blueprint</a><a class="headerlink" href="#specification-and-blueprint" title="Permalink to this headline">¶</a></h2>
+<p>A specification (spec) and blueprint are required for any new large feature or code refactoring. The specification is a detailed document explaining the work that needs to be done and the impact it will have on the project. [4] Some considerations are impacts to the API, security, notifications, end user, performance, etc. A full example of a spec can be found <a class="reference external" href="https://specs.openstack.org/openstack/nova-specs/specs/train/implemented/train-template.html">here</a>. Blueprints are created as a more generalized version of a specification. The progress of the new feature is tracked by mentioning the blueprint in related git commit messages.</p>
+</div>
+<div class="section" id="licenses">
+<h2><a class="toc-backref" href="#id11">Licenses</a><a class="headerlink" href="#licenses" title="Permalink to this headline">¶</a></h2>
+<p>OpenStack is a collection of various different projects that use software licenses that are approved by the Open Source Initiative (OSI). It is recommended that new projects use the Apache Software License v2.0 (ASL v2.0). For supporting the Contributor License Agreement (CLA), a license such as ASL v2.0, BSD, or MIT must be used. [5]</p>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id12">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/openstack/developer.rst">Latest</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id13">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Developer’s Guide.” infra-manual (OpenStack Documentation). August 2, 2019. Accessed December 4, 2019. <a class="reference external" href="https://docs.openstack.org/infra/manual/developers.html">https://docs.openstack.org/infra/manual/developers.html</a></p></li>
+<li><p>“Setup IRC.” OpenStack Documentation Contributor Guide. December 19, 2019. Accessed January 2, 2020. <a class="reference external" href="https://docs.openstack.org/contributors/common/irc.html">https://docs.openstack.org/contributors/common/irc.html</a></p></li>
+<li><p>“Bugs.” OpenStack Documentation Project Team Guide. June 28, 2018. Accessed January 2, 2020. <a class="reference external" href="https://docs.openstack.org/project-team-guide/bugs.html">https://docs.openstack.org/project-team-guide/bugs.html</a></p></li>
+<li><p>“Blueprints and specifications.” OpenStack Documentation Contributor Guide. January 2, 2020. Accessed January 2, 2020. <a class="reference external" href="https://docs.openstack.org/doc-contrib-guide/blueprints-and-specs.html">https://docs.openstack.org/doc-contrib-guide/blueprints-and-specs.html</a></p></li>
+<li><p>“Licensing requirements.” OpenStack Governance. July 18, 2017. Accessed January 2, 2020. <a class="reference external" href="https://governance.openstack.org/tc/reference/licensing.html">https://governance.openstack.org/tc/reference/licensing.html</a></p></li>
+<li><p>“Working with Release Notes.” keystone OpenStack Documentation. May 31, 2019. Accessed May 29, 2020. <a class="reference external" href="https://docs.openstack.org/keystone/train/contributor/release-notes.html">https://docs.openstack.org/keystone/train/contributor/release-notes.html</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="kolla.html" class="btn btn-neutral float-right" title="Kolla" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="openstack.html" class="btn btn-neutral float-left" title="OpenStack" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

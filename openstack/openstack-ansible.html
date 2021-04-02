@@ -1,0 +1,976 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenStack-Ansible &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TripleO" href="tripleo.html" />
+    <link rel="prev" title="Kolla" href="kolla.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kolla.html">Kolla</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">OpenStack-Ansible</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#all-in-one-aio">All-in-One (AIO)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configurations">Configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#neutron">Neutron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nova">Nova</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ceph">Ceph</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operations">Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#openstack-utilities">OpenStack Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ansible-inventory">Ansible Inventory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-a-infrastructure-node">Add a Infrastructure Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-a-compute-node">Add a Compute Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-a-compute-node">Remove a Compute Node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrades">Upgrades</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#minor">Minor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major">Major</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>OpenStack-Ansible</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/openstack-ansible.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack-ansible">
+<h1><a class="toc-backref" href="#id1">OpenStack-Ansible</a><a class="headerlink" href="#openstack-ansible" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#openstack-ansible" id="id1">OpenStack-Ansible</a></p>
+<ul>
+<li><p><a class="reference internal" href="#all-in-one-aio" id="id2">All-in-One (AIO)</a></p></li>
+<li><p><a class="reference internal" href="#configurations" id="id3">Configurations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#neutron" id="id4">Neutron</a></p></li>
+<li><p><a class="reference internal" href="#nova" id="id5">Nova</a></p></li>
+<li><p><a class="reference internal" href="#ceph" id="id6">Ceph</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#install" id="id7">Install</a></p></li>
+<li><p><a class="reference internal" href="#operations" id="id8">Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#openstack-utilities" id="id9">OpenStack Utilities</a></p></li>
+<li><p><a class="reference internal" href="#ansible-inventory" id="id10">Ansible Inventory</a></p></li>
+<li><p><a class="reference internal" href="#add-a-infrastructure-node" id="id11">Add a Infrastructure Node</a></p></li>
+<li><p><a class="reference internal" href="#add-a-compute-node" id="id12">Add a Compute Node</a></p></li>
+<li><p><a class="reference internal" href="#remove-a-compute-node" id="id13">Remove a Compute Node</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#upgrades" id="id14">Upgrades</a></p>
+<ul>
+<li><p><a class="reference internal" href="#minor" id="id15">Minor</a></p></li>
+<li><p><a class="reference internal" href="#major" id="id16">Major</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id17">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id18">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>OpenStack-Ansible uses Ansible for automating the deployment of Ubuntu inside of LXC containers that run the OpenStack services. This was created by RackSpace as an official tool for deploying and managing production environments.</p>
+<ul class="simple">
+<li><p>Supported operating systems: Ubuntu 18.04, Debian 9, or CentOS 7</p></li>
+<li><p>Experimentally supported operating systems: openSUSE Leap 15</p></li>
+</ul>
+<p>It offers key features that include:</p>
+<ul class="simple">
+<li><p>Full LXC containerization of services.</p></li>
+<li><p>HAProxy load balancing for clustering containers.</p></li>
+<li><p>Scaling for MariaDB Galera, RabbitMQ, compute nodes, and more.</p></li>
+<li><p>Central logging with rsyslog.</p></li>
+<li><p>OpenStack package repository caching.</p></li>
+<li><p>Automated upgrades.</p></li>
+</ul>
+<p>[3]</p>
+<p>The <a class="reference external" href="https://opendev.org/openstack/openstack-ansible">OpenStack-Ansible git repository</a> has three different versions that can be used for deployments or upgrades.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stable/&lt;OPENSTACK_RELEASE_NAME&gt;</span></code> = A branch for a specific release of OpenStack. All of the latest updates are committed here. Example: “stable/queens”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;OPENSTACK_RELEASE_NUMBER_MAJOR&gt;.&lt;OSA_MINOR&gt;.&lt;OSA_PATCH&gt;</span></code> = A tag of a specific OpenStack-Ansible release. The major version number is the same number that correlates to the OpenStack release. The minor and patch versions represent OpenStack-Ansible updates to the code. Example: “17.0.2” is the OpenStack Queens release and is the second OpenStack-Ansible update.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;OPENSTACK-RELEASE&gt;-eol</span></code> =  A tag of an end-of-life release. Upstream versions of OpenStack no longer receive any support after a year. This contains the last code for that release. Example: “newton-eol”.</p></li>
+</ul>
+<p>SELinux is currently not supported for CentOS deployments due to the lack of SELinux maintainers in OpenStack-Ansible. [1]</p>
+<div class="section" id="all-in-one-aio">
+<h2><a class="toc-backref" href="#id2">All-in-One (AIO)</a><a class="headerlink" href="#all-in-one-aio" title="Permalink to this headline">¶</a></h2>
+<p><strong>Install</strong></p>
+<p>Minimum requirements:</p>
+<ul class="simple">
+<li><p>8 CPU cores</p></li>
+<li><p>50GB storage (80GB recommended)</p></li>
+<li><p>8GB RAM (16GB recommended)</p></li>
+</ul>
+<p>This quick installation guide covers how to install an all-in-one
+environment. It is recommended to deploy this inside of a virtual
+machine (with nested virtualization enabled) as many system
+configurations are changed.</p>
+<p>Setup the OpenStack-Ansible project.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+<span class="nb">cd</span> /opt/openstack-ansible/
+git checkout stable/queens
+</pre></div>
+</div>
+<p>There are many all-in-one scenarios that will run different Ansible playbooks. The default is “aio_lxc” which deploys the major OpenStack services to LXC containers. This can be changed to a different scenario by setting the <code class="docutils literal notranslate"><span class="pre">SCENARIO</span></code> shell variable to something else. Alternatively, the playbooks to run can be manually modified from the variable file <code class="docutils literal notranslate"><span class="pre">/opt/openstack-ansible/tests/vars/bootstrap-aio-vars.yml</span></code>. Additional playbooks can be added by copying them from <code class="docutils literal notranslate"><span class="pre">/opt/openstack-ansible/etc/openstack_deploy/conf.d/</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/openstack_deploy/conf.d/</span></code>. The file extensions should be changed from <code class="docutils literal notranslate"><span class="pre">.yml.aio</span></code> to <code class="docutils literal notranslate"><span class="pre">.yml</span></code> to be correctly parsed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">export</span> <span class="pre">SCENARIO=&quot;aio_basekit&quot;</span></code></p>
+<p>Scenarios:</p>
+<ul class="simple">
+<li><p>aio_basekit</p></li>
+<li><p>aio_lxc (Default)</p></li>
+<li><p>aio_metal</p></li>
+<li><p>ceph</p></li>
+<li><p>octavia</p></li>
+<li><p>tacker</p></li>
+<li><p>translations</p></li>
+</ul>
+<p>Then OpenStack-Ansible project can now setup and deploy the LXC containers along with the OpenStack services.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>scripts/bootstrap-ansible.sh
+scripts/bootstrap-aio.sh
+<span class="nb">cd</span> /opt/openstack-ansible/playbooks
+openstack-ansible setup-hosts.yml
+openstack-ansible setup-infrastructure.yml
+openstack-ansible setup-openstack.yml
+</pre></div>
+</div>
+<p>If the installation fails, it is recommended to reinstall the operating
+system to completely clear out all of the custom configurations that
+OpenStack-Ansible creates. Running the <code class="docutils literal notranslate"><span class="pre">scripts/run-playbooks.sh</span></code>
+script will not work again until the existing LXC containers and
+configurations have been removed.</p>
+<p>After a reboot, the three-node MariaDB Galera cluster needs to be restarted properly by running the Galera installation playbook again.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/openstack-ansible/playbooks
+openstack-ansible -e <span class="nv">galera_ignore_cluster_state</span><span class="o">=</span><span class="nb">true</span> galera-install.yml
+</pre></div>
+</div>
+<p>[2]</p>
+<p>OpenStack-Ansible will create a default “public” and “private” networks for the “demo” project. These are both on isolated networks that are only on the hypervisor. These networks can be removed by deleting these resources in the order below.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack router <span class="nb">unset</span> --external-gateway router
+openstack router remove subnet router private-subnet
+openstack router delete router
+openstack network delete public
+openstack network delete private
+</pre></div>
+</div>
+<p>The all-in-one environment does not have the ability to create networks on the external network. On a more complete lab deployment of OpenStack-Ansible (not an all-in-one), this is normally accomplished by creating a flat provider network. Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack router create router_public
+openstack network create --share --provider-network-type flat --provider-physical-network flat --external external_network
+openstack subnet create --subnet-range <span class="m">192</span>.168.1.0/24 --allocation-pool <span class="nv">start</span><span class="o">=</span><span class="m">192</span>.168.1.201,end<span class="o">=</span><span class="m">192</span>.168.1.254 --dns-nameserver <span class="m">192</span>.168.1.1 --gateway <span class="m">192</span>.168.1.1 --no-dhcp --network external_network external_subnet
+openstack router <span class="nb">set</span> router_public --external-gateway external_network
+</pre></div>
+</div>
+<p>[11]</p>
+<p><strong>Uninstall</strong></p>
+<p><a class="reference external" href="https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html#rebuilding-an-aio">This Bash script</a> can be used to clean up and uninstall most of the
+OpenStack-Ansible installation. Use at your own risk. The recommended
+way to uninstall OpenStack-Ansible is to reinstall the operating system. [2]</p>
+</div>
+<div class="section" id="configurations">
+<h2><a class="toc-backref" href="#id3">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
+<p>Minimum requirements:</p>
+<ul class="simple">
+<li><p>3 infrastructure nodes</p></li>
+<li><p>2 compute nodes</p></li>
+<li><p>1 log node</p></li>
+</ul>
+<p>It is also required to have at least 3 different network bridges.</p>
+<ul class="simple">
+<li><p><strong>br-mgmt</strong> = All the nodes should have this network. This is the
+management network where all nodes can be accessed and managed by.</p></li>
+<li><p>br-storage = This is the only optional interface. It is
+recommended to use this to separate the “storage” nodes traffic. This
+should exist on the “storage” (when using bare-metal) and “compute”
+nodes.</p></li>
+<li><p><strong>br-vlan</strong> = This should exist on the “network” (when using bare-metal) and “compute” nodes. It is used for external provider networks.</p></li>
+<li><p><strong>br-vxlan</strong> = This should exist on the “network” and “compute” nodes. It is used for private self-service networks.</p></li>
+</ul>
+<p>[3]</p>
+<p>View the
+<code class="docutils literal notranslate"><span class="pre">/etc/openstack_deploy/openstack_user_config.yml.prod.example</span></code> for a
+real production example and reference.</p>
+<p>Configure the networks that are used in the environment.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cider_networks</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">container</span></code> = The network range that the LXC containers will use
+an IP address from. This is the management network that is on
+“br-mgmt.”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tunnel</span></code> = The network range for accessing network services
+between the “compute” and “network” nodes over the VXLAN or GRE
+tunnel interface. The tunnel network should be on “br-vxlan.”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">storage</span></code> = The network range for accessing storage. This is the
+network that is on “br-storage.”</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">used_ips</span></code> = Lists of IP addresses that are already in use and
+should not be used for the container networks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global_overrides</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tunnel_bridge</span></code> = The interface to use for tunneling VXLAN
+traffic. This is typically “br-vxlan.”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">management_bridge</span></code> = The interface to use for management
+access. This is typically <code class="docutils literal notranslate"><span class="pre">br-mgmt</span></code>.</p></li>
+<li><p>external_lb_vip_address = The public IP address to load balance
+for API endpoints.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">provider_networks</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">network</span></code> = Different networks can be defined. At least one
+is required.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code> = The type of network that the “container_bridge”
+device should be used.</p>
+<ul>
+<li><p>flat</p></li>
+<li><p>vlan</p></li>
+<li><p>vxlan</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container_bridge</span></code> = The bridge device that will be used
+to connect the container to the network. The recommended
+deployment scheme recommends setting up a “br-mgmt”,
+“br-storage”, “br-vlan”, and “br-vlan.” Any valid bridge
+device on the host node can be specified here.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container_type</span></code> = veth</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ip_from_q</span></code> = Specify the “cider_networks” that will be
+used to allocate IP addresses from.</p></li>
+<li><p>range = The optional VXLAN that the bridge interface should
+use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">container_interface</span></code> = The interface that the LXC
+container should use. This is typically “eth1.”</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The syntax for defining which host(s) a service will be installed onto
+follow this format below. Controller node services are specified with
+the keyword <code class="docutils literal notranslate"><span class="pre">-infra</span></code> in their name. Each <code class="docutils literal notranslate"><span class="pre">infra#</span></code> entry contains the
+IP address of the physical server to provision the containers to.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;SERVICE_TYPE&gt;</span></code>_hosts:</p>
+<ul>
+<li><p>infra1:</p>
+<ul>
+<li><p>ip: <code class="docutils literal notranslate"><span class="pre">&lt;HOST1_IP_ADDRESS&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>infra2:</p>
+<ul>
+<li><p>ip: <code class="docutils literal notranslate"><span class="pre">&lt;HOST2_IP_ADDRESS&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>infra3:</p>
+<ul>
+<li><p>ip: <code class="docutils literal notranslate"><span class="pre">&lt;HOST3_IP_ADDRESS&gt;</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The valid service types are:</p>
+<ul class="simple">
+<li><p>shared-infra = Galera, memcache, RabbitMQ, and other utilities.</p></li>
+<li><p>repo-infra_hosts = Hosts that will handle storing and retrieving
+packages.</p></li>
+<li><p>metrics = Gnocchi.</p></li>
+<li><p>metering-alartm_hosts = Aodh.</p></li>
+<li><p>storage-infra = Cinder.</p></li>
+<li><p>image = Glance.</p></li>
+<li><p>identity = Keystone.</p></li>
+<li><p>haproxy = Load balancers.</p></li>
+<li><p>log = Central rsyslog servers</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">log&lt;#&gt;</span></code> = Instead of <code class="docutils literal notranslate"><span class="pre">infra&lt;#&gt;</span></code>, log_hosts uses this
+variable for defining the host IP address.</p></li>
+</ul>
+</li>
+<li><p>metering-infra = Ceilometer.</p></li>
+<li><p>metering-alarm = Aodh.</p></li>
+<li><p>metering-compute = Ceilometer for the compute nodes.</p></li>
+<li><p>compute-infra = Nova API nodes.</p></li>
+<li><p>orchestration = Heat.</p></li>
+<li><p>dashboard = Horizon.</p></li>
+<li><p>network = Neutron network nodes</p></li>
+<li><p>compute = Nova hypervisor nodes.</p></li>
+<li><p>storage = Cinder.</p></li>
+<li><p>storage-infra</p></li>
+<li><p>swift = Swift stores.</p></li>
+<li><p>swift-proxy = Swift proxies.</p></li>
+<li><p>trove-infra = Trove.</p></li>
+<li><p>ceph-mon = Ceph monitors.</p></li>
+<li><p>ceph-osd = Ceph OSDs.</p></li>
+<li><p>dnsaas = Designate.</p></li>
+<li><p>unbound = Caching DNS server nodes.</p></li>
+<li><p>magnum-infra = Magnum.</p></li>
+<li><p>sahara-infra = Sahara.</p></li>
+</ul>
+<p>[3]</p>
+<div class="section" id="neutron">
+<h3><a class="toc-backref" href="#id4">Neutron</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h3>
+<p>OpenStack-Ansible does not manage the network interfaces on host nodes. The <code class="docutils literal notranslate"><span class="pre">br-vlan</span></code> interface is recommended to be configured to provide access to the Internet. However, any network configuration can be configured.</p>
+<p>Configure OpenStack-Ansible to only use a single interface (eth0), with no VLANs, on the 192.168.1.0/24 subnet:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">cidr_networks</span><span class="p">:</span>
+  <span class="nt">management</span><span class="p">:</span> <span class="s">&quot;192.168.1.0/24&quot;</span>
+
+<span class="nt">used_ips</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">192.168.1.1,192.168.1.251,192.168.1.252</span>
+
+<span class="nt">global_overrides</span><span class="p">:</span>
+  <span class="nt">internal_lb_vip_address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.1.252</span>
+  <span class="nt">external_lb_vip_address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.1.251</span>
+  <span class="nt">tunnel_bridge</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">management_bridge</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+  <span class="nt">provider_networks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">network</span><span class="p">:</span>
+      <span class="nt">container_bridge</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth0</span>
+      <span class="nt">container_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">veth</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">raw</span>
+      <span class="nt">container_interface</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eth1</span>
+      <span class="nt">ip_from_q</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">management</span>
+      <span class="nt">is_container_address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">is_ssh_address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">groups_binds</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">all_containers</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span>
+</pre></div>
+</div>
+<p>After deployment, the external Neutron network and subnet can be created. [10]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ . /root/openrc
+$ openstack network create --share --provider-physical-network physical_network --provider-network-type flat --router external external_network
+$ openstack subnet create --subnet-range <span class="m">192</span>.168.1.0/24 --gateway <span class="m">192</span>.168.1.1 --network external_network --allocation-pool <span class="nv">start</span><span class="o">=</span><span class="m">192</span>.168.1.201,end<span class="o">=</span><span class="m">192</span>.168.1.254 --no-dhcp public_subnet
+</pre></div>
+</div>
+</div>
+<div class="section" id="nova">
+<h3><a class="toc-backref" href="#id5">Nova</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
+<p>Common variables:</p>
+<ul class="simple">
+<li><p>nova_virt_type = The virtualization technology to use for deploying
+instances with OpenStack. By default, OpenStack-Ansible will guess`
+what should be used based on what is installed on the hypervisor.
+Valid options are: <code class="docutils literal notranslate"><span class="pre">qemu</span></code>, <code class="docutils literal notranslate"><span class="pre">kvm</span></code>, <code class="docutils literal notranslate"><span class="pre">lxd</span></code>, <code class="docutils literal notranslate"><span class="pre">ironic</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">powervm</span></code>.</p></li>
+</ul>
+<p>[4]</p>
+</div>
+<div class="section" id="ceph">
+<h3><a class="toc-backref" href="#id6">Ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h3>
+<p>Ceph can be customized to be deployed differently from the default
+configuration or to use an existing Ceph cluster.</p>
+<p>These settings can be adjusted to use different Ceph users, pools,
+and/or monitor nodes.</p>
+<p>File: /etc/openstack_deploy/user_variables.yml</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">glance_default_store</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbd</span>
+<span class="nt">glance_ceph_client</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;GLANCE_CEPH_USER&gt;</span>
+<span class="nt">glance_rbd_store_pool</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;GLANCE_CEPH_POOL&gt;</span>
+<span class="nt">glance_rbd_store_chunk_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="nt">cinder_ceph_client</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CINDER_CEPH_USER&gt;</span>
+<span class="nt">nova_ceph_client</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">cinder_ceph_client</span> <span class="p p-Indicator">}}</span>
+<span class="nt">nova_libvirt_images_rbd_pool</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CINDER_CEPH_POOL&gt;</span>
+<span class="nt">cephx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">ceph_mons</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MONITOR1_IP&gt;</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MONITOR2_IP&gt;</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MONITOR3_IP&gt;</span>
+</pre></div>
+</div>
+<p>By default, OpenStack-Ansible will generate the ceph.conf configuration
+file by connecting to the Ceph monitor hosts and obtaining the
+information from there. Extra configuration options can be specified or
+overridden using the “ceph_extra”confs” dictionary.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">ceph_extra_confs</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span>  <span class="nt">src</span><span class="p">:</span> <span class="s">&quot;&lt;PATH_TO_LOCAL_CEPH_CONFIGURATION&gt;&quot;</span>
+     <span class="nt">dest</span><span class="p">:</span> <span class="s">&quot;/etc/ceph/ceph.conf&quot;</span>
+     <span class="nt">mon_host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MONITOR_IP&gt;</span>
+     <span class="nt">client_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CEPH_CLIENT&gt;</span>
+     <span class="nt">keyring_src</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;PATH_TO_LOCAL_CEPH_CLIENT_KEYRING_FILE&gt;</span>
+     <span class="nt">keyring_dest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/ceph/ceph.client.&lt;CEPH_CLIENT&gt;.keyring</span>
+     <span class="nt">secret_uuid</span><span class="p">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">cinder_ceph_client_&lt;CEPH_CLIENT&gt;</span><span class="nv"> </span><span class="s">}}&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively, the entire configuration file can be defined as a
+variable using proper YAML syntax. [6]</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">ceph_conf_file</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+  <span class="no">[global]</span>
+  <span class="no">fsid = 00000000-1111-2222-3333-444444444444</span>
+  <span class="no">mon_initial_members = mon1.example.local,mon2.example.local,mon3.example.local</span>
+  <span class="no">mon_host = {{ ceph_mons|join(&#39;,&#39;) }}</span>
+  <span class="no">auth_cluster_required = cephx</span>
+  <span class="no">auth_service_required = cephx</span>
+</pre></div>
+</div>
+<p>A new custom deployment of Ceph can be configured. It is recommended to
+use at least 3 hosts for high availability and quorum. [5]</p>
+<p>File: /etc/openstack_deploy/openstack_user_config.yml</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">storage_hosts</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">infra&lt;#&gt;</span><span class="p p-Indicator">:</span>
+    <span class="nt">ip</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CINDER_HOST1_IP&gt;</span>
+    <span class="nt">container_vars</span><span class="p">:</span>
+      <span class="nt">cinder_backends</span><span class="p">:</span>
+        <span class="nt">limit_container_types</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder_volume</span>
+        <span class="nt">rbd</span><span class="p">:</span>
+          <span class="nt">volume_group</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;LVM_BLOCK_STORAGE&gt;</span>
+          <span class="nt">volume_driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.rbd.RBDDriver</span>
+          <span class="nt">volume_backend_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbd</span>
+          <span class="nt">rbd_pool</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CINDER_CEPH_POOL&gt;</span>
+          <span class="nt">rbd_ceph_conf</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/ceph/ceph.conf</span>
+          <span class="nt">rbd_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CINDER_CEPHX_USER&gt;</span>
+</pre></div>
+</div>
+<p>[5]</p>
+<p>Another real-world example of deploying and managing Ceph as part of OpenStack-Ansible can be found <a class="reference external" href="https://docs.openstack.org/project-deploy-guide/openstack-ansible/html/latest/app-config-prod.html">here</a>.</p>
+</div>
+</div>
+<div class="section" id="install">
+<h2><a class="toc-backref" href="#id7">Install</a><a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<p>Download and install the latest stable OpenStack-Ansible suite from OpenDev or GitHub.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://git.openstack.org/openstack/openstack-ansible /opt/openstack-ansible
+<span class="nb">cd</span> /opt/openstack-ansible/
+git checkout stable/rocky
+cp -a -r -v /opt/openstack-ansible/etc/openstack_deploy/ /etc/
+</pre></div>
+</div>
+<p>Install Ansible and the related OpenStack Roles.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>/opt/openstack-ansible/scripts/bootstrap-ansible.sh
+</pre></div>
+</div>
+<p>Generate random passwords for the services.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>/opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Configure OSA and verify that the configuration syntax is correct. There are “example”, “test”, and “prod[uction]” configuration files provided to use as a base to start a new configuration from.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>cp /etc/openstack_deploy/openstack_user_config.yml.test.example /etc/openstack_deploy/openstack_user_config.yml
+cp /etc/openstack_deploy/user_variables.yml.test.example /etc/openstack_deploy/user_variables.yml
+vim /etc/openstack_deploy/openstack_user_config.yml
+<span class="nb">cd</span> /opt/openstack-ansible/playbooks/
+openstack-ansible setup-infrastructure.yml --syntax-check
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Prepare the hosts.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible setup-hosts.yml
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Setup the LXC containers.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible setup-infrastructure.yml
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Install the OpenStack services.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible setup-openstack.yml
+</pre></div>
+</div>
+<p>[3]</p>
+</div>
+<div class="section" id="operations">
+<h2><a class="toc-backref" href="#id8">Operations</a><a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="openstack-utilities">
+<h3><a class="toc-backref" href="#id9">OpenStack Utilities</a><a class="headerlink" href="#openstack-utilities" title="Permalink to this headline">¶</a></h3>
+<p>Once OpenStack-Ansible is installed, it can be used immediately. The
+primary container to use is the <code class="docutils literal notranslate"><span class="pre">utility</span></code> container.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>lxc-ls -1 <span class="p">|</span> grep utility
+lxc-attach -n &lt;UTILITY_CONTAINER_NAME&gt;
+</pre></div>
+</div>
+<p>The file <code class="docutils literal notranslate"><span class="pre">/root/openrc</span></code> should exist on the container with the
+administrator credentials. Source this file to use them.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /root/openrc
+</pre></div>
+</div>
+<p>Verify that all of the correct services and endpoints exist.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack service list
+openstack endpoint list
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+<div class="section" id="ansible-inventory">
+<h3><a class="toc-backref" href="#id10">Ansible Inventory</a><a class="headerlink" href="#ansible-inventory" title="Permalink to this headline">¶</a></h3>
+<p>Ansible’s inventory contains all of the connection and variable details
+about the hosts (in this case, LXC containers) and which group they are
+a part of. This section covers finding and using these inventory values
+for management and troubleshooting.</p>
+<ul>
+<li><p>Change into the OpenStack-Ansible directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>/opt/openstack-ansible/
+</pre></div>
+</div>
+</li>
+<li><p>Show all of the groups and the hosts that are a part of it.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./scripts/inventory-manage.py -G
+</pre></div>
+</div>
+</li>
+<li><p>Show all of the hosts and the groups they are a part of.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./scripts/inventory-manage.py -g
+</pre></div>
+</div>
+</li>
+<li><p>List hosts that a Playbook will run against.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible ./playbooks/os-&lt;COMPONENT&gt;-install.yml --limit &lt;GROUP&gt; --list-hosts
+</pre></div>
+</div>
+</li>
+<li><p>List all the Ansible tasks that will be executed on a group or host.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible ./playbooks/os-&lt;COMPONENT&gt;-install.yml --limit &lt;GROUP_OR_HOST&gt; --list-tasks
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[8]</p>
+</div>
+<div class="section" id="add-a-infrastructure-node">
+<h3><a class="toc-backref" href="#id11">Add a Infrastructure Node</a><a class="headerlink" href="#add-a-infrastructure-node" title="Permalink to this headline">¶</a></h3>
+<p>Add the new host to the <code class="docutils literal notranslate"><span class="pre">infra_hosts</span></code> section in
+<code class="docutils literal notranslate"><span class="pre">/etc/openstack_deploy/openstack_user_config.yml</span></code>. Then the inventory
+can be updated which will generate a new unique node name that the
+OpenStack-Ansible Playbooks can run against. The <code class="docutils literal notranslate"><span class="pre">--limit</span></code> options are
+important because they will ensure that it will only run on the new
+infrastructure node.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/openstack-ansible/playbooks
+/opt/openstack-ansible/playbooks/inventory/dynamic_inventory.py &gt; /dev/null
+/opt/openstack-ansible/scripts/inventory-manage.py -l <span class="p">|</span>awk <span class="s1">&#39;/&lt;NEW_INFRA_HOST&gt;/ {print $2}&#39;</span> <span class="p">|</span> sort -u <span class="p">|</span> tee /root/add_host.limit
+openstack-ansible setup-everything.yml --limit @/root/add_host.limit
+openstack-ansible --tags<span class="o">=</span>openstack-host-hostfile setup-hosts.yml
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+<div class="section" id="add-a-compute-node">
+<h3><a class="toc-backref" href="#id12">Add a Compute Node</a><a class="headerlink" href="#add-a-compute-node" title="Permalink to this headline">¶</a></h3>
+<p>Add the new host to the <code class="docutils literal notranslate"><span class="pre">compute_hosts</span></code> section in
+<code class="docutils literal notranslate"><span class="pre">/etc/openstack_deploy/openstack_user_config.yml</span></code>. Then the
+OpenStack-Ansible deployment Playbooks can be run again. If Ceilometer is in use then the `` /etc/openstack_deploy/conf.d/ceilometer.yml`` configuration will also have to be updated.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/openstack-ansible/playbooks
+openstack-ansible setup-hosts.yml --limit localhost,&lt;NEW_COMPUTE_HOST&gt;
+ansible nova_all -m setup -a <span class="s1">&#39;filter=ansible_local gather_subset=&quot;!all&quot;&#39;</span>
+openstack-ansible setup-openstack.yml --skip-tags nova-key-distribute --limit localhost,&lt;NEW_COMPUTE_HOST&gt;
+openstack-ansible setup-openstack.yml --tags nova-key --limit compute_hosts
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+<div class="section" id="remove-a-compute-node">
+<h3><a class="toc-backref" href="#id13">Remove a Compute Node</a><a class="headerlink" href="#remove-a-compute-node" title="Permalink to this headline">¶</a></h3>
+<p>Stop the services on the compute container and then use the
+<code class="docutils literal notranslate"><span class="pre">openstack-ansible-ops</span></code> project’s Playbook <code class="docutils literal notranslate"><span class="pre">remote_compute_node.yml</span></code>
+to fully it. The host must also be removed from the
+<code class="docutils literal notranslate"><span class="pre">/etc/openstack_deploy/openstack_user_config.yml</span></code> configuration when
+done.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>lxc-ls -1 <span class="p">|</span> grep compute
+lxc-attach -n &lt;COMPUTE_CONTAINER_TO_REMOVE&gt;
+stop nova-compute
+stop neutron-linuxbridge-agent
+<span class="nb">exit</span>
+git clone https://git.openstack.org/openstack/openstack-ansible-ops /opt/openstack-ansible-ops
+<span class="nb">cd</span> /opt/openstack-ansible-ops/ansible_tools/playbooks
+openstack-ansible remove_compute_node.yml -e <span class="nv">node_to_be_removed</span><span class="o">=</span><span class="s2">&quot;&lt;COMPUTE_CONTAINER_TO_REMOVE&gt;&quot;</span>
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+</div>
+<div class="section" id="upgrades">
+<h2><a class="toc-backref" href="#id14">Upgrades</a><a class="headerlink" href="#upgrades" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="minor">
+<h3><a class="toc-backref" href="#id15">Minor</a><a class="headerlink" href="#minor" title="Permalink to this headline">¶</a></h3>
+<p>This is for upgrading OpenStack from one minor version to another in the same major release. An example would be going from 17.0.0 to 17.0.6.</p>
+<ul>
+<li><p>Change the OpenStack-Ansible version to a new minor tag release. If a
+branch for a OpenStack release name is being used already, pull the
+latest branch commits down from OpenDev or GitHub.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/openstack-ansible/
+git fetch --all
+git tag
+git checkout &lt;TAG&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Update:</p>
+<ul>
+<li><p><strong>All services.</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./scripts/bootstrap-ansible.sh
+<span class="nb">cd</span> ./playbooks/
+openstack-ansible setup-hosts.yml
+openstack-ansible -e <span class="nv">rabbitmq_upgrade</span><span class="o">=</span><span class="nb">true</span> setup-infrastructure.yml
+openstack-ansible setup-openstack.yml
+</pre></div>
+</div>
+</li>
+<li><p><strong>Specific services.</strong></p>
+<ul>
+<li><p>Update the cached package repository.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./playbooks/
+sudo openstack-ansible repo-install.yml
+</pre></div>
+</div>
+</li>
+<li><p>A single service can be upgraded now.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible &lt;COMPONENT&gt;-install.yml --limit &lt;GROUP_OR_HOST&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Some services, such as MariaDB and RabbitMQ, require special
+variables to be set to force an upgrade.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible galera-install.yml -e <span class="s1">&#39;galera_upgrade=true&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>openstack-ansible rabbitmq-install.yml -e <span class="s1">&#39;rabbitmq_upgrade=true&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>[9]</p>
+</div>
+<div class="section" id="major">
+<h3><a class="toc-backref" href="#id16">Major</a><a class="headerlink" href="#major" title="Permalink to this headline">¶</a></h3>
+<p>OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one major release to the next. It is recommended to do a manual upgrade by following the <a class="reference external" href="https://docs.openstack.org/openstack-ansible/queens/admin/upgrades/major-upgrades.html">official guide</a>. Below outlines how to do this automatically. OpenStack should first be updated to the latest minor version. [9]</p>
+<ul>
+<li><p>Move into the OpenStack-Ansible project.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/openstack-ansible
+</pre></div>
+</div>
+</li>
+<li><p>View the available OpenStack releases and choose which one to use.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git fetch --all
+git branch -a
+git tag
+git checkout &lt;BRANCH_OR_TAG&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Run the upgrade script.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./scripts/run-upgrade.sh
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id17">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack-ansible.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst">&lt; 2020.01.01 (OpenStack)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/openstack.rst">&lt; 2019.01.01 (OpenStack)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md">&lt; 2018.01.01 (OpenStack)</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id18">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Hosts role should set SELinux into permissive mode.” openstack-ansible Launchpad Bugs. January 27, 2017. Accessed July 25, 2018. <a class="reference external" href="https://bugs.launchpad.net/openstack-ansible/+bug/1657517">https://bugs.launchpad.net/openstack-ansible/+bug/1657517</a></p></li>
+<li><p>“Quickstart: AIO.” OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. <a class="reference external" href="https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html">https://docs.openstack.org/openstack-ansible/queens/user/aio/quickstart.html</a></p></li>
+<li><p>“OpenStack-Ansible Deployment Guide.” OpenStack Documentation. December 10, 2019. Accessed May 22, 2020. <a class="reference external" href="https://docs.openstack.org/project-deploy-guide/openstack-ansible/train/">https://docs.openstack.org/project-deploy-guide/openstack-ansible/train/</a></p></li>
+<li><p>“Nova role for OpenStack-Ansible.” OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/openstack-ansible-os_nova/queens/">https://docs.openstack.org/openstack-ansible-os_nova/queens/</a></p></li>
+<li><p>“openstack ansible ceph.” OpenStack FAQ. April 9, 2017. Accessed April 9, 2017. <a class="reference external" href="https://www.openstackfaq.com/openstack-ansible-ceph/">https://www.openstackfaq.com/openstack-ansible-ceph/</a></p></li>
+<li><p>“Configuring the Ceph client (optional).” OpenStack Documentation. April 5, 2017. Accessed April 9, 2017. <a class="reference external" href="https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html">https://docs.openstack.org/developer/openstack-ansible-ceph_client/configure-ceph.html</a></p></li>
+<li><p>“[OpenStack-Ansible] Operations Guide.” OpenStack Documentation. October 8, 2019. Accessed October 28, 2019. <a class="reference external" href="https://docs.openstack.org/openstack-ansible/queens/admin/index.html">https://docs.openstack.org/openstack-ansible/queens/admin/index.html</a></p></li>
+<li><p>“Developer Documentation.” OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/openstack-ansible/latest/contributor/index.html">https://docs.openstack.org/openstack-ansible/latest/contributor/index.html</a></p></li>
+<li><p>“Operations Guide.” OpenStack-Ansible Documentation. July 13, 2018. Accessed July 19, 2018. <a class="reference external" href="https://docs.openstack.org/openstack-ansible/queens/admin/index.html">https://docs.openstack.org/openstack-ansible/queens/admin/index.html</a></p></li>
+<li><p>“Open vSwitch: Provider Networks.” Neutron OpenStack Documentation. July 24, 2018. Accessed July 25, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html">https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html</a></p></li>
+<li><p>“Deploying a Home Lab using OpenStack-Ansible.” Lance Bragstad Random Bits. August 2, 2018. Accessed August 9, 2018. <a class="reference external" href="https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab">https://www.lbragstad.com/blog/using-openstack-ansible-for-home-lab</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tripleo.html" class="btn btn-neutral float-right" title="TripleO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kolla.html" class="btn btn-neutral float-left" title="Kolla" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

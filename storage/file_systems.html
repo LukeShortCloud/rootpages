@@ -1,0 +1,1456 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>File Systems &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../virtualization/index.html" />
+    <link rel="prev" title="Ceph" href="ceph.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ceph.html">Ceph</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">File Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#types">Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#btrfs">Btrfs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raids">RAIDs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ext4">ext4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openzfs">OpenZFS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation-source">Installation (Source)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adaptive-replacement-cache-arc">Adaptive Replacement Cache (ARC)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nfs-and-samba-support">NFS and Samba Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#swap">Swap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">RAIDs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mdadm">mdadm</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#network">Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nfs">NFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glusterfs">GlusterFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smb">SMB</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#samba">Samba</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#iscsi">iSCSI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#target">Target</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initiator">Initiator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#filesystem-hierarchy-standard">Filesystem Hierarchy Standard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#errors">Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>File Systems</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/storage/file_systems.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="file-systems">
+<h1><a class="toc-backref" href="#id2">File Systems</a><a class="headerlink" href="#file-systems" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#file-systems" id="id2">File Systems</a></p>
+<ul>
+<li><p><a class="reference internal" href="#types" id="id3">Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#btrfs" id="id4">Btrfs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#raids" id="id5">RAIDs</a></p></li>
+<li><p><a class="reference internal" href="#limitations" id="id6">Limitations</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ext4" id="id7">ext4</a></p></li>
+<li><p><a class="reference internal" href="#openzfs" id="id8">OpenZFS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation-source" id="id9">Installation (Source)</a></p></li>
+<li><p><a class="reference internal" href="#usage" id="id10">Usage</a></p></li>
+<li><p><a class="reference internal" href="#adaptive-replacement-cache-arc" id="id11">Adaptive Replacement Cache (ARC)</a></p></li>
+<li><p><a class="reference internal" href="#nfs-and-samba-support" id="id12">NFS and Samba Support</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#swap" id="id13">Swap</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id14">RAIDs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mdadm" id="id15">mdadm</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#network" id="id16">Network</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nfs" id="id17">NFS</a></p></li>
+<li><p><a class="reference internal" href="#glusterfs" id="id18">GlusterFS</a></p></li>
+<li><p><a class="reference internal" href="#smb" id="id19">SMB</a></p>
+<ul>
+<li><p><a class="reference internal" href="#samba" id="id20">Samba</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#iscsi" id="id21">iSCSI</a></p>
+<ul>
+<li><p><a class="reference internal" href="#target" id="id22">Target</a></p></li>
+<li><p><a class="reference internal" href="#initiator" id="id23">Initiator</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#filesystem-hierarchy-standard" id="id24">Filesystem Hierarchy Standard</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id25">Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#errors" id="id26">Errors</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id27">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id28">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="types">
+<h2><a class="toc-backref" href="#id3">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>Many types of file systems exist for various operating systems. These
+are used to handle the underlying file and data structure when it is
+being read and written to. Every file system has a limit to the number
+of inodes (files and directories) it can handle. The inode limit can be
+calculated by using the equation: <code class="docutils literal notranslate"><span class="pre">2^&lt;BIT_SIZE&gt;</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name (mount type)</p></th>
+<th class="head"><p>OS</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>File Size Limit</p></th>
+<th class="head"><p>Partition Size Limit</p></th>
+<th class="head"><p>Bits</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fat16 (vfat)</p></td>
+<td><p>DOS</p></td>
+<td><p>No journaling.</p></td>
+<td><p>2GiB</p></td>
+<td><p>2GiB</p></td>
+<td><p>16</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fat32 (vfat)</p></td>
+<td><p>DOS</p></td>
+<td><p>No journaling.</p></td>
+<td><p>4GiB</p></td>
+<td><p>8TiB</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-even"><td><p>NTFS (ntfs-3g)</p></td>
+<td><p>Windows NT</p></td>
+<td><p>Journaling, encryption, compression.</p></td>
+<td><p>2TiB</p></td>
+<td><p>256TiB</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-odd"><td><p>ext4 [2]</p></td>
+<td><p>Linux</p></td>
+<td><p>Journaling, less fragmentation, better performance.</p></td>
+<td><p>16TiB</p></td>
+<td><p>1EiB</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-even"><td><p>XFS</p></td>
+<td><p>Linux</p></td>
+<td><p>Journaling, online resizing (but cannot shrink), and online defragmentation.</p></td>
+<td><p>8EiB (theoretically up to 16EiB)</p></td>
+<td><p>8EiB (theoretically up to 16EiB)</p></td>
+<td><p>64</p></td>
+</tr>
+<tr class="row-odd"><td><p>Btrfs [3]</p></td>
+<td><p>Linux</p></td>
+<td><p>Journaling, copy-on-write (CoW), compression, snapshots, and RAID.</p></td>
+<td><p>8EiB (theoretically up to 16EiB)</p></td>
+<td><p>8EiB (theoretically up to 16EiB)</p></td>
+<td><p>64</p></td>
+</tr>
+<tr class="row-even"><td><p>tmpfs</p></td>
+<td><p>Linux</p></td>
+<td><p>RAM and swap</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ramfs</p></td>
+<td><p>Linux</p></td>
+<td><p>RAM (no swap).</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>swap</p></td>
+<td><p>Linux</p></td>
+<td><p>A temporary storage file system to use when RAM is unavailable.</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>[1]</p>
+<div class="section" id="btrfs">
+<h3><a class="toc-backref" href="#id4">Btrfs</a><a class="headerlink" href="#btrfs" title="Permalink to this headline">¶</a></h3>
+<p>Btrfs stands for the “B-tree file system.” The file system is commonly
+referred to as “BtreeFS”, “ButterFS”, and “BetterFS”. In this model,
+data is organized efficiently for fast I/O operations. This helps to
+provide copy-on-write (CoW) for efficient file copies as well as other
+useful features. Btrfs supports subvolumes, CoW snapshots, online
+defragmentation, built-in RAID, compression, and the ability to upgrade
+an existing ext file systems to Btrfs. [4]</p>
+<p>Common mount options:</p>
+<ul class="simple">
+<li><p>autodefrag = Automatically defragment the file system. This can
+negatively impact performance, especially if the partition has active
+virtual machine images on it.</p></li>
+<li><p>compress = File system compression can be used. Valid options are:</p>
+<ul>
+<li><p>zlib = Higher compression</p></li>
+<li><p>lzo = Faster file system performance</p></li>
+<li><p>no = Disable compression (default)</p></li>
+</ul>
+</li>
+<li><p>notreelog = Disable journaling. This may improve performance but can
+result in a loss of the file system if power is lost.</p></li>
+<li><p>subvol = Mount a subvolume contained inside a Btrfs file system.</p></li>
+<li><p>ssd = Enables various solid state drive optimizations. This does not
+turn on TRIM support.</p></li>
+<li><p>discard = Enables TRIM support. [5]</p></li>
+</ul>
+<div class="section" id="raids">
+<h4><a class="toc-backref" href="#id5">RAIDs</a><a class="headerlink" href="#raids" title="Permalink to this headline">¶</a></h4>
+<p>In the latest Linux kernels, all Btrfs software RAID types (0, 1, 5, 6, and 10) are supported. [6]</p>
+</div>
+<div class="section" id="limitations">
+<h4><a class="toc-backref" href="#id6">Limitations</a><a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h4>
+<p>Known limitations:</p>
+<ul class="simple">
+<li><p>The “df” (disk free) command does not report an accurate disk usage
+due to Btrfs’s fragmentation. Instead, <code class="docutils literal notranslate"><span class="pre">btrfs</span> <span class="pre">filesystem</span> <span class="pre">df</span></code> should
+be used to view disk space usage on mount points and “btrfs
+filesystem show” for partitions.</p>
+<ul>
+<li><p>For freeing up space, run a block-level and then a file-level
+defragmentation. Then the disk space usage should be accurate to
+df’s output. [7]</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">btrfs</span> <span class="pre">balance</span> <span class="pre">start</span> <span class="pre">/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">btrfs</span> <span class="pre">filesystem</span> <span class="pre">defrag</span> <span class="pre">-r</span> <span class="pre">/</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">btrfs-convert</span></code> command used for converting an Ext3 or Ext4 filesystems to Btrfs was rewritten in btrfs-progs 4.6. Older versions of this may not work reliably. [17]</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="ext4">
+<h3><a class="toc-backref" href="#id7">ext4</a><a class="headerlink" href="#ext4" title="Permalink to this headline">¶</a></h3>
+<p>The Extended File System 4 (ext4) is the default file system for most
+Linux operating systems. It’s focus is on performance and reliability.
+It is also backwards compatible with the ext3 file system. [8]</p>
+<p>Mount options:</p>
+<ul class="simple">
+<li><p>ro = Mount as read-only.</p></li>
+<li><p>data</p>
+<ul>
+<li><p>journal = All data is saved in the journal before writing it to
+the storage device. This is the safest option.</p></li>
+<li><p>ordered = All data is written to the storage device before
+updating the journal’s metadata.</p></li>
+<li><p>writeback = Data can be written to the drive at the same time it
+updates the journal.</p></li>
+</ul>
+</li>
+<li><p>barrier</p>
+<ul>
+<li><p>1 = On. The file system will ensure that data gets written to the
+drive in the correct order. This provides better integrity to the
+file system due to power failure.</p></li>
+<li><p>0 = Off. If a battery backup RAID unit is used, then the barrier
+is not needed as it should be able to finish the writes after a
+power failure. This could provide a performance increase.</p></li>
+</ul>
+</li>
+<li><p>noacl = Disable the Linux extended access control lists.</p></li>
+<li><p>nouser_xattr = Disable extended file attributes.</p></li>
+<li><p>errors = Specify what happens when there is an error in the file
+system.</p>
+<ul>
+<li><p>remount-ro = Automatically remount the partition into a read-only
+mode.</p></li>
+<li><p>continue = Ignore the error.</p></li>
+<li><p>panic = Shutdown the operating system if any errors are found.</p></li>
+</ul>
+</li>
+<li><p>discard = Enables TRIM support. The file system will immediately free
+up the space from a deleted file for use with new files.</p></li>
+<li><p>nodiscard = Disables TRIM. [9]</p></li>
+</ul>
+</div>
+<div class="section" id="openzfs">
+<h3><a class="toc-backref" href="#id8">OpenZFS</a><a class="headerlink" href="#openzfs" title="Permalink to this headline">¶</a></h3>
+<p>OpenZFS is a unified project aimed at providing support for the ZFS file system on FreeBSD, Linux, macOS, and Windows operating systems. [21] It is not included in most Linux distributions due to licensing issues with the kernel. Debian and Ubuntu are the only Linux distribution that provide the Linux kernel module for ZFS in their official repositories. [22][23]</p>
+<div class="section" id="installation-source">
+<h4><a class="toc-backref" href="#id9">Installation (Source)</a><a class="headerlink" href="#installation-source" title="Permalink to this headline">¶</a></h4>
+<p>Debian:</p>
+<ul>
+<li><p>Install the build dependencies:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span> python3 python3-dev python3-cffi python3-setuptools uuid-dev zlib1g-dev
+</pre></div>
+</div>
+</li>
+<li><p>View and download an OpenZFS release from <a class="reference external" href="https://github.com/openzfs/zfs/releases">here</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">OPENZFS_VER</span><span class="o">=</span><span class="s2">&quot;2.0.0&quot;</span>
+$ wget https://github.com/openzfs/zfs/releases/download/zfs-<span class="si">${</span><span class="nv">OPENZFS_VER</span><span class="si">}</span>/zfs-<span class="si">${</span><span class="nv">OPENZFS_VER</span><span class="si">}</span>.tar.gz
+</pre></div>
+</div>
+</li>
+<li><p>Build the DKMS packages so that the kernel module will be automatically rebuilt upon kernel updates.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ tar -z -x -v -f zfs-<span class="si">${</span><span class="nv">OPENZFS_VER</span><span class="si">}</span>.tar.gz
+$ <span class="nb">cd</span> ./zfs-<span class="si">${</span><span class="nv">OPENZFS_VER</span><span class="si">}</span>
+$ ./configure --enable-systemd
+$ make -j <span class="k">$(</span>nproc<span class="k">)</span> deb-utils deb-dkms
+</pre></div>
+</div>
+</li>
+<li><p>Install the Debian package files. [24]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dpkg -i ./.*deb
+</pre></div>
+</div>
+</li>
+<li><p>Load the ZFS kernel module and verify it works.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe zfs
+$ lsmod <span class="p">|</span> grep zfs
+</pre></div>
+</div>
+</li>
+<li><p>Start and enable these services so that the ZFS pools and mounts will be persistent upon reboots. [28]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl <span class="nb">enable</span> --now zfs-import-cache.service zfs-import-scan.service zfs-mount.service zfs-share.service zfs-zed.service zfs.target zfs-import.target
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h4><a class="toc-backref" href="#id10">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
+<p>ZFS manages multiple devices as a single “pool” of devices. The pool can have several “datasets” (the equivalent to subvolumes in Btrfs) which can have their own settings, mount points, and separate snapshots.</p>
+<p>Create a pool and then a dataset within the pool. Verify it was created.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zpool create &lt;POOL_NAME&gt; &lt;DEVICE_NAME&gt;
+$ sudo zfs create &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+$ sudo zfs list
+</pre></div>
+</div>
+<p>Mount points:</p>
+<ul class="simple">
+<li><p>Pool = /&lt;POOL_NAME&gt;</p></li>
+<li><p>Dataset = /&lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;</p></li>
+</ul>
+<p>If a dataset is accidently created over an existing directory it will be mounted on top. This means that the data is still there but is inaccessible. Either unmount the dataset and rename the existing directory or permanently change the mount point.</p>
+<p>Unmount and then re-mount a dataset:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zfs unmount &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+$ sudo zfs mount &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+</pre></div>
+</div>
+<p>Change the mountpoint:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zfs <span class="nb">set</span> <span class="nv">mountpoint</span><span class="o">=</span>/mnt &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+</pre></div>
+</div>
+<p>View all of the available properties that can be set for the pool and/or datasets.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ man zfsprops
+</pre></div>
+</div>
+<p>View the current value of a property and set a new one.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zfs get &lt;PROPERTY&gt; &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+$ sudo zfs <span class="nb">set</span> &lt;PROPERTY&gt;<span class="o">=</span>&lt;VALUE&gt; &lt;POOL_NAME&gt;/&lt;DATASET_NAME&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="adaptive-replacement-cache-arc">
+<h4><a class="toc-backref" href="#id11">Adaptive Replacement Cache (ARC)</a><a class="headerlink" href="#adaptive-replacement-cache-arc" title="Permalink to this headline">¶</a></h4>
+<p>ARC is the name for the automatic file caching of frequently accessed files by ZFS. Level 1 ARC (L1ARC) stores the cache in RAM. Level 2 ARC (L2ARC) can be configured to use a faster storage device (such as a SSD) as an extra layer of cache for slower devices (such as a HDD). Files stored in L1ARC will be downgraded to L2ARC if they are not used. If L2ARC cache becomes unavailable when the same file is accessed again, it will be accessed directly from the storage device again and placed back into L1ARC.</p>
+<p>Life cycle of a file in relation to ARC:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="ow">is</span> <span class="n">accessed</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">disk</span> <span class="o">--&gt;</span> <span class="n">Stored</span> <span class="ow">in</span> <span class="n">L1ARC</span> <span class="p">(</span><span class="n">RAM</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">Stored</span> <span class="ow">in</span> <span class="n">L2ARC</span> <span class="p">(</span><span class="n">SSD</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="n">Uncached</span>
+</pre></div>
+</div>
+<p>ARC usage:</p>
+<ul>
+<li><p>Add a L2ARC device to an existing ZFS pool. [25]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zpool add &lt;POOL&gt; cache &lt;STORAGE_DEVICE&gt;
+</pre></div>
+</div>
+</li>
+<li><p>View a summary of the ARC cache statistics.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo arc_summary
+</pre></div>
+</div>
+</li>
+<li><p>View real-time statistics for ARC cache. [29]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo arcstat
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="nfs-and-samba-support">
+<h4><a class="toc-backref" href="#id12">NFS and Samba Support</a><a class="headerlink" href="#nfs-and-samba-support" title="Permalink to this headline">¶</a></h4>
+<p>OpenZFS supports automatically configuring pools and datasets for both the NFS and Samba (CIFS) network file systems.</p>
+<p>NFS [27]:</p>
+<ul>
+<li><p>Install the NFS service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt install nfs-kernel-server
+</pre></div>
+</div>
+</li>
+<li><p>Configure a Samba CIFS share using ZFS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zfs <span class="nb">set</span> <span class="nv">sharenfs</span><span class="o">=</span>on &lt;POOL&gt;/&lt;DATASET&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Test the NFS mount.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt install nfs-common
+$ sudo mount -t nfs <span class="m">127</span>.0.0.1:/&lt;POOL&gt;/&lt;DATASET&gt; /mnt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Samba [25]:</p>
+<ul>
+<li><p>Install the Samba service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt install samba
+</pre></div>
+</div>
+</li>
+<li><p>Configure a Samba CIFS share using ZFS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zfs <span class="nb">set</span> <span class="nv">sharesmb</span><span class="o">=</span>on &lt;POOL&gt;/&lt;DATASET&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Configure a user for Samba and correct the permissions.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo useradd &lt;SAMBA_USER&gt;
+$ sudo chown -r &lt;SAMBA_USER&gt;:&lt;SAMBA_GROUP&gt; &lt;POOL&gt;/&lt;DATASET&gt;
+$ sudo smbpasswd -a &lt;SAMBA_USER&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Test the CIFS mount.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt install cifs-utils
+$ sudo mount -t cifs -o <span class="nv">username</span><span class="o">=</span>foo,password<span class="o">=</span>foobar //127.0.0.1/&lt;POOL&gt;_&lt;DATASET&gt; /mnt
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="swap">
+<h3><a class="toc-backref" href="#id13">Swap</a><a class="headerlink" href="#swap" title="Permalink to this headline">¶</a></h3>
+<p>Swap is a special file system that cannot be mounted. It is used by the operating system to temporarily read and write files to when the RAM is full. It prevents out-of-memory (oom) errors but it leads to a huge performance penalty because device storage is typically a lot slower than RAM. It is recommended to allocate more RAM instead of relying on swap wherever possible. According to <a class="reference external" href="https://opensource.com/article/19/2/swap-space-poll">this poll</a>, most users prefer to allocate this amount of swap based on the available system RAM:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;RAM&gt;</span></code> = <code class="docutils literal notranslate"><span class="pre">&lt;SWAP&gt;</span></code></p></li>
+<li><p>&lt;= 2GB = x2 RAM</p></li>
+<li><p>2-8GB = RAM</p></li>
+<li><p>&gt; 8GB = 8GB</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id14">RAIDs</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>RAID officially stands for “Redundant Array of Independent Disks.” The
+idea of a RAID is to get either increased performance and/or an
+automatic backup from using multiple disks together. It utilizes these
+drives to create 1 logical drive.</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>RAID Level</p></th>
+<th class="head"><p>Minimum Drivers</p></th>
+<th class="head"><p>Speed</p></th>
+<th class="head"><p>Redundancy</p></th>
+<th class="head"><p>Increased Storage</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>I/O operations are equally spread to each disk.</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>If one drive fails, a second drive will have an exact copy of all of the data. Slower write speeds.</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>This can recover from a failed drive without any affect on performance. Drive recovery takes a long time and will not work if more than on drive fails.</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>4</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>This is an enhanced RAID 5 that can survive up to 2 drive failures.</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>4</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>This uses both RAID 1 and 0 together. Requires more physical drives. Rebuilding or restoring a RAID 10 will require downtime.</p></td>
+</tr>
+</tbody>
+</table>
+<p>[10]</p>
+<div class="section" id="mdadm">
+<h3><a class="toc-backref" href="#id15">mdadm</a><a class="headerlink" href="#mdadm" title="Permalink to this headline">¶</a></h3>
+<p>Most software RAIDs in Linux are handled by the “mdadm” utility and the
+“md_mod” kernel module. Creating a new RAID requires specifying the
+RAID level and the partitions you will use to create it.</p>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mdadm --create --level<span class="o">=</span>&lt;LEVEL&gt; --raid-devices<span class="o">=</span>&lt;NUMBER_OF_DISKS&gt; /dev/md&lt;DEVICE_NUMBER_TO_CREATE&gt; /dev/sd&lt;PARTITION1&gt; /dev/sd&lt;PARTITION2&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mdadm --create --level<span class="o">=</span><span class="m">10</span> --raid-devices<span class="o">=</span><span class="m">4</span> /dev/md0 /dev/sda1 /dev/sdb1 /dev/sdc1 /dev/sdd1
+</pre></div>
+</div>
+<p>Then to automatically create the partition layout file run this:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo <span class="nb">echo</span> <span class="s1">&#39;DEVICE partitions&#39;</span> &gt; /etc/mdadm.conf
+$ sudo mdadm --detail --scan &gt;&gt; /etc/mdadm.conf
+</pre></div>
+</div>
+<p>Finally, you can initialize the RAID.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mdadm --assemble --scan
+</pre></div>
+</div>
+<p>[11]</p>
+</div>
+</div>
+<div class="section" id="network">
+<h2><a class="toc-backref" href="#id16">Network</a><a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nfs">
+<h3><a class="toc-backref" href="#id17">NFS</a><a class="headerlink" href="#nfs" title="Permalink to this headline">¶</a></h3>
+<p>The Network File System (NFS) aims to universally provide a way to
+remotely mount directories between servers. All subdirectories from a
+shared directory will also be available.</p>
+<p>NFSv4 port:</p>
+<ul class="simple">
+<li><p>2049 TCP</p></li>
+</ul>
+<p>NFSv3 ports:</p>
+<ul class="simple">
+<li><p>111 TCP/UDP</p></li>
+<li><p>2049 TCP/UDP</p></li>
+<li><p>4045 TCP/UDP</p></li>
+</ul>
+<p><strong>Client</strong></p>
+<p>Install:</p>
+<ul>
+<li><p>Debian</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install nfs-common
+</pre></div>
+</div>
+</li>
+<li><p>Fedora</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install nfs-utils
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Server</strong></p>
+<p>Install:</p>
+<ul>
+<li><p>Debian</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install nfs-kernel-system
+</pre></div>
+</div>
+</li>
+<li><p>Fedora</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install nfs-utils
+</pre></div>
+</div>
+</li>
+</ul>
+<p>On the server, the /etc/exports file is used to manage NFS exports. Here
+a directory can be specified to be shared via NFS to a specific IP
+address or CIDR range. After adjusting the exports, the NFS daemon will
+need to be restarted.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">DIRECTORY</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">ALLOWED_HOST</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">OPTIONS</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="nb">dir</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">24</span><span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">no_root_squash</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>NFS export options:</p>
+<ul class="simple">
+<li><p>rw = The directory will be writable.</p></li>
+<li><p>ro (default) = The directory will be read-only.</p></li>
+<li><p>no_root_squash = Allow remote root users to access the directory
+and create files owned by root.</p></li>
+<li><p>root_squash (default) = Do not allow remote root users to create
+files as root. Instead, they will be created as an anonymous user
+(typically “nobody”).</p></li>
+<li><p>all_squash = All files are created as the anonymous user.</p></li>
+<li><p>sync = Writes are instantly written to the disk. When one process is
+writing, the other processes wait for it to finish.</p></li>
+<li><p>async (default) = Multiple writes are optimized to run in parallel.
+These writes may be cached in memory.</p></li>
+<li><p>sec = Specify a type of Kerberos authentication to use.</p>
+<ul>
+<li><p>krb5 = Use Kerberos for authentication only.</p></li>
+</ul>
+</li>
+</ul>
+<p>[12]</p>
+<p>On Red Hat Enterprise Linux systems, the exported directory will need to
+have the “nfs_t” file context for SELinux to work properly.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo semanage fcontext -a -t nfs_t <span class="s2">&quot;/path/to/dir{/.*)?&quot;</span>
+$ sudo restorecon -R <span class="s2">&quot;/path/to/dir&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="glusterfs">
+<h3><a class="toc-backref" href="#id18">GlusterFS</a><a class="headerlink" href="#glusterfs" title="Permalink to this headline">¶</a></h3>
+<p>Gluster syncs two or more network shares. It is recommended to use an odd number of nodes to maintain quorum and prevent split-brain issues. [19]</p>
+<p><strong>Install</strong></p>
+<p>CentOS:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install centos-release-gluster
+$ sudo yum install glusterfs-server
+</pre></div>
+</div>
+<p>Debian:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install glusterfs-server
+</pre></div>
+</div>
+<p>Fedora:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install glusterfs-server
+</pre></div>
+</div>
+<p>Start and enable the service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl <span class="nb">enable</span> --now glusterd
+</pre></div>
+</div>
+<p><strong>Usage</strong></p>
+<p>From one of the nodes, peer the other nodes to add them to the known hosts running Gluster services.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo gluster peer probe &lt;NODE2&gt;
+$ sudo gluster peer probe &lt;NODE3&gt;
+$ sudo gluster peer status
+</pre></div>
+</div>
+<p>There are three types of volumes that can be created:</p>
+<ul class="simple">
+<li><p>replica = Reliability. Save a copy of every file to each node.</p></li>
+<li><p>disperse = Reliability and performance. A combination of replica and stripe. Files are read from and written to different nodes.</p></li>
+<li><p>stripe = Performance. Spread each file onto different nodes to spread out the I/O load among all of the nodes.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ gluster volume create &lt;VOLUME_NAME&gt; &lt;VOLUME_TYPE&gt; &lt;NODE1&gt;:/&lt;PATH_TO_STORAGE&gt; &lt;NODE2&gt;:/&lt;PATH_TO_STORAGE&gt; &lt;NODE3&gt;:/&lt;PATH_TO_STORAGE&gt; force
+$ gluster volume start &lt;VOLUME_NAME&gt;
+$ gluster volume status &lt;VOLUME_NAME&gt;
+</pre></div>
+</div>
+<p>On a client, mount the <code class="docutils literal notranslate"><span class="pre">glusterfs</span></code> file system and verify that it works.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mount -t glusterfs &lt;NODE1&gt;:/&lt;VOLUME_NAME&gt; /mnt
+$ sudo touch /mnt/test
+</pre></div>
+</div>
+<p>[20]</p>
+</div>
+<div class="section" id="smb">
+<h3><a class="toc-backref" href="#id19">SMB</a><a class="headerlink" href="#smb" title="Permalink to this headline">¶</a></h3>
+<p>The Server Message Block (SMB) protocol was created to view and edit
+files remotely over a network. The Common Internet File System (CIFS)
+was created by Microsoft as an enhanced fork of SMB but was eventually
+replaced with newer versions of SMB. On Linux, the “Samba” service is
+typically used for setting up SMB share. [13]</p>
+<p>SMB Ports:</p>
+<ul class="simple">
+<li><p>137 UDP</p></li>
+<li><p>138 UDP</p></li>
+<li><p>139 TCP</p></li>
+<li><p>445 TCP</p></li>
+</ul>
+<div class="section" id="samba">
+<h4><a class="toc-backref" href="#id20">Samba</a><a class="headerlink" href="#samba" title="Permalink to this headline">¶</a></h4>
+<p>Samba is a CIFS server created for UNIX servers. The default configuration file is located at <code class="docutils literal notranslate"><span class="pre">/etc/samba/smb.conf</span></code> and is in an “ini” format. Samba share settings can be set at the <code class="docutils literal notranslate"><span class="pre">[global]</span></code> or in a <code class="docutils literal notranslate"><span class="pre">[&lt;SHARE_NAME&gt;]</span></code>. Global settings cannot be defined in a <code class="docutils literal notranslate"><span class="pre">[&lt;SHARE_NAME&gt;]</span></code>. [14] Boolean settings can have a value of <code class="docutils literal notranslate"><span class="pre">false</span></code>/<code class="docutils literal notranslate"><span class="pre">no</span></code> or <code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[global]</span>
+<span class="na">&lt;GLOBAL_CONFIG_KEY&gt;</span> <span class="o">=</span> <span class="s">&lt;GLOBAL_CONFIG_VALUE&gt;</span>
+<span class="na">&lt;SHARE_CONFIG_KEY&gt;</span> <span class="o">=</span> <span class="s">&lt;SHARE_CONFIG_VALUE&gt;</span>
+
+<span class="k">[&lt;SHARE_NAME&gt;]</span>
+<span class="na">&lt;SHARE_CONFIG_KEY&gt;</span> <span class="o">=</span> <span class="s">&lt;SHARE_CONFIG_VALUE&gt;</span>
+</pre></div>
+</div>
+<p>Global:</p>
+<ul class="simple">
+<li><p>interfaces (string) = Specify the interfaces to listen on.</p></li>
+<li><p>unix extensions (boolean) = This only works for the NT1 protocol. Samba developers are working on adding support to the SMB3 protocol. [30] It enables UNIX file system capabilities such as symbolic and hard links. Default: <code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p></li>
+<li><p>workgroup (string) = Define a workgroup name. Default: <code class="docutils literal notranslate"><span class="pre">MYGROUP</span></code>.</p></li>
+</ul>
+<p>Share:</p>
+<ul class="simple">
+<li><p>acl allow execute always (boolean) = If all files should be executable by Windows (not UNIX) clients. Default: <code class="docutils literal notranslate"><span class="pre">no</span></code>.</p></li>
+<li><p>allocation roundup size (integer) = The number of bytes for rounding up. This used to be set to <code class="docutils literal notranslate"><span class="pre">1048576</span></code> bytes (which is 1 MiB). Using <code class="docutils literal notranslate"><span class="pre">0</span></code> will not round up and provide an accurate size. Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p>[client|server] [max|min] protocol (string) = The protocol restrictions that should be set. Common protocols: <code class="docutils literal notranslate"><span class="pre">NT1</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB2</span></code>, and <code class="docutils literal notranslate"><span class="pre">SMB3</span></code>. All protocols: <code class="docutils literal notranslate"><span class="pre">CORE</span></code>, <code class="docutils literal notranslate"><span class="pre">COREPLUS</span></code>, <code class="docutils literal notranslate"><span class="pre">LANMAN1</span></code>, <code class="docutils literal notranslate"><span class="pre">LANMAN2</span></code>, <code class="docutils literal notranslate"><span class="pre">NT1</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB2_02</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB2_10</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB2_22</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB2_24</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB3_00</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB3_02</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB3_10</span></code>, <code class="docutils literal notranslate"><span class="pre">SMB3_11</span></code> (<code class="docutils literal notranslate"><span class="pre">SMB3</span></code>), or <code class="docutils literal notranslate"><span class="pre">SMB2_FF</span></code>.</p>
+<ul>
+<li><p>client max protocol = Default: <code class="docutils literal notranslate"><span class="pre">SMB3_11</span></code>.</p></li>
+<li><p>client min protocol = Default: <code class="docutils literal notranslate"><span class="pre">SMB2_02</span></code>.</p></li>
+<li><p>server max protocol = Default: <code class="docutils literal notranslate"><span class="pre">SMB3_11</span></code>.</p></li>
+<li><p>server min protocol = Default: <code class="docutils literal notranslate"><span class="pre">SMB2_02</span></code>.</p></li>
+</ul>
+</li>
+<li><p>comment (string) = Place a comment about the share. Default: none.</p></li>
+<li><p>create mask, create mode (integer) = The maximum permissions a file can have when it is created. Default: <code class="docutils literal notranslate"><span class="pre">0744</span></code>.</p></li>
+<li><p>directory mask (integer) = The maximum permissions a directory can have when it is created.: Default: <code class="docutils literal notranslate"><span class="pre">0755</span></code>.</p></li>
+<li><p>force create mode (integer) = The minimum permissions a file can have when it is created. Default: <code class="docutils literal notranslate"><span class="pre">0000</span></code>.</p></li>
+<li><p>force directory mode (integer) = The minimum permissions a directory can have when it is created. Default: <code class="docutils literal notranslate"><span class="pre">0000</span></code>.</p></li>
+<li><p>hosts allow (string) = Specify hosts allowed to access any of the shares. Wildcard IP addresses can be used by omitting different octets. For example, “127.” would be a wildcard for anything in the 127.0.0.0/8 range. Default: all hosts are allowed.</p></li>
+<li><p><strong>path</strong> (string) = The path to the directory to share. Default is what the <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">directory</span></code> value is set to.</p></li>
+<li><p>read only (boolean) = This is the opposite of the writable option. Only one or the other option should be used. If set to no, the share will have write permissions. Default: <code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p></li>
+<li><p>root directory (string) = The primary directory for Samba to share. Default: none.</p></li>
+<li><p>writeable, writable, and write ok (boolean) = This specifies if the folder share is writable. Default: <code class="docutils literal notranslate"><span class="pre">no</span></code>.</p></li>
+<li><p>write list (string) = Specify users that can write to the share, separated by spaces. Groups can also be specified using by appending a “+” to the front of the name. Default: none.</p></li>
+</ul>
+<p>Deprecated and removed settings:</p>
+<ul class="simple">
+<li><p>Share:</p>
+<ul>
+<li><p>directory security mask (integer) = Removed in Samba 4. The maximum Windows permissions for a directory.</p></li>
+<li><p>force security mode (integer) = Removed in Samba 4. The minimum Windows permissions for a file.</p></li>
+<li><p>force directory security mode (integer) = Removed in Samba 4. The minimum Windows permissions for a directory.</p></li>
+<li><p>security mask (integer) = Removed in Samba 4. The maximum Windows permissions for a file.</p></li>
+</ul>
+</li>
+</ul>
+<p>[14][31]</p>
+<p>Example configurations:</p>
+<ul>
+<li><p>Force specific permissions for all files and directories.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[share]</span>
+<span class="na">create mask</span> <span class="o">=</span> <span class="s">0664</span>
+<span class="na">force create mode</span> <span class="o">=</span> <span class="s">0664</span>
+<span class="na">directory mask</span> <span class="o">=</span> <span class="s">0775</span>
+<span class="na">force directory mode</span> <span class="o">=</span> <span class="s">0775</span>
+</pre></div>
+</div>
+</li>
+<li><p>Force all files to be executable.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[share]</span>
+<span class="na">acl allow execute always</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">create mask</span> <span class="o">=</span> <span class="s">0775</span>
+<span class="na">force create mode</span> <span class="o">=</span> <span class="s">0775</span>
+</pre></div>
+</div>
+</li>
+<li><p>Enable UNIX extensions for soft and hard links to work.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[global]</span>
+<span class="na">client min protocol</span> <span class="o">=</span> <span class="s">NT1</span>
+<span class="na">server min protocol</span> <span class="o">=</span> <span class="s">NT1</span>
+<span class="na">unix extensions</span> <span class="o">=</span> <span class="s">yes</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Verify the Samba configuration.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo testparm
+$ sudo smbclient //localhost/&lt;SHARE_NAME&gt; -U &lt;SMB_USER1&gt;%&lt;SMB_USER1_PASS&gt;
+</pre></div>
+</div>
+<p>The Linux user for accessing the SMB share will need to be created and
+have their password added to the Samba configuration. These are stored
+in a binary file at “/var/lib/samba/passdb.tdb.” This can be updated by
+running:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo useradd &lt;SMB_USER1&gt;
+$ sudo smbpasswd -a &lt;SMB_USER1&gt;
+</pre></div>
+</div>
+<p>On Red Hat Enterprise Linux systems, the exported directory will need to
+have the “samba_share_t” file context for SELinux to work properly.
+[15]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo semanage fcontext -a -t samba_share_t <span class="s2">&quot;/path/to/dir{/.*)?&quot;</span>
+$ sudo restorecon -R <span class="s2">&quot;/path/to/dir&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="iscsi">
+<h3><a class="toc-backref" href="#id21">iSCSI</a><a class="headerlink" href="#iscsi" title="Permalink to this headline">¶</a></h3>
+<p>The “Internet Small Computer Systems Interface” (also known as “Internet
+SCSI” or simply “iSCSI”) is used to allocate block storage to servers
+over a network. It relies on two components: the target (server) and the
+initiator (client). The target must first be configured to allow the
+client to attach the storage device.</p>
+<div class="section" id="target">
+<h4><a class="toc-backref" href="#id22">Target</a><a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h4>
+<p>For setting up a target storage, these are the general steps to follow
+in order:</p>
+<ul class="simple">
+<li><p>Create a backstores device.</p></li>
+<li><p>Create an iSCSI target.</p></li>
+<li><p>Create a network portal to listen on.</p></li>
+<li><p>Create a LUN associated with the backstores.</p></li>
+<li><p>Create an ACL.</p></li>
+<li><p>Optionally configure ACL rules.</p></li>
+<li><p>First, start and enable the iSCSI service to start on bootup.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl <span class="nb">enable</span> target <span class="o">&amp;&amp;</span> systemctl start target
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a storage device. This is typically either a block device or a
+file.</p></li>
+</ul>
+<p>Block syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo targetcli
+&gt; <span class="nb">cd</span> /backstores/block/
+&gt; create iscsidisk1 <span class="nv">dev</span><span class="o">=</span>/dev/sd&lt;DISK&gt;
+</pre></div>
+</div>
+<p>File syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo targetcli
+&gt; <span class="nb">cd</span> /backstore/fileio/
+&gt; create iscsidisk1 /&lt;PATH_TO_DISK&gt;.img &lt;SIZE_IN_MB&gt;M
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>A special iSCSI Qualified Name (IQN) is required to create a Target
+Portal Group (TPG). The syntax is
+“iqn.YYYY-MM.tld.domain.subdomain:exportname.”</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> /iscsi
+&gt; create iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ISCSINAME&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> /iscsi
+&gt; create iqn.2016-01.com.example.server:iscsidisk
+&gt; ls
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a portal for the iSCSI device to be accessible on.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> /iscsi/iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ISCSINAME&gt;/tpg1
+&gt; portals/ create
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> /iscsi/iqn.2016-01.com.example.server:iscsidisk/tpg1
+&gt; ls
+o- tpg1
+o- acls
+o- luns
+o- portals
+&gt; portals/ create
+&gt; ls
+o- tpg1
+o- acls
+o- luns
+o- portals
+    o- <span class="m">0</span>.0.0.0:3260
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a LUN.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; luns/ create /backstores/block/&lt;DEVICE&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; luns/ create /backstores/block/iscsidisk
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a blank ACL. By default, this will allow any user to access
+this iSCSI target.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; acls/ create iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ACL_NAME&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; acls/ create iqn.2016-01.com.example.server:client
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Optionally, add a username and password.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> acls/iqn.YYYY-MM.&lt;TLD.DOMAIN&gt;:&lt;ACL_NAME&gt;
+&gt; <span class="nb">set</span> auth <span class="nv">userid</span><span class="o">=</span>&lt;USER&gt;
+&gt; <span class="nb">set</span> auth <span class="nv">password</span><span class="o">=</span>&lt;PASSWORD&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">cd</span> acls/iqn.2016-01.com.example.server:client
+&gt; <span class="nb">set</span> auth <span class="nv">userid</span><span class="o">=</span>toor
+&gt; <span class="nb">set</span> auth <span class="nv">password</span><span class="o">=</span>pass
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Any ACL rules that were created can be overridden by turning off
+authentication entirely.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&gt; <span class="nb">set</span> attribute <span class="nv">authentication</span><span class="o">=</span><span class="m">0</span>
+&gt; <span class="nb">set</span> attribute <span class="nv">generate_node_acls</span><span class="o">=</span><span class="m">1</span>
+&gt; <span class="nb">set</span> attribute <span class="nv">demo_mode_write_protect</span><span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Finally, make sure that both the TCP and UDP port 3260 are open in
+the firewall. [16]</p></li>
+</ul>
+</div>
+<div class="section" id="initiator">
+<h4><a class="toc-backref" href="#id23">Initiator</a><a class="headerlink" href="#initiator" title="Permalink to this headline">¶</a></h4>
+<p>This should be configured on the client server.</p>
+<ul class="simple">
+<li><p>In the initiator configuration file, specify the IQN along with the
+ACL used to access it.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/iscsi/initiatorname.iscsi
+<span class="nv">InitiatorName</span><span class="o">=</span>&lt;IQN&gt;:&lt;ACL&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/iscsi/initiatorname.iscsi
+<span class="nv">InitiatorName</span><span class="o">=</span>iqn.2016-01.com.example.server:client
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Start and enable the iSCSI initiator to load on bootup.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl start iscsi <span class="o">&amp;&amp;</span> systemctl <span class="nb">enable</span> iscsi
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Once started, the iSCSI device should be able to be attached.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo iscsiadm --mode node --targetname &lt;IQN&gt;:&lt;TARGET&gt; --portal &lt;iSCSI_SERVER_IP&gt; --login
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo iscsiadm --mode node --targetname iqn.2016-01.com.example.server:iscsidisk --portal <span class="m">10</span>.0.0.1 --login
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Verify that a new “iscsi” device exists.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo lsblk --scsi
+</pre></div>
+</div>
+<p>[16]</p>
+</div>
+</div>
+</div>
+<div class="section" id="filesystem-hierarchy-standard">
+<h2><a class="toc-backref" href="#id24">Filesystem Hierarchy Standard</a><a class="headerlink" href="#filesystem-hierarchy-standard" title="Permalink to this headline">¶</a></h2>
+<p>The FHS provides a standard layout for files and directories for UNIX-like operating systems and is adopted by most Linux distributions.</p>
+<p>Minimal [18]:</p>
+<ul class="simple">
+<li><p>/ = The top level root directory that the operating system is installed in.</p></li>
+<li><p>/bin/ = Binaries for common utilities for end-users.</p></li>
+<li><p>/boot/ = The boot loader, Linux kernel, and initial RAM disk image.</p></li>
+<li><p>/dev/ = Files for handling devices that support input and/or output.</p></li>
+<li><p>/etc/ = Configuration files for services.</p></li>
+<li><p>/home/ = All user home directories.</p></li>
+<li><p>/lib/ = Libraries for all of the binaries.</p></li>
+<li><p>/media/ = Mount points for physical media such as USB and disk drives.</p></li>
+<li><p>/mnt/ = Temporary mount point for other file systems.</p></li>
+<li><p>/opt/ = Optional third-party (usually proprietary) software.</p></li>
+<li><p>/proc/ = Information about the system reported by the Linux kernel.</p></li>
+<li><p>/root/ = The “root” user’s home directory.</p></li>
+<li><p>/sbin/ = System binaries required to start the operating system.</p></li>
+<li><p>/sys/ = Configurable kernel settings.</p></li>
+<li><p>/tmp/ = Temporary storage.</p></li>
+<li><p>/usr/ = Unix system resources. These programs are not used when booting a system.</p></li>
+<li><p>/var/ = Variable data. Databases, logs, and temporary files are normally stored here.</p></li>
+</ul>
+<p>Full:</p>
+<ul>
+<li><p>/etc/</p>
+<ul class="simple">
+<li><p>/etc/bash.bashrc = Bash specific shell functions.</p></li>
+<li><p>/etc/crypttab = The LUKS encrypted partition table.</p></li>
+<li><p>/etc/environment = Global shell variables.</p></li>
+<li><p>/etc/fstab = The partition table of partitions to mount on boot.</p></li>
+<li><p>/etc/issue = The message banner to display before login for local users.</p></li>
+<li><p>/etc/issue.net = The message banner to displaybefore login for remote users. This also needs to be configured in the <code class="docutils literal notranslate"><span class="pre">/etc/ssh/sshd_config</span></code> for SSH users.</p></li>
+<li><p>/etc/motd = The message of the day banner to display after a successful login.</p></li>
+<li><p>/etc/passwd = Basic user account settings.</p></li>
+<li><p>/etc/profile = Generic shell functions.</p></li>
+<li><p>/etc/profile.d/ = A collection of custom user-defined shell functions.</p></li>
+<li><p>/etc/rsyslog.conf = rsyslogd configuration for most handling OS system logs.</p></li>
+<li><p>/etc/shadow = Encrypted user passwords.</p></li>
+<li><p>/etc/shells = Lists all available CLI shells.</p></li>
+<li><p>/etc/sysconfig/selinux = SELinux configuration.</p></li>
+<li><p>/etc/systemd/system/ = Administrator defined custom systemd service files. These will override any files from the default <code class="docutils literal notranslate"><span class="pre">/usr/lib/systemd/system/</span></code> location.</p></li>
+</ul>
+</li>
+<li><p>/proc/</p>
+<ul>
+<li><p>/proc/&lt;PID&gt;/ = A folder will exist for every running PID.</p></li>
+<li><p>/proc/cmdline = Kernel boot arguments provided by the bootloader.</p></li>
+<li><p>/proc/cpuinfo = Information about the processor.</p></li>
+<li><p><a class="reference external" href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">/proc/sys/vm/</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>/proc/sys/vm/drop_caches = Handles removing cached memory. Set to “3” for dropping all caches.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>/sys/</p>
+<ul class="simple">
+<li><p>/sys/class/backlight/&lt;BACKLIGHT_DEVICE&gt;/{brightness,actual_brightness,max_brightness} = View and set the brightness level of the physical monitor.</p></li>
+<li><p>/sys/class/net = The full list of network devices.</p></li>
+<li><p>/sys/class/power_supply/BAT1/capacity = Show the maximum charge of the battery.</p></li>
+<li><p>/sys/class/power_supply/BAT1/status = Show the current battery charge left.</p></li>
+<li><p>/sys/class/scsi_device/device/rescan = Force a rescan of all drives by setting to “1”.</p></li>
+<li><p>/sys/class/scsi_host/host&lt;PORT&gt;/scan = Manually scan for a device on that port by setting to “- - -“.</p></li>
+<li><p>/sys/block/&lt;DEVICE&gt;/device/delete = Manually deactivate a device by setting to “1”.</p></li>
+</ul>
+</li>
+<li><p>/var/</p>
+<ul class="simple">
+<li><p>/var/log/ = System logs.</p>
+<ul>
+<li><p>/var/log/audit/audit.log = SELinux log file.</p></li>
+</ul>
+</li>
+<li><p>/var/run/utmp = Shows currently logged in users.</p></li>
+<li><p>/var/spool/cron/ = User crontabs are stored here.</p></li>
+</ul>
+</li>
+<li><p>~/ or $HOME</p>
+<ul class="simple">
+<li><p>~/.bash_profile = Shell aliases and functions are sourced for interactive users only.</p></li>
+<li><p>~/.bashrc = Non-interactive and interactive shells will source aliases and functions from here.</p></li>
+<li><p>~/.local/share/applications/ = Desktop application shortcuts.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#id25">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="errors">
+<h3><a class="toc-backref" href="#id26">Errors</a><a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h3>
+<p>Error when looking up ZFS pools.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zpool list
+no pools available
+</pre></div>
+</div>
+<p>Temporary solutions [26]:</p>
+<ol class="arabic">
+<li><p>Import the pool automatically. This will search for available ZFS devices with the defined pool name.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zpool import &lt;POOL&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Or explicitly import a specific device and name.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo zpool import -d /dev/&lt;DEVICE&gt; &lt;POOL&gt;
+</pre></div>
+</div>
+</div></blockquote>
+<p>Permanent solution [28]:</p>
+<ol class="arabic simple">
+<li><p>Start and enable these services so any zpools that are created and/or changed will be persistent upon reboots. Existing zpools will be loaded immediately.</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl <span class="nb">enable</span> zfs-import-cache
+$ sudo systemctl <span class="nb">enable</span> zfs-import.target
+</pre></div>
+</div>
+</div></blockquote>
+<hr class="docutils" />
+<p>Mounting a CIFS share states that it is read-only.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mount -t cifs //&lt;SAMBA_SERVER_ADDRESS&gt;/&lt;SAMBA_SHARE&gt; /mnt
+mount: /mnt: cannot mount //&lt;SAMBA_SERVER_ADDRESS&gt;/&lt;SAMBA_SHARE&gt; read-only.
+</pre></div>
+</div>
+<p>Solution:</p>
+<ul class="simple">
+<li><p>Install the package for CIFS client tools: <code class="docutils literal notranslate"><span class="pre">cifs-utils</span></code>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id27">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/storage/file_systems.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/file_systems.rst">&lt; 2020.07.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/file_systems.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/file_systems.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id28">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Linux File systems Explained.” Ubuntu Documentation. November 8, 2015. <a class="reference external" href="https://help.ubuntu.com/community/LinuxFilesystemsExplained">https://help.ubuntu.com/community/LinuxFilesystemsExplained</a></p></li>
+<li><p>“How many files can I put in a directory?” Stack Overflow. July 14, 2015.http://stackoverflow.com/questions/466521/how-many-files-can-i-put-in-a-directory</p></li>
+<li><p>“Btrfs Main Page.” Btrfs Kernel Wiki. June 24, 2016. <a class="reference external" href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></p></li>
+<li><p>“What’s All This I Hear About Btrfs For Linux.” The Personal Blog of Dan Calloway. December 16, 2012. <a class="reference external" href="https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/">https://danielcalloway.wordpress.com/2012/12/16/whats-all-this-i-hear-about-btrfs-for-linux/</a></p></li>
+<li><p>“Mount Options” Btrfs Kernel Wiki. May 5, 2016. <a class="reference external" href="https://btrfs.wiki.kernel.org/index.php/Mount_options">https://btrfs.wiki.kernel.org/index.php/Mount_options</a></p></li>
+<li><p>“Using Btrfs with Multiple Devices” Btrfs Kernel Wiki. May 14, 2016. <a class="reference external" href="https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices">https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices</a></p></li>
+<li><p>“Preventing a btrfs Nightmare.” Jupiter Broadcasting. July 6, 2014. <a class="reference external" href="http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/">http://www.jupiterbroadcasting.com/61572/preventing-a-btrfs-nightmare-las-320/</a></p></li>
+<li><p>“Linux File Systems: Ext2 vs Ext3 vs Ext4.” The Geek Stuff. May 16, 2011. Accessed October 1, 2016. <a class="reference external" href="http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4">http://www.thegeekstuff.com/2011/05/ext2-ext3-ext4</a></p></li>
+<li><p>“Ext4 Filesystem.” Kernel Documentation. May 29, 2015. Accessed October 1, 2016. <a class="reference external" href="https://kernel.org/doc/Documentation/filesystems/ext4.txt">https://kernel.org/doc/Documentation/filesystems/ext4.txt</a></p></li>
+<li><p>“RAID levels 0, 1, 2, 3, 4, 5, 6, 0+1, 1+0 features explained in detail.” GOLINUXHUB. April 09, 2016. Accessed August 13th, 2016. <a class="reference external" href="http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html">http://www.golinuxhub.com/2014/04/raid-levels-0-1-2-3-4-5-6-01-10.html</a></p></li>
+<li><p>“RAID.” Arch Linux Wiki. August 7, 2016. Accessed August 13, 2016. <a class="reference external" href="https://wiki.archlinux.org/index.php/RAID">https://wiki.archlinux.org/index.php/RAID</a></p></li>
+<li><p>“NFS SERVER CONFIGURATION.” Red Hat Documentation. Accessed September 19, 2016.  <a class="reference external" href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html">https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Storage_Administration_Guide/nfs-serverconfig.html</a></p></li>
+<li><p>“The Difference between CIFS and SMB.” VARONIS. February 14, 1024. Accessed September 18th, 2016. <a class="reference external" href="https://blog.varonis.com/the-difference-between-cifs-and-smb/">https://blog.varonis.com/the-difference-between-cifs-and-smb/</a></p></li>
+<li><p>“Chapter 6. The Samba Configuration File.” Samba Docs Using Samba. April 26, 2018. Accessed March 13, 2021. <a class="reference external" href="https://www.samba.org/samba/docs/using_samba/ch06.html">https://www.samba.org/samba/docs/using_samba/ch06.html</a></p></li>
+<li><p>“RHEL7: Provide SMB network shares to specific clients.” CertDepot. August 25, 2016. Accessed September 18th, 2016. <a class="reference external" href="https://www.certdepot.net/rhel7-provide-smb-network-shares/">https://www.certdepot.net/rhel7-provide-smb-network-shares/</a></p></li>
+<li><p>“RHEL7: Configure a system as either an iSCSI target or initiator that persistently mounts an iSCSI target.” CertDepot. July 30, 2016. Accessed August 13, 2016. <a class="reference external" href="https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/">https://www.certdepot.net/rhel7-configure-iscsi-target-initiator-persistently/</a></p></li>
+<li><p>“Btrfs.” Fedora Project Wiki. March 9, 2017. Accessed May 11, 2018. <a class="reference external" href="https://fedoraproject.org/wiki/Btrfs">https://fedoraproject.org/wiki/Btrfs</a></p></li>
+<li><p>“FilesystemHierarchyStandard.” Debian Wiki. April 21, 2017. Accessed December 5, 2018. <a class="reference external" href="https://wiki.debian.org/FilesystemHierarchyStandard">https://wiki.debian.org/FilesystemHierarchyStandard</a></p></li>
+<li><p>“Split brain and the ways to deal with it.” Gluster Docs. Accessed February 12, 2019. <a class="reference external" href="https://docs.gluster.org/en/latest/Administrator%20Guide/Split%20brain%20and%20ways%20to%20deal%20with%20it/">https://docs.gluster.org/en/latest/Administrator%20Guide/Split%20brain%20and%20ways%20to%20deal%20with%20it/</a></p></li>
+<li><p>“Setting up GlusterFS Volumes.” Gluster Docs. Accessed February 12, 2019. <a class="reference external" href="https://docs.gluster.org/en/latest/Administrator%20Guide/Setting%20Up%20Volumes/">https://docs.gluster.org/en/latest/Administrator%20Guide/Setting%20Up%20Volumes/</a></p></li>
+<li><p>“Main Page.” OpenZFS Wiki. October 15, 2020. Accessed December 4, 2020. <a class="reference external" href="https://openzfs.org/wiki/Main_Page">https://openzfs.org/wiki/Main_Page</a></p></li>
+<li><p>“ZFS.” Debian Wiki. November 4, 2020. Accessed December 4, 2020. <a class="reference external" href="https://wiki.debian.org/ZFS">https://wiki.debian.org/ZFS</a></p></li>
+<li><p>“ZFS.” Ubuntu Wiki. January 22, 2019. Accessed December 4, 2020. <a class="reference external" href="https://wiki.ubuntu.com/ZFS">https://wiki.ubuntu.com/ZFS</a></p></li>
+<li><p>“Custom Packages.” OpenZFS Documentation. 2020. Accessed December 6, 2020. <a class="reference external" href="https://openzfs.github.io/openzfs-docs/Developer%20Resources/Custom%20Packages.html">https://openzfs.github.io/openzfs-docs/Developer%20Resources/Custom%20Packages.html</a></p></li>
+<li><p>“ZFS on Ubuntu: Create ZFS pool with NVMe L2ARC and share via SMB.” ServeTheHome. October 25, 2015. Accessed December 5, 2020. <a class="reference external" href="https://www.servethehome.com/zfs-on-ubuntu-create-zfs-pool-with-nvme-l2arc-and-share-via-smb/">https://www.servethehome.com/zfs-on-ubuntu-create-zfs-pool-with-nvme-l2arc-and-share-via-smb/</a></p></li>
+<li><p>“Error: no pools available.” Reddit /r/zfs. March 7, 2020. Accessed December 5, 2020. <a class="reference external" href="https://www.reddit.com/r/zfs/comments/ff5ea5/error_no_pools_available/">https://www.reddit.com/r/zfs/comments/ff5ea5/error_no_pools_available/</a></p></li>
+<li><p>“Sharing ZFS Datasets Via NFS.” Programster’s Blog. July 6, 2019. Accessed December 6, 2020. <a class="reference external" href="https://blog.programster.org/sharing-zfs-datasets-via-nfs">https://blog.programster.org/sharing-zfs-datasets-via-nfs</a></p></li>
+<li><p>“ZFS.” ArchWiki. November 23, 2020. Accessed December 5, 2020. <a class="reference external" href="https://wiki.archlinux.org/index.php/ZFS">https://wiki.archlinux.org/index.php/ZFS</a></p></li>
+<li><p>“25. Command Line Interface.” FreeNAS 11.3-RELEASE User Guide. <a class="reference external" href="https://www.ixsystems.com/documentation/freenas/11.3-RELEASE/cli.html">https://www.ixsystems.com/documentation/freenas/11.3-RELEASE/cli.html</a></p></li>
+<li><p>“unix extensions not working?” Ubuntu Bugs samba package. June 12, 2020. Accessed March 13, 2021. <a class="reference external" href="https://bugs.launchpad.net/ubuntu/+source/samba/+bug/1883234">https://bugs.launchpad.net/ubuntu/+source/samba/+bug/1883234</a></p></li>
+<li><p>“smb.conf - The configuration file for the Samba suite.” Samba Docs. Accessed March 13, 2021. <a class="reference external" href="https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html">https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../virtualization/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ceph.html" class="btn btn-neutral float-left" title="Ceph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

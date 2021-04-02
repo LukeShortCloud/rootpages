@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Puppet &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../computer_hardware/index.html" />
+    <link rel="prev" title="Ansible" href="ansible.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ansible.html">Ansible</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Puppet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commands-usage">Commands Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cron">cron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exec">exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file">file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#group">group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#host">host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mount">mount</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notify">notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#package">package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service">service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-authorized-keys">ssh_authorized_keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user">user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yumrepo">yumrepo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#metaparameters">Metaparameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#before">before</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">notify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#require">require</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribe">subscribe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nodes">Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Puppet</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/automation/puppet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="puppet">
+<h1><a class="toc-backref" href="#id2">Puppet</a><a class="headerlink" href="#puppet" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#puppet" id="id2">Puppet</a></p>
+<ul>
+<li><p><a class="reference internal" href="#introduction" id="id3">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id4">Installation</a></p></li>
+<li><p><a class="reference internal" href="#commands-usage" id="id5">Commands Usage</a></p></li>
+<li><p><a class="reference internal" href="#resources" id="id6">Resources</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cron" id="id7">cron</a></p></li>
+<li><p><a class="reference internal" href="#exec" id="id8">exec</a></p></li>
+<li><p><a class="reference internal" href="#file" id="id9">file</a></p></li>
+<li><p><a class="reference internal" href="#group" id="id10">group</a></p></li>
+<li><p><a class="reference internal" href="#host" id="id11">host</a></p></li>
+<li><p><a class="reference internal" href="#mount" id="id12">mount</a></p></li>
+<li><p><a class="reference internal" href="#notify" id="id13">notify</a></p></li>
+<li><p><a class="reference internal" href="#package" id="id14">package</a></p></li>
+<li><p><a class="reference internal" href="#service" id="id15">service</a></p></li>
+<li><p><a class="reference internal" href="#ssh-authorized-keys" id="id16">ssh_authorized_keys</a></p></li>
+<li><p><a class="reference internal" href="#user" id="id17">user</a></p></li>
+<li><p><a class="reference internal" href="#yumrepo" id="id18">yumrepo</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#metaparameters" id="id19">Metaparameters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#before" id="id20">before</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id21">notify</a></p></li>
+<li><p><a class="reference internal" href="#require" id="id22">require</a></p></li>
+<li><p><a class="reference internal" href="#subscribe" id="id23">subscribe</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nodes" id="id24">Nodes</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id25">Functions</a></p></li>
+<li><p><a class="reference internal" href="#variables" id="id26">Variables</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id27">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id28">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id3">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Puppet is an automation and configuration management tool. It can be used to push or pull updates to a system. At a minimum, a system needs the <code class="docutils literal notranslate"><span class="pre">puppet-agent</span></code> installed to utilize Puppet. A master server/cluster is not required.</p>
+<p>This tool fundamentally relies on resources to manage the state of different things on a system. These resources can be bundled into classes, manifests, and modules. In ascending order, these are the various different sections that can make up a module.</p>
+<ul class="simple">
+<li><p>Resource = Describes the desired state of something (file, package, service, etc.)</p>
+<ul>
+<li><p>Attributes = Properties that the resource should have (ex. permissions, state, etc.)</p></li>
+</ul>
+</li>
+<li><p>Class = A group of resources.</p></li>
+<li><p>Manifest = The usage of classes. Default variables can be used or overridden here.</p></li>
+<li><p>Module = A group of manifests.</p></li>
+</ul>
+<p>Puppet is written in Ruby and supports the same data types, loops, and conditional statements that the programming language does.</p>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id4">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>RHEL/CentOS 7:</p>
+<ul class="simple">
+<li><p>Puppet 5 repository: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm</span></code></p></li>
+<li><p>Puppet 4 repository [2]: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm</span></code></p></li>
+<li><p>Agent install: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">puppet-agent</span></code></p></li>
+<li><p>Master install: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">yum</span> <span class="pre">install</span> <span class="pre">puppet-master</span></code></p></li>
+</ul>
+<p>Verify that Puppet was installed.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ /opt/puppetlabs/bin/puppet --version
+</pre></div>
+</div>
+<p>[1]</p>
+</div>
+<div class="section" id="commands-usage">
+<h2><a class="toc-backref" href="#id5">Commands Usage</a><a class="headerlink" href="#commands-usage" title="Permalink to this headline">¶</a></h2>
+<p>See: <a class="reference external" href="../commands/configuration_management.html#puppet">Commands - Configuration Management - Puppet</a>.</p>
+</div>
+<div class="section" id="resources">
+<h2><a class="toc-backref" href="#id6">Resources</a><a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<p>Resources define the state of something. The type, the name/title of the resource to manage, and key-value attributes of it’s desired state must be defined. The title must be unique for each resource definition.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+    <span class="n">ATTRIBUTE_KEY</span> <span class="o">=&gt;</span> <span class="n">ATTRIBUTE_VALUE</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Most resources support an array of titles to manage. This is useful for creating and managing large sets of packages, services, users, etc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>RESOURCE_TYPE { RESOURCE_TITLE:
+    * =&gt; $attributes_dictionary
+}
+</pre></div>
+</div>
+<p>A full list of available resource types and their attributes can be found <a class="reference external" href="https://puppet.com/docs/puppet/5.5/type.html">here</a>.</p>
+<div class="section" id="cron">
+<h3><a class="toc-backref" href="#id7">cron</a><a class="headerlink" href="#cron" title="Permalink to this headline">¶</a></h3>
+<p>Manage a crontab.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>command = The command to run on the cron schedule.</p></li>
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>environment = Environment variables to export.</p></li>
+<li><p>target = Specify the full path to a crontab file to manage.</p></li>
+<li><p>user = The user’s crontab that should be managed. Default: root.</p></li>
+</ul>
+<p>Attributes, time:</p>
+<ul class="simple">
+<li><p>hour</p></li>
+<li><p>minute</p></li>
+<li><p>month</p></li>
+<li><p>weekday = The weekday name or integer from 0 to 7 (0 and 7 are both Sunday).</p></li>
+<li><p>special = Specify a special cron schedule such as “annually” or “reboot”.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="exec">
+<h3><a class="toc-backref" href="#id8">exec</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h3>
+<p>Execute a command.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>creates = Specify a file that the command should create.</p></li>
+<li><p>cwd = The current working directory to execute the command from.</p></li>
+<li><p>environment = Environment variables to export.</p></li>
+<li><p>logoutput = Specify if Puppet should log the output or not. Set to false for resources that will display sensitive information. Set to on_failure to only log the output if the command failed to execute.</p></li>
+<li><p>onlyif = Change the resource state if a command specified to <code class="docutils literal notranslate"><span class="pre">onlyif</span></code> succeeds. This is the opposite of <code class="docutils literal notranslate"><span class="pre">unless</span></code>.</p></li>
+<li><p>refresh = A different command to run if a notify event from another resource triggers this resource.</p></li>
+<li><p>refreshonly = Only execute this resource if it was explicitly notified to run by another resource. Otherwise, do nothing.</p></li>
+<li><p>returns = The expected return code. Default: 0.</p></li>
+<li><p>timeout = The time, in seconds, before marking a command as failing. Default: 300.</p></li>
+<li><p>tries = The number of times the command should be executed before considering it failed. Default: 1.</p></li>
+<li><p>try_sleep = The number, in seconds, to pause between tries.</p></li>
+<li><p>umask = Set a custom umask before execution.</p></li>
+<li><p>unless = Change the resource state if a command specified to <code class="docutils literal notranslate"><span class="pre">unless</span></code> fails. This is the opposite of <code class="docutils literal notranslate"><span class="pre">onlyif</span></code>.</p></li>
+<li><p>{user|group} = The user or group to run the command as.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="file">
+<h3><a class="toc-backref" href="#id9">file</a><a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<p>Manage a file, directory, or symlink.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>backup = If a backup of a file should be created or not. By default, files will backed up into a local “puppet” filebucket.</p></li>
+<li><p>checksum = The checksum type to use. Default: md5.</p></li>
+<li><p>checksum_value = The expected checksum hash of a file.</p></li>
+<li><p>content = The exact text that the file should contain.</p></li>
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>directory = The resource should be a directory.</p></li>
+<li><p>link = The resource should be a symlink.</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>force = Allow the removable of old symlinks and directories.</p></li>
+<li><p>group = The group that should own the file.</p></li>
+<li><p>mode = The octal UNIX permissions mode.</p></li>
+<li><p>owner = The user that should own of the file.</p></li>
+<li><p>purge = Remove files and directories from the destination that are not found in the source directory.</p></li>
+<li><p>recurse (ensure =&gt; directory) = If nested directories should also be copied.</p></li>
+<li><p>replace = Replace a file if the contents do not match. Default: true.</p></li>
+<li><p>source = A source file (path or URL) that should be copied to the specified destination.</p></li>
+<li><p>target (ensure =&gt; link) = Where the symlink should point to.</p></li>
+<li><p>validate_cmd = The command to run to validate the syntax of a file. Use “%” to indicate the file name from this resource.</p></li>
+</ul>
+<p>Attributes, SELinux:</p>
+<ul class="simple">
+<li><p>selinux_ignore_defaults</p></li>
+<li><p>selrange</p></li>
+<li><p>selrole</p></li>
+<li><p>selrole</p></li>
+<li><p>seluser</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="group">
+<h3><a class="toc-backref" href="#id10">group</a><a class="headerlink" href="#group" title="Permalink to this headline">¶</a></h3>
+<p>Manage UNIX-like groups.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>gid = The group ID number.</p></li>
+<li><p>members = Users that should be in the group.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="host">
+<h3><a class="toc-backref" href="#id11">host</a><a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h3>
+<p>Manage host entries in <code class="docutils literal notranslate"><span class="pre">/etc/hosts</span></code>.</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>comment = A comment about the hostname entry will be placed near it.</p></li>
+<li><p>host_aliases = An array of all of the desired aliases for the host.</p></li>
+<li><p>ip = The IPv4 or IPv6 address that the host aliases should resolve to.</p></li>
+<li><p>target = The hosts file to modify. Default: /etc/hosts.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="mount">
+<h3><a class="toc-backref" href="#id12">mount</a><a class="headerlink" href="#mount" title="Permalink to this headline">¶</a></h3>
+<p>Manage file system mounts including <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> entries.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>atboot = If the device should be mounted on boot.</p></li>
+<li><p>device = The device to mount.</p></li>
+<li><p>dump = Set the file system dump value. Default: 0.</p></li>
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>mounted</p></li>
+<li><p>present or defined</p></li>
+<li><p>unmounted</p></li>
+</ul>
+</li>
+<li><p>fstype = The file system type.</p></li>
+<li><p>options = Options for the mount.</p></li>
+<li><p>pass = The number of reboot passes before a file system is re-checked for consistency.</p></li>
+<li><p>remounts = If the mount supports the remount option. If not, Puppet will manually unmount and then mount the device again if required.</p></li>
+<li><p>target = The path to the partition table file. Default: /etc/fstab.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="notify">
+<h3><a class="toc-backref" href="#id13">notify</a><a class="headerlink" href="#notify" title="Permalink to this headline">¶</a></h3>
+<p>Log additional information to the puppet-agent log.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>message = The message to log.</p></li>
+<li><p>withpath = Show the full path to the manifest that contains this resource.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="package">
+<h3><a class="toc-backref" href="#id14">package</a><a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h3>
+<p>Manage system packages.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>latest = Update the package.</p></li>
+<li><p>held = A package will only be updated if another package resource requires it to be.</p></li>
+<li><p>present or installed</p></li>
+<li><p>purged = Uninstall the package and delete the related configuration files.</p></li>
+<li><p>&lt;VERSION&gt; = Specify the exact package version that should be present.</p></li>
+</ul>
+</li>
+<li><p>install_options = An array of additional arguments to use with the package manager during installations.</p></li>
+<li><p>reinstall_on_refresh = If the package should be reinstalled when activated by a fresh event. Default: false.</p></li>
+<li><p>provider = The package manager to use.</p></li>
+<li><p>source = A full path to a package to install.</p></li>
+<li><p>uninstall_options = An array of additional arguments to use with the package during uninstalls.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="service">
+<h3><a class="toc-backref" href="#id15">service</a><a class="headerlink" href="#service" title="Permalink to this headline">¶</a></h3>
+<p>Manage system services.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>binary = For systems that do not use a service management system (such as Upstart or systemd), specify the full path to the binary to use for the service.</p></li>
+<li><p>ensure</p>
+<ul>
+<li><p>running or true</p></li>
+<li><p>stopped or false</p></li>
+</ul>
+</li>
+<li><p>enable = If the service should be enabled to start on boot.</p></li>
+<li><p>hasstatus = If the service supports checking it’s status. If not, Puppet will look for the resource name from the running processes.</p></li>
+<li><p>hasrestart = If the service supports restarting itself.</p></li>
+<li><p>pattern = Specify a custom pattern for doing the status check (if hasstatus is set to false).</p></li>
+<li><p>restart = Manually specify a custom restart command for the service.</p></li>
+<li><p>start = Manually specify a custom start command for the service.</p></li>
+<li><p>status = Manually specify a custom status command for the service.</p></li>
+<li><p>stop = Manually specify a custom stop command for the service.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="ssh-authorized-keys">
+<h3><a class="toc-backref" href="#id16">ssh_authorized_keys</a><a class="headerlink" href="#ssh-authorized-keys" title="Permalink to this headline">¶</a></h3>
+<p>Manage authorized SSH public keys.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>key = The public key to use.</p></li>
+<li><p>options = Specify custom SSH options.</p></li>
+<li><p>target = The path to the authorized keys file. Default: ${user}/.ssh/authorized_keys.</p></li>
+<li><p>type = The type of encryption used for the public key.</p></li>
+<li><p>user = The user whose public keys should be managed.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="user">
+<h3><a class="toc-backref" href="#id17">user</a><a class="headerlink" href="#user" title="Permalink to this headline">¶</a></h3>
+<p>Manage user accounts.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+<li><p>role</p></li>
+</ul>
+</li>
+<li><p>expiry = The expiration date for the account.</p></li>
+<li><p>gid = The group ID.</p></li>
+<li><p>groups = An array of groups that the user should be added to.</p></li>
+<li><p>home = The full path to the user’s home directory.</p></li>
+<li><p>password = The user’s password.</p></li>
+<li><p>password_max_age = The number of days before the user’s password expires.</p></li>
+<li><p>password_min_age = The number of days a user has to use their current password before changing it.</p></li>
+<li><p>password_warn_days = The number of days to warn a user before their password expires.</p></li>
+<li><p>shell = The shell for the user.</p></li>
+<li><p>uid = The user ID.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+<div class="section" id="yumrepo">
+<h3><a class="toc-backref" href="#id18">yumrepo</a><a class="headerlink" href="#yumrepo" title="Permalink to this headline">¶</a></h3>
+<p>Manage Yum repositories.</p>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p>ensure</p>
+<ul>
+<li><p>absent</p></li>
+<li><p>present</p></li>
+</ul>
+</li>
+<li><p>baseurl = The full path or URL to the repository.</p></li>
+<li><p>enabled = If the repository should be enabled.</p></li>
+<li><p>exclude = A string of packages that should be ignored from this repository.</p></li>
+<li><p>gpgcheck = If GPG verification checks should be enabled.</p></li>
+<li><p>gpgkey = The full path or URL to the GPG key.</p></li>
+<li><p>includepkgs = A string of packages that should be explicitly included as part of this repository. Ignore the rest.</p></li>
+<li><p>mirrorlist = The URL that contains a list of mirror repositories.</p></li>
+<li><p>mirrorlist_expire = The amount of time, in seconds, before the list of mirrors expires.</p></li>
+<li><p>priority = The priority of the packages in this repository.</p></li>
+<li><p>retries = The number of failed attempts for packages from this repository that is allowed.</p></li>
+<li><p>sslverify = If Yum should verify SSL certificates.</p></li>
+</ul>
+<p>[3]</p>
+</div>
+</div>
+<div class="section" id="metaparameters">
+<h2><a class="toc-backref" href="#id19">Metaparameters</a><a class="headerlink" href="#metaparameters" title="Permalink to this headline">¶</a></h2>
+<p>These special attributes can be used with any resource. [4]</p>
+<p>Require order:</p>
+<ul class="simple">
+<li><p>before = Before.</p></li>
+<li><p>require = After.</p></li>
+</ul>
+<p>Refresh order:</p>
+<ul class="simple">
+<li><p>notify = Before.</p></li>
+<li><p>subscribe = After.</p></li>
+</ul>
+<p>[5]</p>
+<div class="section" id="before">
+<h3><a class="toc-backref" href="#id20">before</a><a class="headerlink" href="#before" title="Permalink to this headline">¶</a></h3>
+<p>Specify that another resource has to apply this resource before that resource can run.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+    <span class="n">before</span> <span class="o">=&gt;</span> <span class="n">Resource</span><span class="p">[</span><span class="s2">&quot;RESOURCE_DEPENDENCY&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+   <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+   <span class="n">before</span> <span class="o">=&gt;</span> <span class="n">Service</span><span class="p">[</span><span class="s2">&quot;docker&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">service</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
+    <span class="n">enable</span> <span class="o">=&gt;</span> <span class="n">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[4]</p>
+</div>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id21">notify</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Notify other resources that their state should be changed in the current resource’s state changes.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+    <span class="n">notify</span> <span class="o">=&gt;</span> <span class="n">Resource</span><span class="p">[</span><span class="s2">&quot;RESOURCE_DEPENDENCY&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+   <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+   <span class="n">notify</span> <span class="o">=&gt;</span> <span class="n">Service</span><span class="p">[</span><span class="s2">&quot;docker&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">service</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
+    <span class="n">enable</span> <span class="o">=&gt;</span> <span class="n">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When requiring a dependency, that resource dependency must be capitalized and then provided the name of that resource.</p>
+<p>[4]</p>
+</div>
+<div class="section" id="require">
+<h3><a class="toc-backref" href="#id22">require</a><a class="headerlink" href="#require" title="Permalink to this headline">¶</a></h3>
+<p>By default, Puppet will parse each resource definition in the order they were defined. Specific orders and dependencies can be set by requiring that one or more resources be completed first before handling the current resource.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+    <span class="n">require</span> <span class="o">=&gt;</span> <span class="n">Resource</span><span class="p">[</span><span class="s2">&quot;RESOURCE_DEPENDENCY&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+   <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">service</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span><span class="n">a</span>
+    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
+    <span class="n">enable</span> <span class="o">=&gt;</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">require</span> <span class="o">=&gt;</span> <span class="n">Package</span><span class="p">[</span><span class="s1">&#39;docker&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[4]</p>
+</div>
+<div class="section" id="subscribe">
+<h3><a class="toc-backref" href="#id23">subscribe</a><a class="headerlink" href="#subscribe" title="Permalink to this headline">¶</a></h3>
+<p>Watch for a change to another resource. If that resource changes then this resource will refresh.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+    <span class="n">subscribe</span> <span class="o">=&gt;</span> <span class="n">Resource</span><span class="p">[</span><span class="s2">&quot;RESOURCE_DEPENDENCY&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+   <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">service</span> <span class="p">{</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+    <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span>
+    <span class="n">enable</span> <span class="o">=&gt;</span> <span class="n">true</span><span class="p">,</span>
+    <span class="n">subscribe</span> <span class="o">=&gt;</span> <span class="n">Package</span><span class="p">[</span><span class="s2">&quot;docker&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[4]</p>
+</div>
+</div>
+<div class="section" id="nodes">
+<h2><a class="toc-backref" href="#id24">Nodes</a><a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h2>
+<p>Resources can be configured to only run on specific nodes.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">node</span> <span class="s2">&quot;NODE_HOSTNAME&quot;</span> <span class="p">{</span>
+    <span class="n">RESOURCE_TYPE</span> <span class="p">{</span> <span class="n">RESOURCE_TITLE</span><span class="p">:</span>
+        <span class="n">require</span> <span class="o">=&gt;</span> <span class="n">Resource</span><span class="p">[</span><span class="s2">&quot;RESOURCE_DEPENDENCY&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">node</span> <span class="s2">&quot;db0&quot;</span> <span class="p">{</span>
+    <span class="n">package</span> <span class="p">{</span> <span class="s2">&quot;mariadb&quot;</span><span class="p">:</span>
+        <span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">installed</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[4]</p>
+</div>
+<div class="section" id="functions">
+<h2><a class="toc-backref" href="#id25">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The full list of built-in functions in Puppet can be found <a class="reference external" href="https://puppet.com/docs/puppet/5.5/function.html">here</a>. These help to deal with common use cases and/or processing data.</p>
+</div>
+<div class="section" id="variables">
+<h2><a class="toc-backref" href="#id26">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>Puppet uses Facter to find facts about a system. By running the <code class="docutils literal notranslate"><span class="pre">facter</span></code> command, it will display all of the facts gathered by the system. Those facts can be accessed inside Puppet using the <code class="docutils literal notranslate"><span class="pre">$facts</span></code> dictionary.</p>
+<p>Additional custom Facter scripts can be added to <code class="docutils literal notranslate"><span class="pre">/opt/puppetlabs/facter/facts.d/</span></code>. The output should be in a Ruby-compatible key-value format.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY</span><span class="o">=</span><span class="n">VALUE</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY</span> <span class="o">=&gt;</span> <span class="n">VALUE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id27">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/automation/puppet.rst">Latest</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id28">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“About Puppet Platform and its packages.” Puppet Documentation. Accessed December 12, 2018. <a class="reference external" href="https://puppet.com/docs/puppet/5.5/puppet_platform.html">https://puppet.com/docs/puppet/5.5/puppet_platform.html</a></p></li>
+<li><p>“Installing Puppet agent: Linux.” Puppet Documentation. Accessed December 12, 2018. <a class="reference external" href="https://puppet.com/docs/puppet/4.10/install_linux.html">https://puppet.com/docs/puppet/4.10/install_linux.html</a></p></li>
+<li><p>“Resource Type Reference (Single-Page).” Puppet Documentation. Accessed December 12, 2018. <a class="reference external" href="https://puppet.com/docs/puppet/5.5/type.html">https://puppet.com/docs/puppet/5.5/type.html</a></p></li>
+<li><p>“Language: Resources.” Puppet Documentation. Accessed December 12, 2018. <a class="reference external" href="https://puppet.com/docs/puppet/5.5/lang_resources.html">https://puppet.com/docs/puppet/5.5/lang_resources.html</a></p></li>
+<li><p>“Language: Relationships and ordering.” Puppet Documentation. Accessed December 12, 2018. <a class="reference external" href="https://puppet.com/docs/puppet/5.5/lang_relationships.html">https://puppet.com/docs/puppet/5.5/lang_relationships.html</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../computer_hardware/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ansible.html" class="btn btn-neutral float-left" title="Ansible" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

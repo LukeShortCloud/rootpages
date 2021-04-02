@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Graphics &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linux" href="linux.html" />
+    <link rel="prev" title="Chromebook" href="chromebook.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromebook.html">Chromebook</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Graphics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#drivers">Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#amd">AMD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation-amdgpu-pro">Installation (AMDGPU-Pro)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nvidia">Nvidia</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nvidia-xrun">nvidia-xrun</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optimus-manager-arch-linux-and-manjaro-linux">optimus-manager (Arch Linux and Manjaro Linux)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#window-managers">Window Managers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#desktop-environments">Desktop Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cinnamon">Cinnamon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gnome">GNOME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kde">KDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xfce">Xfce</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gaming">Gaming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#steam">Steam</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flatpak">Flatpak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proton-steam-play">Proton (Steam Play)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#image-processing">Image Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#error-messages">Error Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Graphics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/administration/graphics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graphics">
+<h1><a class="toc-backref" href="#id1">Graphics</a><a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#graphics" id="id1">Graphics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#drivers" id="id2">Drivers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#amd" id="id3">AMD</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation-amdgpu-pro" id="id4">Installation (AMDGPU-Pro)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#suse-linux-enterprise" id="id5">SUSE Linux Enterprise</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nvidia" id="id6">Nvidia</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation" id="id7">Installation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fedora" id="id8">Fedora</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nvidia-xrun" id="id9">nvidia-xrun</a></p></li>
+<li><p><a class="reference internal" href="#optimus-manager-arch-linux-and-manjaro-linux" id="id10">optimus-manager (Arch Linux and Manjaro Linux)</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#window-managers" id="id11">Window Managers</a></p></li>
+<li><p><a class="reference internal" href="#desktop-environments" id="id12">Desktop Environments</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cinnamon" id="id13">Cinnamon</a></p></li>
+<li><p><a class="reference internal" href="#gnome" id="id14">GNOME</a></p></li>
+<li><p><a class="reference internal" href="#kde" id="id15">KDE</a></p></li>
+<li><p><a class="reference internal" href="#xfce" id="id16">Xfce</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gaming" id="id17">Gaming</a></p>
+<ul>
+<li><p><a class="reference internal" href="#steam" id="id18">Steam</a></p>
+<ul>
+<li><p><a class="reference internal" href="#flatpak" id="id19">Flatpak</a></p></li>
+<li><p><a class="reference internal" href="#proton-steam-play" id="id20">Proton (Steam Play)</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#image-processing" id="id21">Image Processing</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id22">Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#error-messages" id="id23">Error Messages</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id24">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id25">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="drivers">
+<h2><a class="toc-backref" href="#id2">Drivers</a><a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="amd">
+<h3><a class="toc-backref" href="#id3">AMD</a><a class="headerlink" href="#amd" title="Permalink to this headline">¶</a></h3>
+<p>AMD provides an open source driver that is part of the Linux kernel. For the best experience, use the latest development versions of the Linux kernel, Mesa, and LLVM. Compared to the open source driver, the AMDGPU-Pro proprietary driver provides a more stable interface with full OpenGL and Vulkan capabilities.</p>
+<div class="section" id="installation-amdgpu-pro">
+<h4><a class="toc-backref" href="#id4">Installation (AMDGPU-Pro)</a><a class="headerlink" href="#installation-amdgpu-pro" title="Permalink to this headline">¶</a></h4>
+<p>Supported operating systems:</p>
+<ul class="simple">
+<li><p>CentOS 8</p></li>
+<li><p>RHEL 8</p></li>
+<li><p>Ubuntu 18.04</p></li>
+<li><p>SLED/SLES 15</p></li>
+</ul>
+<p>[7]</p>
+<div class="section" id="suse-linux-enterprise">
+<h5><a class="toc-backref" href="#id5">SUSE Linux Enterprise</a><a class="headerlink" href="#suse-linux-enterprise" title="Permalink to this headline">¶</a></h5>
+<p>The Enterprise Desktop, Enterprise Server, and openSUSE Leap variants are all supported.</p>
+<ul class="simple">
+<li><p>Enable the <a class="reference external" href="https://download.opensuse.org/repositories/Kernel:/stable/standard/">stable kernel repository</a>. Install Linux &gt;= 5.4 and latest <code class="docutils literal notranslate"><span class="pre">linux-firmware</span></code> for the best stability with Navi cards. Linux 5.5 is required for overclocking support on Navi cards. [9]</p></li>
+<li><p>Download the latest driver for the graphics card by putting in the product details <a class="reference external" href="https://www.amd.com/en/support">here</a>.</p></li>
+<li><p>Extract the driver archive and run the <code class="docutils literal notranslate"><span class="pre">amdgpu-pro-install</span></code> script to install a local repository of the RPMs.</p></li>
+<li><p>Install the required packages: <code class="docutils literal notranslate"><span class="pre">zypper</span> <span class="pre">install</span> <span class="pre">amdgpu-pro</span> <span class="pre">libgl-amdgpu-pro</span> <span class="pre">vulkan-amdgpu-pro</span></code>.</p></li>
+<li><p>Reboot.</p></li>
+</ul>
+<p>[8]</p>
+</div>
+</div>
+</div>
+<div class="section" id="nvidia">
+<h3><a class="toc-backref" href="#id6">Nvidia</a><a class="headerlink" href="#nvidia" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="installation">
+<h4><a class="toc-backref" href="#id7">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="fedora">
+<h5><a class="toc-backref" href="#id8">Fedora</a><a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h5>
+<p>If the official Nvidia installer was originally used then those libraries need to be cleaned up.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo rm -f /usr/lib<span class="o">{</span>,64<span class="o">}</span>/libGL.so.* /usr/lib<span class="o">{</span>,64<span class="o">}</span>/libEGL.so.*
+$ sudo rm -f /usr/lib<span class="o">{</span>,64<span class="o">}</span>/xorg/modules/extensions/libglx.so
+$ sudo dnf reinstall xorg-x11-server-Xorg mesa-libGL mesa-libEGL libglvnd<span class="se">\*</span>
+$ sudo mv /etc/X11/xorg.conf /etc/X11/xorg.conf.saved
+</pre></div>
+</div>
+<p>The the unofficial Nvidia driver RPMs can be installed. Starting with Fedora 27 [2], the RPMFusion repository can be officially enabled and used to manage the driver.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install fedora-workstation-repositories
+$ sudo dnf config-manager --set-enabled rpmfusion-nonfree-nvidia-driver
+$ sudo dnf install xorg-x11-drv-nvidia akmod-nvidia vdpauinfo libva-vdpau-driver libva-utils vulkan
+</pre></div>
+</div>
+<p>[1][2]</p>
+</div>
+</div>
+<div class="section" id="nvidia-xrun">
+<h4><a class="toc-backref" href="#id9">nvidia-xrun</a><a class="headerlink" href="#nvidia-xrun" title="Permalink to this headline">¶</a></h4>
+<p>This is an unofficial utility for running an application or window manager on a different TTY that uses the dedicated Nvidia graphics card. This is useful for laptops as it removes the need to deal with Nvidia Optimus technology, provides a way to run games that require the Vulkan library, and fields better performance.</p>
+<p>Install the Nvidia graphics driver, Bumblebee, OpenBox (<code class="docutils literal notranslate"><span class="pre">openbox</span></code> and <code class="docutils literal notranslate"><span class="pre">obmenu</span></code> packages), and <a class="reference external" href="https://github.com/Witko/nvidia-xrun">nvidia-xrun</a>. Bumblebee is optionally used to turn the graphics card off and on. OpenBox is the most common window manager to use.</p>
+<p>Configure <cite>bbswitch</cite> kernel module from Bumblebee to handle power management of the Nvidia card. File: <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/bbswitch.conf</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbswitch</span>
+<span class="n">options</span> <span class="n">bbswitch</span> <span class="n">load_state</span><span class="o">=</span><span class="mi">0</span> <span class="n">unload_state</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Set nvidia-xrun to launch OpenBox.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;openbox-session&quot;</span> &gt;&gt; ~/.nvidia-xinitrc
+</pre></div>
+</div>
+<p>Switch to a free TTY. This is normally done in Linux by pressing <code class="docutils literal notranslate"><span class="pre">CTRL</span></code> + <code class="docutils literal notranslate"><span class="pre">ALT</span></code> + <code class="docutils literal notranslate"><span class="pre">F2</span></code>. Log in and then run <code class="docutils literal notranslate"><span class="pre">nvidia-xrun</span></code>. OpenBox will now be running with full access to the Nvidia graphics card.</p>
+<p>[4]</p>
+</div>
+<div class="section" id="optimus-manager-arch-linux-and-manjaro-linux">
+<h4><a class="toc-backref" href="#id10">optimus-manager (Arch Linux and Manjaro Linux)</a><a class="headerlink" href="#optimus-manager-arch-linux-and-manjaro-linux" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">optimus-manager</span></code> provides an easy way to change the graphics card in use on a laptop.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ yay -S optimus-manager
+$ sudo systemctl start optimus-manager
+</pre></div>
+</div>
+<p>Temporarily switch the primary graphics card mode (this will restart the Xorg session):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ optimus-manager --switch <span class="o">[</span>intel<span class="p">|</span>nvidia<span class="p">|</span>hybrid<span class="o">]</span>
+</pre></div>
+</div>
+<p>Or change it on the next boot (this way is more reliable):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ optimus-manager --set-startup <span class="o">[</span>intel<span class="p">|</span>nvidia<span class="p">|</span>hybrid<span class="o">]</span>
+</pre></div>
+</div>
+<p>For using a HDMI port, the laptop must be in the <code class="docutils literal notranslate"><span class="pre">nvidia</span></code> mode.</p>
+<p>[5]</p>
+<p>With Nvidia version &gt;= 435 drivers and Xorg &gt;= 1.20.6, the <code class="docutils literal notranslate"><span class="pre">hybrid</span></code> mode supports GPU offloading. This means the integrated Intel graphics can be used for power efficiency until the dedicated Nvidia GPU is required for gaming or productivity. The example below offloads graphical power to the Nvidia GPU for Vulkan and OpenGL while running Steam. [6]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">__NV_PRIME_RENDER_OFFLOAD</span><span class="o">=</span><span class="m">1</span> <span class="nv">__GLX_VENDOR_LIBRARY_NAME</span><span class="o">=</span>nvidia steam
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="window-managers">
+<h2><a class="toc-backref" href="#id11">Window Managers</a><a class="headerlink" href="#window-managers" title="Permalink to this headline">¶</a></h2>
+<p>Window managers (WMs) control the look and feel of windows.</p>
+<ul class="simple">
+<li><p>Compiz</p></li>
+<li><p>FluxBox</p></li>
+<li><p>Kwin</p></li>
+<li><p>Muffin</p></li>
+<li><p>Mutter</p></li>
+<li><p>Openbox</p></li>
+<li><p>Xfwm</p></li>
+</ul>
+<p>Tiled window managers specialize in splitting up windows into tiles/boxes that can be modified with keyboard shortcuts.</p>
+<ul class="simple">
+<li><p>Awesome</p></li>
+<li><p>Dwm</p></li>
+<li><p>i3</p></li>
+<li><p>Wmii</p></li>
+</ul>
+<p>[4]</p>
+</div>
+<div class="section" id="desktop-environments">
+<h2><a class="toc-backref" href="#id12">Desktop Environments</a><a class="headerlink" href="#desktop-environments" title="Permalink to this headline">¶</a></h2>
+<p>Desktop environments (DEs) are built on top of windows managers. They provide the full functionality of a graphical desktop by bundling applications for managing media, files, and network connections. Some DEs have created their own custom window managers as well. [4]</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>DE Name</p></th>
+<th class="head"><p>Graphical Toolkit</p></th>
+<th class="head"><p>WM</p></th>
+<th class="head"><p>Resource Usage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Cinnamon</p></td>
+<td><p>GTK</p></td>
+<td><p>Muffin</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-odd"><td><p>GNOME</p></td>
+<td><p>GTK</p></td>
+<td><p>Mutter</p></td>
+<td><p>Medium</p></td>
+</tr>
+<tr class="row-even"><td><p>KDE</p></td>
+<td><p>Qt</p></td>
+<td><p>Kwin</p></td>
+<td><p>High</p></td>
+</tr>
+<tr class="row-odd"><td><p>Xfce</p></td>
+<td><p>GTK</p></td>
+<td><p>Xfwm</p></td>
+<td><p>Low</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="cinnamon">
+<h3><a class="toc-backref" href="#id13">Cinnamon</a><a class="headerlink" href="#cinnamon" title="Permalink to this headline">¶</a></h3>
+<p>Installation:</p>
+<ul class="simple">
+<li><p>Arch Linux: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">cinnamon</span></code></p></li>
+<li><p>Debian (manual): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">cinnamon</span></code></p></li>
+<li><p>Debian (automatic): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">task-cinnamon-desktop</span></code></p></li>
+<li><p>Fedora: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">groupinstall</span> <span class="pre">&quot;Cinnamon</span> <span class="pre">Desktop&quot;</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="gnome">
+<h3><a class="toc-backref" href="#id14">GNOME</a><a class="headerlink" href="#gnome" title="Permalink to this headline">¶</a></h3>
+<p>Installation:</p>
+<ul class="simple">
+<li><p>Arch Linux: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">gnome</span> <span class="pre">gnome-extras</span></code></p></li>
+<li><p>Debian (manual): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">gnome</span></code></p></li>
+<li><p>Debian (automatic): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">task-gnome-desktop</span></code></p></li>
+<li><p>Fedora: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">groupinstall</span> <span class="pre">&quot;GNOME</span> <span class="pre">Desktop</span> <span class="pre">Environment&quot;</span></code></p></li>
+</ul>
+<p>The <a class="reference external" href="https://gitlab.gnome.org/GNOME/gnome-tweaks">gnome-tweaks</a> package provides access to useful advanced settings of the GNOME desktop environment via the <code class="docutils literal notranslate"><span class="pre">Tweaks</span></code> application.</p>
+<p>Suggested tweaks:</p>
+<ul class="simple">
+<li><p>Extensions &gt; Applications menu &gt; On</p></li>
+<li><p>Keyboard &amp; Mouse &gt; Mouse &gt; Pointer Location &gt; On</p></li>
+<li><p>Top Bar &gt; Battery Percentage &gt; On</p></li>
+<li><p>Window Titlebars &gt; Titlebar Buttons &gt; [Maximize|Minimize] &gt; On</p></li>
+</ul>
+</div>
+<div class="section" id="kde">
+<h3><a class="toc-backref" href="#id15">KDE</a><a class="headerlink" href="#kde" title="Permalink to this headline">¶</a></h3>
+<p>Installation:</p>
+<ul class="simple">
+<li><p>Arch Linux: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">plasma</span> <span class="pre">kde-applications</span></code></p></li>
+<li><p>Debian (manual): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">kde-standard</span></code></p></li>
+<li><p>Debian (automatic): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">task-kde-desktop</span></code></p></li>
+<li><p>Fedora: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">groupinstall</span> <span class="pre">&quot;KDE</span> <span class="pre">Plasma</span> <span class="pre">Workspaces&quot;</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="xfce">
+<h3><a class="toc-backref" href="#id16">Xfce</a><a class="headerlink" href="#xfce" title="Permalink to this headline">¶</a></h3>
+<p>Installation:</p>
+<ul class="simple">
+<li><p>Arch Linux: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">pacman</span> <span class="pre">-S</span> <span class="pre">xfce4</span> <span class="pre">xfce4-goodies</span></code></p></li>
+<li><p>Debian (manual): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">xfce4</span></code></p></li>
+<li><p>Debian (automatic): <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">task-xfce-desktop</span></code></p></li>
+<li><p>Fedora: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">groupinstall</span> <span class="pre">&quot;Xfce</span> <span class="pre">Desktop&quot;</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="gaming">
+<h2><a class="toc-backref" href="#id17">Gaming</a><a class="headerlink" href="#gaming" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="steam">
+<h3><a class="toc-backref" href="#id18">Steam</a><a class="headerlink" href="#steam" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="flatpak">
+<h4><a class="toc-backref" href="#id19">Flatpak</a><a class="headerlink" href="#flatpak" title="Permalink to this headline">¶</a></h4>
+<p>The Flatpak for Steam can mount external devices into the isolated environment. Mount points are not exposed in the Flatpak by default. [10]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ flatpak override --user --filesystem<span class="o">=</span>&lt;STEAM_LIBRARY_PATH&gt; com.valvesoftware.Steam
+</pre></div>
+</div>
+</div>
+<div class="section" id="proton-steam-play">
+<h4><a class="toc-backref" href="#id20">Proton (Steam Play)</a><a class="headerlink" href="#proton-steam-play" title="Permalink to this headline">¶</a></h4>
+<p>Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found <a class="reference external" href="https://steamdb.info/app/891390/">here</a>. Proton can be enabled for all games by going to <code class="docutils literal notranslate"><span class="pre">Settings</span> <span class="pre">&gt;</span> <span class="pre">Steam</span> <span class="pre">Play</span> <span class="pre">&gt;</span> <span class="pre">Enable</span> <span class="pre">Steam</span> <span class="pre">Play</span> <span class="pre">for</span> <span class="pre">all</span> <span class="pre">other</span> <span class="pre">titles</span></code>. Compatibility will vary. [11]</p>
+</div>
+</div>
+</div>
+<div class="section" id="image-processing">
+<h2><a class="toc-backref" href="#id21">Image Processing</a><a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Remove all metadata from an image.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mogrify -strip &lt;IMAGE_FILE_NAME&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Compress an image to a specified size.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="o">[</span>jpegoptim<span class="p">|</span>optipng<span class="o">]</span> --size<span class="o">=</span>500K &lt;IMAGE_FILE_NAME&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Resize an image.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ convert &lt;IMAGE_ORIGINAL&gt; -resize &lt;PERCENTAGE&gt;% &lt;IMAGE_NEW&gt;
+$ convert &lt;IMAGE_ORIGINAL&gt; -resize &lt;PIXELS_LENGTH&gt;x&lt;PIXELS_WIDTH&gt; &lt;IMAGE_NEW&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Rotate an image.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ convert &lt;IMAGE_ORIGINAL&gt; -rotate &lt;DEGRESS&gt; &lt;IMAGE_NEW&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#id22">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="error-messages">
+<h3><a class="toc-backref" href="#id23">Error Messages</a><a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h3>
+<p>Missing libraries when starting the Steam runtime:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ steam-runtime
+Error: You are missing the following <span class="m">32</span>-bit libraries, and Steam may not run: &lt;LIBRARY_FILE&gt;
+</pre></div>
+</div>
+<p>Solution:</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">steam-runtime</span> <span class="pre">--reset</span></code> to redownload the runtime libraries.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id24">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/graphics.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/graphics.rst">&lt; 2019.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id25">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Howto NVIDIA.” RPM Fusion. May 28, 2018. Accessed October 7, 2018. <a class="reference external" href="https://rpmfusion.org/Howto/NVIDIA">https://rpmfusion.org/Howto/NVIDIA</a></p></li>
+<li><p>“New third-party repositories - easily install Chrome &amp; Steam on Fedora.” Fedora Magazine. April 27, 2018. Accessed October 7, 2018. <a class="reference external" href="https://fedoramagazine.org/third-party-repositories-fedora/">https://fedoramagazine.org/third-party-repositories-fedora/</a></p></li>
+<li><p>“Nvidia-xrun.” Arch Linux Wiki. Accessed November 4, 2018. September 11, 2018. <a class="reference external" href="https://wiki.archlinux.org/index.php/Nvidia-xrun">https://wiki.archlinux.org/index.php/Nvidia-xrun</a></p></li>
+<li><p>“DesktopEnvironment.” Debian Wiki. June 7, 2018. Accessed November 26, 2018. <a class="reference external" href="https://wiki.debian.org/DesktopEnvironment">https://wiki.debian.org/DesktopEnvironment</a></p></li>
+<li><p>“NVIDIA Optimus.” ArchWiki. October 28, 2019. Accessed November 20, 2019. <a class="reference external" href="https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Using_optimus-manager">https://wiki.archlinux.org/index.php/NVIDIA_Optimus#Using_optimus-manager</a></p></li>
+<li><p>“Manjaro Gaming with Nvidia Offloading &amp; D3 Power Managment.” Reddit r/linux_gaming. September 28, 2019. Accessed November 20, 2019. <a class="reference external" href="https://www.reddit.com/r/linux_gaming/comments/dac4bc/manjaro_gaming_with_nvidia_offloading_d3_power/">https://www.reddit.com/r/linux_gaming/comments/dac4bc/manjaro_gaming_with_nvidia_offloading_d3_power/</a></p></li>
+<li><p>“Radeo Software for Linux 19.30 Release Notes.” AMD. November 5, 2019. Accessed December 10, 2019. <a class="reference external" href="https://www.amd.com/en/support/kb/release-notes/rn-rad-lin-19-30-unified">https://www.amd.com/en/support/kb/release-notes/rn-rad-lin-19-30-unified</a></p></li>
+<li><p>“SDB:AMDGPU-PRO.” openSUSE Wiki. July 17, 2019. Accessed December 10, 2019. https://en.opensuse.org/SDB:AMDGPU-PRO</p></li>
+<li><p>“AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel.” Phoronix. November 16, 2019. Accessed December 10, 2019. <a class="reference external" href="https://www.phoronix.com/scan.php?page=news_item&amp;px=Linux-5.5-AMD-Navi-Overclocking">https://www.phoronix.com/scan.php?page=news_item&amp;px=Linux-5.5-AMD-Navi-Overclocking</a></p></li>
+<li><p>“Frequently asked questions.” flathub/com.valvesoftware.Steam. April 12, 2020. Accessed July 3, 2020. <a class="reference external" href="https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions">https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions</a></p></li>
+<li><p>“A simple guide to Steam Play, Valve’s technology for playing Windows games on Linux.” GamingOnLinux. July 12, 2019. Accessed July 3, 2020. <a class="reference external" href="https://www.gamingonlinux.com/articles/14552">https://www.gamingonlinux.com/articles/14552</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="linux.html" class="btn btn-neutral float-right" title="Linux" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="chromebook.html" class="btn btn-neutral float-left" title="Chromebook" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

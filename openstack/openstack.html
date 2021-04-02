@@ -1,0 +1,2500 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenStack &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OpenStack Developer" href="developer.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">OpenStack</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#releases">Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configurations">Configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common">Common</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#database">Database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#messaging">Messaging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ironic">Ironic</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drivers">Drivers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#keystone">Keystone</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#api-v3">API v3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#token-provider">Token Provider</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nova">Nova</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hypervisors">Hypervisors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpu-pinning">CPU Pinning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ceph">Ceph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nested-virtualization">Nested Virtualization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#neutron">Neutron</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#network-types">Network Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dns">DNS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metadata">Metadata</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-balancing-as-a-service">Load-Balancing-as-a-Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quality-of-service">Quality of Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#distributed-virtual-routing">Distributed Virtual Routing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#high-availability">High Availability</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Ceph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cinder">Cinder</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Ceph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encryption">Encryption</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#glance">Glance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">Ceph</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#neutron-troubleshooting">Neutron Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Open vSwitch</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#floating-ips">Floating IPs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cloud-init">cloud-init</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrades">Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-interface-utilities">Command Line Interface Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orchestration">Orchestration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#heat">Heat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#resources">Resources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vagrant">Vagrant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mistral-workflows">Mistral Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manual">Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tempest">Tempest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rally">Rally</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#registering">Registering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scenarios">Scenarios</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reports">Reports</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>OpenStack</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/openstack/openstack.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openstack">
+<h1><a class="toc-backref" href="#id7">OpenStack</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#openstack" id="id7">OpenStack</a></p>
+<ul>
+<li><p><a class="reference internal" href="#introduction" id="id8">Introduction</a></p>
+<ul>
+<li><p><a class="reference internal" href="#releases" id="id9">Releases</a></p></li>
+<li><p><a class="reference internal" href="#services" id="id10">Services</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#configurations" id="id11">Configurations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common" id="id12">Common</a></p>
+<ul>
+<li><p><a class="reference internal" href="#database" id="id13">Database</a></p></li>
+<li><p><a class="reference internal" href="#messaging" id="id14">Messaging</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ironic" id="id15">Ironic</a></p>
+<ul>
+<li><p><a class="reference internal" href="#drivers" id="id16">Drivers</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#keystone" id="id17">Keystone</a></p>
+<ul>
+<li><p><a class="reference internal" href="#api-v3" id="id18">API v3</a></p></li>
+<li><p><a class="reference internal" href="#token-provider" id="id19">Token Provider</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nova" id="id20">Nova</a></p>
+<ul>
+<li><p><a class="reference internal" href="#hypervisors" id="id21">Hypervisors</a></p></li>
+<li><p><a class="reference internal" href="#cpu-pinning" id="id22">CPU Pinning</a></p></li>
+<li><p><a class="reference internal" href="#ceph" id="id23">Ceph</a></p></li>
+<li><p><a class="reference internal" href="#nested-virtualization" id="id24">Nested Virtualization</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#neutron" id="id25">Neutron</a></p>
+<ul>
+<li><p><a class="reference internal" href="#network-types" id="id26">Network Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#provider-networks" id="id27">Provider Networks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#linux-bridge" id="id28">Linux Bridge</a></p></li>
+<li><p><a class="reference internal" href="#open-vswitch" id="id29">Open vSwitch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#self-service-networks" id="id30">Self-Service Networks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id31">Linux Bridge</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id32">Open vSwitch</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dns" id="id33">DNS</a></p></li>
+<li><p><a class="reference internal" href="#metadata" id="id34">Metadata</a></p></li>
+<li><p><a class="reference internal" href="#load-balancing-as-a-service" id="id35">Load-Balancing-as-a-Service</a></p></li>
+<li><p><a class="reference internal" href="#quality-of-service" id="id36">Quality of Service</a></p></li>
+<li><p><a class="reference internal" href="#distributed-virtual-routing" id="id37">Distributed Virtual Routing</a></p></li>
+<li><p><a class="reference internal" href="#high-availability" id="id38">High Availability</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id39">Ceph</a></p></li>
+<li><p><a class="reference internal" href="#cinder" id="id40">Cinder</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id41">Ceph</a></p></li>
+<li><p><a class="reference internal" href="#encryption" id="id42">Encryption</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#glance" id="id43">Glance</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id44">Ceph</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#neutron-troubleshooting" id="id45">Neutron Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id46">Open vSwitch</a></p>
+<ul>
+<li><p><a class="reference internal" href="#floating-ips" id="id47">Floating IPs</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cloud-init" id="id48">cloud-init</a></p></li>
+<li><p><a class="reference internal" href="#upgrades" id="id49">Upgrades</a></p></li>
+<li><p><a class="reference internal" href="#command-line-interface-utilities" id="id50">Command Line Interface Utilities</a></p></li>
+<li><p><a class="reference internal" href="#orchestration" id="id51">Orchestration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#heat" id="id52">Heat</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resources" id="id53">Resources</a></p></li>
+<li><p><a class="reference internal" href="#parameters" id="id54">Parameters</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vagrant" id="id55">Vagrant</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#mistral-workflows" id="id56">Mistral Workflows</a></p></li>
+<li><p><a class="reference internal" href="#testing" id="id57">Testing</a></p>
+<ul>
+<li><p><a class="reference internal" href="#manual" id="id58">Manual</a></p></li>
+<li><p><a class="reference internal" href="#tempest" id="id59">Tempest</a></p></li>
+<li><p><a class="reference internal" href="#rally" id="id60">Rally</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation" id="id61">Installation</a></p></li>
+<li><p><a class="reference internal" href="#registering" id="id62">Registering</a></p></li>
+<li><p><a class="reference internal" href="#scenarios" id="id63">Scenarios</a></p></li>
+<li><p><a class="reference internal" href="#reports" id="id64">Reports</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#performance" id="id65">Performance</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id66">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id67">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2><a class="toc-backref" href="#id8">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This guide is aimed to help Cloud Administrators through deploying, managing, and upgrading OpenStack.</p>
+<div class="section" id="releases">
+<h3><a class="toc-backref" href="#id9">Releases</a><a class="headerlink" href="#releases" title="Permalink to this headline">¶</a></h3>
+<p>Each OpenStack release starts with a letter, chronologically starting with A. These are usually named after the city where one of the recent development conferences were held. The major version number of OpenStack represents the major version number of each software in that release. For example, Ocata software is versioned as <code class="docutils literal notranslate"><span class="pre">15.X.X</span></code>. A new feature release comes out after about 6 months of development. Every major release adheres to a maintenance cycle.</p>
+<p>Maintenance Phases &lt;= Newton</p>
+<ul class="simple">
+<li><p>Phase 1 = 6 months of stability and security fixes.</p></li>
+<li><p>Phase 2 = 6 months of major stability and security fixes.</p></li>
+<li><p>Phase 3 = 6 months of major security fixes.</p></li>
+</ul>
+<p>Maintenance Phases &gt;= Ocata</p>
+<ul class="simple">
+<li><p>Maintained = 18 months of stability and security fixes and official releases from the OpenStack Foundation.</p></li>
+<li><p>Extended Maintenance (em) = Stability and security fixes by community contributors. There are no tagged minor releases. The code will be treated as a rolling minor release. A project can stay in extended maintenance for as long as it wants.</p></li>
+<li><p>Unmaintained = 6 months of no community contributions.</p></li>
+<li><p>End-of-life (eol) = The last version of that OpenStack release to be archived.</p></li>
+</ul>
+<p>[42]</p>
+<p>Releases:</p>
+<ol class="arabic simple">
+<li><p>Austin</p></li>
+<li><p>Bexar</p></li>
+<li><p>Cactus</p></li>
+<li><p>Diablo</p></li>
+<li><p>Essex</p></li>
+<li><p>Folsom</p></li>
+<li><p>Grizzly</p></li>
+<li><p>Havana</p></li>
+<li><p>Icehouse</p></li>
+<li><p>Juno</p></li>
+<li><p>Kilo</p></li>
+<li><p>Liberty</p></li>
+<li><p>Mitaka</p></li>
+<li><p>Newton</p>
+<ul class="simple">
+<li><p>Release: 2016-10-06</p></li>
+<li><p>EOL: 2017-10-11</p></li>
+</ul>
+</li>
+<li><p>Ocata</p>
+<ul class="simple">
+<li><p>Release: 2017-02-22</p></li>
+<li><p>Goals [3]:</p>
+<ul>
+<li><p>Stability. This release included features that are mainly related to reliability, scaling, and performance enhancements. This came out 5 months after Newton, instead of the usual 6, due to the minimal amount of major changes. [2]</p></li>
+<li><p>Remove old OpenStack libraries that were built into some services. Instead, services should rely on the proper up-to-date dependencies provided by external packages.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/302/openstack-ocata-strengthens-core-infrastructure-services-and-container-integration-with-15th-release-of-cloud-computing-software">New Features</a></p></li>
+</ul>
+</li>
+<li><p>Pike</p>
+<ul class="simple">
+<li><p>Release: 2017-08-30</p></li>
+<li><p>Goals [4]:</p>
+<ul>
+<li><p>Convert most of the OpenStack code to be compatible with Python 3. This is because Python 2 will become EOL in 2020.</p></li>
+<li><p>Make all APIs into WSGI applications. This will allow web servers to scale out and run faster with tuning compared to running as a standalone Python daemon.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/340/openstack-pike-delivers-composable-infrastructure-services-and-improved-lifecycle-management">New Features</a></p></li>
+</ul>
+</li>
+<li><p>Queens</p>
+<ul class="simple">
+<li><p>Release: 2018-02-28</p></li>
+<li><p>Goals [5]:</p>
+<ul>
+<li><p>Remove the need for the access control list “policy” files by having default values defined in the source code.</p></li>
+<li><p>Tempest will be split up into different projects for maintaining individual service unit tests. This contrasts with the old model that had all Tempest tests maintained in one central repository.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/371/openstack-queens-release-expands-support-for-gpus-and-containers-to-meet-edge-nfv-and-machine-learning-workload-demands">New Features</a></p></li>
+<li><p><a class="reference external" href="https://releases.openstack.org/queens/highlights.html">Release Highlights</a></p></li>
+</ul>
+</li>
+<li><p>Rocky</p>
+<ul class="simple">
+<li><p>Release: 2018-08-30</p></li>
+<li><p>Goals [53]:</p>
+<ul>
+<li><p>Make configuration options mutable. This avoids having to restart services whenever the configuration is updated.</p></li>
+<li><p>Remove deprecated mox tests to further push towards full Python 3 support.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://superuser.openstack.org/articles/what-you-need-to-know-about-the-openstack-rocky-release/">New Features</a></p></li>
+<li><p><a class="reference external" href="https://releases.openstack.org/rocky/highlights.html">Release Highlights</a></p></li>
+</ul>
+</li>
+<li><p>Stein</p>
+<ul class="simple">
+<li><p>Release: 2019-04-10</p></li>
+<li><p>Goals [54]:</p>
+<ul>
+<li><p>Use Python 3 by default. Python 2.7 will only be tested using unit tests.</p></li>
+<li><p>Pre-upgrade checks. Verify if an upgrade will be successful. Also provide useful information to the end-user on how to overcome known issues.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/421/openstack-stein-enhances-bare-metal-and-network-management-while-launching-kubernetes-clusters-faster-than-ever">New Features</a></p></li>
+<li><p><a class="reference external" href="https://releases.openstack.org/stein/highlights.html">Release Highlights</a></p></li>
+</ul>
+</li>
+<li><p>Train</p>
+<ul class="simple">
+<li><p>Release: 2019-10-16</p></li>
+<li><p>Goals [64]:</p>
+<ul>
+<li><p>Fully support IPv6 environments where IPv4 is not available or used.</p></li>
+<li><p>Test against Python 3.7 instead of 3.5.</p></li>
+<li><p>Project documentation will additionally be built and provided as PDF files (instead of HTML webpages).</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/438/openstack-train-release-extends-security-and-data-protection-adds-new-ai-and-ml-support">New Features</a></p></li>
+<li><p><a class="reference external" href="https://releases.openstack.org/train/highlights.html">Release Highlights</a></p></li>
+</ul>
+</li>
+<li><p>Ussuri</p>
+<ul class="simple">
+<li><p>Release: 2020-05-13</p></li>
+<li><p>Goals [65]:</p>
+<ul>
+<li><p>Python 2.7 support has been fully removed. Python &gt;= 3.5 is required.</p></li>
+<li><p>Project Team Lead (PTL) documentation for each project. This will help with the transition of a new PTL taking charge of a given OpenStack project.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://www.openstack.org/news/view/453/openstack-ussuri-release-lands-today-delivering-automation-for-intelligent-open-infrastructure">New Feature</a></p></li>
+<li><p><a class="reference external" href="https://releases.openstack.org/ussuri/highlights.html">Release Highlights</a></p></li>
+</ul>
+</li>
+</ol>
+<p>[1]</p>
+</div>
+<div class="section" id="services">
+<h3><a class="toc-backref" href="#id10">Services</a><a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h3>
+<p>OpenStack has a large range of services that manage different different
+components in a modular way.</p>
+<p>Most popular services (50% or more of OpenStack cloud operators have
+adopted):</p>
+<ul class="simple">
+<li><p>Ceilometer = Telemetry</p></li>
+<li><p>Cinder = Block Storage</p></li>
+<li><p>Glance = Image</p></li>
+<li><p>Heat = Orchestration</p></li>
+<li><p>Horizon = Dashboard</p></li>
+<li><p>Keystone = Authentication</p></li>
+<li><p>Neutron = Networking</p></li>
+<li><p>Nova = Compute</p></li>
+<li><p>Swift = Object Storage</p></li>
+</ul>
+<p>Other services:</p>
+<ul class="simple">
+<li><p>Aodh = Telemetry Alarming</p></li>
+<li><p>Barbican = Key Management</p></li>
+<li><p>CloudKitty = Billing</p></li>
+<li><p>Congress = Governance</p></li>
+<li><p>Designate = DNS</p></li>
+<li><p>Freezer = Backup and Recovery</p></li>
+<li><p>Ironic = Bare-Metal Provisioning</p></li>
+<li><p>Karbor = Data protection</p></li>
+<li><p>Kuryr = Container plugin</p></li>
+<li><p>Magnum = Container Orchestration Engine Provisioning</p></li>
+<li><p>Manila = Shared File Systems</p></li>
+<li><p>Mistral = OpenStack Workflow</p></li>
+<li><p>Monasca = Monitoring</p></li>
+<li><p>Murano = Application Catalog</p></li>
+<li><p>Octavia = Load Balancing</p></li>
+<li><p>Rally = Benchmark</p></li>
+<li><p>Sahara = Big Data Processing Framework Provisioning</p></li>
+<li><p>Senlin = Clustering</p></li>
+<li><p>Solum = Software Development Lifecycle Automation</p></li>
+<li><p>Searchlight = Indexing</p></li>
+<li><p>Tacker = NFV Orchestration</p></li>
+<li><p>Tricircle = Multi-Region Networking Automation</p></li>
+<li><p>TripleO = Deployment</p></li>
+<li><p>Trove = Database</p></li>
+<li><p>Vitrage = Root Cause Analysis</p></li>
+<li><p>Watcher = Optimization</p></li>
+<li><p>Zaqar = Messaging</p></li>
+<li><p>Zun = Containers</p></li>
+</ul>
+<p>[6]</p>
+</div>
+</div>
+<div class="section" id="configurations">
+<h2><a class="toc-backref" href="#id11">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
+<p>This section focuses on the configuration files and their settings for each OpenStack service.</p>
+<div class="section" id="common">
+<h3><a class="toc-backref" href="#id12">Common</a><a class="headerlink" href="#common" title="Permalink to this headline">¶</a></h3>
+<p>These are the generic INI configuration options for setting up different OpenStack services.</p>
+<div class="section" id="database">
+<h4><a class="toc-backref" href="#id13">Database</a><a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h4>
+<p>Different database servers can be used by the API services on the
+controller nodes.</p>
+<ul>
+<li><p>MariaDB/MySQL. The original <code class="docutils literal notranslate"><span class="pre">mysql://</span></code> connector can be used for the “MySQL-Python” library. Starting with Liberty, the newer “PyMySQL” library was added for Python 3 support. [7] RDO first added the required <code class="docutils literal notranslate"><span class="pre">python2-PyMySQL</span></code> package in the Pike release. [10][49]</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[database]</span>
+<span class="na">connection</span> <span class="o">=</span> <span class="s">mysql+pymysql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MYSQL_HOST&gt;:&lt;MYSQL_PORT&gt;/&lt;DATABASE&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>PostgreSQL. Requires the “psycopg2” Python library. [8]</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[database]</span>
+<span class="na">connection</span> <span class="o">=</span> <span class="s">postgresql://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;POSTGRESQL_HOST&gt;:&lt;POSTGRESQL_PORT&gt;/&lt;DATABASE&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>SQLite.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[database]</span>
+<span class="na">connection</span> <span class="o">=</span> <span class="s">sqlite:///&lt;DATABASE&gt;.sqlite</span>
+</pre></div>
+</div>
+</li>
+<li><p>MongoDB is generally only used for Ceilometer when it is not using
+the Gnocchi back-end. [9]</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[database]</span>
+<span class="na">mongodb://&lt;USER&gt;:&lt;PASSWORD&gt;@&lt;MONGODB_HOST&gt;:&lt;MONGODB_PORT&gt;/&lt;DATABASE&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="messaging">
+<h4><a class="toc-backref" href="#id14">Messaging</a><a class="headerlink" href="#messaging" title="Permalink to this headline">¶</a></h4>
+<p>For high availability and scalability, servers should be configured with
+a messaging agent. This allows a client’s request to correctly be
+handled by the messaging queue and sent to one node to process that
+request.</p>
+<p>The configuration has been consolidated into the <code class="docutils literal notranslate"><span class="pre">transport_url</span></code>
+option. Multiple messaging hosts can be defined by using a comma before
+naming a virtual host.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">transport_url</span> <span class="o">=</span> <span class="s">&lt;TRANSPORT&gt;://&lt;USER1&gt;:&lt;PASS1&gt;@&lt;HOST1&gt;:&lt;PORT1&gt;,&lt;USER2&gt;:&lt;PASS2&gt;@&lt;HOST2&gt;:&lt;PORT2&gt;/&lt;VIRTUAL_HOST&gt;</span>
+</pre></div>
+</div>
+<p>Scenario #1 - RabbitMQ</p>
+<p>On the controller nodes, RabbitMQ needs to be installed. Then a user
+must be created with full privileges.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo rabbitmqctl add_user &lt;RABBIT_USER&gt; &lt;RABBIT_PASSWORD&gt;
+$ sudo rabbitmqctl set_permissions openstack <span class="s2">&quot;.*&quot;</span> <span class="s2">&quot;.*&quot;</span> <span class="s2">&quot;.*&quot;</span>
+</pre></div>
+</div>
+<p>In the configuration file for every service, set the transport_url
+options for RabbitMQ. A virtual host is not required. By default it will
+use <code class="docutils literal notranslate"><span class="pre">/</span></code>.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">transport_url</span> <span class="o">=</span> <span class="s">rabbit://&lt;RABBIT_USER&gt;:&lt;RABBIT_PASSWORD&gt;@&lt;RABBIT_HOST&gt;/&lt;VIRTUAL_HOST&gt;</span>
+</pre></div>
+</div>
+<p>[11][12]</p>
+</div>
+</div>
+<div class="section" id="ironic">
+<h3><a class="toc-backref" href="#id15">Ironic</a><a class="headerlink" href="#ironic" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="drivers">
+<h4><a class="toc-backref" href="#id16">Drivers</a><a class="headerlink" href="#drivers" title="Permalink to this headline">¶</a></h4>
+<p>Ironic supports different ways of managing power cycling of managed nodes. The default enabled driver is IPMITool.</p>
+<p>OpenStack Newton configuration:</p>
+<p>File: /etc/ironic/ironic.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enabled_drivers</span> <span class="o">=</span> <span class="s">&lt;DRIVER&gt;</span>
+</pre></div>
+</div>
+<p>OpenStack Queens configuration:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enabled_hardware_types</span> <span class="o">=</span> <span class="s">&lt;HARDWARE_DRIVER_TYPE&gt;</span>
+<span class="na">enabled_power_interfaces</span> <span class="o">=</span> <span class="s">&lt;POWER_INTERFACE&gt;</span>
+<span class="na">enabled_management_interfaces</span> <span class="o">=</span> <span class="s">&lt;MANAGEMENT_INTERFACE&gt;</span>
+</pre></div>
+</div>
+<p>TripleO Queens configuration [55]:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">IronicEnabledHardwareTypes</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;HARDWARE_DRIVER_TYPE&gt;</span>
+  <span class="nt">IronicEnabledPowerInterfaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;POWER_INTERFACE&gt;</span>
+  <span class="nt">IronicEnabledManagementInterfaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MANAGEMENT_INTERFACE&gt;</span>
+</pre></div>
+</div>
+<p>Supported Drivers:</p>
+<ul class="simple">
+<li><p>CIMC: Cisco UCS servers (C series only).</p></li>
+<li><p>iDRAC.</p></li>
+<li><p>iLO: HPE ProLiant servers.</p></li>
+<li><p>HP OneView.</p></li>
+<li><p>IPMITool.</p></li>
+<li><p>iRMC: FUJITSU PRIMERGY servers.</p></li>
+<li><p>SNMP power racks.</p></li>
+<li><p>UCS: Cisco UCS servers (B and C series).</p></li>
+</ul>
+<p>Each driver has different dependencies and configurations as outlined <a class="reference external" href="https://docs.openstack.org/ironic/queens/admin/drivers.html">here</a>.</p>
+<p>Unsupported <a class="reference external" href="http://ironic-staging-drivers.readthedocs.io/">Ironic Staging Drivers</a>:</p>
+<ul class="simple">
+<li><p>AMT</p></li>
+<li><p>iBoot</p></li>
+<li><p>Wake-On-Lan</p></li>
+</ul>
+<p>Unsupported Drivers:</p>
+<ul class="simple">
+<li><p>MSFT OCS</p></li>
+<li><p>SeaMicro</p></li>
+<li><p>VirtualBox</p></li>
+</ul>
+<p>[75]</p>
+</div>
+</div>
+<div class="section" id="keystone">
+<h3><a class="toc-backref" href="#id17">Keystone</a><a class="headerlink" href="#keystone" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="api-v3">
+<h4><a class="toc-backref" href="#id18">API v3</a><a class="headerlink" href="#api-v3" title="Permalink to this headline">¶</a></h4>
+<p>In Mitaka, the Keystone v2.0 API has been deprecated. It will be removed entirely from OpenStack in the <code class="docutils literal notranslate"><span class="pre">T</span></code> release. [13] It is possible to run both v2.0 and v3 at the same time but it’s desirable to move towards the v3 standard. If both have to be enabled, services should be configured to use v2.0 or else problems can occur with v3’s domain scoping. For disabling v2.0 entirely, Keystone’s API paste configuration needs to have these lines removed (or commented out) and then the web server should be restarted.</p>
+<p>File: /etc/keystone/keystone-paste.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[pipeline:public_api]</span>
+<span class="na">pipeline</span> <span class="o">=</span> <span class="s">cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension public_service</span>
+
+<span class="k">[pipeline:admin_api]</span>
+<span class="na">pipeline</span> <span class="o">=</span> <span class="s">cors sizelimit url_normalize request_id admin_token_auth build_auth_context token_auth json_body ec2_extension s3_extension admin_service</span>
+
+<span class="k">[composite:main]</span>
+<span class="na">/v2.0</span> <span class="o">=</span> <span class="s">public_api</span>
+
+<span class="k">[composite:admin]</span>
+<span class="na">/v2.0</span> <span class="o">=</span> <span class="s">admin_api</span>
+</pre></div>
+</div>
+<p>[14]</p>
+</div>
+<div class="section" id="token-provider">
+<h4><a class="toc-backref" href="#id19">Token Provider</a><a class="headerlink" href="#token-provider" title="Permalink to this headline">¶</a></h4>
+<p>The token provider is used to create and delete tokens for
+authentication. Different providers can be configured.</p>
+<p>File: /etc/keystone/keystone.conf</p>
+<p>Scenario #1 - UUID (default)</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[token]</span>
+<span class="na">provider</span> <span class="o">=</span> <span class="s">uuid</span>
+</pre></div>
+</div>
+<p>Scenario #2 - Fernet (recommended)</p>
+<p>This provides the fastest token creation and validation. A public and private key will need to be created for Fernet and the
+related Credential authentication.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[token]</span>
+<span class="na">provider</span> <span class="o">=</span> <span class="s">fernet</span>
+
+<span class="k">[fernet_tokens]</span>
+<span class="na">key_repository</span> <span class="o">=</span> <span class="s">/etc/keystone/fernet-keys/</span>
+
+<span class="k">[credential]</span>
+<span class="na">provider</span> <span class="o">=</span> <span class="s">fernet</span>
+<span class="na">key_repository</span> <span class="o">=</span> <span class="s">/etc/keystone/credential-keys/</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Create the required keys:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir /etc/keystone/fernet-keys/
+$ sudo chmod <span class="m">750</span> /etc/keystone/fernet-keys/
+$ sudo chown keystone.keystone /etc/keystone/fernet-keys/
+$ sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir /etc/keystone/credential-keys/
+$ sudo chmod <span class="m">750</span> /etc/keystone/credential-keys/
+$ sudo chown keystone.keystone /etc/keystone/credential-keys/
+$ sudo keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[15]</p>
+<p>TripleO Queens configuration [56]:</p>
+<p>Create the Fernet keys and save them to Swift</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> ~/stackrc
+$ sudo keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+$ sudo tar -zcf keystone-fernet-keys.tar.gz /etc/keystone/fernet-keys
+$ upload-swift-artifacts -f keystone-fernet-keys.tar.gz --environment ~/templates/deployment-artifacts.yaml
+</pre></div>
+</div>
+<p>Verify that the object was saved to Swift and that the necessary environment template was generated.</p>
+<blockquote>
+<div><p>$ swift list overcloud-artifacts Keystone-fernet-keys.tar.gz
+$ cat ~/templates/deployment-artifacts.yaml</p>
+</div></blockquote>
+<p>Append the token provider setting to the “parameter_defaults” section in the “deployment-artifacts.yaml” file. Then use this file for the Overcloud deployment.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">controllerExtraConfig</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">keystone::token_provider</span><span class="p p-Indicator">:</span> <span class="s">&quot;fernet&quot;</span>
+</pre></div>
+</div>
+<p>Scenario #3 - PKI</p>
+<p>PKI tokens have been removed since the Ocata release. [16]</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[token]</span>
+<span class="na">provider</span> <span class="o">=</span> <span class="s">pki</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Create the certificates. A new directory “/etc/keystone/ssl/” will be used to store these files.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo keystone-manage pki_setup --keystone-user keystone --keystone-group keystone
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="nova">
+<h3><a class="toc-backref" href="#id20">Nova</a><a class="headerlink" href="#nova" title="Permalink to this headline">¶</a></h3>
+<p>File: /etc/nova/nova.conf</p>
+<ul class="simple">
+<li><p>For the controller nodes, specify the connection database connection strings for both the “nova” and “nova_api” databases.</p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[api_database]</span>
+<span class="na">connection</span> <span class="o">=</span> <span class="s">&lt;DB_PROVIDER&gt;//&lt;DB_USER&gt;:&lt;DB_PASS&gt;@&lt;DB_HOST&gt;/nova_api</span>
+<span class="k">[database]</span>
+<span class="na">connection</span> <span class="o">=</span> <span class="s">&lt;DB_PROVIDER&gt;//&lt;DB_USER&gt;:&lt;DB_PASS&gt;@&lt;DB_HOST&gt;/nova</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Enable support for the Nova API and Nova’s metadata API. If “metadata” is specified here, then the “openstack-nova-api” will handle the metadata and not “openstack-nova-metadata-api.”</p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enabled_apis</span> <span class="o">=</span> <span class="s">osapi_compute,metadata</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Do not inject passwords, SSH keys, or partitions via Nova. This is recommended for Ceph storage back-ends. [20] This should be handled by the Nova’s metadata service that will use cloud-init instead of Nova itself. This will either be “openstack-nova-api” or “openstack-nova-metadata-api” depending on the configuration.</p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libvirt]</span>
+<span class="na">inject_password</span> <span class="o">=</span> <span class="s">False</span>
+<span class="na">inject_key</span> <span class="o">=</span> <span class="s">False</span>
+<span class="na">inject_partition</span> <span class="o">=</span> <span class="s">-2</span>
+</pre></div>
+</div>
+<div class="section" id="hypervisors">
+<h4><a class="toc-backref" href="#id21">Hypervisors</a><a class="headerlink" href="#hypervisors" title="Permalink to this headline">¶</a></h4>
+<p>Nova supports a wide range of virtualization technologies. Full hardware
+virtualization, paravirtualization, or containers can be used. Even
+Windows’ Hyper-V is supported.</p>
+<p>File:</p>
+<p>Scenario #1 - KVM</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">compute_driver</span> <span class="o">=</span> <span class="s">libvirt.LibvirtDriver</span>
+<span class="k">[libvirt]</span>
+<span class="na">virt_type</span> <span class="o">=</span> <span class="s">kvm</span>
+</pre></div>
+</div>
+<p>Scenario #2 - Xen</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">compute_driver</span> <span class="o">=</span> <span class="s">libvirt.LibvirtDriver</span>
+<span class="k">[libvirt]</span>
+<span class="na">virt_type</span> <span class="o">=</span> <span class="s">xen</span>
+</pre></div>
+</div>
+<p>Scenario #3 - LXC</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">compute_driver</span> <span class="o">=</span> <span class="s">libvirt.LibvirtDriver</span>
+<span class="k">[libvirt]</span>
+<span class="na">virt_type</span> <span class="o">=</span> <span class="s">lxc</span>
+</pre></div>
+</div>
+<p>[17]</p>
+</div>
+<div class="section" id="cpu-pinning">
+<h4><a class="toc-backref" href="#id22">CPU Pinning</a><a class="headerlink" href="#cpu-pinning" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p>Verify that the processor(s) has hardware support for non-uniform
+memory access (NUMA). If it does, NUMA may still need to be turned on
+in the BIOS. NUMA nodes are the physical processors. These processors
+are then mapped to specific sectors of RAM.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo lscpu <span class="p">|</span> grep NUMA
+NUMA node<span class="o">(</span>s<span class="o">)</span>:          <span class="m">2</span>
+NUMA node0 CPU<span class="o">(</span>s<span class="o">)</span>:     <span class="m">0</span>-9,20-29
+NUMA node1 CPU<span class="o">(</span>s<span class="o">)</span>:     <span class="m">10</span>-19,30-39
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo numactl --hardware
+available: <span class="m">2</span> nodes <span class="o">(</span><span class="m">0</span>-1<span class="o">)</span>
+node <span class="m">0</span> cpus: <span class="m">0</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">5</span> <span class="m">6</span> <span class="m">7</span> <span class="m">8</span> <span class="m">9</span> <span class="m">20</span> <span class="m">21</span> <span class="m">22</span> <span class="m">23</span> <span class="m">24</span> <span class="m">25</span> <span class="m">26</span> <span class="m">27</span> <span class="m">28</span> <span class="m">29</span>
+node <span class="m">0</span> size: <span class="m">49046</span> MB
+node <span class="m">0</span> free: <span class="m">31090</span> MB
+node <span class="m">1</span> cpus: <span class="m">10</span> <span class="m">11</span> <span class="m">12</span> <span class="m">13</span> <span class="m">14</span> <span class="m">15</span> <span class="m">16</span> <span class="m">17</span> <span class="m">18</span> <span class="m">19</span> <span class="m">30</span> <span class="m">31</span> <span class="m">32</span> <span class="m">33</span> <span class="m">34</span> <span class="m">35</span> <span class="m">36</span> <span class="m">37</span> <span class="m">38</span> <span class="m">39</span>
+node <span class="m">1</span> size: <span class="m">49152</span> MB
+node <span class="m">1</span> free: <span class="m">31066</span> MB
+node distances:
+node   <span class="m">0</span>   <span class="m">1</span>
+  <span class="m">0</span>:  <span class="m">10</span>  <span class="m">21</span>
+  <span class="m">1</span>:  <span class="m">21</span>  <span class="m">10</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh nodeinfo <span class="p">|</span> grep NUMA
+NUMA cell<span class="o">(</span>s<span class="o">)</span>:        <span class="m">2</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[18]</p>
+<ul class="simple">
+<li><p>Append the NUMA filter “NUMATopologyFilter” to the Nova <code class="docutils literal notranslate"><span class="pre">scheduler_default_filters</span></code> key.</p></li>
+</ul>
+<p>File: /etc/nova/nova.conf</p>
+<blockquote>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">scheduler_default_filters</span> <span class="o">=</span> <span class="s">&lt;EXISTING_FILTERS&gt;,NUMATopologyFilter</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p>Restart the Nova scheduler service on the controller node(s).</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart openstack-nova-scheduler
+</pre></div>
+</div>
+</li>
+<li><p>Set the aggregate/availability zone to allow pinning.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack aggregate create &lt;AGGREGATE_ZONE&gt;
+$ openstack aggregate <span class="nb">set</span> --property <span class="nv">pinned</span><span class="o">=</span><span class="nb">true</span> &lt;AGGREGATE_ZONE&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Add the compute hosts to the new aggregate zone.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack host list <span class="p">|</span> grep compute
+$ openstack aggregate host add &lt;AGGREGATE_ZONE&gt; &lt;COMPUTE_HOST&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Modify a flavor to provide dedicated CPU pinning. There are three supported policies to use:</p>
+<blockquote>
+<div><ul>
+<li><p>isolate = Use cores on the same physical processor. Do not allocate any threads.</p></li>
+<li><p>prefer (default) = Cores and threads should be on the same physical processor. Fallback to using mixed cores and threads across different processors if there are not enough resources available.</p></li>
+<li><p>require = Cores and threads must be on the same physical processor.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack flavor <span class="nb">set</span> &lt;FLAVOR_ID&gt; --property hw:cpu_policy<span class="o">=</span>dedicated --property hw:cpu_thread_policy<span class="o">=</span>&lt;POLICY&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Alternatively, set the CPU pinning properties on an image.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack image <span class="nb">set</span> &lt;IMAGE_ID&gt; --property <span class="nv">hw_cpu_policy</span><span class="o">=</span>dedicated --property <span class="nv">hw_cpu_thread_policy</span><span class="o">=</span>&lt;POLICY&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[19]</p>
+</div>
+<div class="section" id="ceph">
+<h4><a class="toc-backref" href="#id23">Ceph</a><a class="headerlink" href="#ceph" title="Permalink to this headline">¶</a></h4>
+<p>Nova can be configured to use Ceph as the storage provider for the instance. This works with any QEMU and Libvirt based hypervisor.</p>
+<p>File: /etc/nova/nova.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libvirt]</span>
+<span class="na">images_type</span> <span class="o">=</span> <span class="s">rbd</span>
+<span class="na">images_rbd_pool</span> <span class="o">=</span> <span class="s">&lt;CEPH_VOLUME_POOL&gt;</span>
+<span class="na">images_rbd_ceph_conf</span> <span class="o">=</span> <span class="s">/etc/ceph/ceph.conf</span>
+<span class="na">rbd_user</span> <span class="o">=</span> <span class="s">&lt;CEPHX_USER&gt;</span>
+<span class="na">rbd_secret_uuid</span> <span class="o">=</span> <span class="s">&lt;LIBVIRT_SECRET_UUID&gt;</span>
+<span class="na">disk_cachemodes</span><span class="o">=</span><span class="s">&quot;network=writeback&quot;</span>
+</pre></div>
+</div>
+<p>[20]</p>
+</div>
+<div class="section" id="nested-virtualization">
+<h4><a class="toc-backref" href="#id24">Nested Virtualization</a><a class="headerlink" href="#nested-virtualization" title="Permalink to this headline">¶</a></h4>
+<p>Nested virtualization allows virtual machines to run virtual machines
+inside of them.</p>
+<p>The kernel module must be stopped, the nested setting enabled, and then
+the module must be started again.</p>
+<p>Intel:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo rmmod kvm_intel
+$ <span class="nb">echo</span> “options kvm_intel <span class="nv">nested</span><span class="o">=</span><span class="m">1</span>” <span class="p">|</span> sudo tee -a /etc/modprobe.d/kvm_intel.conf
+$ sudo modprobe kvm_intel
+</pre></div>
+</div>
+<p>AMD:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo rmmod kvm_amd
+$ <span class="nb">echo</span> “options kvm_amd <span class="nv">nested</span><span class="o">=</span><span class="m">1</span>” <span class="p">|</span> sudo tee -a /etc/modprobe.d/kvm_amd.conf
+$ sudo modprobe kvm_amd
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use a hypervisor technology that supports nested virtualization such as KVM.</p></li>
+</ul>
+<p>File: /etc/nova/nova.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libvirt]</span>
+<span class="na">virt_type</span> <span class="o">=</span> <span class="s">kvm</span>
+<span class="na">cpu_mode</span> <span class="o">=</span> <span class="s">host-passthrough</span>
+</pre></div>
+</div>
+<p>[21]</p>
+</div>
+</div>
+<div class="section" id="neutron">
+<h3><a class="toc-backref" href="#id25">Neutron</a><a class="headerlink" href="#neutron" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="network-types">
+<h4><a class="toc-backref" href="#id26">Network Types</a><a class="headerlink" href="#network-types" title="Permalink to this headline">¶</a></h4>
+<p>In OpenStack, there are two common scenarios for networks: <code class="docutils literal notranslate"><span class="pre">provider</span></code> and <code class="docutils literal notranslate"><span class="pre">self-service</span></code>.</p>
+<p>Provider:</p>
+<ul class="simple">
+<li><p>Simpler</p></li>
+<li><p>Instances have direct access to a bridge device.</p></li>
+<li><p>Faster</p></li>
+<li><p>Best network for bare-metal machines.</p></li>
+</ul>
+<p>Self-service:</p>
+<ul class="simple">
+<li><p>Complex</p></li>
+<li><p>Instances network traffic is isolated and tunneled.</p></li>
+<li><p>More available virtual networks</p></li>
+<li><p>Required for Firewall-as-a-Service (FWaaS) Load-Balancing-as-a-Service (LBaaS) to work.</p></li>
+</ul>
+<p>[22]</p>
+<p>For software-defined networking, the recommended services to use for Neutron’s Modular Layer 2 (ML2) plugin are Open vSwitch (OVS) or Open Virtual Networking (OVN). OVS is mature and tested. OVN is an extension of OVS that uses a new tunneling protocol named Geneve that is faster, more efficient, and allows for more tunnels than older protocols such as VXLAN. For compatibility purposes, it works with VXLAN but those tunnels lose the benefits that Geneve offers. It also provides more features such as built-in services for handling DHCP, NAT, load-balancing, and more. [51]</p>
+<div class="section" id="provider-networks">
+<h5><a class="toc-backref" href="#id27">Provider Networks</a><a class="headerlink" href="#provider-networks" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="linux-bridge">
+<h6><a class="toc-backref" href="#id28">Linux Bridge</a><a class="headerlink" href="#linux-bridge" title="Permalink to this headline">¶</a></h6>
+<p><a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/deploy-lb-provider.html">https://docs.openstack.org/neutron/queens/admin/deploy-lb-provider.html</a></p>
+</div>
+<div class="section" id="open-vswitch">
+<h6><a class="toc-backref" href="#id29">Open vSwitch</a><a class="headerlink" href="#open-vswitch" title="Permalink to this headline">¶</a></h6>
+<p><a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html">https://docs.openstack.org/neutron/queens/admin/deploy-ovs-provider.html</a></p>
+</div>
+</div>
+<div class="section" id="self-service-networks">
+<h5><a class="toc-backref" href="#id30">Self-Service Networks</a><a class="headerlink" href="#self-service-networks" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id1">
+<h6><a class="toc-backref" href="#id31">Linux Bridge</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h6>
+<p><a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/deploy-lb-selfservice.html">https://docs.openstack.org/neutron/queens/admin/deploy-lb-selfservice.html</a></p>
+</div>
+<div class="section" id="id2">
+<h6><a class="toc-backref" href="#id32">Open vSwitch</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h6>
+<p>One device is required, but it is recommended to separate traffic onto
+two different network interfaces. There is <code class="docutils literal notranslate"><span class="pre">br-vlan</span></code> (sometimes also
+referred to as <code class="docutils literal notranslate"><span class="pre">br-provider</span></code>) for internal tagged traffic and
+<code class="docutils literal notranslate"><span class="pre">br-ex</span></code> for external connectivity.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo ovs-vsctl add-br br-vlan
+$ sudo ovs-vsctl add-port br-vlan &lt;VLAN_INTERFACE&gt;
+$ sudo ovs-vsctl add-br br-ex
+$ sudo ovs-vsctl add-port br-ex &lt;EXTERNAL_INTERFACE&gt;
+</pre></div>
+</div>
+<p>File: /etc/neutron/neutron.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">core_plugin</span> <span class="o">=</span> <span class="s">ml2</span>
+<span class="na">service_plugins</span> <span class="o">=</span> <span class="s">router</span>
+<span class="na">allow_overlapping_ips</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>File: /etc/neutron/plugins/ml2/ml2_conf.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ml2]</span>
+<span class="na">type_drivers</span> <span class="o">=</span> <span class="s">flat,vlan,vxlan</span>
+<span class="na">tenant_network_types</span> <span class="o">=</span> <span class="s">vxlan</span>
+<span class="na">mechanism_drivers</span> <span class="o">=</span> <span class="s">openvswitch,l2population</span>
+<span class="k">[ml2_type_vxlan]</span>
+<span class="na">vni_ranges</span> <span class="o">=</span> <span class="s">&lt;START_NUMBER&gt;,&lt;END_NUMBER&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">&lt;LABEL&gt;</span></code> can be any unique name. It is used as an alias for the interface name. The “local_ip” address should be accessible on the <code class="docutils literal notranslate"><span class="pre">br-vlan</span></code> interface.</p></li>
+</ul>
+<p>File: /etc/neutron/plugins/ml2/openvswitch_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ovs]</span>
+<span class="na">bridge_mappings</span> <span class="o">=</span> <span class="s">&lt;LABEL&gt;:br-vlan</span>
+<span class="na">local_ip</span> <span class="o">=</span> <span class="s">&lt;IP_ADDRESS&gt;</span>
+<span class="k">[agent]</span>
+<span class="na">tunnel_types</span> <span class="o">=</span> <span class="s">vxlan</span>
+<span class="na">l2_population</span> <span class="o">=</span> <span class="s">True</span>
+<span class="k">[securitygroup]</span>
+<span class="na">firewall_driver</span> <span class="o">=</span> <span class="s">iptables_hybrid</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The “external_network_bridge” key should be left defined with no value.</p></li>
+</ul>
+<p>File: /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">interface_driver</span> <span class="o">=</span> <span class="s">openvswitch</span>
+<span class="na">external_network_bridge</span> <span class="o">=</span>
+</pre></div>
+</div>
+<p>[23]</p>
+<p>On the controller node, restart the Nova API service and then start the
+required Neutron services.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart openstack-nova-api
+$ sudo systemctl <span class="nb">enable</span> neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+$ sudo systemctl start neutron-server neutron-openvswitch-agent neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+</pre></div>
+</div>
+<p>Finally, on the compute nodes, restart the compute service and then
+start the Open vSwitch agent.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart openstack-nova-compute
+$ sudo systemctl <span class="nb">enable</span> neutron-openvswitch-agent
+$ sudo systemctl start neutron-openvswitch-agent
+</pre></div>
+</div>
+<p>[24]</p>
+</div>
+</div>
+</div>
+<div class="section" id="dns">
+<h4><a class="toc-backref" href="#id33">DNS</a><a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h4>
+<p>By default, Neutron does not provide any DNS resolvers. This means that
+DNS will not work. It is possible to either provide a default list of
+name servers or configure Neutron to refer to the relevant
+/etc/resolv.conf file on the server.</p>
+<p>File: /etc/neutron/dhcp_agent.ini</p>
+<p>Scenario #1 - Define a list of default resolvers (recommended)</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">dnsmasq_dns_servers</span> <span class="o">=</span> <span class="s">8.8.8.8,8.8.4.4</span>
+</pre></div>
+</div>
+<p>Scenario #2 - Leave resolvers to be configured by the subnet details</p>
+<ul class="simple">
+<li><p>Nothing needs to be configured. This is the default setting.</p></li>
+</ul>
+<p>Scenario #3 - Do not provide resolvers, use the ones provided in the image</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">dnsmasq_local_resolv</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>[25]</p>
+</div>
+<div class="section" id="metadata">
+<h4><a class="toc-backref" href="#id34">Metadata</a><a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h4>
+<p>The metadata service provides useful information about the instance from
+the IP address 169.254.169.254/32. This service is also used to
+communicate with “cloud-init” on the instance to configure SSH keys and
+other post-boot tasks.</p>
+<p>Assuming authentication is already configured, set these options for the
+OpenStack environment. These are the basics needed before the metadata
+service can be used correctly. Then it can also be configured to use DHCP
+namespaces (layer 2) or router namespaces (layer 3) for
+delivering/receiving requests.</p>
+<p>File: /etc/neutron/metadata_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">nova_metadata_ip</span> <span class="o">=</span> <span class="s">&lt;CONTROLLER_IP&gt;</span>
+<span class="na">metadata_proxy_shared_secret</span> <span class="o">=</span> <span class="s">&lt;SECRET_KEY&gt;</span>
+</pre></div>
+</div>
+<p>File: /etc/nova/nova.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enabled\_apis</span> <span class="o">=</span> <span class="s">osapi\_compute,metadata</span>
+<span class="k">[neutron]</span>
+<span class="na">service_metadata_proxy</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">metadata_proxy_shared_secret</span> <span class="o">=</span> <span class="s">&lt;SECRET_KEY&gt;</span>
+</pre></div>
+</div>
+<p>Scenario #1 - DHCP Namespace (recommended for DVR)</p>
+<p>File: /etc/neutron/dhcp_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">force_metadata</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">enable_isolated_metadata</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">enable_metadata_network</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>File: /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enable_metadata_proxy</span> <span class="o">=</span> <span class="s">False</span>
+</pre></div>
+</div>
+<p>Scenario #2 - Router Namespace</p>
+<p>File: /etc/neutron/dhcp_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">force_metadata</span> <span class="o">=</span> <span class="s">False</span>
+<span class="na">enable_isolated_metadata</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">enable_metadata_network</span> <span class="o">=</span> <span class="s">False</span>
+</pre></div>
+</div>
+<p>File: /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enable_metadata_proxy</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>[26]</p>
+</div>
+<div class="section" id="load-balancing-as-a-service">
+<h4><a class="toc-backref" href="#id35">Load-Balancing-as-a-Service</a><a class="headerlink" href="#load-balancing-as-a-service" title="Permalink to this headline">¶</a></h4>
+<p>Load-Balancing-as-a-Service version 2 (LBaaS v2) has been stable since
+Liberty. It can be configured with either the HAProxy or Octavia
+back-end. LBaaS v1 has been removed since the Newton release.</p>
+<ul class="simple">
+<li><p>Append the LBaaSv2 service plugin.</p></li>
+</ul>
+<p>File: /etc/neutron/neutron.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">service_plugins</span> <span class="o">=</span> <span class="s">&lt;EXISTING_PLUGINS&gt;,neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Specify the <code class="docutils literal notranslate"><span class="pre">&lt;INTERFACE_DRIVER&gt;</span></code> as either <code class="docutils literal notranslate"><span class="pre">linuxbridge</span></code> or <code class="docutils literal notranslate"><span class="pre">openvswitch</span></code>.</p></li>
+</ul>
+<p>File: /etc/neutron/lbaas_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">interface_driver</span> <span class="o">=</span> <span class="s">&lt;INTERFACE_DRIVER&gt;</span>
+</pre></div>
+</div>
+<p>Scenario #1 - HAProxy</p>
+<p>File: /etc/neutron/neutron_lbaas.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[service_providers]</span>
+<span class="na">service_provider</span> <span class="o">=</span> <span class="s">LOADBALANCERV2:Haproxy:neutron_lbaas.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Specify the HAProxy driver and the group that HAProxy runs as. In RHEL, it is <code class="docutils literal notranslate"><span class="pre">haproxy</span></code>.</p></li>
+</ul>
+<p>File: /etc/neutron/lbaas_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">device_driver</span> <span class="o">=</span> <span class="s">neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver</span>
+<span class="k">[haproxy]</span>
+<span class="na">user_group</span> <span class="o">=</span> <span class="s">haproxy</span>
+</pre></div>
+</div>
+<p>Scenario #2 - Octavia</p>
+<p>File: /etc/neutron/neutron_lbaas.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[service_providers]</span>
+<span class="na">service_provider</span> <span class="o">=</span> <span class="s">LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default</span>
+</pre></div>
+</div>
+<p>[27]</p>
+</div>
+<div class="section" id="quality-of-service">
+<h4><a class="toc-backref" href="#id36">Quality of Service</a><a class="headerlink" href="#quality-of-service" title="Permalink to this headline">¶</a></h4>
+<p>The Quality of Service (QoS) plugin can be used to rate limit the amount
+of bandwidth that is allowed through a network port.</p>
+<ul class="simple">
+<li><p>Append the QoS plugin to the list of service_plugins.</p></li>
+</ul>
+<p>File: /etc/neutron/neutron.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">service_plugins</span> <span class="o">=</span> <span class="s">&lt;EXISTING_PLUGINS&gt;,neutron.services.qos.qos_plugin.QoSPlugin</span>
+</pre></div>
+</div>
+<p>Layer 2 QoS</p>
+<ul class="simple">
+<li><p>Append the QoS driver to the modular layer 2 (ML2) extension drivers.</p></li>
+</ul>
+<p>File: /etc/neutron/plugins/ml2/ml2_conf.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ml2]</span>
+<span class="na">extension_drivers</span> <span class="o">=</span> <span class="s">qos</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Also append the QoS extension directly to the modular layer 2 configuration. The three supported agents for QoS are: Linux Bridge, Open vSwitch, and SR-IOV.</p></li>
+</ul>
+<p>File: /etc/neutron/plugins/ml2/&lt;AGENT&gt;_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[agent]</span>
+<span class="na">extensions</span> <span class="o">=</span> <span class="s">&lt;EXISTING_EXTENSIONS&gt;,qos</span>
+</pre></div>
+</div>
+<p>Layer 3 QoS</p>
+<ul class="simple">
+<li><p>Append the “fip_qos” extension in the neutron-l3-agent’s configuration file.</p></li>
+</ul>
+<p>File: /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[agent]</span>
+<span class="na">extensions</span> <span class="o">=</span> <span class="s">&lt;EXISTING_EXTENSIONS&gt;,fip_qos</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>For Open vSwitch only, this workaround is required to limit the bandwidth usage on routers.</p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">ovs_use_veth</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>[28]</p>
+</div>
+<div class="section" id="distributed-virtual-routing">
+<h4><a class="toc-backref" href="#id37">Distributed Virtual Routing</a><a class="headerlink" href="#distributed-virtual-routing" title="Permalink to this headline">¶</a></h4>
+<p>Distributed virtual routing (DVR) is a concept that involves deploying
+routers to both the compute and network nodes to spread out resource
+usage. All layer 2 traffic will be equally spread out among the servers.
+Public floating IPs will still need to go through the SNAT process via
+the routers on the controller or network nodes. This is only supported when the Open
+vSwitch agent is used. [29]</p>
+<p>File: /etc/neutron/neutron.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">router_distributed</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>File (compute node):  /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">agent_mode</span> <span class="o">=</span> <span class="s">dvr</span>
+</pre></div>
+</div>
+<p>File (network node): /etc/neutron/l3_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">agent_mode</span> <span class="o">=</span> <span class="s">dvr_snat</span>
+</pre></div>
+</div>
+<p>File: /etc/neutron/plugins/ml2/ml2_conf.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[ml2]</span>
+<span class="na">mechanism_drivers</span> <span class="o">=</span> <span class="s">openvswitch,l2population</span>
+</pre></div>
+</div>
+<p>File: /etc/neutron/plugins/ml2/openvswitch_agent.ini</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[agent]</span>
+<span class="na">l2_population</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">enable_distributed_routing</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>[30]</p>
+<p>TripleO configuration [55]:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">NeutronEnableDVR</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="high-availability">
+<h4><a class="toc-backref" href="#id38">High Availability</a><a class="headerlink" href="#high-availability" title="Permalink to this headline">¶</a></h4>
+<p>High availability (HA) in Neutron allows for routers to fail-over to
+another duplicate router if one fails or is no longer present. All new
+routers will be highly available.</p>
+<p>File: /etc/neutron/neutron.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">l3_ha</span> <span class="o">=</span> <span class="s">True</span>
+<span class="na">max_l3_agents_per_router</span> <span class="o">=</span> <span class="s">2</span>
+<span class="na">allow_automatic_l3agent_failover</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<p>[29]</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id39">Ceph</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>For Cinder and/or Glance to work with Ceph, the Ceph configuration needs
+to exist on each controller and compute node. This can be copied over
+from the Ceph nodes. An example is provided below.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[global]</span>
+<span class="na">fsid</span> <span class="o">=</span> <span class="s">&lt;UNIQUE_ID&gt;</span>
+<span class="na">mon_initial_members</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_HOSTNAME&gt;</span>
+<span class="na">mon_host</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_IP_ADDRESS&gt;</span>
+<span class="na">auth_cluster_required</span> <span class="o">=</span> <span class="s">cephx</span>
+<span class="na">auth_service_required</span> <span class="o">=</span> <span class="s">cephx</span>
+<span class="na">auth_client_required</span> <span class="o">=</span> <span class="s">cephx</span>
+<span class="na">osd_pool_default_size</span> <span class="o">=</span> <span class="s">2</span>
+<span class="na">public_network</span> <span class="o">=</span> <span class="s">&lt;CEPH_NETWORK_CIDR&gt;</span>
+
+<span class="k">[mon]</span>
+<span class="na">mon_host</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_HOSTNAME&gt;, &lt;CEPH_MONITOR2_HOSTNAME&gt;, &lt;CEPH_MONITOR3_HOSTNAME&gt;</span>
+<span class="na">mon_addr</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_IP_ADDRESS&gt;:6789, &lt;CEPH_MONITOR2_IP_ADDRESS&gt;:6789, &lt;CEPH_MONITOR3_IP_ADDRESS&gt;:6789</span>
+
+<span class="k">[mon.a]</span>
+<span class="na">host</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_HOSTNAME&gt;</span>
+<span class="na">mon_addr</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR1_IP_ADDRESS&gt;:6789</span>
+
+<span class="k">[mon.b]</span>
+<span class="na">host</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR2_HOSTNAME&gt;</span>
+<span class="na">mon_addr</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR2_IP_ADDRESS&gt;:6789</span>
+
+<span class="k">[mon.c]</span>
+<span class="na">host</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR3_HOSTNAME&gt;</span>
+<span class="na">mon_addr</span> <span class="o">=</span> <span class="s">&lt;CEPH_MONITOR3_IP_ADDRESS&gt;:6789</span>
+</pre></div>
+</div>
+<p>It is recommended to create a separate pool and related user for both
+the Glance and Cinder service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo ceph osd pool create glance &lt;PG_NUM&gt; &lt;PGP_NUM&gt;
+$ sudo ceph osd pool create cinder &lt;PG_NUM&gt; &lt;PGP_NUM&gt;
+$ sudo ceph auth get-or-create client.cinder mon <span class="s1">&#39;allow r&#39;</span> osd <span class="s1">&#39;allow class-read object_prefix rbd_children, allow rwx pool=volumes&#39;</span>
+$ sudo ceph auth get-or-create client.glance mon <span class="s1">&#39;allow r&#39;</span> osd <span class="s1">&#39;allow class-read object_prefix rbd_children, allow rwx pool=images&#39;</span>
+</pre></div>
+</div>
+<p>If Cephx is turned on to utilize authentication, then a client keyring
+file should be created on the controller and compute nodes. This will
+allow the services to communicate to Ceph as a specific user. The
+usernames should match the client users that were just created. [31]</p>
+<p>File: <code class="docutils literal notranslate"><span class="pre">/etc/ceph/ceph.client.&lt;USERNAME&gt;.keyring</span></code></p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[client.&lt;USERNAME&gt;]</span>
+        <span class="na">key</span> <span class="o">=</span> <span class="s">&lt;KEY&gt;</span>
+</pre></div>
+</div>
+<p>On the controller and compute nodes the Nova, Cinder, and Glance
+services require permission to read the <code class="docutils literal notranslate"><span class="pre">/etc/ceph/ceph.conf</span></code> and
+client configurations at <code class="docutils literal notranslate"><span class="pre">/etc/ceph/ceph.client.&lt;USERNAME&gt;.keyring</span></code>.
+The service users should be added to a common group to help securely
+share these settings.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo <span class="k">for</span> openstack_service <span class="k">in</span> <span class="s2">&quot;cinder glance nova&quot;</span><span class="p">;</span> <span class="k">do</span> usermod -a -G ceph <span class="si">${</span><span class="nv">openstack_service</span><span class="si">}</span><span class="p">;</span> <span class="k">done</span>
+$ sudo chmod -R <span class="m">640</span> /etc/ceph/
+$ sudo chown -R ceph.ceph /etc/ceph/
+</pre></div>
+</div>
+<p>For the services to work, the relevant Python libraries for accessing
+Ceph need to be installed. These can be installed by the operating
+system’s package manager. [31]</p>
+<p>Fedora:</p>
+<ul class="simple">
+<li><p>python-ceph-compat</p></li>
+<li><p>python-rbd</p></li>
+</ul>
+<p>Debian:</p>
+<ul class="simple">
+<li><p>python-ceph</p></li>
+</ul>
+</div>
+<div class="section" id="cinder">
+<h3><a class="toc-backref" href="#id40">Cinder</a><a class="headerlink" href="#cinder" title="Permalink to this headline">¶</a></h3>
+<p>The Cinder service provides block devices for instances.</p>
+<div class="section" id="id4">
+<h4><a class="toc-backref" href="#id41">Ceph</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>Ceph has become the most popular back-end to Cinder due to it’s high
+availability and scalability.</p>
+<ul class="simple">
+<li><p>Create a new <code class="docutils literal notranslate"><span class="pre">[ceph]</span></code> section for the back-end configuration. The name of this new section must reflect what is set in “enabled_backends.”</p></li>
+</ul>
+<p>File: /etc/cinder/cinder.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">enabled_backends</span> <span class="o">=</span> <span class="s">ceph</span>
+<span class="na">volume_backend_name</span> <span class="o">=</span> <span class="s">volumes</span>
+<span class="na">rados_connect_timeout</span> <span class="o">=</span> <span class="s">-1</span>
+<span class="k">[ceph]</span>
+<span class="na">volume_driver</span> <span class="o">=</span> <span class="s">cinder.volume.drivers.rbd.RBDDriver</span>
+<span class="na">rbd_pool</span> <span class="o">=</span> <span class="s">&lt;RBD_VOLUME_POOL&gt;</span>
+<span class="na">rbd_ceph_conf</span> <span class="o">=</span> <span class="s">/etc/ceph/ceph.conf</span>
+<span class="c1">#Ceph supports efficient thin provisioned snapshots when this is set to &quot;False.&quot;</span>
+<span class="na">rbd_flatten_volume_from_snapshot</span> <span class="o">=</span> <span class="s">False</span>
+<span class="c1">#Only clone an image up to 5 times before creating a new copy of the image.</span>
+<span class="na">rbd_max_clone_depth</span> <span class="o">=</span> <span class="s">5</span>
+<span class="na">rbd_store_chunk_size</span> <span class="o">=</span> <span class="s">4</span>
+<span class="c1">#Do not timeout when trying to connect to RADOS.</span>
+<span class="na">rados_connect_timeout</span> <span class="o">=</span> <span class="s">-1</span>
+<span class="na">glance_api_version</span> <span class="o">=</span> <span class="s">2</span>
+</pre></div>
+</div>
+<p>File: /etc/nova/nova.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[libvirt]</span>
+<span class="na">images_type</span> <span class="o">=</span> <span class="s">rbd</span>
+<span class="na">images_rbd_pool</span> <span class="o">=</span> <span class="s">&lt;RBD_VOLUME_POOL&gt;</span>
+<span class="na">images_rbd_ceph_conf</span> <span class="o">=</span> <span class="s">/etc/ceph/ceph.conf</span>
+<span class="na">rbd_user</span> <span class="o">=</span> <span class="s">&lt;CEPHX_USER&gt;</span>
+<span class="c1">#This is the Libvirt secret UUID used for Cephx authentication.</span>
+<span class="na">rbd_secret_uuid</span> <span class="o">=</span> <span class="s">&lt;LIBVIRT_SECRET_UUID&gt;</span>
+</pre></div>
+</div>
+<p>[31]</p>
+</div>
+<div class="section" id="encryption">
+<h4><a class="toc-backref" href="#id42">Encryption</a><a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h4>
+<p>Cinder volumes support the Linux LUKS encryption. The only requirement
+is that the compute nodes have the “cryptsetup” package installed. [32]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack volume <span class="nb">type</span> create LUKS
+$ cinder encryption-type-create --cipher aes-xts-plain64 --key_size <span class="m">512</span> --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor
+</pre></div>
+</div>
+<p>Encrypted volumes can now be created.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack volume create --size &lt;SIZE_IN_GB&gt; --type LUKS &lt;VOLUME_NAME&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="glance">
+<h3><a class="toc-backref" href="#id43">Glance</a><a class="headerlink" href="#glance" title="Permalink to this headline">¶</a></h3>
+<p>Glance is used to store and manage images for instance deployment.</p>
+<div class="section" id="id5">
+<h4><a class="toc-backref" href="#id44">Ceph</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>Ceph can be used to store images.</p>
+<p>File: /etc/glance/glance-api.conf</p>
+<ul class="simple">
+<li><p>First configure “show_image_direct_url” to allow copy-on-write (CoW) operations for efficient usage of storage for instances. Instead of cloning the entire image, CoW will be used to store changes between the instance and the original image. This assumes that Cinder is also configured to use Ceph.</p></li>
+<li><p>The back-end Ceph IP addressing will be viewable by the public Glance API. For security purposes, ensure that Ceph is not publicly accessible.</p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[DEFAULT]</span>
+<span class="na">show_image_direct_url</span> <span class="o">=</span> <span class="s">True</span>
+</pre></div>
+</div>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[glance_store]</span>
+<span class="na">stores</span> <span class="o">=</span> <span class="s">rbd</span>
+<span class="na">default_store</span> <span class="o">=</span> <span class="s">rbd</span>
+<span class="na">rbd_store_pool</span> <span class="o">=</span> <span class="s">&lt;RBD_IMAGES_POOL&gt;</span>
+<span class="na">rbd_store_user</span> <span class="o">=</span> <span class="s">&lt;CEPHX_USER&gt;</span>
+<span class="na">rbd_store_ceph_conf</span> <span class="o">=</span> <span class="s">/etc/ceph/ceph.conf</span>
+<span class="na">rbd_store_chunk_size</span> <span class="o">=</span> <span class="s">8</span>
+</pre></div>
+</div>
+<p>[33][50]</p>
+</div>
+</div>
+</div>
+<div class="section" id="neutron-troubleshooting">
+<h2><a class="toc-backref" href="#id45">Neutron Troubleshooting</a><a class="headerlink" href="#neutron-troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>Neutron is one of the most complicated services offered by OpenStack.
+Due to it’s wide range of configurations and technologies that it
+handles, it can be difficult to troubleshoot problems. This section aims
+to clearly layout common techniques to track down and fix issues with
+Neutron.</p>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id46">Open vSwitch</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="floating-ips">
+<h4><a class="toc-backref" href="#id47">Floating IPs</a><a class="headerlink" href="#floating-ips" title="Permalink to this headline">¶</a></h4>
+<p>Floating IPs can be manually added to the namespace. Depending on the
+environment, these rules either need to be added to the
+<code class="docutils literal notranslate"><span class="pre">snat-&lt;ROUTER_ID&gt;</span></code> namespace if it exists or the
+<code class="docutils literal notranslate"><span class="pre">qrouter-&lt;ROUTER_ID&gt;</span></code> namespace. All floating IPs need to be added
+with the /32 CIDR, not the CIDR that represents it’s true subnet mask.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo ip netns <span class="nb">exec</span> snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-OUTPUT -d &lt;FLOATING_IP&gt;/32 -j DNAT --to-destination &lt;LOCAL_IP&gt;
+$ sudo ip netns <span class="nb">exec</span> snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-PREROUTING -d &lt;FLOATING_IP&gt;/32 -j DNAT --to-destination &lt;LOCAL_IP&gt;
+$ sudo ip netns <span class="nb">exec</span> snat-&lt;ROUTER_ID&gt; iptables -t nat -A neutron-l3-agent-float-snat -s &lt;LOCAL_IP&gt;/32 -j SNAT --to-source &lt;FLOATING_IP&gt;
+$ sudo ip netns <span class="nb">exec</span> snat-&lt;ROUTER_ID&gt; ip address add &lt;FLOATING_IP&gt;/32 brd &lt;FLOATING_IP&gt; dev qg-b2e3c286-b2
+</pre></div>
+</div>
+<p>With no floating IPs allocated, the iptables NAT table in the SNAT
+namespace should look similar to this.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo ip netns <span class="nb">exec</span> snat-&lt;ROUTER_ID&gt; iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-N neutron-l3-agent-OUTPUT
+-N neutron-l3-agent-POSTROUTING
+-N neutron-l3-agent-PREROUTING
+-N neutron-l3-agent-float-snat
+-N neutron-l3-agent-snat
+-N neutron-postrouting-bottom
+-A PREROUTING -j neutron-l3-agent-PREROUTING
+-A OUTPUT -j neutron-l3-agent-OUTPUT
+-A POSTROUTING -j neutron-l3-agent-POSTROUTING
+-A POSTROUTING -j neutron-postrouting-bottom
+-A neutron-l3-agent-POSTROUTING ! -i qg-&lt;NIC_ID&gt; ! -o qg-&lt;NIC_ID&gt; -m conntrack ! --ctstate DNAT -j ACCEPT
+-A neutron-l3-agent-snat -o qg-&lt;NIC_ID&gt; -j SNAT --to-source &lt;PUBLIC_ROUTER_IP&gt;
+-A neutron-l3-agent-snat -m mark ! --mark 0x2/0xffff -m conntrack --ctstate DNAT -j SNAT --to-source &lt;PUBLIC_ROUTER_IP&gt;
+-A neutron-postrouting-bottom -m comment --comment <span class="s2">&quot;Perform source NAT on outgoing traffic.&quot;</span> -j neutron-l3-agent-snat
+</pre></div>
+</div>
+<p>[34][35]</p>
+</div>
+</div>
+</div>
+<div class="section" id="cloud-init">
+<h2><a class="toc-backref" href="#id48">cloud-init</a><a class="headerlink" href="#cloud-init" title="Permalink to this headline">¶</a></h2>
+<p>Every instance that is managed by Nova will be configured if cloud-init is installed on the operating system image. Common operations include setting up users and groups, installing packages, configuring SSH keys, etc. The full list of modules that can be used are documented <a class="reference external" href="https://cloudinit.readthedocs.io/en/latest/topics/modules.html">here</a>. Example configurations can be found <a class="reference external" href="https://cloudinit.readthedocs.io/en/latest/topics/examples.html">here</a>. cloud-init will only run once. The service can be forced to run again by deleting the <code class="docutils literal notranslate"><span class="pre">/var/lib/cloud/instance/</span></code> directory. All of the files and directories within <code class="docutils literal notranslate"><span class="pre">/var/lib/cloud/</span></code> are documented <a class="reference external" href="https://cloudinit.readthedocs.io/en/latest/topics/dir_layout.html">here</a>. [62]</p>
+</div>
+<div class="section" id="upgrades">
+<h2><a class="toc-backref" href="#id49">Upgrades</a><a class="headerlink" href="#upgrades" title="Permalink to this headline">¶</a></h2>
+<p>Upgrading a production OpenStack environment requires a lot of planning. It is recommended to test an upgrade in a pre-production environment before rolling it out to production. Automation tools generally have their own guides but most of these guidelines should still apply to manual deployment upgrades. The entire steps include to:</p>
+<ul class="simple">
+<li><p>Backup configuration files and databases.</p></li>
+<li><p>Review the <a class="reference external" href="https://releases.openstack.org/">release notes</a> of the OpenStack services that will be
+upgraded. These will contain details of deprecations and new
+configuration changes.</p></li>
+<li><p>Update configuration files. Sample configuration options can be found at
+<code class="docutils literal notranslate"><span class="pre">https://docs.openstack.org/&lt;RELEASE&gt;/configuration/</span></code>.</p></li>
+<li><p>If not already, consider using an automation tool such as Ansible to
+deploy new service configurations.</p></li>
+<li><p>Remove the old package repository for OpenStack.</p></li>
+<li><p>Add the new package repository for OpenStack.</p></li>
+<li><p>Update all of the packages on the controller node first.</p></li>
+<li><p>Update the database schemas. [52]</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo keystone-manage token_flush
+$ su -s /bin/sh -c <span class="s2">&quot;keystone-manage db_sync&quot;</span> keystone
+$ su -s /bin/sh -c <span class="s2">&quot;glance-manage db_sync&quot;</span> glance
+$ su -s /bin/sh -c <span class="s2">&quot;cinder-manage db sync&quot;</span> cinder
+$ su -s /bin/sh -c <span class="s2">&quot;heat-manage db_sync&quot;</span> heat
+$ su -s /bin/sh -c <span class="s2">&quot;nova-manage db sync&quot;</span> nova
+$ su -s /bin/sh -c <span class="s2">&quot;nova-manage api_db sync&quot;</span> nova
+$ ceilometer-dbsync
+$ aodh-dbsync
+$ gnocchi-upgrade
+$ su -s /bin/sh -c <span class="s2">&quot;sahara-db-manage upgrade heads&quot;</span> sahara
+$ su -s /bin/sh -c <span class="s2">&quot;neutron-db-manage upgrade heads&quot;</span> neutron
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Restart the services on the controller nodes. <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">sudo</span> <span class="pre">openstack-service</span> <span class="pre">restart</span></code></p></li>
+<li><p>View the logs for any problems.</p>
+<ul>
+<li><p>Services on the controller nodes support messages/requests from the current version and the previous version so everything should still continue to work properly.</p></li>
+</ul>
+</li>
+<li><p>Update the packages and restart the services on the other nodes.</p></li>
+</ul>
+<p>[36]</p>
+<p>As of the Newton release, services are compatible with a <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">-</span> <span class="pre">1</span></code> release. This means that, for example, services that are partially upgraded to Newton will continue to work with Mitaka. [63]</p>
+</div>
+<div class="section" id="command-line-interface-utilities">
+<h2><a class="toc-backref" href="#id50">Command Line Interface Utilities</a><a class="headerlink" href="#command-line-interface-utilities" title="Permalink to this headline">¶</a></h2>
+<p>The OpenStack command line interface (CLI) resources used to be handled
+by separate commands. These have all been modified and are managed by
+the universal “openstack” command. The various options and arguments for OpenStack related commands can be found in Root Pages’ <a class="reference external" href="../commands/openstack.html">Commands - OpenStack</a>.</p>
+<p>Install all of the OpenStack CLI tools using pip.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install --user python-openstackclient
+</pre></div>
+</div>
+<p>Alternatively, only install the client utilities for the select services that are installed onto the OpenStack cloud. [57]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install --user python-&lt;SERVICE&gt;client
+</pre></div>
+</div>
+<p>For the CLI utilities to work, the environment variables need to be set
+for the project and user. This way the commands can automatically
+authenticate.</p>
+<ul>
+<li><p>Add the credentials to a text file. Use the “.sh” extension to signify it’s a shell script. A few default variables are filled in below.</p></li>
+<li><p>Keystone v2.0</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unset any variables that may already be sourced.</span>
+<span class="nb">unset</span> OS_PROJECT_ID
+<span class="nb">unset</span> OS_PROJECT_NAME
+<span class="nb">unset</span> OS_PROJECT_DOMAIN_ID
+<span class="nb">unset</span> OS_PROJECT_DOMAIN_NAME
+<span class="nb">unset</span> OS_USER_ID
+<span class="nb">unset</span> OS_USER_NAME
+<span class="nb">unset</span> OS_USER_DOMAIN_ID
+<span class="nb">unset</span> OS_USER_DOMAIN_NAME
+<span class="nb">unset</span> OS_REGION_ID
+<span class="nb">unset</span> OS_REGION_NAME
+<span class="c1"># These values need to be filled in.</span>
+<span class="nb">export</span> <span class="nv">PROJECT_ID</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">PROJECT_NAME</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_USERNAME</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_PASSWORD</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_REGION_NAME</span><span class="o">=</span><span class="s2">&quot;RegionOne&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_AUTH_URL</span><span class="o">=</span><span class="s2">&quot;http://&lt;CONTROLLER&gt;:5000/v2.0&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_AUTH_VERSION</span><span class="o">=</span><span class="s2">&quot;2.0&quot;</span>
+<span class="c1"># For compatibility, some services expect this</span>
+<span class="c1"># variable to be used for defining the API version</span>
+<span class="c1"># instead.</span>
+<span class="nb">export</span> <span class="nv">OS_IDENTITY_API_VERSION</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OS_AUTH_VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Keystone v3</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Unset any variables that may already be sourced.</span>
+<span class="nb">unset</span> OS_PROJECT_ID
+<span class="nb">unset</span> OS_PROJECT_NAME
+<span class="nb">unset</span> OS_PROJECT_DOMAIN_ID
+<span class="nb">unset</span> OS_PROJECT_DOMAIN_NAME
+<span class="nb">unset</span> OS_USER_ID
+<span class="nb">unset</span> OS_USER_NAME
+<span class="nb">unset</span> OS_USER_DOMAIN_ID
+<span class="nb">unset</span> OS_USER_DOMAIN_NAME
+<span class="nb">unset</span> OS_REGION_ID
+<span class="nb">unset</span> OS_REGION_NAME
+<span class="c1"># These values need to be filled in.</span>
+<span class="nb">export</span> <span class="nv">OS_PROJECT_ID</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_PROJECT_NAME</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_PROJECT_DOMAIN_NAME</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_USERID</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_USERNAME</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_PASSWORD</span><span class="o">=</span>
+<span class="nb">export</span> <span class="nv">OS_USER_DOMAIN_NAME</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_REGION_NAME</span><span class="o">=</span><span class="s2">&quot;RegionOne&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_AUTH_URL</span><span class="o">=</span><span class="s2">&quot;http://&lt;CONTROLLER&gt;:5000/v3&quot;</span>
+<span class="nb">export</span> <span class="nv">OS_AUTH_VERSION</span><span class="o">=</span><span class="s2">&quot;3&quot;</span>
+<span class="c1"># For compatibility, some services expect this</span>
+<span class="c1"># variable to be used for defining the API version</span>
+<span class="c1"># instead.</span>
+<span class="nb">export</span> <span class="nv">OS_IDENTITY_API_VERSION</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">OS_AUTH_VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Source the credential file to load it into the shell environment:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> &lt;USER_CREDENTIALS_FILE&gt;.sh
+</pre></div>
+</div>
+</li>
+<li><p>View the available command line options.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack <span class="nb">help</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openstack <span class="nb">help</span> &lt;OPTION&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[37]</p>
+</div>
+<div class="section" id="orchestration">
+<h2><a class="toc-backref" href="#id51">Orchestration</a><a class="headerlink" href="#orchestration" title="Permalink to this headline">¶</a></h2>
+<p>Automating resource management can be accomplished in a few ways.
+OpenStack provides Orchestration as a Service (OaaS) via Heat. It is
+also possible to use Ansible or Vagrant to automate creating, reading,
+updating, and deleting resources in an OpenStack cloud.</p>
+<div class="section" id="heat">
+<h3><a class="toc-backref" href="#id52">Heat</a><a class="headerlink" href="#heat" title="Permalink to this headline">¶</a></h3>
+<p>Heat is used to orchestrate the deployment of multiple OpenStack
+components at once. It can also install and configure software on newly
+built instances.</p>
+<div class="section" id="resources">
+<h4><a class="toc-backref" href="#id53">Resources</a><a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h4>
+<p>Heat templates use YAML formatting and are made of multiple resources.
+All of the different resource types are listed here:
+<a class="reference external" href="https://docs.openstack.org/heat/latest/template_guide/openstack.html">https://docs.openstack.org/heat/latest/template_guide/openstack.html</a>.
+Resources use properties to create a component. If no name is specified
+(for example, a network name), a random string will be used. Most
+properties also accept either an exact ID of a resource or a reference
+to a dynamically generated resource (which will provide it’s ID once it
+has been created). [38]</p>
+<p>All Heat templates must began with defining the version of OpenStack is
+was designed for (using the release date as the version) and enclose all
+resources in a “resources” dictionary. The version indicates that all
+features up until that specific release are used. This is for backwards
+compatibility reasons. Since the Newton release, the release name can be used instead of a date for the version.
+The last update to Heat templating features was in the Rocky release. [66]</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">heat_template_version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rocky</span>
+<span class="nt">resources</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">&lt;RESOURCE&gt;</span>
+</pre></div>
+</div>
+<p>All valid Heat template versions [39]:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">2018-08-31</span></code> or <code class="docutils literal notranslate"><span class="pre">rocky</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2018-03-02</span></code> or <code class="docutils literal notranslate"><span class="pre">queens</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2017-09-01</span></code> or <code class="docutils literal notranslate"><span class="pre">pike</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2017-02-24</span></code> or <code class="docutils literal notranslate"><span class="pre">ocata</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2016-10-14</span></code> or <code class="docutils literal notranslate"><span class="pre">newton</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2016-04-08</span></code> (Mitaka)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2015-10-15</span></code> (Liberty)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2015-04-30</span></code> (Kilo)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2014-10-16</span></code> (Juno)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2013-05-23</span></code> (Icehouse)</p></li>
+</ul>
+<p>This section will go over examples of the more common modules. Each
+resource must be nested under the single “resources” section.</p>
+<p>Syntax:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;DESCRIPTIVE_OBJECT_NAME&gt;</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;HEAT_RESOURCE_TYPE&gt;</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">&lt;PROPERTY_1&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;VALUE_1&gt;</span>
+    <span class="nt">&lt;PROPERTY_2&gt;</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;LIST_VALUE_1&gt;</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;LIST_VALUE_2&gt;</span>
+    <span class="nt">&lt;PROPERTY_3&gt;</span><span class="p">:</span>
+      <span class="nt">&lt;DICTIONARY_KEY_1&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;DICTIONARY_VALUE_1&gt;</span>
+      <span class="nt">&lt;DICTIONARY_KEY_2&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;DICTIONARY_VALUE_2&gt;</span>
+</pre></div>
+</div>
+<p>For referencing created resources (for example, creating a subnet in a
+created network) the “get_resource” function should be used.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">&lt;OBJECT_NAME&gt;</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>Official examples of Heat templates can be found <a class="reference external" href="https://opendev.org/openstack/heat-templates/src/branch/master/hot">here</a>. Below is a demonstration on how to create a virtual machine with public networking.</p>
+<ul class="simple">
+<li><p>Create a network, assigned to the “internal_network” object.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">internal_network</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::Net</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a subnet for the created network. Required properties: network
+name or ID.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">internal_subnet</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::Subnet</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">network</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">internal_network</span> <span class="p p-Indicator">}</span>
+    <span class="nt">cidr</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0.0.0/24</span>
+    <span class="nt">dns_nameservers</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8.8.4.4</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a port. This object can be used during the instance creation.
+Required properties: network name or ID.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">subnet_port</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::Port</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">network</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">internal_network</span> <span class="p p-Indicator">}</span>
+    <span class="nt">fixed_ips</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">subnet_id</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">internal_subnet</span> <span class="p p-Indicator">}</span>
+    <span class="nt">security_groups</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">basic_allow</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a router associated with the public “ext-net” network.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_router</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::Router</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">external_gateway_info</span><span class="p">:</span>
+      <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ext-net</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Attach a port from the network to the router.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">external_router_interface</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::RouterInterface</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">router</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">external_router</span> <span class="p p-Indicator">}</span>
+    <span class="nt">subnet</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">internal_subnet</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create a key pair called “HeatKeyPair.” Required property: name.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">ssh_keys</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Nova::KeyPair</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HeatKeyPair</span>
+    <span class="nt">public_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HeatKeyPair</span>
+    <span class="nt">save_private_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create an instance using the “m1.small” flavor, “RHEL7” image, and
+assign the subnet port created by “OS::Neutron::Port.”</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">instance_creation</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Nova::Server</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">flavor</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">m1.small</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RHEL7</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">port</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">subnet_port</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Allocate an IP from the “ext-net” floating IP pool.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">floating_ip</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Neutron::FloatingIP</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">floating_network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ext-net</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Allocate a a floating IP to the created instance from a
+“instance_creation” function. Alternatively, a specific instance’s
+ID can be defined here.</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">floating_ip_association</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OS::Nova::FloatingIPAssociation</span>
+  <span class="nt">properties</span><span class="p">:</span>
+    <span class="nt">floating_ip</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">floating_ip</span> <span class="p p-Indicator">}</span>
+    <span class="nt">server_id</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> get_resource</span><span class="p">:</span> <span class="nv">instance_creation</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h4><a class="toc-backref" href="#id54">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h4>
+<p>Parameters allow users to input custom variables for Heat templates.</p>
+<p>Common options:</p>
+<ul class="simple">
+<li><p>type = The input type. This can be a string, number, JSON, a comma
+separated list or a boolean.</p></li>
+<li><p>label = String. The text presented to the end-user for the fillable
+entry.</p></li>
+<li><p>description = String. Detailed information about the parameter.</p></li>
+<li><p>default = A default value for the parameter.</p></li>
+<li><p>constraints = A parameter has to match a specified constraint. Any
+number of constraints can be used from the available ones below.</p>
+<ul>
+<li><p>length = How long a string can be.</p></li>
+<li><p>range = How big a number can be.</p></li>
+<li><p>allowed_values = Allow only one of these specific values to be
+used.</p></li>
+<li><p>allowed_pattern = Allow only a value matching a regular
+expression.</p></li>
+<li><p>custom_constraint = A full list of custom service constraints can
+be found at
+<a class="reference external" href="#http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint">http://docs.openstack.org/developer/heat/template_guide/hot_spec.html#custom-constraint</a>.</p></li>
+</ul>
+</li>
+<li><p>hidden = Boolean. Specify if the text entered should be hidden or
+not. Default: false.</p></li>
+<li><p>immutable = Boolean. Specify whether this variable can be changed.
+Default: false.</p></li>
+</ul>
+<p>Syntax:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameters</span><span class="p">:</span>
+    <span class="nt">&lt;CUSTOM_NAME&gt;</span><span class="p">:</span>
+        <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+        <span class="nt">label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;LABEL&gt;</span>
+        <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;DESCRIPTION&gt;</span>
+        <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;DEFAULT_VALUE&gt;</span>
+        <span class="nt">constraints</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="nt">length</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> min</span><span class="p">:</span> <span class="nv">&lt;MINIMUM_NUMBER&gt;</span><span class="p p-Indicator">,</span><span class="nt"> max</span><span class="p">:</span> <span class="nv">&lt;MAXIMUM_NUMBER&gt;</span> <span class="p p-Indicator">}</span>
+            <span class="p p-Indicator">-</span> <span class="nt">range</span><span class="p">:</span> <span class="p p-Indicator">{</span><span class="nt"> min</span><span class="p">:</span> <span class="nv">&lt;MINIMUM_NUMBER&gt;</span><span class="p p-Indicator">,</span><span class="nt"> max</span><span class="p">:</span> <span class="nv">&lt;MAXIMUM_NUMBER&gt;</span> <span class="p p-Indicator">}</span>
+            <span class="p p-Indicator">-</span> <span class="nt">allowed_values</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="nv">&lt;VALUE1&gt;</span><span class="p p-Indicator">,</span> <span class="nv">&lt;VALUE2&gt;</span><span class="p p-Indicator">,</span> <span class="nv">&lt;VALUE3&gt;</span> <span class="p p-Indicator">]</span>
+            <span class="p p-Indicator">-</span> <span class="nt">allowed_pattern</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;REGULAR_EXPRESSION&gt;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">custom_constraint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;CONSTRAINT&gt;</span>
+        <span class="nt">hidden</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;BOOLEAN&gt;</span>
+        <span class="nt">immutable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;BOOLEAN&gt;</span>
+</pre></div>
+</div>
+<p>For referencing this parameter elsewhere in the Heat template, use this
+syntax for the variable:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">{</span><span class="nt"> get_param</span><span class="p">:</span> <span class="nv">&lt;CUSTOM_NAME&gt;</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>[39]</p>
+</div>
+</div>
+<div class="section" id="vagrant">
+<h3><a class="toc-backref" href="#id55">Vagrant</a><a class="headerlink" href="#vagrant" title="Permalink to this headline">¶</a></h3>
+<p>Vagrant is a tool to automate the deployment of virtual machines. A
+“Vagrantfile” file is used to initialize the instance. An example is
+provided below.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="nb">require</span> <span class="s1">&#39;vagrant-openstack-provider&#39;</span>
+
+<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span>       <span class="o">=</span> <span class="s1">&#39;vagrant-openstack&#39;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;cloud-user&#39;</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="ss">:openstack</span> <span class="k">do</span> <span class="o">|</span><span class="n">os</span><span class="o">|</span>
+    <span class="n">identity_api_version</span>  <span class="o">=</span> <span class="s1">&#39;3&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">openstack_auth_url</span> <span class="o">=</span> <span class="s1">&#39;http://controller1/v3/auth/tokens&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">domain</span>             <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">username</span>           <span class="o">=</span> <span class="s1">&#39;openstackUser&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">password</span>           <span class="o">=</span> <span class="s1">&#39;openstackPassword&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">project_name</span>       <span class="o">=</span> <span class="s1">&#39;myProject&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">flavor</span>             <span class="o">=</span> <span class="s1">&#39;m1.small&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">image</span>              <span class="o">=</span> <span class="s1">&#39;centos&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">networks</span>           <span class="o">=</span> <span class="s2">&quot;vagrant-net&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">floating_ip_pool</span>   <span class="o">=</span> <span class="s1">&#39;publicNetwork&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">keypair_name</span>       <span class="o">=</span> <span class="s2">&quot;private_key&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Once those settings are configured for the end user’s cloud environment,
+it can be created by running:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant up --provider<span class="o">=</span>openstack
+</pre></div>
+</div>
+<p>[40]</p>
+</div>
+</div>
+<div class="section" id="mistral-workflows">
+<h2><a class="toc-backref" href="#id56">Mistral Workflows</a><a class="headerlink" href="#mistral-workflows" title="Permalink to this headline">¶</a></h2>
+<p>List all of the available actions that Mistral can preform. [60]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mistral action-list
+</pre></div>
+</div>
+<p>The only supported Mistral template version is <code class="docutils literal notranslate"><span class="pre">2.0</span></code>. All templates should start with this block:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+</pre></div>
+</div>
+<p>A workflow can accept input and output variables. The input is used for the tasks and once complete output it is saved in the Mistral database.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;WORKFLOW_NAME&gt;</span><span class="p">:</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;DESCRIPTION&gt;</span>
+  <span class="nt">input</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;INPUT1&gt;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;INPUT2&gt;</span>
+  <span class="nt">output</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">&lt;KEY&gt;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;VALUE&gt;</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="nt">&lt;TASK1_NAME&gt;</span><span class="p">:</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MISTRAL_ACTION1&gt;</span>
+    <span class="nt">&lt;TASK2_NAME&gt;</span><span class="p">:</span>
+      <span class="nt">action</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;MISTRAL_ACTION2&gt;</span>
+</pre></div>
+</div>
+<p>Common actions:</p>
+<ul class="simple">
+<li><p>std.echo = Used for testing by displaying the output of variables.</p>
+<ul>
+<li><p><strong>output</strong> = The output to display.</p></li>
+</ul>
+</li>
+<li><p>std.fail = Force the workflow to fail.</p></li>
+<li><p>std.http = Handle HTTP requests.</p>
+<ul>
+<li><p>headers = Custom headers to add to the request.</p></li>
+<li><p>method = The HTTP method to use.</p></li>
+<li><p><strong>url</strong> = The URL to interact with.</p></li>
+<li><p>verify = If the certificate should be verified.</p></li>
+</ul>
+</li>
+<li><p>std.ssh = Run commands via SSH.</p>
+<ul>
+<li><p><strong>cmd</strong> = The command to run.</p></li>
+<li><p>host</p></li>
+<li><p>username</p></li>
+<li><p>password</p></li>
+<li><p>private_key_filename = The full path to the private key or the name of the private key in <code class="docutils literal notranslate"><span class="pre">~/.ssh/</span></code>.</p></li>
+</ul>
+</li>
+<li><p>std.javascript or std.js = Execute JavaScript code.</p>
+<ul>
+<li><p><strong>script</strong> = The source code text to run.</p></li>
+</ul>
+</li>
+<li><p>send_email = Send an e-mail.</p>
+<ul>
+<li><p>to_addrs = A list of e-mail addresses to send the e-mail to.</p></li>
+<li><p>body = The text body of the e-mail.</p></li>
+</ul>
+</li>
+</ul>
+<p>Common task attributes:</p>
+<ul class="simple">
+<li><p>description = A string describing what the action does.</p></li>
+<li><p>input = Input strings</p></li>
+<li><p>output = Output strings.</p></li>
+<li><p>output-on-error = Strings that will only output if the task fails.</p></li>
+<li><p>on-{complete,error,success} = A list of tasks to run given the state of the current task.</p></li>
+<li><p>{pause-before,wait-before,wait-after} = Define dependencies or requirements between tasks.</p></li>
+<li><p>timeout = The timeout, in seconds, before the task is marked as a failure.</p></li>
+<li><p>retry = The number of times to retry the task before being marked as a failure.</p></li>
+<li><p>concurrency = The maximum number of parallel task actions to run at once.</p></li>
+</ul>
+<p>[61]</p>
+<p>Load the YAML workflow into Mistral.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mistral workflow-create &lt;WORKFLOW_YAML_FILE_NAME&gt;
+</pre></div>
+</div>
+<p>Then execute the workflow using another file that contains the input variables and check it’s progress.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mistral execution-create &lt;WORKFLOW&gt; &lt;VARIABLES_FILE&gt;
+$ mistral execution-list
+$ mistral execution-get &lt;EXECUTION_ID&gt;
+</pre></div>
+</div>
+<p>[60]</p>
+</div>
+<div class="section" id="testing">
+<h2><a class="toc-backref" href="#id57">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="manual">
+<h3><a class="toc-backref" href="#id58">Manual</a><a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h3>
+<p>Manual testing of the core OpenStack services can be done by deploying an instance using a CirrOS image from <a class="reference external" href="https://download.cirros-cloud.net/">here</a>. It is a minimalist fork of Ubuntu with a small set of packages installed. It was designed to run with the <code class="docutils literal notranslate"><span class="pre">tiny</span></code> instance flavor. [58] The default password for &lt; 0.4 is <code class="docutils literal notranslate"><span class="pre">cubswin:)</span></code> and for &gt;= 0.4 it is <code class="docutils literal notranslate"><span class="pre">gocubsgo</span></code>. [59]</p>
+</div>
+<div class="section" id="tempest">
+<h3><a class="toc-backref" href="#id59">Tempest</a><a class="headerlink" href="#tempest" title="Permalink to this headline">¶</a></h3>
+<p>Tempest is used to query all of the different APIs in use. This helps to
+validate the functionality of OpenStack. This software is a rolling
+release aimed towards verifying the latest OpenStack release in
+development but it should also work for older versions as well.</p>
+<p>The sample configuration file “/etc/tempest/tempest.conf.sample” should be copied to “/etc/tempest/tempest.conf” and then modified. If it is not available then the latest configuration file can be downloaded from one of these sources: <a class="reference external" href="https://docs.openstack.org/tempest/latest/sampleconf.html">https://docs.openstack.org/tempest/latest/sampleconf.html</a> and <a class="reference external" href="https://docs.openstack.org/tempest/latest/_static/tempest.conf.sample">https://docs.openstack.org/tempest/latest/_static/tempest.conf.sample</a>.</p>
+<ul>
+<li><p>Provide credentials to a user with the “admin” role.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[auth]</span>
+<span class="na">admin_username</span>
+<span class="na">admin_password</span>
+<span class="na">admin_project_name</span>
+<span class="na">admin_domain_name</span>
+<span class="na">default_credentials_domain_name</span> <span class="o">=</span> <span class="s">Default</span>
+</pre></div>
+</div>
+</li>
+<li><p>Specify the Keystone version to use. Valid options are “v2” and “v3.”</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[identity]</span>
+<span class="na">auth_version</span>
+</pre></div>
+</div>
+</li>
+<li><p>Provide the admin Keystone endpoint for v2 (uri) or v3 (uri_v3).</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[identity]</span>
+<span class="na">uri</span>
+<span class="na">uri_v3</span>
+</pre></div>
+</div>
+</li>
+<li><p>Two different size flavor IDs should be given.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[compute]</span>
+<span class="na">flavor_ref</span>
+<span class="na">flavor_ref_alt</span>
+</pre></div>
+</div>
+</li>
+<li><p>Two different image IDs should be given.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[compute]</span>
+<span class="na">image_ref</span>
+<span class="na">image_ref_alt</span>
+</pre></div>
+</div>
+</li>
+<li><p>Define what services should be tested for the specific cloud.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[service_available]</span>
+<span class="na">cinder</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">neutron</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">glance</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">swift</span> <span class="o">=</span> <span class="s">false</span>
+<span class="na">nova</span> <span class="o">=</span> <span class="s">true</span>
+<span class="na">heat</span> <span class="o">=</span> <span class="s">false</span>
+<span class="na">sahara</span> <span class="o">=</span> <span class="s">false</span>
+<span class="na">ironic</span> <span class="o">=</span> <span class="s">false</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[41]</p>
+</div>
+<div class="section" id="rally">
+<h3><a class="toc-backref" href="#id60">Rally</a><a class="headerlink" href="#rally" title="Permalink to this headline">¶</a></h3>
+<p>Rally is the benchmark-as-a-service (BaaS) that tests the OpenStack APIs for both functionality and for helping with performance tuning. This tool has support for using different verifier plugins. It is primarily built to be a wrapper for Tempest that is easier to configure and saves the results to a database so it can generate reports.</p>
+<div class="section" id="installation">
+<h4><a class="toc-backref" href="#id61">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h4>
+<p>Install Rally 0.12 on RHEL using a Python virtual environment.</p>
+<p>RHEL:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install gcc git gmp-devel libffi-devel libxml2-devel libxslt-devel openssl-devel postgresql-devel python-devel python-pip redhat-lsb-core redhat-rpm-config wget
+$ virtualenv ~/rally-venv
+$ . ~/rally-venv/bin/activate
+<span class="o">(</span>rally-venv<span class="o">)</span>$ pip install -U pip setuptools
+<span class="o">(</span>rally-venv<span class="o">)</span>$ pip install <span class="nv">rally</span><span class="o">==</span><span class="m">0</span>.12.*
+</pre></div>
+</div>
+<p>Finish the installation by initializing a SQLite database for Rally. Alternatively, a MariaDB or PostgreSQL database connection can be configured in <code class="docutils literal notranslate"><span class="pre">~/rally-venv/etc/rally/rally.conf</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally db recreate
+</pre></div>
+</div>
+<p>If Rally is ever upgraded to the latest version, the database schema also needs to be upgraded.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally db revision
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally db upgrade
+</pre></div>
+</div>
+<p>[43]</p>
+</div>
+<div class="section" id="registering">
+<h4><a class="toc-backref" href="#id62">Registering</a><a class="headerlink" href="#registering" title="Permalink to this headline">¶</a></h4>
+<p>Rally requires a deployment, that defines the OpenStack credentials to test with, to be registered. It is recommended to use an account with the “admin” role so that all features of the cloud can be tested and benchmarked. The “admin” user is no longer required in Rally version &gt;= 0.10.0. [46]</p>
+<p>View registered deployments:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment list
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment show &lt;DEPLOYMENT_NAME&gt;
+</pre></div>
+</div>
+<p>Switch to an existing registered deployment:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment use &lt;DEPLOYMENT_NAME&gt;
+</pre></div>
+</div>
+<p>The current OpenStack credentials for the deployment that is active are saved to <code class="docutils literal notranslate"><span class="pre">~/.rally/openrc</span></code>.</p>
+<p>A deployment and it’s resources and be removing by running:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment destroy &lt;DEPLOYMENT_NAME&gt;
+</pre></div>
+</div>
+<p>Alternatively, keep the configuration and only clean-up the OpenStack resources and existing test data.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment recreate &lt;DEPLOYMENT_NAME&gt;
+</pre></div>
+</div>
+<p><cite>1.</cite> Automatic Registration</p>
+<p>The fastest way to create this configuration is by referencing the OpenStack credential’s shell environment variables.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ . &lt;OPENSTACK_RC_FILE&gt;
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment create --fromenv --name<span class="o">=</span>existing
+</pre></div>
+</div>
+<p><cite>2.</cite> Manual Registration</p>
+<p>A JSON file can be created to define the OpenStack credentials that Rally will be using. Example files can be found at <cite>~/rally-venv/samples/deployments/</cite>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ cp ~/rally-venv/samples/deployments/existing.json ~/existing.json
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;devstack&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;auth_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://&lt;KEYSTONE_ENDPOINT_HOST&gt;:5000/v3/&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;region_name&quot;</span><span class="p">:</span> <span class="s2">&quot;RegionOne&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;endpoint_type&quot;</span><span class="p">:</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;admin&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;PASSWORD&gt;&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;user_domain_name&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;project_name&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;project_domain_name&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;https_insecure&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;https_cacert&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;PATH_TO_CA_CERT&gt;&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For only using non-privileged OpenStack users, omit the “admin” dictionary. [45]</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;openstack&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;auth_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://&lt;KEYSTONE_ENDPOINT_HOST&gt;:5000/v3&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;region_name&quot;</span><span class="p">:</span> <span class="s2">&quot;RegionOne&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;endpoint_type&quot;</span><span class="p">:</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;users&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;USER_NAME&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;PASSWORD&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;user_domain_name&quot;</span><span class="p">:</span> <span class="nt">&quot;Default&quot;</span>
+                <span class="nt">&quot;project_name&quot;</span><span class="p">:</span> <span class="nt">&quot;&lt;PROJECT_NAME&gt;&quot;</span>
+                <span class="nt">&quot;project_domain_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Default&quot;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally deployment create --file<span class="o">=</span>~/existing.json --name<span class="o">=</span>&lt;DEPLOYMENT_NAME&gt;
+</pre></div>
+</div>
+<p>[44]</p>
+</div>
+<div class="section" id="scenarios">
+<h4><a class="toc-backref" href="#id63">Scenarios</a><a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h4>
+<p>Scenarios define the tests that will be ran. Variables can be tweaked to customize them. All Rally scenario files are Jinja2 templates and can be in JSON or YAML format. Multiple scenarios can be setup in a single file for Rally to test them all.</p>
+<p>Example scenarios:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ ls -1 ~/rally-venv/samples/tasks/scenarios/*
+</pre></div>
+</div>
+<p>Each scenario can be configured using similar options.</p>
+<ul>
+<li><p>args = Override default values for a task.</p></li>
+<li><p>context = Defines the resources that need to be created before a task runs.</p></li>
+<li><p>runner [47]</p>
+<blockquote>
+<div><ul>
+<li><p>concurrency (constant types) = The number of tasks to run at the same time (as different threads).</p></li>
+<li><p>duration (constant_for_duration type) = The number of seconds to run a scenario before finishing.</p></li>
+<li><p>max_concurrent (rps type) = The maximum number of threads that should spawn.</p></li>
+<li><p>rps (rps type) = The number of seconds to wait before starting a task in a new thread.</p></li>
+<li><p>times = The number of times the scenario should run.</p></li>
+<li><p>type</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>constant =  The number of <em>times</em> a scenario should run. Optionally run in parallel by setting the <em>concurrency</em>.</p></li>
+<li><p>constant_for_duration = Run the scenario for a specified amount of time, in seconds, as defined by <em>duration</em>.</p></li>
+<li><p>rps = Runs per second. Every <em>rps</em> amount of seconds a task is ran as a new thread.</p></li>
+<li><p>serial = Specify the number of <em>times</em> to run a single task (without any concurrency support).</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>sla = “Service level agreement.” This defines when to mark a scenario as being failed.</p>
+<blockquote>
+<div><ul>
+<li><p>failure_rate</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>max = The number of times a task can fail before the scenario is marked as a failure.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>max_seconds_per_iteration = The amount of seconds before a task is considered failed.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>After creating a scenario, it can be run from the CLI:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally task start &lt;SCENARIO_FILE&gt;.&lt;JSON_OR_YAML&gt;
+</pre></div>
+</div>
+<p>Additional variables can be passed via the command line.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally task start --task-args <span class="s2">&quot;&lt;JSON_ARGS&gt;&quot;</span> &lt;SCENARIO_FILE&gt;.&lt;JSON_OR_YAML&gt;
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally task start --task-args-file &lt;ARGS_FILE&gt;.&lt;JSON_OR_YAML&gt; &lt;SCENARIO_FILE&gt;.&lt;JSON_OR_YAML&gt;
+</pre></div>
+</div>
+<p>[44]</p>
+</div>
+<div class="section" id="reports">
+<h4><a class="toc-backref" href="#id64">Reports</a><a class="headerlink" href="#reports" title="Permalink to this headline">¶</a></h4>
+<p>All tasks that Rally runs are permanently stored in the database. The same detailed report that is sent to the standard output can also be viewed at any time after tasks are done running.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally task list
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally task status &lt;TASK_UUID&gt;
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally task detailed &lt;TASK_UUID&gt;
+</pre></div>
+</div>
+<p>Reports can be generated in a “html” or “json” format. Multiple tasks can also be added to a single report.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ rally task report &lt;TASK_UUID_1&gt; &lt;TASK_UUID_2&gt; &lt;TASK_UUID_3&gt; --&lt;FORMAT&gt;
+</pre></div>
+</div>
+<p>The JUnit XML (a Java unit test library) format can also be used. This library is not installed by default.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rally-venv<span class="o">)</span>$ pip install junit-xml
+<span class="o">(</span>rally-venv<span class="o">)</span>$ rally task <span class="nb">export</span> &lt;TASK_UUID&gt; --type junit
+</pre></div>
+</div>
+<p>[48]</p>
+</div>
+</div>
+</div>
+<div class="section" id="performance">
+<h2><a class="toc-backref" href="#id65">Performance</a><a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<p>OpenStack can be tuned to use less processing power and run faster.</p>
+<ul>
+<li><p>KeyStone</p>
+<blockquote>
+<div><ul>
+<li><p>Switch to Fernet keys.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Creation of tokens is significantly faster because it does not rely on storing them in a database.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Neutron</p>
+<blockquote>
+<div><ul>
+<li><p>Use distributed virtual routing (DVR).</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This offloads a lot of networking resources onto the compute nodes.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>General</p>
+<blockquote>
+<div><ul>
+<li><p>Utilize local DNS.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ensure that all of the domain names in use are either available via a local recursive DNS server or on each server in the /etc/hosts file. This avoids a performance hit from external DNS lookups.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Use memcache.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>This is configured by an option called “memcache_servers” in the configuration files for most services. Consider using “CouchBase” for it’s ease of clustering and redundancy support.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id66">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst">&lt; 2020.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/openstack.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id67">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“OpenStack Releases.” OpenStack Releases. June 17, 2020. Accessed June 17, 2020. <a class="reference external" href="https://releases.openstack.org/">https://releases.openstack.org/</a></p></li>
+<li><p>“New OpenStack Ocata stabilizes popular open-source cloud.” February 22, 2017. Accessed April 10, 2017. <a class="reference external" href="http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/">http://www.zdnet.com/article/new-openstack-ocata-stabilizes-popular-open-source-cloud/</a></p></li>
+<li><p>“Ocata [Goals].” OpenStack Governance. April 10, 2017. Accessed April 10, 2017. <a class="reference external" href="https://governance.openstack.org/tc/goals/ocata/index.html">https://governance.openstack.org/tc/goals/ocata/index.html</a></p></li>
+<li><p>“Pike [Goals].” OpenStack Governance. April 10, 2017. Accessed April 10, 2017. <a class="reference external" href="https://governance.openstack.org/tc/goals/pike/index.html">https://governance.openstack.org/tc/goals/pike/index.html</a></p></li>
+<li><p>“Queens [Goals].” OpenStack Governance. June 27, 2019. Accessed October 28, 2019. <a class="reference external" href="https://governance.openstack.org/tc/goals/queens/index.html">https://governance.openstack.org/tc/goals/queens/index.html</a></p></li>
+<li><p>“Project Navigator.” OpenStack. Accessed March 15, 2018. <a class="reference external" href="https://www.openstack.org/software/project-navigator/">https://www.openstack.org/software/project-navigator/</a></p></li>
+<li><p>“DevStack switching from MySQL-python to PyMySQL.” OpenStack nimeyo. June 9, 2015. Accessed October 15, 2016. <a class="reference external" href="https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql">https://openstack.nimeyo.com/48230/openstack-all-devstack-switching-from-mysql-python-pymysql</a></p></li>
+<li><p>“Using PostgreSQL with OpenStack.” FREE AND OPEN SOURCE SOFTWARE KNOWLEDGE BASE. June 06, 2014. Accessed October 15, 2016. <a class="reference external" href="https://fosskb.in/2014/06/06/using-postgresql-with-openstack/">https://fosskb.in/2014/06/06/using-postgresql-with-openstack/</a></p></li>
+<li><p>“[Ceilometer] Installation Guide.” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/ceilometer/queens/install/">https://docs.openstack.org/ceilometer/queens/install/</a></p></li>
+<li><p>“Liberty install guide RHEL, keystone DB population unsuccessful: Module pymysql not found.” OpenStack Manuals Bugs. March 24, 2017. Accessed April 3, 2017. <a class="reference external" href="https://bugs.launchpad.net/openstack-manuals/+bug/1501991">https://bugs.launchpad.net/openstack-manuals/+bug/1501991</a></p></li>
+<li><p>“Message queue.” OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/install-guide/environment-messaging.html">https://docs.openstack.org/install-guide/environment-messaging.html</a></p></li>
+<li><p>“[oslo.messaging] Configurations.” OpenStack Documentation. March 19, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/oslo.messaging/queens/configuration/">https://docs.openstack.org/oslo.messaging/queens/configuration/</a></p></li>
+<li><p>“[Keystone] Pike Series Release Notes.” OpenStack Documentation. Accessed March 15, 2018. <a class="reference external" href="https://docs.openstack.org/releasenotes/keystone/pike.html">https://docs.openstack.org/releasenotes/keystone/pike.html</a></p></li>
+<li><p>“Setting up an RDO deployment to be Identity V3 Only.” Young Logic. May 8, 2015. Accessed October 16, 2016. <a class="reference external" href="https://adam.younglogic.com/2015/05/rdo-v3-only/">https://adam.younglogic.com/2015/05/rdo-v3-only/</a></p></li>
+<li><p>“Install and configure [Keystone on RDO].” OpenStack Documentation. March 13, 2018. Accessed March 15, 2018. <a class="reference external" href="https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html">https://docs.openstack.org/keystone/queens/install/keystone-install-rdo.html</a></p></li>
+<li><p>“Ocata Series [Keystone] Release Notes.” OpenStack Documentation. Accessed April 3, 2017. <a class="reference external" href="https://docs.openstack.org/releasenotes/keystone/ocata.html">https://docs.openstack.org/releasenotes/keystone/ocata.html</a></p></li>
+<li><p>“Hypervisors.” OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. <a class="reference external" href="https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html">https://docs.openstack.org/nova/queens/admin/configuration/hypervisors.html</a></p></li>
+<li><p>“Driving in the Fast Lane – CPU Pinning and NUMA Topology Awareness in OpenStack Compute.” Red Hat Stack. Mary 5, 2015. Accessed April 13, 2017. <a class="reference external" href="http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/">http://redhatstackblog.redhat.com/2015/05/05/cpu-pinning-and-numa-topology-awareness-in-openstack-compute/</a></p></li>
+<li><p>“CPU topologies.” OpenStack Documentation. March 8, 2018. Accessed March 18, 2018. <a class="reference external" href="https://docs.openstack.org/nova/queens/admin/cpu-topologies.html">https://docs.openstack.org/nova/queens/admin/cpu-topologies.html</a></p></li>
+<li><p>“BLOCK DEVICES AND OPENSTACK.” Ceph Documentation. Accessed March 18, 2018. <a class="reference external" href="http://docs.ceph.com/docs/master/rbd/rbd-openstack">http://docs.ceph.com/docs/master/rbd/rbd-openstack</a></p></li>
+<li><p>“Nested Virtualization in OpenStack, Part 2.” Stratoscale. June 28, 2016. Accessed November 9, 2017. <a class="reference external" href="https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/">https://www.stratoscale.com/blog/openstack/nested-virtualization-openstack-part-2/</a></p></li>
+<li><p>“[Compute service] Overview.” OpenStack Documentation. March 8, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/nova/queens/install/overview.html">https://docs.openstack.org/nova/queens/install/overview.html</a></p></li>
+<li><p>“Open vSwitch: Self-service networks.” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html">https://docs.openstack.org/neutron/queens/admin/deploy-ovs-selfservice.html</a></p></li>
+<li><p>“Neutron Installation Guide.” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/install/index.html">https://docs.openstack.org/neutron/queens/install/index.html</a></p></li>
+<li><p>“DNS resolution for instances.” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/config-dns-res.html">https://docs.openstack.org/neutron/queens/admin/config-dns-res.html</a></p></li>
+<li><p>“Introduction of Metadata Service in OpenStack.” VietStack. September 09, 2014. Accessed August 13th, 2016. <a class="reference external" href="https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/">https://vietstack.wordpress.com/2014/09/27/introduction-of-metadata-service-in-openstack/</a></p></li>
+<li><p>“Load Balancer as a Service (LBaaS).” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/config-lbaas.html">https://docs.openstack.org/neutron/queens/admin/config-lbaas.html</a></p></li>
+<li><p>“Quality of Service (QoS).” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/config-qos.html">https://docs.openstack.org/neutron/queens/admin/config-qos.html</a></p></li>
+<li><p>“Neutron/DVR/HowTo” OpenStack Wiki. January 5, 2017. Accessed March 7, 2017. <a class="reference external" href="https://wiki.openstack.org/wiki/Neutron/DVR/HowTo">https://wiki.openstack.org/wiki/Neutron/DVR/HowTo</a></p></li>
+<li><p>“Distributed Virtual Routing with VRRP.” OpenStack Documentation. March 16, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html">https://docs.openstack.org/neutron/queens/admin/config-dvr-ha-snat.html</a></p></li>
+<li><p>“BLOCK DEVICES AND OPENSTACK.” Ceph Documentation. Accessed March 26, 2018. <a class="reference external" href="http://docs.ceph.com/docs/master/rbd/rbd-openstack/">http://docs.ceph.com/docs/master/rbd/rbd-openstack/</a></p></li>
+<li><p>“Volume encryption supported by the key manager.” OpenStack Documentation. March 18, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html">https://docs.openstack.org/cinder/queens/configuration/block-storage/volume-encryption.html</a></p></li>
+<li><p>“BLOCK DEVICES AND OPENSTACK.” Ceph Documentation. April 5, 2017. Accessed April 5, 2017. <a class="reference external" href="http://docs.ceph.com/docs/master/rbd/rbd-openstack/">http://docs.ceph.com/docs/master/rbd/rbd-openstack/</a></p></li>
+<li><p>“Adding additional NAT rule on neutron-l3-agent.” Ask OpenStack. February 15, 2015. Accessed February 23, 2017. <a class="reference external" href="https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/">https://ask.openstack.org/en/question/60829/adding-additional-nat-rule-on-neutron-l3-agent/</a></p></li>
+<li><p>“Networking in too much detail.” RDO Project. January 9, 2017. Accessed February 23, 2017. <a class="reference external" href="https://www.rdoproject.org/networking/networking-in-too-much-detail/">https://www.rdoproject.org/networking/networking-in-too-much-detail/</a></p></li>
+<li><p>“Upgrades.” OpenStack Documentation. January 15, 2017. Accessed January 15, 2017. <a class="reference external" href="http://docs.openstack.org/ops-guide/ops-upgrades.html">http://docs.openstack.org/ops-guide/ops-upgrades.html</a></p></li>
+<li><p>“OpenStack Command Line.” OpenStack Documentation. Accessed October 16, 2016. <a class="reference external" href="http://docs.openstack.org/developer/python-openstackclient/man/openstack.html">http://docs.openstack.org/developer/python-openstackclient/man/openstack.html</a></p></li>
+<li><p>“OpenStack Orchestration In Depth, Part I: Introduction to Heat.” Accessed September 24, 2016. November 7, 2014. <a class="reference external" href="https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/">https://developer.rackspace.com/blog/openstack-orchestration-in-depth-part-1-introduction-to-heat/</a></p></li>
+<li><p>“Heat Orchestration Template (HOT) specification.” OpenStack Documentation. February 15, 2019. Accessed July 16, 2020. <a class="reference external" href="https://docs.openstack.org/heat/latest/template_guide/hot_spec.html">https://docs.openstack.org/heat/latest/template_guide/hot_spec.html</a></p></li>
+<li><p>“ggiamarchi/vagrant-openstack-provider.” GitHub. January 30, 2017. Accessed April 3, 2017. <a class="reference external" href="https://github.com/ggiamarchi/vagrant-openstack-provider">https://github.com/ggiamarchi/vagrant-openstack-provider</a></p></li>
+<li><p>“Tempest Configuration Guide.” Sep 14th, 2016. <a class="reference external" href="http://docs.openstack.org/developer/tempest/configuration.html">http://docs.openstack.org/developer/tempest/configuration.html</a></p></li>
+<li><p>“Stable branches.” OpenStack Documentation. September 14, 2018. Accessed September 26, 2018. <a class="reference external" href="https://docs.openstack.org/project-team-guide/stable-branches.html">https://docs.openstack.org/project-team-guide/stable-branches.html</a></p></li>
+<li><p>“[Rally] Installation and upgrades.” Rally Documentation. Accessed January 25, 2018. <a class="reference external" href="https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html">https://rally.readthedocs.io/en/latest/install_and_upgrade/index.html</a></p></li>
+<li><p>“[Rally] Quick start.” Rally Documentation. Accessed January 25, 2018. <a class="reference external" href="https://rally.readthedocs.io/en/latest/quick_start/index.html">https://rally.readthedocs.io/en/latest/quick_start/index.html</a></p></li>
+<li><p>“Step 3. Benchmarking OpenStack with existing users.” OpenStack Documentation. July 3, 2017. Accessed January 25, 2018. <a class="reference external" href="https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html">https://docs.openstack.org/developer/rally/quick_start/tutorial/step_3_benchmarking_with_existing_users.html</a></p></li>
+<li><p>“Allow deployment without admin creds.” OpenStack Gerrit Code Review. June 3, 2017. Accessed January 25, 2018. <a class="reference external" href="https://review.openstack.org/#/c/465495/">https://review.openstack.org/#/c/465495/</a></p></li>
+<li><p>“Main concepts of Rally.” OpenStack Documentation. July 3, 2017. Accessed January 26, 2018. <a class="reference external" href="https://docs.openstack.org/developer/rally/miscellaneous/concepts.html">https://docs.openstack.org/developer/rally/miscellaneous/concepts.html</a></p></li>
+<li><p>“Verification reports.” Rally Documentation. Accessed October 28, 2019. <a class="reference external" href="https://docs.openstack.org/rally/latest/verification/reports.html">https://docs.openstack.org/rally/latest/verification/reports.html</a></p></li>
+<li><p>“OpenStack Pike Repository.” CentOS Vault. May 20, 2019. Accessed October 28, 2019. <a class="reference external" href="http://vault.centos.org/7.6.1810/cloud/x86_64/openstack-pike/">http://vault.centos.org/7.6.1810/cloud/x86_64/openstack-pike/</a></p></li>
+<li><p>“External Ceph.” OpenStack Documentation. March 15, 2018. Accessed March 19, 2018. <a class="reference external" href="https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html">https://docs.openstack.org/kolla-ansible/queens/reference/external-ceph-guide.html</a></p></li>
+<li><p>“OVS 2.6 and The First Release of OVN.” Russell Bryant. September 29, 2016. Accessed October 24, 2019. <a class="reference external" href="https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/">https://blog.russellbryant.net/2016/09/29/ovs-2-6-and-the-first-release-of-ovn/</a></p></li>
+<li><p>“Upgrading OpenStack Services Simultaneously.” RDO Project. Accessed August 15, 2018. <a class="reference external" href="https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once">https://www.rdoproject.org/install/upgrading-rdo-1/#upgrading-compute-all-at-once</a></p></li>
+<li><p>“Rocky [Goals].” OpenStack Governance. September 21, 2018. Accessed September 26, 2018. <a class="reference external" href="https://governance.openstack.org/tc/goals/pike/index.html">https://governance.openstack.org/tc/goals/pike/index.html</a></p></li>
+<li><p>“Stein [Goals].” OpenStack Governance. September 21, 2018. Accessed September 26, 2018. <a class="reference external" href="https://governance.openstack.org/tc/goals/stein/index.html">https://governance.openstack.org/tc/goals/stein/index.html</a></p></li>
+<li><p>“Feature Configuration.” TripleO Documentation. September 21, 2018. Accessed September 27, 2018. <a class="reference external" href="https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html">https://docs.openstack.org/tripleo-docs/latest/install/advanced_deployment/features.html</a></p></li>
+<li><p>“Enabling Keystone’s Fernet Tokens in Red Hat OpenStack Platform.” Red Hat Blog. December 11, 2017. Accessed October 28, 2019. <a class="reference external" href="https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform">https://www.redhat.com/en/blog/enabling-keystones-fernet-tokens-red-hat-openstack-platform</a></p></li>
+<li><p>“Install the OpenStack command-line clients.” OpenStack Documentation. August 16, 2019. Accessed October 1, 2019. <a class="reference external" href="https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html">https://docs.openstack.org/mitaka/user-guide/common/cli_install_openstack_command_line_clients.html</a></p></li>
+<li><p>“Get images.” OpenStack Documentation. January 25, 2019. Accessed January 28, 2019. <a class="reference external" href="https://docs.openstack.org/image-guide/obtain-images.html">https://docs.openstack.org/image-guide/obtain-images.html</a></p></li>
+<li><p>“set default password to ‘gocubsgo’.” cirros, Launchpad. November 3, 2016. Accessed February 23, 2019. <a class="reference external" href="https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477">https://git.launchpad.net/cirros/commit/?id=9a7c371ef329cf78f256d0a5a8f475d9c57f5477</a></p></li>
+<li><p>“Workflow service (mistral) command-line client.” OpenStack Documentation. August 15, 2018. Accessed March 1, 2019. <a class="reference external" href="https://docs.openstack.org/ocata/cli-reference/mistral.html">https://docs.openstack.org/ocata/cli-reference/mistral.html</a></p></li>
+<li><p>“Mistral Workflow Language v2 specification.” OpenStack Documentation. Accessed November 13, 2019. Accessed March 1, 2019. <a class="reference external" href="https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html">https://docs.openstack.org/mistral/latest/user/wf_lang_v2.html</a></p></li>
+<li><p>“[Cloud-Init] Documentation.” Cloud-Init Documentation. Accessed July 25, 2019. <a class="reference external" href="https://cloudinit.readthedocs.io/en/latest/index.html">https://cloudinit.readthedocs.io/en/latest/index.html</a></p></li>
+<li><p>“Oslo.” OpenStack Wiki. July 17, 2018. Accessed November 1, 2019. <a class="reference external" href="https://wiki.openstack.org/wiki/Oslo">https://wiki.openstack.org/wiki/Oslo</a></p></li>
+<li><p>“Train [Goals].” OpenStack Governance. June 27, 2019. Accessed December 29, 2019. <a class="reference external" href="https://governance.openstack.org/tc/goals/selected/train/index.html">https://governance.openstack.org/tc/goals/selected/train/index.html</a></p></li>
+<li><p>“Ussuri [Goals].” OpenStack Governance. October 25, 2019. Accessed June 17, 2020. <a class="reference external" href="https://governance.openstack.org/tc/goals/selected/ussuri/index.html">https://governance.openstack.org/tc/goals/selected/ussuri/index.html</a></p></li>
+<li><p>“Bug 1783215 - The ‘heat_template_version’ in RHOSP15 is still ‘Rocky’.” Red Hat Bugzilla. December 16, 2019. Accessed July 16, 2020. <a class="reference external" href="https://bugzilla.redhat.com/show_bug.cgi?id=1783215">https://bugzilla.redhat.com/show_bug.cgi?id=1783215</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="developer.html" class="btn btn-neutral float-right" title="OpenStack Developer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

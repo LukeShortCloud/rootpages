@@ -1,0 +1,7 @@
+.DS_Store
+html/
+build/
+builddir/
+locale/
+locales/
+*.retry

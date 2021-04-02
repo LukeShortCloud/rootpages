@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Operating Systems &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Package Managers" href="package_managers.html" />
+    <link rel="prev" title="Mail Servers" href="mail_servers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Operating Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#arch-linux">Arch Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debian">Debian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fedora">Fedora</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fedora-silverblue">Fedora Silverblue</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gentoo">Gentoo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mandriva">Mandriva</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opensuse-leap">openSUSE Leap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#top-distributions">Top Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Operating Systems</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/administration/operating_systems.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="operating-systems">
+<h1><a class="toc-backref" href="#id1">Operating Systems</a><a class="headerlink" href="#operating-systems" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#operating-systems" id="id1">Operating Systems</a></p>
+<ul>
+<li><p><a class="reference internal" href="#arch-linux" id="id2">Arch Linux</a></p></li>
+<li><p><a class="reference internal" href="#debian" id="id3">Debian</a></p></li>
+<li><p><a class="reference internal" href="#fedora" id="id4">Fedora</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fedora-silverblue" id="id5">Fedora Silverblue</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gentoo" id="id6">Gentoo</a></p></li>
+<li><p><a class="reference internal" href="#mandriva" id="id7">Mandriva</a></p></li>
+<li><p><a class="reference internal" href="#opensuse-leap" id="id8">openSUSE Leap</a></p></li>
+<li><p><a class="reference internal" href="#top-distributions" id="id9">Top Distributions</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id10">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id11">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The Linux kernel is used in many different operating systems. These are commonly referred to as “distributions.” Major distributions sometimes have “derivative” operating systems that are created using the major distribution as a base.</p>
+<div class="section" id="arch-linux">
+<h2><a class="toc-backref" href="#id2">Arch Linux</a><a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h2>
+<p>Arch Linux is a 64-bit operating system whose motto is “Keep it Simple.” There is no graphical installer and the end-user is expected to manually configure their own system to their liking. Unlike Gentoo, compiled system packages are provided. Very detailed documentation about the operating system is provided in the official Arch Linux Wiki: <a class="reference external" href="https://wiki.archlinux.org/">https://wiki.archlinux.org/</a>. [1]</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/Arch_Linux">Rolling Release</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>Tape archive, LZMA2 compressed (tar.xz)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Manager:</dt><dd><ul>
+<li><p>Pacman (CLI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Release branches [14]:</dt><dd><ul>
+<li><p>stable = Rolling release of packages that have passed quality assurance from the testing repository.</p></li>
+<li><p>testing = Packages marked for testing before being promoted to the stable branch.</p></li>
+<li><p>staging = For developers only. An unstable rolling release of the latest package versions.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2]:</dt><dd><ul>
+<li><p>Antergos</p></li>
+<li><p>ArchLabs</p></li>
+<li><p>Manjaro</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="debian">
+<h2><a class="toc-backref" href="#id3">Debian</a><a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h2>
+<p>Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD, and Linux kernels. [11]</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p>Debian: <a class="reference external" href="https://www.debian.org/releases/">5 Years</a></p></li>
+<li><p>Ubuntu LTS (&gt;= 18.04): <a class="reference external" href="https://wiki.ubuntu.com/Releases">10 Years</a></p></li>
+<li><p>Ubuntu LTS (&lt;= 16.04): <a class="reference external" href="https://wiki.ubuntu.com/LTS">5 Years</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>deb</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Managers:</dt><dd><ul>
+<li><p>Apt (CLI)</p></li>
+<li><p>Synaptic (GUI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>[3]</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Release branches [15]:</dt><dd><ul>
+<li><p>stable = Released every two years, based on a freeze of testing a few months before the stable release.</p></li>
+<li><p>testing = A snapshot of packages that have been in unstable and bug-free for 10 days.</p></li>
+<li><p>unstable = For developers only. An unstable rolling release of the latest package versions.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2]:</dt><dd><ul>
+<li><p>elementary</p></li>
+<li><p>Linux Mint</p></li>
+<li><p>Ubuntu</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="fedora">
+<h2><a class="toc-backref" href="#id4">Fedora</a><a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h2>
+<p>Fedora is a upstream community operating system that is sponsored by Red Hat, Inc. that is designed to test the latest technologies. After years of testing, Fedora is eventually used as a base to create a new Red Hat Enterprise Linux (RHEL) operating system that is known for it’s enterprise support and long life cycle. [4] The Community Enterprise Operating System (CentOS) is a rebuild of RHEL without the Red Hat, Inc. branding. [5]</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p>Fedora: <a class="reference external" href="https://fedoraproject.org/wiki/Fedora_Release_Life_Cycle">13 months</a></p></li>
+<li><p>CentOS: <a class="reference external" href="https://www.centosblog.com/centos-eol-dates/">10 Years</a></p></li>
+<li><p>RHEL: <a class="reference external" href="https://access.redhat.com/support/policy/updates/errata">&gt; 10 Years</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>rpm</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Managers:</dt><dd><ul>
+<li><p>dnf (CLI)</p></li>
+<li><p>dnfdragora (GUI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Release branches [16]:</dt><dd><ul>
+<li><p>updates = The release of minor update packages for the major stable release.</p></li>
+<li><p>updates-testing = Updates to stable packages that are staged for testing.</p></li>
+<li><p>stable = Released every six months, based on a freeze of rawhide a few months before the stable release.</p></li>
+<li><p>rawhide = For developers only. An unstable rolling release of the latest package versions.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2]:</dt><dd><ul>
+<li><p>Community Enterprise Linux (CentOS)</p></li>
+<li><p>Red Hat Enterprise Linux (RHEL)</p></li>
+<li><p>Yellow Dog Linux (YDL)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="fedora-silverblue">
+<h3><a class="toc-backref" href="#id5">Fedora Silverblue</a><a class="headerlink" href="#fedora-silverblue" title="Permalink to this headline">¶</a></h3>
+<p>Fedora Silverblue uses ostree (via rpm-ostree) to manage the operating system in a way similar to git. There is a history of each update that can easily be rolled back. The file system is read-only except for writable directories for the user. Beyond the base operating system, it is recommended to install and manage applications as Flatpaks and/or containers. Silverblue may eventually replace the normal Fedora Workstation as the default desktop operating system.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Automatic updates by default.</p></li>
+<li><p>Easy to rollback updates.</p></li>
+<li><p>Difficult to break due to the read-only file system.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Does not support dual-booting.</p></li>
+<li><p>Partitions cannot be customized as fully as Fedora Workstation.</p></li>
+<li><p>RPM updates require a system reboot.</p></li>
+<li><p>Cannot search for specific packages (no <code class="docutils literal notranslate"><span class="pre">dnf</span> <span class="pre">search</span></code> equivalent).</p></li>
+</ul>
+<p>[13]</p>
+</div>
+</div>
+<div class="section" id="gentoo">
+<h2><a class="toc-backref" href="#id6">Gentoo</a><a class="headerlink" href="#gentoo" title="Permalink to this headline">¶</a></h2>
+<p>Gentoo is designed to be very configurable and optimized. Most packages need to be compiled from source code that is distributed through the package manager, Portage. This allows customized compilation options and compiler tuning.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p><a class="reference external" href="https://wiki.gentoo.org/wiki/FAQ">Rolling Release</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>Tape archive, block-sorting compressed (tbz2) [6]</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Manager:</dt><dd><ul>
+<li><p>Portage (CLI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Release branches [17]:</dt><dd><ul>
+<li><p>stable = Stable rolling releases of every package.</p></li>
+<li><p>testing/unstable = For developers only. An unstable version of specific packages.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2][7]:</dt><dd><ul>
+<li><p>Calculate Linux</p></li>
+<li><p>Chromium OS</p></li>
+<li><p>Container Linux</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="mandriva">
+<h2><a class="toc-backref" href="#id7">Mandriva</a><a class="headerlink" href="#mandriva" title="Permalink to this headline">¶</a></h2>
+<p>Mandriva, which was originally called Mandrake Linux, was a fork of the original Red Hat Linux 5.1 in 1998. After it’s start, Mandriva no longer shares code with Fedora or RHEL and is it’s own operating system. The last release came out in 2011. Several derivatives still keep the Mandriva operating system alive. The Mageia project is the closest spiritual successor to the original Mandriva project.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p>Mageia: <a class="reference external" href="https://www.mageia.org/en/support/">1.5 Years</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>rpm</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Managers:</dt><dd><ul>
+<li><p>urpmi (CLI)</p></li>
+<li><p>rpmdrake (GUI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2]:</dt><dd><ul>
+<li><p>Mageia</p></li>
+<li><p>OpenMandriva</p></li>
+<li><p>PCLinuxOS</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>[8]</p>
+</div>
+<div class="section" id="opensuse-leap">
+<h2><a class="toc-backref" href="#id8">openSUSE Leap</a><a class="headerlink" href="#opensuse-leap" title="Permalink to this headline">¶</a></h2>
+<p>openSUSE Leap is a upstream community operating system that is sponsored by SUSE. It is a stable release based off of openSUSE Tumbleweed. It is used as a base for the SUSE Linux Enterprise Server (SLES).</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Life Cycle:</dt><dd><ul>
+<li><p>Leap: <a class="reference external" href="https://en.opensuse.org/Lifetime">3 Years</a></p></li>
+<li><p>Tumbleweed: <a class="reference external" href="https://en.opensuse.org/Portal:Tumbleweed">Rolling Release</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Format:</dt><dd><ul>
+<li><p>rpm</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Package Manager:</dt><dd><ul>
+<li><p>zypper (CLI)</p></li>
+<li><p>YaST (GUI)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Release branches [18]:</dt><dd><ul>
+<li><p>stable = Packages that have been fully tested for release.</p></li>
+<li><p>devel = Packages that are constantly being updated and are in a usable state.</p></li>
+<li><p>staging = For developers only. New packages that are likely to break other packages.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Popular derivatives [2][12]:</dt><dd><ul>
+<li><p>FyreLinux</p></li>
+<li><p>GeckoLinux</p></li>
+<li><p>SLES</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>[10]</p>
+</div>
+<div class="section" id="top-distributions">
+<h2><a class="toc-backref" href="#id9">Top Distributions</a><a class="headerlink" href="#top-distributions" title="Permalink to this headline">¶</a></h2>
+<p>This is an extremely biased list of the best distribution for each use case.</p>
+<ul class="simple">
+<li><p>Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. Ubuntu Web Remix 4. GalliumOS</p></li>
+<li><p>Alternative to macOS = 1. elementary OS 2. Fedora 3. Xubuntu</p></li>
+<li><p>Alternative to Windows = Zorion OS</p></li>
+<li><p>Arm single-board computer (SBC) = Debian</p></li>
+<li><p>Bleeding edge (stable) = Manjaro</p></li>
+<li><p>Bleeding edge (unstable) = Arch Linux</p></li>
+<li><p>Community support = Arch Linux</p></li>
+<li><p>CPU architectures supported = Debian</p></li>
+<li><p>Customizable = Gentoo</p></li>
+<li><p>Customizable (easy) = Arch Linux</p></li>
+<li><p>Easiest = Zorion OS</p></li>
+<li><p>Free and open source software (FOSS) = 1. Fedora 2. Debian</p></li>
+<li><p>Gaming = 1. GamerOS 2. Pop!_OS 3. Manjaro 4. SteamOS</p></li>
+<li><p>Hardest = Linux From Scratch</p></li>
+<li><p>Hardware support = Arch Linux</p></li>
+<li><p>Lightweight = Tiny Core Linux</p></li>
+<li><p>Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. CentOS 4. Ubuntu LTS (free)</p></li>
+<li><p>Old computer = Linux Lite</p></li>
+<li><p>Oldest Linux distribution = 1. Slackware 2. Debian</p></li>
+<li><p>Operating system of the future = 1. Fedora Silverblue 2. Clear Linux 3. GamerOS</p></li>
+<li><p>Packages available = Ubuntu</p></li>
+<li><p>Release cycle</p>
+<ul>
+<li><p>Slow = Debian</p></li>
+<li><p>Moderate = openSUSE Leap</p></li>
+<li><p>Fast = 1. Fedora 2. Ubuntu</p></li>
+<li><p>Latest = Arch Linux</p></li>
+</ul>
+</li>
+<li><p>Security penetration testing = Kali Linux</p></li>
+<li><p>Server = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS</p></li>
+<li><p>Stable = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS</p></li>
+<li><p>Touchscreen = Fedora</p></li>
+<li><p>USB drive = Puppy Linux</p></li>
+<li><p>Desktop environments:</p>
+<ul>
+<li><p>Cinnamon = Linux Mint</p></li>
+<li><p>Deepin = Deepin</p></li>
+<li><p>Enlightenment = Bodhi Linux</p></li>
+<li><p>GNOME = Fedora</p></li>
+<li><p>KDE = KDE neon</p></li>
+<li><p>LXDE/LXQt = Mageia</p></li>
+<li><p>MATE = Solus MATE</p></li>
+<li><p>Pantheon = elementary OS</p></li>
+<li><p>Xfce = Xubuntu</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id10">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/operating_systems.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/operating_systems.rst">&lt; 2019.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id11">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Arch Linux.” Arch Linux. November 8, 2017. Accessed January 2, 2018. <a class="reference external" href="https://www.archlinux.org/">https://www.archlinux.org/</a></p></li>
+<li><p>“DistroWatch.” DistroWatch. Accessed April 27, 2020. <a class="reference external" href="https://distrowatch.com/">https://distrowatch.com/</a></p></li>
+<li><p>“Chapter 8 - The Debian package management tools.” The Debian GNU/Linux FAQ. Accessed January 2, 2018. <a class="reference external" href="https://www.debian.org/doc/manuals/debian-faq/ch-pkgtools.en.html">https://www.debian.org/doc/manuals/debian-faq/ch-pkgtools.en.html</a></p></li>
+<li><p>“What is the relationship between Fedora and Red Hat Enterprise Linux?” Red Hat. Accessed January 2, 2018. <a class="reference external" href="https://www.redhat.com/en/technologies/linux-platforms/articles/relationship-between-fedora-and-rhel">https://www.redhat.com/en/technologies/linux-platforms/articles/relationship-between-fedora-and-rhel</a></p></li>
+<li><p>“About CentOS.” CentOS. Accessed January 2, 2018. <a class="reference external" href="https://www.centos.org/about/">https://www.centos.org/about/</a></p></li>
+<li><p>“Binary package guide.” Gentoo Linux Wiki. November 13, 2017. Accessed January 2, 2018. <a class="reference external" href="https://wiki.gentoo.org/wiki/Binary_package_guide">https://wiki.gentoo.org/wiki/Binary_package_guide</a></p></li>
+<li><p>“Chromium OS SDK Creation.” The Chromium Projects. Accessed January 1, 2018. <a class="reference external" href="https://www.chromium.org/chromium-os/build/sdk-creation">https://www.chromium.org/chromium-os/build/sdk-creation</a></p></li>
+<li><p>“Mandriva Linux is dead, but these 3 forked distros carry on its legacy.” PCWorld. June 4, 2015. Accessed January 1, 2018. <a class="reference external" href="https://www.pcworld.com/article/2930369/mandriva-linux-is-dead-but-these-3-forked-distros-carry-on-its-legacy.html">https://www.pcworld.com/article/2930369/mandriva-linux-is-dead-but-these-3-forked-distros-carry-on-its-legacy.html</a></p></li>
+<li><p>“About Gentoo.” Gentoo Linux. Accessed January 2, 2018. <a class="reference external" href="https://www.gentoo.org/get-started/about/">https://www.gentoo.org/get-started/about/</a></p></li>
+<li><p>“[openSUSE Wiki] Main Page.” openSUSE Wiki. November 16, 2016. Accessed January 2, 2018. <a class="reference external" href="https://en.opensuse.org/Main_Page">https://en.opensuse.org/Main_Page</a></p></li>
+<li><p>“About Debian.” Debian. June 6, 2017. Accessed January 2, 2018. <a class="reference external" href="https://www.debian.org/intro/about">https://www.debian.org/intro/about</a></p></li>
+<li><p>“Derivatives.” OpenSUSE Wiki. Accessed March 20, 2018. <a class="reference external" href="https://en.opensuse.org/Derivatives">https://en.opensuse.org/Derivatives</a></p></li>
+<li><p>“What is Silverblue?” Fedora Magazine. July 12, 2019. Accessed July 29, 2019. <a class="reference external" href="https://fedoramagazine.org/what-is-silverblue/">https://fedoramagazine.org/what-is-silverblue/</a></p></li>
+<li><p>“Official repositories.” ArchWiki. June 8, 2020. Accessed October 11, 2020. <a class="reference external" href="https://wiki.archlinux.org/index.php/official_repositories">https://wiki.archlinux.org/index.php/official_repositories</a></p></li>
+<li><p>“DebianUnstable.” Debian Wiki. September 29, 2020. Accessed October 11, 2020. <a class="reference external" href="https://wiki.debian.org/DebianUnstable">https://wiki.debian.org/DebianUnstable</a></p></li>
+<li><p>“Repositories.” Fedora Docs Site. October 11, 2020. Accessed October 11, 2020. <a class="reference external" href="https://docs.fedoraproject.org/en-US/quick-docs/repositories/">https://docs.fedoraproject.org/en-US/quick-docs/repositories/</a></p></li>
+<li><p>“Stable request.” Gentoo Wiki. April 13, 2020. Accessed October 11, 2020. <a class="reference external" href="https://wiki.gentoo.org/wiki/Stable_request">https://wiki.gentoo.org/wiki/Stable_request</a></p></li>
+<li><p>“openSUSE:Factory development model.” openSUSE Wiki. October 25, 2019. Accessed October 11, 2020. https://en.opensuse.org/openSUSE:Factory_development_model</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="package_managers.html" class="btn btn-neutral float-right" title="Package Managers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mail_servers.html" class="btn btn-neutral float-left" title="Mail Servers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

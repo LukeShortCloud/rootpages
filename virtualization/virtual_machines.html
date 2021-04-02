@@ -1,0 +1,1885 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Virtual Machines &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Wine" href="wine.html" />
+    <link rel="prev" title="Kubernetes Development" href="kubernetes_development.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Virtual Machines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#libvirt">libvirt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vnc">VNC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hardware-virtualization">Hardware Virtualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kvm">KVM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#performance-tuning">Performance Tuning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#networking">Networking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nested-virtualization">Nested Virtualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gpu-pass-through">GPU Pass-through</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#xen">Xen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Nested Virtualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#orchestration">Orchestration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manual">Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anaconda">Anaconda</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kickstart-file">Kickstart File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#terraform">Terraform</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#providers">Providers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vagrant">Vagrant</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#boxes-images">Boxes (Images)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vagrantfile">Vagrantfile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gui">GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ovirt">oVirt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hooks">Hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vmware-vsphere">VMware vSphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#errors">Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Virtual Machines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/virtualization/virtual_machines.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="virtual-machines">
+<h1><a class="toc-backref" href="#id4">Virtual Machines</a><a class="headerlink" href="#virtual-machines" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#virtual-machines" id="id4">Virtual Machines</a></p>
+<ul>
+<li><p><a class="reference internal" href="#libvirt" id="id5">libvirt</a></p>
+<ul>
+<li><p><a class="reference internal" href="#vnc" id="id6">VNC</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#hardware-virtualization" id="id7">Hardware Virtualization</a></p>
+<ul>
+<li><p><a class="reference internal" href="#kvm" id="id8">KVM</a></p>
+<ul>
+<li><p><a class="reference internal" href="#performance-tuning" id="id9">Performance Tuning</a></p>
+<ul>
+<li><p><a class="reference internal" href="#processor" id="id10">Processor</a></p></li>
+<li><p><a class="reference internal" href="#memory" id="id11">Memory</a></p></li>
+<li><p><a class="reference internal" href="#network" id="id12">Network</a></p></li>
+<li><p><a class="reference internal" href="#storage" id="id13">Storage</a></p></li>
+<li><p><a class="reference internal" href="#pci" id="id14">PCI</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#networking" id="id15">Networking</a></p></li>
+<li><p><a class="reference internal" href="#nested-virtualization" id="id16">Nested Virtualization</a></p></li>
+<li><p><a class="reference internal" href="#gpu-pass-through" id="id17">GPU Pass-through</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#xen" id="id18">Xen</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id19">Nested Virtualization</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#orchestration" id="id20">Orchestration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#manual" id="id21">Manual</a></p></li>
+<li><p><a class="reference internal" href="#anaconda" id="id22">Anaconda</a></p>
+<ul>
+<li><p><a class="reference internal" href="#kickstart-file" id="id23">Kickstart File</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#terraform" id="id24">Terraform</a></p>
+<ul>
+<li><p><a class="reference internal" href="#modules" id="id25">Modules</a></p></li>
+<li><p><a class="reference internal" href="#providers" id="id26">Providers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#openstack" id="id27">OpenStack</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vagrant" id="id28">Vagrant</a></p>
+<ul>
+<li><p><a class="reference internal" href="#boxes-images" id="id29">Boxes (Images)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#usage" id="id30">Usage</a></p></li>
+<li><p><a class="reference internal" href="#creation" id="id31">Creation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vagrantfile" id="id32">Vagrantfile</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resource-allocation" id="id33">Resource Allocation</a></p></li>
+<li><p><a class="reference internal" href="#networks" id="id34">Networks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id35">libvirt</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#provisioning" id="id36">Provisioning</a></p></li>
+<li><p><a class="reference internal" href="#multiple-machines" id="id37">Multiple Machines</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gui" id="id38">GUI</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ovirt" id="id39">oVirt</a></p>
+<ul>
+<li><p><a class="reference internal" href="#install" id="id40">Install</a></p>
+<ul>
+<li><p><a class="reference internal" href="#quick" id="id41">Quick</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#hooks" id="id42">Hooks</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mac-spoofing" id="id43">MAC Spoofing</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id44">Nested Virtualization</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vmware-vsphere" id="id45">VMware vSphere</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id46">Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#errors" id="id47">Errors</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id48">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id49">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="libvirt">
+<h2><a class="toc-backref" href="#id5">libvirt</a><a class="headerlink" href="#libvirt" title="Permalink to this headline">¶</a></h2>
+<p>“libvirt” provides a framework and API for accessing and controlling
+different virtualization hypervisors. This Root Pages’ guide assumes
+that libvirt is used for managing Quick Emulator (QEMU) virtual
+machines. [1]</p>
+<div class="section" id="vnc">
+<h3><a class="toc-backref" href="#id6">VNC</a><a class="headerlink" href="#vnc" title="Permalink to this headline">¶</a></h3>
+<p>Any virtual machine can be accessed remotely via a VNC GUI. Shutdown the virtual machine with <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">shutdown</span></code> and then run <code class="docutils literal notranslate"><span class="pre">virsh</span> <span class="pre">edit</span> <span class="pre">${VM}</span></code>.</p>
+<p>Examples:</p>
+<p>Automatically assign a VNC port number (starting at 5900/TCP) and listen on every IP address.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain&gt;</span>
+    <span class="nt">&lt;devices&gt;</span>
+        <span class="nt">&lt;graphics</span> <span class="na">type=</span><span class="s">&#39;vnc&#39;</span> <span class="na">port=</span><span class="s">&#39;-1&#39;</span> <span class="na">autoport=</span><span class="s">&#39;yes&#39;</span> <span class="na">listen=</span><span class="s">&#39;0.0.0.0&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/devices&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+<p>Assign a static port number, listen only on localhost, and password protect the VNC console. The password will be stored in plaintext on the file system.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain&gt;</span>
+    <span class="nt">&lt;devices&gt;</span>
+        <span class="nt">&lt;graphics</span> <span class="na">type=</span><span class="s">&#39;vnc&#39;</span> <span class="na">port=</span><span class="s">&#39;5987&#39;</span> <span class="na">autoport=</span><span class="s">&#39;no&#39;</span> <span class="na">listen=</span><span class="s">&#39;127.0.0.1&#39;</span> <span class="na">passwd=</span><span class="s">&#39;securepasswordhere&#39;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/devices&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+<p>[50]</p>
+</div>
+</div>
+<div class="section" id="hardware-virtualization">
+<h2><a class="toc-backref" href="#id7">Hardware Virtualization</a><a class="headerlink" href="#hardware-virtualization" title="Permalink to this headline">¶</a></h2>
+<p>Hardware virtualization speeds up and further isolates virtualized environments. Most newer CPUs support this. There is “Intel VT (Virtualization Technology)” and “AMD SVM (Secure Virtual Machine)” for x86 processors. Hardware virtualization must be supported by both the motherboard and processor. It should also be enabled in the BIOS. [2]</p>
+<p>Intel has three subtypes of virtualization:</p>
+<ul class="simple">
+<li><p>VT-x = Basic hardware virtualization and host separation support.</p></li>
+<li><p>VT-d = I/O pass-through support.</p></li>
+<li><p>VT-c = Improved network I/O pass-through support.</p></li>
+</ul>
+<p>[3]</p>
+<p>AMD has two subtypes of virtualization:</p>
+<ul class="simple">
+<li><p>AMD-V = Basic hardware virtualization and host separation support.</p></li>
+<li><p>AMD-Vi = I/O pass-through support.</p></li>
+</ul>
+<p>Check for Intel or AMD virtualization support. If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -m <span class="m">1</span> --color vmx /proc/cpuinfo <span class="c1"># Intel</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -m <span class="m">1</span> --color svm /proc/cpuinfo <span class="c1"># AMD</span>
+</pre></div>
+</div>
+<p>Verify the exact subtype of virtualization:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ lscpu <span class="p">|</span> grep ^Virtualization <span class="c1"># Intel or AMD</span>
+</pre></div>
+</div>
+<div class="section" id="kvm">
+<h3><a class="toc-backref" href="#id8">KVM</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h3>
+<p>The “Kernel-based Virtual Machine (KVM)” is the default kernel module
+for handling hardware virtualization in Linux since the 2.6.20 kernel.
+[4] It is used to accelerate the QEMU hypervisor. [5]</p>
+<p>Fedora installation:</p>
+<ul class="simple">
+<li><p>Install KVM and Libvirt. Add non-privileged users to the “libvirt” group to be able to manage virtual machines through <code class="docutils literal notranslate"><span class="pre">qemu:///system</span></code>. By default, users can only manage them through <code class="docutils literal notranslate"><span class="pre">qemu:///session</span></code> which has limited configuration options.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dnf -y install qemu-kvm libvirt
+$ sudo systemctl <span class="nb">enable</span> --now libvirt
+$ sudo groupadd libvirt
+$ sudo usermod -a -G libvirt <span class="nv">$USER</span>
+</pre></div>
+</div>
+<div class="section" id="performance-tuning">
+<h4><a class="toc-backref" href="#id9">Performance Tuning</a><a class="headerlink" href="#performance-tuning" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="processor">
+<h5><a class="toc-backref" href="#id10">Processor</a><a class="headerlink" href="#processor" title="Permalink to this headline">¶</a></h5>
+<p>Configuration details for virtual machines can be modified to provide
+better performance. For processors, it is recommended to use the same
+CPU settings so that all of it’s features are available to the guest.
+[6]</p>
+<p>QEMU:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -cpu host ...
+</pre></div>
+</div>
+<p>libvirt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;cpu <span class="nv">mode</span><span class="o">=</span><span class="s1">&#39;host-passthrough&#39;</span>/&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="memory">
+<h5><a class="toc-backref" href="#id11">Memory</a><a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h5>
+<p>Enable Huge Pages and disable Transparent Hugepages (THP) on the hypervisor for better memory performance in virtual machines.</p>
+<p>View current Huge Pages allocation. The total should be “0” if it is disabled. The default size is 2048 KB on Fedora.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -i hugepages /proc/meminfo
+AnonHugePages:         <span class="m">0</span> kB
+ShmemHugePages:        <span class="m">0</span> kB
+HugePages_Total:       <span class="m">0</span>
+HugePages_Free:        <span class="m">0</span>
+HugePages_Rsvd:        <span class="m">0</span>
+HugePages_Surp:        <span class="m">0</span>
+Hugepagesize:       <span class="m">2048</span> kB
+</pre></div>
+</div>
+<p>Calculate the optimal Huge Pages total based on the amount of RAM that will be allocated to virtual machines. For example, if 24GB of RAM will be allocated to virtual machines then the Huge Pages total should be set to <code class="docutils literal notranslate"><span class="pre">12288</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">AMOUNT_OF_RAM_FOR_VMS_IN_KB</span><span class="o">&gt;</span> <span class="o">/</span> <span class="o">&lt;</span><span class="n">HUGEPAGES_SIZE</span><span class="o">&gt;</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">HUGEPAGES_TOTAL</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Enable Huge Pages by setting the total in sysctl.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/sysctl.conf
+vm.nr_hugepages <span class="o">=</span> &lt;HUGEPAGES_TOTAL&gt;
+$ sudo sysctl -p
+$ sudo mkdir /hugepages
+$ sudo vim /etc/fstab
+hugetlbfs    /hugepages    hugetlbfs    defaults    <span class="m">0</span> <span class="m">0</span>
+</pre></div>
+</div>
+<p>Huge Pages must be configured to be used by the virtualization software. The hypervisor isolates and reserves the Huge Pages RAM and will otherwise make the memory unusable by other resources.</p>
+<p>libvirt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">type=</span><span class="s">&#39;kvm&#39;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;memoryBacking&gt;</span>
+        <span class="nt">&lt;hugepages/&gt;</span>
+    <span class="nt">&lt;/memoryBacking&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+<p>Disable THP using GRUB.</p>
+<p>File: /etc/default/grub</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;&lt;EXISTING_OPTIONS&gt; transparent_hugepage=never&quot;</span>
+</pre></div>
+</div>
+<p>Rebuild the GRUB configuration.</p>
+<p>UEFI:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/efi/EFI/&lt;OPERATING_SYSTEM&gt;/grub.cfg
+</pre></div>
+</div>
+<p>BIOS:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+</pre></div>
+</div>
+<p>Alternatively, THP can be manually disabled. Note that if the GRUB method is used, it will set “enabled” to “never” on boot which means “defrag” does not need to be set to “never” since it is not in use. This manual method should be used on systems that will not be rebooted.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> never <span class="p">|</span> sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+$ <span class="nb">echo</span> never <span class="p">|</span> sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+</pre></div>
+</div>
+<p>In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in <code class="docutils literal notranslate"><span class="pre">/usr/lib/tuned/</span></code> on Fedora or in <code class="docutils literal notranslate"><span class="pre">/etc/tune-profiles/</span></code> on &lt;= RHEL 7.</p>
+<p>Increase the security limits in Fedora to allow the maximum valuable of RAM (in kilobytes) for a virtual machine that can be used with Huge Pages.</p>
+<p>File: /etc/security/limits.d/90-mem.conf</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">soft</span> <span class="n">memlock</span> <span class="mi">25165824</span>
+<span class="n">hard</span> <span class="n">memlock</span> <span class="mi">25165824</span>
+</pre></div>
+</div>
+<p>Reboot the server and verify that the new settings have taken affect.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -i huge /proc/meminfo
+AnonHugePages:         <span class="m">0</span> kB
+ShmemHugePages:        <span class="m">0</span> kB
+HugePages_Total:    <span class="m">8192</span>
+HugePages_Free:        <span class="m">0</span>
+HugePages_Rsvd:        <span class="m">0</span>
+HugePages_Surp:        <span class="m">0</span>
+Hugepagesize:       <span class="m">2048</span> kB
+Hugetlb:        <span class="m">16777216</span> kB
+</pre></div>
+</div>
+<p>[33]</p>
+</div>
+<div class="section" id="network">
+<h5><a class="toc-backref" href="#id12">Network</a><a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h5>
+<p>The network driver that provides the best performance is “virtio.” Some
+guests may not support this feature and require additional drivers.</p>
+<p>QEMU:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -net nic,model<span class="o">=</span>virtio ...
+</pre></div>
+</div>
+<p>libvirt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;interface <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;network&#39;</span>&gt;
+  ...
+  &lt;model <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;virtio&#39;</span> /&gt;
+&lt;/interface&gt;****
+</pre></div>
+</div>
+<p>Using a tap device (that will be assigned to an existing interface) or a
+bridge will speed up network connections.</p>
+<p>QEMU:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... -net tap,ifname<span class="o">=</span>&lt;NETWORK_DEVICE&gt; ...
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>... -net bridge,br<span class="o">=</span>&lt;NETWORK_BRIDGE_DEVICE&gt; ...
+</pre></div>
+</div>
+<p>libvirt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh edit &lt;VIRTUAL_MACHINE&gt;
+    &lt;interface <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span>&gt;
+...
+      &lt;<span class="nb">source</span> <span class="nv">bridge</span><span class="o">=</span><span class="s1">&#39;&lt;BRIDGE_DEVICE&gt;&#39;</span>/&gt;
+      &lt;model <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;virtio&#39;</span>/&gt;
+    &lt;/interface&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="storage">
+<h5><a class="toc-backref" href="#id13">Storage</a><a class="headerlink" href="#storage" title="Permalink to this headline">¶</a></h5>
+<p><strong>virtio</strong></p>
+<p>Raw disk partitions have the greatest speeds with the “virtio” driver, cache disabled, and the I/O mode set to “native.” If a sparsely allocated storage device is used for the virtual machine (such as a thin-provisioned QCOW2 image) then the I/O mode of “threads” is preferred. This is because with “native” some writes may be temporarily blocked as the sparsely allocated storage needs to first grow before committing the write. [20]</p>
+<p>QEMU:</p>
+<ul>
+<li><p>Block:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -drive <span class="nv">file</span><span class="o">=</span>&lt;PATH_TO_STORAGE_DEVICE&gt;,cache<span class="o">=</span>none,aio<span class="o">=</span>threads,if<span class="o">=</span>virtio ...
+</pre></div>
+</div>
+</li>
+<li><p>CDROM:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -cdrom &lt;PATH_TO_CDROM&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>libvirt:</p>
+<ul>
+<li><p>Block:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;block&#39;</span> <span class="na">device=</span><span class="s">&#39;disk&#39;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;raw&#39;</span> <span class="na">cache=</span><span class="s">&#39;none&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;source</span> <span class="na">dev=</span><span class="s">&#39;/dev/sr0&#39;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;vdb&#39;</span> <span class="na">bus=</span><span class="s">&#39;virtio&#39;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/disk&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>CDROM:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;block&#39;</span> <span class="na">device=</span><span class="s">&#39;cdrom&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;raw&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;source</span> <span class="na">dev=</span><span class="s">&#39;/dev/sr0&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;hdc&#39;</span> <span class="na">bus=</span><span class="s">&#39;ide&#39;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;readonly/&gt;</span>
+<span class="nt">&lt;/disk&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Virsh:</p>
+<ul>
+<li><p>Block:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ virsh attach-disk &lt;VM_NAME&gt; --source &lt;SOURCE_BLOCK_DEVICE&gt; --target &lt;DESTINATION_BLOCK_DEVICE&gt; --cache none --persistent
+</pre></div>
+</div>
+</li>
+<li><p>CDROM:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ virsh attach-disk &lt;VM_NAME&gt; /dev/sr0 vdb --config --type cdrom --mode <span class="nb">readonly</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[6][7][51]</p>
+<p><strong>QCOW2</strong></p>
+<p>When using the QCOW2 image format, create the image using metadata
+preallocation or else there could be up to a x5 performance penalty. [8]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ qemu-img create -f qcow2 -o <span class="nv">size</span><span class="o">=</span>&lt;SIZE&gt;G,preallocation<span class="o">=</span>metadata &lt;NEW_IMAGE_NAME&gt;
+</pre></div>
+</div>
+<p>If using a file system with copy-on-write capabilities, either (1) disable copy-on-write functionality of the QCOW2 when creating the file or (2) prevent the QCOW2 file from being part of the copy-on-write for the underlying file system.</p>
+<ol class="arabic">
+<li><p>Create a QCOW2 file without copy-on-write.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ qemu-img create -f qcow2 -o <span class="nv">size</span><span class="o">=</span>&lt;SIZE&gt;G,preallocation<span class="o">=</span>metadata,nocow<span class="o">=</span>on &lt;NEW_IMAGE_NAME&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Or prevent the file system from using its copy-on-write functionality for the QCOW2 file or directory where the QCOW2 files are stored.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ chattr +C &lt;FILE_OR_DIRECTORY&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="pci">
+<h5><a class="toc-backref" href="#id14">PCI</a><a class="headerlink" href="#pci" title="Permalink to this headline">¶</a></h5>
+<p>If possible, PCI pass-through provides the best performance as there is
+no virtualization overhead. The “GPU Pass-through” section expands upon this.</p>
+<p>QEMU:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -net none -device vfio-pci,host<span class="o">=</span>&lt;PCI_DEVICE_ADDRESS&gt; ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="networking">
+<h4><a class="toc-backref" href="#id15">Networking</a><a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h4>
+<p>Different models of virtual network interface cards (NICs) are available for the purposes of compatibility with the virtualized operating system. This can be set using the follow syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo qemu -net nic,model<span class="o">=</span>&lt;MODEL&gt;
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virt-install --network <span class="nv">network</span><span class="o">=</span>default,model<span class="o">=</span>&lt;MODEL&gt;
+</pre></div>
+</div>
+<p>Supported virtual device models [47]:</p>
+<ul class="simple">
+<li><p>e1000 = The default NIC. It emulates a 1 Gbps Intel NIC.</p></li>
+<li><p>virtio = High-performance device for operating systems with the driver available. Most Linux distributions has this driver available by default.</p></li>
+<li><p>rtl8139 = An old NIC for older operating systems. It emulates a 100 Mbps Realtek 8139 card.</p></li>
+<li><p>vmxnet3 = Use for VMware virtual machines and the VMware ESXi hypervisor. It emulates a virtual VMware NSXi NIC.</p></li>
+</ul>
+</div>
+<div class="section" id="nested-virtualization">
+<h4><a class="toc-backref" href="#id16">Nested Virtualization</a><a class="headerlink" href="#nested-virtualization" title="Permalink to this headline">¶</a></h4>
+<p>KVM supports nested virtualization. This allows a virtual machine full
+access to the processor to run another virtual machine in itself. This
+is disabled by default.</p>
+<p>Verify that the computers’ processor supports nested hardware virtualization. [11] If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.</p>
+<ul>
+<li><p>Intel:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -m <span class="m">1</span> --color vmx /proc/cpuinfo
+</pre></div>
+</div>
+</li>
+<li><p>AMD:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ grep -m <span class="m">1</span> --color svm /proc/cpuinfo
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Newer processors support APICv which allow direct hardware calls to go straight to the motherboard’s APIC. This can provide up to a 10% increase in performance for the processor and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ dmesg <span class="p">|</span> grep x2apic
+<span class="o">[</span>    <span class="m">0</span>.062174<span class="o">]</span> x2apic enabled
+</pre></div>
+</div>
+<p>Option #1 - Modprobe</p>
+<ul class="simple">
+<li><p>Intel</p></li>
+</ul>
+<p>File: /etc/modprobe.d/nested_virtualization.conf</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="n">kvm</span><span class="o">-</span><span class="n">intel</span> <span class="n">nested</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">options</span> <span class="n">kvm</span><span class="o">-</span><span class="n">intel</span> <span class="n">enable_apicv</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe -r kvm-intel
+$ sudo modprobe kvm-intel
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>AMD</p></li>
+</ul>
+<p>File: /etc/modprobe.d/nested_virtualization.conf</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="n">kvm</span><span class="o">-</span><span class="n">amd</span> <span class="n">nested</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">options</span> <span class="n">kvm</span><span class="o">-</span><span class="n">amd</span> <span class="n">enable_apicv</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe -r kvm-amd
+$ sudo modprobe kvm-amd
+</pre></div>
+</div>
+</div></blockquote>
+<p>Option #2 - GRUB2</p>
+<p>Append this option to the already existing “GRUB_CMDLINE_LINUX”
+options.</p>
+<ul class="simple">
+<li><p>Intel</p></li>
+</ul>
+<p>File: /etc/default/grub</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;kvm-intel.nested=1&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>AMD</p></li>
+</ul>
+<p>File: /etc/default/grub</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;kvm-amd.nested=1&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Then rebuild the GRUB 2 configuration.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>UEFI:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/efi/EFI/&lt;OPERATING_SYSTEM&gt;/grub.cfg
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p>BIOS:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>[9]</p>
+<p>Edit the virtual machine’s XML configuration to change the CPU mode to
+be “host-passthrough.”</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;cpu <span class="nv">mode</span><span class="o">=</span><span class="s1">&#39;host-passthrough&#39;</span>/&gt;
+</pre></div>
+</div>
+<p>[10]</p>
+<p>Reboot the virtual machine and verify that the hypervisor and the
+virtual machine both report the same capabilities and processor
+information.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh capabilities
+</pre></div>
+</div>
+<p>Finally verify that, in the virtual machine, it has full hardware
+virtualization support.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virt-host-validate
+</pre></div>
+</div>
+<p>OR</p>
+<ul>
+<li><p>Intel:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ cat /sys/module/kvm_intel/parameters/nested
+Y
+</pre></div>
+</div>
+</li>
+<li><p>AMD:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ cat /sys/module/kvm_amd/parameters/nested
+Y
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[11]</p>
+</div>
+<div class="section" id="gpu-pass-through">
+<h4><a class="toc-backref" href="#id17">GPU Pass-through</a><a class="headerlink" href="#gpu-pass-through" title="Permalink to this headline">¶</a></h4>
+<p>GPU pass-through provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU pass-through to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it’s own IOMMU group. The QEMU settings for the guest should be configured to use “SeaBIOS” for older cards or “OVMF” for newer cards that support UEFI. [36]</p>
+<ul class="simple">
+<li><p>Enable IOMMU on the hypervisor via the bootloader’s kernel options. This will provide a static ID to each hardware device. The “vfio-pci” kernel module also needs to start on boot.</p></li>
+</ul>
+<p>Intel:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">intel_iommu</span><span class="o">=</span><span class="n">on</span> <span class="n">rd</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">pre</span><span class="o">=</span><span class="n">vfio</span><span class="o">-</span><span class="n">pci</span>
+</pre></div>
+</div>
+<p>AMD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">amd_iommu</span><span class="o">=</span><span class="n">on</span> <span class="n">rd</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">pre</span><span class="o">=</span><span class="n">vfio</span><span class="o">-</span><span class="n">pci</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>For the GRUB bootloader, rebuild the configuration.</p></li>
+</ul>
+<p>UEFI:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/efi/EFI/&lt;OPERATING_SYSTEM&gt;/grub.cfg
+</pre></div>
+</div>
+<p>BIOS:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Find the IOMMU number for the graphics card. This should be the last alphanumeric set at the end of the line for the graphics card. The format should look similar to <cite>XXXX:XXXX</cite>. Add it to the options for the “vfio-pci” kernel module. This will bind a stub kernel driver to the device so that Linux does not use it.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo lspci -k -nn -v <span class="p">|</span> less
+$ sudo vim /etc/modprobe.d/vfio.conf
+options vfio-pci <span class="nv">ids</span><span class="o">=</span>XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Rebuild the initramfs to include the VFIO related drivers.</p></li>
+</ul>
+<p>Fedora:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s1">&#39;add_drivers+=&quot;vfio vfio_iommu_type1 vfio_pci&quot;&#39;</span> &gt; /etc/dracut.conf.d/vfio.conf
+$ sudo dracut --force
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Reboot the hypervisor operating system.</p></li>
+</ul>
+<p>[34][35]</p>
+<p>Nvidia cards initialized in the guest with a driver version &gt;= 337.88 can detect if the operating system is being virtualized. This can lead to a “Code: 43” error being returned by the driver and the graphics card not working. A work-a-round for this is to set a random “vendor_id” to a alphanumeric 12 character value and forcing KVM’s emulation to be hidden. This does not affect ATI/AMD graphics cards.</p>
+<p>Libvirt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo virsh edit &lt;VIRTUAL_MACHINE&gt;
+&lt;features&gt;
+    &lt;hyperv&gt;
+        &lt;vendor_id <span class="nv">state</span><span class="o">=</span><span class="s1">&#39;on&#39;</span> <span class="nv">value</span><span class="o">=</span><span class="s1">&#39;123456abcdef&#39;</span>/&gt;
+    &lt;/hyperv&gt;
+    &lt;kvm&gt;
+        &lt;hidden <span class="nv">state</span><span class="o">=</span><span class="s1">&#39;on&#39;</span>/&gt;
+    &lt;/kvm&gt;
+&lt;/features&gt;
+</pre></div>
+</div>
+<p>[13]</p>
+</div>
+</div>
+<div class="section" id="xen">
+<h3><a class="toc-backref" href="#id18">Xen</a><a class="headerlink" href="#xen" title="Permalink to this headline">¶</a></h3>
+<p>Xen is a free and open source software hypervisor under the GNU General
+Public License (GPL). It was originally designed to be a competitor of
+VMWare. It is currently owned by Citrix and offers a paid support
+package for it’s virtual machine hypervisor/manager XenServer. [14] By
+itself it can be used as a basic hypervisor, similar to QEMU. It can
+also be used with QEMU to provide accelerated hardware virtualization.</p>
+<div class="section" id="id1">
+<h4><a class="toc-backref" href="#id19">Nested Virtualization</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>Since Xen 4.4, experimental support was added for nested virtualization.
+A few settings need to be added to the Xen virtual machine’s file,
+typically located in the “/etc/xen/” directory. Turn “nestedhvm” on for
+nested virtualization support. The “hap” feature also needs to be
+enabled for faster performance. Lastly, the CPU’s ID needs to be
+modified to hide the original virtualization ID.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nestedhvm</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">hap</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">cpuid</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0x1:ecx=0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>[15]</p>
+</div>
+</div>
+</div>
+<div class="section" id="orchestration">
+<h2><a class="toc-backref" href="#id20">Orchestration</a><a class="headerlink" href="#orchestration" title="Permalink to this headline">¶</a></h2>
+<p>Virtual machine provisioning can be automated through the use of
+different tools.</p>
+<div class="section" id="manual">
+<h3><a class="toc-backref" href="#id21">Manual</a><a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h3>
+<p>Instead of installing operating systems from scratch, a pre-built cloud virtual machine image can be used and customized for use in a non-cloud environment.</p>
+<ul class="simple">
+<li><p>Find and download cloud images from <a class="reference external" href="https://docs.openstack.org/image-guide/obtain-images.html">here</a>.</p></li>
+<li><p>Set the root password and uninstall cloud-init: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">virt-customize</span> <span class="pre">--root-password</span> <span class="pre">password:&lt;PASSWORD&gt;</span> <span class="pre">--uninstall</span> <span class="pre">cloud-init</span> <span class="pre">-a</span> <span class="pre">&lt;VM_IMAGE&gt;</span></code></p></li>
+<li><p>Reset the machine-id: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">virt-sysprep</span> <span class="pre">--operations</span> <span class="pre">machine-id</span> <span class="pre">-a</span> <span class="pre">&lt;VM_IMAGE&gt;</span></code></p></li>
+<li><p>Increase the QCOW2 image size: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">qemu-img</span> <span class="pre">resize</span> <span class="pre">&lt;VM_IMAGE&gt;</span> <span class="pre">&lt;SIZE&gt;G</span></code></p></li>
+<li><p>Create a new QCOW2 image for resizing the partition: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">qemu-img</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">qcow2</span> <span class="pre">&lt;VM_IMAGE_NEW&gt;</span> <span class="pre">&lt;SIZE&gt;G</span></code></p></li>
+<li><p>Resize the partition: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">virt-resize</span> <span class="pre">--expand</span> <span class="pre">/dev/sda1</span> <span class="pre">&lt;VM_IMAGE&gt;</span> <span class="pre">&lt;VM_IMAGE_NEW&gt;</span></code></p></li>
+<li><p>Delete the original cloud image: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rm</span> <span class="pre">&lt;VM_IMAGE&gt;</span></code></p></li>
+<li><p>Rename the new resized QCOW2 image: <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">mv</span> <span class="pre">&lt;VM_IMAGE_NEW&gt;</span> <span class="pre">&lt;VM_IMAGE&gt;</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="anaconda">
+<h3><a class="toc-backref" href="#id22">Anaconda</a><a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h3>
+<p>Anaconda is an installer for the RHEL and Fedora operating systems.</p>
+<div class="section" id="kickstart-file">
+<h4><a class="toc-backref" href="#id23">Kickstart File</a><a class="headerlink" href="#kickstart-file" title="Permalink to this headline">¶</a></h4>
+<p>A Kickstart file defines all of the steps necessary to install the operating system.</p>
+<p>Common commands:</p>
+<ul>
+<li><p><strong>authconfig</strong> = Configure authentication using options specified in the <code class="docutils literal notranslate"><span class="pre">authconfig</span></code> manual.</p></li>
+<li><p>autopart = Automatically create partitions.</p></li>
+<li><p><strong>bootloader</strong> = Define how the bootloader should be installed.</p></li>
+<li><p>clearpart = Delete existing partitions.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>–type &lt;TYPE&gt; = Using one of these partition schemes: partition (partition only, no formatting), plain (normal partitions that are not Btrfs or LVM), btrfs, lvm, or thinp (thin-provisioned logical volumes).</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>{cmdline|graphical|text} = The display mode for the installer.</p>
+<ul class="simple">
+<li><p>cmdline = Non-interactive text installer.</p></li>
+<li><p>graphical = The graphical installer will be displayed.</p></li>
+<li><p>text = An interactive text installer that will prompt for missing options.</p></li>
+</ul>
+</li>
+<li><p><strong>eula –accept</strong> = Automatically accept the end-user license agreement (EULA).</p></li>
+<li><p>firewall = Configure the firewall.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>–enable</p></li>
+<li><p>–disable</p></li>
+<li><p>–port = Specify the ports to open.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>%include = Include another file this Kickstart file.</p></li>
+<li><p><strong>install</strong> = Start the installer.</p></li>
+<li><p><strong>keyboard</strong> = Configure the keyboard layout.</p></li>
+<li><p><strong>lang</strong> = The primary language to use.</p></li>
+<li><p>mount = Manually specify a partition to mount.</p></li>
+<li><p>network = Configure the network settings.</p></li>
+<li><p>%packages = A list of packages, separated by a newline, to be installed. End the list of packages by using <code class="docutils literal notranslate"><span class="pre">%end</span></code>.</p></li>
+<li><p>partition = Manually create partitions.</p>
+<ul class="simple">
+<li><p>UEFI devices need a dedicated partition for storing the EFI information. [16]</p>
+<ul>
+<li><p>part /boot/efi –fstype vfat –size=256 –ondisk=sda</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>raid = Create a software RAID.</p></li>
+<li><p>repo –name=”&lt;REPO_NAME&gt;” –baseurl=”&lt;REPO_URL&gt;” = Add a repository.</p></li>
+<li><p><strong>rootpw</strong> = Change the root password.</p></li>
+<li><p>selinux = Change the SELinux settings.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>–permissive</p></li>
+<li><p>–enforcing</p></li>
+<li><p>–disabled</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>services = Manage systemd services.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>–enabled=&lt;SERVICE1&gt;,&lt;SERVICE2&gt;,SERVICE3&gt; = Enable these services.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>sshkey = Add a SSH key to a specified user.</p></li>
+<li><p><strong>timezone</strong> = Configure the timezone.</p></li>
+<li><p>url = Do a network installation using the specified URL to the operating system’s repository.</p></li>
+<li><p>user = Configure a new user.</p></li>
+<li><p>vnc = Configure a VNC for remote graphical installations.</p></li>
+<li><p>zerombr = Erase the partition table.</p></li>
+</ul>
+<p>[37][38]</p>
+<p>An example of a basic Kickstart file can be found here: <a class="reference external" href="https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file">https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file</a>.</p>
+</div>
+</div>
+<div class="section" id="terraform">
+<h3><a class="toc-backref" href="#id24">Terraform</a><a class="headerlink" href="#terraform" title="Permalink to this headline">¶</a></h3>
+<p>Terraform provides infrastructure automation.</p>
+<p>Find and download the latest version of Terraform from <a class="reference external" href="https://www.terraform.io/downloads.html">here</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/.local/bin/
+$ <span class="nv">TERRAFORM_VERSION</span><span class="o">=</span><span class="m">0</span>.12.28
+$ curl -LO https://releases.hashicorp.com/terraform/<span class="si">${</span><span class="nv">TERRAFORM_VERSION</span><span class="si">}</span>/terraform_<span class="si">${</span><span class="nv">TERRAFORM_VERSION</span><span class="si">}</span>_linux_amd64.zip
+$ unzip terraform_<span class="si">${</span><span class="nv">TERRAFORM_VERSION</span><span class="si">}</span>_linux_amd64.zip
+$ terraform --version
+Terraform v0.12.28
+</pre></div>
+</div>
+<p>Optionally install tab completion support for bash and zsh.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ terraform -install-autocomplete
+</pre></div>
+</div>
+<p>[42]</p>
+<div class="section" id="modules">
+<h4><a class="toc-backref" href="#id25">Modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h4>
+<p>A Terraform Module consists of at least a single <code class="docutils literal notranslate"><span class="pre">main.tf</span></code> file that defines the <code class="docutils literal notranslate"><span class="pre">provider</span></code> (plugin) to use and what <code class="docutils literal notranslate"><span class="pre">resources</span></code> to apply. In addition, <code class="docutils literal notranslate"><span class="pre">variables.tf</span></code> can be used to define related variables used by <code class="docutils literal notranslate"><span class="pre">main.tf</span></code> and a <code class="docutils literal notranslate"><span class="pre">outputs.tf</span></code> file can be used to define what outputs to save (such as generated SSH keys). [44]</p>
+</div>
+<div class="section" id="providers">
+<h4><a class="toc-backref" href="#id26">Providers</a><a class="headerlink" href="#providers" title="Permalink to this headline">¶</a></h4>
+<p>Common cloud providers:</p>
+<ul class="simple">
+<li><p>AWS</p></li>
+<li><p>Azure</p></li>
+<li><p>Cloud-init</p></li>
+<li><p>DigitalOcean</p></li>
+<li><p>Google Cloud Platform</p></li>
+<li><p>Helm</p></li>
+<li><p>Kubernetes</p></li>
+<li><p>OpenStack</p></li>
+<li><p>Packet</p></li>
+<li><p>VMWare Cloud</p></li>
+<li><p>Vultr</p></li>
+</ul>
+<p>Database providers:</p>
+<ul class="simple">
+<li><p>InfluxDB</p></li>
+<li><p>MongoDB Atlas</p></li>
+<li><p>MySQL</p></li>
+<li><p>PostgreSQL</p></li>
+</ul>
+<p>DNS providers:</p>
+<ul class="simple">
+<li><p>DNS</p></li>
+<li><p>DNSimple</p></li>
+<li><p>DNSMadeEasy</p></li>
+<li><p>PowerDNS</p></li>
+<li><p>UltraDNS</p></li>
+</ul>
+<p>Git providers:</p>
+<ul class="simple">
+<li><p>Bitbucket</p></li>
+<li><p>GitHub</p></li>
+<li><p>GitLab</p></li>
+</ul>
+<p>Logging and monitoring:</p>
+<ul class="simple">
+<li><p>Auth0</p></li>
+<li><p>Circonus</p></li>
+<li><p>Datadog</p></li>
+<li><p>Dyn</p></li>
+<li><p>Grafana</p></li>
+<li><p>Icinga2</p></li>
+<li><p>LaunchDarkly</p></li>
+<li><p>Librato</p></li>
+<li><p>Logentries</p></li>
+<li><p>LogicMonitor</p></li>
+<li><p>New Relic</p></li>
+<li><p>OpsGenie</p></li>
+<li><p>PagerDuty</p></li>
+<li><p>Runscope</p></li>
+<li><p>SignalFx</p></li>
+<li><p>StatusCake</p></li>
+<li><p>Sumo Logic</p></li>
+<li><p>Wavefront</p></li>
+</ul>
+<p>Common miscellaneous providers:</p>
+<ul class="simple">
+<li><p>Chef</p></li>
+<li><p>Cobbler</p></li>
+<li><p>Docker</p></li>
+<li><p>HTTP</p></li>
+<li><p>Local</p></li>
+<li><p>Rundeck</p></li>
+<li><p>RabbitMQ</p></li>
+<li><p>Time</p></li>
+<li><p>Terraform</p></li>
+<li><p>TLS</p></li>
+<li><p>Vault</p></li>
+</ul>
+<p>[43]</p>
+<div class="section" id="openstack">
+<h5><a class="toc-backref" href="#id27">OpenStack</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h5>
+<p>Authentication via an existing <a class="reference external" href="https://docs.openstack.org/python-openstackclient/train/configuration/index.html">clouds.yaml</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span> <span class="s2">&quot;openstack&quot;</span> <span class="p">{</span>
+   <span class="n">cloud</span> <span class="o">=</span> <span class="s2">&quot;&lt;CLOUD&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Authentication via Terraform configuration for Keystone v3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span> <span class="s2">&quot;openstack&quot;</span> <span class="p">{</span>
+   <span class="n">project_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;PROJECT&gt;&quot;</span>
+   <span class="n">project_domain_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;PROJECT_DOMAIN_NAME&gt;&quot;</span>
+   <span class="n">user_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;USER&gt;&quot;</span>
+   <span class="n">user_domain_name</span> <span class="o">=</span> <span class="s2">&quot;&lt;USER_DOMAIN_NAME&gt;&quot;</span>
+   <span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;&lt;PASSWORD&gt;&quot;</span>
+   <span class="n">auth_url</span> <span class="o">=</span> <span class="s2">&quot;https://&lt;CLOUD_HOSTNAME&gt;:5000/v3&quot;</span>
+   <span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;&lt;REGION&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Common resources:</p>
+<ul class="simple">
+<li><p>openstack_blockstorage_volume_v3</p></li>
+<li><p>openstack_compute_flavor_v2</p></li>
+<li><p>openstack_compute_floatingip_associate_v2</p></li>
+<li><p>openstack_compute_instance_v2</p></li>
+<li><p>openstack_compute_keypair_v2</p></li>
+<li><p>openstack_compute_secgroup_v2</p></li>
+<li><p>openstack_compute_volume_attach_v2</p></li>
+<li><p>openstack_identity_project_v3</p></li>
+<li><p>openstack_identity_role_v3</p></li>
+<li><p>opentsack_identity_role_assignment_v3</p></li>
+<li><p>openstack_identity_user_v3</p></li>
+<li><p>openstack_images_image_v2</p></li>
+<li><p>openstack_networking_floatingip_v2</p></li>
+<li><p>openstack_networking_network_v2</p></li>
+<li><p>openstack_networking_router_v2</p></li>
+<li><p>openstack_networking_subnet_v2</p></li>
+<li><p>openstack_lb_loadbalancer_v2</p></li>
+<li><p>openstack_lb_listener_v2</p></li>
+<li><p>openstack_lb_pool_v2</p></li>
+<li><p>openstack_lb_member_v2</p></li>
+<li><p>openstack_fw_firewall_v1</p></li>
+<li><p>openstack_fw_policy_v1</p></li>
+<li><p>openstack_fw_rule_v1</p></li>
+<li><p>openstack_objectstorage_container_v1</p></li>
+<li><p>openstack_objectstorage_object_v1</p></li>
+<li><p>openstack_objectstorage_tempurl_v1</p></li>
+<li><p>openstack_sharedfilesystem_securityservice_v2</p></li>
+<li><p>openstack_sharedfilesystem_sharenetwork_v2</p></li>
+<li><p>openstack_sharedfilesystem_share_v2</p></li>
+<li><p>openstack_sharedfilesystem_access_v2</p></li>
+</ul>
+<p>[45]</p>
+</div>
+</div>
+</div>
+<div class="section" id="vagrant">
+<h3><a class="toc-backref" href="#id28">Vagrant</a><a class="headerlink" href="#vagrant" title="Permalink to this headline">¶</a></h3>
+<p>Vagrant is programmed in Ruby to help automate virtual machine (VM)
+deployment. It uses a single file called “Vagrantfile” to describe the
+virtual machines to create. By default, Vagrant will use VirtualBox as
+the hypervisor but other technologies can be used.</p>
+<ul class="simple">
+<li><p>Officially supported hypervisor providers [21]:</p>
+<ul>
+<li><p>docker</p></li>
+<li><p>hyperv</p></li>
+<li><p>virtualbox</p></li>
+<li><p>vmware_desktop</p></li>
+<li><p>vmware_fusion</p></li>
+</ul>
+</li>
+<li><p>Unofficial hypervisor providers [22]:</p>
+<ul>
+<li><p>aws</p></li>
+<li><p>azure</p></li>
+<li><p>google</p></li>
+<li><p>libvirt (KVM or Xen)</p></li>
+<li><p>lxc</p></li>
+<li><p>managed-servers (physical bare metal servers)</p></li>
+<li><p>parallels</p></li>
+<li><p>vsphere</p></li>
+</ul>
+</li>
+</ul>
+<p>Most unofficial hypervisor providers can be automatically installed as a
+plugin from the command line.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant plugin install vagrant-&lt;HYPERVISOR&gt;
+</pre></div>
+</div>
+<p>Vagrantfiles can be downloaded from <a class="reference external" href="https://app.vagrantup.com/boxes/search">here</a> based on the virtual machine box name.</p>
+<p>Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant init &lt;PROJECT&gt;/&lt;VM_NAME&gt;
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant init centos/7
+</pre></div>
+</div>
+<p>Deploy VMs using a Vagrantfile:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant up
+</pre></div>
+</div>
+<p>OR</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant up --provider &lt;HYPERVISOR&gt;
+</pre></div>
+</div>
+<p>Destroy VMs using a Vagrant file:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant destroy
+</pre></div>
+</div>
+<p>The default username and password should be <code class="docutils literal notranslate"><span class="pre">vagrant</span></code>.</p>
+<p>This guide can be followed for creating custom Vagrant boxes:
+<a class="reference external" href="https://www.vagrantup.com/docs/boxes/base.html">https://www.vagrantup.com/docs/boxes/base.html</a>.</p>
+<div class="section" id="boxes-images">
+<h4><a class="toc-backref" href="#id29">Boxes (Images)</a><a class="headerlink" href="#boxes-images" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="usage">
+<h5><a class="toc-backref" href="#id30">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h5>
+<p>Common Vagrant boxes to use with <code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">init</span></code>:</p>
+<ul class="simple">
+<li><p>Arch Linux</p>
+<ul>
+<li><p>archlinux/archlinux</p></li>
+</ul>
+</li>
+<li><p>Debian</p>
+<ul>
+<li><p>debian/buster64 (Debian 10)</p></li>
+<li><p>ubuntu/focal64 (Ubuntu 20.04)</p></li>
+</ul>
+</li>
+<li><p>Fedora</p>
+<ul>
+<li><p>centos/8</p></li>
+<li><p>fedora/33-cloud-base</p></li>
+</ul>
+</li>
+<li><p>openSUSE</p>
+<ul>
+<li><p>opensuse/openSUSE-15.2-x86_64</p></li>
+<li><p>opensuse/openSUSE-Tumbleweed-x86_64</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="creation">
+<h5><a class="toc-backref" href="#id31">Creation</a><a class="headerlink" href="#creation" title="Permalink to this headline">¶</a></h5>
+<p>Custom Vagrant boxes can be created from scratch and used.</p>
+<ul>
+<li><p>Virtual machine setup (for an automated setup, use the <a class="reference external" href="https://github.com/ekultails/ansible_role_vagrant_box">ansible_role_vagrant_box</a> project):</p>
+<ul>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">vagrant</span></code> user with password-less sudo access.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo useradd vagrant
+$ <span class="nb">echo</span> <span class="s1">&#39;vagrant ALL=(ALL) NOPASSWD:ALL&#39;</span> <span class="p">|</span> sudo tee /etc/sudoers.d/vagrant
+$ sudo chmod <span class="m">0440</span> /etc/sudoers.d/vagrant
+</pre></div>
+</div>
+</li>
+<li><p>Install and enable the SSH service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Debian</span>
+$ sudo apt-get install openssh-server
+</pre></div>
+</div>
+<div class="highlight-SH notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fedora</span>
+$ sudo dnf install openssh-server
+</pre></div>
+</div>
+</li>
+<li><p>Add the Vagrant SSH public key.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir /home/vagrant/.ssh/
+$ sudo chmod <span class="m">0700</span> /home/vagrant/.ssh/
+$ curl https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub <span class="p">|</span> sudo tee -a /home/vagrant/.ssh/authorized_keys
+$ sudo chmod <span class="m">0600</span> /home/vagrant/.ssh/authorized_keys
+$ sudo chown -R vagrant.vagrant /home/vagrant/.ssh
+</pre></div>
+</div>
+</li>
+<li><p>Disable SSH password authentication.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vi /etc/ssh/sshd_config
+PasswordAuthentication no
+PubKeyAuthentication yes
+</pre></div>
+</div>
+</li>
+<li><p>Enable the SSH service.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Debian</span>
+$ sudo systemctl <span class="nb">enable</span> ssh
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fedora</span>
+$ sudo systemctl <span class="nb">enable</span> sshd
+</pre></div>
+</div>
+</li>
+<li><p>Shutdown the virtual machine.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo shutdown now
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Hypervisor steps:</p>
+<ul>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">metadata.json</span></code> file with information about the virtual machine.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;provider&quot;</span>     <span class="p">:</span> <span class="s2">&quot;libvirt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;format&quot;</span>       <span class="p">:</span> <span class="s2">&quot;qcow2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;virtual_size&quot;</span> <span class="p">:</span> <span class="o">&lt;</span><span class="n">SIZE_IN_GB</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Rename the virtual machine to be <code class="docutils literal notranslate"><span class="pre">box.img</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mv &lt;VM_IMAGE&gt;.qcow2 box.img
+</pre></div>
+</div>
+</li>
+<li><p>Create the tarball for the Vagrant-compatible box.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ tar -c -z -f &lt;BOX_NAME&gt;.box ./metadata.json ./box.img
+</pre></div>
+</div>
+</li>
+<li><p>Import the new box.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant box add --name &lt;BOX_NAME&gt; &lt;BOX_NAME&gt;.box
+</pre></div>
+</div>
+</li>
+<li><p>Test the new box.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant init &lt;BOX_NAME&gt;
+$ vagrant up --provider<span class="o">=</span>libvirt
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<p>[46]</p>
+</div>
+</div>
+<div class="section" id="vagrantfile">
+<h4><a class="toc-backref" href="#id32">Vagrantfile</a><a class="headerlink" href="#vagrantfile" title="Permalink to this headline">¶</a></h4>
+<p>A default Vagrantfile can be created to start customizing with.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vagrant init
+</pre></div>
+</div>
+<p>All of the settings should be defined within the <code class="docutils literal notranslate"><span class="pre">Vagrant.configure()</span></code>
+block.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+    <span class="c1">#Define VM settings here.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Define the virtual machine template to use. This will be downloaded, by
+default (if the <code class="docutils literal notranslate"><span class="pre">box_url</span></code> is not changed) from the HashiCorp website.</p>
+<ul class="simple">
+<li><p>box = Required. The name of the virtual machine to download. A list
+of official virtual machines can be found at
+<code class="docutils literal notranslate"><span class="pre">https://atlas.hashicorp.com/boxes/search</span></code>.</p></li>
+<li><p>box_version = The version of the virtual machine to use.</p></li>
+<li><p>box_url = The URL to the virtual machine details.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;ubuntu/xenial64&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_version</span> <span class="o">=</span> <span class="s2">&quot;v20170508.0.0&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-vagrant.box&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>[23]</p>
+<div class="section" id="resource-allocation">
+<h5><a class="toc-backref" href="#id33">Resource Allocation</a><a class="headerlink" href="#resource-allocation" title="Permalink to this headline">¶</a></h5>
+<p>Defining the amount of resources a virtual machine has access to is different for each back-end provider. The default primary disk space is normally 40GB.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;&lt;PROVIDER&gt;&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vm_provider</span><span class="o">|</span>
+  <span class="n">vm_provider</span><span class="o">.</span><span class="n n-Operator">&lt;</span><span class="no">KEY</span><span class="o">&gt;</span> <span class="o">=</span> <span class="o">&lt;</span><span class="no">VALUE</span><span class="o">&gt;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Provider specific options:</p>
+<ul class="simple">
+<li><p>libvirt [25]</p>
+<ul>
+<li><p>cpu_mode (string) = The CPU mode to use.</p></li>
+<li><p>cpus (string) = The number of vCPU cores to allocate.</p></li>
+<li><p>memory (string) = The size, in MiB, of RAM to allocate.</p></li>
+<li><p>storage (dictionary of strings) = Create additional disks.</p></li>
+<li><p>volume_cache (string) = The disk cache mode to use.</p></li>
+</ul>
+</li>
+<li><p>virtualbox [17]</p>
+<ul>
+<li><p>cpus (string) = The number of vCPU cores to allocate.</p></li>
+<li><p>customize (list of strings) = Run custom commands after the virtual machine has been created.</p></li>
+<li><p>gui (boolean) = Launch the VirtualBox GUI console.</p></li>
+<li><p>linked_clone (boolean) = Use a thin provisioned virtual machine image.</p></li>
+<li><p>memory (string) = The size, in MiB, of RAM to allocate.</p></li>
+</ul>
+</li>
+<li><p>vmware_desktop (VMware Fusion and VMware Workstation) [48]</p>
+<ul>
+<li><p>gui (boolean) = Launch the VirtualBox GUI console.</p></li>
+<li><p>memsize (string) = The size, in MiB, of RAM to allocate.</p></li>
+<li><p>numvcpus (string) = The number of vCPU cores to allocate.</p></li>
+</ul>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">vmware_desktop</span></code> provider requries a license from Vagrant. It can be used on two different computers. A new license is required when there is a new major version of the provider plugin. [49]</p>
+</div>
+<div class="section" id="networks">
+<h5><a class="toc-backref" href="#id34">Networks</a><a class="headerlink" href="#networks" title="Permalink to this headline">¶</a></h5>
+<p>Networks are either <code class="docutils literal notranslate"><span class="pre">private</span></code> or <code class="docutils literal notranslate"><span class="pre">public</span></code>. <code class="docutils literal notranslate"><span class="pre">private</span></code> networks use
+host-only networking and use network address translation (NAT) to
+communicate out to the Internet. Virtual machines (VMs) can communicate
+with each other but they cannot be reached from the outside world. Port
+forwarding can also be configured to allow access to specific ports from
+the hypervisor node. <code class="docutils literal notranslate"><span class="pre">public</span></code> networks allow a virtual machine to
+attach to a bridge device for full connectivity with the external
+network. This section covers VirtualBox networks since it is the default
+virtualization provider.</p>
+<p>With a <code class="docutils literal notranslate"><span class="pre">private</span></code> network, the IP address can either be a random
+address assigned by DHCP or a static IP that is defined.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;dhcp&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;&lt;IP4_OR_IP6_ADDRESS&gt;&quot;</span><span class="p">,</span> <span class="ss">netmask</span><span class="p">:</span> <span class="s2">&quot;&lt;SUBNET_MASK&gt;&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The same rules apply to <code class="docutils literal notranslate"><span class="pre">public</span></code> networks except it uses the external
+DHCP server on the network (if it exists).</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="ss">use_dhcp_assigned_default_route</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>When a <code class="docutils literal notranslate"><span class="pre">public</span></code> network is defined and no interface is given, the
+end-user is prompted to pick a physical network interface device to
+bridge onto for public network access. This bridge device can also be
+specified manually.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="ss">bridge</span><span class="p">:</span> <span class="s2">&quot;eth0: First NIC&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>In this example, port 2222 on the localhost (127.0.0.1) of the
+hypervisor will forward to port 22 of the VM.</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">2222</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>[24]</p>
+<div class="section" id="id2">
+<h6><a class="toc-backref" href="#id35">libvirt</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h6>
+<p>The options and syntax for public networks with the “libvirt” provider
+are slightly different.</p>
+<p>Options:</p>
+<ul class="simple">
+<li><p>dev = The bridge device name.</p></li>
+<li><p>mode = The libvirt mode to use. Default: <code class="docutils literal notranslate"><span class="pre">bridge</span></code>.</p></li>
+<li><p>type = The libvirt interface type. This is normally set to
+<code class="docutils literal notranslate"><span class="pre">bridge</span></code>.</p></li>
+<li><p>network_name = The name of a network to use.</p></li>
+<li><p>portgroup = The libvirt portgroup to use.</p></li>
+<li><p>ovs = Instead of using a Linux bridge, use Open vSwitch instead.
+Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p>trust_guest_rx_filters = Enable the <code class="docutils literal notranslate"><span class="pre">trustGuestRxFilters</span></code>
+setting. Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;controller&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">controller</span><span class="o">|</span>
+    <span class="n">controller</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;10.0.0.205&quot;</span><span class="p">,</span> <span class="ss">dev</span><span class="p">:</span> <span class="s2">&quot;br0&quot;</span><span class="p">,</span> <span class="ss">mode</span><span class="p">:</span> <span class="s2">&quot;bridge&quot;</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="s2">&quot;bridge&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>[25]</p>
+<p>Boxes for libvirt are cached by Vagrant at: <code class="docutils literal notranslate"><span class="pre">~/.local/share/libvirt/images/</span></code>.</p>
+</div>
+</div>
+<div class="section" id="provisioning">
+<h5><a class="toc-backref" href="#id36">Provisioning</a><a class="headerlink" href="#provisioning" title="Permalink to this headline">¶</a></h5>
+<p>After a virtual machine (VM) has been created, additional commands can
+be run to configure the guest VMs. This is referred to as
+“provisioning.”</p>
+<ul class="simple">
+<li><p>Provisioners [26]:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.vagrantup.com/docs/provisioning/ansible_intro.html">ansible</a>
+= Run a Ansible Playbook from the hypervisor node.</p></li>
+<li><p>ansible_local = Run a Ansible Playbook from within the VM.</p></li>
+<li><p>cfengine = Use CFEngine to configure the VM.</p></li>
+<li><p>chef_solo = Run a Chef Cookbook from inside the VM using
+<code class="docutils literal notranslate"><span class="pre">chef-solo</span></code>.</p></li>
+<li><p>chef_zero = Run a Chef Cookbook, but use <code class="docutils literal notranslate"><span class="pre">chef-zero</span></code> to emulate
+a Chef server inside of the VM.</p></li>
+<li><p>chef_client = Use a remote Chef server to run a Cookbook inside
+the VM.</p></li>
+<li><p>chef_apply = Run a Chef recipe with <code class="docutils literal notranslate"><span class="pre">chef-apply</span></code>.</p></li>
+<li><p>docker = Install and configure docker inside of the VM.</p></li>
+<li><p>file = Copy files from the hypervisor to the VM. Note that the
+directory that the <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> is in will be mounted as the
+directory <code class="docutils literal notranslate"><span class="pre">/vagrant/</span></code> inside of the VM.</p></li>
+<li><p>puppet = Run single Puppet manifests with <code class="docutils literal notranslate"><span class="pre">puppet</span> <span class="pre">apply</span></code>.</p></li>
+<li><p>puppet_server = Run a Puppet manifest inside of the VM using an
+external Puppet server.</p></li>
+<li><p>salt = Run Salt states inside of the VM.</p></li>
+<li><p>shell = Run CLI shell commands.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="multiple-machines">
+<h5><a class="toc-backref" href="#id37">Multiple Machines</a><a class="headerlink" href="#multiple-machines" title="Permalink to this headline">¶</a></h5>
+<p>A <code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code> can specify more than one virtual machine.</p>
+<p>The recommended way to provision multiple VMs is to statically define
+each individual VM to create as shown here. [27]</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;web&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">web</span><span class="o">|</span>
+    <span class="n">web</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;nginx&quot;</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;php&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">php</span><span class="o">|</span>
+    <span class="n">php</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;phpfpm&quot;</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;db&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">db</span><span class="o">|</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;mariadb&quot;</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>However, it is possible to use Ruby to dynamically define and create
+VMs. This will work for creating the VMs but using the <code class="docutils literal notranslate"><span class="pre">vagrant</span></code>
+command to manage the VMs will not work properly [28]:</p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="n">servers</span><span class="o">=[</span>
+  <span class="p">{</span>
+    <span class="ss">:hostname</span> <span class="o">=&gt;</span> <span class="s2">&quot;web&quot;</span><span class="p">,</span>
+    <span class="ss">:ip</span> <span class="o">=&gt;</span> <span class="s2">&quot;10.0.0.10&quot;</span><span class="p">,</span>
+    <span class="ss">:box</span> <span class="o">=&gt;</span> <span class="s2">&quot;xenial&quot;</span><span class="p">,</span>
+    <span class="ss">:ram</span> <span class="o">=&gt;</span> <span class="mi">1024</span><span class="p">,</span>
+    <span class="ss">:cpu</span> <span class="o">=&gt;</span> <span class="mi">2</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="ss">:hostname</span> <span class="o">=&gt;</span> <span class="s2">&quot;db&quot;</span><span class="p">,</span>
+    <span class="ss">:ip</span> <span class="o">=&gt;</span> <span class="s2">&quot;10.10.10.11&quot;</span><span class="p">,</span>
+    <span class="ss">:box</span> <span class="o">=&gt;</span> <span class="s2">&quot;saucy&quot;</span><span class="p">,</span>
+    <span class="ss">:ram</span> <span class="o">=&gt;</span> <span class="n">xenial</span><span class="p">,</span>
+    <span class="ss">:cpu</span> <span class="o">=&gt;</span> <span class="mi">4</span>
+  <span class="p">}</span>
+<span class="o">]</span>
+
+<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+    <span class="n">servers</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">machine</span><span class="o">|</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="n">machine</span><span class="o">[</span><span class="ss">:hostname</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">machine</span><span class="o">[</span><span class="ss">:box</span><span class="o">]</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">machine</span><span class="o">[</span><span class="ss">:hostname</span><span class="o">]</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="n">machine</span><span class="o">[</span><span class="ss">:ip</span><span class="o">]</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+                <span class="n">vb</span><span class="o">.</span><span class="n">customize</span> <span class="o">[</span><span class="s2">&quot;modifyvm&quot;</span><span class="p">,</span> <span class="ss">:id</span><span class="p">,</span> <span class="s2">&quot;--memory&quot;</span><span class="p">,</span> <span class="n">machine</span><span class="o">[</span><span class="ss">:ram</span><span class="o">]]</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="gui">
+<h2><a class="toc-backref" href="#id38">GUI</a><a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<p>There are many programs for managing virtualization from a graphical user interface (GUI).</p>
+<p>Common GUIs:</p>
+<ul class="simple">
+<li><p>oVirt</p></li>
+<li><p>virt-manager</p></li>
+<li><p>XenServer</p></li>
+</ul>
+<div class="section" id="ovirt">
+<h3><a class="toc-backref" href="#id39">oVirt</a><a class="headerlink" href="#ovirt" title="Permalink to this headline">¶</a></h3>
+<p>Supported operating systems: RHEL/CentOS 7</p>
+<p>oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMWare ESXi and XenServer. It is the open source upstream version of Red Hat Virtualization (RHV). It supports using network storage from NFS, Gluster, iSCSI, and other solutions.</p>
+<p>oVirt has three components [39]:</p>
+<ul class="simple">
+<li><p>oVirt Engine = The node that controls oVirt operations and monitoring.</p></li>
+<li><p>Hypervisor nodes = The nodes where the virtual machines run.</p></li>
+<li><p>Storage nodes = Where the operating system images and volumes of created virtual machines.</p></li>
+</ul>
+<div class="section" id="install">
+<h4><a class="toc-backref" href="#id40">Install</a><a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="quick">
+<h5><a class="toc-backref" href="#id41">Quick</a><a class="headerlink" href="#quick" title="Permalink to this headline">¶</a></h5>
+<p>All-in-One (AIO)</p>
+<p>Minimum requirements:</p>
+<ul class="simple">
+<li><p>One 1Gb network interface</p></li>
+<li><p>Hardware virtualization</p></li>
+<li><p>60GB free disk space in /var/tmp/ or a custom directory</p></li>
+<li><p>Two fully qualified domain names (FQDNs) setup</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>One for the oVirt Engine (that is not in use) and one already set for the hypervisor</p></li>
+</ul>
+</div></blockquote>
+<p>Install the stable, development, or the master repository. [32]</p>
+<ul>
+<li><p>Stable:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+</pre></div>
+</div>
+</li>
+<li><p>Development:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42.rpm
+$ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release42-snapshot.rpm
+</pre></div>
+</div>
+</li>
+<li><p>Master:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Install the oVirt Engine dependencies.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install ovirt-hosted-engine-setup ovirt-engine-appliance
+</pre></div>
+</div>
+<p>Setup NFS. The user “vdsm” needs full access to a NFS exported directory. The group “kvm” should have readable and executable permissions to run virtual machines from there. [31]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mkdir -p /exports/data
+$ sudo chmod <span class="m">0755</span> /exports/data
+$ sudo vim /etc/exports
+/exports/data      *<span class="o">(</span>rw<span class="o">)</span>
+$ sudo systemctl restart nfs
+$ sudo groupadd kvm -g <span class="m">36</span>
+$ sudo useradd vdsm -u <span class="m">36</span> -g <span class="m">36</span>
+$ sudo chown -R vdsm:kvm /exports/data
+</pre></div>
+</div>
+<p>Run the manual Engine setup. This will prompt the end-user for different configuration options.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo hosted-engine --deploy
+</pre></div>
+</div>
+<p>Configure the Engine virtual machine to use static IP addressing. Enter in the address that is setup for the Engine’s fully qualified domain name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>How should the engine VM network be configured (DHCP, Static)[DHCP]? Static
+Please enter the IP address to be used for the engine VM []: &lt;ENGINE_IP_ADDRESS&gt;
+The engine VM will be configured to use &lt;ENGINE_IP_ADDRESS&gt;/24
+Please provide a comma-separated list (max 3) of IP addresses of domain name servers for the engine VM
+Engine VM DNS (leave it empty to skip) [127.0.0.1]: &lt;OPTIONAL_DNS_SERVER&gt;
+</pre></div>
+</div>
+<p>If no DNS server is being used to resolve domain names, configure oVirt to use local resolution on the hypervisor and oVirt Engine via <code class="docutils literal notranslate"><span class="pre">/etc/hosts</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Add lines for the appliance itself and for this host to /etc/hosts on the engine VM?
+Note: ensuring that this host could resolve the engine VM hostname is still up to you
+(Yes, No)[No] Yes
+</pre></div>
+</div>
+<p>Define the oVirt Engine’s hostname. This needs to already exist and be resolvable at least by <code class="docutils literal notranslate"><span class="pre">/etc/hosts</span></code> if the above option is set to <code class="docutils literal notranslate"><span class="pre">Yes</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Please</span> <span class="n">provide</span> <span class="n">the</span> <span class="n">FQDN</span> <span class="k">for</span> <span class="n">the</span> <span class="n">engine</span> <span class="n">you</span> <span class="n">would</span> <span class="n">like</span> <span class="n">to</span> <span class="n">use</span><span class="o">.</span>
+<span class="n">This</span> <span class="n">needs</span> <span class="n">to</span> <span class="n">match</span> <span class="n">the</span> <span class="n">FQDN</span> <span class="n">that</span> <span class="n">you</span> <span class="n">will</span> <span class="n">use</span> <span class="k">for</span> <span class="n">the</span> <span class="n">engine</span> <span class="n">installation</span> <span class="n">within</span> <span class="n">the</span> <span class="n">VM</span><span class="o">.</span>
+<span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">FQDN</span> <span class="n">of</span> <span class="n">the</span> <span class="n">VM</span> <span class="n">you</span> <span class="n">are</span> <span class="n">now</span> <span class="n">going</span> <span class="n">to</span> <span class="n">create</span><span class="p">,</span>
+<span class="n">it</span> <span class="n">should</span> <span class="ow">not</span> <span class="n">point</span> <span class="n">to</span> <span class="n">the</span> <span class="n">base</span> <span class="n">host</span> <span class="ow">or</span> <span class="n">to</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">existing</span> <span class="n">machine</span><span class="o">.</span>
+<span class="n">Engine</span> <span class="n">FQDN</span><span class="p">:</span>  <span class="p">[]:</span> <span class="o">&lt;</span><span class="n">OVIRT_ENGINE_HOSTNAME</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Specify the NFS mount options. For avoiding DNS issues, the NFS server’s IP address can be used instead of the hostname.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Please</span> <span class="n">specify</span> <span class="n">the</span> <span class="n">storage</span> <span class="n">you</span> <span class="n">would</span> <span class="n">like</span> <span class="n">to</span> <span class="n">use</span> <span class="p">(</span><span class="n">glusterfs</span><span class="p">,</span> <span class="n">iscsi</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">nfs</span><span class="p">)[</span><span class="n">nfs</span><span class="p">]:</span> <span class="n">nfs</span>
+<span class="n">Please</span> <span class="n">specify</span> <span class="n">the</span> <span class="n">nfs</span> <span class="n">version</span> <span class="n">you</span> <span class="n">would</span> <span class="n">like</span> <span class="n">to</span> <span class="n">use</span> <span class="p">(</span><span class="n">auto</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">v4</span><span class="p">,</span> <span class="n">v4_1</span><span class="p">)[</span><span class="n">auto</span><span class="p">]:</span> <span class="n">v4_1</span>
+<span class="n">Please</span> <span class="n">specify</span> <span class="n">the</span> <span class="n">full</span> <span class="n">shared</span> <span class="n">storage</span> <span class="n">connection</span> <span class="n">path</span> <span class="n">to</span> <span class="n">use</span> <span class="p">(</span><span class="n">example</span><span class="p">:</span> <span class="n">host</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">NFS_HOSTNAME</span><span class="o">&gt;</span><span class="p">:</span><span class="o">/</span><span class="n">exports</span><span class="o">/</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>[40]</p>
+<p>Once the installation is complete, log into the oVirt Engine web portal at <code class="docutils literal notranslate"><span class="pre">https://&lt;OVIRT_ENGINE_HOSTNAME&gt;</span></code>. Use the <a class="reference external" href="mailto:admin&#37;&#52;&#48;internal">admin<span>&#64;</span>internal</a> account with the password that was configured during the setup. Accessing the web portal using the IP address may not work and result in this error: <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">redirection</span> <span class="pre">URI</span> <span class="pre">for</span> <span class="pre">client</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">registered&quot;</span></code>. The fully qualified domain name has to be used for the link. [41]</p>
+<p>If tasks, such as uploading an image, get stuck in the “Paused by System” state then the certificate authority (CA) needs to be imported into the end-user’s web browser. Download it from the oVirt Engine by going to: <code class="docutils literal notranslate"><span class="pre">https://&lt;OVIRT_ENGINE_HOSTNAME&gt;/ovirt-engine/services/pki-resource?resource=ca-certificate&amp;format=X509-PEM-CA</span></code>. [29]</p>
+</div>
+</div>
+<div class="section" id="hooks">
+<h4><a class="toc-backref" href="#id42">Hooks</a><a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h4>
+<p>Hooks can be installed on the oVirt Engine to provide additional features. After they are installed, both the <code class="docutils literal notranslate"><span class="pre">ovirt-engine</span></code> and <code class="docutils literal notranslate"><span class="pre">vdsmd</span></code> services need to be restarted.</p>
+<p>oVirt Engine:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart ovirt-engine
+</pre></div>
+</div>
+<p>Hypervisors:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo systemctl restart vdsmd
+</pre></div>
+</div>
+<div class="section" id="mac-spoofing">
+<h5><a class="toc-backref" href="#id43">MAC Spoofing</a><a class="headerlink" href="#mac-spoofing" title="Permalink to this headline">¶</a></h5>
+<p>Allowing MAC spoofing on a virtual network interface card (vNIC) is required for some services such as Ironic from the OpenStack suite of software.</p>
+<p>Install the hook and define the required virtual machine property.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install -y vdsm-hook-macspoof
+$ sudo engine-config -s <span class="s2">&quot;UserDefinedVMProperties=macspoof=(true|false)&quot;</span>
+</pre></div>
+</div>
+<p>This will add an option to virtual machines to allow MAC spoofing. By default, it will still not be allowed.</p>
+<p>[30]</p>
+</div>
+<div class="section" id="id3">
+<h5><a class="toc-backref" href="#id44">Nested Virtualization</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h5>
+<p>Install the hook.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install vdsm-hook-nestedvt
+</pre></div>
+</div>
+<p>Nested virtualization also requires MAC spoofing to be enabled.</p>
+<p>[30]</p>
+</div>
+</div>
+</div>
+<div class="section" id="vmware-vsphere">
+<h3><a class="toc-backref" href="#id45">VMware vSphere</a><a class="headerlink" href="#vmware-vsphere" title="Permalink to this headline">¶</a></h3>
+<p>VMware vSphere is a collection of VMware virtualization products including ESXi hypervisors, vSphere, and vCenter Server Add-on products include NSX-T, vROps, vSAN, and more. VMware Cloud Foundation = VMware vSphere with most of the add-ons included.</p>
+<p>Terminology:</p>
+<ul class="simple">
+<li><p>ESXi hypervisor = Previously Linux based, now a proprietary UNIX-like operating system. This is the base operating system and hypervisor software suite that is installed onto a node.</p></li>
+<li><p>vSphere = Has two meanings. (1) The entire collection of VMware virtualization products or (2) a management dashboard for a single region of ESXi hypervisors.</p></li>
+<li><p>vCenter Server = Manange and operate vSphere infrastructure such as clusters, NSX-T, DRS, vSANs, and more.</p></li>
+<li><p>vSAN = Storage from each ESXi hypervisor can be pooled together in as a virtual storage area network (vSAN) device. This is a hyperconverged infrastructure.</p></li>
+<li><p>vSphere cluster = A group of two or more ESXi hypervisors that typically share a common vSAN back-end.</p></li>
+<li><p>NSX-T = A fork of Open vSwitch. Used for virtual networking across nodes.</p></li>
+<li><p>VSS = vSphere Standard Switch. A virtual switch that is manually managed across a cluster. Each ESXi hypervisor requires a VSS to be created if VDS is not being used. This is provided for free in VMware vSphere.</p></li>
+<li><p>VDS = vSphere Distributed Switch. A virtual switch that is automatically managed across a cluster by NSX-T.</p></li>
+<li><p>vSwitch = A virtual switch that is either a VSS or VDS..</p></li>
+<li><p>Port group = A virtual VLAN interface on a vSwitch. It can be a single VLAN or have various trunked VLANs.</p></li>
+<li><p>Content library = Local virtual machines templates/images.</p></li>
+<li><p>vROps = vRealize Operations. An observability tool for vSphere.</p></li>
+<li><p>DRS = Distributed Resource Scheduler. Used to manage and monitor virtual machines across a vSphere cluster.</p></li>
+<li><p>Predictive DRS = Requires vROps. This can predict when to reallocate virtual machines to different hypervisors based on load and usage. Moving virtual machines will happen automatically.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#id46">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="errors">
+<h3><a class="toc-backref" href="#id47">Errors</a><a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h3>
+<p><strong>“Error starting domain: Requested operation is not valid: network ‘&lt;LIBVIRT_NETWORK&gt;’ is not active”</strong> when starting a libvirt virtual machine.</p>
+<ul class="simple">
+<li><p>View the status of all libvirt networks: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">virsh</span> <span class="pre">net-list</span> <span class="pre">--all</span></code>.</p></li>
+<li><p>Start the network: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">virsh</span> <span class="pre">net-start</span> <span class="pre">&lt;LIBVIRT_NETWORK&gt;</span></code></p></li>
+<li><p>Optionally, enable the network to start automatically when the <code class="docutils literal notranslate"><span class="pre">libvirtd</span></code> service starts: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">virsh</span> <span class="pre">net-autostart</span> <span class="pre">&lt;LIBVIRT_NETWORK&gt;</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id48">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/virtualization/virtual_machines.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/virtualization.rst">&lt; 2019.04.01 (Virtualization)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst">&lt; 2019.01.01 (Virtualization)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/virtualization.md">&lt; 2018.01.01 (Virtualization)</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id49">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“libvirt Introduction.” libvirt VIRTUALIZATION API. Accessed December 22, 2017. <a class="reference external" href="https://libvirt.org/index.html">https://libvirt.org/index.html</a></p></li>
+<li><p>“Linux: Find Out If CPU Support Intel VT and AMD-V Virtualization Support.” February 11, 2015. nixCraft. Accessed December 18, 2016. <a class="reference external" href="https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/">https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/</a></p></li>
+<li><p>“Intel VT (Virtualization Technology) Definition.” TechTarget. October, 2009. Accessed December 18, 2016. <a class="reference external" href="http://searchservervirtualization.techtarget.com/definition/Intel-VT">http://searchservervirtualization.techtarget.com/definition/Intel-VT</a></p></li>
+<li><p>“Kernel Virtual Machine.” KVM. Accessed December 18, 2016. <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">http://www.linux-kvm.org/page/Main_Page</a></p></li>
+<li><p>“KVM vs QEMU vs Libvirt.” The Geeky Way. February 14, 2014. Accessed December 22, 2017. <a class="reference external" href="http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/">http://thegeekyway.com/kvm-vs-qemu-vs-libvirt/</a></p></li>
+<li><p>“Tuning KVM.” KVM. Accessed January 7, 2016. <a class="reference external" href="http://www.linux-kvm.org/page/Tuning_KVM">http://www.linux-kvm.org/page/Tuning_KVM</a></p></li>
+<li><p>“Virtio.” libvirt Wiki. October 3, 2013. Accessed January 7, 2016. <a class="reference external" href="https://wiki.libvirt.org/page/Virtio">https://wiki.libvirt.org/page/Virtio</a></p></li>
+<li><p>“KVM I/O slowness on RHEL 6.” March 11, 2011. Accessed August 30, 2017. <a class="reference external" href="http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html">http://www.ilsistemista.net/index.php/virtualization/11-kvm-io-slowness-on-rhel-6.html</a></p></li>
+<li><p>“How to Enable Nested KVM.” Rhys Oxenhams’ Cloud Technology Blog. June 26, 2012. Accessed December 1, 2017. <a class="reference external" href="http://www.rdoxenham.com/?p=275">http://www.rdoxenham.com/?p=275</a></p></li>
+<li><p>“Configure DevStack with KVM-based Nested Virtualization.” December 18, 2016. Accessed December 18, 2016. <a class="reference external" href="http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html">http://docs.openstack.org/developer/devstack/guides/devstack-with-nested-kvm.html</a></p></li>
+<li><p>“How to enable nested virtualization in KVM.” Fedora Project Wiki. June 19, 2015. Accessed August 30, 2017. <a class="reference external" href="https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM">https://fedoraproject.org/wiki/How_to_enable_nested_virtualization_in_KVM</a></p></li>
+<li><p>“GPU Passthrough with KVM and Debian Linux.” scottlinux.com Linux Blog. August 28, 2016. Accessed December 18, 2016. <a class="reference external" href="https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/">https://scottlinux.com/2016/08/28/gpu-passthrough-with-kvm-and-debian-linux/</a></p></li>
+<li><p>“PCI passthrough via OVMF.” Arch Linux Wiki. December 18, 2016. Accessed December 18, 2016. <a class="reference external" href="https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF">https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF</a></p></li>
+<li><p>“Xen Definition.” TechTarget. March, 2009. Accessed December 18, 2016. <a class="reference external" href="http://searchservervirtualization.techtarget.com/definition/Xen">http://searchservervirtualization.techtarget.com/definition/Xen</a></p></li>
+<li><p>“Nested Virtualization in Xen.” Xen Project Wiki. November 2, 2017. Accessed December 22, 2017. <a class="reference external" href="https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen">https://wiki.xenproject.org/wiki/Nested_Virtualization_in_Xen</a></p></li>
+<li><p>“UEFI Kickstart failed to find a suitable stage1 device.” Red Hat Discussions. October 1, 2015. Accessed October 18, 2018. <a class="reference external" href="https://access.redhat.com/discussions/1534853">https://access.redhat.com/discussions/1534853</a></p></li>
+<li><p>“Providers VirtualBox Configuration.” Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. <a class="reference external" href="https://www.vagrantup.com/docs/virtualbox/configuration.html">https://www.vagrantup.com/docs/virtualbox/configuration.html</a></p></li>
+<li><p>“APIC Virtualization Performance Testing and Iozone.” Intel Developer Zone Blog. December 17, 2013. Accessed September 6, 2018. <a class="reference external" href="https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone">https://software.intel.com/en-us/blogs/2013/12/17/apic-virtualization-performance-testing-and-iozone</a></p></li>
+<li><p>“Intel x2APIC and APIC Virtualization (APICv or vAPIC).” Red Hat vfio-users Mailing list. June 14, 2016. Accessed September 6, 2018. <a class="reference external" href="https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html">https://www.redhat.com/archives/vfio-users/2016-June/msg00055.html</a></p></li>
+<li><p>“QEMU Disk IO Which perfoms Better: Native or threads?” SlideShare. February, 2016. Accessed May 13, 2018. <a class="reference external" href="https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads">https://www.slideshare.net/pradeepkumarsuvce/qemu-disk-io-which-performs-better-native-or-threads</a></p></li>
+<li><p>“Introduction to Vagrant.” Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. <a class="reference external" href="https://www.vagrantup.com/intro/getting-started/index.html">https://www.vagrantup.com/intro/getting-started/index.html</a></p></li>
+<li><p>“Available Vagrant Plugins.” mitchell/vagrant GitHub. November 9, 2016. Accessed May 8, 2017. <a class="reference external" href="https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins">https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Plugins</a></p></li>
+<li><p>“[Vagrant] Boxes.” Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. <a class="reference external" href="https://www.vagrantup.com/docs/boxes.html">https://www.vagrantup.com/docs/boxes.html</a></p></li>
+<li><p>“[Vagrant] Networking.” Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. <a class="reference external" href="https://www.vagrantup.com/docs/networking/">https://www.vagrantup.com/docs/networking/</a></p></li>
+<li><p>“Vagrant Libvirt Provider [README].” vagrant-libvirt GitHub. May 8, 2017. Accessed October 2, 2018. <a class="reference external" href="https://github.com/vagrant-libvirt/vagrant-libvirt">https://github.com/vagrant-libvirt/vagrant-libvirt</a></p></li>
+<li><p>“[Vagrant] Provisioning.” Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. <a class="reference external" href="https://www.vagrantup.com/docs/provisioning/">https://www.vagrantup.com/docs/provisioning/</a></p></li>
+<li><p>“[Vagrant] Multi-Machine.” Vagrant Documentation. April 24, 2017. Accessed May 9, 2017. <a class="reference external" href="https://www.vagrantup.com/docs/multi-machine/">https://www.vagrantup.com/docs/multi-machine/</a></p></li>
+<li><p>“Vagrantfile.” Linux system administration and monitoring / Windows servers and CDN video. May 9, 2017. Accessed May 9, 2017. <a class="reference external" href="http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html">http://sysadm.pp.ua/linux/sistemy-virtualizacii/vagrantfile.html</a></p></li>
+<li><p>“RHV 4 Upload Image tasks end in Paused by System state.” Red Hat Customer Portal. April 11, 2017. Accessed March 26, 2018. <a class="reference external" href="https://access.redhat.com/solutions/2592941">https://access.redhat.com/solutions/2592941</a></p></li>
+<li><p>“Testing oVirt 3.3 with Nested KVM.” Red Hat Open Source Community. August 15, 2013. Accessed March 29, 2018. <a class="reference external" href="https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/">https://community.redhat.com/blog/2013/08/testing-ovirt-3-3-with-nested-kvm/</a></p></li>
+<li><p>“Storage.” oVirt Documentation. Accessed March 20, 2018. <a class="reference external" href="https://www.ovirt.org/documentation/admin-guide/chap-Storage/">https://www.ovirt.org/documentation/admin-guide/chap-Storage/</a></p></li>
+<li><p>“Install nightly snapshot.” oVirt Documentation. Accessed March 21, 2018. <a class="reference external" href="https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/">https://www.ovirt.org/develop/dev-process/install-nightly-snapshot/</a></p></li>
+<li><p>“Guide: How to Enable Huge Pages to improve VFIO KVM Performance in Fedora 25.” Gaming on Linux with VFIO. August 20, 2017. Accessed March 23, 2018. <a class="reference external" href="http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html">http://vfiogaming.blogspot.com/2017/08/guide-how-to-enable-huge-pages-to.html</a></p></li>
+<li><p>“PCI passthrough via OVMF.” Arch Linux Wiki. February 13, 2018. Accessed February 26, 2018. <a class="reference external" href="https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF">https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF</a></p></li>
+<li><p>“RYZEN GPU PASSTHROUGH SETUP GUIDE: FEDORA 26 + WINDOWS GAMING ON LINUX.” Level One Techs. June 25, 2017. Accessed February 26, 2018. <a class="reference external" href="https://level1techs.com/article/ryzen-gpu-passthrough-setup-guide-fedora-26-windows-gaming-linux">https://level1techs.com/article/ryzen-gpu-passthrough-setup-guide-fedora-26-windows-gaming-linux</a></p></li>
+<li><p>“IOMMU Groups – What You Need to Consider.” Heiko’s Blog. July 25, 2017. Accessed March 3, 2018. <a class="reference external" href="https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/">https://heiko-sieger.info/iommu-groups-what-you-need-to-consider/</a></p></li>
+<li><p>“Kickstart Documentation.” Pykickstart. Accessed March 15, 2018. <a class="reference external" href="http://pykickstart.readthedocs.io/en/latest/kickstart-docs.html">http://pykickstart.readthedocs.io/en/latest/kickstart-docs.html</a></p></li>
+<li><p>“Creating an automated CentOS 7 Install via Kickstart file.” Marc Lopez Personal Blog. December 1, 2014. Accessed March 15, 2018. <a class="reference external" href="https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file">https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file</a></p></li>
+<li><p>“oVirt Architecture.” oVirt Documentation. Accessed March 20, 2018. <a class="reference external" href="https://www.ovirt.org/documentation/architecture/architecture/">https://www.ovirt.org/documentation/architecture/architecture/</a></p></li>
+<li><p>“Deploying Self-Hosted Engine.” oVirt Documentation. Accessed March 20, 2018. <a class="reference external" href="https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/">https://www.ovirt.org/documentation/self-hosted/chap-Deploying_Self-Hosted_Engine/</a></p></li>
+<li><p>“[ovirt-users] Fresh install - unable to web gui login.” oVirt Users Mailing List. January 11, 2018. Accessed March 26, 2018. <a class="reference external" href="http://lists.ovirt.org/pipermail/users/2018-January/086223.html">http://lists.ovirt.org/pipermail/users/2018-January/086223.html</a></p></li>
+<li><p>“Install Terraform.” HashiCorp Learn. Accessed July 8, 2020.https://learn.hashicorp.com/terraform/getting-started/install</p></li>
+<li><p>“Providers.” Terraform CLI. Accessed July 8, 2020. <a class="reference external" href="https://www.terraform.io/docs/providers/index.html">https://www.terraform.io/docs/providers/index.html</a></p></li>
+<li><p>“Create a Terraform Module.” Linode Guides &amp; Tutorials. May 1, 2020. Accessed July 8, 2020. <a class="reference external" href="https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/">https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/</a></p></li>
+<li><p>“OpenStack Provider.” Terraform Docs. Accessed July 18, 2020. <a class="reference external" href="https://www.terraform.io/docs/providers/openstack/index.html">https://www.terraform.io/docs/providers/openstack/index.html</a></p></li>
+<li><p>“How to create a vagrant VM from a libvirt vm/image.” openATTIC. January 11, 2018. Accessed October 19, 2020. <a class="reference external" href="https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/">https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/</a></p></li>
+<li><p>“Qemu/KVM Virtual Machines.” Proxmox VE Wiki. November 26, 2020. Accessed January 21, 2021. <a class="reference external" href="https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines">https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines</a></p></li>
+<li><p>“Providers VMware Configuration.” Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. <a class="reference external" href="https://www.vagrantup.com/docs/providers/vmware/configuration">https://www.vagrantup.com/docs/providers/vmware/configuration</a></p></li>
+<li><p>“VMware Integration.” Vagrant by HashiCorp. Accessed February 10, 2021. <a class="reference external" href="https://www.vagrantup.com/vmware">https://www.vagrantup.com/vmware</a></p></li>
+<li><p>“KVM Virtualization: Start VNC Remote Access For Guest Operating Systems.” nixCraft. May 6, 2017. Accessed February 18, 2021. <a class="reference external" href="https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/">https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/</a></p></li>
+<li><p>“CHAPTER 11. MANAGING STORAGE FOR VIRTUAL MACHINES.” Red Hat Customer Portal. Accessed February 25, 2021. <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#understanding-virtual-machine-storage_managing-storage-for-virtual-machines">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#understanding-virtual-machine-storage_managing-storage-for-virtual-machines</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="wine.html" class="btn btn-neutral float-right" title="Wine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kubernetes_development.html" class="btn btn-neutral float-left" title="Kubernetes Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

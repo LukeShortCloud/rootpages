@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Bootloaders &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ceph" href="ceph.html" />
+    <link rel="prev" title="Backup and Recovery" href="backup_and_recovery.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bootloaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#grub-1">GRUB 1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recovery">Recovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#grub-2">GRUB 2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usb-installation-with-both-legacy-bios-and-uefi-support">USB Installation with Both Legacy BIOS and UEFI Support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Bootloaders</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/storage/bootloaders.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bootloaders">
+<h1><a class="toc-backref" href="#id3">Bootloaders</a><a class="headerlink" href="#bootloaders" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#bootloaders" id="id3">Bootloaders</a></p>
+<ul>
+<li><p><a class="reference internal" href="#grub-1" id="id4">GRUB 1</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installation" id="id5">Installation</a></p></li>
+<li><p><a class="reference internal" href="#recovery" id="id6">Recovery</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#grub-2" id="id7">GRUB 2</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id8">Installation</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id9">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">Recovery</a></p></li>
+<li><p><a class="reference internal" href="#usb-installation-with-both-legacy-bios-and-uefi-support" id="id11">USB Installation with Both Legacy BIOS and UEFI Support</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id12">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id13">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="grub-1">
+<h2><a class="toc-backref" href="#id4">GRUB 1</a><a class="headerlink" href="#grub-1" title="Permalink to this headline">¶</a></h2>
+<p>GRUB 1 is a legacy version of GRUB that is no longer supported. The last
+version made available was 0.97 in 2008. GRUB 2 should be used for newer
+Linux distributions.</p>
+<div class="section" id="installation">
+<h3><a class="toc-backref" href="#id5">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>Install GRUB to the primary drive. This will use the MSDOS partition
+scheme on the first 512 bytes as GPT was not supported until GRUB 2.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub-install --root-directory<span class="o">=</span>/ /dev/&lt;DEVICE&gt;
+</pre></div>
+</div>
+<p>A basic boot menu must be configured to specify the boot partition, the
+kernel to use, the root partition to mount, and the initrd/initramfs to
+load.</p>
+<p>File: /boot/grub/menu.lst</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span>   <span class="p">(</span><span class="n">hd0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">/</span><span class="n">vmlinuz</span><span class="o">-</span><span class="n">linux</span> <span class="n">root</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="n">ro</span>
+<span class="n">initrd</span> <span class="o">/</span><span class="n">initramfs</span><span class="o">-</span><span class="n">linux</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+<p>[1]</p>
+</div>
+<div class="section" id="recovery">
+<h3><a class="toc-backref" href="#id6">Recovery</a><a class="headerlink" href="#recovery" title="Permalink to this headline">¶</a></h3>
+<p>When GRUB fails to boot, or if the boot settings need to be modified,
+the GRUB recovery shell can be used.</p>
+<p>Common options:</p>
+<ul class="simple">
+<li><p>help = Show help messages.</p></li>
+<li><p>cat = View the contents of a file.</p></li>
+<li><p>find = View the contents of a file or locate a specific file.</p></li>
+<li><p>dhcp = Obtain an IP address from DHCP.</p></li>
+<li><p>ifconfig = Manually configure IP addressing.</p></li>
+<li><p>tftpserver = Specify a TFTP server to PXE boot from.</p></li>
+<li><p>module = Load a GRUB module.</p></li>
+<li><p>root hd(<code class="docutils literal notranslate"><span class="pre">X</span></code>,<code class="docutils literal notranslate"><span class="pre">Y</span></code>) = Specify the root drive <code class="docutils literal notranslate"><span class="pre">X</span></code> and partition
+<code class="docutils literal notranslate"><span class="pre">Y</span></code> (the partition starts at “0” in GRUB 1 and “1” in GRUB 2). Use
+the “Tab” key on the keyboard to auto-complete if the partitions are
+unknown.</p></li>
+<li><p>boot = Boot the operating system.</p></li>
+<li><p>halt = Turn the computer off.</p></li>
+<li><p>reboot = Reboot the computer</p></li>
+</ul>
+<p>Example of manually booting a server:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>grub&gt; root hd<span class="o">(</span><span class="m">0</span>,0<span class="o">)</span>
+grub&gt; kernel /vmzlinuz-4.0.img <span class="nv">root</span><span class="o">=</span>/dev/sda2 ro
+grub&gt; initrd /initramfs-4.0.img
+grub&gt; boot
+</pre></div>
+</div>
+<p>[2]</p>
+</div>
+</div>
+<div class="section" id="grub-2">
+<h2><a class="toc-backref" href="#id7">GRUB 2</a><a class="headerlink" href="#grub-2" title="Permalink to this headline">¶</a></h2>
+<p>GRUB stands for the GRand Unified Bootloader. It was designed to be
+cross platform compatible with most operating systems including BSD,
+Linux, and Windows variants. [7]</p>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id8">Installation</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>GRUB must be installed onto the start of the entire drive, not a
+partition, to avoid issues in the case of partitions needing to be
+modified. The first 512 bytes of a drive are used for the Master Boot
+Record (MBR). If you are using a GPT partition then it uses the first
+2048 bytes. GRUB will add it’s own data right after that. It is usually
+a safe and recommended option to create your first partition 1MB after
+the start of the drive, especially if GPT is in use.</p>
+<p>Install the GRUB 2 packages:</p>
+<ul>
+<li><p>Arch Linux:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pacman -S efibootmgr efivar grub os-prober
+</pre></div>
+</div>
+</li>
+<li><p>Debian:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ apt-get install efibootmgr grub-common grub-efi-amd64-bin grub-efi-amd64-signed grub-gfxpayload-lists grub-pc grub-pc-bin libefiboot1 libefivar1 os-prober shim shim-signed
+</pre></div>
+</div>
+</li>
+<li><p>Fedora:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ dnf install efibootmgr efi-filesystem grub2-common grub2-efi-x64 grub2-pc grub2-tools grub2-tools-efi grub2-tools-extra grub2-tools-minimal grubby os-prober shim-x64
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Install GRUB to a drive (replace “X”) and then generate a boot menu
+configuration file. This will create the menu file that loads up to the
+end-user upon boot.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub-install /dev/sdX
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+</div>
+<p>If any changes are made to GRUB’s settings and/or it’s various scripts,
+run this command to update the changes. [3]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo update-grub
+</pre></div>
+</div>
+<p>Common “grub-install” options:</p>
+<ul>
+<li><p>compress = Compress GRUB-related files. Valid options are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>no (default), xz, gz, lzo</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>–modules = List kernel modules that are required for boot. Depending on the end-user’s setup, “lvm”, “raid” (for mdadm), and/or “encrypt” (for LUKS) may be required.</p></li>
+<li><p>–force = Install despite any warnings.</p></li>
+<li><p>–recheck = Remove the original /boot/grub/device.map file (if it exists) and then review the current mapping of partitions.</p></li>
+<li><p>–boot-directory = The directory that the “grub/” folder should exist in. This is typically “/boot”. [4]</p></li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h3><a class="toc-backref" href="#id9">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>Important files:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>/etc/default/grub</p></td>
+<td><p>Default GRUB settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p>/etc/grub.d/</p></td>
+<td><p>A folder with various scripts that make up the grub.cfg. Scripts prefixed with lower numbers are executed first.</p></td>
+</tr>
+<tr class="row-even"><td><p>/boot/grub/grub.cfg</p></td>
+<td><p>This is automatically generated using the settings from /etc/default/grub and the scripts in /etc/grub.d/ . Manual changes may get overwritten.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Common options:</p>
+<ul>
+<li><p>/etc/default/grub</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>GRUB_DEFAULT = The default menu entry to autoboot into.</p>
+<ul>
+<li><p>saved = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.</p></li>
+<li><p>Alternatively, this can either be the number of the “menuentry” section, in order from top to bottom, starting at 0.</p></li>
+<li><p>Or the menu entry title can be explicitly specified. For example, “CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core).”</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grep ^menuentry /boot/grub2/grub.cfg
+menuentry <span class="s1">&#39;CentOS Linux (3.10.0-327.18.2.el7.x86_64) 7 (Core)&#39;</span> --class centos --class gnu-linux --class gnu --class os --unrestricted <span class="nv">$menuentry_id_option</span> <span class="s1">&#39;gnulinux-3.10.0-327.18.2.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b&#39;</span> <span class="o">{</span>
+menuentry <span class="s1">&#39;CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)&#39;</span> --class centos --class gnu-linux --class gnu --class os --unrestricted <span class="nv">$menuentry_id_option</span> <span class="s1">&#39;gnulinux-3.10.0-327.13.1.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b&#39;</span> <span class="o">{</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>GRUB_TIMEOUT = Set the timeout (in seconds) before booting into the
+default menu entry.</p></li>
+<li><p>GRUB_CMDLINE_LINUX = Append kernel options to the end of the
+“linux” line. These can later be seen in the operating system in
+/proc/cmdline. This applies to both the normal and recovery mode
+options.</p></li>
+<li><p>GRUB_CMDLINE_LINUX_DEFAULT = The same as the above setting except
+this option does not affect the recovery kernel options.</p></li>
+<li><p>GRUB_DISABLE_LINUX_UUID = If set to “true”, devices from /dev/
+will be used for specifying the root instead of the UUID. The default
+is “false” which will use UUIDs.</p></li>
+<li><p>GRUB_BACKGROUND = Specify the full path to a custom image for GRUB’s
+menu background.</p></li>
+</ul>
+<p>[5]</p>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id10">Recovery</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>In cases where GRUB fails (because it was installed incorrectly), the
+end-user is automatically switched into GRUB’s rescue shell.</p>
+<p>Common options:</p>
+<ul class="simple">
+<li><p>insmod = Load kernel modules.</p></li>
+<li><p>ls = List partitions and file systems within them.</p></li>
+<li><p>cat = View file contents.</p></li>
+<li><p>set = Set a boot option.</p></li>
+<li><p>unset = Remove a boot option.</p></li>
+<li><p>boot = Attempt to boot again.</p></li>
+<li><p>halt = Shutdown the computer.</p></li>
+<li><p>reboot = Restart the computer.</p></li>
+</ul>
+<p>The rescue prompt will look similar to this.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>grub rescue&gt;
+</pre></div>
+</div>
+<p>Example of using these commands to do a custom rescue boot.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>grub rescue&gt; ls
+<span class="o">(</span>hd0<span class="o">)</span> <span class="o">(</span>hd0,msdos1<span class="o">)</span>
+grub rescue&gt; ls <span class="o">(</span>hd0,1<span class="o">)</span>/boot/
+grub/
+vmlinuz
+initramfs-linux.img
+grub rescue&gt; <span class="nb">set</span> <span class="nv">root</span><span class="o">=(</span>hd0,1<span class="o">)</span>
+grub rescue&gt; linux /boot/vmlinuz <span class="nv">root</span><span class="o">=</span>/dev/sda1
+grub rescue&gt; initrd /boot/initramfs-linux.img
+grub rescue&gt; boot
+</pre></div>
+</div>
+<p>Alternatively, you can switch back to the graphical GRUB menu and make
+changes there.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>grub rescue&gt; insmod normal
+grub rescue&gt; normal
+</pre></div>
+</div>
+<p>For recovering from a corrupt GRUB installation, fully change root into
+the environment from a live CD, USB, or PXE network boot. Then you can
+modify configuration files and re-install GRUB using the same commands
+used during the installation.</p>
+<p>In this example, /dev/sda2 is the root partition and /dev/sda1 is the
+boot partition. [6]</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mount /dev/sda2 /mnt
+$ sudo mount /dev/sda1 /mnt/boot
+$ sudo mount --bind /dev /mnt/dev
+$ sudo mount -t proc proc /mnt/proc
+$ sudo mount --bind /run /mnt/run
+$ sudo mount -t sysfs sys /mnt/sys
+$ chroot /mnt
+$ /bin/bash
+$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:/sbin:/bin&quot;</span>
+</pre></div>
+</div>
+<p>If you need to recover GRUB from a chroot that is based on a LVM on the
+host node, make sure that LVM tools are installed on the guest. This way
+it can properly see the logical volume as a block device.</p>
+<p>Debian:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install lvm2
+</pre></div>
+</div>
+<p>Fedora:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install lvm2
+</pre></div>
+</div>
+</div>
+<div class="section" id="usb-installation-with-both-legacy-bios-and-uefi-support">
+<h3><a class="toc-backref" href="#id11">USB Installation with Both Legacy BIOS and UEFI Support</a><a class="headerlink" href="#usb-installation-with-both-legacy-bios-and-uefi-support" title="Permalink to this headline">¶</a></h3>
+<p>Linux can be installed onto a portable storage device that can boot in both legacy BIOS computers and newer UEFI computers.</p>
+<ul class="simple">
+<li><p>Partition table requirements:</p>
+<ul>
+<li><p>GPT partition table.</p></li>
+<li><p>BIOS boot partition: 1MB unformatted partition with the “BIOS boot” flag/type.</p></li>
+<li><p>EFI partition: &gt;= 200MB vfat (fat32) partition mounted at <code class="docutils literal notranslate"><span class="pre">/boot/efi</span></code>.</p></li>
+<li><p>Linux boot partition: 1GB partition with a stable file system (such as ext4) mounted at <code class="docutils literal notranslate"><span class="pre">/boot</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p>After setting up the partitions and installing the operating system with UEFI support, chroot into the new installation before rebooting. On Fedora only, create the legacy BIOS boot GRUB configuration file. Then install GRUB using the legacy BIOS boot by specifying the block device (not the partition itself).</p>
+<p>Arch Linux and Debian:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub-install --target<span class="o">=</span>i386-pc /dev/&lt;DEVICE&gt;
+</pre></div>
+</div>
+<p>Fedora:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+$ sudo grub2-install --target<span class="o">=</span>i386-pc /dev/&lt;DEVICE&gt;
+</pre></div>
+</div>
+<p>[8]</p>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id12">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/bootloaders.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/bootloaders.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id13">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“GRUB Legacy.” Arch Linux Wiki. January 11, 2017. Accessed February 8, 2017. <a class="reference external" href="https://wiki.archlinux.org/index.php/GRUB_Legacy">https://wiki.archlinux.org/index.php/GRUB_Legacy</a></p></li>
+<li><p>“GNU GRUB Manual 0.97.” GNU. Accessed February 8, 2017. <a class="reference external" href="https://www.gnu.org/software/grub/manual/legacy/grub.html">https://www.gnu.org/software/grub/manual/legacy/grub.html</a></p></li>
+<li><p>“GRUB.” Arch Linux Wiki. May 27, 2016. <a class="reference external" href="https://wiki.archlinux.org/index.php/GRUB">https://wiki.archlinux.org/index.php/GRUB</a></p></li>
+<li><p>“GRUB2-INSTALL MAN PAGE.” Mankier. February 26, 2014. <a class="reference external" href="https://www.mankier.com/8/grub2-install">https://www.mankier.com/8/grub2-install</a></p></li>
+<li><p>“GRUB2/Setup.” Ubuntu Documentation. November 29, 2015. <a class="reference external" href="https://help.ubuntu.com/community/Grub2/Setup">https://help.ubuntu.com/community/Grub2/Setup</a></p></li>
+<li><p>“Grub2/Installing.” Ubuntu Documentation. March 6, 2015. <a class="reference external" href="https://help.ubuntu.com/community/Grub2/Installing">https://help.ubuntu.com/community/Grub2/Installing</a></p></li>
+<li><p>“GNU GRUB Manual 2.00.” GNU. Accessed June 27, 2016. <a class="reference external" href="https://www.gnu.org/software/grub/manual/grub.html">https://www.gnu.org/software/grub/manual/grub.html</a></p></li>
+<li><p>“Is a hybrid Linux USB-Stick for UEFI &amp; legacy BIOS possible?” Super User. March 11, 2018. Accessed June 17, 2020. <a class="reference external" href="https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible">https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ceph.html" class="btn btn-neutral float-right" title="Ceph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="backup_and_recovery.html" class="btn btn-neutral float-left" title="Backup and Recovery" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

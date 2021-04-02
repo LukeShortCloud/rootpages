@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>HTTP Servers &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../networking/index.html" />
+    <link rel="prev" title="Databases" href="databases.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="databases.html">Databases</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HTTP Servers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#apache-2-4">Apache 2.4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-hosts">Virtual Hosts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files-directories-and-locations">Files, Directories, and Locations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication">Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cgi">CGI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selinux">SELinux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nginx">NGINX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#openssl">OpenSSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>HTTP Servers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/http/http_servers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="http-servers">
+<h1><a class="toc-backref" href="#id2">HTTP Servers</a><a class="headerlink" href="#http-servers" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#http-servers" id="id2">HTTP Servers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#apache-2-4" id="id3">Apache 2.4</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration" id="id4">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#virtual-hosts" id="id5">Virtual Hosts</a></p></li>
+<li><p><a class="reference internal" href="#files-directories-and-locations" id="id6">Files, Directories, and Locations</a></p></li>
+<li><p><a class="reference internal" href="#authentication" id="id7">Authentication</a></p></li>
+<li><p><a class="reference internal" href="#cgi" id="id8">CGI</a></p></li>
+<li><p><a class="reference internal" href="#selinux" id="id9">SELinux</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#nginx" id="id10">NGINX</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id11">Configuration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#openssl" id="id12">OpenSSL</a></p></li>
+<li><p><a class="reference internal" href="#history" id="id13">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id14">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="apache-2-4">
+<h2><a class="toc-backref" href="#id3">Apache 2.4</a><a class="headerlink" href="#apache-2-4" title="Permalink to this headline">¶</a></h2>
+<p>The Apache HTTP Server Project is designed to provide a versatile open
+source HTTP and HTTPS web server. It is one of the top used web servers.
+[1]</p>
+<div class="section" id="configuration">
+<h3><a class="toc-backref" href="#id4">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>There is generally one primary Apache configuration file that then
+includes other possible configuration files.</p>
+<p>Fedora file: /etc/http/conf/httpd.conf</p>
+<p>Debian file: /etc/apache2/apache2.conf</p>
+<p>Options:</p>
+<ul class="simple">
+<li><p>ServerRoot = Specify what directory Apache should use as a relative
+path.</p>
+<ul>
+<li><p>Example: ServerRoot “/etc/httpd”</p></li>
+</ul>
+</li>
+<li><p>Listen = What port (and optionally address) Apache should listen on.</p>
+<ul>
+<li><p>Example #1: Listen 127.0.0.1:80</p></li>
+<li><p>Example #2: Listen 443</p></li>
+</ul>
+</li>
+<li><p>User = The user that Apache should be run as.</p>
+<ul>
+<li><p>Example: User apache</p></li>
+</ul>
+</li>
+<li><p>Group = The group that Apache should be run with.</p></li>
+<li><p>ServerAdmin = Provide an e-mail address that will get e-mails when
+there are any errors.</p></li>
+<li><p>LogLevel = Specify how verbose logging should be.</p>
+<ul>
+<li><p>error</p></li>
+<li><p>warn</p></li>
+<li><p>info</p></li>
+<li><p>debug</p></li>
+</ul>
+</li>
+<li><p>ErrorDocument = Provide a custom page for specific error numbers.
+This can either be text, a file, script, or redirect.</p>
+<ul>
+<li><p>Example #1: ErrorDocument 500 “Contact your System Administrator
+for help. Thank you.”</p></li>
+<li><p>Example #2: ErrorDocument 403
+“/cgi-bin/you_didnt_say_the_magic_word.py”</p></li>
+</ul>
+</li>
+<li><p>ErrorLog = The file to use for the error log.</p></li>
+<li><p>CustomLog = The file to use for logging Apache access information.</p></li>
+<li><p>IncludeOptional = Specify what directory (under ServerRoot) to load
+other configurations from.</p>
+<ul>
+<li><p>Example: IncludeOptional conf.d/*.conf</p></li>
+</ul>
+</li>
+</ul>
+<p>[2]</p>
+<p>Verify that the configuration is correct with one of these commands:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apachectl configtest
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo httpd -t
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtual-hosts">
+<h3><a class="toc-backref" href="#id5">Virtual Hosts</a><a class="headerlink" href="#virtual-hosts" title="Permalink to this headline">¶</a></h3>
+<p>A virtual host file is part of the configuration that is required for
+Apache to load a domain.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Options:</p>
+<ul class="simple">
+<li><p>ServerName = The main domain name for the virtual host.</p></li>
+<li><p>ServerAlias = Other domains associated with the virtual host</p></li>
+<li><p>DocumentRoot = The directory where the domain loads its files from.</p></li>
+<li><p>DirectoryIndex = The main file that is loaded up in a directory, if
+found. Default: “index.html” or “index.htm.”</p></li>
+<li><p>LogLevel, ErrorLog, and CustomLog = Refer to the <a class="reference external" href="#apache---configuration">Apache
+Configuration</a> section.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">VirtualHost</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">80</span><span class="o">&gt;</span>
+    <span class="n">ServerName</span>  <span class="n">rootpages</span><span class="o">.</span><span class="n">tld</span>
+    <span class="n">ServerAlias</span> <span class="n">www</span><span class="o">.</span><span class="n">rootpages</span><span class="o">.</span><span class="n">tld</span>
+    <span class="n">DirectoryIndex</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+    <span class="n">DocumentRoot</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">rootpages</span><span class="o">/</span>
+    <span class="n">LogLevel</span> <span class="n">warn</span>
+    <span class="n">ErrorLog</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">rootpages_tld</span><span class="o">.</span><span class="n">error_log</span>
+    <span class="n">CustomLog</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">rootpages_tld</span><span class="o">.</span><span class="n">custom_log</span>
+<span class="o">&lt;/</span><span class="n">VirtualHost</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>[3]</p>
+</div>
+<div class="section" id="files-directories-and-locations">
+<h3><a class="toc-backref" href="#id6">Files, Directories, and Locations</a><a class="headerlink" href="#files-directories-and-locations" title="Permalink to this headline">¶</a></h3>
+<p>Different settings can be used on items based on if a matched file,
+directory, or location is found. Regular expressions can be used to
+match different areas.</p>
+<ul>
+<li><p>File = Match a specific file name.</p></li>
+<li><p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">File</span> <span class="s2">&quot;/path/to/file.html&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">File</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Directory = Match a specific directory name.</p></li>
+<li><p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/path/to/dir&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Location = Match any location. This can be a directory, alias, or a
+redirect path.</p></li>
+<li><p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Location</span> <span class="s2">&quot;/path/to/location&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Location</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Options:</p>
+<ul class="simple">
+<li><p>Require = Set an access control list to allow certain hosts or IPs.</p>
+<ul>
+<li><p>all = Apply the rule to all hosts.</p></li>
+<li><p>host = Apply the rule to a specific host.</p></li>
+<li><p>ip = Apply the rule to an IP address</p>
+<ul>
+<li><p>granted = Allow the matched rule.</p></li>
+<li><p>denied = Deny the matched rule.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Require not [all|host|ip] = Deny access to a host or IP. This
+should be configured after a Require rule. [4]</p></li>
+<li><p>Options = Specify attributes of the matched area. Enable an option
+with a “+” or disable it with “-“. If no sign is present, Apache
+assumes it should be enabled. If at least one option requires a sign
+then all of the other options will need a sign.</p>
+<ul>
+<li><p>All = Allow of the options.</p></li>
+<li><p>ExecGI = Allow CGI scripts to be executed.</p></li>
+<li><p>Includes = Allow HTML include functionality to include files
+server-side.</p></li>
+<li><p>IncludesNOEXEC = The same as Includes but it does not allow HTML
+files to execute commands or scripts.</p></li>
+<li><p>Indexes = Show the content of a directory if the DirectoryIndex is
+not found.</p></li>
+<li><p>FollowSymLinks = Allow symlinks to different directories. [5]</p></li>
+</ul>
+</li>
+</ul>
+<p>A combination of a “Require all” or “Require not all” and then an
+explicit allow/deny list can only be used within a “RequireAll” block.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/html&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">RequireAll</span><span class="o">&gt;</span>
+        <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+        <span class="n">Require</span> <span class="ow">not</span> <span class="n">ip</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">14.19</span>
+        <span class="n">Require</span> <span class="ow">not</span> <span class="n">host</span> <span class="n">server</span><span class="o">.</span><span class="n">hostname</span><span class="o">.</span><span class="n">tld</span>
+    <span class="o">&lt;/</span><span class="n">RequireAll</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authentication">
+<h3><a class="toc-backref" href="#id7">Authentication</a><a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h3>
+<p>Locations can be secured by a username and password. Users can also be
+assigned to groups.</p>
+<p>Create an Apache user.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo htpasswd -c /etc/httpd/conf.d/passwd &lt;USER1&gt;
+</pre></div>
+</div>
+<p>Another user can be appended to this file by omitting the “-c” create
+option.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo htpasswd /etc/httpd/conf.d/passwd &lt;USER2&gt;
+</pre></div>
+</div>
+<p>A new file can be created to assign multiple users to a group.</p>
+<p>File: /etc/httpd/conf.d/group</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">GROUP</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">USER1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">USER2</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Authentication can now be applied to any location. [6] The syntax is:</p>
+<dl class="simple">
+<dt>::</dt><dd><p>AuthType Basic
+AuthName “Login Prompt Text”
+AuthUserFile “/path/to/passwd/file”
+AuthGroupFile “/path/to/group/file”
+Require [user|group] &lt;USER|GROUP&gt;</p>
+</dd>
+</dl>
+<p>Example #1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/html&quot;</span><span class="o">&gt;</span>
+    <span class="n">AuthType</span> <span class="n">Basic</span>
+    <span class="n">AuthName</span> <span class="s2">&quot;Please Login&quot;</span>
+    <span class="n">AuthUserFile</span> <span class="s2">&quot;/etc/httpd/conf.d/joe_passwd&quot;</span>
+    <span class="n">Require</span> <span class="n">user</span> <span class="n">joe</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Example #2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">File</span> <span class="s2">&quot;/var/www/html/grades/spring_2016_grades.csv&quot;</span><span class="o">&gt;</span>
+    <span class="n">AuthType</span> <span class="n">Basic</span>
+    <span class="n">AuthName</span> <span class="s2">&quot;Spring 2016 Class Login&quot;</span>
+    <span class="n">AuthUserFile</span> <span class="s2">&quot;/etc/httpd/conf.d/passwds&quot;</span>
+    <span class="n">AuthGroupFile</span> <span class="s2">&quot;/etc/httpd/conf.d/spring_2016&quot;</span>
+    <span class="n">Require</span> <span class="n">group</span> <span class="n">spring_2016</span>
+<span class="o">&lt;/</span><span class="n">File</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cgi">
+<h3><a class="toc-backref" href="#id8">CGI</a><a class="headerlink" href="#cgi" title="Permalink to this headline">¶</a></h3>
+<p>The common gateway interface (CGI) is a method of the web server
+executing a script and then sending the results to a web browser. The
+default way to handle dynamic CGI programs is to use the “mod_cgi”
+module.</p>
+<p>In the main configuration, the new CGI bin folder has to be aliased to
+/cgi-bin/. This way Apache knows that this should be a CGI folder.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ScriptAlias</span> <span class="s2">&quot;/cgi-bin/&quot;</span> <span class="s2">&quot;/path/to/custom/cgi-bin/&quot;</span>
+</pre></div>
+</div>
+<p>Then the directory can be configured. It needs to allow the execution of
+CGI, set everything in the folder to be executable via the cgi-script
+handler, and allow access to it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/path/to/custom/cgi-bin/&quot;</span><span class="o">&gt;</span>
+    <span class="n">Options</span> <span class="o">+</span><span class="n">ExecCGI</span>
+    <span class="n">SetHandler</span> <span class="n">cgi</span><span class="o">-</span><span class="n">script</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>All CGI scripts have to either be a binary or have a shebang that
+indicates the path to the binary that should execute the program. An
+example shebang is “#!/bin/bash.” The program will also need to first
+print out “Content-type: text/html” so the web browser knows that it is
+a HTML page. An example is shown below.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;Content-type: text/html&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;CGI Test Page&quot;</span>
+</pre></div>
+</div>
+<p>All scripts should have readable and executable Unix permissions by the
+anonymous user (“other”) access category.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo chmod -R o+rx /path/to/custom/cgi-bin/
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+<div class="section" id="selinux">
+<h3><a class="toc-backref" href="#id9">SELinux</a><a class="headerlink" href="#selinux" title="Permalink to this headline">¶</a></h3>
+<p>Red Hat Enterprise Linux and related distributions use SELinux as an
+extra layer of security. In this case, by having SELinux, this ensures
+that a compromised Apache cannot listen on non-standard ports or access
+directories outside of it’s scope. There may be cases where an
+administrator needs to expand Apache’s access so SELinux permissions
+will need to be modified.</p>
+<p>Install the troubleshooting utilities:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install setroubleshoot
+</pre></div>
+</div>
+<p>View the current Apache ports allowed by SELinux:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo semanage port -l <span class="p">|</span> grep ^http_port_t
+http_port_t                    tcp      <span class="m">80</span>, <span class="m">81</span>, <span class="m">443</span>, <span class="m">488</span>, <span class="m">8008</span>, <span class="m">8009</span>, <span class="m">8443</span>, <span class="m">9000</span>
+</pre></div>
+</div>
+<p>Add a new allowed TCP port:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo semanage port -a -t http_port_t -p tcp &lt;PORT_NUMBER&gt;
+</pre></div>
+</div>
+<p>Lookup the Apache SELinux file context permissions. It should be
+“httpd_sys_content_t.”</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ls -lahZ /var/www/html/
+drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 .
+drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 ..
+</pre></div>
+</div>
+<p>Permanently fix SELinux permissions on a custom directory using the
+semanage tool and then apply the permissions by running restorecon:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo semanage fcontext -a -t httpd_sys_content_t <span class="s2">&quot;/path/to/custom/dir(/.*)?&quot;</span>
+$ sudo restorecon -Rv /path/to/custom/dir
+</pre></div>
+</div>
+<p>[8]</p>
+</div>
+</div>
+<div class="section" id="nginx">
+<h2><a class="toc-backref" href="#id10">NGINX</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
+<p>NGINX was originally designed to be a proxy server and had eventually
+added the functionality of being a HTTP web server. For HTTP, it is
+focused on high-performance static content handling. Dynamic scripts
+must be processed by a different web server.</p>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id11">Configuration</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The NGINX configuration file <code class="docutils literal notranslate"><span class="pre">/etc/nginx/nginx.conf</span></code> contains
+different blocks defined by using brackets <code class="docutils literal notranslate"><span class="pre">{}</span></code>. Each line in the file
+(besides that brackets) must end in a semicolon <code class="docutils literal notranslate"><span class="pre">;</span></code>. Comments can be
+created with a pound <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol. [1] Below are some of the more common
+configuration settings.</p>
+<ul class="simple">
+<li><p>main = This is not a block. It is outside of the “events” and “http”
+directives. These settings affect how the main NGINX process is
+spawned and handled.</p>
+<ul>
+<li><p>error_log = The global error log file.</p></li>
+<li><p>load_module = Load an external NGINX module.</p></li>
+<li><p>pid = The file to store the main process ID (PID) of NGINX.</p></li>
+<li><p>user = The user to run as.</p></li>
+<li><p>worker_processes = The number of threads to spawn.</p>
+<ul>
+<li><p>auto = Automatically use the number of threads that the server
+has.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>events = Settings that affect how the NGINX process handles each
+request.</p>
+<ul>
+<li><p>worker_connections = The number of connections that can be
+handled by each worker process.</p></li>
+</ul>
+</li>
+<li><p>http = Global settings for the HTTP web server.</p>
+<ul>
+<li><p>disable_symlinks</p>
+<ul>
+<li><p>off = Default. Follow symlinks.</p></li>
+<li><p>on = Do not follow symlinks.</p></li>
+<li><p>if_not_owner = Only follow a symlink if the destination file
+is owned by the same user.</p></li>
+<li><p>from = Only disable symlinks originating from a specific
+location.</p></li>
+</ul>
+</li>
+<li><p>error_log</p></li>
+<li><p>error_page <code class="docutils literal notranslate"><span class="pre">&lt;CODE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;FILE&gt;</span></code> = The error page that should be
+used for a particular HTTP error code.</p></li>
+<li><p>root = The root directory to load up.</p></li>
+</ul>
+</li>
+<li><p>server = A virtual host definition. This defines what ports to listen
+on, what IP address or hostname to be associated with, on and
+locations to serve content from.</p>
+<ul>
+<li><p>error_log</p></li>
+<li><p>error_page</p></li>
+<li><p>etag = Turn MD5 checksum (etag) generation on or off.</p></li>
+<li><p>listen <code class="docutils literal notranslate"><span class="pre">{&lt;PORT&gt;|&lt;ADDRESS&gt;:&lt;PORT&gt;}</span></code> = The port and/or address to
+listen on for the virtual host.</p></li>
+<li><p>root</p></li>
+<li><p>server_name = A list (separated by spaces) of domain names that
+the virtual host should respond to.</p></li>
+<li><p>try_files $uri $uri/<code class="docutils literal notranslate"><span class="pre">&lt;FILE&gt;</span></code> = Specify the default file to
+load for any given request. Typically this is <code class="docutils literal notranslate"><span class="pre">index.html</span></code>.</p></li>
+</ul>
+</li>
+<li><p>location = The URL path after a domain name that NGINX should load
+and how to handle it. For example, the location “/admin” would define
+what to do when a web browser accesses <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1/admin</span></code>.</p>
+<ul>
+<li><p>alias = A different path that the location should load.</p></li>
+<li><p>disable_symlinks</p></li>
+<li><p>error_log</p></li>
+<li><p>error_page</p></li>
+<li><p>root</p></li>
+<li><p>try_files</p></li>
+</ul>
+</li>
+</ul>
+<p>[10][11]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Main.</span>
+<span class="n">events</span> <span class="p">{</span>
+    <span class="c1"># Connection process settings.</span>
+<span class="p">}</span>
+
+<span class="n">http</span> <span class="p">{</span>
+    <span class="c1"># Global HTTP settings.</span>
+    <span class="n">server</span> <span class="p">{</span>
+        <span class="c1"># Virtual host content.</span>
+        <span class="n">location</span> <span class="o">&lt;</span><span class="n">PATH</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="c1"># How to handle a path to a URL.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[9]</p>
+</div>
+</div>
+<div class="section" id="openssl">
+<h2><a class="toc-backref" href="#id12">OpenSSL</a><a class="headerlink" href="#openssl" title="Permalink to this headline">¶</a></h2>
+<p>OpenSSL is a free and open source library for managing secure socket
+layer (SSL) and Transport Layer Security (TLS) encryption. [12]</p>
+<p>PEM files can either be a single certificate or a full encapsulation of
+all related certificates and keys. This is useful for distributing an
+SSL by using only one file.</p>
+<p>A minimal PEM file can contain just a certificate. If using a
+self-signed SSL, both the certificate and then the key can be included.
+For SSLs issued from a Certificate Authority (CA), the full syntax
+should be used to include all of the necessary content. It includes the
+domain’s certificate (MY CERTIFICATE), the certificates from the CA
+bundle (INTERMEDIATE CERTIFICATE and ROOT CERTIFICATE), and then then
+domain’s certificate key (RSA PRIVATE KEY).</p>
+<p>Minimal Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+</pre></div>
+</div>
+<p>Full Self-signed Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+</pre></div>
+</div>
+<p>Full Verified Syntax:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>-----BEGIN MY CERTIFICATE-----
+-----END MY CERTIFICATE-----
+-----BEGIN INTERMEDIATE CERTIFICATE-----
+-----END INTERMEDIATE CERTIFICATE-----
+-----BEGIN INTERMEDIATE CERTIFICATE-----
+-----END INTERMEDIATE CERTIFICATE-----
+-----BEGIN ROOT CERTIFICATE-----
+-----END ROOT CERTIFICATE-----
+-----BEGIN RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----
+</pre></div>
+</div>
+<p>[13]</p>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id13">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/http/http_servers.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/http_servers.rst">&lt; 2020.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/http_servers.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/http_servers.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id14">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“The Number One HTTP Server On The Internet.” Apache HTTP Server Project. Accessed October 1, 2016. <a class="reference external" href="https://httpd.apache.org/">https://httpd.apache.org/</a></p></li>
+<li><p>“Configure the /etc/httpd/conf/httpd.conf file.” Securing and Optimizing Linux. 2000. Accessed October 1, 2016. <a class="reference external" href="http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html">http://www.tldp.org/LDP/solrhe/Securing-Optimizing-Linux-RH-Edition-v1.3/chap29sec245.html</a></p></li>
+<li><p>“Set up Apache virtual hosts on Ubuntu.” Rackspace Network Support. July 8, 2016. Accessed October 1, 2016. <a class="reference external" href="https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/">https://support.rackspace.com/how-to/set-up-apache-virtual-hosts-on-ubuntu/</a></p></li>
+<li><p>“Access Control.” Apache HTTP Server Project. Accessed October 1, 2016. <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/access.html">https://httpd.apache.org/docs/2.4/howto/access.html</a></p></li>
+<li><p>“Options Directive.” Apache HTTP Server Project. Accessed October 1, 2016. <a class="reference external" href="http://httpd.apache.org/docs/2.4/mod/core.html#options">http://httpd.apache.org/docs/2.4/mod/core.html#options</a></p></li>
+<li><p>“Authentication and Authorization.” Apache HTTP Server Project. Accessed October 1, 2016. <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/auth.html">https://httpd.apache.org/docs/2.4/howto/auth.html</a></p></li>
+<li><p>“Apache Tutorial: Dynamic Content with CGI.” Apache HTTP Server Project. Accessed October 1, 2016. <a class="reference external" href="https://httpd.apache.org/docs/2.4/howto/cgi.html">https://httpd.apache.org/docs/2.4/howto/cgi.html</a></p></li>
+<li><p>“HowTos SELinux.” CentOS Wiki. February 26, 2017. Accessed May 7, 2017. <a class="reference external" href="https://wiki.centos.org/HowTos/SELinux">https://wiki.centos.org/HowTos/SELinux</a></p></li>
+<li><p>“NGINX Beginner’s Guide.” NGINX Documentation. April 18, 2017. Accessed May 7, 2017. <a class="reference external" href="https://nginx.org/en/docs/beginners_guide.html">https://nginx.org/en/docs/beginners_guide.html</a></p></li>
+<li><p>“<a class="reference external" href="#nginx">NGINX</a> Core functionality.” NGINX Documentation. April 18, 2017. Accessed May 7, 2017. <a class="reference external" href="https://nginx.org/en/docs/ngx_core_module.html">https://nginx.org/en/docs/ngx_core_module.html</a></p></li>
+<li><p>“<a class="reference external" href="#nginx">NGINX</a> Module ngx_http_core_module.” NGINX Documentation. April 18, 2017. Accessed May 7, 2017. <a class="reference external" href="https://nginx.org/en/docs/http/ngx_http_core_module.html">https://nginx.org/en/docs/http/ngx_http_core_module.html</a></p></li>
+<li><p>“Welcome to OpenSSL!” Accessed November 27, 2016. <a class="reference external" href="https://www.openssl.org/">https://www.openssl.org/</a></p></li>
+<li><p>“HAProxy Comodo SSL.” Stack Overflow. August 31, 2013. Accessed November 27, 2016. <a class="reference external" href="http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl">http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../networking/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="databases.html" class="btn btn-neutral float-left" title="Databases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

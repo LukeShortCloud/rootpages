@@ -1,0 +1,850 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Linux &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Macs" href="macs.html" />
+    <link rel="prev" title="Graphics" href="graphics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">Graphics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-calls">System Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#schedulers">Schedulers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#processor">Processor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-o">I/O</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#initial-ram-file-system">Initial RAM File System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arch-linux">Arch Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rhel">RHEL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debian">Debian</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#errors-messages">Errors Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Linux</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/administration/linux.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<h1><a class="toc-backref" href="#id1">Linux</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#linux" id="id1">Linux</a></p>
+<ul>
+<li><p><a class="reference internal" href="#system-calls" id="id2">System Calls</a></p></li>
+<li><p><a class="reference internal" href="#modules" id="id3">Modules</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration" id="id4">Configuration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#schedulers" id="id5">Schedulers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#processor" id="id6">Processor</a></p></li>
+<li><p><a class="reference internal" href="#i-o" id="id7">I/O</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#initial-ram-file-system" id="id8">Initial RAM File System</a></p>
+<ul>
+<li><p><a class="reference internal" href="#arch-linux" id="id9">Arch Linux</a></p></li>
+<li><p><a class="reference internal" href="#rhel" id="id10">RHEL</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#install" id="id11">Install</a></p>
+<ul>
+<li><p><a class="reference internal" href="#debian" id="id12">Debian</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id13">Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#errors-messages" id="id14">Errors Messages</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id15">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id16">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Linux is a kernel designed to be similar to the original UNIX kernel. It
+is a modern, free, and open source alternative that was originally
+created by Linus Torvalds. It is built to work on many processor
+architectures. “Linux” is sometimes used to generally describe the many
+operating systems that use the Linux kernel. [1] In the context of this
+Root Pages guide, the focus is on the actual kernel.</p>
+<p>Each kernel new kernel in development normally goes through 7 to 9 weeks of release candidates before it is marked as stable. [12] At some point after the Linux git repository has added more than 2 million git objects, the major version number is increased. [13] The latest kernels can be found <a class="reference external" href="https://www.kernel.org/">here</a>.</p>
+<p>The types of Linux kernel releases include:</p>
+<ul class="simple">
+<li><p>mainline = The latest development release that is working towards a stable release.</p></li>
+<li><p>stable = The current stable release.</p></li>
+<li><p>longterm = Long-term supported kernels are older versions that primarily only receive bug fixes.</p></li>
+<li><p>linux-next = Daily unstable development releases from the “master” git branch.</p></li>
+</ul>
+<div class="section" id="system-calls">
+<h2><a class="toc-backref" href="#id2">System Calls</a><a class="headerlink" href="#system-calls" title="Permalink to this headline">¶</a></h2>
+<p>Programs use system calls to interact with the kernel to do tasks.</p>
+<p>Common system calls:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Call</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>accept</p></td>
+<td><p>Network</p></td>
+<td><p>Accept an incoming network connection.</p></td>
+</tr>
+<tr class="row-odd"><td><p>bind</p></td>
+<td><p>Network</p></td>
+<td><p>Associate a network socket to a specific IP address.</p></td>
+</tr>
+<tr class="row-even"><td><p>chdir</p></td>
+<td><p>Process</p></td>
+<td><p>Change to a different working directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p>chmod</p></td>
+<td><p>File</p></td>
+<td><p>Change the mode permissions.</p></td>
+</tr>
+<tr class="row-even"><td><p>chown</p></td>
+<td><p>File</p></td>
+<td><p>Change the owner permissions.</p></td>
+</tr>
+<tr class="row-odd"><td><p>chroot</p></td>
+<td><p>Process</p></td>
+<td><p>Change the working root directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>close</p></td>
+<td><p>File</p></td>
+<td><p>Close a file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>connect</p></td>
+<td><p>Network</p></td>
+<td><p>Make an external network connection.</p></td>
+</tr>
+<tr class="row-even"><td><p>exec</p></td>
+<td><p>Process</p></td>
+<td><p>Execute/start a program.</p></td>
+</tr>
+<tr class="row-odd"><td><p>exit</p></td>
+<td><p>Process</p></td>
+<td><p>End a process.</p></td>
+</tr>
+<tr class="row-even"><td><p>fork</p></td>
+<td><p>Process</p></td>
+<td><p>Spawn a new process.</p></td>
+</tr>
+<tr class="row-odd"><td><p>getgid</p></td>
+<td><p>Process</p></td>
+<td><p>Find the group ID.</p></td>
+</tr>
+<tr class="row-even"><td><p>getuid</p></td>
+<td><p>Process</p></td>
+<td><p>Find the user ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p>kill</p></td>
+<td><p>Process</p></td>
+<td><p>Send a signal to a process.</p></td>
+</tr>
+<tr class="row-even"><td><p>link</p></td>
+<td><p>File</p></td>
+<td><p>Create a shortcut that mirrors an existing inode (a hard link).</p></td>
+</tr>
+<tr class="row-odd"><td><p>mkdir</p></td>
+<td><p>File</p></td>
+<td><p>Create a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>mknod</p></td>
+<td><p>File</p></td>
+<td><p>Create a file (node).</p></td>
+</tr>
+<tr class="row-odd"><td><p>mount</p></td>
+<td><p>File</p></td>
+<td><p>Mount a file system onto a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>nice</p></td>
+<td><p>Process</p></td>
+<td><p>Modify the priority of a process.</p></td>
+</tr>
+<tr class="row-odd"><td><p>open</p></td>
+<td><p>File</p></td>
+<td><p>Open a file.</p></td>
+</tr>
+<tr class="row-even"><td><p>pause</p></td>
+<td><p>Process</p></td>
+<td><p>Temporarily stop a process from running until a signal is given to continue.</p></td>
+</tr>
+<tr class="row-odd"><td><p>pipe</p></td>
+<td><p>Process</p></td>
+<td><p>Stream output data from one process to another.</p></td>
+</tr>
+<tr class="row-even"><td><p>read</p></td>
+<td><p>File</p></td>
+<td><p>Read data from a file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>setgid</p></td>
+<td><p>Process</p></td>
+<td><p>Change a process’ group ID.</p></td>
+</tr>
+<tr class="row-even"><td><p>setpriority</p></td>
+<td><p>Process</p></td>
+<td><p>Change a process’ kernel scheduling priority.</p></td>
+</tr>
+<tr class="row-odd"><td><p>setuid</p></td>
+<td><p>Process</p></td>
+<td><p>Change a process’ user ID.</p></td>
+</tr>
+<tr class="row-even"><td><p>socket</p></td>
+<td><p>File/Network/Process</p></td>
+<td><p>Create a socket that can listen for requests. This can be a UNIX file socket, network port, or a special process.</p></td>
+</tr>
+<tr class="row-odd"><td><p>symlink</p></td>
+<td><p>File</p></td>
+<td><p>Create a shortcut that redirects to another file (a symbolic link).</p></td>
+</tr>
+<tr class="row-even"><td><p>sync</p></td>
+<td><p>File</p></td>
+<td><p>Flush data from memory to the disk.</p></td>
+</tr>
+<tr class="row-odd"><td><p>stat</p></td>
+<td><p>File</p></td>
+<td><p>View a file’s metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p>time</p></td>
+<td><p>Process</p></td>
+<td><p>A count of seconds since 1970-01-01.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ulimit</p></td>
+<td><p>Process</p></td>
+<td><p>View and modify user process limits.</p></td>
+</tr>
+<tr class="row-even"><td><p>unlink</p></td>
+<td><p>File</p></td>
+<td><p>Delete a directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p>umask</p></td>
+<td><p>File</p></td>
+<td><p>View and modify the default permissions of files and directories.</p></td>
+</tr>
+<tr class="row-even"><td><p>wait</p></td>
+<td><p>Process</p></td>
+<td><p>Wait for a child process to end.</p></td>
+</tr>
+<tr class="row-odd"><td><p>write</p></td>
+<td><p>File</p></td>
+<td><p>Write data to a file.</p></td>
+</tr>
+</tbody>
+</table>
+<p>[2]</p>
+</div>
+<div class="section" id="modules">
+<h2><a class="toc-backref" href="#id3">Modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>The kernel is composed of a large number of modules. These can be found
+here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/&lt;</span><span class="n">KERNEL_VERSION</span><span class="o">&gt;/</span>
+</pre></div>
+</div>
+<p>View all of the loaded modules:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo lsmod
+</pre></div>
+</div>
+<p>Custom modules can be compiled for a specific kernel and copied in their
+respective driver directory. A few common drivers types are “iscsi”,
+“net/ethernet”, “net/wireless”, “usb”, “pci”, “video”, etc.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/&lt;</span><span class="n">KERNEL_VERSION</span><span class="o">&gt;/</span><span class="n">kernel</span><span class="o">/</span><span class="n">drivers</span><span class="o">/&lt;</span><span class="n">DRIVER_TYPE</span><span class="o">&gt;/</span>
+</pre></div>
+</div>
+<p>After copying over the necessary *.ko file(s) for custom modules, load</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo depmod &lt;MODULE&gt;
+</pre></div>
+</div>
+<p>If there are a large number of new modules, it is possible to make sure
+all module dependencies are installed.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo depmod --all
+</pre></div>
+</div>
+<p>Modules can be temporarily loaded:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe &lt;MODULE&gt;
+</pre></div>
+</div>
+<p>Or permanently add the module to a file with the extension “.conf” in
+the modules load directory.</p>
+<p>Files: /etc/modules-load.d/*.conf</p>
+<p>Modules can be deactivated by running one of these two commands:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo rmmod &lt;MODULE&gt;
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe -r &lt;MODULE&gt;
+</pre></div>
+</div>
+<p>Modules can also be blocked from starting on boot:</p>
+<p>File: /etc/modprobe.d/blacklist.conf</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">blacklist</span> <span class="o">&lt;</span><span class="n">MODULE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>[3]</p>
+<div class="section" id="configuration">
+<h3><a class="toc-backref" href="#id4">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p><strong>Options</strong></p>
+<p>View all of the available options for a kernel module [15]:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ modinfo --parameters &lt;KERNEL_MODULE&gt; <span class="c1"># Method 1</span>
+$ ls -1 /sys/module/&lt;KERNEL_MODULE&gt;/parameters/ <span class="c1"># Method 2</span>
+</pre></div>
+</div>
+<p>Temporarily set module parameters:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo modprobe -r &lt;KERNEL_MODULE&gt;
+$ sudo modprobe &lt;KERNEL_MODULE&gt; &lt;PARAMETER&gt;<span class="o">=</span>&lt;VALUE&gt;
+</pre></div>
+</div>
+<p>There are two ways to permanently set options: (1) modprobe configuration or (2) GRUB configuration.</p>
+<ol class="arabic">
+<li><p>modprobe:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/modprobe.d/&lt;MODPROBE_FILENAME&gt;.conf
+options &lt;KERNEL_MODULE&gt; &lt;PARAMETER&gt;<span class="o">=</span>&lt;VALUE&gt;
+</pre></div>
+</div>
+</li>
+<li><p>GRUB:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vim /etc/default/grub
+<span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;&lt;PARAMETER&gt;=&lt;VALUE&gt;&quot;</span>
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Alias</strong></p>
+<p>Create a short and/or memorable alias name for the kernel module:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/modprobe.d/&lt;MODPROBE_FILENAME&gt;.conf
+<span class="nb">alias</span> &lt;ALIAS&gt; &lt;KERNEL_MODULE&gt;
+</pre></div>
+</div>
+<p>[16]</p>
+</div>
+</div>
+<div class="section" id="schedulers">
+<h2><a class="toc-backref" href="#id5">Schedulers</a><a class="headerlink" href="#schedulers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="processor">
+<h3><a class="toc-backref" href="#id6">Processor</a><a class="headerlink" href="#processor" title="Permalink to this headline">¶</a></h3>
+<p>The Linux kernel can handling incoming requests differently depending on
+the scheduler method. By default, all processes use the Completely Fair
+Scheduler (CFS) that tries to handle all incoming tasks equally. It is
+only technically possible to change the default scheduler by modifying
+the Linux kernel’s source code and then recompiling the kernel. [5]
+There are 5 different kernel scheduling policies that can be set to
+processes manually. These are set by using the <code class="docutils literal notranslate"><span class="pre">chrt</span></code> command.</p>
+<ul class="simple">
+<li><p>SCHED_BATCH = Batch handles CPU-intensive tasks with real time
+priority.</p></li>
+<li><p>SCHED_FIFO (first-in first-out) = Handles each task that is
+requested, in order.</p></li>
+<li><p>SCHED_IDLE = Tasks will only be processed when the processor is
+mostly idle.</p></li>
+<li><p>SCHED_OTHER (CFS) = All tasks are treated equally and are handled
+with the same amount of priority.</p></li>
+<li><p>SCHED_RR (round robin) = This is similar to SCHED_BATCH except that
+tasks are handled for a short amount of time before moving onto a
+different task to handle.</p></li>
+</ul>
+<p>The relevant <code class="docutils literal notranslate"><span class="pre">sysctl</span></code> parameters can be adjusted for system-wide
+scheduling settings are:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo sysctl -a <span class="p">|</span> grep <span class="s2">&quot;sched_&quot;</span>
+kernel.sched_autogroup_enabled <span class="o">=</span> <span class="m">0</span>
+kernel.sched_cfs_bandwidth_slice_us <span class="o">=</span> <span class="m">5000</span>
+kernel.sched_child_runs_first <span class="o">=</span> <span class="m">0</span>
+kernel.sched_latency_ns <span class="o">=</span> <span class="m">6000000</span>
+kernel.sched_migration_cost_ns <span class="o">=</span> <span class="m">500000</span>
+kernel.sched_min_granularity_ns <span class="o">=</span> <span class="m">10000000</span>
+kernel.sched_nr_migrate <span class="o">=</span> <span class="m">32</span>
+kernel.sched_rr_timeslice_ms <span class="o">=</span> <span class="m">100</span>
+kernel.sched_rt_period_us <span class="o">=</span> <span class="m">1000000</span>
+kernel.sched_rt_runtime_us <span class="o">=</span> <span class="m">950000</span>
+kernel.sched_schedstats <span class="o">=</span> <span class="m">0</span>
+kernel.sched_shares_window_ns <span class="o">=</span> <span class="m">10000000</span>
+kernel.sched_time_avg_ms <span class="o">=</span> <span class="m">1000</span>
+kernel.sched_tunable_scaling <span class="o">=</span> <span class="m">1</span>
+kernel.sched_wakeup_granularity_ns <span class="o">=</span> <span class="m">15000000</span>
+</pre></div>
+</div>
+<p>[4]</p>
+</div>
+<div class="section" id="i-o">
+<h3><a class="toc-backref" href="#id7">I/O</a><a class="headerlink" href="#i-o" title="Permalink to this headline">¶</a></h3>
+<p>The kernel provides many input/output (I/O) schedulers to configure how
+a hard drive handles a queue of read/write requests from the operating
+system. Different schedulers can be used to adjust performance based on
+the hardware and/or software requirements.</p>
+<ul class="simple">
+<li><p>Deadline = Large I/O requests are done in high-priority sectors until
+smaller I/O requests are about to time out. Then Deadline takes care
+of the small tasks before continuing with the original large I/O
+task. This is ideal for heavy read/write applications on a spinning
+disk drive.</p></li>
+<li><p>CFQ (Completely Fair Queueing) = All I/O requests are treated equally
+and are handled in the order that they are received. [6]</p></li>
+<li><p>NOOP (No Operation) = Only basic merging of read and/or write
+requests and no rescheduling. This is ideal for virtual drives (such
+as QCOW2) where the hypervisor node handles the I/O scheduling [7]
+and physical flash based media or RAID cards with write-back cache
+where the hardware’s firmware takes care of the sorting. [6]</p></li>
+</ul>
+<p>Temporarily change the scheduler to one of the three options:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo <span class="nb">echo</span> <span class="o">{</span>deadline<span class="p">|</span>cfg<span class="p">|</span>noop<span class="o">}</span> &gt; /sys/block/&lt;DEVICE&gt;/queue/scheduler
+</pre></div>
+</div>
+<p>Permanently change the scheduler by appending the existing
+GRUB_CMDLINE_LINUX kernel arguments:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo vim /etc/default/grub
+<span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;elevator={deadline|cfg|noop}&quot;</span>
+$ sudo grub-mkconfig -o /boot/grub/grub.cfg
+</pre></div>
+</div>
+<p>[7]</p>
+</div>
+</div>
+<div class="section" id="initial-ram-file-system">
+<h2><a class="toc-backref" href="#id8">Initial RAM File System</a><a class="headerlink" href="#initial-ram-file-system" title="Permalink to this headline">¶</a></h2>
+<p>The initramfs (initial RAM file system) is used to boot up a system
+before loading the full Linux kernel. It is the successor to the initrd
+(initial RAM disk). A boot loader, such as GRUB, loads the initramfs
+first. This usually contains a minimum copy of the kernel and drivers
+required to boot up the system. Once the boot initialization is
+complete, the initramfs continues to load all of the available kernel
+modules. [8][9]</p>
+<div class="section" id="arch-linux">
+<h3><a class="toc-backref" href="#id9">Arch Linux</a><a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h3>
+<p>All modifications of the initramfs in Arch Linux are handled by the
+“mkinitcpio” utility.</p>
+<p>File: /etc/mkinitcpio.conf</p>
+<ul class="simple">
+<li><p>MODULES = A list of kernel modules to compile in.</p></li>
+<li><p>FILES = A list of files that should be included in the initramfs.</p></li>
+<li><p>BINARIES = A list of binaries that should be included to use in the
+initramfs environment. This is useful for having more recovery
+utilities. The “mkinitcpio” program will automatically detect the
+binary’s dependencies and add them to the initramfs image.</p></li>
+<li><p>HOOKS = Custom hooks for compiling in certain software packages.</p>
+<ul>
+<li><p>Common hooks:</p>
+<ul>
+<li><p>btrfs = BtrFS RAID.</p></li>
+<li><p>net = Add networking.</p></li>
+<li><p>mdadm = mdadm software RAID modules.</p></li>
+<li><p>fsck = FSCK utilities for available operating systems.</p></li>
+<li><p>encrypt = LUKS encryption modules.</p></li>
+<li><p>lvm2 = Logical volume manager (LVM) modules.</p></li>
+<li><p>shutdown = Allows the initramfs to properly shutdown.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Create a new initramfs.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo mkinitcpio
+</pre></div>
+</div>
+<p>[10]</p>
+</div>
+<div class="section" id="rhel">
+<h3><a class="toc-backref" href="#id10">RHEL</a><a class="headerlink" href="#rhel" title="Permalink to this headline">¶</a></h3>
+<p>On Red Hat Enterprise Linux (RHEL) based operating systems (such as RHEL
+itself, CentOS, and Fedora), Dracut is used to manage the initramfs.</p>
+<p>File: /etc/dracut.conf</p>
+<ul class="simple">
+<li><p>add_drivers+= A list of kernel modules to compile in.</p></li>
+<li><p>install_items+= A list of files to compile in.</p></li>
+<li><p>add_dracutmodules+= A list of Dracut modules to compile.</p></li>
+</ul>
+<p>[11]</p>
+</div>
+</div>
+<div class="section" id="install">
+<h2><a class="toc-backref" href="#id11">Install</a><a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="debian">
+<h3><a class="toc-backref" href="#id12">Debian</a><a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
+<p>The latest Linux kernels for both Debian and Ubuntu are provided by the Ubuntu project.</p>
+<ul>
+<li><p>These are the required DEB packages that need to be downloaded and installed:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>linux-headers (all) = The full Linux kernel source code.</p></li>
+<li><p>linux-headers (generic) = The source code specific to a CPU architecture.</p></li>
+<li><p>linux-image-unsigned = The Linux kernel image.</p></li>
+<li><p>linux-modules = Additional/useful Linux kernel modules.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Find the desired Linux kernel version from <a class="reference external" href="https://kernel.ubuntu.com/~kernel-ppa/mainline/">here</a>. Set these variables based on the built packages. This example is for Linux <code class="docutils literal notranslate"><span class="pre">5.10.0</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">KERNEL_VERSION_SHORT</span><span class="o">=</span><span class="s2">&quot;5.10&quot;</span>
+$ <span class="nb">export</span> <span class="nv">KERNEL_VERSION_FULL</span><span class="o">=</span><span class="s2">&quot;5.10.0-051000&quot;</span>
+$ <span class="nb">export</span> <span class="nv">KERNEL_DATE</span><span class="o">=</span><span class="s2">&quot;202012132330&quot;</span>
+$ <span class="nb">export</span> <span class="nv">KERNEL_ARCHITECTURE</span><span class="o">=</span><span class="s2">&quot;amd64&quot;</span> <span class="c1"># Or use &quot;arm64&quot; or &quot;ppc64el&quot;.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Download the required packages.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v<span class="si">${</span><span class="nv">KERNEL_VERSION_SHORT</span><span class="si">}</span>/amd64/linux-image-unsigned-<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>-generic_<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>.<span class="si">${</span><span class="nv">KERNEL_DATE</span><span class="si">}</span>_<span class="si">${</span><span class="nv">KERNEL_ARCHITECTURE</span><span class="si">}</span>.deb
+$ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v<span class="si">${</span><span class="nv">KERNEL_VESION_SHORT</span><span class="si">}</span>/amd64/linux-modules-<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>-generic_<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>.<span class="si">${</span><span class="nv">KERNEL_DATE</span><span class="si">}</span>_<span class="si">${</span><span class="nv">KERNEL_ARCHITECTURE</span><span class="si">}</span>.deb
+$ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v<span class="si">${</span><span class="nv">KERNEL_VERSION_SHORT</span><span class="si">}</span>/amd64/linux-headers-<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>-generic_<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>.<span class="si">${</span><span class="nv">KERNEL_DATE</span><span class="si">}</span>_<span class="si">${</span><span class="nv">KERNEL_ARCHITECTURE</span><span class="si">}</span>.deb
+$ curl -LO https://kernel.ubuntu.com/~kernel-ppa/mainline/v<span class="si">${</span><span class="nv">KERNEL_VERSION_SHORT</span><span class="si">}</span>/amd64/linux-headers-<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>_<span class="si">${</span><span class="nv">KERNEL_VERSION_FULL</span><span class="si">}</span>.<span class="si">${</span><span class="nv">KERNEL_DATE</span><span class="si">}</span>_all.deb
+</pre></div>
+</div>
+</li>
+<li><p>Install the packages.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo dpkg -i ./*.deb
+</pre></div>
+</div>
+</li>
+</ul>
+<p>[14]</p>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#id13">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="errors-messages">
+<h3><a class="toc-backref" href="#id14">Errors Messages</a><a class="headerlink" href="#errors-messages" title="Permalink to this headline">¶</a></h3>
+<p><strong>Compiling</strong></p>
+<p>This is a list of common errors and warnings that make occur while building a kernel and how to resolve them.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.config:&lt;LINE_NUMBER&gt;:warning:</span> <span class="pre">symbol</span> <span class="pre">value</span> <span class="pre">'&lt;SYMBOL_VALUE&gt;'</span> <span class="pre">invalid</span> <span class="pre">for</span> <span class="pre">&lt;CONFIG_OPTION&gt;</span></code> = The symbol (y, n, or m) is invalid. Use a different symbol.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.config:&lt;LINE_NUMBER&gt;:warning:</span> <span class="pre">override:</span> <span class="pre">reassigning</span> <span class="pre">to</span> <span class="pre">symbol</span> <span class="pre">&lt;CONFIG_OPTION&gt;</span></code> = A configuration option is listed more than once. Remove the duplicates.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id15">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/linux.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/linux.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/linux.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id16">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“About Linux Kernel.” The Linux Kernel Archives. April 23, 2017. Accessed July 9, 2016. <a class="reference external" href="https://www.kernel.org/linux.html">https://www.kernel.org/linux.html</a></p></li>
+<li><p>“UNIX System Calls.” University of Miami’s Department of Computer Science. August 22, 2016. Accessed July 1, 2017. <a class="reference external" href="http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml">http://www.cs.miami.edu/home/wuchtys/CSC322-17S/Content/UNIXProgramming/UNIXSystemCalls.shtml</a></p></li>
+<li><p>“Kernel modules.” The Arch Linux Wiki. August 8, 2016. Accessed November 19, 2016. <a class="reference external" href="https://wiki.archlinux.org/index.php/Kernel_modules">https://wiki.archlinux.org/index.php/Kernel_modules</a></p></li>
+<li><p>“Tuning the Task Scheduler.” openSUSE Documentation. December 15, 2016. Accessed July 9, 2017. <a class="reference external" href="https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html">https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.taskscheduler.html</a></p></li>
+<li><p>“Change Linux CPU default scheduler.” A else B. January 6, 2016. Accessed July 9, 2017. <a class="reference external" href="https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/">https://aelseb.wordpress.com/2016/01/06/change-linux-cpu-default-scheduler/</a></p></li>
+<li><p>Linux System Programming. (Love: O’Reilly Media, Inc., 2007).</p></li>
+<li><p>“What is the suggested I/O scheduler to improve disk performance when using Red Hat Enterprise Linux with virtualization?” Red Hat Knowledgebase. December 16, 2016. Accessed December 18, 2016. <a class="reference external" href="https://access.redhat.com/solutions/5427">https://access.redhat.com/solutions/5427</a></p></li>
+<li><p>‘The Kernel Newbie Corner: “initrd” and “initramfs”–What’s Up With That?’ Linux.com September 30, 2009. Accessed November 19, 2016. <a class="reference external" href="https://www.linux.com/learn/kernel-newbie-corner-initrd-and-initramfs-whats">https://www.linux.com/learn/kernel-newbie-corner-initrd-and-initramfs-whats</a></p></li>
+<li><p>“ramfs, rootfs and initramfs.” The Linux Kernel Documentation. May 29, 2015. Accessed November 19, 2016. <a class="reference external" href="https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt">https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt</a></p></li>
+<li><p>“mkinitcpio.” The Arch Linux Wiki. November 13, 2016. Accessed November 19, 2016. <a class="reference external" href="https://wiki.archlinux.org/index.php/mkinitcpio">https://wiki.archlinux.org/index.php/mkinitcpio</a></p></li>
+<li><p>“Dracut.” The Linux Kernel Archives. October, 2013. Accessed November 19, 2016. <a class="reference external" href="https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html">https://www.kernel.org/pub/linux/utils/boot/dracut/dracut.html</a></p></li>
+<li><p>“Which Linux Kernel Version Is ‘Stable’?” Linux.com. February 3, 2018. Accessed September 25, 2018. <a class="reference external" href="https://www.linux.com/blog/learn/2018/2/which-linux-kernel-version-stable">https://www.linux.com/blog/learn/2018/2/which-linux-kernel-version-stable</a></p></li>
+<li><p>“Linux Kernel 5.0 to Be Released When We Hit 6M Git Objects, Says Linus Torvalds.” Softpedia News. October 9, 2016. Accessed September 25, 2018. <a class="reference external" href="https://news.softpedia.com/news/linux-kernel-5-0-to-be-released-when-we-hit-6m-git-objects-says-linus-torvalds-509108.shtml">https://news.softpedia.com/news/linux-kernel-5-0-to-be-released-when-we-hit-6m-git-objects-says-linus-torvalds-509108.shtml</a></p></li>
+<li><p>“How to install Linux 5.8 Kernel on Ubuntu 20.04 LTS.” Linux Shout. August 5, 2020. Accessed December 13, 2020. <a class="reference external" href="https://www.how2shout.com/linux/install-linux-5-8-kernel-on-ubuntu-20-04-lts/">https://www.how2shout.com/linux/install-linux-5-8-kernel-on-ubuntu-20-04-lts/</a></p></li>
+<li><p>“How can I know/list available options for kernel modules?” Ask Ubuntu. December 13, 2017. Accessed January 21, 2021. <a class="reference external" href="https://askubuntu.com/questions/59135/how-can-i-know-list-available-options-for-kernel-modules">https://askubuntu.com/questions/59135/how-can-i-know-list-available-options-for-kernel-modules</a></p></li>
+<li><p>“Kernel module.” Arch Wiki. October 14, 2020. Accessed January 21, 2021. <a class="reference external" href="https://wiki.archlinux.org/index.php/Kernel_module">https://wiki.archlinux.org/index.php/Kernel_module</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="macs.html" class="btn btn-neutral float-right" title="Macs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graphics.html" class="btn btn-neutral float-left" title="Graphics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

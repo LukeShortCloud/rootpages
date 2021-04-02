@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>DNS &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Networking (Hardware)" href="networking_hardware.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DNS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction-to-dns">Introduction to DNS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#domain-names">Domain Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#record-types">Record Types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ptr">PTR</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#coredns">CoreDNS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#authoratitive-server">Authoratitive Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recursive-server">Recursive Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#powerdns">PowerDNS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#poweradmin">PowerAdmin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gmysql">gmysql</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#records">Records</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../observation/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observation/monitoring.html">Monitoring</a></li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>DNS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/networking/dns_servers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dns">
+<h1><a class="toc-backref" href="#id1">DNS</a><a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dns" id="id1">DNS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#introduction-to-dns" id="id2">Introduction to DNS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#domain-names" id="id3">Domain Names</a></p></li>
+<li><p><a class="reference internal" href="#record-types" id="id4">Record Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ptr" id="id5">PTR</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#coredns" id="id6">CoreDNS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#authoratitive-server" id="id7">Authoratitive Server</a></p></li>
+<li><p><a class="reference internal" href="#recursive-server" id="id8">Recursive Server</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#powerdns" id="id9">PowerDNS</a></p>
+<ul>
+<li><p><a class="reference internal" href="#poweradmin" id="id10">PowerAdmin</a></p></li>
+<li><p><a class="reference internal" href="#gmysql" id="id11">gmysql</a></p>
+<ul>
+<li><p><a class="reference internal" href="#records" id="id12">Records</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id13">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id14">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction-to-dns">
+<h2><a class="toc-backref" href="#id2">Introduction to DNS</a><a class="headerlink" href="#introduction-to-dns" title="Permalink to this headline">¶</a></h2>
+<p>A Domain Name System (DNS) provides human-friendly domain names that are
+generally associated with an IP address or a string of text. There are
+two types of DNS servers:</p>
+<ul class="simple">
+<li><p>Authoritative = Serves its own DNS records. Generally most
+authoritative servers will rely on a recursive component to provide
+missing DNS records.</p></li>
+<li><p>Recursive = Queries an external DNS server for records. These are
+usually then cached for a certain period of time.</p></li>
+</ul>
+<p>It is important to note that every DNS record has to be associated with
+a state of authority (SOA) record. This provides the primary
+nameserver/resolver along with time to live (TTL) related information.</p>
+<div class="section" id="domain-names">
+<h3><a class="toc-backref" href="#id3">Domain Names</a><a class="headerlink" href="#domain-names" title="Permalink to this headline">¶</a></h3>
+<p>Example of a Fully Qualified Domain Name (FQDN): <code class="docutils literal notranslate"><span class="pre">www.google.com</span></code></p>
+<ul class="simple">
+<li><p>Top-level domain (TLD) = The end part of a domain name. Example: <code class="docutils literal notranslate"><span class="pre">com</span></code>.</p></li>
+<li><p>Second-level domain (SLD) = The name before the TLD. Example: <code class="docutils literal notranslate"><span class="pre">google</span></code>.</p></li>
+<li><p>Subdomain or third-level domain = The name before the SLD. Custom subdomains can be configured by the person who owns a domain name. Example: <code class="docutils literal notranslate"><span class="pre">www</span></code>.</p></li>
+</ul>
+<p>[7]</p>
+<p>A person can buy a domain name which is a unique SLD determined by the person and is associated with a TLD that already exists. The full list of available TLD names can be found <a class="reference external" href="https://data.iana.org/TLD/tlds-alpha-by-domain.txt">here</a>. A domain name is bought from a registrar. Any number of subdomains can be configured by the person who owns the domain name. A subdomain combined with a domain name is known as a FQDN.</p>
+<p><strong>DNS Lookup Flow</strong></p>
+<ol class="arabic simple">
+<li><p>An end-user requests information for a FQDN by trying to visit the website in their web browser. Example: <code class="docutils literal notranslate"><span class="pre">www.google.com</span></code></p></li>
+<li><p>A DNS resolver from <code class="docutils literal notranslate"><span class="pre">/etc/resolv.conf</span></code> is asked for information about it. Example resolvers: CloudFlare <code class="docutils literal notranslate"><span class="pre">1.1.1.1</span></code> or Google <code class="docutils literal notranslate"><span class="pre">8.8.8.8</span></code>.</p></li>
+<li><p>If the DNS resolver does not have the required information cached, it asks one of the 12 root level DNS servers (such as one from ICANN). The root level DNS server provides the name servers for the TLD DNS server.</p></li>
+<li><p>The TLD DNS server provides the authoritative name server for the domain name. This is directed to the registrar that manages the domain name.</p></li>
+<li><p>The authoritative name server provides the A or AAAA record (IP address) for <code class="docutils literal notranslate"><span class="pre">www.google.com</span></code>.</p></li>
+<li><p>The web browser connects to the IP address to load up the website.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">End</span><span class="o">-</span><span class="n">user</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">Resolver</span> <span class="n">DNS</span> <span class="n">Server</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">Root</span> <span class="n">Level</span> <span class="n">DNS</span> <span class="n">Server</span> <span class="p">(</span><span class="n">ICANN</span><span class="p">)</span>
+    <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">TLD</span> <span class="n">DNS</span> <span class="n">Server</span> <span class="o">--&gt;</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">Registrar</span> <span class="n">Authoritative</span> <span class="n">DNS</span> <span class="n">Server</span>
+</pre></div>
+</div>
+<p>[8]</p>
+</div>
+<div class="section" id="record-types">
+<h3><a class="toc-backref" href="#id4">Record Types</a><a class="headerlink" href="#record-types" title="Permalink to this headline">¶</a></h3>
+<p>These are the most common types of DNS records. [6]</p>
+<ul class="simple">
+<li><p>SOA = Start of Authority. Required for all domain names. This record is handled by the domain hosting provider and it indicates that they control the domain name.</p></li>
+<li><p>NS = Name server. A DNS server that handles setting and providing DNS entries for the domain.</p></li>
+<li><p>A = IPv4 address.</p></li>
+<li><p>AAAA = IPv6 address.</p></li>
+<li><p>ALIAS = An alias to a completely different domain name. The A record of the domain name  is resolved instantly but losses geographical information.</p></li>
+<li><p>CNAME = A canonical name. An alias to another domain name (including part of the same domain name, if desired). First the CNAME is resolved and then the A record is resolved.</p></li>
+<li><p>MX = Mail exchange. Used for configuring e-mail with the domain.</p></li>
+<li><p>PTR = Pointer. Associate an IP address with a domain name. Specify an IP address in the nibble address format (a reserved order).</p></li>
+<li><p>TXT = Descriptive text. Commonly used to verify that the domain is valid.</p></li>
+</ul>
+<div class="section" id="ptr">
+<h4><a class="toc-backref" href="#id5">PTR</a><a class="headerlink" href="#ptr" title="Permalink to this headline">¶</a></h4>
+<p>PTR records require that the IP address be defined in the nibble format and end with a period. This special format is basically the IP address in reverse with special suffixes added. For helping to quickly get the format for long IPv6 addresses, use the <code class="docutils literal notranslate"><span class="pre">ipv6calc</span></code> command or <a class="reference external" href="http://rdns6.com/hostRecord">this site</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">NIBBLE_IP4</span><span class="o">&gt;.</span><span class="ow">in</span><span class="o">-</span><span class="n">addr</span><span class="o">.</span><span class="n">arpa</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">NIBBLE_IP6</span><span class="o">&gt;.</span><span class="n">ip6</span><span class="o">.</span><span class="n">arpa</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Here is an example of converting addresses to nibble.</p>
+<ul>
+<li><p>IPv4</p>
+<ul class="simple">
+<li><p>Address = 192.168.0.10</p></li>
+<li><p>Nibble address = 10.0.168.192.in-addr.arpa.</p></li>
+</ul>
+</li>
+<li><p>IPv6</p>
+<ul>
+<li><p>Address = FE8::56:CC7A:129B:7AAA (FE80:0000:0000:0000:056:CC7A:129B:7AAA)</p></li>
+<li><p>Nibble address = a.a.a.7.b.9.2.1.a.7.c.c.6.5.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ipv6calc --out revnibbles.arp FE8::56:CC7A:129B:7AAA
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="coredns">
+<h2><a class="toc-backref" href="#id6">CoreDNS</a><a class="headerlink" href="#coredns" title="Permalink to this headline">¶</a></h2>
+<p>CoreDNS is a cloud native DNS service that provides many plugins. It can be used as both an authoritative and recursive DNS server. It supports DNS <code class="docutils literal notranslate"><span class="pre">dns://</span></code>, DNS over TLS <code class="docutils literal notranslate"><span class="pre">tls://</span></code>, DNS over HTTPS <code class="docutils literal notranslate"><span class="pre">https://</span></code>, and DNS over gRPC <code class="docutils literal notranslate"><span class="pre">grpc://</span></code>.</p>
+<p>All settings are configured via a configuration file named <code class="docutils literal notranslate"><span class="pre">Corefile</span></code>. Different server blocks can be used for configuring different DNS zones. The default zone is <code class="docutils literal notranslate"><span class="pre">.</span></code> which is actually <code class="docutils literal notranslate"><span class="pre">.:53</span></code> to indicate that it will listen on port 53.</p>
+<p>Global settings set for a zone <code class="docutils literal notranslate"><span class="pre">.:&lt;PORT&gt;</span></code> will apply to all server blocks listening on that same port. This means that two or more ports can be configured and they can all have different default global settings.</p>
+<p>Global settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">{</span>
+   <span class="o">&lt;</span><span class="n">PLUGIN</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">PLUGIN_OPTIONS</span><span class="o">&gt;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>Logging:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">{</span>
+   <span class="n">health</span>
+   <span class="n">prometheus</span>
+   <span class="n">log</span>
+   <span class="n">errors</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Snippets can be defined by using <code class="docutils literal notranslate"><span class="pre">(&lt;SNIPPET_NAME&gt;)</span></code> and then imported into other server blocks.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">logging</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">log</span>
+    <span class="n">errors</span>
+<span class="p">}</span>
+
+<span class="o">.</span> <span class="p">{</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Foward DNS requests syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">{</span>
+   <span class="p">;</span> <span class="n">Forward</span> <span class="n">requests</span> <span class="n">to</span> <span class="n">the</span> <span class="n">specified</span> <span class="n">DNS</span> <span class="n">resolvers</span><span class="o">.</span>
+   <span class="n">forward</span> <span class="o">&lt;</span><span class="n">DOMAIN_NAME</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">RESOLVER_IP_1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">RESOLVER_IP_2</span><span class="o">&gt;</span>
+   <span class="p">;</span> <span class="n">Forward</span> <span class="n">requests</span> <span class="n">to</span> <span class="n">resolvers</span> <span class="n">specified</span> <span class="ow">in</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="o">.</span><span class="n">conf</span>
+   <span class="n">forward</span> <span class="o">&lt;</span><span class="n">DOMAIN_NAME</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="o">.</span><span class="n">conf</span>
+   <span class="p">;</span> <span class="n">Forward</span> <span class="nb">all</span> <span class="n">other</span> <span class="n">requests</span> <span class="n">to</span> <span class="n">the</span> <span class="n">specified</span> <span class="n">resolvers</span><span class="o">.</span>
+   <span class="n">forward</span> <span class="o">.</span> <span class="o">&lt;</span><span class="n">RESOLVER_IP_1</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">RESOLVER_IP_2</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example forwarding to CloudFlare [9]:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">{</span>
+    <span class="n">forward</span> <span class="o">.</span> <span class="n">tls</span><span class="p">:</span><span class="o">//</span><span class="mf">1.1</span><span class="o">.</span><span class="mf">1.1</span> <span class="n">tls</span><span class="p">:</span><span class="o">//</span><span class="mf">1.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="p">{</span>
+        <span class="n">tls_servername</span> <span class="n">tls</span><span class="o">.</span><span class="n">cloudflare</span><span class="o">-</span><span class="n">dns</span><span class="o">.</span><span class="n">com</span>
+        <span class="n">health_check</span> <span class="mi">10</span><span class="n">s</span>
+    <span class="p">}</span>
+    <span class="n">log</span>
+    <span class="n">errors</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>[10]</p>
+<div class="section" id="authoratitive-server">
+<h3><a class="toc-backref" href="#id7">Authoratitive Server</a><a class="headerlink" href="#authoratitive-server" title="Permalink to this headline">¶</a></h3>
+<p>Use a separate file for each DNS zone. Define the file to use in the main <code class="docutils literal notranslate"><span class="pre">Corefile</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SLD</span><span class="o">&gt;.&lt;</span><span class="n">TLD</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">file</span> <span class="o">&lt;</span><span class="n">DNS_ZONE_FILE</span><span class="o">&gt;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>DNS zone file SOA syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ORIGIN &lt;SLD&gt;.&lt;TLD&gt;.
+@    IN    SOA    &lt;DNS_SERVER_FQDN&gt;.    &lt;EMAIL_USER&gt;.&lt;EMAIL_FQDN&gt;. (
+    &lt;SERIAL_DATE&gt;
+    &lt;SOA_REFRESH_SECONDS&gt;
+    &lt;RETRY_DNS_RECORD_SECONDS&gt;
+    &lt;RETRY_SOA_SECONDS&gt;
+    &lt;TTL&gt;
+)
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ORIGIN foo.bar.
+# &lt;DNS_SERVER_FQDN&gt; = coredns.example.com., &lt;EMAIL_USER&gt;.&lt;EMAIL_FQDN&gt; = joe@gmail.com, &lt;SERIAL_DATE&gt; = 2021-02-28 23:00, &lt;SOA_REFRESH_SECONDS&gt; = 2 hours, &lt;RETRY_DNS_RECORD_SECONDS&gt; = 1 hour, &lt;RETRY_SOA_SECONDS&gt; = 2 weeks, &lt;TTL&gt; = 1 hour
+@    IN    SOA    coredns.example.com.    joe.gmail.com. (
+    2021022823
+    7200
+    3600
+    1209600
+    3600
+)
+</pre></div>
+</div>
+<p>DNS records can now be set using these values as a minimum.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SUBDOMAIN</span><span class="o">&gt;</span>    <span class="n">IN</span>    <span class="o">&lt;</span><span class="n">RECORD_TYPE</span><span class="o">&gt;</span>    <span class="o">&lt;</span><span class="n">RECORD_VALUE</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">www</span>    <span class="n">IN</span>    <span class="n">A</span>    <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span>
+</pre></div>
+</div>
+<p>[10]</p>
+</div>
+<div class="section" id="recursive-server">
+<h3><a class="toc-backref" href="#id8">Recursive Server</a><a class="headerlink" href="#recursive-server" title="Permalink to this headline">¶</a></h3>
+<p>CoreDNS does not natively support being a recursive/caching DNS server. For this functionality, recompile CoreDNS with the <code class="docutils literal notranslate"><span class="pre">unbound</span></code> plugin and then enable it in the configuration. The Unbound plugin requires using CGO which makes the binary non-portable across different operating system distributions.</p>
+<p><strong>Container Image</strong></p>
+<p>A CoreDNS build with the Unbound plugin is provided in a container from the <a class="reference external" href="https://github.com/ekultails/container-coredns-unbound">ekultails/container-coredns-unbound</a> GitHub project.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ docker pull ekultails/coredns-unbound
+</pre></div>
+</div>
+<p><strong>Manual Install</strong></p>
+<p>Download CoreDNS and its dependencies for the Unbound plugin:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install golang libunbound-dev make
+$ <span class="nb">export</span> <span class="nv">COREDNS_VER</span><span class="o">=</span><span class="m">1</span>.8.3
+$ wget https://github.com/coredns/coredns/archive/v<span class="si">${</span><span class="nv">COREDNS_VER</span><span class="si">}</span>.tar.gz
+$ tar -x -v -f v<span class="si">${</span><span class="nv">COREDNS_VER</span><span class="si">}</span>.tar.gz
+$ <span class="nb">cd</span> coredns-<span class="si">${</span><span class="nv">COREDNS_VER</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>There is a <a class="reference external" href="https://github.com/miekg/unbound/issues/13">bug with the Unbound plugin</a> that prevents it from being compiled with newer versions of CoreDNS. Modify the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and remove any mention of “CGO_ENABLED”.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vim Makefile
+</pre></div>
+</div>
+<p>Compile CoreDNS with the Unbound plugin:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;unbound:github.com/coredns/unbound&quot;</span> &gt;&gt; plugin.cfg
+$ go generate
+$ <span class="nb">export</span> <span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">1</span>
+$ make
+</pre></div>
+</div>
+<p>Verify that the recursive server works:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ vim Corefile
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">{</span>
+   <span class="n">unbound</span>
+   <span class="n">cache</span>
+   <span class="n">forward</span> <span class="o">.</span> <span class="mf">8.8</span><span class="o">.</span><span class="mf">8.8</span> <span class="mf">8.4</span><span class="o">.</span><span class="mf">4.8</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./coredns <span class="p">&amp;</span>
+$ sudo apt-get install dnsutils
+$ dig @127.0.0.1 google.com <span class="p">|</span> grep <span class="s2">&quot;Query time&quot;</span>
+<span class="p">;;</span> Query time: <span class="m">34</span> msec
+$ dig @127.0.0.1 google.com <span class="p">|</span> grep <span class="s2">&quot;Query time&quot;</span>
+<span class="p">;;</span> Query time: <span class="m">1</span> msec
+</pre></div>
+</div>
+<p>[11]</p>
+</div>
+</div>
+<div class="section" id="powerdns">
+<h2><a class="toc-backref" href="#id9">PowerDNS</a><a class="headerlink" href="#powerdns" title="Permalink to this headline">¶</a></h2>
+<p>The pdns service can be both an authoritative and recursive DNS server.
+It supports a large number of back-ends that can be used for it’s
+authoritative server. [1] A few of the most popular back-ends are “bind”
+(BIND) due to it’s large usage in the Linux community and “gmysql”
+(MySQL) due to it’s scalability.</p>
+<p>This is the SOA format that pdns uses. At the bare minimum, the
+nameserver and email should be defined. [3]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nameserver</span> <span class="n">email</span> <span class="n">serial</span> <span class="n">refresh</span> <span class="n">retry</span> <span class="n">expire</span> <span class="n">ttl</span>
+</pre></div>
+</div>
+<p>SOA options:</p>
+<ul class="simple">
+<li><p>nameserver = The DNS server that should host the zone information.
+This value should normally mirror one of the NS records used for the
+zone (if applicable).</p></li>
+<li><p>email = The administrator’s e-mail.</p></li>
+<li><p>serial = 0 for automatic serial creation (default). Not all back-ends
+support automatic serials, such as bind. gmysql supports it. If using
+automatic serial numbers, place the number here. If any records are
+updated, the serial should also be updated.</p></li>
+<li><p>refresh = When DNS servers should check for DNS updates (in seconds).</p></li>
+<li><p>retry = How long to wait (in seconds) to recheck the zone after a
+failed refresh.</p></li>
+<li><p>expire = How long (in seconds) before this zone should longer be
+queried for a failed retry. This value only applies to slave DNS
+servers.</p></li>
+<li><p>ttl = How long (in seconds) a record is allowed to be cached by
+another DNS server. [5]</p></li>
+</ul>
+<div class="section" id="poweradmin">
+<h3><a class="toc-backref" href="#id10">PowerAdmin</a><a class="headerlink" href="#poweradmin" title="Permalink to this headline">¶</a></h3>
+<p>PowerAdmin is the graphic control panel that can be installed and
+accessed via a web browser.</p>
+</div>
+<div class="section" id="gmysql">
+<h3><a class="toc-backref" href="#id11">gmysql</a><a class="headerlink" href="#gmysql" title="Permalink to this headline">¶</a></h3>
+<p>The generic MySQL back-end (gmysql) was created to allow any MySQL server
+to store and serve records. [2] This is not to be confused with using
+the MyDNS back-end. [1]</p>
+<p>This is the recommend InnoDB table schema to use. [2]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE DATABASE IF NOT EXISTS pdns;
+
+CREATE TABLE pdns.domains (
+  id                    INT AUTO_INCREMENT,
+  name                  VARCHAR(255) NOT NULL,
+  master                VARCHAR(128) DEFAULT NULL,
+  last_check            INT DEFAULT NULL,
+  type                  VARCHAR(6) NOT NULL,
+  notified_serial       INT DEFAULT NULL,
+  account               VARCHAR(40) DEFAULT NULL,
+  PRIMARY KEY (id)
+) Engine=InnoDB;
+
+CREATE UNIQUE INDEX name_index ON pdns.domains(name);
+
+CREATE TABLE pdns.records (
+  id                    INT AUTO_INCREMENT,
+  domain_id             INT DEFAULT NULL,
+  name                  VARCHAR(255) DEFAULT NULL,
+  type                  VARCHAR(10) DEFAULT NULL,
+  content               VARCHAR(64000) DEFAULT NULL,
+  ttl                   INT DEFAULT NULL,
+  prio                  INT DEFAULT NULL,
+  change_date           INT DEFAULT NULL,
+  disabled              TINYINT(1) DEFAULT 0,
+  ordername             VARCHAR(255) BINARY DEFAULT NULL,
+  auth                  TINYINT(1) DEFAULT 1,
+  PRIMARY KEY (id)
+  CONSTRAINT `records_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE
+) Engine=InnoDB;
+
+CREATE INDEX nametype_index ON pdns.records (name,type);
+CREATE INDEX domain_id ON pdns.records (domain_id);
+CREATE INDEX recordorder ON pdns.records (domain_id, ordername);
+
+CREATE TABLE pdns.supermasters (
+  ip                    VARCHAR(64) NOT NULL,
+  nameserver            VARCHAR(255) NOT NULL,
+  account               VARCHAR(40) NOT NULL,
+  PRIMARY KEY (ip, nameserver)
+) Engine=InnoDB;
+
+CREATE TABLE pdns.comments (
+  id                    INT AUTO_INCREMENT,
+  domain_id             INT NOT NULL,
+  name                  VARCHAR(255) NOT NULL,
+  type                  VARCHAR(10) NOT NULL,
+  modified_at           INT NOT NULL,
+  account               VARCHAR(40) NOT NULL,
+  comment               VARCHAR(64000) NOT NULL,
+  PRIMARY KEY (id)
+) Engine=InnoDB;
+
+CREATE INDEX comments_domain_id_idx ON pdns.comments (domain_id);
+CREATE INDEX comments_name_type_idx ON pdns.comments (name, type);
+CREATE INDEX comments_order_idx ON pdns.comments (domain_id, modified_at);
+
+CREATE TABLE pdns.domainmetadata (
+  id                    INT AUTO_INCREMENT,
+  domain_id             INT NOT NULL,
+  kind                  VARCHAR(32),
+  content               TEXT,
+  PRIMARY KEY (id)
+) Engine=InnoDB;
+
+CREATE INDEX domainmetadata_idx ON pdns.domainmetadata (domain_id, kind);
+
+CREATE TABLE pdns.cryptokeys (
+  id                    INT AUTO_INCREMENT,
+  domain_id             INT NOT NULL,
+  flags                 INT NOT NULL,
+  active                BOOL,
+  content               TEXT,
+  PRIMARY KEY(id)
+) Engine=InnoDB;
+
+CREATE INDEX domainidindex ON pdns.cryptokeys (domain_id);
+
+CREATE TABLE pdns.tsigkeys (
+  id                    INT AUTO_INCREMENT,
+  name                  VARCHAR(255),
+  algorithm             VARCHAR(50),
+  secret                VARCHAR(255),
+  PRIMARY KEY (id)
+) Engine=InnoDB;
+
+CREATE UNIQUE INDEX namealgoindex ON pdns.tsigkeys (name, algorithm);
+</pre></div>
+</div>
+<p>Then make sure that the pdns service is configured via the <code class="docutils literal notranslate"><span class="pre">pdns.conf</span></code>
+file to connect to the MySQL server.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">launch</span><span class="o">=</span><span class="s">gmysql</span>
+<span class="na">gmysql-host</span><span class="o">=</span><span class="s">&lt;MYSQL_HOST&gt;</span>
+<span class="na">gmysql-user</span><span class="o">=</span><span class="s">&lt;MYSQL_USER&gt;</span>
+<span class="na">gmysql-dbname</span><span class="o">=</span><span class="s">pdns</span>
+<span class="na">gmysql-password</span><span class="o">=</span><span class="s">&lt;MYSQL_PASS&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="records">
+<h4><a class="toc-backref" href="#id12">Records</a><a class="headerlink" href="#records" title="Permalink to this headline">¶</a></h4>
+<p>After pdns is configured to use gmysql, a domain zones can be added.
+This requires that a information about the domain is added to the
+<code class="docutils literal notranslate"><span class="pre">pdns.domains</span></code> table and then a SOA record needs to be created in
+<code class="docutils literal notranslate"><span class="pre">pdns.records</span></code> referencing the domain’s <code class="docutils literal notranslate"><span class="pre">id</span></code> number. [3]</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">pdns</span><span class="p">;</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">domains</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="n">values</span> <span class="p">(</span><span class="s1">&#39;&lt;DOMAIN_NAME&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;NATIVE&#39;</span><span class="p">);</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">records</span> <span class="p">(</span><span class="n">domain_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span> <span class="n">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;&lt;DOMAIN_NAME&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost &lt;DOMAIN_ADMIN_EMAIL_ADDRESS&gt; 0&#39;</span><span class="p">,</span> <span class="s1">&#39;SOA&#39;</span><span class="p">,</span> <span class="mi">86400</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once the SOA record is created then normal DNS records can be created
+and served. For the records tables, the most important columns are:</p>
+<ul class="simple">
+<li><p>name = The domain name that will correspond to a record. This record
+should never end with a “.”</p></li>
+<li><p>type = The type of DNS record. This can be SOA, A, AAAA, MX, SRV,
+PTR, etc.</p></li>
+<li><p>content = What the name should resolve to when queried.</p></li>
+</ul>
+<p>In this example, NS records and an A record is added for the domain
+<code class="docutils literal notranslate"><span class="pre">test.tld</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">records</span> <span class="p">(</span><span class="n">domain_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;test.tld&#39;</span><span class="p">,</span><span class="s1">&#39;dns1.nameserver.tld&#39;</span><span class="p">,</span> <span class="s1">&#39;NS&#39;</span><span class="p">,</span> <span class="mi">86400</span><span class="p">);</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">records</span> <span class="p">(</span><span class="n">domain_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;test.tld&#39;</span><span class="p">,</span> <span class="s1">&#39;dns2.nameserver.tld&#39;</span><span class="p">,</span> <span class="s1">&#39;NS&#39;</span><span class="p">,</span> <span class="mi">86400</span><span class="p">);</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">records</span> <span class="p">(</span><span class="n">domain_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>
+<span class="n">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;www.test.tld&#39;</span><span class="p">,</span> <span class="s1">&#39;192.168.0.10&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id13">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/networking/dns_servers.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/http/dns_servers.rst">&lt; 2021.04.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/dns_servers.rst">&lt; 2020.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/dns_servers.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/dns_servers.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id14">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“PowerDNS.” PowerDNS Docs. Accessed July 7, 2016. <a class="reference external" href="https://doc.powerdns.com/md/">https://doc.powerdns.com/md/</a></p></li>
+<li><p>“PowerDNS Generic MySQL backend.” PowerDNS Docs. Accessed July 7, 2016. <a class="reference external" href="https://doc.powerdns.com/md/authoritative/backend-generic-mysql/">https://doc.powerdns.com/md/authoritative/backend-generic-mysql/</a></p></li>
+<li><p>“PowerDNS How To’s” PowerDNS Docs. Accessed July 7, 2016. <a class="reference external" href="https://doc.powerdns.com/md/authoritative/howtos/">https://doc.powerdns.com/md/authoritative/howtos/</a></p></li>
+<li><p>“Supported Record Types. PowerDNS Docs. Accessed July 7, 2016. <a class="reference external" href="https://doc.powerdns.com/md/types/">https://doc.powerdns.com/md/types/</a></p></li>
+<li><p>“Start of Authority Resource Record (SOA RR).” zytrax open. Accessed July 7, 2016. <a class="reference external" href="http://www.zytrax.com/books/dns/ch8/soa.html">http://www.zytrax.com/books/dns/ch8/soa.html</a></p></li>
+<li><p>“Simple DNS Plus.” DNS Record types. Accessed February 25, 2021. <a class="reference external" href="https://simpledns.plus/help/dns-record-types">https://simpledns.plus/help/dns-record-types</a></p></li>
+<li><p>“What’s in a Domain Name: Sub, Second-Level, Top-Level and Country Code Domains.” Hover Blog. December 24, 2020. Accessed February 26, 2021. <a class="reference external" href="https://hover.blog/whats-a-domain-name-subdomain-top-level-domain/">https://hover.blog/whats-a-domain-name-subdomain-top-level-domain/</a></p></li>
+<li><p>“What is DNS and the DNS Hierarchy.” Interserver Tips. August 22, 2016. Accessed February 26, 2021. <a class="reference external" href="https://www.interserver.net/tips/kb/dns-dns-hierarchy/">https://www.interserver.net/tips/kb/dns-dns-hierarchy/</a></p></li>
+<li><p>“forward.” CoreDNS Plugins. January 28, 2021. Accessed March 1, 2021. <a class="reference external" href="https://coredns.io/plugins/forward/">https://coredns.io/plugins/forward/</a></p></li>
+<li><p>“CoreDNS Manual.” CoreDNS: DNS and Service Discovery. September 28, 2019. Accessed March 1, 2021. <a class="reference external" href="https://coredns.io/manual/toc/">https://coredns.io/manual/toc/</a></p></li>
+<li><p>“unbound.” CoreDNS External Plugins. April 27, 2018. Accessed March 1, 2021. <a class="reference external" href="https://coredns.io/explugins/unbound/">https://coredns.io/explugins/unbound/</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="networking_hardware.html" class="btn btn-neutral float-right" title="Networking (Hardware)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

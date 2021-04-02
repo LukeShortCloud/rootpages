@@ -1,0 +1,584 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Monitoring &mdash; Root Pages  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../openstack/index.html" />
+    <link rel="prev" title="Logging" href="logging.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Root Pages
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2021.04.01
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../administration/authentication.html">Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/chromebook.html">Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/graphics.html">Graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/macs.html">Macs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/mail_servers.html">Mail Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/operating_systems.html">Operating Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../administration/security.html">Security</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Automation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../automation/ansible.html">Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../automation/puppet.html">Puppet</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Computer Hardware</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/graphics_cards.html">Graphics Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/laptops.html">Laptops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/monitors.html">Monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/processors.html">Processors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/storage_devices.html">Storage Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../computer_hardware/webcams.html">Webcams</a></li>
+</ul>
+<p class="caption"><span class="caption-text">HTTP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../http/clustering.html">Clustering and High Availability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/cms.html">Content Management Systems (CMSs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/databases.html">Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../http/http_servers.html">HTTP Servers</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Networking</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../networking/dns_servers.html">DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/networking_hardware.html">Networking (Hardware)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/linux.html">Linux Networking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Observation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Monitoring</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#monit">Monit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#history">History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bibliography">Bibliography</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">OpenStack</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/developer.html">OpenStack Developer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/kolla.html">Kolla</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/openstack-ansible.html">OpenStack-Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openstack/tripleo.html">TripleO</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../programming/c_and_c%2B%2B.html">C and C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/devops.html">DevOps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/go.html">Go</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming/python.html">Python 3</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Storage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../storage/backup_and_recovery.html">Backup and Recovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/bootloaders.html">Bootloaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/ceph.html">Ceph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../storage/file_systems.html">File Systems</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Virtualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_administration.html">Kubernetes Administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/kubernetes_development.html">Kubernetes Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/virtual_machines.html">Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../virtualization/wine.html">Wine</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Commands</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../commands/clustering.html">Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/configuration_management.html">Configuration Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/firewalls.html">Firewalls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/hardware.html">Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/openstack.html">OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/package_managers.html">Package Managers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/phones.html">Phones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/software_code_management.html">Source Code Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/storage.html">Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/text_editors.html">Text Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/virtualization.html">Virtualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Root Pages</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>Monitoring</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/observation/monitoring.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="monitoring">
+<h1><a class="toc-backref" href="#id1">Monitoring</a><a class="headerlink" href="#monitoring" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#monitoring" id="id1">Monitoring</a></p>
+<ul>
+<li><p><a class="reference internal" href="#monit" id="id2">Monit</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration" id="id3">Configuration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#history" id="id4">History</a></p></li>
+<li><p><a class="reference internal" href="#bibliography" id="id5">Bibliography</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="monit">
+<h2><a class="toc-backref" href="#id2">Monit</a><a class="headerlink" href="#monit" title="Permalink to this headline">¶</a></h2>
+<p>Monit is a complete service monitoring software. It has a web interface
+that is available by default on the localhost interface via port 2812.
+It can detect if a service is down and restart it. Automatic alerts
+can also be configured.</p>
+<div class="section" id="configuration">
+<h3><a class="toc-backref" href="#id3">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>Install monit:</p>
+<p>RHEL</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo yum install epel-release
+$ sudo yum install monit
+</pre></div>
+</div>
+<p>Ubuntu</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install monit
+</pre></div>
+</div>
+<p>Depending on your system, the main configuration file is one of these
+two below. The default settings can be used. The configurations are not
+case sensitive.</p>
+<ul class="simple">
+<li><p>/etc/monitrc</p></li>
+<li><p>/etc/monit.conf</p></li>
+</ul>
+<p>The include directory for other configuration files will be on of these
+two:</p>
+<ul class="simple">
+<li><p>/etc/monit.d/</p></li>
+<li><p>/etc/monit/conf.d/</p></li>
+</ul>
+<p>[1]</p>
+<p>Global configuration options:</p>
+<ul>
+<li><p>SET DAEMON <code class="docutils literal notranslate"><span class="pre">&lt;SECONDs&gt;</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Specify the cycle time in seconds. After this many seconds, each service in the configuration will be polled.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>SET ALERT <code class="docutils literal notranslate"><span class="pre">&lt;EMAIL&gt;&#64;&lt;ADDRESS&gt;</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Send all alerts to this e-mail address.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>SET MAILSERVER <code class="docutils literal notranslate"><span class="pre">&lt;HOSTNAME&gt;</span></code> [<code class="docutils literal notranslate"><span class="pre">&lt;PORT&gt;</span></code>] [USERNAME <code class="docutils literal notranslate"><span class="pre">&lt;USERNAME&gt;</span></code>] [PASSWORD <code class="docutils literal notranslate"><span class="pre">&lt;PASSWORD&gt;</span></code>]</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Define the mail server to use. This is typically localhost.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>An example of a basic Nginx template is provided below. If the PID is
+not found, then monit will continue to attempt to start it until the new
+process is spawned.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">check</span> <span class="n">process</span> <span class="n">nginx</span> <span class="k">with</span> <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">start</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/bin/systemctl start nginx&quot;</span>
+<span class="n">stop</span> <span class="n">program</span> <span class="o">=</span> <span class="s2">&quot;/bin/systemctl stop nginx&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>check system <code class="docutils literal notranslate"><span class="pre">&lt;NAME&gt;</span></code></p></li>
+<li><p>Check system resources.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF <code class="docutils literal notranslate"><span class="pre">&lt;RESOURCE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>check process <code class="docutils literal notranslate"><span class="pre">&lt;SERVICE_NAME&gt;</span></code> with pidfile <code class="docutils literal notranslate"><span class="pre">&lt;PATH_TO_PIDFILE&gt;</span></code></p></li>
+<li><p>Verify that the PID is running.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF CHANGED PID THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF UPTIME <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> value <code class="docutils literal notranslate"><span class="pre">&lt;TIME_UNIT&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF <code class="docutils literal notranslate"><span class="pre">&lt;RESOURCE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>check file <code class="docutils literal notranslate"><span class="pre">&lt;SERVICE_NAME&gt;</span></code> with path <code class="docutils literal notranslate"><span class="pre">&lt;PATH_TO_FILE&gt;</span></code></p></li>
+<li><p>Verify a file exists with specific attributes. The “check directory”
+should be used instead if verifying a directory state.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF FAILED UID <code class="docutils literal notranslate"><span class="pre">&lt;UID_OR_USERNAME&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF FAILED GID <code class="docutils literal notranslate"><span class="pre">&lt;GID_OR_GROUPNAME&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF FAILED PERMISSION <code class="docutils literal notranslate"><span class="pre">&lt;OCTAL_PERMISSION&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF SIZE <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;NUMBER&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code> THEN
+<code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF CHANGED SIZE THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF CHANGED [MD5|SHA1] CHECKSUM THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF FAILED [MD5|SHA1] CHECKSUM [EXPECT <code class="docutils literal notranslate"><span class="pre">&lt;CHECKSUM&gt;</span></code>] THEN
+<code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF TIMESTAMP <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;TIME_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;TIME_UNIT&gt;</span></code> THEN
+<code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>check program <code class="docutils literal notranslate"><span class="pre">&lt;SERVICE_NAME&gt;</span></code> with <code class="docutils literal notranslate"><span class="pre">&lt;PATH_TO_SCRIPT&gt;</span></code></p></li>
+<li><p>Execute a script and verify it’s exit code.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF STATUS <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;EXIT_CODE&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>check host <code class="docutils literal notranslate"><span class="pre">&lt;HOSTNAME&gt;</span></code> WITH ADDRESS <code class="docutils literal notranslate"><span class="pre">&lt;IP_ADDRESS&gt;</span></code></p></li>
+<li><p>Verify that the remote host is accessible.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF FAILED PING[4|6] [COUNT <code class="docutils literal notranslate"><span class="pre">&lt;NUMBER_VALUE&gt;</span></code>] [SIZE
+<code class="docutils literal notranslate"><span class="pre">&lt;MTU_SIZE&gt;</span></code>] [TIMEOUT <code class="docutils literal notranslate"><span class="pre">&lt;NUMBER_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;TIME_UNIT&gt;</span></code>]
+[ADDRESS <code class="docutils literal notranslate"><span class="pre">&lt;IP_ADDRESS&gt;</span></code>] THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF FAILED PORT <code class="docutils literal notranslate"><span class="pre">&lt;PORT_NUMBER&gt;</span></code> [TYPE <code class="docutils literal notranslate"><span class="pre">[TCP|UDP]</span></code>] [PROTOCOL
+<code class="docutils literal notranslate"><span class="pre">&lt;PROTOCOL&gt;</span></code>]</p></li>
+</ul>
+</li>
+<li><p>check network <code class="docutils literal notranslate"><span class="pre">&lt;NETWORK_NAME&gt;</span></code> WITH INTERFACE <code class="docutils literal notranslate"><span class="pre">&lt;INTERFACE&gt;</span></code></p></li>
+<li><p>Verify that an IP address exists on the local machine. This is useful
+for failover type load balancers.</p></li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF FAILED LINK THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF SATURATION <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;PERCENT&gt;</span></code> THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+<li><p>check filesystem <code class="docutils literal notranslate"><span class="pre">&lt;FILE_SYSTEM_NAME&gt;</span></code>with path
+<code class="docutils literal notranslate"><span class="pre">&lt;PATH_TO_DEVICE&gt;</span></code></p></li>
+<li><p>Verify statistics about a file system.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;PATH_TO_DEVICE&gt;</span></code> can be a block device, mount, or directory.</p></li>
+</ul>
+</li>
+<li><p>Checks:</p>
+<ul>
+<li><p>IF SPACE USAGE <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code>
+THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF SPACE FREE <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code> THEN
+<code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF INODE USAGE <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code>
+THEN <code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+<li><p>IF INODE FREE <code class="docutils literal notranslate"><span class="pre">&lt;OPERATOR&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_VALUE&gt;</span></code> <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code> THEN
+<code class="docutils literal notranslate"><span class="pre">&lt;ACTION&gt;</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>Valid operators:</p>
+<ul class="simple">
+<li><p>“&lt;”, “lt”, or “less”</p></li>
+<li><p>“&gt;”, “gt”, or “greater”</p></li>
+<li><p>“==”, “eq”, or “equal”</p></li>
+<li><p>“!=”, “ne”, or “notequal”</p></li>
+</ul>
+<p>Valid size units:</p>
+<ul class="simple">
+<li><p>“B”, or “byte”</p></li>
+<li><p>“KB”, or “kilobyte”</p></li>
+<li><p>“MB”, or “megabyte”</p></li>
+<li><p>“GB”, or “gigabyte”</p></li>
+<li><p>“%”, or “percent”.</p></li>
+</ul>
+<p>Valid time units:</p>
+<ul class="simple">
+<li><p>“SECOND”, or “SECONDS”</p></li>
+<li><p>“MINUTE”, or “MINUTES”</p></li>
+<li><p>“HOUR”, or “HOURS”</p></li>
+<li><p>“DAY”, or “DAYS”</p></li>
+</ul>
+<p>Valid resources:</p>
+<ul class="simple">
+<li><p>CPU([user|system|wait])</p></li>
+<li><p>THREADS</p></li>
+<li><p>CHILDREN</p></li>
+<li><p>TOTAL MEMORY <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code></p></li>
+<li><p>The memory usage of the main process and all of the children.</p></li>
+<li><p>MEMORY <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code></p></li>
+<li><p>The memory usage of just the main process. Alternatively this can
+monitor all of the server’s memory usage.</p></li>
+<li><p>SWAP <code class="docutils literal notranslate"><span class="pre">&lt;SIZE_UNIT&gt;</span></code></p></li>
+<li><p>LOADAVG([1min|5min|15min])</p></li>
+</ul>
+<p>Valid protocols:</p>
+<ul class="simple">
+<li><p>dns</p></li>
+<li><p>http</p></li>
+<li><p>https</p></li>
+<li><p>mysql</p></li>
+<li><p>smtp</p></li>
+</ul>
+<p>Valid actions:</p>
+<ul class="simple">
+<li><p>“ALERT”</p></li>
+<li><p>Send an e-mail alert.</p></li>
+<li><p>“RESTART”</p></li>
+<li><p>Run the restart function (or the stop and then start functions if the
+restart command is not specified). This will also send an e-mail
+alert.</p></li>
+<li><p>“START”</p></li>
+<li><p>Run the start service function.</p></li>
+<li><p>“STOP”</p></li>
+<li><p>Run the stop service function.</p></li>
+<li><p>“EXEC”</p></li>
+<li><p>Execute a specified script.</p></li>
+<li><p>“UNMONITOR”</p></li>
+<li><p>Stop monitoring the service.</p></li>
+</ul>
+<p>[2]</p>
+<p>Event Types:</p>
+<ul class="simple">
+<li><p>1=checksum</p></li>
+<li><p>2=resource</p></li>
+<li><p>4=timeout</p></li>
+<li><p>8=timestamp</p></li>
+<li><p>16=size</p></li>
+<li><p>32=connection</p></li>
+<li><p>64=permission</p></li>
+<li><p>128=UID</p></li>
+<li><p>256=GID</p></li>
+<li><p>512=nonexist</p></li>
+<li><p>1024=invalid</p></li>
+<li><p>2048=data</p></li>
+<li><p>4096=exec</p></li>
+<li><p>8192=fsflags</p></li>
+<li><p>16384=icmp</p></li>
+<li><p>32768=content</p></li>
+<li><p>65536=instance</p></li>
+<li><p>131072=action</p></li>
+<li><p>262144=PID</p></li>
+<li><p>524288=PPID</p></li>
+<li><p>1048576=heartbeat</p></li>
+<li><p>2097152=status</p></li>
+<li><p>4194304=uptime [3]</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="history">
+<h2><a class="toc-backref" href="#id4">History</a><a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/observation/monitoring.rst">Latest</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/administration/monitoring.rst">&lt; 2020.10.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/src/monitoring.rst">&lt; 2019.01.01</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ekultails/rootpages/commits/master/markdown/monitoring.md">&lt; 2018.01.01</a></p></li>
+</ul>
+</div>
+<div class="section" id="bibliography">
+<h2><a class="toc-backref" href="#id5">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>“Installing Monit for Server Monitoring.” Linode. October 15, 2015.
+Accessed November 22, 2016.
+<a class="reference external" href="https://www.linode.com/docs/uptime/monitoring/monitoring-servers-with-monit">https://www.linode.com/docs/uptime/monitoring/monitoring-servers-with-monit</a></p></li>
+<li><p>“Mont Documentation.” Accessed September 30, 2016.
+<a class="reference external" href="https://mmonit.com/monit/documentation/monit.html">https://mmonit.com/monit/documentation/monit.html</a></p></li>
+<li><p>“Monit Events.” Accessed September 30, 2016.
+<a class="reference external" href="https://mmonit.com/documentation/http-api/Methods/Events">https://mmonit.com/documentation/http-api/Methods/Events</a></p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../openstack/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="logging.html" class="btn btn-neutral float-left" title="Logging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright None, Copyleft 2021, Luke Short. Documents licensed under GFDLv1.3.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
