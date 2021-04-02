@@ -1893,11 +1893,58 @@ Pod
 -  activeDeadlineSeconds (integer) = The startTime, in seconds, to wait before marking a Pod as failed.
 -  affinity (map) = Define scheduling constraints.
 
-   -  nodeAffinity (map) = Specify NodeAffinity spec values here.
+   -  nodeAffinity (map) = Handle scheduling a Pod on specific Nodes.
 
-      -  requiredDuringSchedulingIgnoredDuringExecution (map)
-      -  requiredDuringSchedulingRequiredDuringExecution (map)
-      -  preferredDuringSchedulingIgnoredDuringExecution (map)
+      -  preferredDuringSchedulingIgnoredDuringExecution (map) = This Pod will prioritize being scheduled on Nodes matching the specified labels. If no Nodes can be used, this Pod will schedule itself on another available Node.
+
+         -  **preference** (map)
+
+            -  matchExpressions (list of maps)
+
+               -  **key** (string)
+               -  **operator** (string)
+
+                  -  In
+                  -  NotIn
+                  -  Exists
+                  -  DoesNotExist
+                  -  Gt (greater than)
+                  -  Lt (less than)
+
+               -  values (list of strings)
+
+            -  matchFields (map of strings)
+
+               -  **key** (string)
+               -  **operator** (string) = Refer to the ``pod.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference.matchExpressions.operator`` options above.
+               -  values (list of strings)
+
+         -  **weight** (integer) = A number, 1 through 100, of how important it is to match this affinity.
+
+      -  requiredDuringSchedulingIgnoredDuringExecution (map) = This Pod can only be scheduled on Nodes matching the specified labels.
+
+         -  nodeSelectorTerms (list of maps) = Refer to the ``pod.spec.affinity.nodeAffinity.preferredDuringSchedulingIgnoredDuringExecution.preference`` options above.
+
+   -  podAffinity (map) = Schedule this Pod on a Node that has Pods matching specified labels.
+
+      -  preferredDuringSchedulingIgnoredDuringExecution (list of maps)
+
+         -  labelSelector (map)
+
+            -  matchExpressions (list of maps)
+
+               -  **key** (string)
+               -  **operator** (string)
+               -  values (list of strings)
+
+            -  matchLabels (map of strings)
+
+         -  namespaces (list of strings)
+         -  **topologyKey** (string)
+
+      -  requiredDuringSchedulingIgnoredDuringExecution (list of maps) = Refer to the ``pod.spec.affinity.podAffinity.preferredDuringSchedulingIgnoredDuringExecution`` options above.
+
+   -  podAntiAffinity (map) = Do not schedule this Pod on a Node that has Pods matching specified labels. Refer to the ``pod.spec.affinity.podAffinity`` options above.
 
 -  automountServiceAccountToken (boolean) = If the service account token should be available via a mount. The default is true.
 -  **containers** (list of `Containers map <#containers>`_) = The list of containers the Pod should create and manage.
@@ -2214,6 +2261,27 @@ Pod with ports exposed on the Node it is running on.
            - containerPort: 53
              protocol: UDP
              name: coredns-udp
+
+Pod with a toleration to the Control Pane Node taint.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-with-control-plane-toleration
+   spec:
+     containers:
+       - name: busybox
+         image: busybox
+     tolerations:
+       - effect: "NoSchedule""
+         key: "node-role.kubernetes.io/control-plane"
+         operator: "Exists"
+       - effect: "NoSchedule""
+         key: "node-role.kubernetes.io/master"
+         operator: "Exists"
 
 Third-Party
 ~~~~~~~~~~~
@@ -2930,6 +2998,99 @@ Kubernetes >= 1.19 ``ingress.spec.ingressClassName``:
    spec:
      ingressClassName: <INGRESS_CONTROLLER>
 
+Pod Scheduling
+~~~~~~~~~~~~~~
+
+Pods have many ways to configure which Nodes it will or will not be scheduled to run on.
+
+----
+
+**nodeName and nodeSelector**
+
+Either ``pod.spec.nodeName`` or ``pod.spec.nodeSelector`` can be set to determine which Node(s) it should be scheduled on.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   spec:
+     nodeName: <NODE_NAME>
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   spec:
+     nodeSelector:
+       <NODE_LABEL_KEY>: <NODE_LABEL_VALUE>
+
+----
+
+**Affinity and Anti-affinity**
+
+Affinities provide a more customizable alternative to nodeName and nodeSelector.
+
+Affinity types (``pod.spec.affinity``):
+
+-  nodeAffinity = Specify the Node(s) the Pod should be scheduled on based on the labels of Nodes.
+-  podAffinity = Specify the Node(s) the Pod should be scheduled on based on the labels of Pods running on a Node.
+-  podAntiAffinity = The opposite of podAffinity (do not schedule on that Node).
+
+Scheduling types:
+
+-  preferredDuringSchedulingIgnoredDuringExecution = Try to schedule the Pod to run on specific Nodes. If that is not possible, use any available Node.
+-  requiredDuringSchedulingIgnoredDuringExecution = Only schedule the Pod to run on specific Nodes.
+
+[38]
+
+----
+
+**Taints and Tolerations**
+
+A taint is a special label that can be set on a Node to prevent Pods from being scheduled on it. Pods can still run on the Node if they have a toleration to the taint. The concept of taints is similar to a "deny all" policy and a toleration is a specific "allow list".
+
+Taint effects:
+
+-  NoExecute = All Pods will be evicited from the Node.
+-  NoPreferNoSchedule = Only schedule a Pod on this Node if no other Node can run the Pod.
+-  NoSchedule = Do not schedule Pods on this Node.
+
+Add a taint to a Node either with a key-value pair or just a key:
+
+.. code-block:: sh
+
+   $ kubectl taint nodes <NODE> <KEY>=<VALUE>:<TAINT>
+   $ kubectl taint nodes <NODE> <KEY>:<TAINT>
+
+Remove a taint from a Node by adding a dash after the taint name:
+
+.. code-block:: sh
+
+   $ kubectl taint nodes <NODE> <KEY>=<VALUE>:<TAINT>-
+   $ kubectl taint nodes <NODE> <KEY>:<TAINT>-
+
+By default, Control Plane Nodes currently have two taints that prevent normal workloads from being scheduled on them:
+
+-  node-role.kubernetes.io/master:NoSchedule
+-  node-role.kubernetes.io/control-plane:NoSchedule = This was added in Kubernetes 1.20.
+
+Toleration operators:
+
+-  Equals = Tolerate a taint if a Node has the specified key-value pair.
+-  Exists = Tolerate a taint if a Node has the specified key.
+
+[39]
+
+A Pod can tolerate all taints by setting ``pod.spec.tolerations.operator`` to ``Exists`` and leaving the ``key`` and ``value`` fields undefined. [40]
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   spec:
+    tolerations:
+      - operator: "Exists"
+
 Helm (Package Manager)
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3050,3 +3211,6 @@ Bibliography
 35. "CA." cert-manager Documentation. February 4, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/ca/
 36. "Securing NGINX-ingress." cert-manager Documentation. March 14, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/tutorials/acme/ingress/
 37. "Setting up CA Issuers." cert-manager Documentation. 2018. Accessed March 31, 2021. https://docs.cert-manager.io/en/release-0.11/tasks/issuers/setup-ca.html
+38. "Assigning Pods to Nodes." Kubernetes Documentation. March 19, 2021. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+39. "Taints and Tolerations." Kubernetes Documentation. November 19, 2020. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+40. "Making Sense of Taints and Tolerations in Kubernetes." Supergiant.io - Medium. March 5, 2019. Accessed April 1, 2021. https://medium.com/kubernetes-tutorials/making-sense-of-taints-and-tolerations-in-kubernetes-446e75010f4e
