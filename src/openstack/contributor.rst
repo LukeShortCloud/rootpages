@@ -1,5 +1,5 @@
-OpenStack Developer
-===================
+OpenStack Contributor
+=====================
 
 .. contents:: Table of Contents
 

@@ -3,7 +3,7 @@
    :caption: OpenStack
 
    openstack
-   developer
+   contributor
    kolla
    openstack-ansible
    tripleo
