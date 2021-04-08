@@ -1166,6 +1166,17 @@ Popular Ingress controllers [57]:
 
 A full list of Ingress Controllers can be found `here <https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/>`__.
 
+Contour
+~~~~~~~
+
+Installation [63]:
+
+.. code-block:: sh
+
+   $ helm repo add bitnami https://charts.bitnami.com/bitnami
+   $ helm repo update
+   $ helm install contour bitnami/contour
+
 Traefik
 ~~~~~~~
 
@@ -1578,3 +1589,4 @@ Bibliography
 60. "API reference docs." cert-manager Documentation. January 1, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/reference/api-docs/
 61. "basic auth is deprecated." Kubernetes Master Charm Bugs. October 2, 2021. Accessed March 31, 2021. https://bugs.launchpad.net/charm-kubernetes-master/+bug/1841226
 62. "Using RBAC Authentication." Kubernetes Documentation. February 11, 2021. Accessed March 31, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+63. "Getting Started." Contour. Accessed April 8, 2021. https://projectcontour.io/getting-started/
