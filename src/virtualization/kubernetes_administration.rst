@@ -1177,6 +1177,33 @@ Installation [63]:
    $ helm repo update
    $ helm install contour bitnami/contour
 
+NGINX
+~~~~~
+
+There are two different Ingress Controllers that use the NGINX reverse-proxy server: (1) ``kubernetes/ingress-nginx`` and (2) ``nginxinc/kubernetes-ingress``. The first one is the official Ingress Controller supported by the Kubernetes project. The second one is provided by NGINX, Inc. that adds more advanced features. [64]
+
+kubernetes/ingress-nginx
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installation [65]:
+
+.. code-block:: sh
+
+   $ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+   $ helm repo update
+   $ helm install ingress-nginx-kubernetes ingress-nginx/ingress-nginx
+
+nginxinc/kubernetes-ingress
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Installation [66]:
+
+.. code-block:: sh
+
+   $ helm repo add nginx-stable https://helm.nginx.com/stable
+   $ helm repo update
+   $ helm install ingress-nginx-nginxinc nginx-stable/nginx-ingress
+
 Traefik
 ~~~~~~~
 
@@ -1590,3 +1617,6 @@ Bibliography
 61. "basic auth is deprecated." Kubernetes Master Charm Bugs. October 2, 2021. Accessed March 31, 2021. https://bugs.launchpad.net/charm-kubernetes-master/+bug/1841226
 62. "Using RBAC Authentication." Kubernetes Documentation. February 11, 2021. Accessed March 31, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 63. "Getting Started." Contour. Accessed April 8, 2021. https://projectcontour.io/getting-started/
+64. "Differences Between nginxinc/kubernetes-ingress and kubernetes/ingress-nginx Ingress Controllers." GitHub nginxinc/kubernetes-ingress. July 13, 2020. Accessed April 8, 2021. https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/nginx-ingress-controllers.md
+65. "Installation Guide." NGINX Ingress Controller. Accessed April 8, 2021. https://kubernetes.github.io/ingress-nginx/deploy/
+66. "Installation with Helm." NGINX Docs. Accessed April 8, 2021. https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/
