@@ -3120,6 +3120,25 @@ There are three types of health probes for a Pod. At a minimum, a liveness probe
 
 For a full list of configuration options, see the `Probe <#probe>`_ section.
 
+There are known issues with using probes with the method ``httpGet``. As a workaround, use the method ``command`` instead with the ``curl`` command. [41]
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   spec:
+     containers:
+       - name: webapp
+         readinessProbe:
+           #httpGet:
+           #  path: "/healthcheck"
+           #  port: 8080
+           exec:
+             command:
+               - "curl"
+               - "--fail"
+               - "http://localhost:8080/healthcheck"
+
 Installation
 ------------
 
@@ -3214,3 +3233,4 @@ Bibliography
 38. "Assigning Pods to Nodes." Kubernetes Documentation. March 19, 2021. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 39. "Taints and Tolerations." Kubernetes Documentation. November 19, 2020. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 40. "Making Sense of Taints and Tolerations in Kubernetes." Supergiant.io - Medium. March 5, 2019. Accessed April 1, 2021. https://medium.com/kubernetes-tutorials/making-sense-of-taints-and-tolerations-in-kubernetes-446e75010f4e
+41. "Sometime Liveness/Readiness Probes fail because of net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers) #89898." GitHub kubernetes/kubernetes. April 8, 2021. Accessed April 8, 2021. https://github.com/kubernetes/kubernetes/issues/89898
