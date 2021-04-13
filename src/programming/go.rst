@@ -80,7 +80,21 @@ The ``gofmt`` command will automatically format a Go source code file into the s
 Lint
 ~~~~
 
-Go provides a basic lint tool with ``golint``. It will look for common issues and print out warnings for any that it finds. A community project called ``golangci-lint`` has even more lint checks and functionality. Installation instructions can be found in the project's `README.md <https://github.com/golangci/golangci-lint/blob/master/README.md>`__ file.
+Go provides a basic lint tool with ``golint``. It will look for common issues and print out warnings for any that it finds.
+
+golangci-lint
+^^^^^^^^^^^^^
+
+A community project called ``golangci-lint`` adds even more lint checks and functionality compared to ``golint``.
+
+Install [33]:
+
+.. code-block:: sh
+
+   $ VER="v1.39.0"
+   $ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/${VER}/install.sh | sh -s -- -b ~/.local/bin ${VER}
+
+False-positives can be ignored by placing a ``//nolint`` comment above the code causing a lint warning. For warnings about the end of a function block ``{ }``, add the comment after the block because adding it before creates a new warning (the last line in a block should not be a comment or whitespace). [34]
 
 Comments
 ~~~~~~~~
@@ -1427,3 +1441,5 @@ Bibliography
 30. "Package log." The Go Programming Language. Accessed February 8, 2021. https://golang.org/pkg/log/
 31. "Logging HOWTO." Python documentation. February 8, 2021. Accessed February 8, 2021. https://docs.python.org/3/howto/logging.html
 32. "iota - Create Effective Constants in Golang." Medium. September 5, 2020. Accessed March 11, 2021. https://medium.com/swlh/iota-create-effective-constants-in-golang-b399f94aac31
+33. "Install." golangci-lint. Accessed April 13, 2021. https://golangci-lint.run/usage/install/
+34. "False Positives." golangci-lint. Accessed April 13, 2021. https://golangci-lint.run/usage/false-positives/
