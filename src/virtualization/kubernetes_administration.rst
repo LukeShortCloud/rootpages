@@ -902,6 +902,23 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
          $ kubectl get nodes -o wide
          $ kubectl get -n kube-system pods
 
+TKGS
+^^^^
+
+Applications
+''''''''''''
+
+Harbor
+&&&&&&
+
+**IMPORTANT:** The version of Harbor provided by TKGS in VMware vSphere <= 7.0U2 is an older version and lacks many of the features found in the upstream release. It only provides basic push and pull capabilities. It is recommended to install the Helm chart instead.
+
+Enable Harbor in TKGS [67]:
+
+-  vSphere Client > Workload Management > Clusters > (select the workload cluster) > Configure > Namespaces > Image Registry > Embedded Harbor: ENABLE
+
+Each Kubernetes Namespace will now have two secrets created: a pull and push Secret. These are named ``<VSPHERE_NAMESPACE>-default-image-[pull|push]-secret``. In the specification of a Pod, use the pull Secret in ``pod.spec.imagePullSecrets.name``. When interacting with the container registry manually via ``docker login``, use a vSphere user that has "edit" permissions with the cluster. [68]
+
 Uninstall
 ---------
 
@@ -1620,3 +1637,5 @@ Bibliography
 64. "Differences Between nginxinc/kubernetes-ingress and kubernetes/ingress-nginx Ingress Controllers." GitHub nginxinc/kubernetes-ingress. July 13, 2020. Accessed April 8, 2021. https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/nginx-ingress-controllers.md
 65. "Installation Guide." NGINX Ingress Controller. Accessed April 8, 2021. https://kubernetes.github.io/ingress-nginx/deploy/
 66. "Installation with Helm." NGINX Docs. Accessed April 8, 2021. https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/
+67. "Enable the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-AE24CF79-3C74-4CCD-B7C7-757AD082D86A.html
+68. "Configure a Tanzu Kubernetes Cluster with the Image Pull Secret for the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-13CDE060-DF61-4AA0-9DEE-6D3F903BAB77.html
