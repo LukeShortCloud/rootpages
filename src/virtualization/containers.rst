@@ -108,6 +108,17 @@ Registries
 
 A container registry stores Open Container Initiative (OCI) formatted images. These can universally be used across any modern cloud-native platform.
 
+Here are a list of different container registiries that exist [22]:
+
+-  Amazon Elastic Container Registry (ECR)
+-  Docker Hub
+-  Docker Trusted Registry (DTR)
+-  Harbor
+-  JFrog Artifactory
+-  Nexus Repository
+-  Pulp Container Registry
+-  Quay
+
 By default, the ``docker`` command manages container images on the `Docker Hub <https://hub.docker.com/>`__ registry.
 
 .. code-block:: sh
@@ -522,3 +533,4 @@ Bibliography
 19. "podman." podman. November 13, 2020. Accessed November 22, 2020. https://podman.io/
 20. "A Practical Introduction to Container Terminology." Red Hat Developer. February 22, 2018. Accessed November 22, 2020. https://developers.redhat.com/blog/2018/02/22/container-terminology-practical-introduction/
 21. "docker push." Docker Documentation. Accessed March 2, 2021. https://docs.docker.com/engine/reference/commandline/push/
+22. "Episode 147: CoreDNS." GitHub vmware-tanzu/tgik. April 3, 2021. Accessed April 13, 2021. https://github.com/vmware-tanzu/tgik/tree/master/episodes/147
