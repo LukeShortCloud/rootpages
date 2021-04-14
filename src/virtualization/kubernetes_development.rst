@@ -2879,6 +2879,49 @@ An object can declaratively bind itself to a Namespace by specifying it in the m
    metadata:
      namespace: <NAMESPACE_NAME>
 
+Image Pull Secrets (imagePullSecrets)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some container registires require authentication for any access or to gain more privileges when interacting with a container registry. Kubernetes has a special Secret type of "docker-registry" (kubernetes.io/dockerconfigjson) for storing container registry credentials and using them for Pods when they need to pull images.
+
+If not using "credsStore" for storing credentials, then the ``docker login`` configuration file can be directly imported into Kubernetes as a Secret object.
+
+.. code-block:: sh
+
+   $ docker login
+   $ grep credsStore ~/.docker/config.json
+   $ kubectl create secret generic <SECRET_NAME> --type=kubernetes.io/dockerconfigjson --from-file=.dockerconfigjson="${HOME}/.docker/config.json"
+
+Alternatively, make a valid Secret object without a pre-existing configuration file.
+
+.. code-block:: sh
+
+   $ kubectl create secret docker-registry <SECRET_NAME> --docker-server=<CONTAINER_REGISTRY> --docker-username=<DOCKER_USER> --docker-password=<DOCKER_PASS>
+
+Then use the Secret object when creating a new Pod object using the ``pod.spec.imagePullSecrets.name`` attribute.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: v1
+   kind: Pod
+   metadata:
+     name: nginx
+   spec:
+     containers:
+     - image: nginx
+       name: nginx
+     imagePullSecrets:
+     - name: secret-docker-registry-foobar
+
+[42]
+
+If using a Helm chart via the CLI, then the value can be set using this syntax:
+
+.. code-block:: sh
+
+   $ helm install --set 'imagePullSecrets[0].name'=<SECRET_NAME> <HELM_RELEASE_NAME> <HELM_REPOSITORY>/<HELM_CHART>
+
 Persistent Storage
 ~~~~~~~~~~~~~~~~~~
 
@@ -3234,3 +3277,4 @@ Bibliography
 39. "Taints and Tolerations." Kubernetes Documentation. November 19, 2020. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 40. "Making Sense of Taints and Tolerations in Kubernetes." Supergiant.io - Medium. March 5, 2019. Accessed April 1, 2021. https://medium.com/kubernetes-tutorials/making-sense-of-taints-and-tolerations-in-kubernetes-446e75010f4e
 41. "Sometime Liveness/Readiness Probes fail because of net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers) #89898." GitHub kubernetes/kubernetes. April 8, 2021. Accessed April 8, 2021. https://github.com/kubernetes/kubernetes/issues/89898
+42. "Pull an Image from a Private Registry." Kubernetes Documentation. February 11, 2021. Accessed April 14, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
