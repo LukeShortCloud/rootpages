@@ -1439,6 +1439,38 @@ The process of managing certificates:
 2.  Create a Certificate object using a [Cluster]Issuer for each domain that requires TLS encryption.
 3.  Use the Certificate(s) in an Ingress or Gateway object(s).
 
+Container Registries
+~~~~~~~~~~~~~~~~~~~~
+
+Harbor
+^^^^^^
+
+Harbor will use the default StorageClass for the PersistentVolumeClaim. Set these Helm chart variables to a different StorageClass or use "-" to disable persistent storage:
+
+-  ``persistence.persistentVolumeClaim.chartmuseum.storageClass``
+-  ``persistence.persistentVolumeClaim.database.storageClass``
+-  ``persistence.persistentVolumeClaim.jobservice.storageClass``
+-  ``persistence.persistentVolumeClaim.redis.storageClass``
+-  ``persistence.persistentVolumeClaim.registry.storageClass``
+-  ``persistence.persistentVolumeClaim.trivy.storageClass``
+
+Install:
+
+.. code-block:: sh
+
+   $ helm repo add harbor https://helm.goharbor.io
+   $ helm update
+   $ helm install harbor harbor/harbor
+
+Uninstall:
+
+.. code-block:: sh
+
+   $ helm uninstall harbor
+   $ kubectl delete pvc -l chart=harbor
+
+[69]
+
 Troubleshooting
 ---------------
 
@@ -1639,3 +1671,4 @@ Bibliography
 66. "Installation with Helm." NGINX Docs. Accessed April 8, 2021. https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/
 67. "Enable the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-AE24CF79-3C74-4CCD-B7C7-757AD082D86A.html
 68. "Configure a Tanzu Kubernetes Cluster with the Image Pull Secret for the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-13CDE060-DF61-4AA0-9DEE-6D3F903BAB77.html
+69. "Helm Chart for Harbor." GitHub goharbor/harbor-helm. February 26, 2021. Accessed April 14, 2021. https://github.com/goharbor/harbor-helm
