@@ -16,6 +16,7 @@ There are three update channels to choose from for Chrome OS updates. This can b
 -  Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.
 -  Beta = Minor updates every week. Major upgrades every 6 weeks.
 -  Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with ``Developer Mode`` which is different.
+-  Canary = Updates daily. This is an extremely experimental update channel that can only be enabled on the CLI.
 
 Check `here <https://chromereleases.googleblog.com/search/label/Chrome%20OS>`__ for information on the latest channel updates for Chrome OS.
 
@@ -164,7 +165,7 @@ Updates
 Change Update Channel
 ^^^^^^^^^^^^^^^^^^^^^
 
-Channels can be changed on any Chromebook not in developer mode by going to ``Settings > About Chrome OS > Additional Details > Channel > Change channel`` and selecting ``Stable``, ``Beta``, or ``Developer - unstable``. However, this will require a Powerwash which will factory reset the Chromebook.
+Channels can be changed on any Chromebook not in developer mode by going to ``Settings > About Chrome OS > Additional Details > Channel > Change channel`` and selecting ``Stable``, ``Beta``, or ``Developer - unstable``. However, this will require a Powerwash which will factory reset the Chromebook and does not expose the ``Canary`` channel.
 
 With Developer Mode enabled, it is possible to change channels on the CLI without a Powerwash. If going from a newer channel to an older one (Dev to Beta, Dev to Stable, or Beta to Stable), Chrome OS will automatically update when that channel catches up to your version.
 
@@ -172,7 +173,7 @@ Syntax:
 
 .. code-block:: sh
 
-   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel={stable,beta,dev}-channel
+   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel={stable,beta,dev,canary}-channel
 
 Example:
 
