@@ -1186,6 +1186,8 @@ A full list of Ingress Controllers can be found `here <https://kubernetes.io/doc
 Contour
 ~~~~~~~
 
+The official Contour project does not have a Helm chart to help install their Ingress Controller. Instead, the Bitnami project has a collection of installers including a Helm Chart for Contour. [70]
+
 Installation [63]:
 
 .. code-block:: sh
@@ -1193,6 +1195,8 @@ Installation [63]:
    $ helm repo add bitnami https://charts.bitnami.com/bitnami
    $ helm repo update
    $ helm install contour bitnami/contour
+
+The `Helm chart values can be found here <https://github.com/bitnami/charts/blob/master/bitnami/contour>`__.
 
 NGINX
 ~~~~~
@@ -1672,3 +1676,4 @@ Bibliography
 67. "Enable the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-AE24CF79-3C74-4CCD-B7C7-757AD082D86A.html
 68. "Configure a Tanzu Kubernetes Cluster with the Image Pull Secret for the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-13CDE060-DF61-4AA0-9DEE-6D3F903BAB77.html
 69. "Helm Chart for Harbor." GitHub goharbor/harbor-helm. February 26, 2021. Accessed April 14, 2021. https://github.com/goharbor/harbor-helm
+70. "Create a helm chart for Contour #2050." GitHub projectcontour/contour. February 12, 2021. Accessed April 15, 2021. https://github.com/projectcontour/contour/issues/2050
