@@ -1451,12 +1451,11 @@ Harbor
 
 Harbor will use the default StorageClass for the PersistentVolumeClaim. Set these Helm chart variables to a different StorageClass or use "-" to disable persistent storage:
 
--  ``persistence.persistentVolumeClaim.chartmuseum.storageClass``
--  ``persistence.persistentVolumeClaim.database.storageClass``
--  ``persistence.persistentVolumeClaim.jobservice.storageClass``
--  ``persistence.persistentVolumeClaim.redis.storageClass``
--  ``persistence.persistentVolumeClaim.registry.storageClass``
--  ``persistence.persistentVolumeClaim.trivy.storageClass``
+-  ``persistence.persistentVolumeClaim.[chartmuseum|database|jobservice|redis|registry|trivy].storageClass``
+
+The default storage sizes for Harbor are small by default. The container registry itself will only have 5 GiB of available space. These can be adjusted by setting different ``<SIZE>Gi`` values in these Helm chart variables.
+
+- ``persistence.persistentVolumeClaim.[chartmuseum|database|jobservice|redis|registry|trivy].size``
 
 Install:
 
