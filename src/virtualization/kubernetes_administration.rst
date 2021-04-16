@@ -1466,6 +1466,11 @@ Install:
    $ helm update
    $ helm install harbor harbor/harbor
 
+Log in with the default account [71]:
+
+-  Username: admin
+-  Password: Harbor12345
+
 Uninstall:
 
 .. code-block:: sh
@@ -1677,3 +1682,4 @@ Bibliography
 68. "Configure a Tanzu Kubernetes Cluster with the Image Pull Secret for the Embedded Harbor Registry." VMware Docs. February 16, 2021. Accessed April 13, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-13CDE060-DF61-4AA0-9DEE-6D3F903BAB77.html
 69. "Helm Chart for Harbor." GitHub goharbor/harbor-helm. February 26, 2021. Accessed April 14, 2021. https://github.com/goharbor/harbor-helm
 70. "Create a helm chart for Contour #2050." GitHub projectcontour/contour. February 12, 2021. Accessed April 15, 2021. https://github.com/projectcontour/contour/issues/2050
+71. "Run the Installer Script." Harbor docs. October 28, 2020. Accessed April 16, 2021. https://goharbor.io/doc/2.1.0/install-config/run-installer-script/
