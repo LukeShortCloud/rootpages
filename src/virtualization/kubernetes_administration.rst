@@ -1188,6 +1188,8 @@ Contour
 
 The official Contour project does not have a Helm chart to help install their Ingress Controller. Instead, the Bitnami project has a collection of installers including a Helm Chart for Contour. [70]
 
+View the `Helm chart values here <https://github.com/bitnami/charts/blob/master/bitnami/contour>`__.
+
 Installation [63]:
 
 .. code-block:: sh
@@ -1195,8 +1197,6 @@ Installation [63]:
    $ helm repo add bitnami https://charts.bitnami.com/bitnami
    $ helm repo update
    $ helm install contour bitnami/contour
-
-The `Helm chart values can be found here <https://github.com/bitnami/charts/blob/master/bitnami/contour>`__.
 
 NGINX
 ~~~~~
@@ -1449,6 +1449,11 @@ Container Registries
 Harbor
 ^^^^^^
 
+harbor/harbor
+'''''''''''''
+
+The ``harbor`` Helm chart from ``https://helm.goharbor.io`` is the official chart for installing Harbor.
+
 Harbor will use the default StorageClass for the PersistentVolumeClaim. Set these Helm chart variables to a different StorageClass or use "-" to disable persistent storage:
 
 -  ``persistence.persistentVolumeClaim.[chartmuseum|database|jobservice|redis|registry|trivy].storageClass``
@@ -1456,6 +1461,8 @@ Harbor will use the default StorageClass for the PersistentVolumeClaim. Set thes
 The default storage sizes for Harbor are small by default. The container registry itself will only have 5 GiB of available space. These can be adjusted by setting different ``<SIZE>Gi`` values in these Helm chart variables.
 
 - ``persistence.persistentVolumeClaim.[chartmuseum|database|jobservice|redis|registry|trivy].size``
+
+View the `Helm chart values here <https://github.com/goharbor/harbor-helm>`__.
 
 Install:
 
@@ -1478,6 +1485,41 @@ Uninstall:
    $ kubectl delete pvc -l chart=harbor
 
 [69]
+
+bitnami/harbor
+''''''''''''''
+
+The ``harbor`` Helm chart from ``https://charts.bitnami.com/bitnami`` is an unofficial chart based on the upstream Helm chart. It is developed by VMware and provides additional features such as consolidated variables, secure/random admin password, automatic external Service LoadBalancer, and more.
+
+Unlike the ``harbor/harbor`` chart, this chart supports setting a global StorageClass for all PersistentVolumeClaims:
+
+- ``global.storageClass``
+
+View the `Helm chart values here <https://github.com/bitnami/charts/tree/master/bitnami/harbor>`__.
+
+Install:
+
+.. code-block:: sh
+
+   $ helm repo add https://charts.bitnami.com/bitnami
+   $ helm repo update
+   $ helm install harbor-bitnami bitnami/harbor
+
+Locate the ``admin`` acocunt password:
+
+.. code-block:: sh
+
+   $ echo Password: $(kubectl get secret bitnami-harbor-core-envvars -o jsonpath="{.data.HARBOR_ADMIN_PASSWORD}" | base64 --decode)
+   Password: bzOLNxqrhq
+
+Uninstall:
+
+.. code-block:: sh
+
+   $ helm uninstall harbor-bitnami
+   $ kubectl delete pvc bitnami-harbor-chartmuseum bitnami-harbor-jobservice bitnami-harbor-registry data-bitnami-harbor-postgresql-0 data-bitnami-harbor-trivy-0 redis-data-bitnami-harbor-redis-master-0
+
+[72]
 
 Troubleshooting
 ---------------
@@ -1682,3 +1724,4 @@ Bibliography
 69. "Helm Chart for Harbor." GitHub goharbor/harbor-helm. February 26, 2021. Accessed April 14, 2021. https://github.com/goharbor/harbor-helm
 70. "Create a helm chart for Contour #2050." GitHub projectcontour/contour. February 12, 2021. Accessed April 15, 2021. https://github.com/projectcontour/contour/issues/2050
 71. "Run the Installer Script." Harbor docs. October 28, 2020. Accessed April 16, 2021. https://goharbor.io/doc/2.1.0/install-config/run-installer-script/
+72. "Harbor." GitHub bitnami/charts. March 30, 2021. Accessed April 16, 2021. https://github.com/bitnami/charts/tree/master/bitnami/harbor
