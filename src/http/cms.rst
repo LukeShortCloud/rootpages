@@ -60,7 +60,11 @@ All of the configuration is handled by the ``config.toml`` file.
 
 Settings:
 
--  baseURL (string) = The URL to the actual website.
+-  baseURL (string) = The URL to the actual website. This is used when creating a static website with the ``hugo`` command (no arguments required).
+
+   -  When running ``hugo server``, this value is temporarily set to ``http://127.0.0.1:1313/``.
+   -  When building a static website, either change this to a URL or a ``file://`` path that points to the "public" folder.
+
 -  languageCode (string) = The default language to use for the website.
 -  **theme** (string) = The name of the theme to use. This will load up a theme ``themes/<THEME_NAME>/``.
 -  **title** (string) = The name of the website to display.
