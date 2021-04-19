@@ -8,6 +8,63 @@ Introduction
 
 A CMS provides a framework to create a website without having to code it from scratch or even knowing HTML. It automates the process of creating new webpages and can use different themes and plugins. Most CMSs have search engine opitmizations (SEOs). The goal of a CMS is to make creating a website easy. [1]
 
+Hugo
+----
+
+Installation
+~~~~~~~~~~~~
+
+Install the ``hugo`` package.
+
+Create a new website:
+
+.. code-block:: sh
+
+   $ hugo new site <WEBSITE_NAME>
+
+Unlike Jekyll, Hugo does not provide a default theme. Find and download a `Hugo theme from here <https://themes.gohugo.io/>`__. Extract it to the ``themes`` directory.
+
+Configure the theme to be used.
+
+.. code-block:: sh
+
+   $ vim config.toml
+   theme = "<THEME_DIRECTORY_NAME>"
+
+Optionally create a new post on the website:
+
+.. code-block:: sh
+
+   $ hugo new <CATEGORY>/<POST_NAME>.md
+   $ vim content/<CATEGORY>/<POST_NAME>.md
+   ---
+   title: "Example Post"
+   date: 2021-01-01T12:00:00+00:00
+   draft: false
+   ---
+
+Generate and serve the static website:
+
+.. code-block:: sh
+
+   $ hugo server
+
+Access the website via ``http://127.0.0.1:1313/``.
+
+[5]
+
+Configuration
+~~~~~~~~~~~~~
+
+All of the configuration is handled by the ``config.toml`` file.
+
+Settings:
+
+-  baseURL (string) = The URL to the actual website.
+-  languageCode (string) = The default language to use for the website.
+-  **theme** (string) = The name of the theme to use. This will load up a theme ``themes/<THEME_NAME>/``.
+-  **title** (string) = The name of the website to display.
+
 Jekyll
 ------
 
@@ -105,3 +162,4 @@ Bibliography
 2. "[Jekyll] Installation." Jekyll Documentation. Accessed November 25, 2020. https://jekyllrb.com/docs/installation/
 3. "[Jekyll] Quickstart." Jekyll Documentation. Accessed November 25, 2020. https://jekyllrb.com/docs/
 4. "[Jekyll] Themes." Jekyll Documentation. Accessed November 25, 2020. https://jekyllrb.com/docs/themes/
+5. "Quick Start." Hugo. March 26, 2021. Accessed April 19, 2021. https://gohugo.io/getting-started/quick-start/
