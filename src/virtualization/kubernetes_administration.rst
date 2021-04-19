@@ -375,6 +375,8 @@ Below is a list of RHOCP and OKD versions that correspond with the upstream Kube
    :header: RHOCP/OKD, Kubernetes
    :widths: 20, 20
 
+   4.7, 1.20
+   4.6, 1.19
    4.5, 1.18
    4.4, 1.17
    4.3, 1.16
