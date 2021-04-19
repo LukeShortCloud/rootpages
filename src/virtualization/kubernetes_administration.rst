@@ -213,6 +213,28 @@ TKGm
 
 TKGm stands for TKG Multicloud. It is a product for installing Kubernetes on-top of virtual infrastructure provided by AWS, Azure, GCE, or VMware vSphere. It first deploys an all-in-one TKG Management Cluster using `kind <https://kind.sigs.k8s.io/>`__. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
 
+TKGS
+^^^^
+
+TKG Service (TKGS) is a product built into VMware vSphere 7 that provides heavy integration with Kubernetes.
+
+Requirements for TKGS:
+
+-  ESXi hypervisors = At least two are required. For the best results, use three or more.
+-  vSphere HA = Highly available vSphere clusters.
+-  HAProxy load balancer = Virtual machines running HAProxy are used for load balancing requests to Kubernetes.
+-  DRS = Distributed Resource Scheduler.
+-  vSAN = Virtual Storage Area Network.
+-  vDS = vSphere Distributed Switch.
+
+Layers of TKGS:
+
+1.  Supervisor cluster = The Kubernetes workload management cluster. Only vSphere itself has full access to the administrative account. End-users are expected to log into a namespace to create a production Kubernetes cluster.
+2.  Supervisor cluster namespace = This namespace exists in both vSphere and Kubernetes. It is used to isolate teams and resources. This is used to create the production Kubernetes cluster using the TanzuKubernetesCluster API.
+3.  TanzuKubenretesCluster (tkc) = This is the Kubernetes cluster that will be used for deploying applications.
+
+[73]
+
 Releases
 --------
 
@@ -1736,3 +1758,4 @@ Bibliography
 70. "Create a helm chart for Contour #2050." GitHub projectcontour/contour. February 12, 2021. Accessed April 15, 2021. https://github.com/projectcontour/contour/issues/2050
 71. "Run the Installer Script." Harbor docs. October 28, 2020. Accessed April 16, 2021. https://goharbor.io/doc/2.1.0/install-config/run-installer-script/
 72. "Harbor." GitHub bitnami/charts. March 30, 2021. Accessed April 16, 2021. https://github.com/bitnami/charts/tree/master/bitnami/harbor
+73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
