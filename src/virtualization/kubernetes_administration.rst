@@ -1462,6 +1462,10 @@ The default storage sizes for Harbor are small by default. The container registr
 
 - ``persistence.persistentVolumeClaim.[chartmuseum|database|jobservice|redis|registry|trivy].size``
 
+Optionally configure a universal image pull Secret to use.
+
+- ``'imagePullSecrets[0].name'``
+
 View the `Helm chart values here <https://github.com/goharbor/harbor-helm>`__.
 
 Install:
@@ -1494,6 +1498,10 @@ The ``harbor`` Helm chart from ``https://charts.bitnami.com/bitnami`` is an unof
 Unlike the ``harbor/harbor`` chart, this chart supports setting a global StorageClass for all PersistentVolumeClaims:
 
 - ``global.storageClass``
+
+Optionally configure a universal image pull Secret to use.
+
+- ``'global.imagePullSecrets[0]'``
 
 View the `Helm chart values here <https://github.com/bitnami/charts/tree/master/bitnami/harbor>`__.
 
