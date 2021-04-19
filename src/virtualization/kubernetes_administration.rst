@@ -395,9 +395,10 @@ TKGm
 Tanzu supports a few of the versions of Kubernetes. Listed below is the minimum Tanzu Kubernetes Grid (TKG) version to deploy the specified Kubernetes version. [33]
 
 .. csv-table::
-   :header: TKG, Kubernetes
+   :header: TKGm, Kubernetes
    :widths: 20, 20
 
+   1.3.0, "1.20.4, 1.19.8, 1.18.16, and 1.17.16"
    1.2.0, "1.19.1, 1.18.8, and 1.17.11"
    1.1.0, "1.18.6 and 1.17.9"
    1.0.0, 1.17.3
@@ -1693,7 +1694,7 @@ Bibliography
 30. "Upgrading kubeadm clusters." Kubernetes Documentation. August 7, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 31. "Kubernetes version and version skew support policy." Kubernetes Documentation. August 15, 2020. Accessed October 18, 2020. https://kubernetes.io/docs/setup/release/version-skew-policy/
 32. "Deploying Tanzu Kubernetes Clusters and Managing their Lifecycle." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-index.html
-33. "VMware Tanzu Kubernetes Grid 1.2 Release Notes." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/rn/VMware-Tanzu-Kubernetes-Grid-12-Release-Notes.html
+33. "VMware Tanzu Kubernetes Grid 1.3 Release Notes." VMware Tanzu Kubernetes Grid Docs. April 8, 2021. Accessed April 19, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/rn/VMware-Tanzu-Kubernetes-Grid-13-Release-Notes.html
 34. "Download and Install the Tanzu Kubernetes Grid CLI." VMware Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-install-tkg-set-up-tkg.html
 35. "AWS Command Line Interface User Guide." AWS Documentation. May 19, 2020. Accessed October 27, 2020. https://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf
 36. "Deploy Management Clusters to Amazon EC2 with the CLI." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-aws-cli.html
