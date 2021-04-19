@@ -94,6 +94,12 @@ Install [33]:
    $ VER="v1.39.0"
    $ curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/${VER}/install.sh | sh -s -- -b ~/.local/bin ${VER}
 
+View the list of available linters and which ones are currently enabled or disabled. By default, over 50 linters are available. [35]
+
+.. code-block:: sh
+
+   $ golangci-lint linters
+
 False-positives can be ignored by placing a ``//nolint`` comment above the code causing a lint warning. For warnings about the end of a function block ``{ }``, add the comment after the block because adding it before creates a new warning (the last line in a block should not be a comment or whitespace). [34]
 
 Comments
@@ -1443,3 +1449,4 @@ Bibliography
 32. "iota - Create Effective Constants in Golang." Medium. September 5, 2020. Accessed March 11, 2021. https://medium.com/swlh/iota-create-effective-constants-in-golang-b399f94aac31
 33. "Install." golangci-lint. Accessed April 13, 2021. https://golangci-lint.run/usage/install/
 34. "False Positives." golangci-lint. Accessed April 13, 2021. https://golangci-lint.run/usage/false-positives/
+35. "Configuration." golangci-lint. Accessed April 19, 2021. https://golangci-lint.run/usage/configuration/
