@@ -1273,17 +1273,18 @@ Container Network Interface (CNI) Plugins
 The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage the network connections between Pods. The cloud operator must pick at least one plugin. For using more than one plugin, use the `Multus CNI project <https://github.com/intel/multus-cni>`__. Canal (both Calico and Flannel combined into a single plugin) is recommended for most use cases.
 
 .. csv-table::
-   :header: Plugin, Arm Support, Ease of Configuration, Resource Usage, Network Layer, Encryption, NetworkPolicy Support, Use Case
-   :widths: 20, 20, 20, 20, 20, 20, 20, 20
+   :header: Plugin, Arm Support, Ease of Configuration, Resource Usage, Network Layer, Encryption, NetworkPolicy Support, Windows Support, Use Case
+   :widths: 20, 20, 20, 20, 20, 20, 20, 20, 20
 
-   Calico, Yes, Medium, Low, 3, No, Yes, Highly configurable
-   Canal, Yes, Medium, Low, 3, No, Yes, Combine the easiness of Flannel and the NetworkPolicy support of Calico
-   Cilium, No, Easy, High, 3, No, Yes, BPF Linux kernel integration
-   Flannel, Yes, Easy, Low, 2, No, No, Simple overlay network management
-   kubenet, Yes, Easy,  Low, 2, No, No, Very basic Linux bridge management
-   kube-router, Yes, Medium, Low, 3, No, Yes, Feature rich
-   Weave Net, Yes, Hard, Medium, 3, No, Yes, Manage mesh networks
-   Weave Net (Encrypted), Yes, Hard, High, 3, Yes, Yes, Secure networks
+   Antrea, Yes, Easy, Low, 3 and 4, Yes, Yes, Yes, Windows and VMware TKG
+   Calico, Yes, Medium, Low, 3, No, Yes, No, Highly configurable
+   Canal, Yes, Medium, Low, 3, No, Yes, No, Combine the easiness of Flannel and the NetworkPolicy support of Calico
+   Cilium, No, Easy, High, 3, No, Yes, No, BPF Linux kernel integration
+   Flannel, Yes, Easy, Low, 2, No, No, No, Simple overlay network management
+   kubenet, Yes, Easy,  Low, 2, No, No, No, Very basic Linux bridge management
+   kube-router, Yes, Medium, Low, 3, No, Yes, No, Feature rich
+   Weave Net, Yes, Hard, Medium, 3, No, Yes, No, Manage mesh networks
+   Weave Net (Encrypted), Yes, Hard, High, 3, Yes, Yes, No, Secure networks
 
 Recommended CNI plugins for each use case:
 
@@ -1291,6 +1292,7 @@ Recommended CNI plugins for each use case:
 -  Home lab = Flannel. Easy to setup and provides container network separation.
 -  Work lab = Canal. It expands upond Flannel by adding support for other features such as the  NetworkPolicy API.
 -  Encryption = Weave Net. Designed to be scalable and secure.
+-  Windows Node = Antrea. The only vendor-agnostic CNI plugin that works on Windows Nodes.
 
 Legacy plugins that are no longer maintained:
 
