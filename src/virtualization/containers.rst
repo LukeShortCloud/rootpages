@@ -550,6 +550,37 @@ able to run.
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when pulling a container image from a Harbor container registry proxy-cache project:
+
+.. code-block:: sh
+
+   $ docker pull <HARBOR_ADDRESS>/<HARBOR_PROJECT_NAME>/<DOCKER_HUB_PROJECT_NAME>/<DOCKER_HUB_CONTAINER_NAME>
+   Using default tag: latest
+   Error response from daemon: unknown: artifact docker-hub-proxy-cache/mysql/mysql-router@sha256:66d5955bbf926b9ab35df6e199aa434c89c96a2b8c5a47531cf011d67b4b37f0 not found
+
+Solution:
+
+-  View the ``harbor-core`` logs. The repository may be temporarily blocked by Docker Hub API rate limiting. Wait at least two hours before trying to pull the image again.
+
+   ::
+
+      2021-04-22T06:17:47Z [WARNING] [/server/middleware/repoproxy/proxy.go:139]: Artifact: <HARBOR_PROJECT_NAME>/<DOCKER_HUB_PROJECT_NAME>/<DOCKER_HUB_CONTAINER_NAME>:, digest:sha256:66d5955bbf926b9ab35df6e199aa434c89c96a2b8c5a47531cf011d67b4b37f0 is not found in proxy cache, fetch it from remote repo
+      2021-04-22T06:17:47Z [DEBUG] [/server/middleware/repoproxy/proxy.go:141]: the tag is , digest is sha256:66d5955bbf926b9ab35df6e199aa434c89c96a2b8c5a47531cf011d67b4b37f0
+      2021-04-22T06:17:47Z [WARNING] [/server/middleware/repoproxy/proxy.go:151]: Proxy to remote failed, fallback to local repo, error: http status code: 429, body: {
+        "errors": [
+          {
+            "code": "TOOMANYREQUESTS",
+            "message": "You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit"
+          }
+        ]
+      }
+
 History
 -------
 
