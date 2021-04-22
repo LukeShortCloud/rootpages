@@ -147,6 +147,55 @@ It may be required to first create a new image with a name of the alternative re
 
 [21]
 
+Insecure
+~~~~~~~~
+
+The docker daemon strictly enforces verified certificates. If a certificate for a container registry cannot be validated, then the docker client will refuse to connect to it. These are workarounds for connecting to registries with untrusted and/or broken certificates.
+
+**Add a Certificate Authority**
+
+Create a directory in ``/etc/docker/certs.d/`` or ``~/.docker/certs.d/`` named ``<REGISTRY_DOMAIN_OR_IP>:<REGISTRY_PORT>``. Place the certificate authority certificate and public key there. Normally a "ca.crt" file would contain both of those but may also be provided separately as "ca.cert" and "ca.key" files. On Linux, a restart of the docker daemon is not required. [23]
+
+On macOS, local certificates will be synced to from ``~/.docker/certs.d/`` to ``/etc/docker/certs.d/`` in the back-end virtual machine after restarting the Docker Desktop app. [24]
+
+.. code-block:: sh
+
+   $ osascript -e 'quit app Docker'
+   $ open -a Docker
+
+**Ignore Certificates**
+
+If a certificate has a common name of something other than the domain or IP address of the container registry then it will not work. In this case, the certificate should be ignored entirely by being listed as an insecure registry. This can also be used as an alternative to providing a certificate authority.
+
+Edit the docker daemon configuration file and add a list of registries to ignore invalid or self-signed certificates.
+
+-  Linux: ``/etc/docker/daemon.json``
+-  macOS: ``~/.docker/daemon.json`` or navigate to Docker Desktop > Preferences > Docker Engine.
+
+.. code-block:: json
+
+   {
+     "insecure-registries": [
+       "<REGISTRY_1_DOMAIN_OR_IP>:<REGISTRY_1_PORT>",
+       "<REGISTRY_2_DOMAIN_OR_IP>:<REGISTRY_2_PORT>"
+     ]
+   }
+
+Restart the docker daemon:
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ sudo systemctl restart docker
+
+-  macOS:
+
+   .. code-block:: sh
+
+      $ osascript -e 'quit app Docker'
+      $ open -a Docker
+
 Container Runtimes
 ------------------
 
@@ -534,3 +583,5 @@ Bibliography
 20. "A Practical Introduction to Container Terminology." Red Hat Developer. February 22, 2018. Accessed November 22, 2020. https://developers.redhat.com/blog/2018/02/22/container-terminology-practical-introduction/
 21. "docker push." Docker Documentation. Accessed March 2, 2021. https://docs.docker.com/engine/reference/commandline/push/
 22. "Episode 147: CoreDNS." GitHub vmware-tanzu/tgik. April 3, 2021. Accessed April 13, 2021. https://github.com/vmware-tanzu/tgik/tree/master/episodes/147
+23. "Test an insecure registry." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/registry/insecure/
+24. "Docker Desktop for Mac user manual." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/docker-for-mac/
