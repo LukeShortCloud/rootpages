@@ -255,6 +255,9 @@ Top alogithms [7]:
    2. POLY1305
    3. SHA256
 
+Certificate Creation
+~~~~~~~~~~~~~~~~~~~~
+
 Self-signed certificates and keys can be manually created. Web browsers and tools will show these as unverified since a trusted certificate authority (CA) did not sign the certificate. The benefit is that secure TLS connections can still be used.
 
 -  Create a CA key.
@@ -307,6 +310,32 @@ Self-signed certificates and keys can be manually created. Web browsers and tool
 
 [9]
 
+Trusted Certificate Authorities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Custom certificate authorities (CAs) can be added as known trusted CAs.
+
+Arch Linux [10]:
+
+.. code-block:: sh
+
+   $ sudo cp ca.crt /etc/ca-certificates/trust-source/anchors/
+   $ sudo update-ca-trust
+
+Debian [11]:
+
+.. code-block:: sh
+
+   $ sudo cp ca.crt /usr/local/share/ca-certificates/
+   $ sudo update-ca-certificates
+
+Fedora [11]:
+
+.. code-block:: sh
+
+   $ sudo cp ca.crt /etc/pki/ca-trust/source/anchors/
+   $ sudo update-ca-trust
+
 History
 -------
 
@@ -326,3 +355,5 @@ Bibliography
 7. "Recommendations for TLS/SSL Cipher Hardening." The Acunetix Blog. April 10, 2019. Accessed March 21, 2021. https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/
 8. "How to Create Your Own SSL Certificate Authority for Local HTTPS Development." WP Migrate DB Pro. June 23, 2020. Accessed March 21, 2021. https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/
 9. "OpenSSL Quick Reference Guide." DigiCert. Accessed March 21, 2021. https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
+10. "User:Grawity/Adding a trusted CA certificate." Arch Linux Wiki. June 16, 2020. Accessed April 30, 2021. https://wiki.archlinux.org/index.php/User:Grawity/Adding_a_trusted_CA_certificate
+11. "How To Set Up and Configure a Certificate Authority (CA) On Debian 10." Digital Ocean Community Tutorials. April 2, 2020. Accessed April 30, 2021. https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-debian-10
