@@ -66,6 +66,12 @@ Welcome to Root Pages!
 
    virtualization/index
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Windows
+
+   windows/index
+
 -----
 
 .. toctree::
