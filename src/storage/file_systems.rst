@@ -159,7 +159,7 @@ Debian:
 
    .. code-block:: sh
 
-      $ sudo dpkg -i ./.*deb
+      $ sudo dpkg -i ./*.deb
 
 -  Load the ZFS kernel module and verify it works.
 
