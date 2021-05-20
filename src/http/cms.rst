@@ -22,7 +22,11 @@ Create a new website:
 
    $ hugo new site <WEBSITE_NAME>
 
-Unlike Jekyll, Hugo does not provide a default theme. Find and download a `Hugo theme from here <https://themes.gohugo.io/>`__. Extract it to the ``themes`` directory.
+Unlike Jekyll, Hugo does not provide a default theme. Find and download a `Hugo theme from here <https://themes.gohugo.io/>`__. Extract it to the ``themes`` directory. Alternatively, use a git submodule to track the theme in a different repository.
+
+.. code-block:: sh
+
+   $ git submodule add https://<GIT_WEBSITE>/<GIT_USER>/<GIT_PROJECT>.git themes/<THEME_NAME>
 
 Configure the theme to be used.
 
