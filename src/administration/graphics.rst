@@ -211,6 +211,31 @@ Gaming
 Steam
 ~~~~~
 
+Runtime
+^^^^^^^
+
+Steam provides a runtime that is a chroot of pre-installed Linux libraries required for Steam to work. Sometimes these libraries may not work as expected. There are different ways to configure how Steam will or will not use its own runtime.
+
+-  Use the Steam runtime libraries.
+
+   .. code-block:: sh
+
+      $ STEAM_RUNTIME=1 steam
+
+-  Use the system libraries and fall-back to Steam runtime libraries if they are missing on the system.
+
+   .. code-block:: sh
+
+      $ STEAM_RUNTIME=1 STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 steam
+
+-  Use the system libraries.
+
+   .. code-block:: sh
+
+      $ STEAM_RUNTIME=0 steam
+
+[12]
+
 Flatpak
 ^^^^^^^
 
@@ -290,3 +315,4 @@ Bibliography
 9. "AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel." Phoronix. November 16, 2019. Accessed December 10, 2019. https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.5-AMD-Navi-Overclocking
 10. "Frequently asked questions." flathub/com.valvesoftware.Steam. April 12, 2020. Accessed July 3, 2020. https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions
 11. "A simple guide to Steam Play, Valve's technology for playing Windows games on Linux." GamingOnLinux. July 12, 2019. Accessed July 3, 2020. https://www.gamingonlinux.com/articles/14552
+12. "Steam/Client troubleshooting." Gentoo Wiki. February 15, 2021. Accessed May 20, 2021. https://wiki.gentoo.org/wiki/Steam/Client_troubleshooting
