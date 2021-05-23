@@ -173,13 +173,13 @@ Syntax:
 
 .. code-block:: sh
 
-   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel={stable,beta,dev,canary}-channel
+   chronos@localhost / $ update_engine_client --nopowerwash --channel={stable,beta,dev,canary}-channel
 
 Example:
 
 .. code-block:: sh
 
-   chronos@localhost / $ sudo update_engine_client --nopowerwash --channel=stable-channel
+   chronos@localhost / $ update_engine_client --nopowerwash --channel=stable-channel
    chronos@localhost / $ update_engine_client --show_channel
    [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
    [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
