@@ -4047,6 +4047,52 @@ Linux kernel capabilities can only be defined at the ``pod.spec.containers.secur
 
 [48]
 
+Tanzu
+~~~~~
+
+Tanzu Editions
+^^^^^^^^^^^^^^
+
+**Tanzu Basic:**
+
+-  `Container Networking <https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html>`__ = Antrea (new) or Calico (legacy).
+-  `Container Registry <https://tanzu.vmware.com/developer/guides/containers/managing-container-images-registry/>`__ = Harbor.
+-  `Identity and Access Management (IAM) <https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-iam-index.html>`__ = TKGm: Dex Identity Provider and Pinniped. TKGS: vCenter SSO.
+-  `Kubernetes Runtime <https://docs.vmware.com/en/VMware-Tanzu/index.html>`__ = TKGI, TKGm, and/or TKGS.
+-  `Lifecycle Management <https://docs.vmware.com/en/VMware-Tanzu/services/tanzu-adv-deploy-config/GUID-components.html>`__ = Cluster API via TKGI, TKGm, and/or TKGS.
+-  `Load Balancing <https://rudimartinsen.com/2021/06/14/vmware-tanzu-alb/>`__ = HAProxy or NSX Advanced Load Balance (ALB).
+-  `Logging <https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-packages-logging-fluentbit.html>`__ = Fluent Bit.
+-  Operating System
+
+   -  AWS = Amazon Linux.
+   -  Azure = Ubuntu.
+   -  vSphere = Photon OS.
+
+-  `vSphere Support <https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-152BE7D2-E227-4DAA-B527-557B564D9718.html>`__
+
+**Tanzu Standard:**
+
+-  `Conformance/Diagnostics <https://docs.vmware.com/en/VMware-Tanzu-Mission-Control/services/tanzumc-concepts/GUID-1BB98612-A9BF-494C-8446-1DB2E80BF5F9.html>`__ = CNCF Conformance Inspection, CIS benchmark, and Lite.
+-  `Data Protection <https://docs.vmware.com/en/VMware-Tanzu-Mission-Control/services/tanzumc-concepts/GUID-C16557BC-EB1B-4414-8E63-28AD92E0CAE5.html>`__ = Tanzu Mission Control (TMC) Data Protection. Velero backups with Amazon S3 object storage integration.
+-  `Ingress <https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-packages-ingress-contour.html>`__ = Contour.
+-  `Multi-Cloud Support <https://tanzu.vmware.com/mission-control>`__ = Tanzu Mission Control (TMC).
+-  Observability/Monitoring
+
+   -  `Observability <https://tanzu.vmware.com/observability>`__ = Tanzu Observability (Wavefront).
+   -  `Monitoring <https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-packages-monitoring.html>`__ = Prometheus and Grafana.
+
+-  `Policy Management <https://tanzu.vmware.com/content/blog/vmware-tanzu-mission-control-expands-its-policy-management-capabilities>`__ = Open Policy Agent (OPA) / Gatekeeper running in TMC.
+
+**Tanzu Advanced:**
+
+-  `Container Build <https://docs.pivotal.io/build-service/latest/>`__ = Tanzu Build Service (TBS) is a fork of Cloud Native Buildpacks (CNB). It includes `CNB Lifecycle <https://github.com/buildpacks/lifecycle>`__, `kpack <https://github.com/pivotal/kpack>`__, `kpack-cli <https://github.com/vmware-tanzu/kpack-cli>`__, and `Tanzu Buildpacks <https://docs.pivotal.io/tanzu-buildpacks/>`__ (forked from `Paketo Buildpacks <https://paketo.io/>`__).
+-  `Curated App Catalog <https://tanzu.vmware.com/application-catalog>`__ = Tanzu Application Catalog (TAC). A collection of Bitnami applications. A full list of those applications can be found `here <https://github.com/bitnami/charts/tree/master/bitnami>`__.
+-  `Data Services (VMware Tanzu SQL) <https://tanzu.vmware.com/sql>`__ = `MySQL <https://github.com/bitnami/charts/tree/master/bitnami/mysql>`__ and `PostgreSQL <https://github.com/bitnami/charts/tree/master/bitnami/postgresql>`__ Kubernetes operators.
+-  `Developer Frameworks <https://tanzu.vmware.com/solutions-hub/microservices-management/>`__ = `Spring Boot (Java) <https://tanzu.vmware.com/spring-app-framework>`__ and `Steeltoe (.NET) <https://tanzu.vmware.com/solutions-hub/microservices-management/steeltoe>`__.
+-  `Service Mesh <https://docs.vmware.com/en/VMware-Tanzu-Service-Mesh/services/rn/VMware-Tanzu-Service-Mesh-Release-Notes.html>`__ = Istio with VMware NSX as the network back-end.
+
+[55][56]
+
 Installation
 ------------
 
@@ -4155,3 +4201,5 @@ Bibliography
 52. "Getting Started with Knative." Knative. Accessed January 27, 2022. https://knative.dev/docs/getting-started/
 53. "API Serving." Knative. Accessed January 28, 2022. https://knative.dev/docs/reference/api/serving-api/
 54. "Autoscaling." Knative. Accessed January 28, 2022. https://knative.dev/docs/serving/autoscaling/
+55. "Compare VMware Tanzu Editions." VMware Tanzu. Accessed May 17, 2021. https://tanzu.vmware.com/tanzu/compare
+56. "Deploying and Managing Extensions and Shared Services." VMware Docs. August 19, 2021. Accessed August 23, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
