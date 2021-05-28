@@ -137,13 +137,13 @@ Debian:
 
    .. code-block:: sh
 
-      $ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-$(uname -r) python3 python3-dev python3-cffi python3-setuptools uuid-dev zlib1g-dev
+      $ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-$(uname -r) python3 python3-dev python3-distutils python3-cffi python3-setuptools uuid-dev zlib1g-dev
 
 -  View and download an OpenZFS release from `here <https://github.com/openzfs/zfs/releases>`__.
 
    .. code-block:: sh
 
-      $ export OPENZFS_VER="2.0.0"
+      $ export OPENZFS_VER="2.0.4"
       $ wget https://github.com/openzfs/zfs/releases/download/zfs-${OPENZFS_VER}/zfs-${OPENZFS_VER}.tar.gz
 
 -  Build the DKMS packages so that the kernel module will be automatically rebuilt upon kernel updates.
@@ -165,6 +165,7 @@ Debian:
 
    .. code-block:: sh
 
+      $ echo -n "zfs" | sudo tee -a /etc/modules-load.d/zfs.conf
       $ sudo modprobe zfs
       $ lsmod | grep zfs
 
