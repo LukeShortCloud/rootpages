@@ -263,29 +263,68 @@ Fedora:
 USB Installation with Both Legacy BIOS and UEFI Support
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Linux can be installed onto a portable storage device that can boot in both legacy BIOS computers and newer UEFI computers.
+Linux can be installed onto a portable storage device that can boot on both legacy BIOS computers and newer UEFI computers. UEFI requires a GPT partition table which means a legacy MBR partition scheme will not work.
 
--  Partition table requirements:
+-  GPT partitions:
 
-   -  GPT partition table.
-   -  BIOS boot partition: 1MB unformatted partition with the "BIOS boot" flag/type.
-   -  EFI partition: >= 200MB vfat (fat32) partition mounted at ``/boot/efi``.
-   -  Linux boot partition: 1GB partition with a stable file system (such as ext4) mounted at ``/boot``.
+   1.  BIOS boot partition.
 
-After setting up the partitions and installing the operating system with UEFI support, chroot into the new installation before rebooting. On Fedora only, create the legacy BIOS boot GRUB configuration file. Then install GRUB using the legacy BIOS boot by specifying the block device (not the partition itself).
+      -  Size: 1 MiB.
+      -  File system: none.
+      -  Partition flag: ``bios_grub``.
+      -  Mount point: none.
+
+   2.  EFI partition.
+
+      -  Size: >= 200 MiB.
+      -  File system: FAT32.
+      -  Partition flags: ``boot`` and ``esp``.
+      -  Mount point: ``/boot/efi/``.
+
+   3.  Linux boot partition for storing the Linux kernel and boot configuration files (optional).
+
+      -  Size: 1 GiB.
+      -  File system: ext4.
+      -  Partition flags: none.
+      -  Mount point: ``/boot/``.
+
+-  GRUB requirements:
+
+   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device.
+   2.  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
+   3.  Regenerate the GRUB configuration file.
+
+Example partition layout:
+
+::
+
+   Number  Start   End 	Size	File system 	Name 	Flags
+    1  	1049kB  2097kB  1049kB              	primary  bios_grub
+    2  	2097kB  500MB   498MB   fat32       	primary  boot, esp
+    3  	500MB   8500MB  8000MB  linux-swap(v1)  primary  swap
+    4  	8500MB  128GB   120GB   btrfs       	primary
 
 Arch Linux and Debian:
 
 .. code-block:: sh
 
+   # UEFI
+   $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable
+   # BIOS
    $ sudo grub-install --target=i386-pc /dev/<DEVICE>
+   $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 Fedora:
 
 .. code-block:: sh
 
+   # UEFI
+   $ sudo grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable
+   # BIOS
    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
    $ sudo grub2-install --target=i386-pc /dev/<DEVICE>
+
+Most modern Linux installers will default to installing GRUB with UEFI support. After installation, ensure to run the necessary commands to setup legacy BIOS boot.
 
 [8]
 
