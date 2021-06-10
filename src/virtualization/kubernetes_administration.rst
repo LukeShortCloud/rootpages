@@ -437,6 +437,18 @@ Tanzu supports a few of the versions of Kubernetes. Listed below is the minimum 
    1.1.0, "1.18.6 and 1.17.9"
    1.0.0, 1.17.3
 
+TKGS
+^^^^
+
+Each version of VMware vSphere supports a range of Kubernetes versions. [74]
+
+.. csv-table::
+   :header: vSphere, Kubernetes Minimum, Kubernetes Maximum
+   :widths: 20, 20, 20
+
+   7.0 Update 2, v1.17.7+vmware.1-tkg.1.154236c, TBD
+   7.0 Update 1, v1.16.12+vmware.1-tkg.1.da7afe7, v1.18.15+vmware.1-tkg.2.ebf6117
+
 Installation
 ------------
 
