@@ -204,7 +204,7 @@ Tanzu (pronounced tawn-zoo) Kubernetes Grid (TKG) is developed by VMware as a co
 
 There are currently three offerings for TKG [54]:
 
--  **TKG Multicloud (TKGm)** = TKGm supports creating and managing infrastructure on Amazon Web Services, Microsoft Azure, and VMware vSphere 6. For VMware vSphere 7, TKGm can be used but TKGS is recommended instead.
+-  **TKG Multicloud (TKGm)** or **TKG** = TKGm, sometimes referred to as just TKG, supports creating and managing infrastructure on Amazon Web Services, Microsoft Azure, and VMware vSphere 6. For VMware vSphere 7, TKGm can be used but TKGS is recommended instead.
 -  **TKG Services (TKGS)** = VMware vSphere 7 creates and manages the Kubernetes cluster.
 -  **TKG Integrated Edition (TKGI)** = Previosuly Enterprise PKS. Uses BOSH to deploy and manage virtual machines for the Kubernetes cluster. BOSH supports creating infrastructure on Alibaba Cloud, Amazon Web Services, Google Cloud Platform, Microsoft Azure, OpenStack, and VMware vSphere. [55]
 
