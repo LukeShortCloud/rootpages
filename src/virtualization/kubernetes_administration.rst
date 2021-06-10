@@ -235,6 +235,14 @@ Layers of TKGS:
 
 [73]
 
+Networking
+''''''''''
+
+CNI plugin [74]:
+
+-  Kubernetes >= 1.18 = Antrea
+-  Kubernetes <= 1.17 = Calico
+
 Releases
 --------
 
@@ -1761,3 +1769,4 @@ Bibliography
 71. "Run the Installer Script." Harbor docs. October 28, 2020. Accessed April 16, 2021. https://goharbor.io/doc/2.1.0/install-config/run-installer-script/
 72. "Harbor." GitHub bitnami/charts. March 30, 2021. Accessed April 16, 2021. https://github.com/bitnami/charts/tree/master/bitnami/harbor
 73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
