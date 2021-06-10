@@ -243,6 +243,8 @@ CNI plugin [74]:
 -  Kubernetes >= 1.18 = Antrea
 -  Kubernetes <= 1.17 = Calico
 
+Service LoadBalancer = HAProxy or NSX-T Load Balancer. [75]
+
 Releases
 --------
 
@@ -1770,3 +1772,4 @@ Bibliography
 72. "Harbor." GitHub bitnami/charts. March 30, 2021. Accessed April 16, 2021. https://github.com/bitnami/charts/tree/master/bitnami/harbor
 73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
+75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
