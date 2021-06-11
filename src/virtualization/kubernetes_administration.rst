@@ -440,7 +440,7 @@ Tanzu supports a few of the versions of Kubernetes. Listed below is the minimum 
 TKGS
 ^^^^
 
-Each version of VMware vSphere supports a range of Kubernetes versions. [74]
+Each version of VMware vSphere supports a range of Kubernetes versions that can be deployed using the TanzuKubernetesCluster (TKC) API. [74]
 
 .. csv-table::
    :header: vSphere, Kubernetes Minimum, Kubernetes Maximum
@@ -448,6 +448,34 @@ Each version of VMware vSphere supports a range of Kubernetes versions. [74]
 
    7.0 Update 2, v1.17.7+vmware.1-tkg.1.154236c, TBD
    7.0 Update 1, v1.16.12+vmware.1-tkg.1.da7afe7, v1.18.15+vmware.1-tkg.2.ebf6117
+
+View all available Kubernetes versions of TKC in TKGS:
+
+.. code-block:: sh
+
+   $ tanzu kubernetes-release get
+
+.. code-block:: sh
+
+   $ kubectl get tanzukubernetesrelease
+
+.. code-block:: sh
+
+   $ kubectl get tkr
+
+View all of the available patch versions of TKC for a specified version of Kubernetes:
+
+.. code-block:: sh
+
+   $ tanzu kubernetes-release get v<KUBERNETES_VERSION_MAJOR>.<KUBERNETES_VERSION_MINOR>
+
+View valid versions of TKC that can be upgraded to from the specified version:
+
+.. code-block:: sh
+
+   $ tanzu kubernetes-release available-upgrades get <TANZU_KUBERNETES_RELEASE_FULL>
+
+[76]
 
 Installation
 ------------
@@ -1785,3 +1813,4 @@ Bibliography
 73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
 75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
+76. "Deploy Tanzu Kubernetes Clusters with Different Kubernetes Versions." VMware Docs. June 9, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-k8s-versions.html
