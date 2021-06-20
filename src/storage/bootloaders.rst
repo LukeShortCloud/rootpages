@@ -267,21 +267,21 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GPT partitions:
 
-   1.  BIOS boot partition.
+   1.  BIOS GRUB boot partition. This extra space provides more room for GRUB to store its boot and partition table data.
 
       -  Size: 1 MiB.
       -  File system: none.
       -  Partition flag: ``bios_grub``.
       -  Mount point: none.
 
-   2.  EFI partition.
+   2.  EFI partition. This stores the UEFI firmware.
 
       -  Size: >= 200 MiB.
       -  File system: FAT32.
       -  Partition flags: ``boot`` and ``esp``.
       -  Mount point: ``/boot/efi/``.
 
-   3.  Linux boot partition for storing the Linux kernel and boot configuration files (optional).
+   3.  Linux boot partition. This stores the Linux kernel and boot configuration files (optional).
 
       -  Size: 1 GiB.
       -  File system: ext4.
@@ -290,7 +290,7 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GRUB requirements:
 
-   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device.
+   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9]
    2.  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    3.  Regenerate the GRUB configuration file.
 
@@ -346,3 +346,4 @@ Bibliography
 6. "Grub2/Installing." Ubuntu Documentation. March 6, 2015. https://help.ubuntu.com/community/Grub2/Installing
 7. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html
 8. "Is a hybrid Linux USB-Stick for UEFI & legacy BIOS possible?" Super User. March 11, 2018. Accessed June 17, 2020. https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible
+9. "GRUB/Tips and tricks." ArchWiki. April 17, 2021. Accessed May 31, 2021. https://wiki.archlinux.org/title/GRUB/Tips_and_tricks
