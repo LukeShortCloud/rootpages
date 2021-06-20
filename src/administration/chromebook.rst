@@ -13,10 +13,22 @@ Update Channels
 
 There are three update channels to choose from for Chrome OS updates. This can be changed by going to: ``Settings`` > ``About Chrome OS`` > ``Additional details`` > ``Channel`` > ``Change channel`` [15].
 
--  Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.
--  Beta = Minor updates every week. Major upgrades every 6 weeks.
--  Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with ``Developer Mode`` which is different.
--  Canary = Updates daily. This is an extremely experimental update channel that can only be enabled on the CLI.
+-  Chrome OS >= 94
+
+   -  Stable (default) = Major upgrades every 4 weeks.
+   -  Extended stable (enterprise only) = Major upgrades every 8 weeks.
+   -  Beta = Major upgrades every 4 weeks. This upgrade rolls out 2 weeks before the next stable release.
+   -  Developer = Updates twice a week. Those updates can be minor or major and usually contain new experimental features. This is not to be confused with ``Developer Mode`` which is different.
+   -  Canary = Updates almost every day. This is an extremely experimental update channel that can only be enabled on the CLI.
+
+-  Chrome OS < 94
+
+   -  Stable (default) = Minor updates every 3 weeks. Major upgrades every 6 weeks.
+   -  Beta = Minor updates every week. Major upgrades every 6 weeks.
+   -  Developer
+   -  Canary
+
+[30]
 
 Check `here <https://chromereleases.googleblog.com/search/label/Chrome%20OS>`__ for information on the latest channel updates for Chrome OS.
 
@@ -857,3 +869,4 @@ Bibliography
 27. "Build chrome os kernel and kernel modules." GitHub dnschneid/crouton. March 22, 2018. Accessed March 15, 2021. https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules
 28. "Custom Kernel Modules for Chromebook." The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/
 29. "Dev-Install: Installing Developer and Test packages onto a Chrome OS device." Chromium OS How Tos and Troubleshooting. Accessed March 16, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images
+30. "Chrome Release Cycle." chromium - Git at Google. Accessed June 20, 2021. https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/process/release_cycle_new.md
