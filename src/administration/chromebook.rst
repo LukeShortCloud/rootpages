@@ -329,13 +329,13 @@ Re-enable updates by deleting the old log file so it will be recreated, make the
    chronos@localhost / $ sudo chmod +x /usr/sbin/update_engine
    chronos@localhost / $ sudo /usr/sbin/update_engine
 
-Custom Linux Kernel and Modules
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Chromium OS Development
+-----------------------
 
-Building
-''''''''
+Development Environment
+~~~~~~~~~~~~~~~~~~~~~~~
 
-It is recommended to build a Linux kernel and/or modules on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility. The kernel and/or modules can be compiled regardless of the CPU architecture required.
+It is recommended to build Chromium OS packages on a separate computer as the official development environment is large and takes a long time to setup. This can take up to 100 GiB of storage space and 3 hours or more to complete but it guarantees compatibility.
 
 Create and use a working directory.
 
@@ -366,13 +366,30 @@ Setup the Chromium OS SDK. Once complete, this will change the prompt as it chan
    $ cros_sdk
    (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $
 
-Find the board name for the Chromebook from `here <https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices>`__. Alternatively, visit ``chrome://version`` on the Chromebook and look for "Platform:". The board name is the last word on that line. Use it to setup the Gentoo packages that mirror what is being used by the latest version of that Chromebook.
+Find the board name for the Chromebook from `here <https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices>`__. Alternatively, visit ``chrome://version`` on the Chromebook and look for "Platform:". The board name is the last word on that line. Use it to setup the Gentoo packages that mirror what is being used by the latest version of that Chromebook. If using a generic Chromium OS image, it is possible to target ``BOARD=amd64-generic``.
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ export BOARD=amd64-generic
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ setup_board --board=<CHROMEBOOK_BOARD_NAME>
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=<CHROMEBOOK_BOARD_NAME>
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ export BOARD=<CHROMEBOOK_BOARD_NAME>
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ setup_board --board=${BOARD}
+   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
+
+Cleanup:
+
+If the development environment is no longer required, clean it up using these commands:
+
+.. code-block:: sh
+
+   $ cros_sdk --delete
+   $ rm -rf chromiumos
+
+Linux Kernel and Modules
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Building
+^^^^^^^^
+
+The kernel and/or modules can be compiled regardless of the CPU architecture required.
 
 On the Chromebook, find the major ``X.Y`` kernel version.
 
@@ -393,7 +410,7 @@ Copy the configuration to the computer that is building the Linux kernel and int
 
    $ cp config chromiumos/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/
 
-In the cros_sdk chroot, change into the directory of the kernel source code.
+In the ``cros_sdk`` chroot, change into the directory of the kernel source code.
 
 .. code-block:: sh
 
@@ -425,16 +442,8 @@ Build the kernel or just the modules.
 
 [28]
 
-Cleanup:
-
-If the development environment is no longer required, clean it up using this command:
-
-.. code-block:: sh
-
-   $ cros_sdk --delete
-
-Installing Kernel Modules
-'''''''''''''''''''''''''
+Installing
+^^^^^^^^^^
 
 Mount the root file system as writable, copy the kernel module, and then load it to ensure it works.
 
