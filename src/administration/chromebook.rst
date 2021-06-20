@@ -455,8 +455,8 @@ If the module fails to load with this error, it is possible that it was compiled
    chronos@localhost / $ sudo modprobe <KERNEL_MODULE>
    modprobe: ERROR: could not insert '<KERNEL_MODULE>': Exec format error
 
-Linux (Beta)
-------------
+Linux
+-----
 
 Crostini
 ~~~~~~~~
@@ -771,6 +771,10 @@ Features
 --------
 
 Chrome OS versions:
+
+-  91
+
+   -  `Linux has been promoted to stable is no longer considered a beta. <https://chromeunboxed.com/linux-leaving-beta-in-next-chrome-os-update-and-thats-a-big-deal/>`__
 
 -  89
 
