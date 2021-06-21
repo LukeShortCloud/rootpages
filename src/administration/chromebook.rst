@@ -351,11 +351,11 @@ Download and load-up the ``repo`` command. This can later be loaded up from the 
    $ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
    $ export PATH="$(pwd)/depot_tools/:$PATH"
 
-Use the ``repo`` command to download all of the > 200 git repositories for Chromium OS. Use the argument ``-j 8`` for the initial repo sync to download 8 repositories at a time. After the first time, it can be ran with ``-j 16``. [31]
+Use the ``repo`` command to download all of the > 200 git repositories for Chromium OS. Use the argument ``-j 8`` for the initial repo sync to download 8 repositories at a time. After the first time, it can be ran with ``-j 16``. By default, the ``main`` branch is pulled down. Another branch can be specified if targetting a specific release. [31]
 
 .. code-block:: sh
 
-   $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git
+   $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git -b main
    $ repo sync -j 8
 
 Setup the Chromium OS SDK. Once complete, this will change the prompt as it changes into a chroot of Gentoo. In the future, use this command to re-enter the chroot.
@@ -382,6 +382,37 @@ If the development environment is no longer required, clean it up using these co
 
    $ cros_sdk --delete
    $ rm -rf chromiumos
+
+Finding the Release Branch Name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, ``repo init`` will set git repositories to pull from the ``main`` branch. This may not be desired if the goal is to build a specific version of Chromium OS packages.
+
+On the Chromebook, take note of the major "Google Chrome:" version and the major "Platform:" version in ``chrome://version``.
+
+::
+
+   Google Chrome: 91.0.4472.102 (Official Build) (64-bit)
+   Platform: 13904.55.0 (Official Build) stable-channel samus
+
+Do a search for the branch that relates to the versions.
+
+.. code-block:: sh
+
+   $ cros_sdk
+   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ git branch -a | grep release-R91
+     remotes/cros/release-R91-13904.B
+
+Resync the repositories to use the specified branch.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ exit
+   $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git -b release-R91-13904.B
+   $ repo sync -j 16
+   $ cros_sdk
+
+[31]
 
 Linux Kernel and Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~
