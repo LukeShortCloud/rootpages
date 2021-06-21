@@ -422,6 +422,70 @@ Resync the repositories to use the specified branch.
 
 [31]
 
+Installation and Recovery Image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Set the environment variable for the board that will be used.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ export BOARD=<BOARD_NAME>
+
+Optionally configure additional ``USE`` flags for by Portage/emerge while building packages. Flags that are specific to Chromium/Chrome OS but disabled by default are listed in the ``_IUSE`` array in the `platform2.py <https://chromium.googlesource.com/chromiumos/platform2/+/HEAD/common-mk/platform2.py#32>`__ file. [32]
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ vim ../overlays/overlay-${BOARD}/profiles/base/make.defaults
+   USE="${USE} <USE_FLAG_1> <USE_FLAG_2>"
+
+Install base system packages into a new chroot created at ``/boot/${BOARD}``. Everytime this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Optionally add the ``--force`` argument to delete and recreate the chroot for the board.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ setup_board --board=${BOARD}
+
+Configure the password for the ``chronos`` user.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./set_share_user_password.sh
+   Enter password for shared user account: Password set in /etc/shared_user_passwd.txt
+
+Install all the packages. Similar to the ``setup_board`` command, everytime this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Specify the ``--nowithdebug`` argument to not compile packages with debug mode enabled. The configuration for Portage/emerge that is used is saved to the file ``../../chroot/build/${BOARD}/packages/Packages``.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_packages --nowithdebug --board=${BOARD}
+
+Build an image using one or more of the specified image types below. Specify the ``--noenable_rootfs_verification`` argument to make the root file system writable by default.
+
+-  base = A production image.
+-  dev (default) = Install developer packages.
+-  test = Install developer and testing packages.
+-  factory_install = Installs factory tests used for the manufacturing of Chromebooks.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_image --board=${BOARD} --noenable_rootfs_verification <IMAGE_TYPE>
+
+The resulting image will be saved to ``~/trunk/src/build/images/${BOARD}/latest/chromiumos_image.bin`` and will be almost 8 GiB in size. Either (1) convert the raw image into a virtual machine image, (2) copy the image to a flash drive, or (3) use SSH to copy over and flash the image directly onto a Chromebook.
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./image_to_vm.sh --from=../build/images/${BOARD}/latest --board=${BOARD}
+
+[31]
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cros flash usb:///dev/<DEVICE> ${BOARD}/latest
+
+.. code-block:: sh
+
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cros flash ssh://<CHROMEBOOK_IP>:22 ${BOARD}/latest
+
+[33]
+
 Linux Kernel and Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -923,3 +987,5 @@ Bibliography
 29. "Dev-Install: Installing Developer and Test packages onto a Chrome OS device." Chromium OS How Tos and Troubleshooting. Accessed March 16, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images
 30. "Chrome Release Cycle." chromium - Git at Google. Accessed June 20, 2021. https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/process/release_cycle_new.md
 31. "Chromium OS Developer Guide." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md
+32. "Chromium OS Board Porting Guide." Chromium OS How Tos and Troubleshooting. Accessed June 20, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/chromiumos-board-porting-guide
+33. "Cros Flash." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/cros_flash.md
