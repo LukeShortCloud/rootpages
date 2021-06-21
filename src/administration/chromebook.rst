@@ -374,7 +374,15 @@ Find the board name for the Chromebook from `here <https://www.chromium.org/chro
    (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ setup_board --board=${BOARD}
    (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
 
-Cleanup:
+**Update:**
+
+Update all of the git repositories by running the ``repo sync`` command again.
+
+.. code-block:: sh
+
+   $ repo sync -j 16
+
+**Clean Up:**
 
 If the development environment is no longer required, clean it up using these commands:
 
