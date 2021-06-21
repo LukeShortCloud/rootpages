@@ -351,12 +351,12 @@ Download and load-up the ``repo`` command. This can later be loaded up from the 
    $ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
    $ export PATH="$(pwd)/depot_tools/:$PATH"
 
-Use the ``repo`` command to download all of the > 200 git repositories for Chromium OS.
+Use the ``repo`` command to download all of the > 200 git repositories for Chromium OS. Use the argument ``-j 8`` for the initial repo sync to download 8 repositories at a time. After the first time, it can be ran with ``-j 16``. [31]
 
 .. code-block:: sh
 
    $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git
-   $ repo sync
+   $ repo sync -j 8
 
 Setup the Chromium OS SDK. Once complete, this will change the prompt as it changes into a chroot of Gentoo. In the future, use this command to re-enter the chroot.
 
@@ -883,3 +883,4 @@ Bibliography
 28. "Custom Kernel Modules for Chromebook." The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/
 29. "Dev-Install: Installing Developer and Test packages onto a Chrome OS device." Chromium OS How Tos and Troubleshooting. Accessed March 16, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/install-software-on-base-images
 30. "Chrome Release Cycle." chromium - Git at Google. Accessed June 20, 2021. https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/process/release_cycle_new.md
+31. "Chromium OS Developer Guide." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md
