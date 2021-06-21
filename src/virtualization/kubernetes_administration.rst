@@ -38,7 +38,7 @@ Networking
 Pod Networking
 ''''''''''''''
 
-Kubernetes requires a Container Network Interface (CNI) plugin to create an overlay network for inter-communication between Pods across all of the Control Plane and Worker Nodes. The default Pod network CIDR (as configured by ``kubeadm --pod-network-cidr``) is normally assumed to be 10.244.0.0/16.
+Kubernetes requires a Container Network Interface (CNI) plugin to create an overlay network for inter-communication between Pods across all of the Control Plane and Worker Nodes. The default Pod network CIDR (as configured by ``kubeadm init --pod-network-cidr``) is normally assumed to be 10.244.0.0/16. The default Service network CIDR (as configured by ``kubeadm init --service-cidr``) is 10.96.0.0/12. [77]
 
 Ports
 '''''
@@ -1814,3 +1814,4 @@ Bibliography
 74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
 75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
 76. "Deploy Tanzu Kubernetes Clusters with Different Kubernetes Versions." VMware Docs. June 9, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-k8s-versions.html
+77. "kubeadm init." Kubernetes Documentation. February 17, 2021. Accessed June 14, 2021. https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
