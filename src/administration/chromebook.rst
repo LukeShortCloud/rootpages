@@ -448,7 +448,7 @@ Configure the password for the ``chronos`` user.
 
 .. code-block:: sh
 
-   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./set_share_user_password.sh
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./set_shared_user_password.sh
    Enter password for shared user account: Password set in /etc/shared_user_passwd.txt
 
 Install all the packages. Similar to the ``setup_board`` command, everytime this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Specify the ``--nowithdebug`` argument to not compile packages with debug mode enabled. The configuration for Portage/emerge that is used is saved to the file ``../../chroot/build/${BOARD}/packages/Packages``.
