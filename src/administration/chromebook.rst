@@ -486,6 +486,116 @@ The resulting image will be saved to ``~/trunk/src/build/images/${BOARD}/latest/
 
 [33]
 
+Build Flags
+^^^^^^^^^^^
+
+USE and IUSE flags are used by the Gentoo and, by extension, Chromium OS package manager Portage/emerge. These are respectively used to enable and disable features. Those, along with other flags, can be used to customize the Chromium OS build. Every build overlay has at least a base profile configuration located at ``/mnt/host/source/src/overlays/overlay-${BOARD}/profiles/base/make.defaults``. These contain the default options. Either modify the flags there or create a new profile.
+
+If any of the flags are changed, it is required to run ``setup_board --force`` or completely delete the build directory at ``/build/${BOARD}``.
+
+Here are a list of common features that can be enabled for a Chromium OS build:
+
+-  Linux
+
+   -  Enable a LTS Linux kernel >= 5.4 (for example, 5.10). This mirrors the logic of ``~/trunk/src/third_party/chromiumos-overlay/profiles/features/kernel/deselect-all-kernels/make.defaults`` by explicitly disabling all other kernels.
+
+      ::
+
+         USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-4_19 -kernel-5_4 -kernel-5_10 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next"
+         USE="${USE} kernel-5_10 direncription_allow_v2"
+
+   -  Enable a LTS Linux kernel < 5.4 (for example, 4.19).
+
+      ::
+
+         USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-5_4 -kernel-5_10 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next -direncription_allow_v2"
+         USE="${USE} kernel-4_19"
+
+-  Graphics
+
+   -  Enable all graphics drivers.
+
+      ::
+
+         VIDEO_CARDS="intel llvmpipe nouveau radeon"
+
+   -  Enable AMD graphics drivers:
+
+      ::
+
+         VIDEO_CARDS="-* radeon amdgpu"
+         USE="${USE} llvm"
+
+   -  Enable Intel graphics driver:
+
+      ::
+
+         VIDEO_CARDS="intel"
+
+   -  Enable the open source NVIDIA graphics driver. This is not supported on Chrome OS, provides bad performance, and do not support the latest NVIDIA cards.
+
+      ::
+
+         VIDEO_CARDS="nouveau"
+
+   -  Enable CPU-only graphics (for automated testing):
+
+      ::
+
+         VIDEO_CARDS="llvmpipe"
+
+-  Hardware
+
+   -  Enable all Intel wireless firmware.
+
+      ::
+
+         LINUX_FIRMWARE="iwlwifi-all"
+
+   -  Enable NVMe storage support:
+
+      ::
+
+         USE="${USE} nvme"
+
+   -  Enable touchscreen devices:
+
+      ::
+
+         USE="${USE} touchview"
+
+   -  Enable USB type-C support:
+
+      ::
+
+         USE="${USE} typecd"
+
+-  Virtualization
+
+   -  Enable crosvm support with OpenGL acceleration:
+
+      ::
+
+         USE="${USE} kvm_host crosvm-gpu virtio_gpu"
+
+   -  Enable Borealis (Steam).
+
+      ::
+
+         USE="${USE} has-borealis vm_borealis <BOARD>-borealis"
+
+   -  Enable crosvm Vulkan pass-through support (not currently working).
+
+      ::
+
+         USE="${USE} crosvm_virtio_video crosvm_wl_dmabuf vulkan"
+
+-  Enable all optional features.
+
+   ::
+
+      USE="${USE} buffet"
+
 Linux Kernel and Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
