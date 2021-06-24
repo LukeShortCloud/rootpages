@@ -577,6 +577,12 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
          USE="${USE} typecd"
 
+   -  Enable audio support:
+
+      ::
+
+         USE="${USE} alsa cras"
+
    -  Enable printer and scanner support:
 
       ::
