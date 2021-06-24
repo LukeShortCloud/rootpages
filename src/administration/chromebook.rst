@@ -577,6 +577,12 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
          USE="${USE} typecd"
 
+   -  Enable printer and scanner support:
+
+      ::
+
+         USE="${USE} cups scanner"
+
 -  Virtualization
 
    -  Enable crosvm support with OpenGL acceleration:
