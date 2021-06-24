@@ -603,6 +603,12 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
          USE="${USE} crosvm_virtio_video crosvm_wl_dmabuf vulkan"
 
+-  Enable CIFS (Windows network file share) support:
+
+   ::
+
+      USE="${USE} drivefs samba smbprovider"
+
 -  Enable all optional features.
 
    ::
