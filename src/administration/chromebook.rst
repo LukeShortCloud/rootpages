@@ -497,18 +497,25 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
 -  Linux
 
-   -  Enable a LTS Linux kernel >= 5.4 (for example, 5.10). This mirrors the logic of ``~/trunk/src/third_party/chromiumos-overlay/profiles/features/kernel/deselect-all-kernels/make.defaults`` by explicitly disabling all other kernels.
+   -  Enable the latest stable Linux kernel with Chrome OS patches applied. This mirrors the logic of ``~/trunk/src/third_party/chromiumos-overlay/profiles/features/kernel/deselect-all-kernels/make.defaults`` by explicitly disabling all other kernels.
 
       ::
 
          USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-4_19 -kernel-5_4 -kernel-5_10 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next"
+         USE="${USE} kernel-upstream direncription_allow_v2"
+
+   -  Enable a LTS Linux kernel >= 5.4 (for example, 5.10).
+
+      ::
+
+         USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-4_19 -kernel-5_4 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next -kernel-upstream"
          USE="${USE} kernel-5_10 direncription_allow_v2"
 
    -  Enable a LTS Linux kernel < 5.4 (for example, 4.19).
 
       ::
 
-         USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-5_4 -kernel-5_10 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next -direncription_allow_v2"
+         USE="-kernel-3_18 -kernel-4_4 -kernel-4_14 -kernel-5_4 -kernel-5_10 -kernel-experimental -kernel-next -kernel-upstream-mainline -kernel-upstream-next -kernel-upstream -direncription_allow_v2"
          USE="${USE} kernel-4_19"
 
 -  Graphics
