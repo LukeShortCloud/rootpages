@@ -520,7 +520,13 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
 -  Graphics
 
-   -  Enable all graphics drivers.
+   -  Enable the base graphics libraries:
+
+      ::
+
+         USE="${USE} egl fonts opengl opengles X"
+
+   -  Enable all graphics drivers:
 
       ::
 
