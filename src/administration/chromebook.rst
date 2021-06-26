@@ -627,8 +627,46 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
       USE="${USE} buffet"
 
-Linux Kernel and Modules
-~~~~~~~~~~~~~~~~~~~~~~~~
+Custom Linux Kernel
+^^^^^^^^^^^^^^^^^^^
+
+It is not recommended to use an unmodified upstream Linux kernel. Chromium OS provides lots of customized patches on-top of LTS Linux kernels. However, it is still possible to build any vanilla or custom kernel.
+
+-  For a vanilla kernel, find a git tag for a related Linux kernel version from `here <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/refs/>`__. Use that to clone the git repository.
+
+   .. code-block:: sh
+
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cd ~/trunk/src/third_party/kernel/
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git --depth=1 -b <LINUX_KERNEL_GIT_TAG> experimental
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel $ cd -
+
+-  Configure the board to build experimental kernel.
+
+   ::
+
+      USE="${USE} kernel-experimental"
+
+-  Setup a new board build as normal. After that, use the special ``cros-workon`` command to specify that the ``chromeos-kernel-experimental`` package should be built from the locally downloaded kernel in ``~/trunk/src/third_party/kernel/experimental/``.
+
+   -  Otherwise, by default, the ``build_packages`` script will use a known-good commit which is commonly used by the Chromium OS LTS Linux kernels. That does not exist for the ``chromeos-kernel-experimental`` package as Chromium OS has no idea about the custom Linux kernel.
+
+   .. code-block:: sh
+
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ export BOARD=<BOARD>
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ setup_board --board ${BOARD}
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cros-workon --board ${BOARD} start chromeos-kernel-experimental
+
+-  The custom Linux kernel is now setup to be built. Continue on with the build as normal.
+
+   .. code-block:: sh
+
+      (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_image --board=${BOARD} --noenable_rootfs_verification <IMAGE_TYPE>
+
+[34]
+
+Linux Kernel Modules
+~~~~~~~~~~~~~~~~~~~~
 
 Building
 ^^^^^^^^
@@ -1130,3 +1168,4 @@ Bibliography
 31. "Chromium OS Developer Guide." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md
 32. "Chromium OS Board Porting Guide." Chromium OS How Tos and Troubleshooting. Accessed June 20, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/chromiumos-board-porting-guide
 33. "Cros Flash." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/cros_flash.md
+34. "Kernel Development." Chromium OS Docs. Accessed June 25, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/kernel_development.md
