@@ -486,6 +486,18 @@ The resulting image will be saved to ``~/trunk/src/build/images/${BOARD}/latest/
 
 [33]
 
+For new and future builds where a major package will be changed (such as the Linux kernel) or where many packages will change, the build chroot should be deleted. This will cause the build to start from scratch and avoid package conflicts.
+
+.. code-block:: sh
+
+   $ sudo rm -rf /build/${BOARD}
+
+Built images will take up a lot of space and may optionally be deleted.
+
+.. code-block:: sh
+
+   $ rm -rf /mnt/host/source/src/build/images/${BOARD}
+
 Build Flags
 ^^^^^^^^^^^
 
