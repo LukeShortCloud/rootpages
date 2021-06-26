@@ -860,7 +860,6 @@ Steam requires a handful of dependencies. Enable the proprietary repository to i
 
 ::
 
-   user@penguin~$ sudo usermod -a -G video,audio $USER
    user@penguin~$ sudo nano /etc/apt/sources.list.d/non-free.list
    deb http://deb.debian.org/debian buster main contrib non-free
    deb http://security.debian.org/ buster/updates main contrib non-free
