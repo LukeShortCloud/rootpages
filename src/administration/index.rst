@@ -3,7 +3,6 @@
    :caption: Administration
 
    authentication
-   chromebook
    graphics
    linux
    macs

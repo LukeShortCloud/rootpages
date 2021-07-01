@@ -32,6 +32,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Linux Distributions
+
+   linux_distributions/index
+
+.. toctree::
+   :maxdepth: 1
    :caption: Networking
 
    networking/index

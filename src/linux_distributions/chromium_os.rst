@@ -1,5 +1,5 @@
-Chromebook
-==========
+Chromium OS
+===========
 
 .. contents:: Table of Contents
 
@@ -1141,7 +1141,8 @@ Upcoming Features
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/chromebook.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/master/src/linux_distributions/chromium_os.rst>`__
+-  `< 2021.07.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/chromebook.rst>`__
 
 Bibliography
 ------------
