@@ -153,8 +153,8 @@ Common options:
     -   GRUB\_DEFAULT = The default menu entry to autoboot into.
 
         -  saved = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.
-        -  Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at 0.
-        -  Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7 (Core)."
+        -  Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at "0".
+        -  Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7 (Core)".
 
 .. code-block:: sh
 
@@ -177,6 +177,27 @@ Common options:
    menu background.
 
 [5]
+
+Examples
+^^^^^^^^
+
+These are examples configurations for ``/etc/default/grub``. Use ``grub-mkconfig -o /boot/grub/grub.cfg`` to load up the new configurations.
+
+-  Do not show the GRUB menu on boot:
+
+   ::
+
+      GRUB_TIMEOUT=0
+      GRUB_TIMEOUT_STYLE=hidden
+
+-  Show the GRUB menu on boot:
+
+   ::
+
+      GRUB_TIMEOUT=5
+      GRUB_TIMEOUT_STYLE=menu
+
+[10]
 
 Recovery
 ~~~~~~~~
@@ -347,3 +368,4 @@ Bibliography
 7. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html
 8. "Is a hybrid Linux USB-Stick for UEFI & legacy BIOS possible?" Super User. March 11, 2018. Accessed June 17, 2020. https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible
 9. "GRUB/Tips and tricks." ArchWiki. April 17, 2021. Accessed May 31, 2021. https://wiki.archlinux.org/title/GRUB/Tips_and_tricks
+10. "Simple configuration handling." GNU GRUB Manual 2.06. Accessed July 5, 2021. https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
