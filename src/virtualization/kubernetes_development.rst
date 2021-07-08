@@ -1150,7 +1150,7 @@ There is no ``spec`` section for ServiceAccounts.
 
 ServiceAccount example. A random Secret token will automatically be generated.
 
-.. code-block:: sh
+.. code-block:: yaml
 
    ---
    kind: ServiceAccount
@@ -1161,7 +1161,7 @@ ServiceAccount example. A random Secret token will automatically be generated.
 
 ServiceAccount using an existing Secret token.
 
-.. code-block:: sh
+.. code-block:: yaml
 
    ---
    kind: ServiceAccount
@@ -1170,6 +1170,17 @@ ServiceAccount using an existing Secret token.
      name: sa-example
    secrets:
      - name: secret-foo-bar
+
+ServiceAccount that will not mount the authentication token into containers.
+
+.. code-block:: yaml
+
+   ---
+   kind: ServiceAccount
+   apiVersion: v1
+   metadata:
+     name: sa-foobar
+   automountServiceAccountToken: false
 
 [5]
 
@@ -3182,6 +3193,39 @@ There are known issues with using probes with the method ``httpGet``. As a worka
                - "--fail"
                - "http://localhost:8080/healthcheck"
 
+Security Best Practices
+~~~~~~~~~~~~~~~~~~~~~~~
+
+ServiceAccounts
+^^^^^^^^^^^^^^^
+
+The "default" ServiceAccount authentication token is mounted into every Pod by default. It is used to access the Kubernetes API which is not required in most cases. [43] It can only ``get`` a few things such as the list of APIs (``/apis``), the Kubernetes version (``/version``), and check the health state of the Kubernetes cluster (``/livez`` and ``/readyz``). The ``/healthz`` endpoint has been deprecated since Kubernetes 1.16. [44]
+
+The ServiceAccount can be modified to not automount the authentication token:
+
+.. code-block:: yaml
+
+   ---
+   kind: ServiceAccount
+   apiVersion: v1
+   metadata:
+     name: <SERVICEACCOUNT_NAME>
+   automountServiceAccountToken: false
+
+Alternatively, the automount of the authentication token can be disabled on a per-Pod basis:
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: <POD_NAME>
+   spec:
+     automountServiceAccountToken: false
+
+[43]
+
 Installation
 ------------
 
@@ -3278,3 +3322,5 @@ Bibliography
 40. "Making Sense of Taints and Tolerations in Kubernetes." Supergiant.io - Medium. March 5, 2019. Accessed April 1, 2021. https://medium.com/kubernetes-tutorials/making-sense-of-taints-and-tolerations-in-kubernetes-446e75010f4e
 41. "Sometime Liveness/Readiness Probes fail because of net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers) #89898." GitHub kubernetes/kubernetes. April 8, 2021. Accessed April 8, 2021. https://github.com/kubernetes/kubernetes/issues/89898
 42. "Pull an Image from a Private Registry." Kubernetes Documentation. February 11, 2021. Accessed April 14, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+43. "Configure Service Accounts for Pods." Kubernetes Documentation. July 6, 2021. Accessed July 7, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+44. "Kubernetes API health endpoints." Kubernetes Documentation. November 17, 2020. Accessed July 7, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
