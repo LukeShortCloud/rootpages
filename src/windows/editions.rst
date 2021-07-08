@@ -9,12 +9,12 @@ NT 10 (Windows 10)
 Feature comparison:
 
 .. csv-table::
-   :header: Edition, Windows Defender, Encryption, Domain Join, Group Policy Management, Remote Desktop, Hyper-V, ReFS, LTSC Updates
-   :widths: 20, 20, 20, 20, 20, 20, 20, 20, 20
+   :header: Edition, Windows Defender, Encryption, Domain Join, Group Policy Management, Remote Desktop, Hyper-V, NFS Client, ReFS, LTSC Updates
+   :widths: 20, 20, 20, 20, 20, 20, 20, 20, 20, 20
 
-   Home, Yes, Yes, No, No, No, No, No, No
-   Pro, Yes, Yes, Yes, Yes, Yes, Yes, No, No
-   Enterprise/Education, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes
+   Home, Yes, Yes, No, No, No, No, No, No, No
+   Pro, Yes, Yes, Yes, Yes, Yes, Yes, Yes, No, No
+   Enterprise/Education, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes
 
 [1][2]
 
