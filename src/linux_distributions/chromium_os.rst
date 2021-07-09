@@ -391,25 +391,58 @@ If the development environment is no longer required, clean it up using these co
    $ cros_sdk --delete
    $ rm -rf chromiumos
 
-Finding the Release Branch Name
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Finding the Stable Branch or Tag
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, ``repo init`` will set git repositories to pull from the ``main`` branch. This may not be desired if the goal is to build a specific version of Chromium OS packages.
+By default, ``repo init`` will set git repositories to pull from the latest ``main`` branch. This may not be desired if the goal is to build a specific version of Chromium OS packages. Tags are not provided for non-stable releases.
 
-On the Chromebook, take note of the major "Google Chrome:" version and the major "Platform:" version in ``chrome://version``.
+Update channels:
+
+-  Stable = Uses the ``release-R<CHROME_MAJOR>-<PLATFORM_MAJOR>.B`` branch.
+
+   -  Each stable release has a released tag of ``stabilize-<PLATFORM_MAJOR>.<PLATFORM_MINOR>.B``.
+
+-  Beta = Uses the ``release-R<CHROME_MAJOR>-<PLATFORM_MAJOR>.B`` branch.
+-  Dev = Follows the ``main`` branch slowly (once a week).
+-  Canary = Follows the ``main`` branch quickly (every six hours). [36]
+
+On the Chromebook, take note of the major "Google Chrome:" version and the major "Platform:" version in ``chrome://version``. [36]
+
+::
+
+   Google Chrome: <CHROME_MAJOR>.<CHROME_MINOR>.<CHROME_BUILD>.<CHROME_PATCH> (Official Build) (64-bit)
+   Platform: <PLATFORM_MAJOR>.<PLATFORM_MINOR>.<PLATFORM_PATCH> (Official Build) <UPDATE_CHANNEL>-channel <BOARD>
 
 ::
 
    Google Chrome: 91.0.4472.102 (Official Build) (64-bit)
    Platform: 13904.55.0 (Official Build) stable-channel samus
 
-Do a search for the branch that relates to the versions.
+With these two pieces of information, the exact release branch and tag can be pieced together.
+
+-  Branch = Use this to track the latest updates to the stable release.
+
+   -  Syntax: ``release-R<CHROME_MAJOR>-<PLATFORM_MAJOR>.B``
+   -  Example: ``release-R91-13904.B``
+
+-  Tag = Use this to pin the version to a specified stable release.
+
+   -  Syntax: ``stabilize-<PLATFORM_MAJOR>.<PLATFORM_MINOR>.B``
+   -  Example: ``stabilize-13904.55.B``
+
+Do a search to ensure that the relevant branch or tag exists.
 
 .. code-block:: sh
 
    $ cros_sdk
    (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ git branch -a | grep release-R91
      remotes/cros/release-R91-13904.B
+
+.. code-block:: sh
+
+   $ cros_sdk
+   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ git tag | grep stabilize-13904.55.B
+     remotes/cros/stabilize-13904.55.B
 
 Resync the repositories to use the specified branch.
 
@@ -1209,3 +1242,4 @@ Bibliography
 33. "Cros Flash." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/cros_flash.md
 34. "Kernel Development." Chromium OS Docs. Accessed June 25, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/kernel_development.md
 35. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 8, 2021. https://github.com/sebanc/brunch
+36. "Version Numbers." The Chromium Projects. Accessed July 8, 2021. https://www.chromium.org/developers/version-numbers
