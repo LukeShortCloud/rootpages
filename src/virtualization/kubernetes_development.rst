@@ -458,6 +458,22 @@ NetworkPolicy
 
 **Examples**:
 
+Deny all incoming and outgoing traffic for all Pods in a namespace.
+
+.. code-block:: yaml
+
+   ---
+   kind: NetworkPolicy
+   apiVersion: networking.k8s.io/v1
+   metadata:
+     name: netpol-deny-in
+     namespace: foobar
+   spec:
+     podSelector: {}
+     policyTypes:
+       - Egress
+       - Ingress
+
 Deny all incoming traffic to all Pods in a namespace.
 
 .. code-block:: yaml
@@ -490,7 +506,7 @@ Allow all incoming traffic to all Pods in a namespace.
      ingress:
        - {}
 
-Only allow outgoing traffic to access port 443.
+Only allow outgoing traffic from Pods with a specified label to access port 443.
 
 .. code-block:: yaml
 
@@ -510,7 +526,7 @@ Only allow outgoing traffic to access port 443.
          - protocol: TCP
            port: 443
 
-Only allow incoming traffic to access port 53 via TCP and UDP.
+Only allow incoming traffic to Pods with a specified label to access port 53 via TCP and UDP.
 
 .. code-block:: yaml
 
@@ -532,7 +548,7 @@ Only allow incoming traffic to access port 53 via TCP and UDP.
          - protocol: UDP
            port: 53
 
-Only allow incoming traffic from a specified CIDR range.
+Only allow incoming traffic to a specified CIDR range for Pods with a specified label.
 
 .. code-block:: yaml
 
@@ -550,7 +566,7 @@ Only allow incoming traffic from a specified CIDR range.
          - ipBlock:
              cidr: 10.0.0.0/24
 
-Only allow incoming traffic from a specific namespace.
+Only allow incoming traffic from to Pods with a specified label from a specific namespace.
 
 .. code-block:: yaml
 
