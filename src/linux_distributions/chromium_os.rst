@@ -498,6 +498,33 @@ Built images will take up a lot of space and may optionally be deleted.
 
    $ rm -rf /mnt/host/source/src/build/images/${BOARD}
 
+Board Overlays
+^^^^^^^^^^^^^^
+
+A Chromium OS build requires an "overlay" to be specified. It is set as the ``${BOARD}`` variable. This overlay provides additional device-specific configurations on-top of a minimal "baseboard" (motherboard) configuration. The baseboard is referred to as the "parent" of the overlay. Only a single overlay can be used (an overlay cannot be nested under a second/different overlay). A list of all baseboards and overlays can be found `here <https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/refs/heads/main>`__.
+
+Select an existing overlay to use. Here are recommended boards based on the processor that the build is targeting:
+
+-  AMD or Intel
+
+   -  amd64-generic = A 64-bit overlay with a set of generic defaults that have a wide range of hardware support.
+
+-  AMD [35]
+
+   -  grunt = AMD Stoney Ridge and Bristol Ridge.
+   -  zork = AMD Ryzen.
+
+-  Intel [35]
+
+   -  samus = Intel 1st to 3rd generation.
+   -  rammus = Intel 4th to 9th generation.
+   -  volteer = Intel >= 10th generation.
+
+-  Arm
+
+   -  arm-generic = Arm 32-bit.
+   -  arm64-generic = Arm 64-bit.
+
 Build Flags
 ^^^^^^^^^^^
 
@@ -1181,3 +1208,4 @@ Bibliography
 32. "Chromium OS Board Porting Guide." Chromium OS How Tos and Troubleshooting. Accessed June 20, 2021. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/chromiumos-board-porting-guide
 33. "Cros Flash." Chromium OS Docs. Accessed June 20, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/cros_flash.md
 34. "Kernel Development." Chromium OS Docs. Accessed June 25, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/kernel_development.md
+35. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 8, 2021. https://github.com/sebanc/brunch
