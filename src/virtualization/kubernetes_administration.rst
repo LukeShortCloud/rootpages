@@ -69,7 +69,7 @@ Worker Nodes:
    10250/TCP, kubelet.
    30000-32767/TCP+UDP, Default NodePort ports when a port is not specified.
 
-CNI Ports (All Nodes):
+CNI Ports (All Nodes) [78]:
 
 .. csv-table::
    :header: Port, Description
@@ -78,9 +78,13 @@ CNI Ports (All Nodes):
    179/TCP, Calico BGP.
    8472/UDP, Flannel VXLAN overlay network (Linux).
    4789/UDP, Flannel VXLAN overlay network (Windows).
+   4789/UDP, Antrea VXLAN overlay network.
+   6081/UDP, Antrea Geneve overlay network.
+   7471/TCP, Antrea STT overlay network.
    9099/TCP, Flannel probes.
    6783/TCP, Weave.
    6783-6784/UDP, Weave.
+   10349-10250/TCP, Antrea.
 
 [47]
 
@@ -1815,3 +1819,4 @@ Bibliography
 75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
 76. "Deploy Tanzu Kubernetes Clusters with Different Kubernetes Versions." VMware Docs. June 9, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-k8s-versions.html
 77. "kubeadm init." Kubernetes Documentation. February 17, 2021. Accessed June 14, 2021. https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
+78. "Network Requirements." GitHub antrea-io/antrea. May 7, 2021. Accessed July 12, 2021. https://github.com/antrea-io/antrea/blob/main/docs/network-requirements.md
