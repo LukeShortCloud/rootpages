@@ -409,7 +409,7 @@ Some instructions in the Dockerfile have special uses in regards to OpenShift.
 
 **Storage Space**
 
-Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Dockerfile operation creates a writable/container layer ontop of the previous layer. Each layer takes up more space.
+Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Dockerfile operation creates a writable/container layer ontop of the previous layer. Each layer created with ``ADD``, ``COPY``, and ``RUN`` takes up more space.
 
 Lower space usage by [10]:
 
