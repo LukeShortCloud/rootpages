@@ -389,7 +389,7 @@ docker containers are built by using a template called ``Dockerfile``. This file
 
 -  ONBUILD <INSTRUCTION> <ARGS> = Define instructions to only execute during the build process. This is specific to docker and by default does not apply to images being built with OCI tools such as Buildah.
 -  RUN = A command that can be ran once in the container. Use the ``CMD <COMMAND> <ARG1> <ARG2>`` format to open a shell or ``CMD ['<COMMAND>', '<ARG1>', '<ARG2>']`` to execute without a shell.
--  USER <UID>:<GID> = Configure a UID and/or GID to run the container as.
+-  USER <UID>:<GID> = Configure a UID and/or GID to run the container as. After this instruction is defined, all ``CMD``, ``ENTRYPOINT``, and ``RUN`` commands use this specified user.
 -  VOLUME <PATH> = A list of paths inside the container that can mount to an external persistent storagedevice (for example, for storing a database).
 -  WORKDIR = The working directory where commands will be executed from.
 
