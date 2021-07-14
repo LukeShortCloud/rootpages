@@ -2470,7 +2470,7 @@ ClusterIssuer that uses Let's Encrypt (ACME) to create free signed certificates.
        solvers:
        - http01:
            ingress:
-             class:  <INGRESS_CLASS>
+             class: <INGRESS_CLASS>
    ---
    kind: ClusterIssuer
    apiVersion: cert-manager.io/v1
@@ -2481,11 +2481,11 @@ ClusterIssuer that uses Let's Encrypt (ACME) to create free signed certificates.
        server: https://acme-v02.api.letsencrypt.org/directory
        email: <EMAIL_ADDRESS>
        privateKeySecretRef:
-         name: letsencrypt-staging
+         name: letsencrypt-production
        solvers:
        - http01:
            ingress:
-             class:  <INGRESS_CLASS>
+             class: <INGRESS_CLASS>
 
 Use the Let's Encrypt ClusterIssuer in an Ingress object to automatically create a certificate and save it to a new Secret object. [36]
 
@@ -2497,7 +2497,7 @@ Use the Let's Encrypt ClusterIssuer in an Ingress object to automatically create
    metadata:
      name: ing-with-letsencrypt
      annotations:
-       cert-manager.io/clusterissuer: "clusterissuer-letsencrypt-staging"
+       cert-manager.io/cluster-issuer: "clusterissuer-letsencrypt-staging"
    spec:
      tls:
      - hosts:
