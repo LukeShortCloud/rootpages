@@ -349,6 +349,33 @@ Most modern Linux installers will default to installing GRUB with UEFI support. 
 
 [8]
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error after selecting a boot entry in the GRUB menu:
+
+::
+
+   ERROR: device 'UUID=9d4e74d8-8046-4f12-9ac9-624b8f306343' not found. Skipping fsck.
+   mount: /new_root: can't find UUID=9d4e74d8-8046-4f12-9ac9-624b8f306343.
+   You are now being dropped into an emergency shell.
+
+Solutions:
+
+1.  Boot from the fallback initramfs instead. This uses a full kernel and extra dependencies compared to the minimal default initramfs.
+2.  Ensure that the initramfs has all of the Linux kernel modules that are required for storage devices. Normally this is a missing hardware RAID driver.
+3.  Ensure that the UUID for the root device is correct. If not, update ``/etc/fstab`` and then rebuild the ``grub.cfg`` configuration.
+4.  On Arch Linux, ensure both the "block" and "keyboard" hooks are loaded before the "autodetect" hook in the initramfs. [11]
+
+   ::
+
+      $ sudo vim /etc/mkinitcpio.conf
+      HOOKS=(base udev keyboard block autodetect modconf resume filesystems fsck)
+      $ sudo mkinitpcio -p linux
+
 History
 -------
 
@@ -369,3 +396,4 @@ Bibliography
 8. "Is a hybrid Linux USB-Stick for UEFI & legacy BIOS possible?" Super User. March 11, 2018. Accessed June 17, 2020. https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible
 9. "GRUB/Tips and tricks." ArchWiki. April 17, 2021. Accessed May 31, 2021. https://wiki.archlinux.org/title/GRUB/Tips_and_tricks
 10. "Simple configuration handling." GNU GRUB Manual 2.06. Accessed July 5, 2021. https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
+11. "Install Arch Linux on a removable medium." ArchWiki. July 12, 2021. Accessed July 17, 2021. https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium
