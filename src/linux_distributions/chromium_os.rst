@@ -673,19 +673,19 @@ Here are a list of common features that can be enabled for a Chromium OS build:
 
       ::
 
-         USE="${USE} kvm_host crosvm-gpu virtio_gpu"
+         USE="${USE} dlc kvm_host crosvm-gpu virtio_gpu"
 
    -  Enable Borealis (Steam).
 
       ::
 
-         USE="${USE} has-borealis vm_borealis <BOARD>-borealis"
+         USE="${USE} dlc has-borealis vm_borealis <BOARD>-borealis"
 
    -  Enable crosvm Vulkan pass-through support (not currently working).
 
       ::
 
-         USE="${USE} crosvm_virtio_video crosvm_wl_dmabuf vulkan"
+         USE="${USE} dlc crosvm_virtio_video crosvm_wl_dmabuf vulkan"
 
 -  Enable CIFS (Windows network file share) support:
 
