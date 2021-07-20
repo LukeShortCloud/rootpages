@@ -531,6 +531,7 @@ The official ``kubeadm`` utility is used to quickly create production environmen
 
 .. code-block:: sh
 
+   $ echo "br_netfilter" | sudo tee /etc/modules-load.d/br_netfilter.conf
    $ sudo modprobe br_netfilter
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
