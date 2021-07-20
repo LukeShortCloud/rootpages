@@ -37,6 +37,20 @@ A utility used to build new container images as non-privileged users.
 
    bud -f Dockerfile -t fedora28-arm64-java ., build a new container from the Dockerfile
 
+crictl
+~~~~~~
+
+Manage containers, pods, and images of ``containerd`` or ``docker``. Most of the ``docker`` arguments will work with this command.
+
+.. csv-table::
+   :header: Usage, Explanation
+   :widths: 20, 20
+
+   --runtime-endpoint=/var/run/dockershim.sock --image-endpoint=/var/run/dockershim.sock, connect to the ``docker`` daemon back-end (default)
+   --runtime-endpoint=/var/run/containerd/containerd.sock --image-endpoint=/var/run/containerd/containerd.sock, connect to the ``containerd`` daemon back-end
+   pods, view the running pods
+   pods --label <KEY>=<VALUE>, view pods with the specified label
+
 docker
 ~~~~~~
 

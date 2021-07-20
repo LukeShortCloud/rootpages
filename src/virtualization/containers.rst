@@ -297,6 +297,60 @@ Debian and Ubuntu:
 
 [16]
 
+Usage
+^^^^^
+
+Use ``crictl`` to manage containers that are running using the ``containerd`` or ``docker`` daemon (default). The command uses the same arguments as the ``docker`` CLI tool except it also has the ability to view Kubernetes pods via ``crictl pods``.
+
+There are three main ways to define which daemon to interact with. Use one of the three.
+
+1.  Use the ``/etc/crictl.yaml`` configuration file.
+
+   -  containerd:
+
+      .. code-block:: yaml
+
+         ---
+         runtime-endpoint: unix:///var/run/containerd.sock
+         image-endpoint: unix:///var/run/containerd.sock
+         timeout: 5
+         debug: false
+
+   -  docker:
+
+      .. code-block:: yaml
+
+         ---
+         runtime-endpoint: unix:///var/run/dockershim.sock
+         image-endpoint: unix:///var/run/dockershim.sock
+         timeout: 5
+         debug: false
+
+2.  Use CLI arguments.
+
+   -  containerd: ``$ sudo crictl --runtime-endpoint=/var/run/containerd/containerd.sock --image-endpoint=/var/run/containerd/containerd.sock``
+   -  docker: ``$ sudo crictl --runtime-endpoint=/var/run/dockershim.sock --image-endpoint=/var/run/dockershim.sock``
+
+3.  Use environment variables.
+
+   -  containerd:
+
+      .. code-block:: sh
+
+         $ export CONTAINER_RUNTIME_ENDPOINT="/var/run/containerd/containerd.sock"
+         $ export IMAGE_SERVICE_ENDPOINT="${CONTAINER_RUNTIME_ENDPOINT}"
+         $ sudo -E crictl
+
+   -  docker:
+
+      .. code-block:: sh
+
+         $ export CONTAINER_RUNTIME_ENDPOINT="/var/run/containerd/containerd.sock"
+         $ export IMAGE_SERVICE_ENDPOINT="${CONTAINER_RUNTIME_ENDPOINT}"
+         $ sudo -E crictl
+
+[25]
+
 CRI-O
 ~~~~~
 
@@ -616,3 +670,4 @@ Bibliography
 22. "Episode 147: CoreDNS." GitHub vmware-tanzu/tgik. April 3, 2021. Accessed April 13, 2021. https://github.com/vmware-tanzu/tgik/tree/master/episodes/147
 23. "Test an insecure registry." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/registry/insecure/
 24. "Docker Desktop for Mac user manual." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/docker-for-mac/
+25. "Debugging Kubernetes nodes with crictl." Kubernetes Documentation. December 10, 2020. Accessed July 20, 2021. https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/
