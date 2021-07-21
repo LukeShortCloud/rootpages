@@ -1256,6 +1256,90 @@ ConfigMap using all of it's available options.
    binaryData:
      goodbye: Y3J1ZWwgd29ybGQ=
 
+EncryptionConfiguration
+^^^^^^^^^^^^^^^^^^^^^^^
+
+-  API group / version (latest): apiserver.config.k8s.io/v1
+-  Shortname: (None)
+-  Namespaced: false
+
+This special API is only used by the ``kube-apiserver`` binary. A single object can be created to define what passwords are used to encrypt, at rest, specified API resource objects stored in the etcd database. For information on how to use this special API, refer to `Secrets Encryption at Rest <kubernetes_administration.html#secrets-encryption-at-rest>`__.
+
+----
+
+``encryptionconfiguration.resources:``
+
+-  resources (list of strings) = The API resources to apply the encryption provider(s) to.
+-  providers (list of maps)
+
+   -  aescbc (map) = AES-CBC encryption. This is the strongest and the recommended encryption to use.
+
+      -  keys (map) = A list of encryption keys/passwords to use.
+
+         -  name (string) = A name to help identify the key/password.
+         -  secret (string) = A base64 encoded key/password.
+
+   -  aesgcm (map) = AES-GCM encryption. This is the fastest but requires rotating the password.
+   -  identity (map) = No encryption. This needs to be set to an empty value of ``{}``.
+   -  secretbox (map) = XSalsa20 and Poly1305. This is a strong encryption but is a newer standard with less tooling support.
+   -  `kms (map) <https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/>`__  = DEKS encryption. This is the strongest encryption that relies on a third-party Key Management Service (KMS).
+
+      -  name (string)
+      -  endpoint (string)
+      -  cachesize (string)
+      -  timeout (string)
+
+----
+
+**Examples:**
+
+Do not encrypt any objects. This is the default behavior.
+
+.. code-block:: yaml
+
+   ---
+   kind: EncryptionConfiguration
+   apiVersion: apiserver.config.k8s.io/v1
+   resources:
+     - resources: {}
+       providers:
+         - identity: {}
+
+Enable AES encryption for Secret objects and also allow unencrypted Secret objects to continue to work.
+
+.. code-block:: yaml
+
+   ---
+   kind: EncryptionConfiguration
+   apiVersion: apiserver.config.k8s.io/v1
+   resources:
+     - resources:
+         - secrets
+       providers:
+         - aescbc:
+             keys:
+               - name: firstkey
+                 secret: cGFzc3dvcmQ=
+         - identity: {}
+
+Enable AES encryption for Secret objects and also do not allow unencrypted Secret objects to work anymore.
+
+.. code-block:: yaml
+
+   ---
+   kind: EncryptionConfiguration
+   apiVersion: apiserver.config.k8s.io/v1
+   resources:
+     - resources:
+         - secrets
+       providers:
+         - aescbc:
+             keys:
+               - name: firstkey
+                 secret: cGFzc3dvcmQ=
+
+[45]
+
 PersistentVolumeClaim
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -3340,3 +3424,4 @@ Bibliography
 42. "Pull an Image from a Private Registry." Kubernetes Documentation. February 11, 2021. Accessed April 14, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 43. "Configure Service Accounts for Pods." Kubernetes Documentation. July 6, 2021. Accessed July 7, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 44. "Kubernetes API health endpoints." Kubernetes Documentation. November 17, 2020. Accessed July 7, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
+45. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/

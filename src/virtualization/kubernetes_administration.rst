@@ -1611,6 +1611,94 @@ Uninstall:
 
 [72]
 
+Security Best Practices
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Secrets Encryption at Rest
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, Secret objects are unencrypted base64 strings stored in the etcd database. Kubernetes natively supports encrypting any API resource objects including Secrets. Every Control Plane Node needs to have these same changes made to be able to read and write encrypted Secrets.
+
+Generate a base64-encoded key/password to be used for encrypting the Secrets.
+
+.. code-block:: sh
+
+   $ echo -n <PASSWORD> | base64
+
+.. code-block:: sh
+
+   $ echo -n password | base64
+   cGFzc3dvcmQ=
+
+Create a manifest for the EncryptionConfiguration API. Configure AES encryption for new Secret objects and allow old unencrypted Secrets to continue to work by using the no-operationg ``identity`` provider. For information on the specification and usage of this special API, refer to the `EncryptionConfiguration documentation <kubernetes_development.html#encryptionconfiguration>`__.
+
+.. code-block:: sh
+
+   $ sudo touch /etc/kubernetes/encryption-configuration.yaml
+   $ sudo chmod 0600 /etc/kubernetes/encryption-configuration.yaml
+   $ sudo vim /etc/kubernetes/encryption-configuration.yaml
+
+.. code-block:: yaml
+
+   ---
+   kind: EncryptionConfiguration
+   apiVersion: apiserver.config.k8s.io/v1
+   resources:
+     - resources:
+         - secrets
+       providers:
+         - aescbc:
+             keys:
+               - name: firstkey
+                 secret: cGFzc3dvcmQ=
+         - identity: {}
+
+Add the ``--encryption-provider-config`` argument pointing to that manifest file for the ``kube-apiserver`` command.
+
+.. code-block:: sh
+
+   $ sudo vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+.. code-block:: yaml
+
+   spec:
+     containers:
+     - command:
+       - kube-apiserver
+       - --encryption-provider-config=/etc/kubernetes/encryption-configuration.yaml
+
+Then add the ``pod.spec.volumes`` and the related ``pod.spec.containers.volumeMounts``.
+
+.. code-block:: yaml
+
+     volumes:
+     - hostPath:
+         path: /etc/kubernetes/encryption-configuration.yaml
+         type: File
+       name: encryption-configuration
+
+.. code-block:: yaml
+
+       volumeMounts:
+       - mountPath: /etc/kubernetes/encryption-configuration.yaml
+         name: encryption-configuration
+         readOnly: true
+
+The ``kubelet`` system service should pick up on the changes to the configuration file and recreate the Pod. If the EncryptionConfiguration is ever changed, move the ``kube-apiserver.yaml`` manifest to a different directory temporarily and then move it back. This will cause it to recreate the Pod without changing the manifest file itself.
+
+.. code-block:: sh
+
+   $ sudo mv /etc/kubernetes/manifests/kube-apiserver.yaml /etc/kubernetes/kube-apiserver.yaml
+   $ sudo mv /etc/kubernetes/kube-apiserver.yaml /etc/kubernetes/manifests/kube-apiserver.yaml
+
+After making all of the above changes on each Control Plane Node, re-create all Secret objects in Kubernetes. These will use the first EncryptionConfiguration provider listed which is now the AES encryption provider.
+
+.. code-block:: sh
+
+   $ kubectl get secrets --all-namespaces -o json | kubectl replace -f -
+
+[79]
+
 Troubleshooting
 ---------------
 
@@ -1821,3 +1909,4 @@ Bibliography
 76. "Deploy Tanzu Kubernetes Clusters with Different Kubernetes Versions." VMware Docs. June 9, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-k8s-versions.html
 77. "kubeadm init." Kubernetes Documentation. February 17, 2021. Accessed June 14, 2021. https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
 78. "Network Requirements." GitHub antrea-io/antrea. May 7, 2021. Accessed July 12, 2021. https://github.com/antrea-io/antrea/blob/main/docs/network-requirements.md
+79. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
