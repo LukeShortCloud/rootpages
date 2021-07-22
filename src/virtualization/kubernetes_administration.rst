@@ -518,12 +518,11 @@ kubeadm
 Supported operating systems:
 
 -  Debian >= 9, Ubuntu >= 16.04
--  Fedora >= 25
+-  Fedora >= 25, RHEL/CentOS >= 7
 -  Flatcar Container Linux
 -  HypriotOS >= 1.0.1
--  RHEL/CentOS >= 7
 
-The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [8] Install it using the instructions found `here <https://kubernetes.io/docs/setup/independent/install-kubeadm/>`__. Other pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing docker. On RHEL/CentOS, SELinux needs to be disabled as it is not supported for use with kubeadm.
+The official ``kubeadm`` utility is used to quickly create production environments and manage their life-cycle. This tool had became stable and supported since the Kubernetes 1.13 release. [8] Pre-requisite steps include disabling swap partitions, enabling IP forwarding, and installing a container runtime interface (CRI) such as ``containerd`` or ``CRI-O``. On Fedora-based distributions, SELinux needs to be disabled as it is not supported for use with kubeadm.
 
 .. code-block:: sh
 
@@ -536,7 +535,38 @@ The official ``kubeadm`` utility is used to quickly create production environmen
    $ echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
    $ sudo sysctl -p
 
-Install Kubernetes. This will bootstrap a ``kubelet`` container which will read manifest files to create all of the other required services as containers.
+Setup the Kubernetes repository.
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo apt-get update && sudo apt-get install apt-transport-https ca-certificates curl
+      $ sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      $ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+      $ sudo apt-get update
+
+Search for a specific version of Kubernetes and install it:
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ apt-cache madison kubeadm
+      $ export KUBE_VERSION="1.18.20-00"
+      $ sudo -E apt-get install kubeadm=${KUBE_VERSION} kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION}
+
+Prevent those packages from being accidently upgraded:
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo apt-mark hold kubeadm kubelet kubectl
+
+[80]
+
+Initialize a Kubernetes Control Plane Node. This will bootstrap a ``kubelet`` container which will read manifest files generated in ``/etc/kubernetes/manifests/`` to create all of the other required Kubernetes daemons as containers.
 
 Syntax for a single Control Plane Node:
 
@@ -1910,3 +1940,4 @@ Bibliography
 77. "kubeadm init." Kubernetes Documentation. February 17, 2021. Accessed June 14, 2021. https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
 78. "Network Requirements." GitHub antrea-io/antrea. May 7, 2021. Accessed July 12, 2021. https://github.com/antrea-io/antrea/blob/main/docs/network-requirements.md
 79. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+80. "Installing kubeadm." Kubernetes Documentation. February 17, 2021. Accessed July 22, 2021. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
