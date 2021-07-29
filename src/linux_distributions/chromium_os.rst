@@ -818,6 +818,53 @@ If the module fails to load with this error, it is possible that it was compiled
    chronos@localhost / $ sudo modprobe <KERNEL_MODULE>
    modprobe: ERROR: could not insert '<KERNEL_MODULE>': Exec format error
 
+Brunch
+~~~~~~
+
+`Brunch <https://github.com/sebanc/brunch>`__ is a framework that allows installing the official Chrome OS operating system on any computer with all of the features available such as Android support. It takes a custom build of Chromium OS image and injects the boot loader settings into an official Chrome OS recovery image so that any device can be booted up with it (not just the Chromebook/Chromebox that the recovery image was designed for). Brunch installs these modifications into the unused "C" file system partitions. The Brunch project is a spiritual successor to `Project Croissant (also known as Chromefy) <https://github.com/imperador/chromefy>`__. [37]
+
+Building
+^^^^^^^^
+
+-  Load up the Chromium OS developer chroot. This will include the binary ``cgpt`` which is required to build Brunch.
+
+   .. code-block:: sh
+
+      $ cd chromiumos
+      $ export PATH="$(pwd)/chromite/bin/:$PATH"
+      $ cros_sdk
+      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $
+
+-  Download a Chrome OS recovery image from `cros.tech <https://cros.tech/>`__ depending on the processor of the device that Chrome OS will be installed onto. Unzip the archive that was downloaded.
+
+   -  Intel 1st to 9th generation = `board: rammus <https://cros.tech/device/rammus>`__ = ASUS Chromebook Flip C434
+   -  Intel 10th and newer generation = `board: volteer <https://cros.tech/device/volteer>`__ = Acer Chromebook Spin 713 (CP713-3W)
+   -  AMD Stoney Ridge and Bristol Ridge = `board: grunt <https://cros.tech/device/grunt>`__ = Acer Chromebook 311 (C721)
+   -  AMD Ryzen = `board: zork <https://cros.tech/device/zork>`__ = ASUS Chromebook Flip CM5
+
+-  Download the latest `stable release of Brunch <https://github.com/sebanc/brunch/releases>`__. For the best results, this should be the same major version as the Chrome OS recovery image that was downloaded. Alternatively, download the latest `unstable release of Brunch <https://github.com/sebanc/brunch-unstable/releases>`__.
+
+   .. code-block:: sh
+
+      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ mkdir ~/brunch/
+      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ cd ~/brunch/
+      (cr) <USER>@<HOTSNAME> ~/brunch $ wget https://github.com/sebanc/brunch/releases/download/r<CHROME_OS_RELEASE>-stable-<DATE>/brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
+      (cr) <USER>@<HOTSNAME> ~/brunch $ tar -x -f brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
+
+-  Create a Brunch installer image for Chrome OS. This wil be 14 GB in size.
+
+   .. code-block:: sh
+
+      (cr) <USER>@<HOTSNAME> ~/brunch $ sudo ./chromeos-install.sh -src <CHROME_OS_RECOVERY_IMAGE>.bin -dst brunch.bin
+
+-  Flash the installer image to an external drive.
+
+   .. code-block:: sh
+
+      (cr) <USER>@<HOTSNAME> ~/brunch $ sudo dd if="/home/${USER}/brunch/brunch.bin" of=/dev/<DEVICE>
+
+[37]
+
 Linux
 -----
 
@@ -1243,3 +1290,4 @@ Bibliography
 34. "Kernel Development." Chromium OS Docs. Accessed June 25, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/kernel_development.md
 35. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 8, 2021. https://github.com/sebanc/brunch
 36. "Version Numbers." The Chromium Projects. Accessed July 8, 2021. https://www.chromium.org/developers/version-numbers
+37. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 28, 2021. https://github.com/sebanc/brunch
