@@ -4,7 +4,7 @@
 
    authentication
    graphics
-   linux
+   linux_kernel
    macs
    mail_servers
    operating_systems
