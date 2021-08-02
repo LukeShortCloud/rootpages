@@ -868,6 +868,45 @@ Syntax:
 
 [16]
 
+Mounting
+--------
+
+Image Files
+~~~~~~~~~~~
+
+ISO:
+
+-  Mount an ISO (CD/DVD) image:
+
+   .. code-block:: sh
+
+      $ sudo mount -t iso9660 -o loop <IMAGE>.iso /mnt
+
+Raw image with partitions [32]:
+
+-  Expose the partitions in the raw image. The image file extension is normally ``bin``, ``img``, or ``raw``. The partitions will be available at ``/dev/mapper/loop<LOOP_DEVICE_NUMBER>p<PARTITION_NUMBER>``.
+
+   .. code-block:: sh
+
+      $ sudo kpartx -a -v <IMAGE>.img
+
+-  Mount and unmount the first partition.
+
+   .. code-block:: sh
+
+      $ sudo mount /dev/mapper/loop0p1 /mnt
+      $ sudo umount /dev/mapper/loop0p1
+
+-  Remove the partition mappings by referencing the raw image file or the loop device. This essentially ejects the raw image.
+
+   .. code-block:: sh
+
+      $ sudo kpartx -d -v <IMAGE>.img
+
+   .. code-block:: sh
+
+      $ sudo kpartx -d -v /dev/loop<LOOP_DEVICE_NUMBER>
+
 Filesystem Hierarchy Standard
 -----------------------------
 
@@ -1038,3 +1077,4 @@ Bibliography
 29. "25. Command Line Interface." FreeNAS 11.3-RELEASE User Guide. https://www.ixsystems.com/documentation/freenas/11.3-RELEASE/cli.html
 30. "unix extensions not working?" Ubuntu Bugs samba package. June 12, 2020. Accessed March 13, 2021. https://bugs.launchpad.net/ubuntu/+source/samba/+bug/1883234
 31. "smb.conf - The configuration file for the Samba suite." Samba Docs. Accessed March 13, 2021. https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+32. "kpartx - Create device maps from partition tables." Ubuntu Manpage. Accessed August 2, 2021. https://manpages.ubuntu.com/manpages/focal/man8/kpartx.8.html
