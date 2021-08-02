@@ -69,6 +69,29 @@ Common system calls:
 
 [2]
 
+Capabilities
+------------
+
+The ``root`` user with the user ID of ``0`` has access to all capabilities exposed by the Linux kernel. All other users are considered unprivileged and do not have access to any of the capabilities. Each capability allows certain system calls and other specific actions. Unprivileged users can be run binaries that a ``root`` user enables specific privileged capabilities on.
+
+Common capabilities in the Linux kernel:
+
+.. csv-table::
+   :header: Capability, Description, System Calls
+   :widths: 20, 20, 20
+
+   CAP_CHOWN, Change ownership of files and directories., chown
+   CAP_KILL, Kill any process., "ioctl, kill"
+   CAP_NET_ADMIN, Access to all networking functions., "setsockopt"
+   CAP_NET_BIND_SERVICE, Bind to a port below 1024., "(None)"
+   CAP_SYS_ADMIN, Provide a process most of the  privileged capabilities., "accept, bdflush, clone, execve, fanotify_init, ioctl, ioprio_set, keyctl, lookup_dcookie, madvise, mount, nfsservctl, open, pipe, pivot_root, ptrace, quotactl, random, sched, seccomp, setdomainname, sethostname, setns, swapoff, swapon, syslog, umount, unshare, xattr"
+   CAP_SYS_CHROOT, Change the root directory and namespace., "chroot, nets"
+   CAP_SYS_NICE, Change the priority of a process., "ioprio_set, mbind, migrate_pages, move_pages, nice, sched_setattr, sched_setparam, sched_setscheduler, setpriority"
+   CAP_SYS_RESOURCE, Change resource limits and quotas., "fcntl, ioctl, mq_overview, msgop, msgctl, prctl, setrlimit, unix"
+   CAP_SYS_TIME, Change the system time., "adjtimex, settimeofday, stime"
+
+[17]
+
 Modules
 -------
 
@@ -412,3 +435,4 @@ Bibliography
 14. "How to install Linux 5.8 Kernel on Ubuntu 20.04 LTS." Linux Shout. August 5, 2020. Accessed December 13, 2020. https://www.how2shout.com/linux/install-linux-5-8-kernel-on-ubuntu-20-04-lts/
 15. "How can I know/list available options for kernel modules?" Ask Ubuntu. December 13, 2017. Accessed January 21, 2021. https://askubuntu.com/questions/59135/how-can-i-know-list-available-options-for-kernel-modules
 16. "Kernel module." Arch Wiki. October 14, 2020. Accessed January 21, 2021. https://wiki.archlinux.org/index.php/Kernel_module
+17. "capabilities (7)." Linux manual page. June 20, 2021. Accessed August 2, 2021. https://man7.org/linux/man-pages/man7/capabilities.7.html
