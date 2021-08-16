@@ -247,9 +247,9 @@ How to create users and groups in Windows Active Directory:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/authentication.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/authentication.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/authentication.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/authentication.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/authentication.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/authentication.md>`__
 
 Bibliography
 ------------

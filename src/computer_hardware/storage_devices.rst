@@ -53,7 +53,7 @@ All SSDs (including NVMe) use a specific type of NAND flash: single-level cell (
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/computer_hardware/storage_devices.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/storage_devices.rst>`__
 
 Bibliography
 ------------

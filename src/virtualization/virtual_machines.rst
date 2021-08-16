@@ -1542,10 +1542,10 @@ Errors
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/virtualization/virtual_machines.rst>`__
--  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/administration/virtualization.rst>`__
--  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/virtualization.rst>`__
--  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/markdown/virtualization.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/virtualization/virtual_machines.rst>`__
+-  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/administration/virtualization.rst>`__
+-  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/virtualization.rst>`__
+-  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/markdown/virtualization.md>`__
 
 Bibliography
 ------------

@@ -298,8 +298,8 @@ Solution:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/graphics.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/graphics.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/graphics.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/graphics.rst>`__
 
 Bibliography
 ------------

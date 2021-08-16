@@ -3349,10 +3349,10 @@ OpenShift 4 now uses the concept of User Provisioned Infrastructure (UPI). [71] 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/tripleo.rst>`__
--  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst>`__
--  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
--  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/openstack/tripleo.rst>`__
+-  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/src/virtualization/openstack.rst>`__
+-  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/src/openstack.rst>`__
+-  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/markdown/openstack.md>`__
 
 Bibliography
 ------------

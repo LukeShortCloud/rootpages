@@ -181,7 +181,7 @@ All of the configurations are handled in ``/etc/kolla/globals.yml``.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/kolla.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/openstack/kolla.rst>`__
 
 Bibliography
 ------------

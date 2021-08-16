@@ -493,10 +493,10 @@ Full Verified Syntax:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/http_servers.rst>`__
--  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/http_servers.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/http_servers.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/http_servers.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/http/http_servers.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/http_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/http_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/http_servers.md>`__
 
 Bibliography
 ------------

@@ -108,10 +108,10 @@ IPVS is easily managed via the "ipvsadm" command.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/clustering.rst>`__
--  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/clustering.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/clustering.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/clustering.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/http/clustering.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/clustering.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/clustering.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/clustering.md>`__
 
 Bibliography
 ------------

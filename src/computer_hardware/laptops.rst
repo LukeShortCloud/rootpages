@@ -25,7 +25,7 @@ For the best experience, get a laptop with at least an `Intel Coffee Lake (Intel
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/computer_hardware/laptops.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/laptops.rst>`__
 
 Bibliography
 ------------

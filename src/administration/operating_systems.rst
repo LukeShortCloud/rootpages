@@ -232,8 +232,8 @@ This is an extremely biased list of the best distribution for each use case.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/operating_systems.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/operating_systems.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/operating_systems.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/operating_systems.rst>`__
 
 Bibliography
 ------------

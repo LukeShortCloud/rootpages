@@ -49,7 +49,7 @@ Now, whenever the GRUB configuration is re-generated, the Btrfs snapshots will b
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/storage/backup_and_recovery.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/storage/backup_and_recovery.rst>`__
 
 Bibliography
 ------------

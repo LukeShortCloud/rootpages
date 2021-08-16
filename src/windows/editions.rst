@@ -42,7 +42,7 @@ An installation of Windows 10 Enterprise LTSC can switch to the traditional "cur
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/windows/editions.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/windows/editions.rst>`__
 
 Bibliography
 ------------

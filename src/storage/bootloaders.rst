@@ -379,9 +379,9 @@ Solutions:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/bootloaders.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/bootloaders.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/bootloaders.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/bootloaders.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/bootloaders.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/bootloaders.md>`__
 
 Bibliography
 ------------

@@ -182,5 +182,5 @@ Allow non-root accounts to temporarily run privileged commands.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/security.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/security.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/commands/security.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/linux_commands/security.rst>`__

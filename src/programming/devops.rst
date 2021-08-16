@@ -950,8 +950,8 @@ These are the most important concepts to learn when studying a new language, lis
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/devops.rst>`__
--  `< 2018.07.01 <https://github.com/ekultails/rootpages/commits/master/src/devops.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/programming/devops.rst>`__
+-  `< 2018.07.01 <https://github.com/ekultails/rootpages/commits/main/src/devops.rst>`__
 
 Bibliography
 ------------

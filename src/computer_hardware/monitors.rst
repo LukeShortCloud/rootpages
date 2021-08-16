@@ -151,7 +151,7 @@ With modern day technology, it is almost possible to reproduce the image quality
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/computer_hardware/monitors.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/monitors.rst>`__
 
 Bibliography
 ------------

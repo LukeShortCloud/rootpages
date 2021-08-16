@@ -267,10 +267,10 @@ Errors
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/administration/package_managers.rst>`__
--  `< 2019.07.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/packages.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/packages.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/packages.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/package_managers.rst>`__
+-  `< 2019.07.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/packages.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/packages.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/packages.md>`__
 
 Bibliography
 ------------

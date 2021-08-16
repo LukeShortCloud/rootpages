@@ -1025,4 +1025,4 @@ Utility for creating Windows Master Boot Records (MBR).
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/storage.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/commands/storage.rst>`__

@@ -11,7 +11,7 @@ SMT, also known as Hyper-Threading Technology (HTT) on Intel processors, allows 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/computer_hardware/processors.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/processors.rst>`__
 
 Bibliography
 ------------

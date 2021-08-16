@@ -198,10 +198,10 @@ Previous bans that have now been addressed:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/virtualization/wine.rst>`__
--  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/administration/wine.rst>`__
--  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/src/wine.rst>`__
--  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/master/markdown/wine.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/virtualization/wine.rst>`__
+-  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/administration/wine.rst>`__
+-  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/wine.rst>`__
+-  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/markdown/wine.md>`__
 
 Bibliography
 ------------

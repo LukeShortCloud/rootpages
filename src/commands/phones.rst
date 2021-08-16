@@ -43,5 +43,5 @@ fastboot
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/commands/phones.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/linux_commands/phones.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/commands/phones.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/linux_commands/phones.rst>`__

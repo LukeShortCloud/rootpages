@@ -161,7 +161,7 @@ Themes
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/http/cms.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/http/cms.rst>`__
 
 Bibliography
 ------------

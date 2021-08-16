@@ -674,9 +674,9 @@ fgetc example:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/c_and_c++.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/c_and_c++.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/c_and_c++.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/programming/c_and_c++.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/c_and_c++.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/c_and_c++.md>`__
 
 Bibliography
 ------------

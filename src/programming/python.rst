@@ -1738,9 +1738,9 @@ Solutions:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/programming/python.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/python.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/python.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/programming/python.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/python.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/python.md>`__
 
 Bibliography
 ------------

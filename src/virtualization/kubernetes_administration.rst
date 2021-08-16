@@ -1853,10 +1853,10 @@ Solutions:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/virtualization/kubernetes_administration.rst>`__
--  `< 2019.10.01 <https://github.com/ekultails/rootpages/commits/master/src/virtualization/kubernetes.rst>`__
--  `< 2019.07.01 <https://github.com/ekultails/rootpages/commits/master/src/virtualization/containers.rst>`__
--  `< 2019.04.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/virtualization.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/virtualization/kubernetes_administration.rst>`__
+-  `< 2019.10.01 <https://github.com/ekultails/rootpages/commits/main/src/virtualization/kubernetes.rst>`__
+-  `< 2019.07.01 <https://github.com/ekultails/rootpages/commits/main/src/virtualization/containers.rst>`__
+-  `< 2019.04.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/virtualization.rst>`__
 
 Bibliography
 ------------

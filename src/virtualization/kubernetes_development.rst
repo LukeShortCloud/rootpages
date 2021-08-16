@@ -3374,8 +3374,8 @@ Installation:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/virtualization/kubernetes_development.rst>`__
--  `< 2019.10.01 <https://github.com/ekultails/rootpages/commits/master/src/virtualization/kubernetes.rst>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/virtualization/kubernetes_development.rst>`__
+-  `< 2019.10.01 <https://github.com/ekultails/rootpages/commits/main/src/virtualization/kubernetes.rst>`__
 
 Bibliography
 ------------

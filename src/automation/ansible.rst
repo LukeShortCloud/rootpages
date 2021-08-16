@@ -5223,9 +5223,9 @@ Tensor is an open source dashboard and API for infrastructure management using b
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/automation/ansible.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/ansible.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/ansible.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/automation/ansible.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/ansible.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/ansible.md>`__
 
 Bibliography
 ------------

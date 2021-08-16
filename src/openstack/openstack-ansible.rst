@@ -654,10 +654,10 @@ OpenStack-Ansible has playbooks capable of fully upgrading OpenStack from one ma
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/openstack/openstack-ansible.rst>`__
--  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/virtualization/openstack.rst>`__
--  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/src/openstack.rst>`__
--  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/master/markdown/openstack.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/openstack/openstack-ansible.rst>`__
+-  `< 2020.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/src/virtualization/openstack.rst>`__
+-  `< 2019.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/src/openstack.rst>`__
+-  `< 2018.01.01 (OpenStack) <https://github.com/ekultails/rootpages/commits/main/markdown/openstack.md>`__
 
 Bibliography
 ------------

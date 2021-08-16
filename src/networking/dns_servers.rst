@@ -470,11 +470,11 @@ In this example, NS records and an A record is added for the domain
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/master/src/networking/dns_servers.rst>`__
--  `< 2021.04.01 <https://github.com/ekultails/rootpages/commits/master/src/http/dns_servers.rst>`__
--  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/master/src/administration/dns_servers.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/master/src/dns_servers.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/master/markdown/dns_servers.md>`__
+-  `Latest <https://github.com/ekultails/rootpages/commits/main/src/networking/dns_servers.rst>`__
+-  `< 2021.04.01 <https://github.com/ekultails/rootpages/commits/main/src/http/dns_servers.rst>`__
+-  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/dns_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/dns_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/dns_servers.md>`__
 
 Bibliography
 ------------
