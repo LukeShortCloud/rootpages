@@ -6,10 +6,8 @@ metadata:
   namespace: ns-rootpages
   labels:
     app: rootpages
-  annotations:
-    traefik.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
     - host: rootpages.lukeshort.cloud
       http:
