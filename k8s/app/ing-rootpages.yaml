@@ -6,8 +6,16 @@ metadata:
   namespace: ns-rootpages
   labels:
     app: rootpages
+  annotations:
+    cert-manager.io/cluster-issuer: "clusterissuer-letsencrypt-production"
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    cert-manager.io/issue-temporary-certificate: "true"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - rootpages.lukeshort.cloud
+      secretName: secret-tls-rootpages-lukeshort-cloud
   rules:
     - host: rootpages.lukeshort.cloud
       http:
