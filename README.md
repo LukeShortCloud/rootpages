@@ -9,7 +9,7 @@ All Root Pages are written in the reStructuredText (RST) markup language. Sphinx
 ## Website
 
 * Stable quarterly updates: https://ekultails.github.io/rootpages/
-* Latest development updates: http://k8s.ekultails.com/rp/
+* Latest development updates: http://rootpages.lukeshort.cloud
 
 The latest updates to Root Pages are automatically tested via [Travis CI](https://travis-ci.org/). The latest build is pushed to a Kubernetes cluster on every successful build. Tags are published quarterly which Travis CI will automatically push the built website to [GitHub Pages](https://pages.github.com/). The hosted website is stored in the "gh-pages" branch.
 

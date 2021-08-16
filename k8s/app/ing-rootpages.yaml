@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: k8s.ekultails.com
+    - host: rootpages.lukeshort.cloud
       http:
         paths:
           - backend:
@@ -19,5 +19,5 @@ spec:
                 name: svc-rootpages
                 port:
                   number: 80
-            path: /rp
+            path: /
             pathType: Prefix
