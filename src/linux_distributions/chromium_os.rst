@@ -895,14 +895,14 @@ Container Management
 
 With developer mode enabled, the ``termina`` VM can be manually edited with the ``vmc`` command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.
 
--  Manually start and connect to the ``termina`` VM.
+-  Manually start the ``termina`` virtual machine with graphics acceleration and then automatically SSH into it.
 
 ::
 
-   crosh> vmc start termina
+   crosh> vmc start --enable-gpu --enable-vulkan termina
    (termina) chronos@localhost ~ $
 
--  Manually connect to an already running ``termina`` VM.
+-  Manually connect via SSH to an already running ``termina`` VM.
 
 ::
 
@@ -954,7 +954,7 @@ The ``Files`` app will list ``Linux files``. That will load the visible contents
 GPU Acceleration
 ^^^^^^^^^^^^^^^^
 
-Crostini supports OpenGL graphics hardware acceleration via the use of `Virgil 3d <https://virgil3d.github.io/>`__. This allows the passthrough of OpenGL calls from the virtual machine ``termina`` to the host system. Vulkan passthrough support is planned to be released in 2020. [11] For gaming, it is recommended to enable these flags:
+Crostini supports OpenGL graphics hardware acceleration via the use of `Virgil 3d <https://virgil3d.github.io/>`__. This allows the passthrough of OpenGL calls from the virtual machine ``termina`` to the host system. Vulkan passthrough support is planned to be fully supported in 2021. [11] For gaming, it is recommended to enable these flags:
 
 -  chrome://flags#crostini-gpu-support = Enable Virgil 3d support. It is enabled by default as of Chrome OS 80 [12].
 -  chrome://flags#scheduler-configuration = Enable hyper-threading on Chrome OS (if available on the processor). This will help improve the performance of games by allowing the virtual machine to use more processing power.
@@ -1012,7 +1012,7 @@ Stop and rename the original container.
    (termina) chronos@localhost ~ $ lxc rename penguin penguin-original
    (termina) chronos@localhost ~ $ lxc launch images:<IMAGE_NAME>/<IMAGE_VERSION> penguin
 
-Create a user using the same username as the Chrome OS user (which is normally the first part of the e-mail address used to log in: ``<CHROME_OS_USER>@gmail.com``). This user should have privileged access via the use of ``sudo``.
+Create a user and related group with the UID and GID of 1000. The name can be anything. Typically this is named using the same username as the Chrome OS user (which is the first part of the e-mail address used to log in: ``<CHROME_OS_USER>@gmail.com``). This user should have privileged access via the use of ``sudo``.
 
 ::
 
@@ -1057,14 +1057,44 @@ Enable the required services and then restart the virtual machine to load the ne
 
 ::
 
-   [root@penguin ~]# systemctl enable cros-sftp
+   [root@penguin ~]# systemctl enable --now cros-sftp
    [root@penguin ~]# su - <CHROME_OS_USER>
    [<CHROME_OS_USER>@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommlier@1 sommelier-x@1 cros-garcon cros-pulse-config
 
 ::
 
    crosh> vmc stop termina
-   crosh> vmc start termina
+   crosh> vmc start --enable-gpu --enable-vulkan termina
+
+Vulkan Support
+''''''''''''''
+
+Vulkan passthrough support requires at least Chrome OS 92. For the best results, use the latest version from the Developer update channel. This currently only works using the latest open source Mesa graphics library. Arch Linux is the easiest Linux distribution for installing the latest source code.
+
+-  Install the latest builds of both the 64-bit and 32-bit variants of Mesa from the Arch Linux User Repository (AUR). This will download and compile them with the required ``virtio-experimental`` Vulkan driver.
+
+   ::
+
+      [<CHROME_OS_USER>@penguin ~]$ yay -S mesa-git lib32-mesa-git
+
+-  Enable Vulkan passthrough by using the VirtIO-GPU Venus driver. The first command enables it temporarily. The next command enables it permanently.
+
+   ::
+
+      [<CHROME_OS_USER>@penguin ~]$ export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/virtio_icd.i686.json:/usr/share/vulkan/icd.d/virtio_icd.x86_64.json
+      [<CHROME_OS_USER>@penguin ~]$ echo 'VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/virtio_icd.i686.json:/usr/share/vulkan/icd.d/virtio_icd.x86_64.json' | sudo tee -a /etc/environment
+
+-  Verify that Vulkan works by checking that the Venus driver is being used and that a basic 3D cube can be rendered.
+
+   ::
+
+      [<CHROME_OS_USER>@penguin ~]$ sudo pacman -S vulkan-tools
+      [<CHROME_OS_USER>@penguin ~]$ vulkaninfo | grep driverName
+              driverName         = venus
+        driverName                                           = venus
+      [<CHROME_OS_USER>@penguin ~]$ vkcube
+
+[38]
 
 Nested Virtualization
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1279,12 +1309,12 @@ Bibliography
 8. "Debugging Features." Chromium OS. Accessed March 4, 2020. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
 9. "LXD Getting started - command line." Linux containers. Accessed March 7, 2020. https://linuxcontainers.org/lxd/getting-started-cli/
 10. "Crostini Setup Guide." Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide
-11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. February 12, 2020. Accessed March 11, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
+11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. April 10, 2021. Accessed August 17, 2021. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
 12. "CHROME OS 80 MAKES GRAPHIC INTENSIVE LINUX APPS SO MUCH BETTER." Chrome Unboxed. March 10, 2020. Accessed March 11, 2020. https://chromeunboxed.com/chrome-os-80-gpu-linux-apps-enabled/
 13. "How to install Steam." Reddit r/Crostini. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
 14. "Auto Update Policy." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chrome/a/answer/6220366?hl=en
 15. "Switch between stable, beta & dev software." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chromebook/answer/1086915?hl=en
-16. "Chrome OS devices/Crostini." Arch Linux Wiki. February 17, 2020. Accessed March 14, 2020. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
+16. "Chrome OS devices/Crostini." Arch Linux Wiki. July 25, 2021. Accessed August 17, 2021. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
 17. "How to run CentOS instead of Debian." Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux
 18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
 19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
@@ -1306,3 +1336,4 @@ Bibliography
 35. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 8, 2021. https://github.com/sebanc/brunch
 36. "Version Numbers." The Chromium Projects. Accessed July 8, 2021. https://www.chromium.org/developers/version-numbers
 37. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 28, 2021. https://github.com/sebanc/brunch
+38. "Virtio-GPU Venus." The Mesa 3D Graphics Library latest documentation. Accessed August 17, 2021. https://docs.mesa3d.org/drivers/venus.html
