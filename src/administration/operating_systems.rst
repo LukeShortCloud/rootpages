@@ -83,7 +83,7 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
 
 - Popular derivatives [2]:
     - Community Enterprise Linux (CentOS)
-    - Red Hat Enterprise Linux (RHEL)
+    - Red Hat Enterprise Linux (RHEL), AlmaLinux OS, and Rocky Linux
     - Yellow Dog Linux (YDL)
 
 Fedora Silverblue
@@ -184,9 +184,9 @@ Top Distributions
 
 This is an extremely biased list of the best distribution for each use case.
 
--  Alternative to Chrome OS = 1. ArnoldTheBats Chromium OS 2. CloudReady 3. Ubuntu Web Remix 4. GalliumOS
--  Alternative to macOS = 1. elementary OS 2. Fedora 3. Xubuntu
--  Alternative to Windows = Zorion OS
+-  Alternative to Chrome OS = 1. Brunch 2. CloudReady 3. ArnoldTheBats Chromium OS 4. Ubuntu Web Remix 5. GalliumOS
+-  Alternative to macOS = 1. Zorion OS Pro 2. elementary OS 3. Fedora 4. Xubuntu 5. `Mac Linux Gaming Stick <https://github.com/ekultails/mac-linux-gaming-stick>`__
+-  Alternative to Windows = Zorion OS Core
 -  Arm single-board computer (SBC) = Debian
 -  Bleeding edge (stable) = Manjaro
 -  Bleeding edge (unstable) = Arch Linux
@@ -194,29 +194,6 @@ This is an extremely biased list of the best distribution for each use case.
 -  CPU architectures supported = Debian
 -  Customizable = Gentoo
 -  Customizable (easy) = Arch Linux
--  Easiest = Zorion OS
--  Free and open source software (FOSS) = 1. Fedora 2. Debian
--  Gaming = 1. GamerOS 2. Pop!_OS 3. Manjaro 4. SteamOS
--  Hardest = Linux From Scratch
--  Hardware support = Arch Linux
--  Lightweight = Tiny Core Linux
--  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. CentOS 4. Ubuntu LTS (free)
--  Old computer = Linux Lite
--  Oldest Linux distribution = 1. Slackware 2. Debian
--  Operating system of the future = 1. Fedora Silverblue 2. Clear Linux 3. GamerOS
--  Packages available = Ubuntu
--  Release cycle
-
-   -  Slow = Debian
-   -  Moderate = openSUSE Leap
-   -  Fast = 1. Fedora 2. Ubuntu
-   -  Latest = Arch Linux
-
--  Security penetration testing = Kali Linux
--  Server = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS
--  Stable = 1. RHEL 2. CentOS 3. Debian 4. Ubuntu LTS
--  Touchscreen = Fedora
--  USB drive = Puppy Linux
 -  Desktop environments:
 
    -  Cinnamon = Linux Mint
@@ -228,6 +205,31 @@ This is an extremely biased list of the best distribution for each use case.
    -  MATE = Solus MATE
    -  Pantheon = elementary OS
    -  Xfce = Xubuntu
+
+-  Easiest = Zorion OS Core
+-  Free and open source software (FOSS) = 1. Fedora 2. Debian
+-  Gaming = 1. SteamOS 3 2. ChimeraOS 3. Pop!_OS 4. Manjaro
+-  Hardest = Linux From Scratch
+-  Hardware support = 1. Manjaro 2. Arch Linux 3. Pop!_OS
+-  Lightweight = Tiny Core Linux
+-  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. AlmaLinux OS 4. Ubuntu LTS (free)
+-  Old computer = 1. Linux Lite 2. Zorion OS Lite
+-  Oldest Linux distribution = 1. Slackware 2. Debian
+-  Operating system of the future = 1. Fedora Silverblue 2. Clear Linux 3. ChimeraOS
+-  Packages available = 1. Arch Linux 2. Ubuntu 3. Debian
+-  Privacy = Tails
+-  Release cycle
+
+   -  Slow = Debian
+   -  Moderate = openSUSE Leap
+   -  Fast = 1. Fedora 2. Ubuntu
+   -  Latest = Arch Linux
+
+-  Security penetration testing = Kali Linux
+-  Server = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
+-  Stable = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
+-  Touchscreen = Fedora
+-  USB drive / portable = 1. `Mac Linux Gaming Stick <https://github.com/ekultails/mac-linux-gaming-stick>`__ 2. Puppy Linux
 
 History
 -------
