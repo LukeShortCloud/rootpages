@@ -2763,6 +2763,129 @@ A Template provides a way to create more than one object using a single manifest
 
 [29]
 
+VMware Tanzu
+~~~~~~~~~~~~
+
+TanzuKubernetesCluster
+^^^^^^^^^^^^^^^^^^^^^^
+
+-  API group / version (latest): run.tanzu.vmware.com/v1alpha1
+-  Shortname: tkc
+-  Namespaced: true
+
+This API is used to create workload clusters within a namespace of a TKGS Supervisor Cluster.
+
+----
+
+``tkc.spec:``
+
+-  **distributions** (map)
+
+   -  fullVersion (string) = The exact full version of Kubernetes to install.
+   -  version (string) = The short version of Kubernetes to install.
+
+-  settings (map) = Additional settings for Kubernetes.
+
+   -  network (map)
+
+      -  cni (map)
+
+         -  **name** (string) = The container networking interface plugin to use: ``antrea`` (default) or ``calico``.
+
+      -  pods (map)
+
+         -  cidrBlocks (list of strings) = The CIDR ranges to use for Pod networking. These need to be unique IP addresses that are not in ``tkc.spec.settings.network.services.cidrBlocks``.  Default: ``192.168.0.0/16``.
+
+      -  proxy (map)
+
+         -  httpProxy (string) = The URL of a HTTP proxy server.
+         -  httpsProxy (string) = The URL of a HTTPS proxy server.
+         -  noProxy (list of strings) = A list of hosts that should not be proxied.
+
+      -  serviceDomain (string) = The domain name to use for the Kubernetes cluster. Default: ``cluster.local``.
+      -  services (map)
+
+         -  cidrBlocks (list of strings) = The CIDR ranges to use for Service objects. These need to be unique IP addresses that are not in ``tkc.spec.settings.network.pods.cidrBlocks``. Default: ``10.96.0.0/12``.
+
+      -  trust (map)
+
+         -  additionalTrustedCAs (list of maps)
+
+            -  **data** (string) = A PEM certificate authority encoded with base64.
+            -  **name** (string) = A descriptive name for the certificate authority.
+
+   -  storage  (map)
+
+      -  classes (list of strings) = List each StorageClass available from the Supervisor Cluster that will be available to this TanzuKubernetesCluster.
+      -  defaultClass (string) = Configure a default storage class.
+
+-  **topology** (map) = Define the settings for the control plane and worker nodes.
+
+   -  controlPlane
+
+      -  **count** (integer) = The number of nodes to deploy.
+      -  **class** (string) = The VirtualMachineClass to use for the nodes.
+      -  **storageClass** (string) = The StorageClass to use for the nodes.
+      -  volumes (list of maps) = A list of PersistentVolumeClaims to mount to create and mount on each node.
+
+         -  **capacity** (map of strings)
+
+            -  storage (integer) = The size, in GiB, of each PersistentVolumeClaim.
+
+         -  **mountPath** (string) = The path on the node to mount the PersistentVolumeClaim.
+         -  **name** (string) = A descriptive name for the volume.
+         -  **storageClass** (string) = The StorageClass to use for the PersistentVolumeClaim.
+
+   -  workers
+
+      -  count (integer)
+      -  class (string)
+      -  storageClass (string)
+      -  volumes (list of maps)
+
+[46][47]
+
+----
+
+**Examples:**
+
+Install Kubernetes 1.20, use the CNI plugin Calico, use custom IP address ranges, deploy x3 control plane nodes, deploy x2 worker nodes, and add a certificate authority to all of the nodes.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: run.tanzu.vmware.com/v1alpha1
+   kind: TanzuKubernetesCluster
+   metadata:
+     name: tkc-demo
+     namespace: ns-in-supervisor-cluster
+   spec:
+     distribution:
+       version: v1.20
+     settings:
+       network:
+         cni:
+           name: calico
+         pods:
+           cidrBlocks:
+             - 10.5.0.0/16
+         services:
+           cidrBlocks:
+             - 10.10.0.0/16
+         trust:
+           additionalTrustedCAs:
+             - name: organization-ca
+               data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURkVENDQWwyZ0F3SUJBZ0lMQkFBQUFBQUJGVXRhdzVRd0RRWUpLb1pJaHZjTkFRRUZCUUF3VnpFTE1Ba0cKQTFVRUJoTUNRa1V4R1RBWEJnTlZCQW9URUVkc2IySmhiRk5wWjI0Z2JuWXRjMkV4RURBT0JnTlZCQXNUQjFKdgpiM1FnUTBFeEd6QVpCZ05WQkFNVEVrZHNiMkpoYkZOcFoyNGdVbTl2ZENCRFFUQWVGdzA1T0RBNU1ERXhNakF3Ck1EQmFGdzB5T0RBeE1qZ3hNakF3TURCYU1GY3hDekFKQmdOVkJBWVRBa0pGTVJrd0Z3WURWUVFLRXhCSGJHOWkKWVd4VGFXZHVJRzUyTFhOaE1SQXdEZ1lEVlFRTEV3ZFNiMjkwSUVOQk1Sc3dHUVlEVlFRREV4SkhiRzlpWVd4VAphV2R1SUZKdmIzUWdRMEV3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRRGFEdWFaCmpjNmo0MCtLZnZ2eGk0TWxhK3BJSC9FcXNMbVZFUVM5OEdQUjRtZG16eHpkenh0SUsrNk5pWTZhcnltQVphdnAKeHkwU3k2c2NUSEFIb1QwS01NMFZqVS80M2RTTVVCVWM3MUR1eEM3My9PbFM4cEY5NEczVk5UQ09Ya056OGtIcAoxV3Jqc29rNlZqazRid1k4aUdsYktrM0ZwMVM0YkluTW0vazh5dVg5aWZVU1BKSjRsdGJjZEc2VFJHSFJqY2RHCnNuVU9odWdaaXRWdGJOVjRGcFdpNmNnS09PdnlKQk5QYzFTVEU0VTZHN3dlTkxXTEJZeTVkNHV4Mng4Z2thc0oKVTI2UXpuczNkTGx3UjVFaVVXTVdlYTZ4cmtFbUNNZ1pLOUZHcWtqV1pDclhnelQvTENyQmJCbERTZ2VGNTlOOAo5aUZvNytyeVVwOS9rNURQQWdNQkFBR2pRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJCakFQQmdOVkhSTUJBZjhFCkJUQURBUUgvTUIwR0ExVWREZ1FXQkJSZ2UyWWFSUTJYeW9sUUwzMEV6VFNvLy96OVN6QU5CZ2txaGtpRzl3MEIKQVFVRkFBT0NBUUVBMW5QbmZFOTIwSTIvN0xxaXZqVEZLREsxZlB4c25Dd3J2UW1lVTc5clhxb1JTTGJsQ0tPegp5ajFoVGROR0NiTSt3NkRqWTFVYjhycnZyVG5oUTdrNG8rWXZpaVk3NzZCUVZ2bkdDdjA0emNRTGNGR1VsNWdFCjM4TmZsTlVWeVJSQm5NUmRkV1FWRGY5Vk1PeUdqLzhON3l5NVkwYjJxdnpmdkduOUxoSklaSnJnbGZDbTd5bVAKQWJFVnRRd2RwZjVwTEdra2VCNnpweHh4WXU3S3lKZXNGMTJLd3ZoSGhtNHF4Rll4bGRCbmlZVXIrV3ltWFVhZApES3FDNUpsUjNYQzMyMVk5WWVScTRWelc5djQ5M2tITUI2NWpVcjlUVS9RcjZjZjl0dmVDWDRYU1FSamJnYk1FCkhNVWZwSUJ2RlNESjNneUlDaDNXWmxYaS9FakpLU1pwNEE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+     topology:
+       controlPlane:
+         count: 3
+         class: best-effort-large
+         storageClass: gold-pressed-latinum-storage-policy
+       workers:
+         count: 2
+         class: best-effort-large
+         storageClass: gold-pressed-latinum-storage-policy
+
 (Common Reoccuring Fields)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3425,3 +3548,5 @@ Bibliography
 43. "Configure Service Accounts for Pods." Kubernetes Documentation. July 6, 2021. Accessed July 7, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 44. "Kubernetes API health endpoints." Kubernetes Documentation. November 17, 2020. Accessed July 7, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
 45. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+46. "Configuration Parameters for Tanzu Kubernetes Clusters."  VMware Docs. June 14, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-4E68C7F2-C948-489A-A909-C7A1F3DC545F.html
+47. "Examples for Provisioning Tanzu Kubernetes Clusters." VMware Docs. July 30, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
