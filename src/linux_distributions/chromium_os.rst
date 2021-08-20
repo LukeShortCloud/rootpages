@@ -196,6 +196,21 @@ Example:
    [0304/220556.325714:INFO:update_engine_client.cc(447)] Current Channel: beta-channel
    [0304/220556.325824:INFO:update_engine_client.cc(450)] Target Channel (pending update): stable-channel
 
+Rollback to an Older Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Rollback to the last update that was installed. This will change the A/B partition mounts on the next boot.
+
+.. code-block:: sh
+
+   chronos@localhost / $ update_engine_client --rollback --nopowerwash
+
+Alternatively, switch to a different update channel and download/install the update immediately.
+
+.. code-block:: sh
+
+   chronos@localhost / $ update_engine_client --update --nopowerwash --channel={stable,beta,dev,canary}-channel
+
 Package Managers
 ~~~~~~~~~~~~~~~~
 
