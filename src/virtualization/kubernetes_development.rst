@@ -2394,6 +2394,45 @@ Pod with a toleration to the Control Pane Node taint.
          key: "node-role.kubernetes.io/master"
          operator: "Exists"
 
+Pod running as a specific user and group.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-running-with-specific-user-and-group
+   spec:
+     securityContext:
+       runAsNonRoot: true
+       runAsGroup: 1234
+       runAsUser: 1234
+     containers:
+       - name: busybox
+         image: busybox:latest
+
+Pod with every possible option to disable root access.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-with-no-root-access
+   spec:
+     securityContext:
+       runAsNonRoot: true
+       runAsGroup: 1234
+       runAsUser: 1234
+     containers:
+       - name: busybox
+         image: busybox:latest
+         securityContext:
+           allowPrivilegeEscalation: false
+           privileged: false
+
 Third-Party
 ~~~~~~~~~~~
 
@@ -3419,8 +3458,8 @@ There are known issues with using probes with the method ``httpGet``. As a worka
 Security Best Practices
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-ServiceAccounts
-^^^^^^^^^^^^^^^
+Service Accounts
+^^^^^^^^^^^^^^^^
 
 The "default" ServiceAccount authentication token is mounted into every Pod by default. It is used to access the Kubernetes API which is not required in most cases. [43] It can only ``get`` a few things such as the list of APIs (``/apis``), the Kubernetes version (``/version``), and check the health state of the Kubernetes cluster (``/livez`` and ``/readyz``). The ``/healthz`` endpoint has been deprecated since Kubernetes 1.16. [44]
 
@@ -3448,6 +3487,49 @@ Alternatively, the automount of the authentication token can be disabled on a pe
      automountServiceAccountToken: false
 
 [43]
+
+Security Contexts
+^^^^^^^^^^^^^^^^^
+
+Run Containers as Non-root Users
+''''''''''''''''''''''''''''''''
+
+Run all containers as a non-root user.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-running-as-non-root
+   spec:
+     securityContext:
+       runAsUser: 1000
+     containers:
+       - name: busybox
+         image: busybox:latest
+
+Run specific containers as a non-root user.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-with-some-containers-running-as-non-root
+   spec:
+     containers:
+       - name: nginx
+         image: nginx:1.21.1-alpine
+         securityContext:
+           runAsUser: 1000
+       - name: php-fpm
+         image: bitnami/php-fpm:7.3.29-prod-debian-10-r53
+         securityContext:
+           # 0 is always the root user.
+           runAsUser: 0
 
 Installation
 ------------
