@@ -6,7 +6,10 @@ Raspberry Pi OS
 Downloads
 ---------
 
-There are three official images provided for Raspberry Pi OS. [2] These are the main features of each: [3]
+Official
+~~~~~~~~
+
+There are three official images provided for Raspberry Pi OS by the Raspberry Pi Foundation. [2] All of these are based on Debian. These are the main features of each: [3]
 
 .. csv-table::
    :header: Image Name, Minimum SD Card Size, Desktop Environment, Office Suite
@@ -15,6 +18,28 @@ There are three official images provided for Raspberry Pi OS. [2] These are the 
    Raspberry Pi OS with desktop and recommended software, 16 GB, LXDE, LibreOffice
    Raspberry Pi OS with desktop, 8 GB, LXDE, None
    Raspberry Pi OS Lite, 4 GB, None, None
+
+Unofficial
+~~~~~~~~~~
+
+These are third-party images that are not from the Raspberry Pi foundation:
+
+-  `Arch Linux <https://archlinuxarm.org/>`__
+
+   -  `Raspberry Pi 4 <https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-4>`__
+
+-  `Debian (upstream) <https://raspi.debian.net/tested-images/>`__
+-  `Fedora <https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi>`__
+-  `Manjaro <https://manjaro.org/download/#ARM>`__
+-  openSUSE
+
+    -  `Raspberry Pi 4 <https://en.opensuse.org/HCL:Raspberry_Pi4>`__
+
+-  [Red Hat] Enterprise Linux
+
+   -  `AlmaLinux <https://github.com/AlmaLinux/raspberry-pi>`__
+
+-  `Ubuntu <https://ubuntu.com/download/raspberry-pi>`__
 
 SSH
 ---
