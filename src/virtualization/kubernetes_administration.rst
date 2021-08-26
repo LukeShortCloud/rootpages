@@ -1729,6 +1729,70 @@ After making all of the above changes on each Control Plane Node, re-create all 
 
 [79]
 
+Tanzu Administration
+~~~~~~~~~~~~~~~~~~~~
+
+TKGS
+^^^^
+
+Supervisor Cluster Access
+'''''''''''''''''''''''''
+
+Access to the TKGS Supervisor cluster is restricted and only meant to be used accessed by automated APIs and VMware support for troubleshooting. Any modifications made to the Supervisor cluster **WILL** revoke the ability of VMware to provide support for it. In that case, the Supervisor cluster will need to be completely re-deployed.
+
+-  SSH into the vCenter host.
+
+   ::
+
+      $ ssh -l root <VCENTER_SERVER_IP>
+      
+      VMware vCenter Server 7.0.2.00000
+      
+      Type: vCenter Server with an embedded Platform Services Controller
+      
+      root@<VCENTER_SERVER_IP>'s password:
+      Connected to service
+      
+          * List APIs: "help api list"
+          * List Plugins: "help pi list"
+          * Launch BASH: "shell"
+      
+      Command>
+
+-  Open a shell and then find the password used by all SuperVisorControlPlaneVMs.
+
+   ::
+
+      Command> shell
+      Shell access is granted to root
+      root@<VCENTER_HOSTNAME> [ ~ ]# /usr/lib/vmware-wcp/decryptK8Pwd.py
+      Read key from file
+      
+      Connected to PSQL
+      
+      Cluster: domain-c8:446a411e-7f5c-4d4a-8e35-720c6a07ff44
+      IP: 10.213.212.45
+      PWD: VHFSZbeMPYZIxZcKOhB9dNAR35UrAsE9gMILZQz5QjsK6obI0/PX7CiTKFeIx2vbcmC6OmeILeweue3PlkHHWMUzixMRHAugtHx5TyDgqYxazEsQrMBi47v8H0wHjyYJCdyleGviTRbSvN8LcnipvgDltcTl0cab94KRYJ5BkzY=
+      ------------------------------------------------------------
+
+-  From vSphere, find an IP address of one of the SupervisorControlPlaneVM virtual machines. Ignore the IP address from the previous command. Use the "PWD" password to log in.
+
+   ::
+
+      root@<VCENTER_HOSTNAME> [ ~ ]# ssh -l root <SUPERVISOR_CONTROL_PLANE_VM_IP>
+      FIPS mode initialized
+      Password: VHFSZbeMPYZIxZcKOhB9dNAR35UrAsE9gMILZQz5QjsK6obI0/PX7CiTKFeIx2vbcmC6OmeILeweue3PlkHHWMUzixMRHAugtHx5TyDgqYxazEsQrMBi47v8H0wHjyYJCdyleGviTRbSvN8LcnipvgDltcTl0cab94KRYJ5BkzY=
+      Last login: Fri Aug 27 21:35:36 2021 from 10.213.212.14
+       21:40:15 up 23 days,  3:12,  0 users,  load average: 12.10, 8.86, 7.46
+      
+      41 Security notice(s)
+      Run 'tdnf updateinfo info' to see the details.
+      root@<SUPERVISOR_CONTROL_PLANE_VM_HOSTNAME> [ ~ ]#
+
+-  The default Kubernetes configuration provides full "admin" access to the cluster via ``kubectl``.
+
+[81]
+
 Troubleshooting
 ---------------
 
@@ -1941,3 +2005,4 @@ Bibliography
 78. "Network Requirements." GitHub antrea-io/antrea. May 7, 2021. Accessed July 12, 2021. https://github.com/antrea-io/antrea/blob/main/docs/network-requirements.md
 79. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
 80. "Installing kubeadm." Kubernetes Documentation. February 17, 2021. Accessed July 22, 2021. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+81. "Common issues with a vSphere with Tanzu Cluster deployment stuck in Configuring state (83060)." VMware Customer Connect. July 27, 2021. Accessed August 27, 2021. https://kb.vmware.com/s/article/83060
