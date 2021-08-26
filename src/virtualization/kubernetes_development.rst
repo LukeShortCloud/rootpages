@@ -2433,6 +2433,24 @@ Pod with every possible option to disable root access.
            allowPrivilegeEscalation: false
            privileged: false
 
+Pod with Linux kernel capabilities added to the process.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-with-capabilities
+   spec:
+     containers:
+       - name: busybox
+         image: busybox:latest
+         securityContext:
+           capabilities:
+             add:
+               - SYS_ADMIN
+
 Third-Party
 ~~~~~~~~~~~
 
@@ -3531,6 +3549,31 @@ Run specific containers as a non-root user.
            # 0 is always the root user.
            runAsUser: 0
 
+[48]
+
+Set Linux Kernel Capabilities
+'''''''''''''''''''''''''''''
+
+Linux kernel capabilities can only be defined at the ``pod.spec.containers.securityContext`` level (not in ``pod.spec.securityContext``). This is because it only affects a single Linux process. Visit `here <../administration/linux_kernel.html#capabilities>`__ for more information about common Linux capabilities.
+
+.. code-block:: yaml
+
+   ---
+   kind: Pod
+   apiVersion: v1
+   metadata:
+     name: pod-with-limited-capabilities
+   spec:
+     containers:
+       - name: busybox
+         image: busybox:1.33.1
+         securityContext:
+           capabilities:
+             add:
+               - NET_ADMIN
+
+[48]
+
 Installation
 ------------
 
@@ -3632,3 +3675,4 @@ Bibliography
 45. "Encrypting Secret Data at Rest." Kubernetes Documentation. May 30, 2020. Accessed July 21, 2021. https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
 46. "Configuration Parameters for Tanzu Kubernetes Clusters."  VMware Docs. June 14, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-4E68C7F2-C948-489A-A909-C7A1F3DC545F.html
 47. "Examples for Provisioning Tanzu Kubernetes Clusters." VMware Docs. July 30, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
+48. "Configure a Security Context for a Pod or Container." Kubernetes Documentation. July 8, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
