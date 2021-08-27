@@ -1997,6 +1997,43 @@ Installation [44]:
 Concepts
 --------
 
+Admission Controllers
+~~~~~~~~~~~~~~~~~~~~~
+
+Admission Controllers provide a way to regulate the Kubernetes APIs. Here are all of the available ones that can be configured:
+
+.. code-block:: sh
+
+   $ kubectl exec --namespace kube-system -it kube-apiserver-controlplane -- kube-apiserver --help | grep enable-admission
+         --enable-admission-plugins strings       admission plugins that should be enabled in addition to default enabled ones (NamespaceLifecycle, LimitRanger, ServiceAccount, TaintNodesByCondition, Priority, DefaultTolerationSeconds, DefaultStorageClass, StorageObjectInUseProtection, PersistentVolumeClaimResize, RuntimeClass, CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, MutatingAdmissionWebhook, ValidatingAdmissionWebhook, ResourceQuota). Comma-delimited list of admission plugins: AlwaysAdmit, AlwaysDeny, AlwaysPullImages, CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, DenyEscalatingExec, DenyExecOnPrivileged, EventRateLimit, ExtendedResourceToleration, ImagePolicyWebhook, LimitPodHardAntiAffinityTopology, LimitRanger, MutatingAdmissionWebhook, NamespaceAutoProvision, NamespaceExists, NamespaceLifecycle, NodeRestriction, OwnerReferencesPermissionEnforcement, PersistentVolumeClaimResize, PersistentVolumeLabel, PodNodeSelector, PodSecurityPolicy, PodTolerationRestriction, Priority, ResourceQuota, RuntimeClass, SecurityContextDeny, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
+
+A detailed explaination of each built-in Kubernetes Admission Controller can be found `here <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/>`__.
+
+Find which Admission Controllers are enabled or disabled:
+
+.. code-block:: sh
+
+   $ grep -P "[enable|disable]-admission" /etc/kubernetes/manifests/kube-apiserver.yaml
+
+[112]
+
+All Admission Controllers are configured via a single file. This file must be passed through to the ``kube-apiserver`` with the argument ``--admission-control-config-file=<PATH_TO_YAML_FILE>``.
+
+.. code-block:: yaml
+
+   ---
+   kind: AdmissionConfiguration
+   apiVersion: apiserver.config.k8s.io/v1
+   plugins:
+     - name: <ADMISSION_CONTROLLER_1>
+       configuration:
+         <CONFIGURATION>
+     - name: <ADMISSION_CONTROLLER_2>
+       configuration:
+         <CONFIGURATION>
+
+[113]
+
 Container Network Interface (CNI) Plugins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2864,3 +2901,5 @@ Bibliography
 109. "Falco." GitHub falcosecurity/charts. February 20, 2023. Accessed February 21, 2023. https://github.com/falcosecurity/charts/tree/master/falco
 110. "VMware HA and DRS Explained." BDRSuite. May 9, 2022. Accessed February 21, 2023. https://www.bdrsuite.com/blog/ha-vs-drs-in-vmware-vsphere/
 111. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-vsphere-cli.html
+112. "Using Admission Controllers." Kubernetes Documentation. July 13, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+113. "Kubernetes admission controllers in 5 minutes." sysdig. February 18, 2021. Accessed February 21, 2023. https://sysdig.com/blog/kubernetes-admission-controllers/
