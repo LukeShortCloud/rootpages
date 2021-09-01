@@ -46,6 +46,14 @@ During the supported lifecycle, no features or hardware support are added. Only 
 
 An installation of Windows Enterprise LTSC can switch to the traditional "current" update channel which recieves two major feature updates every year. This essentially turns it into Windows Enterprise. However, downgrading Windows Enterprise to Windows Enterprise LTSC is not supported. [4]
 
+Downloads
+---------
+
+Windows can be freely and legally downloaded directly from Microsoft:
+
+-  `Windows 10 Home and Pro <https://www.microsoft.com/en-us/software-download/windows10ISO>`__ = Limited features are enabled until a license key is provided. There is no expiration time for this trial. [7]
+-  `Windows 10 Enterprise and Enterprise LTSC <https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise>`__ = A 90 day full trial. License keys can only be purchased in volume by a company and not an individual.
+
 History
 -------
 
@@ -60,3 +68,4 @@ Bibliography
 4. "Windows 10 edition upgrade." Microsoft Docs. March 25, 2021. Accessed May 9, 2021. https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades
 5. "Microsoft is cutting Windows 10 Enterprise LTSC support from ten years to five." ZDNet. February 18, 2021. Accessed August 31, 2021. https://www.zdnet.com/article/microsoft-is-cutting-windows-10-enterprise-ltsc-support-from-ten-years-to-five/
 6. "Microsoft says that there will be a Windows 11 LTSC release, but it's a few years out." Neowin. July 21, 2021. Accessed August 31, 2021. https://www.neowin.net/news/microsoft-says-that-there-will-be-a-windows-11-ltsc-release-but-its-a-few-years-out/
+7. "Question About Windows 10 Trial." Microsoft Community. January 1, 2017. Accessed August 31, 2021. https://answers.microsoft.com/en-us/windows/forum/all/question-about-windows-10-trial/fd9b4d3a-f44c-4a38-ae89-12b4692c744e
