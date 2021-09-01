@@ -3,8 +3,8 @@ Windows Editions
 
 .. contents:: Table of Contents
 
-NT 10 (Windows 10)
-------------------
+NT 10 (Windows 10 and 11)
+-------------------------
 
 Feature comparison:
 
@@ -21,23 +21,30 @@ Feature comparison:
 Long-Term Servicing Channel (LTSC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Previously known as the long-term servicing branch (LTSB) in older releases of Windows, LTSC provides a stripped down version of Windows Enterprise. It removes pre-installed applications including:
+Previously known as the long-term servicing branch (LTSB) in older releases of Windows, LTSC provides a stripped down version of Windows Enterprise. It removes pre-installed applications including [3]:
 
 -  Cortana
 -  Edge web browser
 -  Microsoft Store
--  Onedrive
+-  OneDrive
+-  OneNote
 -  Skype
 
-Major updates (including hardware support) only come every two to three years. Every release receives security updates for 10 years.
+During the supported lifecycle, no features or hardware support are added. Only security and bug fixes are provided.
 
--  Windows 10 Enterprise LTSC 2016
--  Windows 10 Enterprise LTSC 2019
--  Windows 10 Enterprise LTSC 2021
+.. csv-table::
+   :header: Name, Years of Support
+   :widths: 20, 20
 
-[3]
+   Windows 10 Enterprise LTSB 2015, 10
+   Windows 10 Enterprise LTSB 2016, 10
+   Windows 10 Enterprise LTSC 2019, 10
+   Windows 10 Enterprise LTSC 2021, 5
+   Windows 11 Enterprise LTSC 2024, 5
 
-An installation of Windows 10 Enterprise LTSC can switch to the traditional "current" update channel which recieves two major updates every year. This essentially turns it into Windows 10 Enterprise. However, downgrading Windows 10 Enterprise to Windows 10 Enterprise LTSC is not supported. [4]
+[5][6]
+
+An installation of Windows Enterprise LTSC can switch to the traditional "current" update channel which recieves two major feature updates every year. This essentially turns it into Windows Enterprise. However, downgrading Windows Enterprise to Windows Enterprise LTSC is not supported. [4]
 
 History
 -------
@@ -49,5 +56,7 @@ Bibliography
 
 1. "Compare Windows 10 editions." Microsoft. Accessed May 9, 2021 https://www.microsoft.com/en-us/WindowsForBusiness/Compare
 2. "Windows 10 editions comparison with features." Whatvwant. October 16, 2020. Accessed May 9, 2021. https://whatvwant.com/windows-10-editions-comparison-with-features/
-3. "LTSC: What is it, and when should it be used?" Windows IT Pro Blog. July 15, 2019. Accessed May 9, 2021. https://techcommunity.microsoft.com/t5/windows-it-pro-blog/ltsc-what-is-it-and-when-should-it-be-used/ba-p/293181
+3. "LTSC: What is it, and when should it be used?" Windows IT Pro Blog. July 15, 2019. Accessed August 31, 2021. https://techcommunity.microsoft.com/t5/windows-it-pro-blog/ltsc-what-is-it-and-when-should-it-be-used/ba-p/293181
 4. "Windows 10 edition upgrade." Microsoft Docs. March 25, 2021. Accessed May 9, 2021. https://docs.microsoft.com/en-us/windows/deployment/upgrade/windows-10-edition-upgrades
+5. "Microsoft is cutting Windows 10 Enterprise LTSC support from ten years to five." ZDNet. February 18, 2021. Accessed August 31, 2021. https://www.zdnet.com/article/microsoft-is-cutting-windows-10-enterprise-ltsc-support-from-ten-years-to-five/
+6. "Microsoft says that there will be a Windows 11 LTSC release, but it's a few years out." Neowin. July 21, 2021. Accessed August 31, 2021. https://www.neowin.net/news/microsoft-says-that-there-will-be-a-windows-11-ltsc-release-but-its-a-few-years-out/
