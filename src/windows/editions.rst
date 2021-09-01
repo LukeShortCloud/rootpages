@@ -33,14 +33,14 @@ Previously known as the long-term servicing branch (LTSB) in older releases of W
 During the supported lifecycle, no features or hardware support are added. Only security and bug fixes are provided.
 
 .. csv-table::
-   :header: Name, Years of Support
-   :widths: 20, 20
+   :header: Name, Years of Support, Version Feature Set is Based On
+   :widths: 20, 20, 20
 
-   Windows 10 Enterprise LTSB 2015, 10
-   Windows 10 Enterprise LTSB 2016, 10
-   Windows 10 Enterprise LTSC 2019, 10
-   Windows 10 Enterprise LTSC 2021, 5
-   Windows 11 Enterprise LTSC 2024, 5
+   Windows 10 Enterprise LTSB 2015, 10, `Windows 10 Version 1507 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2015>`__
+   Windows 10 Enterprise LTSB 2016, 10, `Windows 10 Version 1607 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2016>`__
+   Windows 10 Enterprise LTSC 2019, 10, `Windows 10 Version 1809 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2019>`__
+   Windows 10 Enterprise LTSC 2021, 5, ""
+   Windows 11 Enterprise LTSC 2024, 5, ""
 
 [5][6]
 
