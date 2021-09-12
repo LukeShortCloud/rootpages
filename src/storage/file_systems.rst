@@ -868,6 +868,99 @@ Syntax:
 
 [16]
 
+Encrypted Partitions
+--------------------
+
+Linux Unified Key Setup (LUKS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Setup
+^^^^^
+
+Install LUKS:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S cryptsetup
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install cryptsetup
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install cryptsetup-luks
+
+Encrypt a partition non-interactively:
+
+.. code-block:: sh
+
+   $ echo <PASSWORD> | sudo cryptsetup -q luksFormat /dev/<DEVICE><PARTITION_NUMBER>
+
+Open the encrypted partition as a specificed ``/dev/mapper/<DEVICE_MAPPER_NAME>`` device which can be formatted and mounted as normal.
+
+.. code-block:: sh
+
+   $ echo <PASSWORD> | sudo cryptsetup luksOpen /dev/<DEVICE><PARTITION_NUMBER> <DEVICE_MAPPER_NAME>
+
+[33]
+
+Passwords
+^^^^^^^^^
+
+LUKS encrypted partitions can be accessed either with a password from standard input or a key file.
+
+Add an additional password to unlock the encrypted partition:
+
+.. code-block:: sh
+
+   $ sudo cryptsetup luksAddKey /dev/<DEVICE><PARTITION_NUMBER>
+
+Change an existing password (add a new password and delete the old one):
+
+.. code-block:: sh
+
+   $ sudo cryptsetup luksChangeKey /dev/<DEVICE><PARTITION_NUMBER>
+
+Remove one of the existing passwords:
+
+.. code-block:: sh
+
+   $ sudo cryptsetup luksRemoveKey /dev/<DEVICE><PARTITION_NUMBER>
+
+[34]
+
+LUKS can use a key file to decrypt a partition. This can contain any kind of data. It is recommended to use either data from ``/dev/urandom``, ``/dev/random``, or the command ``openssl``.
+
+.. code-block:: sh
+
+   $ dd bs=512 count=8 if=/dev/urandom of=<PATH_TO_NEW_KEY_FILE>
+
+.. code-block:: sh
+
+   $ openssl genrsa -out <PATH_TO_NEW_KEY_FILE> 4096
+
+Add an additional key file to unlock the encrypted partition:
+
+.. code-block:: sh
+
+   $ sudo cryptsetup luksAddKey /dev/<DEVICE><PARTITION_NUMBER> <PATH_TO_NEW_KEY_FILE>
+
+Use a key file to open an encrypted partition:
+
+.. code-block:: sh
+
+   $ sudo cryptsetup luksOpen /dev/<DEVICE><PARTITION_NUMBER> <DEVICE_MAPPER_NAME> --key-file=<PATH_TO_KEY_FILE>
+
+[35]
+
 Mounting
 --------
 
@@ -1078,3 +1171,6 @@ Bibliography
 30. "unix extensions not working?" Ubuntu Bugs samba package. June 12, 2020. Accessed March 13, 2021. https://bugs.launchpad.net/ubuntu/+source/samba/+bug/1883234
 31. "smb.conf - The configuration file for the Samba suite." Samba Docs. Accessed March 13, 2021. https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
 32. "kpartx - Create device maps from partition tables." Ubuntu Manpage. Accessed August 2, 2021. https://manpages.ubuntu.com/manpages/focal/man8/kpartx.8.html
+33. "Encrypting data partitions using LUKS." IBM Sterling Order Management Software 10.0.0 Documentation. Accessed September 12, 2021. https://www.ibm.com/docs/en/order-management-sw/10.0?topic=considerations-encrypting-data-partitions-using-luks
+34. "cryptsetup(8)." Linux manual page. Accessed September 12, 2021. https://man7.org/linux/man-pages/man8/cryptsetup.8.html
+35. "How to enable LUKS disk encryption with keyfile on Linux." nixCraft. Accessed September 12, 2021. https://www.cyberciti.biz/hardware/cryptsetup-add-enable-luks-disk-encryption-keyfile-linux/
