@@ -4000,6 +4000,73 @@ Optionally setup a lab environment.
 
 [52]
 
+Cloud Native Buildpacks (CNB)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installation:
+
+-  ``pack`` requires the ``docker`` daemon to be installead and running. [61]
+
+   -  Linux:
+
+      .. code-block:: sh
+
+         $ export PACK_VERSION=v0.21.0
+         $ curl -sSL "https://github.com/buildpacks/pack/releases/download/${PACK_VERSION}/pack-${PACK_VERSION}-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -x -v -z pack
+
+   -  macOS:
+
+      .. code-block:: sh
+
+         $ brew install buildpacks/tap/pack
+
+-  ``kpack`` requires cluster-admin Kubernetes privileges to install and access to a container registry to work. [62]
+
+   -  Install ``kpack`` to Kubernetes:
+
+      .. code-block:: sh
+
+         $ export KPACK_VERSION=0.3.1
+         $ wget https://github.com/pivotal/kpack/releases/download/v${KPACK_VERSION}/release-${KPACK_VERSION}.yaml
+         $ kubectl apply --filename release-${KPACK_VERSION}.yaml
+         $ kubectl --namespace kpack get pods
+
+   -  Provide container registry credentials so ``kpack`` can automatically upload built images. [64]
+
+      .. code-block:: yaml
+
+         ---
+         apiVersion: v1
+         kind: Secret
+         metadata:
+           name: secret-container-registry-for-kpack
+           annotations:
+             kpack.io/docker: https://index.docker.io/v1/
+         type: kubernetes.io/basic-auth
+         stringData:
+           username: "<CONTAINER_REGISTRY_USERNAME>"
+           password: "<CONTAINER_REGISTRY_PASSWORD>"
+
+      .. code-block:: yaml
+
+         ---
+         apiVersion: v1
+         kind: ServiceAccount
+         metadata:
+           name: dockerhub-service-account
+         secrets:
+           - name: dockerhub-registry-credentials
+         imagePullSecrets:
+           - name: dockerhub-registry-credentials
+
+Find existing build packs from `here <https://github.com/paketo-buildpacks>`__. Use these as a starting point.
+
+Use ``pack stack suggest`` to find a stack. A stack contains a build image and a related run image. The build contains the build dependencies and the run image is smaller with it only containing the minimum libraries required to run the application. [65]
+
+Apply a builder. A builder uses build packs, lifecycle, and the stack's build image. [66]
+
+[63]
+
 Best Practices
 ~~~~~~~~~~~~~~
 
@@ -4351,3 +4418,9 @@ Bibliography
 58. "K8ssandra FAQs." K8ssandra. March 17, 2022. Accessed August 23, 2022. https://docs.k8ssandra.io/faqs/
 59. "Single-cluster install with helm." K8ssandra. May 30, 2022. Accessed August 23, 2022. https://docs-v2.k8ssandra.io/install/local/single-cluster-helm/
 60. "Deployments." Kubernetes Documentation. December 15, 2022. Accessed January 12, 2023. https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+61. "Pack." Cloud Native Buildpacks. Accessed February 21, 2023. https://buildpacks.io/docs/tools/pack/
+62. "Installing kpack." GitHub pivotal/kpack. October 14, 2022. Accessed February 21, 2023. https://github.com/pivotal/kpack/blob/main/docs/install.md
+63. "Getting Started with kpack to Automate Builds using Cloud Native Buildpacks." VMware Tanzu Developer Center. Accessed February 21, 2023. https://tanzu.vmware.com/developer/guides/containers/cnb-gs-kpack/
+64. "Secrets." GitHub pivotal/kpack. October 7, 2021. Accessed February 21, 2023. https://github.com/pivotal/kpack/blob/main/docs/secrets.md
+65. "Stack." Cloud Native Buildpacks. Accessed February 21, 2023. https://buildpacks.io/docs/concepts/components/stack/
+66. "Builder." Cloud Native Buildpacks. Accessed February 21, 2023. https://buildpacks.io/docs/concepts/components/builder/
