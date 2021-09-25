@@ -408,6 +408,43 @@ After resolving the conflict, add the commit back by doing a continue or a new c
 
 [13]
 
+Changing the Default Branch Name
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In some cases it may be desired to change the default branch name that is shown when visiting a git repository via a GUI or via the CLI when cloning it. In 2020, GitHub changed the default branch name "master" to "main" on all newly created projects. This was to promote more inclusion by avoiding historically racist terminology. [33]
+
+-  Rename the "master" branch to "main".
+
+   .. code-block:: sh
+
+      $ git branch --move master main
+
+-  Push the new "main" branch to the git server and set the upstream to follow changes that may now happen on the git server side.
+
+   .. code-block:: sh
+
+      $ git push --set-upstream origin main
+
+-  Change the "HEAD" symbolic reference to point to "main" instead of "master".
+
+   .. code-block:: sh
+
+      $ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+      $ git branch --all | grep HEAD
+      remotes/origin/HEAD -> origin/main
+
+-  Go to the git server and change the default branch.
+
+   -  GitHub: Settings > Branches > Switch to another branch > (select "main" from the drop-down menu) > Update > I understand, update the default branch.
+
+-  Confirm everything is setup as intended. Then delete the "master" branch.
+
+   .. code-block:: sh
+
+      $ git push --delete origin master
+
+[34]
+
 Versioning
 ----------
 
@@ -988,3 +1025,5 @@ Bibliography
 30. Difference between URL, URI and URN - Interview Questions." Java 67. Accessed December 29, 2020. https://www.java67.com/2013/01/difference-between-url-uri-and-urn.html
 31. "Events that trigger workflows." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 32. "Workflow syntax for GitHub Actions." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+33. "GitHub to replace 'master' with 'main' starting next month." ZDNet. September 19, 2020. Accessed September 24, 2021. https://www.zdnet.com/article/github-to-replace-master-with-main-starting-next-month/
+34. "5 steps to change GitHub default branch from master to main." Steven M. Mortimer. July 23, 2020. Accessed September 24, 2021. https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
