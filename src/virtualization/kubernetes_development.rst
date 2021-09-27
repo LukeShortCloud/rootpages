@@ -236,10 +236,13 @@ CertificateSigningRequest
 ``csr.spec:``
 
 -  extras (map of strings) = Additional settings for the user.
--  groups (list of strings) [32] = Specify the type of account that this certificate can be used as for authentication.
+-  groups (list of strings) [32][49] = Specify the type of account that this certificate can be used as for authentication. Most commonly, this is either set to only be ``system:authenticated`` or ``system:serviceaccounts``.
 
    -  system:authenticated = Human.
+   -  system:masters = A human cluster administrator with full access to the Kubernetes cluster by default.
+   -  system:nodes = A non-human service account specifically for Nodes. Requires the common name for the certificate to start with ``system:node:``.
    -  system:serviceaccounts = Non-human.
+   -  system:unauthenticated = Anonymous account used when authentication is provided.
 
 -  **request** (string) = Base64-encoded PEM/certificate file content.
 -  **signerName** (string) [33] = The CA that will sign the certificate.
@@ -3676,3 +3679,4 @@ Bibliography
 46. "Configuration Parameters for Tanzu Kubernetes Clusters."  VMware Docs. June 14, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-4E68C7F2-C948-489A-A909-C7A1F3DC545F.html
 47. "Examples for Provisioning Tanzu Kubernetes Clusters." VMware Docs. July 30, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
 48. "Configure a Security Context for a Pod or Container." Kubernetes Documentation. July 8, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+49. "Improving Your Kubernetes Authorization: Don’t Use system:masters." Aqua Blog. May 20, 2021. Accessed September 26, 2021. https://blog.aquasec.com/kubernetes-authorization
