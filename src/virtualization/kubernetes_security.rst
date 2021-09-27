@@ -98,6 +98,25 @@ A user is defined using the "common name" (CN) subject in a TLS certificate. The
             $ base64 -w 0 <USER>.csr
 
       -  Create a CSR object. Refer to `examples from the Kubernetes Development documentation about CSR <kubernetes_development.html#certificatesigningrequest>`__.
+
+         .. code-block:: yaml
+
+            ---
+            apiVersion: certificates.k8s.io/v1
+            kind: CertificateSigningRequest
+            metadata:
+              name: <NEW_USER>
+            spec:
+              request: |
+                <BASE64_ENCODED_CERTIFICATE_SIGNING_REQUEST>
+              signerName: kubernetes.io/kube-apiserver-client
+              # Optionally define the amount of time until the certificate should expire.
+              #expirationSeconds:
+              groups:
+              - system: authenticated
+              usages:
+              - client auth
+
       -  The CSR will be in a ``Pending`` state until manually approved by an administrator user.
 
          .. code-block:: sh

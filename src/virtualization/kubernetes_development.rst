@@ -297,7 +297,8 @@ A CSR for a new end-user account.
    metadata:
      name: csr-henry
    spec:
-     request: <BASE64_ENCODED_CERTIFICATE>
+     request: |
+       <BASE64_ENCODED_CERTIFICATE_SIGNING_REQUEST>
      signerName: kubernetes.io/kube-apiserver-client
      groups:
        - system:authenticated
@@ -314,7 +315,8 @@ A CSR for a new end-user account that will have administrator access.
    metadata:
      name: csr-harry
    spec:
-     request: <BASE64_ENCODED_CERTIFICATE>
+     request: |
+       <BASE64_ENCODED_CERTIFICATE_SIGNING_REQUEST>
      signerName: kubernetes.io/kube-apiserver-client
      groups:
        - system:authenticated
@@ -333,7 +335,8 @@ A CSR for a Kubernetes component added to the cluster.
    metadata:
      name: csr-kube-new-operator
    spec:
-     request: <BASE64_ENCODED_CERTIFICATE>
+     request: |
+       <BASE64_ENCODED_CERTIFICATE_SIGNING_REQUEST>
      signerName: kubernetes.io/kubelet-serving
      groups:
        - system:serviceaccount
