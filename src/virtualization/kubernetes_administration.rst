@@ -2436,6 +2436,77 @@ Install:
 
 [81]
 
+Falco
+^^^^^
+
+Installation [109]:
+
+.. code-block:: sh
+
+   $ helm repo add falcosecurity https://falcosecurity.github.io/charts
+   $ helm repo update
+   $ helm install --create-namespace --namespace falco falco falcosecurity/falco
+
+Files:
+
+-  /etc/falco/falco.yaml = Configuration file.
+-  /etc/falco/falco_rules.yaml = Default rules.
+-  /etc/falco/falco_rules.local.yaml = Custom defined rules.
+
+Configuration settings:
+
+-  rules_file = a YAML list of YAML files and/or directories containing more rules.
+-  json_output = log to JSON.
+-  log_stderr
+-  log_syslog
+-  log_level = Logs for Falco itself.
+-  priority = Logs to send (default is "debug")
+-  stdoutput:
+
+   -  enabled: true
+
+-  file_output:
+
+  -  enabled: true
+  -  filename: /opt/falco/events.txt
+
+-  program_output: true
+
+   -  program: "jq '{text: .output}' | curd -d @- -X POST https://hooks.slack.com/services/XYZ"
+
+-  http_output:
+
+   -  enabled: true
+   -  url: http://some.url/some/path
+
+The full rules documentation can be found `here <https://falco.org/docs/rules/>`__.
+
+Common filters:
+
+-  container.id
+-  container.name
+-  proc.name
+-  fd.name
+-  evt.type
+-  user.name
+-  container.image.tag
+-  container.image.repository
+-  proc.cmdline = The command that was run.
+
+View events from falco:
+
+.. code-block:: sh
+
+   $ sudo journalctl -u falco
+
+Reload the configuration wihtout restart the service:
+
+.. code-block:: sh
+
+   $ sudo systemctl status falco | grep PID
+    Main PID: 3927 (falco)
+   $ kill -1 3927
+
 Tanzu Administration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2740,3 +2811,4 @@ Bibliography
 106. "Tags." GitHub vmware-tanzu/community-edition. June 6, 2022. Accessed October 24, 2022. https://github.com/vmware-tanzu/community-edition/tags
 107. "Configuration." kind. October 2, 2022. Accessed October 28, 2022. https://kind.sigs.k8s.io/docs/user/configuration/
 108. "Creating a Kind Cluster With Calico Networking." alexbrand's blog. September 30, 2019. Accessed October 28, 2022. https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/
+109. "Falco." GitHub falcosecurity/charts. February 20, 2023. Accessed February 21, 2023. https://github.com/falcosecurity/charts/tree/master/falco
