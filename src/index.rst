@@ -62,6 +62,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Security
+
+   security/index
+
+.. toctree::
+   :maxdepth: 1
    :caption: Storage
 
    storage/index

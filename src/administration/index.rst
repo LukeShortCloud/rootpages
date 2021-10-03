@@ -9,4 +9,3 @@
    mail_servers
    operating_systems
    package_managers
-   security
