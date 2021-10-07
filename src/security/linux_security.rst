@@ -50,6 +50,36 @@ Example (letters):
 Authentication
 --------------
 
+Passwords
+~~~~~~~~~
+
+Expiration
+^^^^^^^^^^
+
+Use the `passwd <https://man7.org/linux/man-pages/man1/passwd.1.html>`__ to force a password to be changed immediately.
+
+.. code-block:: sh
+
+   $ sudo passwd --expire <USER>
+
+Or use `chage <https://man7.org/linux/man-pages/man1/chage.1.html>`__ to force a password change on a specified date.
+
+.. code-block:: sh
+
+   $ sudo chage --lastday <TWO_DIGIT_YEAR>-<TWO_DIGIT_MONTH>-<TWO_DIGIT_DAY> <USER>
+
+Or use ``chage`` to force a password change after a specified number of days.
+
+.. code-block:: sh
+
+   $ sudo chage --maxdays <DAYS> <USER>
+
+View details about password expiration for a user.
+
+.. code-block:: sh
+
+   $ sudo chage --list <USER>
+
 Kerberos
 ~~~~~~~~
 
