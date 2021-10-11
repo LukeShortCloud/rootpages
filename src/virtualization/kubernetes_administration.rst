@@ -1451,7 +1451,7 @@ Install:
 
 .. code-block:: sh
 
-   $ helm repo add https://charts.bitnami.com/bitnami
+   $ helm repo add bitnami https://charts.bitnami.com/bitnami
    $ helm repo update
    $ helm install harbor-bitnami bitnami/harbor
 
