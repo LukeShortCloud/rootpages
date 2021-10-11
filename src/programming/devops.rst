@@ -65,8 +65,23 @@ Common IDEs:
 
    -  `PyCharm <https://www.jetbrains.com/pycharm/>`__
 
+Visual Studio Code
+~~~~~~~~~~~~~~~~~~
+
+Terminal
+^^^^^^^^
+
+Visual Studio Code provides a built-in terminal to that opens a full shell for accessing CLI utilities. Open it by going to:
+
+View > Terminal
+
+[35]
+
+Forks
+^^^^^
+
 code-server
-~~~~~~~~~~~
+'''''''''''
 
 Minimum requirements:
 
@@ -76,7 +91,7 @@ Minimum requirements:
 code-server is a service developed by Coder that hosts a remote session of Microsoft Visual Studio Code. This allows developers to install their dependencies for their application development in a remote environment and are able to access it from anywhere.
 
 Installation
-^^^^^^^^^^^^
+&&&&&&&&&&&&
 
 -  Package Manager
 
@@ -113,7 +128,7 @@ Installation
 [20]
 
 Configuration
-^^^^^^^^^^^^^
+&&&&&&&&&&&&&
 
 All of the configuration is handled via the ``coder-server`` binary.
 
@@ -1027,3 +1042,4 @@ Bibliography
 32. "Workflow syntax for GitHub Actions." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 33. "GitHub to replace 'master' with 'main' starting next month." ZDNet. September 19, 2020. Accessed September 24, 2021. https://www.zdnet.com/article/github-to-replace-master-with-main-starting-next-month/
 34. "5 steps to change GitHub default branch from master to main." Steven M. Mortimer. July 23, 2020. Accessed September 24, 2021. https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+35. "Integrated Terminal." Visual Studio Code. October 7, 2021. Accessed October 11, 2021. https://code.visualstudio.com/docs/editor/integrated-terminal
