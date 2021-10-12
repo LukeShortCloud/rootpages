@@ -86,6 +86,15 @@ View details about an object.
 
    $ kubectl describe <RESOURCE_NAME> <OBJECT_NAME>
 
+View details about a specific Resource API version. Examples:
+
+.. code-block:: sh
+
+   $ kubectl explain deployment --api-version apps/v1
+   $ kubectl explain ingress --api-version extensions/v1beta1
+   $ kubectl explain ingress --api-version networking.k8s.io/v1beta1
+   $ kubectl explain ingress --api-version networking.k8s.io/v1
+
 [7]
 
 Edit or view the YAML configuration for an existing object.
@@ -3640,7 +3649,7 @@ Bibliography
 4. "So you want to change the API?" GitHub kubernetes/community. June 25, 2019. Accessed April 15, 2020. https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api_changes.md
 5. "[Kubernetes 1.19] API OVERVIEW." Kubernetes API Reference Docs. October 19, 2020. Accessed March 25, 2021. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/
 6. "Kubernetes Resources and Controllers Overview." The Kubectl Book. Accessed April 29, 2020. https://kubectl.docs.kubernetes.io/pages/kubectl_book/resources_and_controllers.html
-7. "Overview of kubectl." Kubernetes Reference. March 28, 2020. Accessed April 29, 2020. https://kubernetes.io/docs/reference/kubectl/overview/
+7. "Overview of kubectl." Kubernetes Reference. September 8, 2021. Accessed October 12, 2021. https://kubernetes.io/docs/reference/kubectl/overview/
 8. "Using kubectl to jumpstart a YAML file — #HeptioProTip." heptio Blog. September 21, 2017. Accessed April 29, 2020. https://blog.heptio.com/using-kubectl-to-jumpstart-a-yaml-file-heptioprotip-6f5b8a63a3ea
 9. "Declarative Management of Kubernetes Objects Using Configuration Files." Kubernetes Tasks. May 2, 2020. Accessed May 28, 2020. https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/
 10. "Kubernetes Tips: Create Pods With Imperative Commands in 1.18." Better Programming - Medium. April 7, 2020. Accessed May 28, 2020. https://medium.com/better-programming/kubernetes-tips-create-pods-with-imperative-commands-in-1-18-62ea6e1ceb32
