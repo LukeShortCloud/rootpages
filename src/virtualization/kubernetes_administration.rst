@@ -1385,6 +1385,64 @@ Legacy plugins that are no longer maintained:
 
 [19][20]
 
+Service LoadBalancers
+~~~~~~~~~~~~~~~~~~~~~
+
+A Service with the type of LoadBalancer provides an external IP address that can be used to access an application from outside of the Kubernetes cluster. Most public cloud providers have built-in support for their own load balancing services to integrate with Kubernetes.
+
+An installation of Kubernetes on bare-metal requires a special third-party Service LoadBalancer to be installed and configured to be able to access applications without using an internal Service of the type ClusterIP or a Service of the type NodePort on an undesired port number.
+
+Bare-metal:
+
+1.  `MetalLB <https://metallb.universe.tf/>`__ = The most popular and widely used bare-metal Service LoadBalancer.
+2.  `kube-vip <https://github.com/kube-vip/kube-vip>`__ = A basic Kubernetes load balancer.
+3.  `Seesaw <https://opensource.google/projects/seesaw>`__ = No binaries are packaged so it must be compiled from source code.
+4.  `Klipper Service Load Balancer <https://rancher.com/docs/k3s/latest/en/networking/>`__ = Designed for Rancher's k3s.
+
+MetalLB
+^^^^^^^
+
+**Installation**
+
+-  Manual:
+
+   -  Find the desired version from the `GitHub metallb/metallb releases page <https://github.com/metallb/metallb/releases>`__.
+   -  Install MetalLB into the metallb-system namespace. [76]
+
+      .. code-block:: sh
+
+         $ export METALLB_VERSION=v0.10.3
+         $ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/${METALLB_VERSION}/manifests/namespace.yaml
+         $ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/${METALLB_VERSION}/manifests/metallb.yaml
+
+   -  Configure the external IP range to use for Service LoadBalancers. [77] As soon as this ConfigMap object is created, Service objects of type LoadBalancer will get an external IP address. If not, there is an issue with the installation or configuration.
+
+      .. code-block:: sh
+
+         $ cat <<EOF | kubectl apply -f -
+         ---
+         apiVersion: v1
+         kind: ConfigMap
+         metadata:
+           name: config
+           namespace: metallb-system
+         data:
+           config: |
+             address-pools:
+               - name: default
+                 protocol: layer2
+                 addresses:
+                   - <IP_ADDRESS_FIRST>-<IP_ADDRESS_LAST>
+         EOF
+
+-  Automatic (Helm) [78]:
+
+   .. code-block:: sh
+
+      $ helm repo add bitnami https://charts.bitnami.com/bitnami
+      $ helm repo update
+      $ helm install --create-namespace --namespace metallb-system --set 'configInline.address-pools[0].name'=default --set 'configInline.address-pools[0].protocol'=layer2 --set 'configInline.address-pools[0].addresses[0]'="<IP_ADDRESS_FIRST>-<IP_ADDRESS_LAST>" metallb bitnami/metallb
+
 Container Registries
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1742,3 +1800,6 @@ Bibliography
 73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
 75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
+76. "Installation." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/installation/
+77. "Configuration." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/configuration/
+78. "MetalLB." GitHub bitnami/charts. October 8, 2021. Accessed October 12, 2021. https://github.com/bitnami/charts/tree/master/bitnami/metallb
