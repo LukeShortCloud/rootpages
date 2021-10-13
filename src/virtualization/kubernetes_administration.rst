@@ -1385,6 +1385,228 @@ Legacy plugins that are no longer maintained:
 
 [19][20]
 
+CoreDNS
+~~~~~~~
+
+CoreDNS is the standard internal DNS server used by Kubernetes. All of the Pods in the Kubernetes cluster use it to resolve the internal domain ("cluster.local" by default) and then forward all other DNS requests to the DNS resolvers configured in ``/etc/resolv.conf`` file on the actual Node.
+
+It is configured through a ConfigMap and Deployment in the "kube-system" namespace. Here is an example of what it should look like on a default installation of Kubernetes.
+
+.. code-block:: sh
+
+   $ kubectl --namespace kube-system get configmap coredns --output yaml
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: v1
+   kind: ConfigMap
+   metadata:
+     name: coredns
+     namespace: kube-system
+   data:
+     Corefile: |
+       .:53 {
+           errors
+           health {
+              lameduck 5s
+           }
+           ready
+           kubernetes cluster.local in-addr.arpa ip6.arpa {
+              pods insecure
+              fallthrough in-addr.arpa ip6.arpa
+              ttl 30
+           }
+           prometheus :9153
+           forward . /etc/resolv.conf
+           cache 30
+           loop
+           reload
+           loadbalance
+       }
+
+.. code-block:: sh
+
+   $ kubectl --namespace kube-system get deployment coredns --output yaml
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     annotations:
+       deployment.kubernetes.io/revision: "1"
+     labels:
+       k8s-app: kube-dns
+     name: coredns
+     namespace: kube-system
+   spec:
+     progressDeadlineSeconds: 600
+     replicas: 2
+     revisionHistoryLimit: 10
+     selector:
+       matchLabels:
+         k8s-app: kube-dns
+     strategy:
+       rollingUpdate:
+         maxSurge: 25%
+         maxUnavailable: 1
+       type: RollingUpdate
+     template:
+       metadata:
+         labels:
+           k8s-app: kube-dns
+       spec:
+         containers:
+         - args:
+           - -conf
+           - /etc/coredns/Corefile
+           image: k8s.gcr.io/coredns:1.6.7
+           imagePullPolicy: IfNotPresent
+           livenessProbe:
+             failureThreshold: 5
+             httpGet:
+               path: /health
+               port: 8080
+               scheme: HTTP
+             initialDelaySeconds: 60
+             periodSeconds: 10
+             successThreshold: 1
+             timeoutSeconds: 5
+           name: coredns
+           ports:
+           - containerPort: 53
+             name: dns
+             protocol: UDP
+           - containerPort: 53
+             name: dns-tcp
+             protocol: TCP
+           - containerPort: 9153
+             name: metrics
+             protocol: TCP
+           readinessProbe:
+             failureThreshold: 3
+             httpGet:
+               path: /ready
+               port: 8181
+               scheme: HTTP
+             periodSeconds: 10
+             successThreshold: 1
+             timeoutSeconds: 1
+           resources:
+             limits:
+               memory: 170Mi
+             requests:
+               cpu: 100m
+               memory: 70Mi
+           securityContext:
+             allowPrivilegeEscalation: false
+             capabilities:
+               add:
+               - NET_BIND_SERVICE
+               drop:
+               - all
+             readOnlyRootFilesystem: true
+           terminationMessagePath: /dev/termination-log
+           terminationMessagePolicy: File
+           volumeMounts:
+           - mountPath: /etc/coredns
+             name: config-volume
+             readOnly: true
+         dnsPolicy: Default
+         nodeSelector:
+           kubernetes.io/os: linux
+         priorityClassName: system-cluster-critical
+         restartPolicy: Always
+         schedulerName: default-scheduler
+         securityContext: {}
+         serviceAccount: coredns
+         serviceAccountName: coredns
+         terminationGracePeriodSeconds: 30
+         tolerations:
+         - key: CriticalAddonsOnly
+           operator: Exists
+         - effect: NoSchedule
+           key: node-role.kubernetes.io/master
+         volumes:
+         - configMap:
+             defaultMode: 420
+             items:
+             - key: Corefile
+               path: Corefile
+             name: coredns
+           name: config-volume
+
+It is possible to modify CoreDNS to serve its own DNS records for testing purposes.
+
+-  Append a new configuration for a custom domain name. Then add a new data field for that custom domain.
+
+   .. code-block:: yaml
+
+      ---
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: coredns
+        namespace: kube-system
+      data:
+        Corefile: |
+          .:53 {
+              errors
+              health {
+                 lameduck 5s
+              }
+              ready
+              kubernetes cluster.local in-addr.arpa ip6.arpa {
+                 pods insecure
+                 fallthrough in-addr.arpa ip6.arpa
+                 ttl 30
+              }
+              prometheus :9153
+              forward . /etc/resolv.conf
+              cache 30
+              loop
+              reload
+              loadbalance
+          }
+          # Add this extra configuration for CoreDNS.
+          <DOMAIN>.<TOP_LEVEL_DOMAIN> {
+              file <DOMAIN>.<TOP_LEVEL_DOMAIN>
+          }
+        # Add this new data field and value that will be used as another configuration file.
+        <DOMAIN>.<TOP_LEVEL_DOMAIN>: |
+          $ORIGIN lab.com.
+          @    IN    SOA    coredns.example.com.    <EMAIL_USER>.<EMAIL_DOMAIN>. (
+              2021022823
+              7200
+              3600
+              1209600
+              3600
+          )
+          <SUBDOMAIN>    IN    A    <IP_ADDRESS_FOR_SUBDOMAIN>
+          *    IN    A    <IP_ADDRESS_FOR_WILDCARD>
+
+-  Update the Deployment to load the new data field from the ConfigMap as a file.
+
+   .. code-block:: sh
+
+      $ kubectl --namespace kube-system edit deployment coredns
+
+   .. code-block:: sh
+
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: Corefile
+            path: Corefile
+          # Add a new item with these two lines.
+          - key: <DOMAIN>.<TOP_LEVEL_DOMAIN>
+            path: <DOMAIN>.<TOP_LEVEL_DOMAIN>
+          name: coredns
+        name: config-volume
+
 Service LoadBalancers
 ~~~~~~~~~~~~~~~~~~~~~
 
