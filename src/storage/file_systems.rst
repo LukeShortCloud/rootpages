@@ -415,7 +415,7 @@ Install:
 
    .. code-block:: sh
 
-      $ sudo apt-get install nfs-kernel-system
+      $ sudo apt-get install nfs-kernel-server
 
 -  Fedora
 
