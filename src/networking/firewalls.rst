@@ -92,6 +92,12 @@ UFW is designed to be easy to use and it is the default firewall for Debian.
 
       $ sudo ufw enable
 
+   -  If another firewall on the system is enabled, such as Firewalld, UFW will refuse to start on boot and remain in an "inactive" state. Ensure that all other firewalls are disabled. [4]
+
+      .. code-block:: sh
+
+         $ sudo systemctl disable firewalld
+
 -  Disable the firewall rules.
 
    .. code-block:: sh
@@ -183,3 +189,4 @@ Bibliography
 1. "How to install Fail2Ban on CentOS 7." HowtoForge. Accessed June 10, 2018. https://www.howtoforge.com/tutorial/how-to-install-fail2ban-on-centos/
 2. "Uncomplicated Firewall (ufw)." Debian Wiki. October 15, 2021. Accessed October 19, 2021.
 3. "How do I use ufw to open ports on ipv4 only?" Server Fault. September 24, 2020. Accessed October 19, 2021. https://serverfault.com/questions/809643/how-do-i-use-ufw-to-open-ports-on-ipv4-only
+4. "How can I enable ufw automatically on boot?" Stack Exchange Network - Unix & Linux. September 12, 2021. Accessed October 20, 2021. https://unix.stackexchange.com/questions/182959/how-can-i-enable-ufw-automatically-on-boot
