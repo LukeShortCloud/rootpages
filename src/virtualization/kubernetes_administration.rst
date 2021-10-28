@@ -850,7 +850,7 @@ Stop the virtual machine at any time.
 kind
 ~~~~
 
-kind is a tool written in Go that is used by the upstream Kubernetes developers. It simulates different Kubernetes nodes via the use of containers on a single local workstation.
+kind is a tool written in Go that is used by the upstream Kubernetes developers. It simulates different Kubernetes nodes via the use of containers on a single local workstation. Kubernetes clusters made this way are not meant to be persistent as restarting the containers will wipe all of data added and changes made.
 
 Installation:
 
