@@ -886,11 +886,53 @@ Usage:
 
       $ kind create cluster --config=<CLUSTER_MANIFEST>.yaml
 
+   .. code-block:: sh
+
+      $ cat <<EOF | kind create cluster --config=-
+      kind: Cluster
+      apiVersion: kind.x-k8s.io/v1alpha4
+      nodes:
+      - role: control-plane
+      EOF
+
+   -  Create a cluster with an Ingress Controller that is port-forwarded to the host (required for Docker on macOS and Windows, not Linux) [79]:
+
+      .. code-block:: sh
+
+         $ cat <<EOF | kind create cluster --config=-
+         kind: Cluster
+         apiVersion: kind.x-k8s.io/v1alpha4
+         nodes:
+         - role: control-plane
+           kubeadmConfigPatches:
+           - |
+             kind: InitConfiguration
+             nodeRegistration:
+               kubeletExtraArgs:
+                 node-labels: "ingress=true"
+           extraPortMappings:
+           - containerPort: 80
+             hostPort: 80
+             protocol: TCP
+           - containerPort: 443
+             hostPort: 443
+             protocol: TCP
+         - role: control-plane
+         - role: control-plane
+         - role: worker
+         - role: worker
+         - role: worker
+         - role: worker
+         - role: worker
+         EOF
+         $ kubectl apply --filename https://projectcontour.io/quickstart/contour.yaml
+         $ kubectl patch daemonsets --namespace projectcontour envoy --patch '{"spec":{"template":{"spec":{"nodeSelector":{"ingress":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
+
 -  Configure kubectl to use the cluster by default:
 
    .. code-block:: sh
 
-      $ kubectl cluster-info --context kind-kind
+      $ kubectl config set-context kind-kind
 
 [45]
 
@@ -2025,3 +2067,4 @@ Bibliography
 76. "Installation." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/installation/
 77. "Configuration." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/configuration/
 78. "MetalLB." GitHub bitnami/charts. October 8, 2021. Accessed October 12, 2021. https://github.com/bitnami/charts/tree/master/bitnami/metallb
+79. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress

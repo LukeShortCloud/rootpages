@@ -2503,6 +2503,7 @@ Cluster
 -  nodes (list of maps)
 
    -  role (string) = The Nodes that should be deployed. Use ``control-plane`` and ``worker``. List the same type of Node more than once to deploy more Nodes.
+   -  image (string) = Configure the Kubernetes version here by defining the Node container to use via a tag from `kindest/node on Docker Hub <https://hub.docker.com/r/kindest/node/tags>`__
    -  extraMounts (list of maps)
 
       -  containerPath (string) = The mount point for ``Cluster.nodes.role.extraMounts.hostPath``.
@@ -2535,7 +2536,49 @@ x3 Control Plane Nodes and x2 Worker Nodes.
      - role: worker
      - role: worker
 
+x1 Control Plane and x1 Worker Node using a specified Kubernetes version.
+
+.. code-block:: yaml
+
+   ---
+   kind: Cluster
+   apiVersion: kind.x-k8s.io/v1alpha4
+   nodes:
+     - role: control-plane
+       image: kindest/node:v1.20.7
+     - role: worker
+       image: kindest/node:v1.20.7
+
 [30]
+
+Deploy a cluster with support for Ingress ports 80 and 443 being forwarded (required for Docker on macOS and Windows, not Linux). Only a single Node can have the port-forward because there would be port conflicts between the containers. Ensure that the Ingress Controller installed is configured to use ``pod.spec.nodeSelector.ingress: true``, ``pod.spec.containers.ports.hostPort``, and the related tolerations for Control Plane nodes.
+
+.. code-block:: yaml
+
+   ---
+   kind: Cluster
+   apiVersion: kind.x-k8s.io/v1alpha4
+   nodes:
+   - role: control-plane
+     kubeadmConfigPatches:
+     - |
+       kind: InitConfiguration
+       nodeRegistration:
+         kubeletExtraArgs:
+           node-labels: "ingress=true"
+     extraPortMappings:
+     - containerPort: 80
+       hostPort: 80
+       protocol: TCP
+     - containerPort: 443
+       hostPort: 443
+       protocol: TCP
+   - role: control-plane
+   - role: control-plane
+   - role: worker
+   - role: worker
+
+[50]
 
 ClusterIssuer
 ^^^^^^^^^^^^^
@@ -3692,3 +3735,4 @@ Bibliography
 47. "Examples for Provisioning Tanzu Kubernetes Clusters." VMware Docs. July 30, 2021. Accessed August 20, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
 48. "Configure a Security Context for a Pod or Container." Kubernetes Documentation. July 8, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 49. "Improving Your Kubernetes Authorization: Don’t Use system:masters." Aqua Blog. May 20, 2021. Accessed September 26, 2021. https://blog.aquasec.com/kubernetes-authorization
+50. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
