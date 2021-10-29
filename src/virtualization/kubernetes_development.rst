@@ -2947,7 +2947,7 @@ This API is used to create workload clusters within a namespace of a TKGS Superv
 
             -  storage (integer) = The size, in GiB, of each PersistentVolumeClaim.
 
-         -  **mountPath** (string) = The path on the node to mount the PersistentVolumeClaim.
+         -  **mountPath** (string) = The path on the control plane node to mount the PersistentVolumeClaim. This can only be set to ``/var/lib/etcd`` or ``/var/lib/containerd``. [51]
          -  **name** (string) = A descriptive name for the volume.
          -  **storageClass** (string) = The StorageClass to use for the PersistentVolumeClaim.
 
@@ -2957,6 +2957,8 @@ This API is used to create workload clusters within a namespace of a TKGS Superv
       -  class (string)
       -  storageClass (string)
       -  volumes (list of maps)
+
+         -  **mountPath** (string) = The path on the worker node to mount the PersistentVolumeClaim. This can only be set to ``/var/lib/containerd``. [51]
 
 [46][47]
 
@@ -3000,6 +3002,39 @@ Install Kubernetes 1.20, use the CNI plugin Calico, use custom IP address ranges
          count: 2
          class: best-effort-large
          storageClass: gold-pressed-latinum-storage-policy
+
+Add persistent storage to the control plane and worker nodes. [51]
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: run.tanzu.vmware.com/v1alpha1
+   kind: TanzuKubernetesCluster
+   metadata:
+     name: tkc-storage-demo
+     namespace: ns-in-supervisor-cluster
+   spec:
+     distribution:
+       version: v1.20
+     topology:
+       controlPlane:
+         count: 3
+         class: best-effort-large
+         storageClass: gold-pressed-latinum-storage-policy
+         volumes:
+           - name: etcd-persistent
+             mountPath: /var/lib/etcd
+             capacity:
+               storage: 5Gi
+       workers:
+         count: 2
+         class: best-effort-large
+         storageClass: gold-pressed-latinum-storage-policy
+         volumes:
+           - name: containerd-persistent
+             mountPath: /var/lib/containerd
+             capacity:
+               storage: 100Gi
 
 (Common Reoccuring Fields)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3736,3 +3771,4 @@ Bibliography
 48. "Configure a Security Context for a Pod or Container." Kubernetes Documentation. July 8, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 49. "Improving Your Kubernetes Authorization: Don’t Use system:masters." Aqua Blog. May 20, 2021. Accessed September 26, 2021. https://blog.aquasec.com/kubernetes-authorization
 50. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
+51. "Examples for Provisioning Tanzu Kubernetes Clusters Using the Tanzu Kubernetes Grid Service v1alpha1 API." VMware Docs. September 20, 2021. Accessed October 29, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
