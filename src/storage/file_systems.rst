@@ -468,6 +468,71 @@ have the "nfs\_t" file context for SELinux to work properly.
     $ sudo semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
     $ sudo restorecon -R "/path/to/dir"
 
+Windows Client
+^^^^^^^^^^^^^^
+
+Windows NFS clients require a very specific NFS server configuration.
+
+-  Find out which user and group is being used as the default anonymous accounts on the system. Newer systems use ``nobody``/``nogroup`` and older systems use ``nfsnobody``. The default UID/GID for these accounts is normally ``65534``.
+
+   .. code-block:: sh
+
+      $ less /etc/idmapd.conf
+      [Mapping]
+
+      Nobody-User = nobody
+      Nobody-Group = nogroup
+
+   -  Create the accounts manually if they do not exist. [36]
+
+      .. code-block:: sh
+
+         $ sudo groupadd -g 65534 nfsnobody
+         $ sudo useradd -u 65534 -g 65534 -d /nonexistent -s /sbin/nologin nfsnobody
+         $ sudo vim /etc/idmapd.conf
+         [Mapping]
+
+         Nobody-User = nfsnobody
+         Nobody-Group = nfsnobody
+
+      -  Debian:
+
+         .. code-block:: sh
+
+            $ sudo systemctl restart nfs-idmapd
+
+      -  Fedora:
+
+         .. code-block:: sh
+
+            $ sudo systemctl restart rpcidmapd
+
+-  Find the exact UID and GID used by the anonymous NFS account.
+
+   .. code-block:: sh
+
+      $ grep nobody /etc/passwd
+      nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+      $ grep nogroup /etc/group
+      nogroup:x:65534:
+
+-  Create an export using that anonymous NFS user. This will make it so that only a root user can access the share. Windows also requires all files in the NFS export to be executable, readable, and writable.
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/exports
+      /exports/foobar *(rw,sync,no_root_squash,all_squash,anonuid=65534,anongid=65534)
+      $ sudo mkdir -p /exports/foobar/
+      $ sudo chown -R nobody.nogroup /exports/foobar
+      $ sudo chmod -R 0770 /exports/foobar
+      $ sudo systemctl restart nfs-server
+
+   -  Alternatively, set the ``anonuid`` and ``anongid`` to a Linux account that can also access the share such as ``1000``. By default, most Linux distributions create the first system user with the UID and GID of ``1000``. This user and group needs to be created and exist on both the client and the server.
+
+-  For configuring a Windows NFS client that can be connected to a Linux NFS server, refer to `here <../windows/storage.html#nfs>`__.
+
+[37]
+
 GlusterFS
 ~~~~~~~~~
 
@@ -1174,3 +1239,5 @@ Bibliography
 33. "Encrypting data partitions using LUKS." IBM Sterling Order Management Software 10.0.0 Documentation. Accessed September 12, 2021. https://www.ibm.com/docs/en/order-management-sw/10.0?topic=considerations-encrypting-data-partitions-using-luks
 34. "cryptsetup(8)." Linux manual page. Accessed September 12, 2021. https://man7.org/linux/man-pages/man8/cryptsetup.8.html
 35. "How to enable LUKS disk encryption with keyfile on Linux." nixCraft. Accessed September 12, 2021. https://www.cyberciti.biz/hardware/cryptsetup-add-enable-luks-disk-encryption-keyfile-linux/
+36. "chown: invalid user: 'nfsnobody' in fedora 32 after install nfs." Stack Overflow. August 14, 2020. Accessed December 20, 2021. https://stackoverflow.com/questions/62980913/chown-invalid-user-nfsnobody-in-fedora-32-after-install-nfs
+37. "Mounting NFS share from Linux to Windows server." techbeatly. June 12, 2019. Accessed December 20, 2021. https://www.techbeatly.com/mounting-nfs-share-from-linux-to-windows-server/

@@ -4,3 +4,4 @@
 
    editions
    security
+   storage
