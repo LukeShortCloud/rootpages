@@ -1017,19 +1017,28 @@ Create a user and related group with the UID and GID of 1000. The name can be an
 ::
 
    (termina) chronos@localhost ~ $ lxc exec penguin /bin/bash
-   [root@penguin ~]# useradd <CHROME_OS_USER>
+   [root@penguin ~]# useradd --create-home <CHROME_OS_USER>
    [root@penguin ~]# mkdir /etc/sudoers.d/
    [root@penguin ~]# echo '<CHROME_OS_USER> ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/<CHROME_OS_USER>
    [root@penguin ~]# chmod 0440 /etc/sudoers.d/<CHROME_OS_USER>
 
-**archlinux/current**
-
-First install a package manager such as `yay <https://github.com/Jguer/yay>`__. This is required to install packages from the Arch Linux User Repository (AUR).
+For the extra functionality of being able to console into a LXC container from the virtual machine, set a password for the account.
 
 ::
 
-   [root@penguin ~]# yay -S cros-container-guest-tools-git
-   [root@penguin ~]# pacman -S sudo wayland xorg-server-xwayland
+   [root@penguin ~]# passwd <CHROME_OS_USER>
+
+**archlinux/current**
+
+First enable the `32-bit multilib libraries <https://wiki.archlinux.org/title/official_repositories#Enabling_multilib>`__ and install a package manager such as `yay <https://github.com/Jguer/yay>`__. This is required to install packages from the Arch Linux User Repository (AUR).
+
+::
+
+   [root@penguin ~]# pacman -S sudo wayland xorg-xwayland
+   [root@penguin ~]# pacman -S base-devel git
+   [root@penguin ~]# su - <CHROME_OS_USER>
+   [<CHROME_OS_USER>@penguin ~]$ yay -S cros-container-guest-tools-git
+   [<CHROME_OS_USER>@penguin ~]$ cp -r /etc/skel/.config/pulse ~/.config
 
 [16]
 
@@ -1053,18 +1062,27 @@ First install a package manager such as `yay <https://github.com/Jguer/yay>`__. 
 
 **All**
 
+Restart the virtual machine (optionally with GPU acceleration enabled).
+
+::
+
+   crosh> vmc stop termina
+   crosh> vmc start --enable-gpu --enable-vulkan termina
+
+If using a different container that is not replacing ``penguin``, console into it to be able to use systemd. Log in as the user account. Press ``CTRL`` + ``a`` then ``q`` to exit the console session.
+
+::
+
+   crosh> vsh termina
+   (termina) chronos@localhost ~ $ lxc console <CONTAINER_NAME>
+
 Enable the required services and then restart the virtual machine to load the new ``penguin`` container integration.
 
 ::
 
    [root@penguin ~]# systemctl enable --now cros-sftp
    [root@penguin ~]# su - <CHROME_OS_USER>
-   [<CHROME_OS_USER>@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommlier@1 sommelier-x@1 cros-garcon cros-pulse-config
-
-::
-
-   crosh> vmc stop termina
-   crosh> vmc start --enable-gpu --enable-vulkan termina
+   [<CHROME_OS_USER>@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommelier@1 sommelier-x@1 cros-garcon
 
 Vulkan Support
 ''''''''''''''
@@ -1314,7 +1332,7 @@ Bibliography
 13. "How to install Steam." Reddit r/Crostini. November 2, 2018. Accessed March 11, 2020. https://www.reddit.com/r/Crostini/wiki/howto/install-steam
 14. "Auto Update Policy." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chrome/a/answer/6220366?hl=en
 15. "Switch between stable, beta & dev software." Google Chrome Enterprise Help. Accessed March 13, 2020. https://support.google.com/chromebook/answer/1086915?hl=en
-16. "Chrome OS devices/Crostini." Arch Linux Wiki. July 25, 2021. Accessed August 17, 2021. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
+16. "Chrome OS devices/Crostini." Arch Linux Wiki. December 8, 2021. Accessed December 19, 2021. https://wiki.archlinux.org/index.php/Chrome_OS_devices/Crostini
 17. "How to run CentOS instead of Debian." Reddit r/Crostini. October 16, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-centos-linux
 18. "How to run Fedora instead of Debian." Reddit r/Crostini. December 21, 2019. Accessed March 14, 2020. https://www.reddit.com/r/Crostini/wiki/howto/run-fedora-linux
 19. "skycocker/chromebrew." GitHub. March 28, 2020. Accessed March 28, 2020. https://github.com/skycocker/chromebrew
