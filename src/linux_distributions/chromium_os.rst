@@ -1084,6 +1084,13 @@ Enable the required services and then restart the virtual machine to load the ne
    [root@penguin ~]# su - <CHROME_OS_USER>
    [<CHROME_OS_USER>@penguin ~]$ systemctl --user enable sommelier@0 sommelier-x@0 sommelier@1 sommelier-x@1 cros-garcon
 
+Set the display. Use ``:0`` for the native resolution or ``:1`` for a scaled resolution. These are handled by the ``sommelier`` services.
+
+::
+
+   [<CHROME_OS_USER>@penguin ~]$ export DISPLAY=:0
+   [<CHROME_OS_USER>@penguin ~]$ echo "DISPLAY=:0" | sudo tee -a /etc/environment
+
 Vulkan Support
 ''''''''''''''
 
