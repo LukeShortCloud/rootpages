@@ -1315,6 +1315,35 @@ Upcoming Features
 -  `Official Steam support via a framework called Borealis. It will automatically set up an Ubuntu virtual machine tuned for gaming. <https://chromeunboxed.com/steam-games-chrome-os-chromebooks-web-install-app-manager>`__
 -  `Vulkan support in Crostini. <https://bugs.chromium.org/p/chromium/issues/detail?id=996591>`__
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+"**Failed to install DLC: termina-dlc**" when trying to manually start the Termina virtual machine from the CLI.
+
+.. code-block:: sh
+
+   crosh> vmc start termina
+   2021-12-20T04:29:10.439301Z ERROR dlcservice_util: [dlc_service_util.cc(212)] Failed to install DLC: termina-dlc with error code: org.chromium.DlcServiceInterface.INTERNAL
+
+Solutions:
+
+1.  Enable the DLC flag for Crostini by going to ``chrome://flags#crostini-use-dlc``. Reboot the Chrome OS device.
+2.  Install the Termina DLC.
+
+   .. code-block:: sh
+
+      crosh> shell
+      chronos@localhost / $ sudo dlcservice_util --id=termina-dlc --install
+
+3.  Start Termina without the DLC by setting the undocumented argument ``--dlc-id`` to an empty string with the use of double quotes.
+
+   .. code-block:: sh
+
+      crosh> vmc start --dlc-id="" termina
+
 History
 -------
 
