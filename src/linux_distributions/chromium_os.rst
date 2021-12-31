@@ -59,6 +59,27 @@ Chromebooks come with modified keyboards that do not include the traditional lay
 
 \*Requires the `Windows Manager for Google Chrome <https://chrome.google.com/webstore/detail/windows-manager-for-googl/gophpkegccafhjahoijdembdkbjpiflb>`__ extension.
 
+Powerwash
+---------
+
+A Powerwash is a factory reset of the Chrome OS operating system. This will delete all local files on the device.
+
+From a Chromebook that is powered on and logged in:
+
+1. Settings > Advanced > Privacy & Security > Powerwash
+
+From a Chromebook that is powered on and logged out [39]:
+
+1. Press ``CTRL``, ``ALT``, ``SHIFT``, and ``r``.
+2. Select "Powerwash".
+
+From a Chromebook that is powered off [40]:
+
+0. Visit the `Chrome OS recovery page <https://google.com/chromeos/recovery>`__ to download a recovery image and setup a >= 8 GB flash drive.
+1. Press ``ESC``, ``F2`` (the refresh key), and the power button.
+2. Let go of the power button.
+3. Select "Recovery using external storage" and follow the on-screen instructions.
+
 Developer Mode
 --------------
 
@@ -1391,3 +1412,5 @@ Bibliography
 36. "Version Numbers." The Chromium Projects. Accessed July 8, 2021. https://www.chromium.org/developers/version-numbers
 37. "Brunch framework." GitHub sebanc/brunch. June 20, 2021. Accessed July 28, 2021. https://github.com/sebanc/brunch
 38. "Virtio-GPU Venus." The Mesa 3D Graphics Library latest documentation. Accessed August 17, 2021. https://docs.mesa3d.org/drivers/venus.html
+39. "Reset your Chromebook to factory settings." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/183084?hl=en
+40. "Recover your Chromebook." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/1080595
