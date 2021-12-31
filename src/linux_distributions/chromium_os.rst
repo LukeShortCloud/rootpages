@@ -365,6 +365,22 @@ Re-enable updates by deleting the old log file so it will be recreated, make the
    chronos@localhost / $ sudo chmod +x /usr/sbin/update_engine
    chronos@localhost / $ sudo /usr/sbin/update_engine
 
+Disable SELinux
+^^^^^^^^^^^^^^^
+
+Change the SELinux mode from ``enforcing`` to ``permissive``. Do **NOT** change it to ``disabled`` as this will cause Chrome OS to no longer boot. [41]
+
+.. code-block:: sh
+
+   chronos@localhost / $ sudo getenforce
+   Enforcing
+   chronos@localhost / $ sudo vim /etc/selinux/config
+   SELINUX=permissive
+   SELINUXTYPE=arc
+   chronos@localhost / $ sudo setenforce permissive
+   chronos@localhost / $ sudo getenforce
+   Permissive
+
 Chromium OS Development
 -----------------------
 
@@ -1414,3 +1430,4 @@ Bibliography
 38. "Virtio-GPU Venus." The Mesa 3D Graphics Library latest documentation. Accessed August 17, 2021. https://docs.mesa3d.org/drivers/venus.html
 39. "Reset your Chromebook to factory settings." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/183084?hl=en
 40. "Recover your Chromebook." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/1080595
+41. "SELinux in Chrome OS." Chromium OS Docs. Accessed December 31, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/security/selinux.md
