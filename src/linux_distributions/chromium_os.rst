@@ -83,32 +83,48 @@ From a Chromebook that is powered off [40]:
 Developer Mode
 --------------
 
-Chromebooks have an optional developer mode that unlocks additional features of Chrome OS. It allows the usage of a shell, ``root`` user access, and the ability to install and boot custom operating systems. [5]
+Chromebooks have an optional Developer Mode that unlocks additional features of Chrome OS. It allows the usage of a shell, ``root`` user access, writing to the root file system,  and the ability to boot and install other operating systems. [5][6][8] Debugging features can also be enabled to install additional tools. If debugging features are not enabled immediately, all of those tools and features are still available through Developer Mode. [46]
 
-Enabling this mode will powerwash (reset) the device. Start the Chromebook in Recovery mode by pressing ``ESC`` + ``<REFRESH>`` + ``<POWER>``. Once booted, press ``CTRL`` + ``d`` to boot into developer mode. Optionally select to enable debugging features to allow writing to the root file system, booting to external storage devices, and changing the root password. [6][8] After completion, whenever booting up the Chromebook, use ``CTRL`` + ``d`` to boot Chrome OS.
+Enable Developer Mode
+~~~~~~~~~~~~~~~~~~~~~
+
+Enabling this mode will Powerwash (reset) the device. All local data will be lost.
+
+1.  Start the Chromebook in Recovery mode by pressing ``ESC``, ``F2`` (refresh), and ``<POWER>``.
+2.  Enter Developer Mode:
+
+   2a.  New Chrome OS devices:
+
+      -  Advanced options > Enable developer Mode > Confirm
+
+   2b.  Old Chrome OS devices:
+
+      -  Once booted, press ``CTRL`` + ``d`` to boot into Developer Mode.
+
+3.  Optionally select to enable debugging features. This will install additional tools
 
 Use the command ``chromeos-setdevpasswd`` to enable the sudo password for the ``chronos`` user in the ``Secure Shell App``. Use the password that was set when enabling debugging features to access the ``root`` account.
 
 -  Using ``Secure Shell App`` by pressing ``CTRL`` + ``ALT`` + ``t``:
 
-::
+   ::
 
-   crosh> shell
-   chronos@localhost / $ ssh -l root 127.0.0.1
-   localhost ~ # chromeos-setdevpasswd
+      crosh> shell
+      chronos@localhost / $ ssh -l root 127.0.0.1
+      localhost ~ # chromeos-setdevpasswd
 
 -  Using the tty2 console by pressing ``CTRL`` + ``ALT`` + ``-->``:
 
-::
+   ::
 
-   localhost login: root
-   Password:
-   localhost ~ # chromeos-setdevpasswd
+      localhost login: root
+      Password:
+      localhost ~ # chromeos-setdevpasswd
 
 Boot
 ~~~~
 
-When booting a Chromebook in developer mode, there are a few options to choose from. By default, a screen will appear for 30 seconds saying ``OS verification is OFF``. It will beep and continue to boot into local storage if no boot option is specified via keyboard shortcuts. Pressing the ``<SPACE>`` bar will powerwash the Chromebook.
+When booting a Chromebook in Developer Mode, there are a few options to choose from. By default, a screen will appear for 30 seconds saying ``OS verification is OFF``. It will beep and continue to boot into local storage if no boot option is specified via keyboard shortcuts. Pressing the ``<SPACE>`` bar will powerwash the Chromebook.
 
 -  Internal storage = ``CTRL`` + ``d``.
 -  External storage = ``CTRL`` + ``u``.
@@ -157,7 +173,7 @@ View all of the available commands in ``crosh`` and their help descriptions.
    crosh> help
    crosh> help_advanced
 
-Open a full shell terminal in developer mode to access more commands.
+Open a full shell terminal in Developer Mode to access more commands.
 
 ::
 
@@ -198,7 +214,7 @@ Updates
 Change Update Channel
 ^^^^^^^^^^^^^^^^^^^^^
 
-Channels can be changed on any Chromebook not in developer mode by going to ``Settings > About Chrome OS > Additional Details > Channel > Change channel`` and selecting ``Stable``, ``Beta``, or ``Developer - unstable``. However, this will require a Powerwash which will factory reset the Chromebook and does not expose the ``Canary`` channel.
+Channels can be changed on any Chromebook not in Developer Mode by going to ``Settings > About Chrome OS > Additional Details > Channel > Change channel`` and selecting ``Stable``, ``Beta``, or ``Developer - unstable``. However, this will require a Powerwash which will factory reset the Chromebook and does not expose the ``Canary`` channel.
 
 With Developer Mode enabled, it is possible to change channels on the CLI without a Powerwash. If going from a newer channel to an older one (Dev to Beta, Dev to Stable, or Beta to Stable), Chrome OS will automatically update when that channel catches up to your version.
 
@@ -966,7 +982,7 @@ Linux
 Crostini
 ~~~~~~~~
 
-Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require developer mode.
+Crostini is an official set of technologies used to securely run Linux on Chrome OS in an isolated environment. It creates a minimal Chrome OS virtual machine (VM) called ``termina`` that then starts a LXC container named ``penguin``.  By default, the ``penguin`` container uses Debian 10 Buster as of Chrome OS 80. [3] It does not require Developer Mode.
 
 Enable it by going into Chrome OS settings and selecting ``Linux (Beta)``. [1] A new ``Terminal`` app will appear to access the terminal of the container. Alternatively, the Chrome web browser can be used to access the terminal by going to ``chrome-untrusted://terminal/html/terminal.html``.
 
@@ -1193,7 +1209,7 @@ By default, a crosvm virtual machine does not have any networking configured. Ne
 Container Management (LXC)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-With developer mode enabled, the ``termina`` VM can be manually edited with the ``vmc`` command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.
+With Developer Mode enabled, the ``termina`` VM can be manually edited with the ``vmc`` command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.
 
 -  Manually start the ``termina`` virtual machine with graphics acceleration and then automatically SSH into it.
 
@@ -1454,7 +1470,7 @@ Launch the program and then create virtual machines.
 Virtual Machine External Storage
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Untrusted virtual machines (only available in developer mode) can use external storage devices. [23]
+Untrusted virtual machines (only available in Developer Mode) can use external storage devices. [23]
 
 View the available devices that can be used for external storage. These are the same that will appear in the ``Files`` app.
 
@@ -1682,10 +1698,10 @@ Bibliography
 2. "Issue 878324: Share Downloads with crostini container." Chromium Bugs. May 6, 2019. Accessed March 2, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=878324
 3. "Issue 930901: crostini: support buster as the default container." Chromium Bugs. February 7, 2020. Accessed March 2, 2020. https://bugs.chromium.org/p/chromium/issues/detail?id=930901
 4. "Chromebook keyboard shortcuts." Chromebook Help. Accessed March 2, 2020. https://support.google.com/chromebook/answer/183101?hl=en
-5. "Developer Mode." Chromium OS Docs. Accessed March 4, 2020. https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md
-6. "Turn on debugging features." Chromebook Help. Accessed March 4, 2020. https://support.google.com/chromebook/answer/6204310?hl=en
+5. "Developer Mode." Chromium OS Docs. Accessed January 1, 2022. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/developer_guide.md
+6. "Turn on debugging features." Chromebook Help. Accessed January 1, 2022. https://support.google.com/chromebook/answer/6204310?hl=en
 7. "Debug Button Shortcuts." Chromium OS Docs. Accessed March 4, 2020. https://chromium.googlesource.com/chromiumos/docs/+/master/debug_buttons.md
-8. "Debugging Features." Chromium OS. Accessed March 4, 2020. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
+8. "Debugging Features." Chromium OS. Accessed January 1, 2022.. https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/debugging-features
 9. "LXD Getting started - command line." Linux containers. Accessed March 7, 2020. https://linuxcontainers.org/lxd/getting-started-cli/
 10. "Crostini Setup Guide." Reddit r/Crostini. December 27, 2018. Accessed March 7, 2020. https://www.reddit.com/r/Crostini/wiki/getstarted/crostini-setup-guide
 11. "Issue 996591: Vulkan does not appear to be working in Crostini." Chromium Bugs. April 10, 2021. Accessed August 17, 2021. https://bugs.chromium.org/p/chromium/issues/detail?id=996591
@@ -1723,3 +1739,4 @@ Bibliography
 43. "Example Usage (Outdated)." Book of crosvm. Accessed January 19, 2022. https://google.github.io/crosvm/appendix/example_usage.html
 44. "crosvm - The Chrome OS Virtual Machine Monitor." chromiumos/platform/crosvm - Git at Google. January 13, 2022. Accessed January 15, 2022. https://chromium.googlesource.com/chromiumos/platform/crosvm/
 45. "System Requirements." Book of crosvm. Accessed January 19, 2022. https://google.github.io/crosvm/running_crosvm/requirements.html
+46. "Can't enable debugging features in Developer Mode (No Link)." Chromebook Help. May 12, 2021. Accessed January 1, 2022. https://support.google.com/chromebook/thread/109479412/can-t-enable-debugging-features-in-developer-mode-no-link?hl=en
