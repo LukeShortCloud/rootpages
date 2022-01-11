@@ -93,5 +93,5 @@ Welcome to Root Pages!
    commands/index
 
 
-`Contribute to Root Pages! <https://github.com/ekultails/rootpages>`__
+`Contribute to Root Pages! <https://github.com/LukeShortCloud/rootpages>`__
 

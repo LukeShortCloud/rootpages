@@ -666,11 +666,11 @@ Solution:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/networking/linux.rst>`__
--  `< 2020.10.01 <https://github.com/ekultails/rootpages/commits/main/src/networking/networking_software.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/networking_software.rst>`__
--  `< 2018.07.01 <https://github.com/ekultails/rootpages/commits/main/src/networking.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/networking.md>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/linux.rst>`__
+-  `< 2020.10.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/networking_software.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking_software.rst>`__
+-  `< 2018.07.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking.rst>`__
+-  `< 2018.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/networking.md>`__
 
 ----------------------------------------------------------------------------------------------------------
 

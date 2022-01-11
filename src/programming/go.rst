@@ -1410,7 +1410,7 @@ Other ``testing`` functions:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/programming/go.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/programming/go.rst>`__
 
 Bibliography
 ------------

@@ -53,7 +53,7 @@ If using another antivirus program or if required for testing, it may be desired
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/windows/security.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/windows/security.rst>`__
 
 Bibliography
 ------------

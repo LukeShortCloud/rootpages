@@ -40,7 +40,7 @@ Day 1 Linux support for new hardware:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/graphics_cards.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/computer_hardware/graphics_cards.rst>`__
 
 Bibliography
 ------------

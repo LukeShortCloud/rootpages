@@ -297,11 +297,11 @@ Configuration options:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/http/databases.rst>`__
--  `< 2020.01.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/databases.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/databases.rst>`__
--  `< 2018.01.01 (NoSQL) <https://github.com/ekultails/rootpages/commits/main/markdown/nosql.md>`__
--  `< 2018.01.01 (SQL) <https://github.com/ekultails/rootpages/commits/main/markdown/sql.md>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/http/databases.rst>`__
+-  `< 2020.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/databases.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/databases.rst>`__
+-  `< 2018.01.01 (NoSQL) <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/nosql.md>`__
+-  `< 2018.01.01 (SQL) <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/sql.md>`__
 
 Bibliography
 ------------

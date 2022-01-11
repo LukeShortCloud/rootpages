@@ -39,7 +39,7 @@ SSR:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/electrical_equipment.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/computer_hardware/electrical_equipment.rst>`__
 
 Bibliography
 ------------

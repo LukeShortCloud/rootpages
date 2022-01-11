@@ -101,7 +101,7 @@ Alternatively, use a different MAC such as SELinux. Only one MAC implementation 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/security/mandatory_access_control.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/security/mandatory_access_control.rst>`__
 
 Bibliography
 ------------

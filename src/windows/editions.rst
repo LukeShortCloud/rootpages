@@ -59,7 +59,7 @@ Windows can be freely and legally downloaded directly from Microsoft:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/windows/editions.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/windows/editions.rst>`__
 
 Bibliography
 ------------

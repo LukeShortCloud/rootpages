@@ -22,8 +22,8 @@ The `GNS3 Marketplace <https://www.gns3.com/marketplace/appliances>`__ provides 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/networking/networking_hardware.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/networking_hardware.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/networking_hardware.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking_hardware.rst>`__
 
 Bibliography
 ------------

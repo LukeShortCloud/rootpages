@@ -67,7 +67,7 @@ Create the virtual webcam device. It will now show up in online video conferenci
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/webcams.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/computer_hardware/webcams.rst>`__
 
 Bibliography
 ------------

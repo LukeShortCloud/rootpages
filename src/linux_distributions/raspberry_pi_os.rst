@@ -55,7 +55,7 @@ Log into the IP address of the Raspberry Pi using the username ``pi`` and passwo
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/linux_distributions/raspberry_pi_os.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/raspberry_pi_os.rst>`__
 
 Bibliography
 ------------

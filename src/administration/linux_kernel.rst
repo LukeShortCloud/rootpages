@@ -411,10 +411,10 @@ This is a list of common errors and warnings that make occur while building a ke
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/linux_kernel.rst>`__
--  `< 2021.10.01 <https://github.com/ekultails/rootpages/commits/main/src/administration/linux.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/linux.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/linux.md>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/linux_kernel.rst>`__
+-  `< 2021.10.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/linux.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux.rst>`__
+-  `< 2018.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/linux.md>`__
 
 Bibliography
 ------------

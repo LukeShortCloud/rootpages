@@ -42,7 +42,7 @@ Top gamepads [1]:
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/computer_hardware/accessories.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/computer_hardware/accessories.rst>`__
 
 Bibliography
 ------------

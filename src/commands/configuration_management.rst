@@ -235,5 +235,5 @@ Package: puppet-agent
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/commands/configuration_management.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/linux_commands/configuration_management.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/commands/configuration_management.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_commands/configuration_management.rst>`__

@@ -188,7 +188,7 @@ OpenStack is a collection of various different projects that use software licens
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/openstack/developer.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/openstack/developer.rst>`__
 
 Bibliography
 ------------

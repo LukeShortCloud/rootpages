@@ -67,9 +67,9 @@ network to the 10.0.0.1 server.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/mail_servers.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/mail_servers.rst>`__
--  `< 2018.01.01 <https://github.com/ekultails/rootpages/commits/main/markdown/mail_servers.md>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/mail_servers.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/mail_servers.rst>`__
+-  `< 2018.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/mail_servers.md>`__
 
 Bibliography
 ------------

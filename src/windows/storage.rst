@@ -95,7 +95,7 @@ Windows Vista Professional or better is required for the NFS client and server f
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/windows/storage.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/windows/storage.rst>`__
 
 Bibliography
 ------------

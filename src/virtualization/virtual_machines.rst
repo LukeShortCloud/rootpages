@@ -974,7 +974,7 @@ Creation
 
 Custom Vagrant boxes can be created from scratch and used.
 
--  Virtual machine setup (for an automated setup, use the `ansible_role_vagrant_box <https://github.com/ekultails/ansible_role_vagrant_box>`__ project):
+-  Virtual machine setup (for an automated setup, use the `ansible_role_vagrant_box <https://github.com/LukeShortCloud/ansible_role_vagrant_box>`__ project):
 
    -  Create a ``vagrant`` user with password-less sudo access.
 
@@ -1542,10 +1542,10 @@ Errors
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/virtualization/virtual_machines.rst>`__
--  `< 2019.04.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/administration/virtualization.rst>`__
--  `< 2019.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/src/virtualization.rst>`__
--  `< 2018.01.01 (Virtualization) <https://github.com/ekultails/rootpages/commits/main/markdown/virtualization.md>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/virtualization/virtual_machines.rst>`__
+-  `< 2019.04.01 (Virtualization) <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/virtualization.rst>`__
+-  `< 2019.01.01 (Virtualization) <https://github.com/LukeShortCloud/rootpages/commits/main/src/virtualization.rst>`__
+-  `< 2018.01.01 (Virtualization) <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/virtualization.md>`__
 
 Bibliography
 ------------

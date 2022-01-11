@@ -223,5 +223,5 @@ Package: zip
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/commands/compression.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/linux_commands/compression.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/commands/compression.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_commands/compression.rst>`__

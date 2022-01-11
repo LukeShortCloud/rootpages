@@ -185,7 +185,7 @@ Top Distributions
 This is an extremely biased list of the best distribution for each use case.
 
 -  Alternative to Chrome OS = 1. Brunch 2. CloudReady 3. ArnoldTheBats Chromium OS 4. Ubuntu Web Remix 5. GalliumOS
--  Alternative to macOS = 1. Zorion OS Pro 2. elementary OS 3. Fedora 4. Xubuntu 5. `Mac Linux Gaming Stick <https://github.com/ekultails/mac-linux-gaming-stick>`__
+-  Alternative to macOS = 1. Zorion OS Pro 2. elementary OS 3. Fedora 4. Xubuntu 5. `Mac Linux Gaming Stick <https://github.com/LukeShortCloud/mac-linux-gaming-stick>`__
 -  Alternative to Windows = Zorion OS Core
 -  Arm single-board computer (SBC) = Debian
 -  Bleeding edge (stable) = Manjaro
@@ -229,13 +229,13 @@ This is an extremely biased list of the best distribution for each use case.
 -  Server = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
 -  Stable = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
 -  Touchscreen = Fedora
--  USB drive / portable = 1. `Mac Linux Gaming Stick <https://github.com/ekultails/mac-linux-gaming-stick>`__ 2. Puppy Linux
+-  USB drive / portable = 1. `Mac Linux Gaming Stick <https://github.com/LukeShortCloud/mac-linux-gaming-stick>`__ 2. Puppy Linux
 
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/administration/operating_systems.rst>`__
--  `< 2019.01.01 <https://github.com/ekultails/rootpages/commits/main/src/operating_systems.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/operating_systems.rst>`__
+-  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/operating_systems.rst>`__
 
 Bibliography
 ------------

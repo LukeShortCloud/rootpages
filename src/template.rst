@@ -93,7 +93,7 @@ Error Codes
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/template.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/template.rst>`__
 
 Bibliography
 ------------

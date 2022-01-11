@@ -150,7 +150,7 @@ Any arguments or options that are required for a command or configuration are ma
 
 ### New Contributors
 
-There are a lot of [issues open on GitHub that have the label "new content."](https://github.com/ekultails/rootpages/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+content%22) These issues indicate that a new subject matter should be added into an existing document. These normally have at least one link to a source article that can be referenced or at least used as a starting point for further research.
+There are a lot of [issues open on GitHub that have the label "new content."](https://github.com/LukeShortCloud/rootpages/issues?q=is%3Aopen+is%3Aissue+label%3A%22new+content%22) These issues indicate that a new subject matter should be added into an existing document. These normally have at least one link to a source article that can be referenced or at least used as a starting point for further research.
 
 ### Quarterly Updates
 
@@ -173,4 +173,4 @@ Files:
 
 ### Plagiarism
 
-Root Pages strives to provide proper citation to the original authors to give credit where due. If there are any reports of plagiarism, please [open a new GitHub issue](https://github.com/ekultails/rootpages/issues) for it to get addressed.
+Root Pages strives to provide proper citation to the original authors to give credit where due. If there are any reports of plagiarism, please [open a new GitHub issue](https://github.com/LukeShortCloud/rootpages/issues) for it to get addressed.

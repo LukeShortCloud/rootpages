@@ -181,7 +181,7 @@ UFW is designed to be easy to use and it is the default firewall for Debian.
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/networking/firewalls.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/firewalls.rst>`__
 
 Bibliography
 ------------

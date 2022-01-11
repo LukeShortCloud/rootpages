@@ -533,7 +533,7 @@ or
 History
 -------
 
--  `Latest <https://github.com/ekultails/rootpages/commits/main/src/automation/puppet.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/automation/puppet.rst>`__
 
 Bibliography
 ------------
