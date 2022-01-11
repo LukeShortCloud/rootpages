@@ -354,6 +354,92 @@ File: /etc/dracut.conf
 
 [11]
 
+Build
+-----
+
+-  Install the build dependencies for the Linux kernel:
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo apt-get install bc build-essential cpio dwarves findutils flex git kmod libelf-dev libncurses5-dev libssl-dev linux-source rsync
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ sudo dnf install bc bison diffutils elfutils-libelf-devel findutils flex git gcc make openssl-devel rpm-build rsync
+
+-  Download the Linux kernel source code:
+
+   -  Using the newest kernels from `here <https://www.kernel.org/>`__.
+   -  Or using any kernel version from `here <https://mirrors.edge.kernel.org/pub/linux/kernel/>`__.
+   -  Or from the stable kernel git repository:
+
+      -  Using a specific version tag:
+
+         .. code-block:: sh
+
+            $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ --depth=1 --branch v<VERSION_MAJOR>.<VERSION_MINOR>.<VERSION_PATCH>
+
+      -  Using a specific version branch:
+
+         .. code-block:: sh
+
+            $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ --depth=1 --branch linux-<VERSION_MAJOR>.<VERSION_MINOR>.y
+
+-  Create the ``.config`` file in the top-level of the kernel directory. It defines what features will be built for the Linux kernel.
+
+   -  Use a default configuration:
+
+      .. code-block:: sh
+
+         $ make defconfig
+
+-  Build the Linux kernel:
+
+   -  Generic:
+
+      .. code-block:: sh
+
+         $ make -j $(nproc)
+
+   -  DEB (Debian) packages:
+
+      .. code-block:: sh
+
+         $ make -j $(nproc) bindeb-pkg
+
+   -  RPM (Fedora) packages:
+
+      .. code-block:: sh
+
+         $ make -j $(nproc) binrpm-pkg
+
+-  Install the Linux kernel:
+
+   -  Generic:
+
+      .. code-block:: sh
+
+         $ sudo make install
+         $ sudo make modules_install
+
+   -  DEB (Debian) packages:
+
+      .. code-block:: sh
+
+         $ sudo dpkg -i ../linux-*.deb
+
+   -  RPM (Fedora) packages:
+
+      .. code-block:: sh
+
+         $ sudo rpm -iU ~/rpmbuild/RPMS/x86_64/kernel-*.rpm
+
+[18][19]
+
 Install
 -------
 
@@ -436,3 +522,5 @@ Bibliography
 15. "How can I know/list available options for kernel modules?" Ask Ubuntu. December 13, 2017. Accessed January 21, 2021. https://askubuntu.com/questions/59135/how-can-i-know-list-available-options-for-kernel-modules
 16. "Kernel module." Arch Wiki. October 14, 2020. Accessed January 21, 2021. https://wiki.archlinux.org/index.php/Kernel_module
 17. "capabilities (7)." Linux manual page. June 20, 2021. Accessed August 2, 2021. https://man7.org/linux/man-pages/man7/capabilities.7.html
+18. "BuildADebianKernelPackage." Debian Wiki. December 1, 2021. Accessed January 10, 2022. https://wiki.debian.org/BuildADebianKernelPackage
+19. "How to compile vanilla Linux kernel from source on Fedora." LinuxConfig.org. May 30, 2019. Accessed January 10, 2022. https://linuxconfig.org/how-to-compile-vanilla-linux-kernel-from-source-on-fedora
