@@ -2005,6 +2005,169 @@ Job example.
 
 [5]
 
+Run a Job exactly once on every control plane and worker node by using a toleration and pod anti-affinity.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: batch/v1
+   kind: Job
+   metadata:
+     name: read-hostname-all
+     namespace: default
+     labels:
+       app: read-hostname
+   spec:
+     # Change these two values to the number of nodes in the Kubernetes cluster.
+     completions: 5
+     parallelism: 5
+     template:
+       metadata:
+         name: pod-read-hostname-all
+         labels:
+           app: read-hostname-all
+           hasDNS: "false"
+       spec:
+         tolerations:
+         - effect: NoSchedule
+           key: node-role.kubernetes.io/master
+         affinity:
+           podAntiAffinity:
+             requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                   matchExpressions:
+                   - key: app
+                     operator: In
+                     values:
+                     - read-hostname-all
+               topologyKey: kubernetes.io/hostname
+         containers:
+           - name: busybox
+             image: busybox:latest
+             imagePullPolicy: IfNotPresent
+             command:
+               - cat /mnt/etc/hostname
+             securityContext:
+               privileged: true
+             volumeMounts:
+                - name: root-filesystem
+                   mountPath: /mnt
+         volumes:
+            - name: root-filesystem
+               hostPath:
+                 path: /
+         restartPolicy: OnFailure
+
+Run a Job exactly once on every control plane node only (not the worker nodes) by using a toleration, pod anti-affinity, and node affinity.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: batch/v1
+   kind: Job
+   metadata:
+     name: read-hostname-controls
+     namespace: default
+     labels:
+       app: read-hostname-controls
+   spec:
+     # Change these two values to the number of control plane nodes in the Kubernetes cluster.
+     completions: 3
+     parallelism: 3
+     template:
+       metadata:
+         name: pod-read-hostname-controls
+         labels:
+           app: read-hostname-controls
+           hasDNS: "false"
+       spec:
+         tolerations:
+         - effect: NoSchedule
+           key: node-role.kubernetes.io/master
+         affinity:
+           podAntiAffinity:
+             requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                   matchExpressions:
+                   - key: app
+                     operator: In
+                     values:
+                     - read-hostname-controls
+               topologyKey: kubernetes.io/hostname
+           nodeAffinity:
+             requiredDuringSchedulingIgnoredDuringExecution:
+               nodeSelectorTerms:
+               - matchExpressions:
+                 - key: node-role.kubernetes.io/master
+                   operator: Exists
+         containers:
+           - name: busybox
+             image: busybox:latest
+             imagePullPolicy: IfNotPresent
+             command:
+               - cat /mnt/etc/hostname
+             securityContext:
+               privileged: true
+             volumeMounts:
+                - name: root-filesystem
+                   mountPath: /mnt
+         volumes:
+            - name: root-filesystem
+               hostPath:
+                 path: /
+         restartPolicy: OnFailure
+
+
+Run a Job exactly once on every worker node only (not the control plane nodes) by using a pod anti-affinity. [38]
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: batch/v1
+   kind: Job
+   metadata:
+     name: read-hostname-workers
+     namespace: default
+     labels:
+       app: read-hostname-workers
+   spec:
+     # Change these two values to the number of worker nodes in the Kubernetes cluster.
+     completions: 2
+     parallelism: 2
+     template:
+       metadata:
+         name: pod-read-hostname-workers
+         labels:
+           app: read-hostname-workers
+           hasDNS: "false"
+       spec:
+         affinity:
+           podAntiAffinity:
+             requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                   matchExpressions:
+                   - key: app
+                     operator: In
+                     values:
+                     - read-hostname-workers
+               topologyKey: kubernetes.io/hostname
+         containers:
+           - name: busybox
+             image: busybox:latest
+             imagePullPolicy: IfNotPresent
+             command:
+               - cat /mnt/etc/hostname
+             securityContext:
+               privileged: true
+             volumeMounts:
+                - name: root-filesystem
+                   mountPath: /mnt
+         volumes:
+            - name: root-filesystem
+               hostPath:
+                 path: /
+         restartPolicy: OnFailure
+
 Pod
 ^^^
 
@@ -3758,7 +3921,7 @@ Bibliography
 35. "CA." cert-manager Documentation. February 4, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/ca/
 36. "Securing NGINX-ingress." cert-manager Documentation. March 14, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/tutorials/acme/ingress/
 37. "Setting up CA Issuers." cert-manager Documentation. 2018. Accessed March 31, 2021. https://docs.cert-manager.io/en/release-0.11/tasks/issuers/setup-ca.html
-38. "Assigning Pods to Nodes." Kubernetes Documentation. March 19, 2021. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+38. "Assigning Pods to Nodes." Kubernetes Documentation. June 14, 2021. Accessed January 12, 2022. https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 39. "Taints and Tolerations." Kubernetes Documentation. November 19, 2020. Accessed April 1, 2021. https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 40. "Making Sense of Taints and Tolerations in Kubernetes." Supergiant.io - Medium. March 5, 2019. Accessed April 1, 2021. https://medium.com/kubernetes-tutorials/making-sense-of-taints-and-tolerations-in-kubernetes-446e75010f4e
 41. "Sometime Liveness/Readiness Probes fail because of net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers) #89898." GitHub kubernetes/kubernetes. April 8, 2021. Accessed April 8, 2021. https://github.com/kubernetes/kubernetes/issues/89898
