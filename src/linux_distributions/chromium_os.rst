@@ -789,13 +789,47 @@ It is not recommended to use an unmodified upstream Linux kernel. Chromium OS pr
 
 [34]
 
-Linux Kernel Modules
-~~~~~~~~~~~~~~~~~~~~
+Linux Kernel
+~~~~~~~~~~~~
+
+Kernel
+^^^^^^
 
 Building
-^^^^^^^^
+''''''''
 
-The kernel and/or modules can be compiled regardless of the CPU architecture required.
+Google uses a fork of upstream Linux kernel. It trackes the long-term support (LTS) releases. Visit `here <https://chromium.googlesource.com/chromiumos/third_party/kernel/+refs>`__ for the full list of branches and tags that can be built.
+
+Common kernel branches:
+
+-  chromeos-5.15
+-  chromeos-5.10
+-  chromeos-5.4
+-  chromeos-4.19
+-  chromeos-4.14
+-  chromeos-4.4
+
+.. code-block:: sh
+
+   $ export KERNEL_CHROMEOS="chromeos-5.15"
+   $ git clone --depth 1 https://chromium.googlesource.com/chromiumos/third_party/kernel --branch ${KERNEL_CHROMEOS} ${KERNEL_CHROMEOS}
+   $ cd ${KERNEL_CHROMEOS}
+   $ ls -1 arch/x86/configs/ | grep chromiumos
+   chromiumos-borealis-vm-x86_64_defconfig
+   chromiumos-container-vm-x86_64_defconfig
+   chromiumos-jail-vm-x86_64_defconfig
+   $ make chromiumos-container-vm-x86_64_defconfig
+   $ make -j $(nproc) bzImage
+
+[42]
+
+Modules
+^^^^^^^
+
+Building
+''''''''
+
+Modules can be built for specific Chrome OS kernels. The kernel and/or modules can be compiled regardless of the CPU architecture required when using the cros_sdk environment.
 
 On the Chromebook, find the major ``X.Y`` kernel version.
 
@@ -848,8 +882,8 @@ Build the kernel or just the modules.
 
 [28]
 
-Installing
-^^^^^^^^^^
+Manual Install
+''''''''''''''
 
 Mount the root file system as writable, copy the kernel module, and then load it to ensure it works.
 
@@ -1431,3 +1465,4 @@ Bibliography
 39. "Reset your Chromebook to factory settings." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/183084?hl=en
 40. "Recover your Chromebook." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/1080595
 41. "SELinux in Chrome OS." Chromium OS Docs. Accessed December 31, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/security/selinux.md
+42. "Basic Usage." Book of crosvm. Accessed January 11, 2022. https://google.github.io/crosvm/running_crosvm/basic_usage.html
