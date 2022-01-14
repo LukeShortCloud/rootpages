@@ -1794,6 +1794,78 @@ Uninstall:
 
 [72]
 
+Serverless
+~~~~~~~~~~
+
+Serverless is a concept of being able to scale an application down to zero. This helps to save resources and money.
+
+Knative
+^^^^^^^
+
+Knative is the most popular implementation of serverless. The project originally had three components but now it only has two:
+
+1. `Knative Serving <https://knative.dev/docs/serving/>`__ = The serverless component of Knative. It provides scaling and routing capabilities.
+2. `Knative Eventing <https://knative.dev/docs/eventing/>`__ = A messaging queue that sends events from a specified event provider to an event sink (such as an application). An event source handles taking a message from the provider and sending it to the sink. A full list of supported event sources can be found `here <https://knative.dev/docs/eventing/sources/index.html>`__.
+3. `Knative Build <https://github.com/knative/build>`__ = This project is no longer maintained as part of Knative. It has been forked into the Tekton Pipelines project. [80]
+
+Install:
+
+-  Find a desired version of Knative Serving from the `releases <https://github.com/knative/serving/releases>`__ page.
+
+   .. code-block:: sh
+
+      $ export KNATIVE_VERSION=v1.1.0
+
+-  Install Knative Serving:
+
+   .. code-block:: sh
+
+      $ kubectl apply -f https://github.com/knative/serving/releases/download/knative-${KNATIVE_VERSION}/serving-crds.yaml
+      $ kubectl apply -f https://github.com/knative/serving/releases/download/knative-${KNATIVE_VERSION}/serving-core.yaml
+      $ kubectl get pods --namespace knative-serving
+
+-  Install a CNI plugin that is specifically configured for use by Knative by following the instructions from `here <https://knative.dev/docs/install/serving/install-serving-with-yaml/#install-a-networking-layer>`__. Ambassador, Contour, Istio, and Kourier are all supported. Installing a CNI plugin from a Knative release will ensure that it does not conflict with other CNI plugins.
+
+   -  Contour:
+
+      .. code-block:: sh
+
+         $ kubectl apply -f https://github.com/knative/net-contour/releases/download/knative-${KNATIVE_VERSION}/contour.yaml
+         $ kubectl apply -f https://github.com/knative/net-contour/releases/download/knative-${KNATIVE_VERSION}/net-contour.yaml
+         $ kubectl patch configmap/config-network \
+             --namespace knative-serving \
+             --type merge \
+             --patch '{"data":{"ingress-class":"contour.ingress.networking.knative.dev"}}'
+         $ kubectl get service envoy --namespace contour-external
+
+   -  Istio:
+
+      .. code-block:: sh
+
+         $ kubectl apply -l knative.dev/crd-install=true -f https://github.com/knative/net-istio/releases/download/knative-${KNATIVE_VERSON}/istio.yaml
+         $ kubectl apply -f https://github.com/knative/net-istio/releases/download/knative-${KNATIVE_VERSION}/istio.yaml
+         $ kubectl apply -f https://github.com/knative/net-istio/releases/download/knative-${KNATIVE_VERSION}/net-istio.yaml
+         $ kubectl get service istio-ingressgateway --namespace istio-system
+
+   -  Kourier (recommended default):
+
+      .. code-block:: sh
+
+         $ kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-${KNATIVE_VERSION}/kourier.yaml
+         $ kubectl patch configmap/config-network \
+             --namespace knative-serving \
+             --type merge \
+             --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+         $ kubectl get service kourier --namespace kourier-system
+
+-  Install cert-manager support:
+
+   .. code-block:: sh
+
+      $ kubectl apply -f https://github.com/knative/net-certmanager/releases/download/knative-${KNATIVE_VERSION}/release.yaml
+
+[81]
+
 Tanzu Administration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2069,3 +2141,5 @@ Bibliography
 77. "Configuration." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/configuration/
 78. "MetalLB." GitHub bitnami/charts. October 8, 2021. Accessed October 12, 2021. https://github.com/bitnami/charts/tree/master/bitnami/metallb
 79. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
+80. "Migrating from Knative Build." Tekton. Accessed January 14, 2022. https://tekton.dev/docs/pipelines/migrating-from-knative-build/
+81. "Installing Knative Serving using YAML files." Knative. Accessed January 14, 2022. https://knative.dev/docs/install/serving/install-serving-with-yaml/
