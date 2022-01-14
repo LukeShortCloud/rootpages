@@ -800,7 +800,7 @@ Building
 
 Google uses a fork of upstream Linux kernel. It trackes the long-term support (LTS) releases. Visit `here <https://chromium.googlesource.com/chromiumos/third_party/kernel/+refs>`__ for the full list of branches and tags that can be built.
 
-Common kernel branches:
+Here are the currently supported and updated kernel branches according to the `"chromiumos-overlay" source code <https://chromium.googlesource.com/chromiumos/overlays/chromiumos-overlay/+/refs/heads/main/sys-kernel/>`__:
 
 -  chromeos-5.15
 -  chromeos-5.10
