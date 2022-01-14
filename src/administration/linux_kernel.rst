@@ -389,12 +389,33 @@ Build
 
             $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ --depth=1 --branch linux-<VERSION_MAJOR>.<VERSION_MINOR>.y
 
+-  Add the kernel headers to the system to help with building DKMS modules in the future. The "linux" folder will need to later be renamed to reflect the output of ``uname -r`` of the installed kernel.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         $ sudo cp -r ./linux* /usr/lib/modules/
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo cp -r ./linux* /usr/src/
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ sudo cp -r ./linux* /usr/src/kernels/
+
 -  Create the ``.config`` file in the top-level of the kernel directory. It defines what features will be built for the Linux kernel.
 
    -  Use a default configuration:
 
       .. code-block:: sh
 
+         $ cd ./linux/
          $ make defconfig
 
 -  Build the Linux kernel:
