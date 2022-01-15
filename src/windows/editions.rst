@@ -48,6 +48,17 @@ An installation of Windows Enterprise LTSC can switch to the traditional "curren
 
 Windows Enterprise LTSC can only be upgraded to a new major release by manually running the "setup.exe" installer from a new ISO image. This can be done with a virtually mounted ISO image as the installation/upgrade files are copied locally to the ``C:\`` drive. Windows Update will not provide upgrades to newer major versions. [8]
 
+Windows Photo Viewer
+^^^^^^^^^^^^^^^^^^^^
+
+By default, Windows Photo Viewer is installed but not enabled in Windows LTSC editions. There is no default application set for viewing photos. Here are the steps to re-enable it as the default:
+
+-  Download the `Restore_Windows_Photo_Viewer_ALL_USERS_with_Sort_order_fix.reg <https://www.tenforums.com/attachments/tutorials/198321d1533487488-restore-windows-photo-viewer-windows-10-a-restore_windows_photo_viewer_all_users_with_sort_order_fix.reg>`__ fix.
+-  Right-click on the downloaded file and select "Open with > Registry Editor".
+-  Windows Settings > Apps > Default apps > Photo viewer > + Choose a default > Windows Photo Viewer
+
+[9]
+
 Downloads
 ---------
 
@@ -72,3 +83,4 @@ Bibliography
 6. "Microsoft says that there will be a Windows 11 LTSC release, but it's a few years out." Neowin. July 21, 2021. Accessed August 31, 2021. https://www.neowin.net/news/microsoft-says-that-there-will-be-a-windows-11-ltsc-release-but-its-a-few-years-out/
 7. "Question About Windows 10 Trial." Microsoft Community. January 1, 2017. Accessed August 31, 2021. https://answers.microsoft.com/en-us/windows/forum/all/question-about-windows-10-trial/fd9b4d3a-f44c-4a38-ae89-12b4692c744e
 8. "Upgrading Windows 10 2016 LTSB to Windows 10 2019 LTSC." Roberto Viola. July 28, 2020. Accessed August 31, 2021. https://robertoviola.cloud/2020/07/28/upgrading-windows-10-2016-ltsb-to-windows-10-2019-ltsc/
+9. "How to Restore Windows Photo Viewer in Windows 10." Windows 10 Help Forums. October 30, 2020. Accessed January 15, 2022. https://www.tenforums.com/tutorials/14312-restore-windows-photo-viewer-windows-10-a.html
