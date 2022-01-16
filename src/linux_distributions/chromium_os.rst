@@ -961,8 +961,150 @@ Crostini is an official set of technologies used to securely run Linux on Chrome
 
 Enable it by going into Chrome OS settings and selecting ``Linux (Beta)``. [1] A new ``Terminal`` app will appear to access the terminal of the container. Alternatively, the Chrome web browser can be used to access the terminal by going to ``chrome-untrusted://terminal/html/terminal.html``.
 
-Container Management
-^^^^^^^^^^^^^^^^^^^^
+Virtual Machine Management (crosvm)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Chrome OS Virtual Machine Monitor, also known as "crosvm", is a virtual machine monitor similar to QEMU. It is designed to work with the KVM hypervisor and uses VirtIO paravirtualization. [44]
+
+Custom Virtual Machine
+''''''''''''''''''''''
+
+The default ``termina`` virtual machine is based on Chrome OS. However, a custom virtual machine can be created and used via crosvm.
+
+-  Google recommends creating two separate virtual storage devices for a virtual machine: one containing the root file system and a second for storing additional data. However, it is possible to run a crosvm virtual machine with just one.
+
+   -  Raw disks:
+
+      .. code-block:: sh
+
+         $ truncate -s 5G root.img
+         $ mkfs.ext4 ./root.img
+         $ mkdir rootfs
+         $ sudo mount root.img rootfs/
+         $ fallocate --length 10G storage.img
+         $ mkfs.ext4 ./storage.img
+
+   -  Virtual disks:
+
+      .. code-block:: sh
+
+         $ qemu-img create -f qcow2 -o size=5G root.qcow2
+         $ virt-format --filesystem=ext4 --add root.qcow2
+         $ sudo guestmount --add root.qcow2 --mount /dev/sda1 ./rootfs/
+         $ qemu-img create -f qcow2 -o size=10G storage.qcow2
+         $ virt-format --filesystem=ext4 --add storage.qcow2
+
+-  Install the base packages for a desired Linux distribution.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         $ sudo pacstrap -i ./rootfs/ base
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo debootstrap stable ./rootfs/ http://deb.debian.org/debian/
+
+-  Configure the basic Linux file system mounts:
+
+   .. code-block:: sh
+
+      $ echo "tmpfs /tmp tmpfs defaults 0 0" | sudo tee -a ./rootfs/etc/fstab
+      $ echo "tmpfs /var/log tmpfs defaults 0 0" | sudo tee -a ./rootfs/etc/fstab
+      $ echo "tmpfs /root tmpfs defaults 0 0" | sudo tee -a ./rootfs/etc/fstab
+      $ echo "sysfs /sys sysfs defaults 0 0" | sudo tee -a ./rootfs/etc/fstab
+      $ echo "proc /proc proc defaults 0 0" | sudo tee -a ./rootfs/etc/fstab
+
+-  Set a root password:
+
+   ::
+
+      $ sudo chroot ./rootfs/
+      [root@localhost /]# passwd root
+
+-  For optional additional configuration, mount ``sysfs`` to allow more Linux utilities to work.
+
+   ::
+
+      [root@localhost /]# mount sysfs -t sysfs /sys
+
+-  Exit the chroot:
+
+   ::
+
+      [root@localhost /]# exit
+
+-  Unmount the root file system.
+
+   -  Raw disks:
+
+      .. code-block:: sh
+
+         $ umount ./rootfs/
+
+   -  Virtual disks:
+
+      .. code-block:: sh
+
+         $ sudo guestunmount ./rootfs/
+
+-  Build the Chromium OS kernel that is optimized for use with virtual machines:
+
+   .. code-block:: sh
+
+      $ git clone --depth 1 -b chromeos-5.15 https://chromium.googlesource.com/chromiumos/third_party/kernel kernel-chromeos-5.15
+      $ cd kernel-chromeos-5.15
+      $ make chromiumos-container-vm-x86_64_defconfig
+      $ make -j $(nproc) bzImage
+      $ cp arch/x86/boot/bzImage ../bzImage-chromeos-5.15
+      $ cd ../
+
+   -  These are the minimum requirements for the Linux kernel configuration [43]:
+
+      ::
+
+         CONFIG_VT=y
+         CONFIG_INPUT=y
+         CONFIG_VIRTIO_INPUT=y
+         CONFIG_INPUT_EVDEV=y
+
+-  Start the virtual machine.
+
+   -  At a minimum, a virtual machine requires a root disk.
+
+      -  Raw disks (``--rwroot`` implies ``-p root=/dev/vda``):
+
+         .. code-block:: sh
+
+            $ crosvm run --disable-sandbox --rwroot "$(pwd)/root.img" -p init=/bin/bash bzImage-chromeos-5.15
+
+      -  Virtual disks:
+
+         .. code-block:: sh
+
+            $ crosvm run --disable-sandbox --rwdisk "$(pwd)/root.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
+
+   -  At most, a virtual machine can specify a root disk and any number of additional disks for storage.
+
+      -  Raw disks:
+
+         .. code-block:: sh
+
+            $ crosvm run --disable-sandbox --rwroot "$(pwd)/root.img" --rwdisk "$(pwd)/storage.img" -p init=/bin/bash bzImage-chromeos-5.15
+
+      -  Virtual disks:
+
+         .. code-block:: sh
+
+            $ crosvm run --disable-sandbox --rwdisk "$(pwd)/root.qcow2" --rwdisk "$(pwd)/storage.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
+
+[42]
+
+Container Management (LXC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 With developer mode enabled, the ``termina`` VM can be manually edited with the ``vmc`` command. It can enable GPU acceleration, enable audio capture, export/save the VM, share files, and attach USB devices. New containers can also be created.
 
@@ -1465,4 +1607,6 @@ Bibliography
 39. "Reset your Chromebook to factory settings." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/183084?hl=en
 40. "Recover your Chromebook." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/1080595
 41. "SELinux in Chrome OS." Chromium OS Docs. Accessed December 31, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/security/selinux.md
-42. "Basic Usage." Book of crosvm. Accessed January 11, 2022. https://google.github.io/crosvm/running_crosvm/basic_usage.html
+42. "Basic Usage." Book of crosvm. Accessed January 15, 2022. https://google.github.io/crosvm/running_crosvm/basic_usage.html
+43. "Example Usage (Outdated)." Book of crosvm. Accessed January 15, 2022. https://google.github.io/crosvm/appendix/example_usage.html
+44. "crosvm - The Chrome OS Virtual Machine Monitor." chromiumos/platform/crosvm - Git at Google. January 13, 2022. Accessed January 15, 2022. https://chromium.googlesource.com/chromiumos/platform/crosvm/
