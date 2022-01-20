@@ -1115,6 +1115,81 @@ The default ``termina`` virtual machine is based on Chrome OS. However, a custom
 
 [42]
 
+Networking
+&&&&&&&&&&
+
+By default, a crosvm virtual machine does not have any networking configured. Networking requires either root access or that the ``crosvm`` process has the CAP_NET_ADMIN Linux capability. [45] Use the arguments ``--host_ip``, ``--netmask``, and ``--mac`` to enable networking. [43] This will create a network tap device on the hypervisor called ``vmtap<NUMBER>``. That tap device should automatically have the host IP, subnet mask, and MAC address configured.
+
+.. code-block:: sh
+
+   $ sudo crosvm run --disable-sandbox --rwroot "$(pwd)/root.img" --host_ip=10.0.0.1 --netmask=255.255.255.0 --mac="AA:BB:CC:00:00:10" bzImage-chromeos-5.15
+
+-  Find the ``vmtap<NUMBER>`` number by running ``ip link`` and looking for the MAC address. On Chrome OS, it may be a higher number because Android, Borealis, and Linux run as virtual machines and also use tap devices. On other Linux distributions, this will start with ``vmtap0``.
+
+   .. code-block:: sh
+
+      $ ip link | grep -B 1 "aa:bb:cc:00:00:10"
+      17: vmtap6: <BROADCAST,ALLMULTI,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN mode DEFAULT group default qlen 1000
+          link/ether aa:bb:cc:00:00:10 brd ff:ff:ff:ff:ff:ff
+
+-  Networking types:
+
+   -  **Bridge** = The tap can be added to a bridge to give it direct access to the LAN.
+
+      .. code-block:: sh
+
+         $ sudo brctl addif br0 vmtap6
+         $ sudo ip link set vmtap6 master br0
+
+      -  In the virtual machine, setup IP addressing for the LAN.
+
+         .. code-block:: sh
+
+            $ sudo ip address add 192.168.1.123/24 dev enp0s4
+            $ sudo ip link set enp0s4 up
+            $ sudo ping -c 4 192.168.1.1
+            $ sudo ip route add default via 192.168.1.1
+            $ sudo ping -c 4 8.8.8.8
+
+   -  **NAT** = On Chrome OS, a bridge device will not be available by default. Instead, a NAT can be created between the tap interface and the wireless ``wlan0`` or wired ``eth0`` interface. [43]
+
+      .. code-block:: sh
+
+         $ sudo sysctl net.ipv4.ip_forward=1
+         $ sudo iptables -t nat  -A POSTROUTING -o wlan0 -j MASQUERADE
+         $ sudo iptables -A FORWARD -i wlan0 -o vmtap6 -m state --state RELATED,ESTABLISHED -j ACCEPT
+         $ sudo iptables -A FORWARD -o wlan0 -i vmtap6 -j ACCEPT
+
+      -  In the virtual machine, setup IP addressing so that it can route through the hypervisor IP that is setup with NAT.
+
+         .. code-block:: sh
+
+            $ sudo ip address add 10.0.0.2/24 dev enp0s4
+            $ sudo ip link set enp0s4 up
+            $ sudo ping -c 4 10.0.0.1
+            $ sudo ip route add default via 10.0.0.1
+            $ sudo ping -c 4 8.8.8.8
+
+-  Troubleshooting = On Chrome OS, crosvm may setup restrictive firewall rules.
+
+   -  Check to see if any rules exist in the iptables NAT table.
+
+      .. code-block:: sh
+
+         $ iptables -t nat -S | grep vmtap6
+
+   -  Delete any that exist.
+
+      .. code-block:: sh
+
+         # Ingress rules.
+         $ sudo iptables -t nat -D ingress_default_forwarding -i vmtap6 -m socket --nowildcard -j ACCEPT
+         $ sudo iptables -t nat -D ingress_default_forwarding -i vmtap6 -p tcp -j DNAT --to-destination 100.115.92.6
+         $ sudo iptables -t nat -D ingress_default_forwarding -i vmtap6 -p udp -j DNAT --to-destination 100.115.92.6
+         # DNS rules.
+         $ sudo iptables -t nat -D redirect_default_dns -i vmtap6 -p tcp -m tcp --dport 53 -j DNAT --to-destination 100.115.92
+         $ sudo iptables -t nat -D redirect_default_dns -i vmtap6 -p udp -m udp --dport 53 -j DNAT --to-destination 100.115.92.13
+
 Container Management (LXC)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1620,5 +1695,6 @@ Bibliography
 40. "Recover your Chromebook." Chromebook Help. Accessed December 30, 2021. https://support.google.com/chromebook/answer/1080595
 41. "SELinux in Chrome OS." Chromium OS Docs. Accessed December 31, 2021. https://chromium.googlesource.com/chromiumos/docs/+/HEAD/security/selinux.md
 42. "Basic Usage." Book of crosvm. Accessed January 15, 2022. https://google.github.io/crosvm/running_crosvm/basic_usage.html
-43. "Example Usage (Outdated)." Book of crosvm. Accessed January 15, 2022. https://google.github.io/crosvm/appendix/example_usage.html
+43. "Example Usage (Outdated)." Book of crosvm. Accessed January 19, 2022. https://google.github.io/crosvm/appendix/example_usage.html
 44. "crosvm - The Chrome OS Virtual Machine Monitor." chromiumos/platform/crosvm - Git at Google. January 13, 2022. Accessed January 15, 2022. https://chromium.googlesource.com/chromiumos/platform/crosvm/
+45. "System Requirements." Book of crosvm. Accessed January 19, 2022. https://google.github.io/crosvm/running_crosvm/requirements.html
