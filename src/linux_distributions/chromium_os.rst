@@ -809,6 +809,15 @@ Here are the currently supported and updated kernel branches according to the `"
 -  chromeos-4.14
 -  chromeos-4.4
 
+Other useful branches:
+
+-  ``merge/continuous/chromeos-kernelupstream-<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>`` = The specified `mainline <https://www.kernel.org/>`__ Linux kernel with Chromium OS patches.
+
+   -  ``merge/continuous/chromeos-kernelupstream-<KERNEL_VERSION_MANJOR>.<KERNEL_VERSION_MINOR>-rc<KERNEL_VERSION_RELEASE_CANDIDATE>``
+
+-  ``merge/upstream-kernel`` = The latest mainline Linux kernel with Chromium OS patches.
+-  ``stable-merge/linux/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>.<KERNEL_VERSION_PATCH>`` = The specified `stable <https://mirrors.edge.kernel.org/pub/linux/kernel/>`__ Linux kernel.
+
 .. code-block:: sh
 
    $ export KERNEL_CHROMEOS="chromeos-5.15"
