@@ -978,6 +978,9 @@ The Chrome OS Virtual Machine Monitor, also known as "crosvm", is a virtual mach
 Custom Virtual Machine
 ''''''''''''''''''''''
 
+Build
+&&&&&
+
 The default ``termina`` virtual machine is based on Chrome OS. However, a custom virtual machine can be created and used via crosvm.
 
 -  Google recommends creating two separate virtual storage devices for a virtual machine: one containing the root file system and a second for storing additional data. However, it is possible to run a crosvm virtual machine with just one.
@@ -1084,7 +1087,7 @@ The default ``termina`` virtual machine is based on Chrome OS. However, a custom
 
    -  At a minimum, a virtual machine requires a root disk.
 
-      -  Raw disks (``--rwroot`` implies ``-p root=/dev/vda``):
+      -  Raw disks (``--rwroot`` implies ``-p root=/dev/vda -p rw``):
 
          .. code-block:: sh
 
@@ -1094,7 +1097,7 @@ The default ``termina`` virtual machine is based on Chrome OS. However, a custom
 
          .. code-block:: sh
 
-            $ crosvm run --disable-sandbox --rwdisk "$(pwd)/root.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
+            $ crosvm run --disable-sandbox --rwroot "$(pwd)/root.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
 
    -  At most, a virtual machine can specify a root disk and any number of additional disks for storage.
 
@@ -1108,7 +1111,7 @@ The default ``termina`` virtual machine is based on Chrome OS. However, a custom
 
          .. code-block:: sh
 
-            $ crosvm run --disable-sandbox --rwdisk "$(pwd)/root.qcow2" --rwdisk "$(pwd)/storage.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
+            $ crosvm run --disable-sandbox --rwroot "$(pwd)/root.qcow2" --rwdisk "$(pwd)/storage.qcow2" -p root=/dev/vda1 -p init=/bin/bash bzImage-chromeos-5.15
 
 [42]
 
