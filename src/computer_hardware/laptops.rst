@@ -6,13 +6,17 @@ Laptops
 Brands
 ------
 
-These are popular computer manufacturers that provide options to buy laptops with Linux pre-installed.
+Brands that provide Linux pre-installed:
 
 -  `Dell <https://www.dell.com/support/contents/en-us/category/product-support/self-support-knowledgebase/operating-systems>`__ = RHEL, SLED, and Ubuntu.
 -  `Lenovo <https://support.lenovo.com/us/en/solutions/pd031426>`__ = `Fedora <https://news.lenovo.com/pressroom/press-releases/lenovo-brings-linux-certification-to-thinkpad-and-thinkstation-workstation-portfolio-easing-deployment-for-developers-data-scientists/>`__, RHEL, SLED, and Ubuntu.
 -  `Star Labs <https://starlabs.systems/>`__ = elementary OS, Linux Mint, Manjaro, MX Linux, Ubuntu, or Zorin OS.
 -  `System76 <https://system76.com/>`__ = Pop!_OS and Ubuntu.
 -  `TUXEDO Computers <https://www.tuxedocomputers.com/index.php>`__ = Manjaro, openSUSE, TUXEDO_OS, or Ubuntu.
+
+Brands that provide Linux hardware support but do not pre-install an operating system:
+
+-  `Framework <https://frame.work/>`__ = `Fedora <https://guides.frame.work/Guide/Fedora+35+Installation+on+the+Framework+Laptop/108?lang=en>`__, `Linux Mint <https://guides.frame.work/Guide/Mint+20.3+Installation+on+the+Framework+Laptop/110?lang=en>`__, `Manjaro <https://guides.frame.work/Guide/Manjaro+21.2.1+Installation+on+the+Framework+Laptop/111?lang=en>`__, and `Ubuntu <https://guides.frame.work/Guide/Ubuntu+21.10+Installation+on+the+Framework+Laptop/109?lang=en>`__.
 
 Graphics Cards
 --------------
