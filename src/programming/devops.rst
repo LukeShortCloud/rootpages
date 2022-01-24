@@ -99,23 +99,23 @@ Installation
 
       .. code-block:: sh
 
-         $ export CODE_SERVER_VER="3.4.1"
+         $ export CODE_SERVER_VER="3.12.0"
 
    -  Fedora and EL:
 
       .. code-block:: sh
 
-         $ curl -LO https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VER}/code-server-${CODE_SERVER_VER}-amd64.rpm
+         $ curl -LO https://github.com/cdr/code-server/releases/download/v${CODE_SERVER_VER}/code-server-${CODE_SERVER_VER}-amd64.rpm
 
    -  Debian and Ubuntu:
 
       .. code-block:: sh
 
-         $ curl -LO https://github.com/cdr/code-server/releases/download/${CODE_SERVER_VER}/code-server_${CODE_SERVER_VER}_amd64.deb
+         $ curl -LO https://github.com/cdr/code-server/releases/download/v${CODE_SERVER_VER}/code-server_${CODE_SERVER_VER}_amd64.deb
 
 -  Container
 
-   -  The official code-server 3.4.Z containers are based on Debian 10 Buster.
+   -  The official code-server container is based on `Debian <https://github.com/coder/code-server/blob/main/ci/release-image/Dockerfile>`__.
 
       .. code-block:: sh
 
