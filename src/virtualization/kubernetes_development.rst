@@ -3696,6 +3696,46 @@ Vocabulary:
 
 Each Chart contains a "values.yaml" for manifest settings that can be overridden. It is expected that it contains sane defaults and can be deployed without any modifications. The manifest files are `Go templates <https://golang.org/pkg/text/template/>`__ that get rendered out based on the values provided to Helm. `The Chart Template Developer's Guide <https://helm.sh/docs/chart_template_guide/>`__ explains in more detail how to fully customize templates. It is possible to override values that are not templated, or to add new ones, by using `Kustomize <https://kustomize.io/>`__. The biggest downside to using Kustomize is that Helm no longer has visibility into the release/life-cycle of a Chart. [17]
 
+Serverless
+~~~~~~~~~~
+
+Knative
+^^^^^^^
+
+Install the client.
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ export KNATIVE_VERSION=v1.1.0
+      $ sudo -E wget https://github.com/knative/client/releases/download/knative-${KNATIVE_VERSION}/kn-linux-amd64 -O /usr/local/bin/kn
+      $ sudo chmod +x /usr/local/bin/kn
+
+-  macOS:
+
+   .. code-block:: sh
+
+      $ brew install kn
+
+Optionally setup a lab environment.
+
+-  kind
+
+   .. code-block:: sh
+
+      $ kn quickstart kind
+      $ kind get clusters
+
+-  minikube
+
+   .. code-block:: sh
+
+      $ kn quickstart minikube
+      $ minikube profile list
+
+[52]
+
 Best Practices
 ~~~~~~~~~~~~~~
 
@@ -3935,3 +3975,4 @@ Bibliography
 49. "Improving Your Kubernetes Authorization: Don’t Use system:masters." Aqua Blog. May 20, 2021. Accessed September 26, 2021. https://blog.aquasec.com/kubernetes-authorization
 50. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
 51. "Examples for Provisioning Tanzu Kubernetes Clusters Using the Tanzu Kubernetes Grid Service v1alpha1 API." VMware Docs. September 20, 2021. Accessed October 29, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
+52. "Getting Started with Knative." Knative. Accessed January 27, 2022. https://knative.dev/docs/getting-started/
