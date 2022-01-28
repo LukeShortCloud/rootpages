@@ -2888,6 +2888,172 @@ Issuer
 
 View the `ClusterIssuer API <#clusterissuer>`_ documentation. The spec is exactly the same except the ClusterIssuer does not support being namespaced.
 
+Knative
+^^^^^^^
+
+Service
+'''''''
+
+-  API group / version (latest): serving.knative.dev/v1
+-  Shortname: ksvc
+-  Namespaced: true
+
+----
+
+``ksvc.spec:``
+
+-  template (map)
+
+   -  metadata (map)
+
+      -  annotations (map)
+
+         -  autoscaling.knative.dev/class (string)
+
+            -  ``kpa.autoscaling.knative.dev`` (default) = Use the Knative Pod Autoscaler (KPA). This can scale to zero and scale based on the metrics relating to active network connections.
+            -  ``hpa.autoscaling.knative.dev`` = Use the vanilla Kubernetes Horizontal Pod Autoscaler (HPA). It cannot scale to zero and scale based on metrics for the CPU and RAM usage along with custom metrics.
+
+         -  autoscaling.knative.dev/initial-scale (integer) = Default: ``1``. The number of Pods to create when this Kubernetes object is first created.
+         -  autoscaling.knative.dev/max-scale (integer) = Default: ``0`` (unlimited). The maximum number of Pods that can be created.
+         -  autoscaling.knative.dev/metric (string) = The type of metric to use for automatic scaling purposes.
+
+             -  Allowed values for HPA = ``custom``, ``cpu``, or ``memory``.
+             -  Allowed values for KPA = ``concurrency`` (default, the number of active connections) or ``rps`` (requests per second).
+
+         -  autoscaling.knative.dev/min-scale (integer) = Default: ``0`` (KPA) or ``1`` (HPA). The minimum number of Pods that should be running.
+         -  autoscaling.knative.dev/panic-threshold-percentage (float) = Default: ``200``. The percentage of the target metric that must be reached before panic mode activates.
+         -  autoscaling.knative.dev/panic-window-percentage (float) = Default: ``10.0``. The percentage of time from the specified ``autoscaling.knative.dev/window`` to do a panic scale-up of Pods.
+         -  autoscaling.knative.dev/scale-down-delay (string) = Default: ``0s``. The number of seconds to wait to scale-down after a target is being under-utilized. This can be in the format of ``<SECONDS>s`` or ``<MINUTES>m`` and cannot exceed one hour.
+         -  autoscaling.knative.dev/target (float) = Default: ``100``. A number representing the metric target that must be exceeded before Knative will scale-up the number of Pods. Depending on the metric, this may be a percentage.
+         -  autoscaling.knative.dev/target-utilization-percentage (float) = Default: ``70``. A number representing the percentage of the target to watch for before scaling up additional Pods earlier.
+         -  autoscaling.knative.dev/window (string) = Default: ``60s``. The stable amount of time that Knative takes into account when decieding if Pods need to be scaled up or down.
+
+[53][54]
+
+----
+
+**Examples:**
+
+Run a Pod with a minimum scale of 1 replica and a maximum scale of 5 replicas.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: min-max-scale
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           autoscaling.knative.dev/max-scale: "5"
+           autoscaling.knative.dev/min-scale: "1"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
+Run a Pod with scaling based on the amount of memory usage. If a Pod uses more than 30 MiB of RAM, then the autoscaling class will create more replicas.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: memory-scale
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
+           autoscaling.knative.dev/metric: memory
+           autoscaling.knative.dev/target: "30"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
+Run a Pod with scaling based on the amount of processor usage. If a Pod uses more than 50% load of total CPU usage, then the autoscaling class will create more replicas.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: memory-scale
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
+           autoscaling.knative.dev/metric: cpu
+           autoscaling.knative.dev/target: "50"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
+Run a Pod that will enter panic mode (which happens if the metric reports double, or more, of what the target expects) after 15 seconds (instead of the default of 10 seconds).
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: slower-panic
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           # 25% of the default stable window of 60 seconds is 15 seconds.
+           autoscaling.knative.dev/panic-window-percentage: "25"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
+Run a Pod with no replicas running at first.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: no-starting-pod
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           autoscaling.knative.dev/initial-scale: "0"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
+Run a Pod that will only enter panic mode if the metric target is three and a half times the desired target.
+
+.. code-block:: yaml
+
+   ---
+   apiVersion: serving.knative.dev/v1
+   kind: Service
+   metadata:
+     name: no-starting-pod
+     namespace: default
+   spec:
+     template:
+       metadata:
+         annotations:
+           autoscaling.knative.dev/panic-threshold-percentage: "350"
+       spec:
+         containers:
+           - image: gcr.io/knative-samples/autoscale-go:0.1
+
 OpenShift
 ~~~~~~~~~
 
@@ -3702,6 +3868,17 @@ Serverless
 Knative
 ^^^^^^^
 
+Scaling Modes
+'''''''''''''
+
+There are two modes for autoscaling in Knative:
+
+-  **Stable** is the default mode that scales replicas up or down based on the "target" usage of the defined "metric". Every 60 seconds, this checks the average metrics.
+-  **Panic** mode checks every 6 seconds. It is inactive until the average metrics is reported as twice as much as the target then scaling up will happen every 6 seconds if necessary. Panic mode will not scale down replicas.
+
+Client
+''''''
+
 Install the client.
 
 -  Linux:
@@ -3976,3 +4153,5 @@ Bibliography
 50. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
 51. "Examples for Provisioning Tanzu Kubernetes Clusters Using the Tanzu Kubernetes Grid Service v1alpha1 API." VMware Docs. September 20, 2021. Accessed October 29, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-B1034373-8C38-4FE2-9517-345BF7271A1E.html
 52. "Getting Started with Knative." Knative. Accessed January 27, 2022. https://knative.dev/docs/getting-started/
+53. "API Serving." Knative. Accessed January 28, 2022. https://knative.dev/docs/reference/api/serving-api/
+54. "Autoscaling." Knative. Accessed January 28, 2022. https://knative.dev/docs/serving/autoscaling/
