@@ -133,11 +133,11 @@ Installation (Source)
 
 Debian:
 
--  Install the build dependencies:
+-  Install the build dependencies [38]:
 
    .. code-block:: sh
 
-      $ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-$(uname -r) python3 python3-dev python3-distutils python3-cffi python3-setuptools uuid-dev zlib1g-dev
+      $ sudo apt install alien autoconf automake build-essential dkms fakeroot gawk libaio-dev libattr1-dev libblkid-dev libcurl4-openssl-dev libelf-dev libffi-dev libssl-dev libtool libudev-dev libzstd-dev linux-headers-$(uname -r) python3 python3-dev python3-distutils python3-cffi python3-packaging python3-pyparsing python3-setuptools uuid-dev zlib1g-dev
 
 -  View and download an OpenZFS release from `here <https://github.com/openzfs/zfs/releases>`__.
 
@@ -1241,3 +1241,4 @@ Bibliography
 35. "How to enable LUKS disk encryption with keyfile on Linux." nixCraft. Accessed September 12, 2021. https://www.cyberciti.biz/hardware/cryptsetup-add-enable-luks-disk-encryption-keyfile-linux/
 36. "chown: invalid user: 'nfsnobody' in fedora 32 after install nfs." Stack Overflow. August 14, 2020. Accessed December 20, 2021. https://stackoverflow.com/questions/62980913/chown-invalid-user-nfsnobody-in-fedora-32-after-install-nfs
 37. "Mounting NFS share from Linux to Windows server." techbeatly. June 12, 2019. Accessed December 20, 2021. https://www.techbeatly.com/mounting-nfs-share-from-linux-to-windows-server/
+38. "Building ZFS." OpenZFS Documentation. 2021. Accessed February 5, 2022. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html
