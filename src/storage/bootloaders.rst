@@ -178,6 +178,20 @@ Common options:
 
 [5]
 
+-  GRUB\_PRELOAD\_MODULES = Default: ``part_gpt part_msdos``. Additional GRUB modules to load. These may be required for special file systems or boot configurations. [12]
+
+   -  View all of the UEFI GRUB modules:
+
+      .. code-block:: sh
+
+         $ ls -1 /boot/grub/x86_64-efi/*.mod
+
+   -  View all of the legacy BIOS boot GRUB modules:
+
+      .. code-block:: sh
+
+         $ ls -1 /boot/grub/i386-pc/*.mod
+
 Examples
 ^^^^^^^^
 
@@ -190,14 +204,49 @@ These are examples configurations for ``/etc/default/grub``. Use ``grub-mkconfig
       GRUB_TIMEOUT=0
       GRUB_TIMEOUT_STYLE=hidden
 
--  Show the GRUB menu on boot:
+-  Show the consolidated GRUB menu on boot:
 
    ::
 
       GRUB_TIMEOUT=5
       GRUB_TIMEOUT_STYLE=menu
 
+-  Show everything on the main GRUB menu page on boot:
+
+   ::
+
+      GRUB_TIMEOUT=5
+      GRUB_TIMEOUT_STYLE=menu
+      GRUB_DISABLE_SUBMENU=y
+
+-  Save the selected boot kernel as the default for the next boot:
+
+   ::
+
+      GRUB_DEFAULT=saved
+      GRUB_SAVEDEFAULT=true
+
 [10]
+
+-  Support for booting off of any file systems:
+
+   ::
+
+      GRUB_PRELOAD_MODULES="part_gpt part_msdos affs afs bfs btrfs cbfs ext2 fat fshelp geli hfs hfspluscomp hfsplus http iso9660 luks macbless memdisk minix nilfs2 ntfscomp ntfs pxe reiserfs scsi sfs squash4 tftp usf1_be ufs1 ufs2 xfs zfscrypt zfsinfo zfs"
+
+-  Support for booting more than one operating system:
+
+   ::
+
+      GRUB_PRELOAD_MODULES="part_gpt part_msdos multiboot2"
+
+-  Support for compression (required by some file systems):
+
+   ::
+
+      GRUB_PRELOAD_MODULES="part_gpt part_msdos hfspluscomp lzopio ntfscomp zstd zxio"
+
+[12]
 
 Recovery
 ~~~~~~~~
@@ -395,5 +444,6 @@ Bibliography
 7. "GNU GRUB Manual 2.00." GNU. Accessed June 27, 2016. https://www.gnu.org/software/grub/manual/grub.html
 8. "Is a hybrid Linux USB-Stick for UEFI & legacy BIOS possible?" Super User. March 11, 2018. Accessed June 17, 2020. https://superuser.com/questions/801515/is-a-hybrid-linux-usb-stick-for-uefi-legacy-bios-possible
 9. "GRUB/Tips and tricks." ArchWiki. April 17, 2021. Accessed May 31, 2021. https://wiki.archlinux.org/title/GRUB/Tips_and_tricks
-10. "Simple configuration handling." GNU GRUB Manual 2.06. Accessed July 5, 2021. https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
+10. "Simple configuration handling." GNU GRUB Manual 2.06. Accessed February 5, 2022. https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
 11. "Install Arch Linux on a removable medium." ArchWiki. July 12, 2021. Accessed July 17, 2021. https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium
+12. "Understanding the Various Grub Modules." Linux.org. March 2, 2015. Accessed February 5, 2022. https://www.linux.org/threads/understanding-the-various-grub-modules.11142/
