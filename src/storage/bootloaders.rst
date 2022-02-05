@@ -425,6 +425,47 @@ Solutions:
       HOOKS=(base udev keyboard block autodetect modconf resume filesystems fsck)
       $ sudo mkinitpcio -p linux
 
+----
+
+Error from GRUB during boot:
+
+::
+
+   error: sparse file not allowed
+
+Solutions:
+
+This means that GRUB was unable to save information such as which kernel was used to boot into and should be the default next time.
+
+1.  Configure GRUB to not automatically save the last boot option.
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/default/grub
+      GRUB_DEFAULT=0
+      GRUB_SAVEDEFAULT=false
+      $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+2.  Add support for the correct file system (including compression, if necessary). Refer to the `GRUB 2 - Configuration <#configuration>`_ section for a list of valid GRUB modules.
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ sudo vim /etc/default/grub
+         GRUB_PRELOAD_MODULES="part_gpt part_msdos <FILE_SYSTEM_MODULE> <COMPRESSION_MODULE>"
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+   -  Example:
+
+      .. code-block:: sh
+
+         $ sudo vim /etc/default/grub
+         GRUB_PRELOAD_MODULES="part_gpt part_msdos btrfs zstd"
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+[13]
+
 History
 -------
 
@@ -447,3 +488,4 @@ Bibliography
 10. "Simple configuration handling." GNU GRUB Manual 2.06. Accessed February 5, 2022. https://www.gnu.org/software/grub/manual/grub/html_node/Simple-configuration.html
 11. "Install Arch Linux on a removable medium." ArchWiki. July 12, 2021. Accessed July 17, 2021. https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium
 12. "Understanding the Various Grub Modules." Linux.org. March 2, 2015. Accessed February 5, 2022. https://www.linux.org/threads/understanding-the-various-grub-modules.11142/
+13. "GRUB error: sparse file not allowed." Support - Manjaro Linux. September 6, 2020. Accessed February 2022. https://forum.manjaro.org/t/grub-error-sparse-file-not-allowed/20267/6
