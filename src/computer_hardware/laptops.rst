@@ -26,6 +26,37 @@ NVIDIA
 
 For the best experience, get a laptop with at least an `Intel Coffee Lake (Intel Core >= 9000 series) CPU <https://ark.intel.com/content/www/us/en/ark/products/codename/97787/coffee-lake.html>`__ and a `NVIDIA Turing (GeForce RTX >= 2000 series) GPU <https://www.nvidia.com/en-us/geforce/turing/>`__. These are the minimum requirements for automatic power management of the graphics card which will greatly increase battery life. The integrated Intel GPU is used until an application is specifically ran with offloading to the NVIDIA GPU. [1]
 
+Battery
+-------
+
+There are a few popular battery management utilities for Linux that are used to extend the battery life of a laptop. The most popular options are `auto-cpufreq <https://github.com/AdnanHodzic/auto-cpufreq>`__ and `TLP <https://github.com/linrunner/TLP>`__. Both programs will automatically change power profiles based on the current usage of the portable computer.
+
+``auto-cpufreq`` is preferred as it has more features such as a turbo mode to increase the processor frequency/speed. These two programs are not compatible with each other.
+
+Install:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ yay -S auto-cpufreq
+
+-  Other:
+
+   .. code-block:: sh
+
+      $ git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+      $ cd ./auto-cpufreq/
+      $ sudo ./auto-cpufreq-installer
+
+Enable and start the service:
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now auto-cpufreq
+
+[2]
+
 History
 -------
 
@@ -35,3 +66,4 @@ Bibliography
 ------------
 
 1. "Chapter 22. PCI-Express Runtime D3 (RTD3) Power Management." NVIDIA Accelerated Linux Graphics Driver README and Installation Guide. Accessed December 30, 2020. https://us.download.nvidia.com/XFree86/Linux-x86_64/455.45.01/README/dynamicpowermanagement.html
+2. "AdnanHodzic/auto-cpufreq." GitHub. January 9, 2022. Accessed February 5, 2022. https://github.com/AdnanHodzic/auto-cpufreq
