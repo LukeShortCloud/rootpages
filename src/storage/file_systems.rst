@@ -18,6 +18,7 @@ calculated by using the equation: ``2^<BIT_SIZE> - 1``.
 
    "Fat16 (vfat)", "DOS", "No journaling.", "2GiB", "2GiB", "16"
    "Fat32 (vfat)", "DOS", "No journaling.", "4GiB", "8TiB", "32"
+   "exFAT", "Windows NT", "No journaling.", "128 PiB", "128 PiB", "32"
    "NTFS (ntfs-3g)", "Windows NT", "Journaling, encryption, compression.", "2TiB", "256TiB", "32"
    "ext4 [2]", "Linux", "Journaling, less fragmentation, better performance.", "16TiB", "1EiB", "32"
    "XFS", "Linux", "Journaling, online resizing (but cannot shrink), and online defragmentation.", "8EiB (theoretically up to 16EiB)", "8EiB (theoretically up to 16EiB)", "64"
@@ -80,6 +81,55 @@ Known limitations:
       -  ``$ sudo btrfs filesystem defrag -r /``
 
 -  The ``btrfs-convert`` command used for converting an Ext3 or Ext4 filesystems to Btrfs was rewritten in btrfs-progs 4.6. Older versions of this may not work reliably. [17]
+
+exFAT
+~~~~~
+
+exFAT is an enhanced version of the FAT32 file system created by Microsoft. It offers the best cross-platform compatibility between Linux, macOS, and Windows. It is commonly used on external storage devices. As of Linux kernel version 5.4, exFAT is now natively supported. As of Linux kernel version 5.7, a faster driver has been implemented.
+
+Installation:
+
+-  Arch Linux [39]:
+
+   -  Linux kernel >= 5.4
+
+      .. code-block:: sh
+
+         $ sudo pacman -S exfatprogs
+
+   -  Linux kernel < 5.4
+
+      .. code-block:: sh
+
+         $ sudo pacman -S exfat-utils
+
+-  Debian [40]:
+
+   -  Linux kernel >= 5.4
+
+      .. code-block:: sh
+
+         $ sudo apt-get install exfatprogs
+
+   -  Linux kernel < 5.4
+
+      .. code-block:: sh
+
+         $ sudo exfat-fuse exfat-utils
+
+-  Fedora [40]:
+
+   -  Linux kernel >= 5.4
+
+      .. code-block:: sh
+
+         $ sudo dnf install exfatprogs
+
+   -  Linux kernel < 5.4
+
+      .. code-block::
+
+         $ sudo dnf install exfat fuse-exfat
 
 ext4
 ~~~~
@@ -1242,3 +1292,5 @@ Bibliography
 36. "chown: invalid user: 'nfsnobody' in fedora 32 after install nfs." Stack Overflow. August 14, 2020. Accessed December 20, 2021. https://stackoverflow.com/questions/62980913/chown-invalid-user-nfsnobody-in-fedora-32-after-install-nfs
 37. "Mounting NFS share from Linux to Windows server." techbeatly. June 12, 2019. Accessed December 20, 2021. https://www.techbeatly.com/mounting-nfs-share-from-linux-to-windows-server/
 38. "Building ZFS." OpenZFS Documentation. 2021. Accessed February 5, 2022. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html
+39. "File systems." Arch Wiki. January 25, 2022. Accessed February 9, 2022. https://wiki.archlinux.org/title/file_systems
+40. "How to mount an exFAT drive on Linux." Xmodulo. January 31, 2021. Accessed February 9, 2022. https://www.xmodulo.com/mount-exfat-drive-linux.html
