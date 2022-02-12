@@ -26,8 +26,58 @@ Universal Serial Bus (USB) is a common connector for accessories. Real world spe
 
 As of USB 4, Thunderbolt 4 is natively supported with all cables and interfaces. All Thunderbolt 3 interfaces are USB type-C but not all USB type-C interfaces are Thunderbolt. All Thunderbolt 4 interfaces are USB 4 and vice-versa. [3]
 
+USB Devices
+-----------
+
+Polling Frequency
+~~~~~~~~~~~~~~~~~
+
+The polling frequency of a USB device can be set based on the type of device it is:
+
+-  jspoll = Joystick (gamepad)
+-  kbpoll = Keyboard
+-  mousepoll = Mouse
+
+An interval of time in miliseconds is configurable for the polling frequency. The default interval is 10ms. Linux uses this equation to calculate the frequency (Hz) that it should use for checking input from a device: ``<RATE> Hz = 1000 / <INTERVAL> ms``. A lower interval will make a device more responsive but it will also use more processing power.
+
+Here is how to change the pollling frequency:
+
+-  Temporary
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ echo "<INTERVAL>" | sudo tee /sys/module/usbhid/parameters/<DEVICE>
+
+   -  Example (250 Hz USB mouse):
+
+      .. code-block:: sh
+
+         $ echo "4" | sudo tee /sys/module/usbhid/parameters/mousepoll
+
+-  Permanent
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ sudo vim /etc/default/grub
+         GRUB_CMDLINE_LINUX_DEFAULT="usbhid.<DEVICE>=<INTERVAL>"
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+   -  Example (500 Hz USB keyboard):
+
+      .. code-block:: sh
+
+         $ sudo vim /etc/default/grub
+         GRUB_CMDLINE_LINUX_DEFAULT="usbhid.kbpoll=2"
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+[4]
+
 Gamepads
---------
+~~~~~~~~
 
 A gamepad is a game controller that usually has thumbsticks, triggers, and buttons.
 
@@ -50,3 +100,4 @@ Bibliography
 1. "Controller Gaming on PC." Steam Blog. September 25, 2018. Accessed August 17, 2021. https://steamcommunity.com/games/593110/announcements/detail/1712946892833213377
 2. "USB 3.2 Speed Comparison & Drive Benchmark." Everything USB. November 2019. Accessed August 25, 2021. https://www.everythingusb.com/speed.html
 3. "USB 3, USB 4, Thunderbolt, & USB-C --- everything you need to know." AppleInsider. August 24, 2020. Accessed August 25, 2021. https://appleinsider.com/articles/20/08/24/usb-3-usb-4-thunderbolt-usb-c----everything-you-need-to-know
+4. "Mouse polling rate." Arch Wiki. January 25, 2022. Accessed February 11, 2022. https://wiki.archlinux.org/title/mouse_polling_rate
