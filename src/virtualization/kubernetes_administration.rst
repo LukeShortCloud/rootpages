@@ -206,9 +206,10 @@ Tanzu
 
 Tanzu (pronounced tawn-zoo) Kubernetes Grid (TKG) is developed by VMware as a collection of different products to install upstream Kubernetes.
 
-There are currently three offerings for TKG [54]:
+There are currently four offerings for TKG [54]:
 
 -  **TKG Multicloud (TKGm)** or **TKG** = TKGm, sometimes referred to as just TKG, supports creating and managing infrastructure on Amazon Web Services, Microsoft Azure, and VMware vSphere 6. For VMware vSphere 7, TKGm can be used but TKGS is recommended instead.
+-  **Tanzu Community Edition (TCE)** = The free and open source upstream version of TKGm.
 -  **TKG Services (TKGS)** = VMware vSphere 7 creates and manages the Kubernetes cluster.
 -  **TKG Integrated Edition (TKGI)** = Previosuly Enterprise PKS. Uses BOSH to deploy and manage virtual machines for the Kubernetes cluster. BOSH supports creating infrastructure on Alibaba Cloud, Amazon Web Services, Google Cloud Platform, Microsoft Azure, OpenStack, and VMware vSphere. [55]
 
@@ -1055,6 +1056,75 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
          $ kubectl get nodes -o wide
          $ kubectl get -n kube-system pods
 
+TCE
+^^^
+
+Install the ``tanzu`` CLI utility. [82]
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ export TCE_VER="v0.10.0"
+      $ wget https://github.com/vmware-tanzu/community-edition/releases/download/${TCE_VER}/tce-linux-amd64-${TCE_VER}.tar.gz
+      $ tar -x -v -f tce-linux-amd64-${TCE_VER}.tar.gz
+      $ cd tce-linux-amd64-${TCE_VER}
+      $ ./install.sh
+
+-  macOS:
+
+   .. code-block:: sh
+
+      $ brew install vmware-tanzu/tanzu/tanzu-community-edition
+      $ /usr/local/Cellar/tanzu-community-edition/*/libexec/configure-tce.sh
+
+For lab deployments, create a single standalone cluster. [87]
+
+.. code-block:: sh
+
+   $ tanzu unmanaged-cluster create <STANDALONE_CLUSTER_NAME>
+
+For production deployments, a single management Kubernetes cluster is created and then one or more Kubernetes workload clusters are created from that.
+
+   -  Create a management cluster using the Docker Engine. [83]
+
+      .. code-block:: sh
+
+         $ tanzu management-cluster create -i docker --name <MANAGEMENT_CLUSTER_NAME> -v 10 --plan dev --ceip-participation=false
+
+   -  Create one or more workload clusters using the management cluster. [83]
+
+      .. code-block:: sh
+
+         $ kubectl config get-contexts
+         $ kubectl config use-context <MANAGEMENT_CLUSTER-NAME>-admin@<MANAGEMENT_CLUSTER-NAME>
+         $ tanzu cluster create <WORKLOAD_CLUSTER_NAME> --plan dev
+         $ tanzu cluster kubeconfig get <WORKLOAD_CLUSTER_NAME> --admin
+         $ kubectl config use-context <WORKLOAD_CLUSTER-NAME>-admin@<WORKLOAD_CLUSTER-NAME>
+
+Tanzu Packages
+''''''''''''''
+
+Setup the Tanzu Packages repository globally:
+
+.. code-block:: sh
+
+   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.10.1 --namespace tanzu-package-repo-global
+
+View the available packages to install:
+
+.. code-block:: sh
+
+   $ tanzu package available list
+
+Install a package:
+
+.. code-block:: sh
+
+   $ tanzu package install <PACKAGE_NAME_SHORT> --package-name <PACKAGE_NAME_FULL> --version <PACKAGE_VERSION>
+
+[85]
+
 TKGS
 ^^^^
 
@@ -1164,6 +1234,66 @@ TKGm
 
          $ export AWS_B64ENCODED_CREDENTIALS=foobar
          $ tkg delete management-cluster <TKG_MANAGEMENT_CLUSTER>
+
+TCE
+^^^
+
+-  Servers
+
+   -  Delete all standalone clusters. [87]
+
+      .. code-block:: sh
+
+         $ tanzu unmanaged-cluster delete <STANDALONE_CLUSTER_NAME>
+
+   -  Delete all workload clusters.
+
+      .. code-block:: sh
+
+         $ tanzu cluster delete <WORKLOAD_CLUSTER_NAME>
+
+   -  Delete the management cluster. [84]
+
+      .. code-block:: sh
+
+         $ tanzu management-cluster delete <MANAGEMENT_CLUSTER_NAME>
+
+      -  If there are any problems deleting a managment cluster, try forcing a delete.
+
+         .. code-block:: sh
+
+            $ tanzu management-cluster delete <MANAGEMENT_CLUSTER_NAME>
+
+         -  If there are still problems, then manually delete the containers (Docker Engine) or virtual machines (vSphere, AWS, or Azure).
+
+            -  Docker Engine:
+
+               .. code-block:: sh
+
+                  $ sudo docker ps -a | egrep "haproxy|vmware" | awk '{print $1}' | xargs docker stop
+                  $ sudo docker ps -a | egrep "haproxy|vmware" | awk '{print $1}' | xargs docker rm
+
+        -  Then delete the configuration.
+
+           .. code-block:: sh
+
+              $ tanzu config server delete <MANAGEMENT_CLUSTER_NAME>
+
+-  Client
+
+   -  Linux
+
+      .. code-block:: sh
+
+         $ ~/.local/share/tce/uninstall.sh
+
+   -  macOS
+
+      .. code-block:: sh
+
+         $ ~/Library/Application\ Support/tce/uninstall.sh
+
+[86]
 
 Upgrade
 -------
@@ -2143,3 +2273,9 @@ Bibliography
 79. "Ingress." kind. July 14, 2021. Accessed October 28, 2021. https://kind.sigs.k8s.io/docs/user/ingress
 80. "Migrating from Knative Build." Tekton. Accessed January 14, 2022. https://tekton.dev/docs/pipelines/migrating-from-knative-build/
 81. "Installing Knative Serving using YAML files." Knative. Accessed January 14, 2022. https://knative.dev/docs/install/serving/install-serving-with-yaml/
+82. "Getting Started with Managed Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/getting-started/
+83. "Deploy a Management Cluster to Docker." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/docker-install-mgmt/
+84. "Delete Management Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/delete-mgmt/
+85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/package-management/
+86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
+87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
