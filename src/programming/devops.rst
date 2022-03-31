@@ -508,6 +508,54 @@ A bare clone can be converted back into a usable git repsoitory. [37]
 
       $ git reset --hard
 
+Migrate a Git Repository
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Here is how to completely migrate all commits, branches, and tags from one git repository to a different one.
+
+-  Download the repository and fetch all of the metadata about its branches and tags.
+
+   .. code-block:: sh
+
+      $ git clone <GIT_REPOSITORY_URL>
+      $ cd <GIT_REPOSITORY>
+      $ git fetch origin
+
+-  Find all of the remote branches and then recreate all of them locally.
+
+   .. code-block:: sh
+
+      $ git branch --all
+      $ git checkout --branch <ORIGIN_BRANCH> origin/<ORIGIN_BRANCH>
+
+-  Configure the remote for the new repository.
+
+   .. code-block:: sh
+
+      $ git remote add origin2 git@github.com:<GIT_USER>/<GIT_REPOSITORY>.git
+
+-  Push all branches and tags to the new remote.
+
+   .. code-block:: sh
+
+      $ git push --all origin2
+      $ git push --tags origin2
+
+-  View and delete the old remotes.
+
+   .. code-block:: sh
+
+      $ git remote --verbose
+      $ git remote rm origin
+
+-  Rename the new remote to be the default "origin" remote.
+
+   .. code-block:: sh
+
+      $ git remote rename origin2 origin
+
+[38]
+
 Versioning
 ----------
 
@@ -1093,3 +1141,4 @@ Bibliography
 35. "Integrated Terminal." Visual Studio Code. October 7, 2021. Accessed October 11, 2021. https://code.visualstudio.com/docs/editor/integrated-terminal
 36. "What's the difference between git clone --mirror and git clone --bare." Stack Overflow. October 23, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/3959924/whats-the-difference-between-git-clone-mirror-and-git-clone-bare
 37. "How do I convert a bare git repository into a normal one (in-place)?" Stack Overflow. July 28, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/10637378/how-do-i-convert-a-bare-git-repository-into-a-normal-one-in-place
+38. "Moving git repository and all its branches, tags to a new remote repository keeping commits history." GitHub niksumeiko/git.migrate. October 27, 2021. Accessed March 30, 2022. https://gist.github.com/niksumeiko/8972566
