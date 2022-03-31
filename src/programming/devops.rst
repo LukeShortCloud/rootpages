@@ -460,6 +460,54 @@ In some cases it may be desired to change the default branch name that is shown 
 
 [34]
 
+Bare Repository
+^^^^^^^^^^^^^^^
+
+A bare clone of a repository only contains the git files and patches themselves. These files are what a normal ``git --clone`` command would place in a ``.git`` directory.
+
+.. code-block:: sh
+
+   $ git clone --bare <GIT_REPOSITORY_URL>.git
+   $ ls -1
+   <GIT_REPOSITORY_URL>.git
+
+A mirror clone is similar except it keeps information about the original "origin" remote. [36]
+
+.. code-block:: sh
+
+   $ git clone --mirror <GIT_REPOSITORY_URL>.git
+   $ ls -1
+   <GIT_REPOSITORY_URL>.git
+
+A bare clone can be converted back into a usable git repsoitory. [37]
+
+-  Recreate the ".git" directory.
+
+   .. code-block:: sh
+
+      $ mkdir .git
+      $ mv branches ./git/
+      $ mv config ./git/
+      $ mv description ./git/
+      $ mv HEAD ./git/
+      $ mv hooks ./git/
+      $ mv info ./git/
+      $ mv objects ./git/
+      $ mv packed-refs ./git/
+      $ mv refs ./git/
+
+-  Configure git to no longer treat this as a bare clone.
+
+   .. code-block:: sh
+
+      $ git config --local --bool core.bare false
+
+-  Reset the repository to restore usual files.
+
+   .. code-block:: sh
+
+      $ git reset --hard
+
 Versioning
 ----------
 
@@ -1043,3 +1091,5 @@ Bibliography
 33. "GitHub to replace 'master' with 'main' starting next month." ZDNet. September 19, 2020. Accessed September 24, 2021. https://www.zdnet.com/article/github-to-replace-master-with-main-starting-next-month/
 34. "5 steps to change GitHub default branch from master to main." Steven M. Mortimer. July 23, 2020. Accessed September 24, 2021. https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
 35. "Integrated Terminal." Visual Studio Code. October 7, 2021. Accessed October 11, 2021. https://code.visualstudio.com/docs/editor/integrated-terminal
+36. "What's the difference between git clone --mirror and git clone --bare." Stack Overflow. October 23, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/3959924/whats-the-difference-between-git-clone-mirror-and-git-clone-bare
+37. "How do I convert a bare git repository into a normal one (in-place)?" Stack Overflow. July 28, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/10637378/how-do-i-convert-a-bare-git-repository-into-a-normal-one-in-place
