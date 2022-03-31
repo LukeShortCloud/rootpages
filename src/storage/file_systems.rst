@@ -173,6 +173,31 @@ Mount options:
    up the space from a deleted file for use with new files.
 -  nodiscard = Disables TRIM. [9]
 
+NTFS
+~~~~
+
+The New Technology File System (NT File System or NTFS) is the primary file system used by Windows. As of Linux kernel version 5.15, it is natively supported. [41]
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S ntfs-3g
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S ntfs-3g
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S ntfs-3g
+
 OpenZFS
 ~~~~~~~
 
@@ -1294,3 +1319,4 @@ Bibliography
 38. "Building ZFS." OpenZFS Documentation. 2021. Accessed February 5, 2022. https://openzfs.github.io/openzfs-docs/Developer%20Resources/Building%20ZFS.html
 39. "File systems." Arch Wiki. January 25, 2022. Accessed February 9, 2022. https://wiki.archlinux.org/title/file_systems
 40. "How to mount an exFAT drive on Linux." Xmodulo. January 31, 2021. Accessed February 9, 2022. https://www.xmodulo.com/mount-exfat-drive-linux.html
+41. "Linux 5.15 Delivers Many Features With New NTFS Driver, In-Kernel SMB3 Server, New Hardware." Phoronix. September 13, 2021. Accessed March 30, 2022. https://www.phoronix.com/scan.php?page=article&item=linux-515-features&num=1
