@@ -464,6 +464,49 @@ Required:
 
 [10][11]
 
+AUR Submission
+~~~~~~~~~~~~~~
+
+The Arch Linux User (AUR) repository allows developers to easily upload their own packages. Here are the steps on how to submit a new package to the AUR.
+
+**SSH Key Pair**
+
+Create a unique SSH key pair to use for interacting with the AUR.
+
+.. code-block:: sh
+
+   $ ssh-keygen -t ed25519 -b 4096 -f ~/.ssh/aur
+   $ vim ~/.ssh/config
+   Host aur.archlinux.org
+     IdentityFile ~/.ssh/aur
+     User aur
+
+**Create the AUR Git Repository**
+
+Clone a repository with the desired AUR package name. Once files are committed and pushed, this package will be instantly available on the AUR.
+
+.. code-block:: sh
+
+   $ git clone ssh://aur@aur.archlinux.org/<NEW_AUR_PACKAGE_NAME>.git
+
+**Files**
+
+Every AUR git repository needs to contain at least 2 files:
+
+-  PKGBUILD = The PKGBUILD explains how to download and build the source code.
+-  .SRCINFO = Information about what packages the PKGBUILD will provide. Generate this by running ``makepkg --printsrcinfo > .SRCINFO``.
+
+    -  Every time the PKGBUILD metadata has been updated, this file needs to be regenerated and committed to the git repository.
+
+Optional files:
+
+-  .gitignore = Ignore build files and directories such as ``pkg`` and ``src``.
+-  LICENSE = The license for the PKGBUILD. This is generally the same as the software that it builds.
+
+There should not be any binary or source code hosted in the AUR git repository.
+
+[13]
+
 History
 -------
 
@@ -487,3 +530,4 @@ Bibliography
 10. "Creating packages." Arch Linux Wiki. July 30, 2016. Accessed November 19, 2016. https://wiki.archlinux.org/index.php/creating\_packages
 11. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
 12. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
+13. "AUR submission guidelines." Arch Linux Wiki. February 20, 2022. Accessed April 5, 2022. https://wiki.archlinux.org/title/AUR_submission_guidelines
