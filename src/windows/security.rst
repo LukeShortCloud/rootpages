@@ -50,6 +50,18 @@ If using another antivirus program or if required for testing, it may be desired
 
          PS> .\disable-windows-defender.ps1
 
+User Account Control (UAC)
+--------------------------
+
+UAC ensures that all applications are run as a normal user account with no escalated privileges. When an application tries to run as Administrator, UAC will prompt the user and ask if they want to run with Administrator privileges. [3] This feature was first introduced in Windows Vista. [4]
+
+Disable
+~~~~~~~
+
+For users who often need to use the Administrator account, it may be desired to disable UAC entirely.
+
+-  Control Panel > User Accounts > User Accounts > Change User Account Control settings > Never notify
+
 History
 -------
 
@@ -60,3 +72,5 @@ Bibliography
 
 1. "I already have Windows Defender – why do I need another antimalware tool?" Panda Security Mediacenter. July 15, 2021. Accessed August 18, 2021. https://www.pandasecurity.com/en/mediacenter/tips/defender-antimalware-tool/
 2. "how to cancel windows defender automatic scans?" Windows 10 Help Forums. June 8, 2016. Accessed August 18, 2021. https://www.tenforums.com/antivirus-firewalls-system-security/52486-how-cancel-windows-defender-automatic-scans.html
+3. "User Account Control." Microsoft Docs. December 3, 2021. Accessed April 7, 2022. https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/user-account-control-overview
+4. "User Account Control." Fandom Microsoft Wiki. June 13, 2017. Accessed April 7, 2022. https://microsoft.fandom.com/wiki/User_Account_Control
