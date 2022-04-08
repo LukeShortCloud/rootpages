@@ -48,6 +48,19 @@ An installation of Windows Enterprise LTSC can switch to the traditional "curren
 
 Windows Enterprise LTSC can only be upgraded to a new major release by manually running the "setup.exe" installer from a new ISO image. This can be done with a virtually mounted ISO image as the installation/upgrade files are copied locally to the ``C:\`` drive. Windows Update will not provide upgrades to newer major versions. [8]
 
+Microsoft Store
+^^^^^^^^^^^^^^^
+
+By default, the Microsoft Store is not installed on Windows Enterprise LTSC editions. As a workaround, all editions of Windows support manually downloading and installing APPX programs that are typically only available on the Microsoft Store. [10] This includes the Microsoft Store itself. The `LTSC-Add-MicrosoftStore <https://github.com/kkkgo/LTSC-Add-MicrosoftStore>`__ project on GitHub provides all of the required packages. Even though these packages are old, they will install on all versions of Windows Enterprise LTSC >= 2019. After the initial installation of the Microsoft Store, these can all be updated through the Microsoft Store itself.
+
+.. code-block:: powershell
+
+   PS C:\Windows\system32> cd $env:tmp
+   PS C:\Users\<USER>\AppData\Local\Temp> Invoke-WebRequest -Uri https://github.com/lixuy/LTSC-Add-MicrosoftStore/archive/2019.zip -OutFile LTSC-Add-MicrosoftStore-2019.zip
+   PS C:\Users\<USER>\AppData\Local\Temp> Expand-Archive -Path .\LTSC-Add-MicrosoftStore-2019.zip -DestinationPath $env:tmp
+   PS C:\Users\<USER>\AppData\Local\Temp> cd LTSC-Add-MicrosoftStore-2019\
+   PS C:\Users\<USER>\AppData\Local\Temp\LTSC-Add-MicrosoftStore-2019> Add-Store.cmd
+
 Windows Photo Viewer
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -84,3 +97,4 @@ Bibliography
 7. "Question About Windows 10 Trial." Microsoft Community. January 1, 2017. Accessed August 31, 2021. https://answers.microsoft.com/en-us/windows/forum/all/question-about-windows-10-trial/fd9b4d3a-f44c-4a38-ae89-12b4692c744e
 8. "Upgrading Windows 10 2016 LTSB to Windows 10 2019 LTSC." Roberto Viola. July 28, 2020. Accessed August 31, 2021. https://robertoviola.cloud/2020/07/28/upgrading-windows-10-2016-ltsb-to-windows-10-2019-ltsc/
 9. "How to Restore Windows Photo Viewer in Windows 10." Windows 10 Help Forums. October 30, 2020. Accessed January 15, 2022. https://www.tenforums.com/tutorials/14312-restore-windows-photo-viewer-windows-10-a.html
+10. "How to Download APPX file of Any App from Windows Store." WindowsLoop. Accessed April 8, 2022. https://windowsloop.com/how-to-download-appx-file-of-any-app-from-windows-store/
