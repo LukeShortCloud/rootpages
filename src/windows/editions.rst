@@ -39,7 +39,7 @@ During the supported lifecycle, no features or hardware support are added. Only 
    Windows 10 Enterprise LTSB 2015, 10, `Windows 10 Version 1507 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2015>`__
    Windows 10 Enterprise LTSB 2016, 10, `Windows 10 Version 1607 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2016>`__
    Windows 10 Enterprise LTSC 2019, 10, `Windows 10 Version 1809 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2019>`__
-   Windows 10 Enterprise LTSC 2021, 5, ""
+   Windows 10 Enterprise LTSC 2021, 5, `Windows 10 Version 21H2 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2021>`__
    Windows 11 Enterprise LTSC 2024, 5, ""
 
 [5][6]
