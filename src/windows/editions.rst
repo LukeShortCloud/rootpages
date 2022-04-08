@@ -78,7 +78,7 @@ Downloads
 Windows can be freely and legally downloaded directly from Microsoft:
 
 -  `Windows 10 Home and Pro <https://www.microsoft.com/en-us/software-download/windows10ISO>`__ = Limited features are enabled until a license key is provided. There is no expiration time for this trial. [7]
--  `Windows 10 Enterprise and Enterprise LTSC <https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise>`__ = A 90 day full trial. License keys can only be purchased in volume by a company and not an individual.
+-  `Windows 10 Enterprise and Enterprise LTSC <https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise>`__ = A 90 day full trial. There is no way to activate a production license during or after the trial period. License keys and production Windows installation ISO images can only be purchased in volume by a company and not an individual.
 
 History
 -------
