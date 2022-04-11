@@ -447,6 +447,19 @@ Each Tanzu Kubernetes Grid Multicloud (TKGm) release supports up to three versio
    1.1.0, "1.18.6 and 1.17.9"
    1.0.0, 1.17.3
 
+TCE
+^^^
+
+Tanzu Community Edition (TCE) is the upstream variant of TKGm. Based on similar release dates, here are the equivalent versions. [88]
+
+.. csv-table::
+   :header: TCE, TKGm
+   :widths: 20, 20
+
+   0.10.0, 1.5.0
+   0.8.0, 1.4.0
+   0.4.0, 1.3.0
+
 TKGS
 ^^^^
 
@@ -2283,3 +2296,4 @@ Bibliography
 85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/package-management/
 86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
+88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
