@@ -1203,6 +1203,17 @@ Each Kubernetes Namespace will now have two secrets created: a pull and push Sec
 Uninstall
 ---------
 
+minikube
+~~~~~~~~
+
+Stop all running instances, delete them, and then delete the minikube cache and configuration directory. [7]
+
+.. code-block:: sh
+
+   $ minikube stop --all
+   $ minikube delete --all
+   $ rm -r -f ~/.minikube/
+
 CodeReady Containers (CRC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
