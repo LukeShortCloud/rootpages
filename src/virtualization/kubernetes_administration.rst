@@ -281,7 +281,7 @@ Release highlights:
 
 -  `1.3 <https://kubernetes.io/blog/2016/07/kubernetes-1-3-bridging-cloud-native-and-enterprise-workloads/>`__
 
-   -  `Minikube <https://minikube.sigs.k8s.io/docs/>`__ was created for quick and easy development environment for Kubernetes.
+   -  `minikube <https://minikube.sigs.k8s.io/docs/>`__ was created for quick and easy development environment for Kubernetes.
    -  `Container Network Interface (CNI) <https://github.com/containernetworking/cni>`__ is now supported.
    -  `rkt <https://coreos.com/rkt/>`__ can now be used as a container runtime.
    -  Cross-cluster discovery support for running Pods across multiple clouds.
@@ -503,31 +503,72 @@ View valid versions of TKC that can be upgraded to from the specified version:
 Installation
 ------------
 
-Minikube
+minikube
 ~~~~~~~~
 
-Minikube deploys a virtual machine with Kubernetes pre-installed as a test environment for developers. This is only supported on x86_64 processors.
+minikube deploys containers or a virtual machine with Kubernetes pre-installed as a test environment for developers. The Docker container driver is the default as of minikube 1.12.0. [89] AMD/Intel, Arm (including Apple Silicon), and PowerPC processor architectures are all supported.
 
-Download the latest Minikube release from `here <https://github.com/kubernetes/minikube/releases>`__.
+Define the processor architecture to use.
+
+-  Linux
+
+   -  AMD/Intel:
+
+      .. code-block:: sh
+
+         $ export MINIKUBE_ARCH="linux-amd64"
+
+   -  Arm:
+
+      .. code-block:: sh
+
+         $ export MINIKUBE_ARCH="linux-arm64"
+
+-  macOS
+
+   -  Intel:
+
+      .. code-block:: sh
+
+         $ export MINIKUBE_ARCH="darwin-amd64"
+
+   -  Arm:
+
+      .. code-block:: sh
+
+         $ export MINIKUBE_ARCH="darwin-arm64"
+
+Download the latest minikube release from `here <https://github.com/kubernetes/minikube/releases>`__.
 
 .. code-block:: sh
 
-   $ MINIKUBE_VER=1.8.2
-   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/minikube-linux-amd64 -o /usr/local/bin/minikube
+   $ sudo curl -L https://github.com/kubernetes/minikube/releases/latest/download/minikube-${MINIKUBE_ARCH} -o /usr/local/bin/minikube
    $ sudo chmod +x /usr/local/bin/minikube
 
-Optionally install a driver such as KVM2. The ``minikube`` installer will automatically download it if it cannot be found.
+Select the virtualization driver to use. The ``minikube`` installer will automatically download it if it cannot be found. A full list of the available drivers can be found `here <https://minikube.sigs.k8s.io/docs/drivers/>`__.
+
+-  All
+
+   -  docker
+   -  virtualbox
+
+-  Linux
+
+   -  kvm2
+
+-  macOS
+
+   -  hyperkit
+
+-  Windows
+
+   - hyperv
+
+Deploy Kubernetes. Optionally specify the Kubernetes version to use. If using the ``kvm2`` driver as the root user on Linux, the ``--force`` argument is also required.
 
 .. code-block:: sh
 
-   $ sudo curl -L https://github.com/kubernetes/minikube/releases/download/v${MINIKUBE_VER}/docker-machine-driver-kvm2 -o /usr/local/bin/docker-machine-driver-kvm2
-   $ sudo chmod +x /usr/local/bin/docker-machine-driver-kvm2
-
-Deploy Kubernetes. Optionally specify the Kubernetes version to use. If using the ``kvm2`` driver as the root user, the ``--force`` argument is also required.
-
-.. code-block:: sh
-
-   $ minikube start --vm-driver kvm2 --kubernetes-version ${KUBERNETES_VERSION}
+   $ minikube start --driver ${MINIKUBE_DRIVER} --kubernetes-version ${KUBERNETES_VERSION}
 
 [7]
 
@@ -1341,15 +1382,15 @@ Common upgrade scenarios (for a Kubernetes and/or operating system upgrade), in 
 
 3.  Upgrade all Nodes at the same time. This will cause downtime.
 
-Minikube
+minikube
 ~~~~~~~~
 
-Minikube can be upgraded by starting with a specified Kubernetes version (or use "latest"). [29]
+minikube can be upgraded by starting with a specified Kubernetes version (or use "latest"). [29]
 
 .. code-block:: sh
 
    $ minikube stop
-   $ minikube start --kubernetes-version=<VERSION>
+   $ minikube start --kubernetes-version ${KUBERNETES_VERSION}
 
 kubeadm
 ~~~~~~~
@@ -2215,7 +2256,7 @@ Bibliography
 4. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
 5. "Releases Notes. OpenShift Container Platform 4.1 Documentation. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/release_notes/index
 6. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed April 11, 2021. https://access.redhat.com/support/policy/updates/openshift
-7. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
+7. "minikube start." minikube Documentation. November 19, 2021. Accessed April 11, 2022. https://minikube.sigs.k8s.io/docs/start/
 8. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
 9. "Creating a cluster with kubeadm." Kubernetes Documentation. February 4, 2021. Accessed February 19, 2021. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 10. "k3s - 5 less than k8s." k3s, GitHub. March 29, 2019. Accessed April 1, 2019. https://github.com/rancher/k3s
@@ -2297,3 +2338,4 @@ Bibliography
 86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
 88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
+89. "make docker driver highly preferred #8623." GitHub kubernetes/minikube. July 1, 2020. Accessed April 11, 2022. https://github.com/kubernetes/minikube/pull/8623
