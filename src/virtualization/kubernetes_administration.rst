@@ -426,7 +426,7 @@ Below is a list of RHOCP and OKD versions that correspond with the upstream Kube
    3.10, 1.10
    3.9, 1.9
 
-Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> + 3`` is released, the ``<RHOCP_RELEASE>`` soon becomes end-of-life. [6]
+Every release of RHOCP is supported for about 1.5 years. When ``<RHOCP_RELEASE> + 3`` is released, the ``<RHOCP_RELEASE>`` soon becomes end-of-life. Starting with RHOCP 4.8, all even numbered minor releases are labelled as Extended Update Support (EUS). Red Hat recommends using EUS releases and supports upgrading from one EUS release to the next (skipping the odd numbered release in-between). [6]
 
 Tanzu
 ~~~~~
@@ -2200,7 +2200,7 @@ Bibliography
 3. "Understanding persistent storage." Red Hat OpenShift Container Platform 4.5 Documentation. Accessed July 16, 2020. https://docs.openshift.com/container-platform/4.5/storage/understanding-persistent-storage.html
 4. "OKD: Renaming of OpenShift Origin with 3.10 Release." Red Hat OpenShift Blog. August 3, 2018. Accessed September 17, 2018. https://blog.openshift.com/okd310release/
 5. "Releases Notes. OpenShift Container Platform 4.1 Documentation. https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html-single/release_notes/index
-6. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed March 9, 2020. https://access.redhat.com/support/policy/updates/openshift
+6. "Red Hat OpenShift Container Platform Life Cycle Policy." Red Hat Support. Accessed April 11, 2021. https://access.redhat.com/support/policy/updates/openshift
 7. "Install Minikube." Kubernetes Documentation. Accessed September 17, 2018. https://kubernetes.io/docs/tasks/tools/install-minikube/
 8. "Kubernetes 1.13: Simplified Cluster Management with Kubeadm, Container Storage Interface (CSI), and CoreDNS as Default DNS are Now Generally Available." Kubernetes Blog. December 3, 2018. Accessed December 5, 2018. https://kubernetes.io/blog/2018/12/03/kubernetes-1-13-release-announcement/
 9. "Creating a cluster with kubeadm." Kubernetes Documentation. February 4, 2021. Accessed February 19, 2021. https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
