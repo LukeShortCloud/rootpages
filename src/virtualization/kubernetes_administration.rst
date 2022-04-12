@@ -218,6 +218,17 @@ TKGm
 
 TKGm stands for TKG Multicloud. It is a product for installing Kubernetes on-top of virtual infrastructure provided by AWS, Azure, GCE, or VMware vSphere. It first deploys an all-in-one TKG Management Cluster using `kind <https://kind.sigs.k8s.io/>`__. This then uses the `Cluster API <https://cluster-api.sigs.k8s.io/>`__ to deploy and manage one or more production Kubernetes clouds. [32]
 
+TCE
+^^^
+
+Supported storage classes [90]:
+
+-  Amazon Elastic Block Store (EBS)
+-  Azure Disk
+-  Internet Small Computer System Interface (iSCSI)
+-  Network File System (NFS)
+-  vSphere Cloud Native Storage (CNS)
+
 TKGS
 ^^^^
 
@@ -2350,3 +2361,4 @@ Bibliography
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
 88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
 89. "make docker driver highly preferred #8623." GitHub kubernetes/minikube. July 1, 2020. Accessed April 11, 2022. https://github.com/kubernetes/minikube/pull/8623
+90. "Create Persistent Volumes with Storage Classes." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/storage/
