@@ -1123,7 +1123,7 @@ Install the ``tanzu`` CLI utility. [82]
 
    .. code-block:: sh
 
-      $ export TCE_VER="v0.10.0"
+      $ export TCE_VER="v0.11.0"
       $ wget https://github.com/vmware-tanzu/community-edition/releases/download/${TCE_VER}/tce-linux-amd64-${TCE_VER}.tar.gz
       $ tar -x -v -f tce-linux-amd64-${TCE_VER}.tar.gz
       $ cd tce-linux-amd64-${TCE_VER}
@@ -1167,7 +1167,7 @@ Setup the Tanzu Packages repository globally:
 
 .. code-block:: sh
 
-   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.10.1 --namespace tanzu-package-repo-global
+   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.11.0 --namespace tanzu-package-repo-global
 
 View the available packages to install:
 
@@ -2345,7 +2345,7 @@ Bibliography
 82. "Getting Started with Managed Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/getting-started/
 83. "Deploy a Management Cluster to Docker." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/docker-install-mgmt/
 84. "Delete Management Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/delete-mgmt/
-85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/package-management/
+85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/package-management/
 86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
 88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
