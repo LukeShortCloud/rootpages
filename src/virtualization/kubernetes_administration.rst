@@ -921,7 +921,7 @@ Stop the virtual machine at any time.
 kind
 ~~~~
 
-kind is a tool written in Go that is used by the upstream Kubernetes developers. It simulates different Kubernetes nodes via the use of containers on a single local workstation. Kubernetes clusters made this way are not meant to be persistent as restarting the containers will wipe all of data added and changes made.
+kind is a tool written in Go that is used by upstream Kubernetes developers. It simulates different Kubernetes nodes via the use of containers on a single local workstation. As of kind v0.8.0, a single node deployment of Kubernetes will have persistent storage and survive if the container restart. Multi-node Kubernetes clusters will break if the containers are restarted. [91]
 
 Installation:
 
@@ -2362,3 +2362,4 @@ Bibliography
 88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
 89. "make docker driver highly preferred #8623." GitHub kubernetes/minikube. July 1, 2020. Accessed April 11, 2022. https://github.com/kubernetes/minikube/pull/8623
 90. "Create Persistent Volumes with Storage Classes." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/storage/
+91. "Cluster doesn't restart when docker restarts #148." GitHub kubernetes-sigs/kind. March 20, 2022. Accessed April 12, 2022. https://github.com/kubernetes-sigs/kind/issues/148#issuecomment-1044197449
