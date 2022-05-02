@@ -5,3 +5,4 @@
    arch_linux
    chromium_os
    raspberry_pi_os
+   steamos
