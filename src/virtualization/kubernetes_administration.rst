@@ -436,6 +436,27 @@ Release highlights:
    -  `PID limits <https://kubernetes.io/docs/concepts/policy/pid-limiting/>`__ are enabled by default: ``kube-apiserver --feature-gates=SupportNodePidsLimit=true,SupportPodPidsLimit=true``
    -  Dual-stack IPv4 and IPv6 support has been re-added to Kubernetes.
 
+-  `1.21 <https://kubernetes.io/blog/2021/04/08/kubernetes-1-21-release-announcement/>`__
+
+   -  PodSecurityPolicy is now deprecated.
+   -  ``service.spec.topologyKeys`` is now deprecated.
+   -  Dual-stack IPv4 and IPv6 support is now beta.
+   -  ``pod.spec.securityContext.sysctls`` is now stable.
+   -  ``configmap.immutable`` and ``secret.immutable`` are now stable.
+   -  Alpha APIs:
+
+      -  `Volume health monitoring <https://kubernetes.io/docs/concepts/storage/volume-health-monitoring/>`__ is now supported as part of the CSI integration within ``kubelet``. This feature requires a supported External Health Monitor controller.
+
+   -  Beta APIs:
+
+      -  Graceful shutdown of pods during a node shutdown is now enabled by default: ``kube-apiserver --feature-gates=GracefulNodeShutdown=true``
+
+   -  Stable APIs:
+
+      -  CronJobs
+      -  EndpointSplice
+      -  PodDisruptionBudgets
+
 OpenShift
 ~~~~~~~~~
 
