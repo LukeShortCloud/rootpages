@@ -468,6 +468,21 @@ Release highlights:
    -  kubeadm can `deploy the control plane as a non-root user <https://kubernetes.io/docs/tasks/administer-cluster/kubelet-in-userns/>`__ (disabled by default): ``kubelet --feature-gates=KubeletInUserNamespace=false``
    -  ``kubectl debug`` now requires features only found in ``kubectl`` version 1.22 and is not backwards compatible with version 1.21.
 
+-  `1.23 <https://kubernetes.io/blog/2021/12/07/kubernetes-1-23-release-announcement/>`__
+
+   -  Dual-stack IPv4 and IPv6 support is now stable.
+   -  Generic ephemeral volumes are now stable. Any persistent volume provider that supports this feature will automatically delete a persistent volume claim if it is marked as ephemeral.
+   -  Skip volume ownership change is now stable. Kubernetes can now optionally configure a mount to not have a ``chmod`` and ``chown`` run on the mount to speed up the start time of a pod.
+   -  Migration from built-in to CSI storage plugins is now beta for plugins relating to public cloud storage providers.
+   -  Structured logging is now beta.
+   -  Invalid YAML manifests can better feedback about validation issues when using ``kubectl create`` or ``kubectl apply``. This is disabled by default: ``kube-apiserver --feature-gates=ServerSideFieldValidation=false``.
+   -  OpenAPI v3 is now availble in alpha to provide more features to the Kuberntes API endpoint.
+   -  `klog <https://kubernetes.io/docs/concepts/cluster-administration/system-logs/#klog>`__ is now deprecated.
+   -  FlexVolume storage driver is now deprecated.
+   -  Stable APIs:
+
+      -  HorizontalPodAutoscaler (autoscaling/v2)
+
 OpenShift
 ~~~~~~~~~
 
