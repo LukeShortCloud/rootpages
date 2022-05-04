@@ -457,6 +457,17 @@ Release highlights:
       -  EndpointSplice
       -  PodDisruptionBudgets
 
+-  `1.22 <https://kubernetes.io/blog/2021/08/04/kubernetes-1-22-release-announcement/>`__
+
+   -  `Server-Side Apply <https://kubernetes.io/docs/reference/using-api/server-side-apply/>`__ is now stable.
+   -  Credential plugins are now stable.
+   -  cgroupsv2 can now be used to restrict both CPU and memory allocations for pods (disabled by default): ``kubelet --feature-gates=MemoryQoS=false``. cgroupsv1 was only able to restrict CPU allocations for pods.
+   -  Swap is now supported (disabled by default): ``kubelet --feature-gates=NodeSwap=false``
+   -  Windows CSI is now stable.
+   -  Default seccomp profiles can now be used.
+   -  kubeadm can `deploy the control plane as a non-root user <https://kubernetes.io/docs/tasks/administer-cluster/kubelet-in-userns/>`__ (disabled by default): ``kubelet --feature-gates=KubeletInUserNamespace=false``
+   -  ``kubectl debug`` now requires features only found in ``kubectl`` version 1.22 and is not backwards compatible with version 1.21.
+
 OpenShift
 ~~~~~~~~~
 
