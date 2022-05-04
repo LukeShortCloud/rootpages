@@ -97,6 +97,8 @@ Networking
 Ports
 '''''
 
+firewalld is not supported on k3s. iptables is the recommended firewall. [92]
+
 Control Plane Nodes:
 
 .. csv-table::
@@ -807,6 +809,23 @@ Pre-requisites:
    GRUB_CMDLINE_LINUX_DEFAULT="quiet cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory"
    $ sudo update-grub
 
+k3s does not support firewalld. [92] Disable the service and switch to iptables before installing.
+
+.. code-block:: sh
+
+   $ sudo systemctl stop firewalld
+   $ sudo systemctl disable firewalld
+   $ sudo yum install iptables-services
+   $ sudo systemctl start iptables
+   $ sudo systemctl enable iptables
+
+-  If k3s was accidently installed with firewalld running, it must uninstalled completely before re-installing it. [93]
+
+   .. code-block:: sh
+
+      $ sudo k3s-killall.sh
+      $ sudo k3s-uninstall.sh
+
 Common installation environment variables [50]:
 
 -  INSTALL_K3S_VERSION = The version of k3s to install. Specify a `k3s tag from GitHub <https://github.com/k3s-io/k3s/tags>`__.
@@ -1349,12 +1368,14 @@ Control Plane Nodes:
 
 .. code-block:: sh
 
+   $ sudo /usr/local/bin/k3s-killall.sh
    $ sudo /usr/local/bin/k3s-uninstall.sh
 
 Worker Nodes:
 
 .. code-block:: sh
 
+   $ sudo /usr/local/bin/k3s-killall.sh
    $ sudo /usr/local/bin/k3s-agent-uninstall.sh
 
 kind
@@ -2448,3 +2469,5 @@ Bibliography
 89. "make docker driver highly preferred #8623." GitHub kubernetes/minikube. July 1, 2020. Accessed April 11, 2022. https://github.com/kubernetes/minikube/pull/8623
 90. "Create Persistent Volumes with Storage Classes." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/storage/
 91. "Cluster doesn't restart when docker restarts #148." GitHub kubernetes-sigs/kind. March 20, 2022. Accessed April 12, 2022. https://github.com/kubernetes-sigs/kind/issues/148#issuecomment-1044197449
+92. "Opening Ports with firewalld." Rancher Docs. March 21, 2022. Accessed May 4, 2022. https://rancher.com/docs/rancher/v2.6/en/installation/resources/advanced/firewall/
+93. "k3s service cannot start in RHEL with firewall enabled #401." GitHub k3s-io/k3s. February 19, 2021. Accessed May 5, 2022. https://github.com/k3s-io/k3s/issues/401
