@@ -483,6 +483,22 @@ Release highlights:
 
       -  HorizontalPodAutoscaler (autoscaling/v2)
 
+-  `1.24 <https://kubernetes.io/blog/2022/05/03/kubernetes-1-24-release-announcement/>`__
+
+   -  Dockershim has been removed. The ``docker`` binary will no longer work with Kubernetes. Install and use ``containerd`` or ``CRI-O`` instead.
+   -  CNI introduces breaking changes. For ``containerd``, first upgrade to version >= 1.6.4 or >= 1.5.11. For ``CRI-O``, first upgrade to version >= 1.24.
+   -  Dynamic Kubelet configuration has been removed from the kubelet (but not yet for the kube-apiserver).
+   -  Any new beta APIs will be disabled by default. Previously, alpha APIs are disabled and beta APIs are enabled. Now only stable APIs will be enabled by default.
+   -  Kubernetes releases are now signed.
+   -  Service objects that are of type LoadBalancer now support more than one back-end using the annotation ``service.kubernetes.io/load-balancer-class: <LOAD_BALANCER_CLASS>``.
+   -  OpenAPI v3 is now beta.
+   -  gRPC pod probes are now beta.
+   -  `kubelet credential provider <https://kubernetes.io/docs/tasks/kubelet-credential-provider/kubelet-credential-provider/>`__ is now beta (disabled by default).
+   -  Service types of ClusterIP now support static IP ranges (disabled by default): ``kube-apiserver --feature-gates=ServiceIPStaticSubrange=false``
+   -  Stable APIs:
+
+      -  CSIStorageCapacity
+
 OpenShift
 ~~~~~~~~~
 
