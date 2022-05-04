@@ -414,6 +414,28 @@ Release highlights:
    -  Ephemeral PVCs.
    -  Consistent log format for all Kubernetes control plane logs.
 
+-  `1.20 <https://kubernetes.io/blog/2020/12/08/kubernetes-1-20-release-announcement/>`__
+
+   -  Dockershim has been deprecated. In a future release, Kubernetes will no longer directly use the ``docker`` binary to manage containers.
+   -  Exec probes have been fixed to finally timeout properly.
+   -  Alpha APIs:
+
+      -  Graceful shutdown of pods during a node shutdown is now supported (but disabled by default): ``kube-apiserver --feature-gates=GracefulNodeShutdown=false``
+
+   -  Beta APIs:
+
+      -  ``kubectl debug``
+
+   -  Stable APIs:
+
+
+      -  RuntimeClass
+      -  `VolumeSnapshot, VolumeSnapshotContent, and VolumeSnapshotClass <https://kubernetes.io/docs/concepts/storage/volume-snapshots/>`__
+
+   -  `API Priority and Fairness (APF) <https://kubernetes.io/docs/concepts/cluster-administration/flow-control/>`__ is enabled by default: ``kube-apiserver --feature-gates=APIPriorityAndFairness=true``
+   -  `PID limits <https://kubernetes.io/docs/concepts/policy/pid-limiting/>`__ are enabled by default: ``kube-apiserver --feature-gates=SupportNodePidsLimit=true,SupportPodPidsLimit=true``
+   -  Dual-stack IPv4 and IPv6 support has been re-added to Kubernetes.
+
 OpenShift
 ~~~~~~~~~
 
