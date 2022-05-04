@@ -1655,7 +1655,7 @@ Ingress with an existing TLS certificate.
 
 [5]
 
-Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the root path ``/``. In this example, a HTTP request to ``http://foo.bar.com/`` will load up the contents of ``http://foo.bar.com/some/path/here/``.
+Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the root path ``/``. In this example, a HTTP request to ``http://foo.bar.com/`` will load up the contents of ``http://foo.bar.com/some/path/here/``. [57]
 
 .. code-block:: yaml
 
@@ -1665,8 +1665,10 @@ Ingress with the internal ``ing.spec.rules.http.paths.path`` being routed to the
    metadata:
      name: ing-rewrite-target-example
      annotations:
-       # NGINX
+       # NGINX (Kubernetes)
        nginx.ingress.kubernetes.io/rewrite-target: /
+       # NGINX (NGINX, Inc.)
+       #nginx.org/rewrites: "serviceName=svc-rewrite-target-example rewrite=/"
        # Traefik
        #traefik.ingress.kubernetes.io/rewrite-target: /
    spec:
@@ -4203,3 +4205,4 @@ Bibliography
 54. "Autoscaling." Knative. Accessed January 28, 2022. https://knative.dev/docs/serving/autoscaling/
 55. "Compare VMware Tanzu Editions." VMware Tanzu. Accessed May 17, 2021. https://tanzu.vmware.com/tanzu/compare
 56. "Deploying and Managing Extensions and Shared Services." VMware Docs. August 19, 2021. Accessed August 23, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
+57. "Rewrites Support." GitHub nginxinc/kubernetes-ingress. August 16, 2021. Accessed May 3, 2022. https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/rewrites
