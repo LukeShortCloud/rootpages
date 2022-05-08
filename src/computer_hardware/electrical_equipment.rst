@@ -34,6 +34,26 @@ Wires have two physical types [4]:
    -  Harder to break.
    -  Harder to insert into holes and terminal connectors.
 
+Gauges
+~~~~~~
+
+A gauge is how thick a wire is. The lower the number, the bigger the thickness. Here are recommendations for what gauge wire to use based on the project:
+
+-  22
+
+   -  Breadboard, Arduino, Raspberry Pi, and other single-board devices. [4]
+
+-  18
+
+   -  House lights. [5]
+   -  Small appliances. [5]
+   -  Speakers. [6]
+
+-  14
+
+   -  House in-wall electrical wiring. [4]
+   -  Speakers that require high power consumption and/or long wires. [6]
+
 Colors
 ~~~~~~
 
@@ -103,3 +123,5 @@ Bibliography
 2. "Wiring Color Codes Chapter 2 - Color Codes." All About Circuits Electrical Textbook. Accessed May 8, 2022. https://www.allaboutcircuits.com/textbook/reference/chpt-2/wiring-color-codes-infographic/
 3. "Eletrical Wiring Tips: What is Hot, Neutral, and Ground." Roman Electric. Accessed May 8, 2022. https://romanelectrichome.com/electrical-wiring-tips/
 4. "Stock Up on Wire for Your Electronics Projects." dummies. March 26, 2016. Accessed May 8, 2022. https://www.dummies.com/article/technology/electronics/general-electronics/stock-up-on-wire-for-your-electronics-projects-180328/
+5. "Fix a Lamp Cord." Family Handyman. August 28, 2019. Accessed May 8, 2022. https://www.familyhandyman.com/project/fix-a-lamp-cord/
+6. "What Size Speaker Wire Is Right? The Right Gauge, Type, And More." Sound Certified. April 10, 2022. Accessed May 8, 2022. https://soundcertified.com/what-size-speaker-wire-guide/
