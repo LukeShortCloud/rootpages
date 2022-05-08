@@ -3,6 +3,33 @@ Electrical Equipment
 
 .. contents:: Table of Contents
 
+Wires
+-----
+
+Colors
+~~~~~~
+
+Each country has a different standard for the purpose of each colored wire. In the United States of America, these are the standards [2]:
+
+-  Hot
+
+   -  **Black**
+   -  Blue
+   -  Brown
+   -  Yellow
+   -  Red = High voltage up to 240 volts.
+   -  Orange = Very high voltage up to 480 volts.
+
+-  Neutral
+
+   -  **White** = High voltage up to 240 volts.
+   -  Grey = Very high voltage up to 480 volts.
+
+-  Ground
+
+   -  **Green**
+   -  Bare wire (no covering)
+
 Relays
 ------
 
@@ -45,3 +72,4 @@ Bibliography
 ------------
 
 1. "How Relays Work." Galco. Accessed September 24, 2021. https://www.galco.com/comp/prod/relay.htm
+2. "Wiring Color Codes Chapter 2 - Color Codes." All About Circuits Electrical Textbook. Accessed May 8, 2022. https://www.allaboutcircuits.com/textbook/reference/chpt-2/wiring-color-codes-infographic/
