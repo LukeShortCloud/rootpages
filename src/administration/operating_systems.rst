@@ -184,16 +184,19 @@ Top Distributions
 
 This is an extremely biased list of the best distribution for each use case.
 
--  Alternative to Chrome OS = 1. Brunch 2. CloudReady 3. ArnoldTheBats Chromium OS 4. Ubuntu Web Remix 5. GalliumOS
--  Alternative to macOS = 1. Zorion OS Pro 2. elementary OS 3. Fedora 4. Xubuntu 5. `Mac Linux Gaming Stick <https://github.com/LukeShortCloud/mac-linux-gaming-stick>`__
+-  Alternative to Chrome OS = 1. Chrome OS Flex 2. Brunch 3. ArnoldTheBats Chromium OS 4. Ubuntu Web Remix 5. GalliumOS 6. dahliaOS
+-  Alternative to macOS = 1. Zorion OS Pro 2. elementary OS 3. Fedora 4. Xubuntu 5. `winesapOS <https://github.com/LukeShortCloud/winesapOS>`__
 -  Alternative to Windows = Zorion OS Core
 -  Arm single-board computer (SBC) = Debian
 -  Bleeding edge (stable) = Manjaro
 -  Bleeding edge (unstable) = Arch Linux
 -  Community support = Arch Linux
 -  CPU architectures supported = Debian
--  Customizable = Gentoo
--  Customizable (easy) = Arch Linux
+-  Customizable installation
+
+   -  Hard = Gentoo
+   -  Easy = Arch Linux
+
 -  Desktop environments:
 
    -  Cinnamon = Linux Mint
@@ -206,17 +209,21 @@ This is an extremely biased list of the best distribution for each use case.
    -  Pantheon = elementary OS
    -  Xfce = Xubuntu
 
--  Easiest = Zorion OS Core
+-  Easiest = 1. Zorion OS Core 2. Pop!_OS
 -  Free and open source software (FOSS) = 1. Fedora 2. Debian
 -  Gaming = 1. SteamOS 3 2. ChimeraOS 3. Pop!_OS 4. Manjaro
--  Hardest = Linux From Scratch
--  Hardware support = 1. Manjaro 2. Arch Linux 3. Pop!_OS
--  Lightweight = Tiny Core Linux
--  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. AlmaLinux OS 4. Ubuntu LTS (free)
--  Old computer = 1. Linux Lite 2. Zorion OS Lite
--  Oldest Linux distribution = 1. Slackware 2. Debian
--  Operating system of the future = 1. Fedora Silverblue 2. Clear Linux 3. ChimeraOS
--  Packages available = 1. Arch Linux 2. Ubuntu 3. Debian
+-  Hardest = 1. Linux From Scratch 2. Slackware 3. Gentoo
+-  Hardware support
+
+   -  Modern hardware = 1. Manjaro 2. Arch Linux 3. Pop!_OS
+   -  Legacy hardware = 1. Slax 2. antiX Linux 3. Debian
+
+-  Lightweight = 1. Tiny Core Linux 2. Slax 3. antiX Linux 4. Linux Lite
+-  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. AlmaLinux OS 4. Ubuntu LTS (free) 5. Debian
+-  Old computer = 1. Slax 2. Puppy Linux (Ubuntu) 3. antiX Linux 4. Zorion OS Lite 5. Linux Lite
+-  Oldest Linux distribution = 1. Slackware 2. openSUSE 3. Debian 4. Fedora 5. Gentoo 6. Arch Linux [19]
+-  Operating system of the future = 1. Fedora Silverblue 2. SteamOS 3 3. Clear Linux 4. ChimeraOS
+-  Packages available = 1. Arch Linux 2. Manjaro 3. Ubuntu 4. Debian
 -  Privacy = Tails
 -  Release cycle
 
@@ -229,7 +236,7 @@ This is an extremely biased list of the best distribution for each use case.
 -  Server = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
 -  Stable = 1. RHEL 2. AlmaLinux OS 3. Debian 4. Ubuntu LTS
 -  Touchscreen = Fedora
--  USB drive / portable = 1. `Mac Linux Gaming Stick <https://github.com/LukeShortCloud/mac-linux-gaming-stick>`__ 2. Puppy Linux
+-  USB drive / portable = 1. `winesapOS <https://github.com/LukeShortCloud/winesapOS>`__ 2. Slax 3. Puppy Linux
 
 History
 -------
@@ -258,3 +265,4 @@ Bibliography
 16. "Repositories." Fedora Docs Site. October 11, 2020. Accessed October 11, 2020. https://docs.fedoraproject.org/en-US/quick-docs/repositories/
 17. "Stable request." Gentoo Wiki. April 13, 2020. Accessed October 11, 2020. https://wiki.gentoo.org/wiki/Stable_request
 18. "openSUSE:Factory development model." openSUSE Wiki. October 25, 2019. Accessed October 11, 2020. https://en.opensuse.org/openSUSE:Factory_development_model
+19. "The History of Various Linux Distros." Make Tech Easier. July 25, 2021. Accessed May 10, 2022. https://www.maketecheasier.com/history-of-linux-distros/"
