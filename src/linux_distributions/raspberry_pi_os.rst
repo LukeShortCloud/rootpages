@@ -19,6 +19,8 @@ There are three official images provided for Raspberry Pi OS by the Raspberry Pi
    Raspberry Pi OS with desktop, 8 GB, LXDE, None
    Raspberry Pi OS Lite, 4 GB, None, None
 
+These images can be downloaded from `here <https://www.raspberrypi.com/software/operating-systems/>`__.
+
 Unofficial
 ~~~~~~~~~~
 
