@@ -106,6 +106,34 @@ Install LightShow Pi as the ``pi`` user [5]:
    $ echo 'export SYNCHRONIZED_LIGHTS_HOME=/home/pi/lightshowpi' >> ~/.bashrc
    $ sudo reboot
 
+Usage
+^^^^^
+
+First, move to the LightShow Pi directory:
+
+.. code-block:: sh
+
+   $ cd ~/lightshowpi/
+
+Verify that LightShow Pi can turn on and off all of the lights [6]:
+
+.. code-block:: sh
+
+   $ sudo python py/hardware_controller.py --state=flash
+   $ sudo python py/hardware_controller.py --state=fade
+
+Play one of the included sample songs to ensure the audio output is working [7]:
+
+.. code-block:: sh
+
+   $ sudo python py/synchronized_lights.py --file=/home/pi/lightshowpi/music/sample/ovenrake_deck-the-halls.mp3
+
+Play any song:
+
+.. code-block:: sh
+
+   $ sudo python py/synchronized_lights.py --file=<PATH_TO_AUDIO_FILE>
+
 History
 -------
 
@@ -119,3 +147,5 @@ Bibliography
 3. "Hands on with the new Raspberry Pi OS release: Here's what you need to know." ZDNet. December 10, 2020. Accessed August 24, 2021.
 4. "How To Configure WiFi on Raspberry Pi: Step By Step Tutorial." Latest Open Tech From Seed. 2021. Accessed May 12, 2022. https://www.seeedstudio.com/blog/2021/01/25/three-methods-to-configure-raspberry-pi-wifi
 5. "Download and Install." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/download-and-install/
+6. "Configuring and Testing Your Hardware." Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
+7. "Play Music." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
