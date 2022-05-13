@@ -73,6 +73,39 @@ Starting with the release of the Raspberry Pi 3 Model B, the Raspberry Pi includ
 
 [4]
 
+Projects
+--------
+
+LightShow Pi
+~~~~~~~~~~~~
+
+This projects creates a light show using GPU-accelerated mathematical equations to automatically figure out when to turn lights on and off. It processes the frequency of any given audio file to help determine that. It is commonly used for holiday house light shows.
+
+Installation
+^^^^^^^^^^^^
+
+Requirements:
+
+-  Raspberry Pi OS based on Debian 10 Buster
+
+    -  Raspberry Pi OS based on Deiban 11 Bullseye is not supported because the WiringPi Python project it relies on has been deprecated and does not work on newer versions of Debian.
+
+-  Raspberry Pi 3 Model B+
+
+    -  The Raspberry Pi 4 is only partially supported because it does not support GPU acceleration for the NumPy library it uses.
+
+Install LightShow Pi as the ``pi`` user [5]:
+
+.. code-block:: sh
+
+   $ cd ~
+   $ git clone https://togiles@bitbucket.org/togiles/lightshowpi.git
+   $ cd lightshowpi
+   $ git checkout stable
+   $ sudo ./install.sh
+   $ echo 'export SYNCHRONIZED_LIGHTS_HOME=/home/pi/lightshowpi' >> ~/.bashrc
+   $ sudo reboot
+
 History
 -------
 
@@ -85,3 +118,4 @@ Bibliography
 2. "Operating system images." Raspberry Pi. Accessed August 24, 2021. https://www.raspberrypi.org/software/operating-systems/
 3. "Hands on with the new Raspberry Pi OS release: Here's what you need to know." ZDNet. December 10, 2020. Accessed August 24, 2021.
 4. "How To Configure WiFi on Raspberry Pi: Step By Step Tutorial." Latest Open Tech From Seed. 2021. Accessed May 12, 2022. https://www.seeedstudio.com/blog/2021/01/25/three-methods-to-configure-raspberry-pi-wifi
+5. "Download and Install." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/download-and-install/
