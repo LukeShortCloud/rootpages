@@ -136,6 +136,8 @@ Play any song:
 
    $ sudo python py/synchronized_lights.py --file=<PATH_TO_AUDIO_FILE>
 
+A song needs to be played entirely at least once to build up a cache and will look different than the final result. Play a song a second time to see the final result. LightShow Pi runs NumPy in the background to generate a light show based on a song or playlist. This takes a lot of processing power [8] and is even slower when GPU acceleration is disabled (such as on a Raspberry Pi 4 for compatibility purposes).
+
 History
 -------
 
@@ -151,3 +153,4 @@ Bibliography
 5. "Download and Install." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/download-and-install/
 6. "Configuring and Testing Your Hardware." Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
 7. "Play Music." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
+8. "Custom frequencies." Reddit r/LightShowPi. November 24, 2018. Accessed May 12, 2022. https://www.reddit.com/r/LightShowPi/comments/9zub3h/custom_frequencies/
