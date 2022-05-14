@@ -124,7 +124,7 @@ Verify that LightShow Pi can turn on and off all of the lights [6]:
    $ sudo python py/hardware_controller.py --state=flash
    $ sudo python py/hardware_controller.py --state=fade
 
-Play one of the included sample songs to ensure the audio output is working [7]:
+Play one of the included sample songs to ensure the audio output is working:
 
 .. code-block:: sh
 
@@ -135,6 +135,55 @@ Play any song:
 .. code-block:: sh
 
    $ sudo python py/synchronized_lights.py --file=<PATH_TO_AUDIO_FILE>
+
+Play the included sample playlist:
+
+.. code-block:: sh
+
+   $ sudo python py/synchronized_lights.py --playlist=/home/pi/lightshowpi/music/sample/.playlist
+
+Play any playlist:
+
+.. code-block:: sh
+
+   $ sudo python py/synchronized_lights.py --playlist=<PATH_TO_PLAYLIST>
+
+Create a new playlist (avoid spaces in the path and MP3 file names):
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ nano <PLAYLIST_NAME>
+         <SONG_NAME_1><TAB><PATH_TO_FIRST_MP3>
+         <SONG_NAME_2><TAB><PATH_TO_SECOND_MP3>
+
+   -  Example:
+
+      .. code-block:: sh
+
+         $ nano hello_world.playlist
+         Hello World    /home/pi/Music/hello_world.mp3
+         Foo Bar    /home/pi/foo-bar.mp3
+
+Automatically generate a playlist based on a directory of MP3 files (the new playlist file will be saved in the same directory as the music) [16]:
+
+.. code-block:: sh
+
+   $ python ./tools/playlist_generator.py
+   Enter the full path to the folder of songs:
+
+Start or stop the light show with the configured ``[lightshow] playlist_path``:
+
+.. code-block:: sh
+
+   $ sudo python bin/start_music_and_lights
+
+.. code-block:: sh
+
+   $ sudo python bin/start_music_and_lights
+
+[7]
 
 **Song Cache:**
 
@@ -266,6 +315,17 @@ Common configurations:
                     "audio_file": null
                 }
 
+-  Change the default playlist.
+
+   .. code-block:: ini
+
+      [lightshow]
+      playlist_path = <STRING>
+
+   -  ``playlist_path``
+
+      -  Default = ``$SYNCHRONIZED_LIGHTS_HOME/music/sample/.playlist``.
+
 History
 -------
 
@@ -289,3 +349,4 @@ Bibliography
 13. "Sound - Frequency, Wavelength and Octave." Engineering ToolBox. 2003. Accessed May 13, 2022. https://www.engineeringtoolbox.com/sound-frequency-wavelength-d_56.html
 14. "lights are very blinky. how can i slow them down?" Reddit r/LightShowPi. December 13, 2020. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/kcn0oy/lights_are_very_blinky_how_can_i_slow_them_down/
 15. "Custom channel frequencies, attenuate, min/max frequency." Reddit r/LightShowPi. December 19, 2021. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/rcrgh5/custom_channel_frequencies_attenuate_minmax/
+16. "Creating a Playlist for your LightShowPi (easy mode)." LightShowPi KB. December 8, 2017. Accessed May 14, 2022. https://lspkb.blogspot.com/2017/12/creating-playlist-for-your-lightshowpi.html
