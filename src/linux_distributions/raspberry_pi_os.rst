@@ -94,7 +94,7 @@ Requirements:
 
 -  Raspberry Pi 3 Model B+
 
-    -  The Raspberry Pi 4 is only partially supported because it does not support GPU acceleration for the NumPy library it uses.
+    -  The Raspberry Pi 4 is only partially supported because it does not support GPU acceleration for the NumPy library it uses. [9]
 
 Install LightShow Pi as the ``pi`` user [5]:
 
@@ -136,7 +136,135 @@ Play any song:
 
    $ sudo python py/synchronized_lights.py --file=<PATH_TO_AUDIO_FILE>
 
-A song needs to be played entirely at least once to build up a cache and will look different than the final result. Play a song a second time to see the final result. LightShow Pi runs NumPy in the background to generate a light show based on a song or playlist. This takes a lot of processing power [8] and is even slower when GPU acceleration is disabled (such as on a Raspberry Pi 4 for compatibility purposes).
+**Song Cache:**
+
+A song needs to be played entirely at least once to build up a cache and will look different than the final result due to lagging behind from the large amount of processing power required. Play that song a second time to see the final result. [8] LightShow Pi runs NumPy in the background to generate a light show based on a song or playlist. This is even slower when GPU acceleration is disabled (such as on a Raspberry Pi 4 for compatibility purposes [9]). Most changes to the configuration file will also invalidate the cache and will require the song to be played again to recreate the cache.
+
+Configuration
+^^^^^^^^^^^^^
+
+Copy the default configuration and then use the new overrides configuration for customizations. Do NOT modify the default configuration.
+
+.. code-block:: sh
+
+   $ cd ~/lightshowpi/
+   $ cp config/defaults.cfg config/overrides.cfg
+   $ nano config/override.cfg
+
+Common configurations:
+
+-  Disable GPU processing for Raspberry Pi 4 compatibility. [9]
+
+   .. code-block:: ini
+
+      [audio_processing]
+      use_gpu = <BOOLEAN>
+
+   -  ``use_gpu``
+
+      -  ``False`` = Do not compute math equations using the graphics processor. This will be slower.
+      -  ``True`` (default) = Compute math equations using the graphics processor. This will be faster.
+
+-  Configure GPIO pins that are wired into a relay with lights plugged in. The pins layout will be different depending on the Raspberry Pi board.
+
+   .. code-block:: ini
+
+      [hardware]
+      gpio_pins = <LIST_OF_INTEGERS>
+
+   -  ``gpio_pins``
+
+      -  Raspberry Pi 4 = ``8,9,7,0,2,3,12,13``.
+
+-  Customize the frequency ranges automatically. This is the easiest way to configure the light show. LightShow Pi runs various math equations to automatically have each individual channel (light) turn on if a certain frequency is reached.
+
+   .. code-block:: ini
+
+      [audio_processing]
+      min_frequency = <FLOAT>
+      max_frequency = <FLOAT>
+
+   -  ``min_frequency``
+
+      -  Default = ``20``.
+      -  Recommended = ``40``. [15]
+      -  Recommended minimum = ``20``.
+      -  Recommended maximum = ``200``. [10]
+
+   -  ``max_frequency``
+
+      -  Default = ``15000``.
+      -  Recommended = ``12000``. [10]
+      -  Recommended minimum = ``6000``. [10]
+      -  Recommended maximum = ``20000``. [11][12]
+
+-  Customize the frequency ranges manually. This gives direct control over which individual light will turn on when. This overrides both the ``min_frequency`` and ``max_frequency`` settings. This list needs to be one number longer than the number of ``gpio_pins`` because each channel is assigned a range between each set of defined values. For example, the first channel (light) will turn on if frequencies are between the first and second items in the list.
+
+   .. code-block:: ini
+
+      [audio_processing]
+      custom_channel_frequencies = <LIST_OF_FLOATS>
+
+   -  ``custom_channel_frequencies``
+
+      -  Default = ``20.00,45.62,104.07,237.40,541.55,1235.36,6428.37,1466.05``. [11]
+      -  Recommended = Use frequencies from each octave: ``0,125,250,500,1000,2000,4000,8000,16000``. [11][13]
+
+-  Customize how quickly the lights turn on or off.
+
+   .. code-block:: ini
+
+      [lightshow]
+      decay_factor = <FLOAT>
+      attenuate_pct = <FLOAT>
+
+   -  ``decay_factor`` = Controls the lights staying on longer. Lower values make the lights stay on for longer.
+
+      -  Default = ``0`` (disabled).
+      -  Recommended = ``0.10``. [15]
+      -  Recommended value for lights to stay on longer = ``0.07``. [14]
+      -  Recommended minimum = ``0.05``.
+      -  Recommended maximum = ``0.20``.
+
+   -  ``attenuate_pct`` = Controls the lights turning off faster. Higher values make the lights turn off faster.
+
+      -  Default = ``0`` (disabled).
+      -  Recommended = ``25``. [15]
+      -  Recommended minimum = ``20``.
+      -  Recommended maximum = ``50``.
+
+-  Customize the time of the light show.
+
+   .. code-block:: ini
+
+      [lightshow]
+      preshow_configuration = <DICTIONARY>
+
+   -  ``preshow_configuration``
+
+      -  Default = Keep lights on for 10 seconds before starting the show. When the show is over, keep the lights off for 1 second before starting the loop again.
+
+         .. code-block:: ini
+
+            [lightshow]
+            preshow_configuration =
+                {
+                    "transitions": [
+                        {
+                            "type": "on",
+                            "duration": 10,
+                            "channel_control": {
+                            }
+                        },
+                        {
+                            "type": "off",
+                            "duration": 1,
+                            "channel_control": {
+                            }
+                        }
+                    ],
+                    "audio_file": null
+                }
 
 History
 -------
@@ -154,3 +282,10 @@ Bibliography
 6. "Configuring and Testing Your Hardware." Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
 7. "Play Music." LightShow Pi. Accessed May 12, 2022. https://www.lightshowpi.org/configuring-and-testing-your-hardware/
 8. "Custom frequencies." Reddit r/LightShowPi. November 24, 2018. Accessed May 12, 2022. https://www.reddit.com/r/LightShowPi/comments/9zub3h/custom_frequencies/
+9. "Unable to enable V3D. Please check your firmware is up to date. Segmentation fault." Bitbucket Todd Giles / lightshowPi. November 11, 2021. Accessed May 13, 2022. https://bitbucket.org/togiles/lightshowpi/issues/118/unable-to-enable-v3d-please-check-your
+10. "I finally completed the setup for the frequencies, even I could get the channel 8 to work I had to use min_freq to 10 and max_freq to 1200 and that shouldn’t be right. I have a feeling that adding another 8 channel SSR the program would register the frequency better. Thoughts?" Reddit r/LightShowPi. December 19, 2018. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/9wk134/i_finally_completed_the_setup_for_the_frequencies/
+11. "Fine tuning of my lightshowpi - custom channel frequencies, attenuate, min/max frequency." Reddit r/LightShowPi. November 2, 2019. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/dkkmn4/fine_tuning_of_my_lightshowpi_custom_channel/
+12. "THE FREQUENCY SPECTRUM, INSTRUMENT RANGES, AND EQ TIPS." The National STEM Guitar Project. 2003. Accessed May 13, 2022. https://www.guitarbuilding.org/wp-content/uploads/2014/06/Instrument-Sound-EQ-Chart.pdf
+13. "Sound - Frequency, Wavelength and Octave." Engineering ToolBox. 2003. Accessed May 13, 2022. https://www.engineeringtoolbox.com/sound-frequency-wavelength-d_56.html
+14. "lights are very blinky. how can i slow them down?" Reddit r/LightShowPi. December 13, 2020. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/kcn0oy/lights_are_very_blinky_how_can_i_slow_them_down/
+15. "Custom channel frequencies, attenuate, min/max frequency." Reddit r/LightShowPi. December 19, 2021. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/rcrgh5/custom_channel_frequencies_attenuate_minmax/
