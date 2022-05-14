@@ -90,7 +90,7 @@ Requirements:
 
 -  Raspberry Pi OS based on Debian 10 Buster
 
-    -  Raspberry Pi OS based on Deiban 11 Bullseye is not supported because the WiringPi Python project it relies on has been deprecated and does not work on newer versions of Debian.
+    -  Raspberry Pi OS based on Debian 11 Bullseye is not supported because the WiringPi Python project it relies on has been deprecated and does not work on newer versions of Debian.
 
 -  Raspberry Pi 3 Model B+
 
