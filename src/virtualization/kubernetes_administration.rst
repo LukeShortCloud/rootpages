@@ -88,6 +88,41 @@ CNI Ports (All Nodes) [60]:
 
 [47]
 
+Recommended Architecture
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+These are recommendations for a generic upstream Kubernetes cluster.
+
+-  **Operating system: Debian**
+
+   -  Most deployments of vanilla Kubernetes use a Debian-based distribution. For Fedora based-distributions, the very customized and opinionated OpenShift fork of Kubernetes is used.
+
+-  **Firewall: ufw**
+
+   -  firewalld is known to cause issues. Even the official Kubernetes installer ``kubeadm`` warns against using it. [94]
+   -  ufw is a lot easier to manage than pure iptables/nftables. However, it loads rules before kube-proxy does so extra rules need to be in place to allow certain traffic. [95]
+
+-  **Container runtime: crun**
+
+   -  It is twice as fast as runc and uses less memory. This is due to it being written in C instead of Go. [96]
+
+-  **Container runtime interface (CNI): containerd**
+
+   -  containerd provides the best overall performance.
+   -  CRI-O is recommended for heavy I/O workloads. [97]
+
+-  **Kubernetes installer: kubeadm**
+
+   -  This is the standard installer created and maintained by the Kubernetes community.
+
+-  **CNI plugin: Antrea**
+
+   -  This is the most feature-rich CNI plugin.
+
+-  **Ingress Controller: Traefik**
+
+   -  This is the most popular Ingress Controller.
+
 k3s
 ~~~
 
@@ -2482,3 +2517,7 @@ Bibliography
 91. "Cluster doesn't restart when docker restarts #148." GitHub kubernetes-sigs/kind. March 20, 2022. Accessed April 12, 2022. https://github.com/kubernetes-sigs/kind/issues/148#issuecomment-1044197449
 92. "Opening Ports with firewalld." Rancher Docs. March 21, 2022. Accessed May 4, 2022. https://rancher.com/docs/rancher/v2.6/en/installation/resources/advanced/firewall/
 93. "k3s service cannot start in RHEL with firewall enabled #401." GitHub k3s-io/k3s. February 19, 2021. Accessed May 5, 2022. https://github.com/k3s-io/k3s/issues/401
+94. "Implementation details." Kubernetes Documentation. January 18, 2022. Accessed May 18, 2022. https://kubernetes.io/docs/reference/setup-tools/kubeadm/implementation-details/
+95. "What firewall do you use/How do you lockdown a node?" Reddit r/kubernetes. July 16, 2021. Accessed May 18, 2022. https://www.reddit.com/r/kubernetes/comments/olhrpo/what_firewall_do_you_usehow_do_you_lockdown_a_node/
+96. "An introduction to crun, a fast and low-memory footprint container runtime." Red Hat Enable Sysadmin. August 3, 2020. Accessed May 18, 2020. https://www.redhat.com/sysadmin/introduction-crun
+97. "Performance Evaluation of Container Runtimes." Chair of Computer Architecture and Parallel Systems, TU Munich, Garching, Germany. 2020. Accessed May 18, 2022.
