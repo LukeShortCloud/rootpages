@@ -1633,24 +1633,35 @@ kind does not officially support upgrades. It was designed for developers to spi
 Ingress Controllers
 -------------------
 
+Introduction
+~~~~~~~~~~~~
+
 The ``Ingress`` API requires at least one Ingress Controller to be installed. That controller creates a ``Service`` of type ``LoadBalancer`` using an external IP address that is available on all of the Nodes. Domain names should have their DNS resolve to that IP address.
 
 The Ingress Controller will handle all incoming HTTP connections on port 80. It also supports handling TLS termination for incoming HTTPS connections on port 443. Custom layer 7 routing rules for the HTTP/S traffic can be defined via the API.
 
 Other ports and protocols are not supported. Use a ``Service`` of type ``LoadBalancer`` or ``NodePort`` instead for applications that do not use HTTP or require a custom port. [58]
 
-Popular Ingress controllers [57]:
+These are the most popular Ingress controllers [57] in order of the number of GitHub stars they have:
 
--  Ambassador
--  Contour
--  HAProxy
--  Istio
--  Kong
--  NGINX
--  Traefik
--  Voyager
+1.  `Traefik <https://github.com/traefik/traefik>`__
+2.  `Istio <https://github.com/istio/istio>`__
+3.  `NGINX (Kubernetes) <https://github.com/kubernetes/ingress-nginx>`__
+4.  `Emissary <https://github.com/emissary-ingress/emissary>`__ (formerly known as `Ambassador <https://www.cncf.io/blog/2021/04/13/emissary-ingress-formerly-ambassador-is-now-a-cncf-incubating-project/>`__)
+5.  `NGINX (NGINX, Inc.) <https://github.com/nginxinc/kubernetes-ingress>`__
+6.  `Contour <https://github.com/projectcontour/contour>`__
+7.  `Kong <https://github.com/Kong/kubernetes-ingress-controller>`__
+8.  `Voyager <https://github.com/voyagermesh/voyager>`__
+9.  `HAProxy <https://github.com/haproxytech/kubernetes-ingress>`__
 
 A full list of Ingress Controllers can be found `here <https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/>`__.
+
+Recommended Ingress Controller for each use case:
+
+-  Proof-of-concept = NGINX (Kubernetes). A basic Ingress Controller that is maintained by the Kubernetes project.
+-  Home lab = Traefik. This is the most popular Ingress Controller and is known to work out-of-the-box.
+-  Work lab = Contour. It uses Enovy in the back-end to provide advanced routing capabilities, similar to what Istio does, but is more lightweight on resources and easier to manage.
+-  Security = Istio. This is the most secure but it uses the most amount of resources (every pod has a side car container to manager network traffic) and upgrades are difficult.
 
 Contour
 ~~~~~~~
@@ -1730,12 +1741,12 @@ The ``kubelet`` service on each ``Node`` interacts with a CNI plugin to manage t
    Weave Net, Yes, Hard, Medium, 3, No, Yes, No, Manage mesh networks
    Weave Net (Encrypted), Yes, Hard, High, 3, Yes, Yes, No, Secure networks
 
-Recommended CNI plugins for each use case:
+Recommended CNI plugin for each use case:
 
 -  Proof-of-concept = kubenet. It is built into Kubernetes and does not require any additional setup.
 -  Home lab = Flannel. Easy to setup and provides container network separation.
 -  Work lab = Canal. It expands upond Flannel by adding support for other features such as the  NetworkPolicy API.
--  Encryption = Weave Net. Designed to be scalable and secure.
+-  Security = Weave Net. Designed to be scalable and secure.
 -  Windows Node = Antrea. The only vendor-agnostic CNI plugin that works on Windows Nodes.
 
 Legacy plugins that are no longer maintained:
