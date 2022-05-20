@@ -71,6 +71,19 @@ For documentation on how to use the ``az`` command, refer to `here <https://docs
 Storage
 -------
 
+Services
+~~~~~~~~
+
+Here are all of the storage services provided by Azure [7]:
+
+-  Blobs = Append (log), block (single object/file), and page (virtual disk drive) storage.
+
+   -  Disks = Fully managed page blobs for virtual machines.
+
+-  Files = SMB and/or NFS network storage.
+-  Queues = Messaging queues.
+-  Tables = NoSQL.
+
 Storage Accounts
 ~~~~~~~~~~~~~~~~
 
@@ -126,3 +139,4 @@ Bibliography
 4. "Storage account overview." Microsoft Docs - Azure Storage. April 28, 2022. Accessed May 19, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
 5. "Azure Storage redundancy." Microsoft Docs - Azure Storage. May 12, 2022. Accessed May 19, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
 6. "Hot, Cool, and Archive access tiers for blob data." Microsoft Docs - Azure Storage. May 12, 2022. Accessed May 19, 2022. https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
+7. "Introduction to Azure Storage." Microsoft Docs - Azure Storage. March 17, 2022. Accessed May 20, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json
