@@ -223,6 +223,43 @@ There are two official and free tools for accessing Azure storage [9]:
 
    -  `Download <https://azure.microsoft.com/en-us/features/storage-explorer/>`__ and use the full Storage Explorer program for the full feature-rich experience.
 
+Jobs
+'''''
+
+Azure Jobs provides a way to physically move a large amount of data between on-prem and the Azure cloud.
+
+-  Azure Import Job steps (send drives to Microsoft):
+
+   1.  Customer prepares disks using WAImportExport (this is only supported on Windows)
+   2.  Create job
+   3.  Customer ships drives to Microsoft
+   4.  Check job status
+   5.  Microsoft receives the disks
+   6.  Check data in Azure Storage
+   7.  Disks are shipped back to the customer
+
+-  Azure Export Job steps (receive drives from Microsoft):
+
+   1.  Create job
+   2.  Microsoft prepares disks
+   3.  Microsoft ships drives to the customer
+   4.  Check job status
+   5.  Customer receives the disks
+   6.  Use WAImportExport to unlock the encrypted BitLocker disks and move the data to a different disk
+   7.  Disks are shipped back to Microsoft
+
+Create a job request:
+
+-  Azure Portal > Import/export jobs > + Create
+
+Costs for a job include:
+
+-  Shipping fee to and from Microsoft
+-  Per-drive handling fee
+-  Import and export transaction fee
+
+[10]
+
 History
 -------
 
@@ -240,3 +277,4 @@ Bibliography
 7. "Introduction to Azure Storage." Microsoft Docs - Azure Storage. March 17, 2022. Accessed May 20, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json
 8. "Use private endpoints for Azure Storage." Microsoft Docs - Azure Storage. March 10, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-private-endpoints
 9. "Azure storage explorer." Azure Lessons. March 14, 2021. Accessed June 9, 2022. https://azurelessons.com/azure-storage-explorer/
+10. "What is Azure Import/Export service?" Microsoft Docs - Azure Storage. March 15, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service"
