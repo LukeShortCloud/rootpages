@@ -208,6 +208,21 @@ A storage account along with most storage objects, besides just containers, supp
 -  Azure Portal > Storage accounts > (select an existing storage account) > Data storage > (select a storage type) > Access Control (IAM)
 -  Azure Portal > Storage accounts > (select an existing storage account) > Data storage > (select a storage type) > (select an existing resource) > Access Control (IAM)
 
+Utilities
+'''''''''
+
+There are two official and free tools for accessing Azure storage [9]:
+
+-  AzCopy = CLI supported on Linux, macOS, and Windows.
+-  Storage Explorer = GUI supported on Linux, macOS, and Windows.
+
+   -  This uses AzCopy in the back-end.
+   -  In the Azure Portal, a limited version of the Storage Explorer is provided:
+
+      -  Azure Portal > Storage Accounts > (select an existing storage account) > Storage Explorer (preview)
+
+   -  `Download <https://azure.microsoft.com/en-us/features/storage-explorer/>`__ and use the full Storage Explorer program for the full feature-rich experience.
+
 History
 -------
 
@@ -224,3 +239,4 @@ Bibliography
 6. "Hot, Cool, and Archive access tiers for blob data." Microsoft Docs - Azure Storage. May 12, 2022. Accessed May 19, 2022. https://docs.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview
 7. "Introduction to Azure Storage." Microsoft Docs - Azure Storage. March 17, 2022. Accessed May 20, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json
 8. "Use private endpoints for Azure Storage." Microsoft Docs - Azure Storage. March 10, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-private-endpoints
+9. "Azure storage explorer." Azure Lessons. March 14, 2021. Accessed June 9, 2022. https://azurelessons.com/azure-storage-explorer/
