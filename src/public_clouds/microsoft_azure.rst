@@ -260,6 +260,35 @@ Costs for a job include:
 
 [10]
 
+Object Replication
+^^^^^^^^^^^^^^^^^^
+
+Objects can be replicated across different Azure Subscriptions and regions. Object replication requires a general purpose v2 storage account.
+
+Create a source storage account:
+
+-  Azure Portal > Storage Accounts > + Create > Next: Networking > Next: Data Protection > Tracking
+
+   -  Turn on versioning for blobs
+   -  Turn on blob change feed
+
+Create a destination storage account:
+
+-  Azure Portal > Storage Accounts > + Create > Next: Networking > Next: Data Protection > Tracking
+
+   -  Turn on versioning for blobs
+
+Create a source and destination container:
+
+-  Azure Portal > Storage Accounts > (select the source storage account) > Blob service > Containers > + Container > Create
+-  Azure Portal > Storage Accounts > (select the destination storage account) > Blob service > Containers > + Container > Create
+
+Create the replication policy:
+
+-  Azure Portal > Storage Accounts > (select the source storage account) > Blob service > Object replication > + Set up replication rules
+
+[11]
+
 History
 -------
 
@@ -277,4 +306,5 @@ Bibliography
 7. "Introduction to Azure Storage." Microsoft Docs - Azure Storage. March 17, 2022. Accessed May 20, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-introduction?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json
 8. "Use private endpoints for Azure Storage." Microsoft Docs - Azure Storage. March 10, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/storage/common/storage-private-endpoints
 9. "Azure storage explorer." Azure Lessons. March 14, 2021. Accessed June 9, 2022. https://azurelessons.com/azure-storage-explorer/
-10. "What is Azure Import/Export service?" Microsoft Docs - Azure Storage. March 15, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service"
+10. "What is Azure Import/Export service?" Microsoft Docs - Azure Storage. March 15, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service
+11. "Azure Storage Object Replication." Tech Talk Corner. September 29, 2020. Accessed June 9, 2022. https://www.techtalkcorner.com/azure-storage-object-replication/
