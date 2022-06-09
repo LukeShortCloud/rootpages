@@ -289,6 +289,24 @@ Create the replication policy:
 
 [11]
 
+Lifecycle Management
+^^^^^^^^^^^^^^^^^^^^
+
+Lifecycle management helps to minimize costs by automating (1) the deletion or (2) archival of objects.
+
+Create a lifecycle management rule to move objects after a specified number of days [12]:
+
+-  Azure Portal > Storage Accounts > (select an existing storage account) > Blob service > Lifecycle Management > + Add a rule > Next
+
+   -  if-then block
+
+      -  If - Base blobs were - Last modified - More than (days ago)
+      -  Then (select one)
+
+         -  Move to cool storage
+         -  Move to archive storage
+         -  Delete the blob
+
 History
 -------
 
@@ -308,3 +326,4 @@ Bibliography
 9. "Azure storage explorer." Azure Lessons. March 14, 2021. Accessed June 9, 2022. https://azurelessons.com/azure-storage-explorer/
 10. "What is Azure Import/Export service?" Microsoft Docs - Azure Storage. March 15, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service
 11. "Azure Storage Object Replication." Tech Talk Corner. September 29, 2020. Accessed June 9, 2022. https://www.techtalkcorner.com/azure-storage-object-replication/
+12. "Data Lifecycle Management in Azure Blob Storage." SQLShack. February 17, 2022. Accessed June 9, 2022. https://www.sqlshack.com/data-lifecycle-management-in-azure-blob-storage/
