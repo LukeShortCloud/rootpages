@@ -84,6 +84,32 @@ Here are all of the storage services provided by Azure [7]:
 -  Queues = Messaging queues.
 -  Tables = NoSQL.
 
+Disk
+^^^^
+
+Disks use blob storage in the back-end, are fully managed, and provide unique features over a standard blob.
+
+Differences between Azure Disk and Azure Blob [13][14]:
+
+.. csv-table::
+   :header: Feature, Disk, Blob
+   :widths: 20, 20, 20
+
+   Back-end, Azure Blob (Page), Azure Blob (Page)
+   File format, VHD, Any
+   File system, NTFS, None
+   Number of allowed mounts to a virtual machine, 1, Unlimited
+   Storage Service Encryption (SSE), Yes, Yes
+   Azure Disk Encryption, BitLocker (Windows) and DM-Crypt (Linux), None
+   CDN, No, Yes
+
+Disk types ranging from slow and cheap to fast and expensive [14]:
+
+-  Standard HDD
+-  Standard SSD
+-  Premium SSD
+-  Ultra disk
+
 Storage Accounts
 ~~~~~~~~~~~~~~~~
 
@@ -327,3 +353,5 @@ Bibliography
 10. "What is Azure Import/Export service?" Microsoft Docs - Azure Storage. March 15, 2022. Accessed June 9, 2022. https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service
 11. "Azure Storage Object Replication." Tech Talk Corner. September 29, 2020. Accessed June 9, 2022. https://www.techtalkcorner.com/azure-storage-object-replication/
 12. "Data Lifecycle Management in Azure Blob Storage." SQLShack. February 17, 2022. Accessed June 9, 2022. https://www.sqlshack.com/data-lifecycle-management-in-azure-blob-storage/
+13. "Azure Blob storage vs Azure Drive." Stack Overflow. December 5, 2012. Accessed June 10, 2022. https://stackoverflow.com/questions/6295004/azure-blob-storage-vs-azure-drive
+14. "Azure Storage Types: What are they?" ZiniosEdge. June 15, 2021. Accessed June 10, 2022. https://ziniosedge.com/azure-storage-types-what-are-they/
