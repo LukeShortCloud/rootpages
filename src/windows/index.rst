@@ -3,5 +3,6 @@
    :caption: Windows
 
    editions
+   performance_tuning
    security
    storage
