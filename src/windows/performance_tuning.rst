@@ -39,6 +39,15 @@ Replace Microsoft Defender
 
 Microsoft Defender is the default antivirus for Windows. It is the second worst antivirus for causing a computer to be slow. It is recommended to `disable it <./security.html#microsoft-defender-antivirus>`__ and use a lightweight program such as `K7 Antivirus Premium <https://www.k7computing.com/us/home-users/antivirus-premium>`__, `Panda Free Antivirus <https://www.pandasecurity.com/en/homeusers/free-antivirus/>`__, or `ESET NOD32 Antivirus <https://www.eset.com/us/home/antivirus/>`__ instead. [2]
 
+Disable Startup Applications
+----------------------------
+
+Some applications will enable themselves to startup upon login. These take up system resources and users may not want them running automatically. View the resource impact and disable all or some applications from automatically starting up by using the System Configuration utility. [3]
+
+::
+
+   System Configuration (msconfig.exe) > Startup > Disable all
+
 History
 -------
 
@@ -49,3 +58,4 @@ Bibliography
 
 1. "How to Enable the Ultimate Performance Power Plan in Windows 10." MakeUseOf (MUO). October 28, 2021. Accessed July 13, 2022. https://www.makeuseof.com/how-to-enable-ultimate-performance-power-plan/
 2. "AV-Comparatives: Microsoft Defender has a large impact on system performance." gHacks. May 4, 2022. Accessed July 13, 2022. https://www.ghacks.net/2022/05/04/av-comparatives-microsoft-defender-has-a-large-impact-on-system-performance/
+3. "How to Disable Startup Programs in Windows." How-To Geek. May 11, 2018. Accessed July 13, 2022. https://www.howtogeek.com/74523/how-to-disable-startup-programs-in-windows/
