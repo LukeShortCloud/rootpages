@@ -333,6 +333,72 @@ Create a lifecycle management rule to move objects after a specified number of d
          -  Move to archive storage
          -  Delete the blob
 
+Files
+^^^^^
+
+Azure Files provides fully managed SMB and/of NFS file shares. It supports Linux, macOS, and Windows.
+
+Differences between Azure Disk and Azure Blob [13][14]:
+
+.. csv-table::
+   :header: Feature, Files, Blob
+   :widths: 20, 20, 20
+
+   Back-end, Azure Blob (Page), Azure Blob (Page)
+   File system, SMB (default) and/or NFS (premium), None
+   Number of allowed mounts, 1, Unlimited
+   Mounts, Cloud or on-prem, Cloud
+   Directory structure, Hierarchical, Flat
+
+Use-cases:
+
+-  Hybrid = Cloud and on-prem.
+-  Lift and shift = Cloud only.
+
+Connectivity:
+
+-  REST, SMB, or NFS
+
+   -  SMB 3.0 was the first version of SMB that includes encryption so it can also be used externally.
+
+      -  For internal connectivity, the insecure SMB 2.1 can be used since all networks are private by default.
+
+   -  NFS requires a premium storage account (it will not work with a general purpose v2 storage account)
+
+Create a file share:
+
+-  Azure Portal > Storage Accounts > (select an existing storage account) > Data storage > File shares > + File share > Create
+
+Get the commands to automatically connect the file share on different operating systems:
+
+-  Azure Portal > File Shares > (select an existing file share) > Overview > Connect
+
+   -  Windows
+   -  Linux
+   -  macOS
+
+[15]
+
+File Sync
+'''''''''
+
+Azure File Sync caches files on-prem. It supports the use of SMB, NFS, and FTPS.
+
+Requirements:
+
+-  Windows >= 2012 R2
+-  File Sync agent
+
+Create a storage sync service:
+
+-  Azure Portal > + Create a resource > Azure File Sync
+
+View hints on how to set up storage sync service on a client device:
+
+-  Azure Portal > Storage Sync Service > (select an existing storage sync service) > Sync > Getting Started
+
+[16]
+
 History
 -------
 
@@ -355,3 +421,5 @@ Bibliography
 12. "Data Lifecycle Management in Azure Blob Storage." SQLShack. February 17, 2022. Accessed June 9, 2022. https://www.sqlshack.com/data-lifecycle-management-in-azure-blob-storage/
 13. "Azure Blob storage vs Azure Drive." Stack Overflow. December 5, 2012. Accessed June 10, 2022. https://stackoverflow.com/questions/6295004/azure-blob-storage-vs-azure-drive
 14. "Azure Storage Types: What are they?" ZiniosEdge. June 15, 2021. Accessed June 10, 2022. https://ziniosedge.com/azure-storage-types-what-are-they/
+15. "Azure File Share Explained [Tutorial With Examples]." GoLinuxCloud. Accessed June 15, 2022. https://www.golinuxcloud.com/azure-file-share/
+16. "Azure File Sync Explained with Practical Examples." GoLinuxCloud. Accessed June 15, 2022. https://www.golinuxcloud.com/azure-file-sync/
