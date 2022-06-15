@@ -53,6 +53,15 @@ Some applications will enable themselves to startup upon login. These take up sy
 
    System Configuration (msconfig.exe) > Startup > Disable all
 
+Disable Background Applications (Windows >= 10)
+-----------------------------------------------
+
+Background applications are allowed to launch silently and not appear in the taskbar. These applications can easily run without a user knowing. Disable some or all of the background applications [4]:
+
+::
+
+   Settings (ms-settings:) > Privacy > App Permissions > Background apps > Let apps run in the background: Off
+
 Scan for Viruses
 ----------------
 
@@ -69,3 +78,4 @@ Bibliography
 1. "How to Enable the Ultimate Performance Power Plan in Windows 10." MakeUseOf (MUO). October 28, 2021. Accessed July 13, 2022. https://www.makeuseof.com/how-to-enable-ultimate-performance-power-plan/
 2. "AV-Comparatives: Microsoft Defender has a large impact on system performance." gHacks. May 4, 2022. Accessed July 13, 2022. https://www.ghacks.net/2022/05/04/av-comparatives-microsoft-defender-has-a-large-impact-on-system-performance/
 3. "How to Disable Startup Programs in Windows." How-To Geek. May 11, 2018. Accessed July 13, 2022. https://www.howtogeek.com/74523/how-to-disable-startup-programs-in-windows/
+4. "How to disable background apps in Windows 10." TechEngage. May 3, 2022. Accessed June 15, 2022. https://techengage.com/how-to-disable-background-apps-in-windows-10/
