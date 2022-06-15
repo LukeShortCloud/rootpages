@@ -3,6 +3,11 @@ Windows Performance Tuning
 
 .. contents:: Table of Contents
 
+Introduction
+------------
+
+This guide has steps to increase the performance of Windows starting with the most impactful to the least. Before doing anything, it is recommended to `create a system restore point <storage.html#system-restore-point>`__ first.
+
 Power Plans
 -----------
 
