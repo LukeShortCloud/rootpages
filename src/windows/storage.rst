@@ -3,6 +3,25 @@ Windows Storage
 
 .. contents:: Table of Contents
 
+System Restore Point
+--------------------
+
+A system restore point is a backup of important Windows files and the registry. This backup can be restored at any time in case these are issues with the system. [3]
+
+Create a system restore point:
+
+::
+
+   System Properties (sysdm.cpl) > System Protection > Create...
+
+Restore the backup:
+
+::
+
+   System Properties (sysdm.cpl) > System Protection > System Restore...
+
+[4]
+
 NFS
 ---
 
@@ -102,3 +121,5 @@ Bibliography
 
 1. "Mounting NFS share from Linux to Windows server." techbeatly. June 12, 2019. Accessed December 20, 2021. https://www.techbeatly.com/mounting-nfs-share-from-linux-to-windows-server/
 2. "NFS Mount not showing in Windows Explorer." Super User. September 10, 2021. Accessed December 20, 2021. https://superuser.com/questions/599641/nfs-mount-not-showing-in-windows-explorer/696913
+3. "What is System Restore?" Microsoft Support. Accessed June 15, 2022. https://support.microsoft.com/en-us/topic/what-is-system-restore-a9d1b33f-1df9-e0f2-8aa3-d904cd940ee4
+4. "Create a system restore point." Microsoft Support. Accessed June 15, 2022. https://support.microsoft.com/en-us/windows/create-a-system-restore-point-77e02e2a-3298-c869-9974-ef5658ea3be9
