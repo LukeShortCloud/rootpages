@@ -53,6 +53,11 @@ Some applications will enable themselves to startup upon login. These take up sy
 
    System Configuration (msconfig.exe) > Startup > Disable all
 
+Scan for Viruses
+----------------
+
+Viruses typically slow down a computer. They run in the background to hijack processes, encrypt files, mine cryptocurrency, or do other malicious acts. Use one of the top 3 most efficient antiviruses to run an antivirus scan: `K7 Antivirus Premium <https://www.k7computing.com/us/home-users/antivirus-premium>`__, `Panda Free Antivirus <https://www.pandasecurity.com/en/homeusers/free-antivirus/>`__, or `ESET NOD32 Antivirus <https://www.eset.com/us/home/antivirus/>`__. [2]
+
 History
 -------
 
