@@ -76,6 +76,18 @@ Scan for Viruses
 
 Viruses typically slow down a computer. They run in the background to hijack processes, encrypt files, mine cryptocurrency, or do other malicious acts. Use one of the top 3 most efficient antiviruses to run an antivirus scan: `K7 Antivirus Premium <https://www.k7computing.com/us/home-users/antivirus-premium>`__, `Panda Free Antivirus <https://www.pandasecurity.com/en/homeusers/free-antivirus/>`__, or `ESET NOD32 Antivirus <https://www.eset.com/us/home/antivirus/>`__. [2]
 
+Windows Updates
+---------------
+
+Check for Updates
+~~~~~~~~~~~~~~~~~
+
+Windows occasionally has updates to the operating system itself, other applications, and drivers that include performance improvements. It is recommended to be on the latest version of these.
+
+::
+
+   Settings (ms-settings:) > Update & Security > Windows Update > Check for updates
+
 History
 -------
 
