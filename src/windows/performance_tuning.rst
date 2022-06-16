@@ -44,6 +44,15 @@ Replace Microsoft Defender
 
 Microsoft Defender is the default antivirus for Windows. It is the second worst antivirus for causing a computer to be slow. It is recommended to `disable it <./security.html#microsoft-defender-antivirus>`__ and use a lightweight program such as `K7 Antivirus Premium <https://www.k7computing.com/us/home-users/antivirus-premium>`__, `Panda Free Antivirus <https://www.pandasecurity.com/en/homeusers/free-antivirus/>`__, or `ESET NOD32 Antivirus <https://www.eset.com/us/home/antivirus/>`__ instead. [2]
 
+Disable Virtualization-Based Security (Windows >= 11)
+-----------------------------------------------------
+
+Virtualization-based security (VBS) isolates RAM allocations of every application. That way, a malicious application cannot access the memory of other applications on the system. VBS is reported to cause anywhere between a 5-25% slowdown of a computer. [5]
+
+::
+
+      Settings (ms-settings:) > Update & Security > Windows Security > Device security > Memory integrity: Off
+
 Disable Startup Applications
 ----------------------------
 
@@ -79,3 +88,4 @@ Bibliography
 2. "AV-Comparatives: Microsoft Defender has a large impact on system performance." gHacks. May 4, 2022. Accessed July 13, 2022. https://www.ghacks.net/2022/05/04/av-comparatives-microsoft-defender-has-a-large-impact-on-system-performance/
 3. "How to Disable Startup Programs in Windows." How-To Geek. May 11, 2018. Accessed July 13, 2022. https://www.howtogeek.com/74523/how-to-disable-startup-programs-in-windows/
 4. "How to disable background apps in Windows 10." TechEngage. May 3, 2022. Accessed June 15, 2022. https://techengage.com/how-to-disable-background-apps-in-windows-10/
+5. "How to Disable VBS and Speed Up Windows 11." Tom's Hardware. October 6, 2021. Accessed June 16, 2022. https://www.tomshardware.com/how-to/disable-vbs-windows-11
