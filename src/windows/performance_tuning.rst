@@ -71,6 +71,15 @@ Background applications are allowed to launch silently and not appear in the tas
 
    Settings (ms-settings:) > Privacy > App Permissions > Background apps > Let apps run in the background: Off
 
+Disable Scheduled Tasks
+-----------------------
+
+Some applications start themselves by using scheduled tasks. Look at the current tasks and see if there are any that should be disabled.
+
+::
+
+   Task Scheduler (taskschd.msc) > Task Scheduler (Local) > Task Scheduler Library > (select an existing task) > Actions > Disable
+
 Scan for Viruses
 ----------------
 
