@@ -60,7 +60,7 @@ Some applications will enable themselves to startup upon login. These take up sy
 
 ::
 
-   System Configuration (msconfig.exe) > Startup > Disable all
+   Task Manager (taskmgr.exe) > Startup > (select an application) > Disable
 
 Disable Background Applications (Windows >= 10)
 -----------------------------------------------
