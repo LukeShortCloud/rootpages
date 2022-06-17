@@ -137,6 +137,19 @@ Windows occasionally has updates to the operating system itself, other applicati
 
    Settings (ms-settings:) > Update & Security > Windows Update > Check for updates
 
+Disable Windows Tips (Windows >= 8.1)
+-------------------------------------
+
+Windows monitors your behavior and provides tips based on your usage. Since it is always monitoring your actions in the background, it is utilizing system resources. These tips should be disabled.
+
+-  Windows >= 10
+
+   ::
+
+      Settings (ms-settings:) > System > Notifications & actions > uncheck "Suggest ways I can finish setting up my device to get the most out of Windows"
+
+Windows 8.1 introduced "Help Tips" which is slightly different. It works as an on-going tutorial with pop-ups on how to use the Windows 8.1 interface. This can be disabled by setting the registry key ``HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\EdgeUI`` to a DWORD value of ``1``. [7]
+
 History
 -------
 
@@ -151,3 +164,4 @@ Bibliography
 4. "How to disable background apps in Windows 10." TechEngage. May 3, 2022. Accessed June 15, 2022. https://techengage.com/how-to-disable-background-apps-in-windows-10/
 5. "How to Disable VBS and Speed Up Windows 11." Tom's Hardware. October 6, 2021. Accessed June 16, 2022. https://www.tomshardware.com/how-to/disable-vbs-windows-11
 6. "How Often Should I Defrag My HDD?" AOMEI Partition Assistant. March 4, 2022. Accessed June 17, 2022. https://www.diskpart.com/articles/how-often-should-I-defrag-my-hdd-0725.html
+7. "Ways to completely disable windows 8 1 help tips." Tutorials Point. October 23, 2019. Accessed June 17, 2022. https://www.tutorialspoint.com/ways-to-completely-disable-windows-8-1-help-tips
