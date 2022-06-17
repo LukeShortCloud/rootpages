@@ -94,6 +94,37 @@ Scan for Viruses
 
 Viruses typically slow down a computer. They run in the background to hijack processes, encrypt files, mine cryptocurrency, or do other malicious acts. Use one of the top 3 most efficient antiviruses to run an antivirus scan: `K7 Antivirus Premium <https://www.k7computing.com/us/home-users/antivirus-premium>`__, `Panda Free Antivirus <https://www.pandasecurity.com/en/homeusers/free-antivirus/>`__, or `ESET NOD32 Antivirus <https://www.eset.com/us/home/antivirus/>`__. [2]
 
+Defragment HDDs
+---------------
+
+Traditional spinning disk drives (HDDs) are faster and more efficient when all of the data for a file is in the same area. Otherwise, it has to seek to different regions of the disk which is a slow process. Manually defragment a HDD:
+
+-  Windows >= 8
+
+   ::
+
+      Optimize Drives (dfrgui.exe) > (select a drive) > Optimize
+
+-  Windows <= 7
+
+   ::
+
+      Disk Defragmenter (dfrgui.exe) > (select a drive) > Defragment disk
+
+This process takes a long time and a lot of system resources. A consumer HDD only needs to be defragmented once every 3 months. [6] By default, Windows will automatically defragment drives every week. It also tries to optimize SSD drives with is not necessary and will not improve their performance. Here is how to disable the scheduled optimization:
+
+-  Windows >= 8
+
+   ::
+
+      Optimize Drives (dfrgui.exe) > Scheduled optimization > Change settings > uncheck "Run on a schedule (recommended)" > OK
+
+-  Windows <= 7
+
+   ::
+
+      Disk Defragmenter (dfrgui.exe) > Schedule: > Configure schedule... > uncheck "Run on a schedule (recommended)" > OK
+
 Windows Updates
 ---------------
 
@@ -119,3 +150,4 @@ Bibliography
 3. "How to Disable Startup Programs in Windows." How-To Geek. May 11, 2018. Accessed July 13, 2022. https://www.howtogeek.com/74523/how-to-disable-startup-programs-in-windows/
 4. "How to disable background apps in Windows 10." TechEngage. May 3, 2022. Accessed June 15, 2022. https://techengage.com/how-to-disable-background-apps-in-windows-10/
 5. "How to Disable VBS and Speed Up Windows 11." Tom's Hardware. October 6, 2021. Accessed June 16, 2022. https://www.tomshardware.com/how-to/disable-vbs-windows-11
+6. "How Often Should I Defrag My HDD?" AOMEI Partition Assistant. March 4, 2022. Accessed June 17, 2022. https://www.diskpart.com/articles/how-often-should-I-defrag-my-hdd-0725.html
