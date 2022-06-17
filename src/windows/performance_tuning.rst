@@ -80,6 +80,15 @@ Some applications start themselves by using scheduled tasks. Look at the current
 
    Task Scheduler (taskschd.msc) > Task Scheduler (Local) > Task Scheduler Library > (select an existing task) > Actions > Disable
 
+Uninstall Programs
+------------------
+
+If there are programs installed that will never be used again, then uninstall them. Otherwise, they take up storage space and may be running in the background.
+
+::
+
+   Settings (ms-settings:) > Apps > Apps & features > (select an application)> Uninstall
+
 Scan for Viruses
 ----------------
 
