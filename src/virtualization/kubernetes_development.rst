@@ -2745,8 +2745,23 @@ Deploy a cluster with support for Ingress ports 80 and 443 being forwarded (requ
 
 [50]
 
+cert-manager
+^^^^^^^^^^^^
+
+cert-manager provides APIs to manage SSL/TLS certificates from various different providers. Details about the API specifications that cert-manager provides can be found `here <https://cert-manager.io/docs/reference/api-docs/>`__. The most common API is the ClusterIssuer/Issuer. Here are all of the APIs that cert-manager provides:
+
+.. code-block:: sh
+
+   $ kubectl api-resources | grep cert-manager
+   challenges                                     acme.cert-manager.io/v1                true         Challenge
+   orders                                         acme.cert-manager.io/v1                true         Order
+   certificaterequests               cr,crs       cert-manager.io/v1                     true         CertificateRequest
+   certificates                      cert,certs   cert-manager.io/v1                     true         Certificate
+   clusterissuers                                 cert-manager.io/v1                     false        ClusterIssuer
+   issuers                                        cert-manager.io/v1                     true         Issuer
+
 ClusterIssuer
-^^^^^^^^^^^^^
+'''''''''''''
 
 -  API group / version (latest): cert-manager.io/v1
 -  Shortname: (None)
@@ -2882,7 +2897,7 @@ Use the Let's Encrypt ClusterIssuer in an Ingress object to automatically create
                  number: 80
 
 Issuer
-^^^^^^
+''''''
 
 -  API group / version (latest): cert-manager.io/v1
 -  Shortname: (None)
