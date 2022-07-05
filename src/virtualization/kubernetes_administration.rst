@@ -2070,6 +2070,23 @@ MetalLB
       $ helm repo update
       $ helm install --create-namespace --namespace metallb-system --set 'configInline.address-pools[0].name'=default --set 'configInline.address-pools[0].protocol'=layer2 --set 'configInline.address-pools[0].addresses[0]'="<IP_ADDRESS_FIRST>-<IP_ADDRESS_LAST>" metallb bitnami/metallb
 
+cert-manager
+~~~~~~~~~~~~
+
+cert-manager provides integration with various SSL/TLS certificate providers such as Let's Encrypt. Through annotations, it can automatically generate certificates for Ingress objects.
+
+Installation using the Helm chart [98]:
+
+.. code-block:: sh
+
+   $ helm repo add jetstack https://charts.jetstack.io
+   $ helm repo update
+   $ helm install \
+     cert-manager jetstack/cert-manager \
+     --namespace cert-manager \
+     --create-namespace \
+     --set installCRDs=true
+
 Container Registries
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2521,3 +2538,4 @@ Bibliography
 95. "What firewall do you use/How do you lockdown a node?" Reddit r/kubernetes. July 16, 2021. Accessed May 18, 2022. https://www.reddit.com/r/kubernetes/comments/olhrpo/what_firewall_do_you_usehow_do_you_lockdown_a_node/
 96. "An introduction to crun, a fast and low-memory footprint container runtime." Red Hat Enable Sysadmin. August 3, 2020. Accessed May 18, 2020. https://www.redhat.com/sysadmin/introduction-crun
 97. "Performance Evaluation of Container Runtimes." Chair of Computer Architecture and Parallel Systems, TU Munich, Garching, Germany. 2020. Accessed May 18, 2022.
+98. "Installing with Helm." cert-manager Documentation. 2022. Accessed July 5, 2022. https://cert-manager.io/docs/installation/helm/
