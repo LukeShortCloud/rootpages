@@ -68,6 +68,28 @@ azure-cli (az)
 
 For documentation on how to use the ``az`` command, refer to `here <https://docs.microsoft.com/en-us/cli/azure/>`__.
 
+Active Directory (AD)
+---------------------
+
+Comparison with Traditional AD
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Azure AD is used for managing access to cloud resources. Traditional AD (not Azure AD) is used for managing on-prem devices.
+
+Differences between Azure AD and traditional AD [17][18]:
+
+.. csv-table::
+   :header: Feature, Azure AD, AD
+   :widths: 20, 20, 20
+
+   Directory structure, Flat, Hierarchical
+   Permission managment, "Domains/forests, organization units (OUs), and groups", Azure RBAC
+   Group policy support, No, Yes
+   Authentication integration, "OAuth2, SAML, and WS-Federation", "Kerberos, LDAP, or NTLM"
+   Supported Windows computers, Windows >= 10, Windows >= XP
+   Native Linux support, Yes, No
+   Cloud access, Yes, No
+
 Storage
 -------
 
@@ -423,3 +445,5 @@ Bibliography
 14. "Azure Storage Types: What are they?" ZiniosEdge. June 15, 2021. Accessed June 10, 2022. https://ziniosedge.com/azure-storage-types-what-are-they/
 15. "Azure File Share Explained [Tutorial With Examples]." GoLinuxCloud. Accessed June 15, 2022. https://www.golinuxcloud.com/azure-file-share/
 16. "Azure File Sync Explained with Practical Examples." GoLinuxCloud. Accessed June 15, 2022. https://www.golinuxcloud.com/azure-file-sync/
+17. "Compare Active Directory to Azure Active Directory." Microsoft Docs - Azure Active Directory. June 23, 2022. Accessed July 6, 2022. https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-compare-azure-ad-to-ad
+18. "What's the difference between AD vs Azure AD?" Compete 366. Accessed July 6, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
