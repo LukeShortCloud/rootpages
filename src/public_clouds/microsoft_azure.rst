@@ -90,6 +90,15 @@ Differences between Azure AD and traditional AD [17][18]:
    Native Linux support, Yes, No
    Cloud access, Yes, No
 
+Domain Names
+~~~~~~~~~~~~
+
+By default, all Azure AD domains are created using the fully-qualified domain name ``<DOMAIN>.onmicrosoft.com``. This can be changed to any non-Microsoft domain name that a user owns by going to:
+
+-  Azure Portal > Azure Active Directory > Manage > Custom domain names > + Add custom domain
+
+Then a TXT DNS record needs to be added at the domain's registrar to verify it. [19]
+
 Storage
 -------
 
@@ -447,3 +456,4 @@ Bibliography
 16. "Azure File Sync Explained with Practical Examples." GoLinuxCloud. Accessed June 15, 2022. https://www.golinuxcloud.com/azure-file-sync/
 17. "Compare Active Directory to Azure Active Directory." Microsoft Docs - Azure Active Directory. June 23, 2022. Accessed July 6, 2022. https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-compare-azure-ad-to-ad
 18. "What's the difference between AD vs Azure AD?" Compete 366. Accessed July 6, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
+19. "Add your custom domain name using the Azure Active Directory portal." Microsoft Docs - Azure Active Directory. May 24, 2022. Accessed July 8, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
