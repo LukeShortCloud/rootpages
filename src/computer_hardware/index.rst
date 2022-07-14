@@ -8,5 +8,6 @@
    laptops
    monitors
    processors
+   ram
    storage_devices
    webcams
