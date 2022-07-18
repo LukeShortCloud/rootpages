@@ -21,10 +21,9 @@ Feature comparison:
 Long-Term Servicing Channel (LTSC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Previously known as the long-term servicing branch (LTSB) in older releases of Windows, LTSC provides a stripped down version of Windows Enterprise. It removes pre-installed applications including [3]:
+Previously known as the long-term servicing branch (LTSB) in older releases of Windows, LTSC provides a stripped down version of Windows Enterprise that receives updates for many years. It removes pre-installed applications including [3]:
 
 -  Cortana
--  Edge web browser
 -  Microsoft Store
 -  OneDrive
 -  OneNote
@@ -32,17 +31,19 @@ Previously known as the long-term servicing branch (LTSB) in older releases of W
 
 During the supported lifecycle, no features or hardware support are added. Only security and bug fixes are provided.
 
+Modern versions of Windows 10 Enterprise LTSC are only supported for 5 years compared to the previous 10 years it used to support. Windows 10 IoT Enterprise LTSC still provides 10 years of support and is binary-compatible. The only difference between the two is how licensing is handled. [11]
+
 .. csv-table::
-   :header: Name, Years of Support, Version Feature Set is Based On
-   :widths: 20, 20, 20
+   :header: Name, Years of Support, Years of Support (IoT), Version Feature Set is Based On
+   :widths: 20, 20, 20, 20
 
-   Windows 10 Enterprise LTSB 2015, 10, `Windows 10 Version 1507 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2015>`__
-   Windows 10 Enterprise LTSB 2016, 10, `Windows 10 Version 1607 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2016>`__
-   Windows 10 Enterprise LTSC 2019, 10, `Windows 10 Version 1809 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2019>`__
-   Windows 10 Enterprise LTSC 2021, 5, `Windows 10 Version 21H2 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2021>`__
-   Windows 11 Enterprise LTSC 2024, 5, ""
+   Windows 10 Enterprise LTSB 2015, 10, 10, `Windows 10 Version 1507 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2015>`__
+   Windows 10 Enterprise LTSB 2016, 10, 10, `Windows 10 Version 1607 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2016>`__
+   Windows 10 Enterprise LTSC 2019, 10, 10, `Windows 10 Version 1809 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2019>`__
+   Windows 10 Enterprise LTSC 2021, 5, 10, `Windows 10 Version 21H2 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2021>`__
+   Windows 11 Enterprise LTSC 2024, 5, 10, ""
 
-[5][6]
+[5][6][12]
 
 An installation of Windows Enterprise LTSC can switch to the traditional "current" update channel which recieves two major feature updates every year. This essentially turns it into Windows Enterprise. However, downgrading Windows Enterprise to Windows Enterprise LTSC is not supported. [4]
 
@@ -98,3 +99,5 @@ Bibliography
 8. "Upgrading Windows 10 2016 LTSB to Windows 10 2019 LTSC." Roberto Viola. July 28, 2020. Accessed August 31, 2021. https://robertoviola.cloud/2020/07/28/upgrading-windows-10-2016-ltsb-to-windows-10-2019-ltsc/
 9. "How to Restore Windows Photo Viewer in Windows 10." Windows 10 Help Forums. October 30, 2020. Accessed January 15, 2022. https://www.tenforums.com/tutorials/14312-restore-windows-photo-viewer-windows-10-a.html
 10. "How to Download APPX file of Any App from Windows Store." WindowsLoop. Accessed April 8, 2022. https://windowsloop.com/how-to-download-appx-file-of-any-app-from-windows-store/
+11. "The next Windows 10 Long Term Servicing Channel (LTSC) release." Microsoft Windows IT Pro Blog. February 18, 2021. Accessed July 19, 2022. https://techcommunity.microsoft.com/t5/windows-it-pro-blog/the-next-windows-10-long-term-servicing-channel-ltsc-release/ba-p/2147232
+12. "Windows for IoT Lifecycle pages." Microsoft Docs. May 2, 2022. Accessed July 18, 2022. https://docs.microsoft.com/en-us/windows/iot/product-family/product-lifecycle
