@@ -73,6 +73,11 @@ By default, Windows Photo Viewer is installed but not enabled in Windows LTSC ed
 
 [9]
 
+DirectX End-User Runtime
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The DirectX 9 end-user runtime is not installed by default on Windows LTSC editions. This includes many gaming libraries required by older games such as the older DirectX SDK, Managed DirectX, XACT, XAudio, and XInput. Download and install "DirectX End-User Runtimes (June 2010)" from `here <https://www.microsoft.com/en-us/download/details.aspx?id=8109>`__.
+
 Downloads
 ---------
 
