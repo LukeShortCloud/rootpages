@@ -1338,6 +1338,7 @@ There are many programs for managing virtualization from a graphical user interf
 Common GUIs:
 
 -  oVirt
+-  Proxmox
 -  virt-manager
 -  XenServer
 
@@ -1505,6 +1506,45 @@ Nested virtualization also requires MAC spoofing to be enabled.
 
 [30]
 
+Proxmox
+~~~~~~~
+
+Introduction
+^^^^^^^^^^^^
+
+Proxmox was designed to be a free and open source alternative to VMware vSphere. It is based on Debian and KVM.
+
+Local Storage
+^^^^^^^^^^^^^
+
+It is recommended to have the Proxmox operating system installed onto a dedicated storage device. However, for lab environments, it is possible to use the same storage device for virtual machines.
+
+Delete the ``local-lvm`` storage which is used for virtual machine and container images by default.
+
+::
+
+   Datacenter > Storage > local-lvm > Remove > Yes
+
+Add that free space back to the root file system.
+
+::
+
+   Datacenter > (select the server) > Shell
+
+.. code-block:: sh
+
+   $ lvremove /dev/pve/data
+   $ lvresize -l +100%FREE /dev/pve/root
+   $ resize2fs /dev/mapper/pve-root
+
+Enable all types of storage to be allowed on the root file system.
+
+::
+
+   Datacenter > Storage > local > Edit > Content: > (select everything) > OK
+
+[52]
+
 VMware vSphere
 ~~~~~~~~~~~~~~
 
@@ -1601,3 +1641,4 @@ Bibliography
 49. "VMware Integration." Vagrant by HashiCorp. Accessed February 10, 2021. https://www.vagrantup.com/vmware
 50. "KVM Virtualization: Start VNC Remote Access For Guest Operating Systems." nixCraft. May 6, 2017. Accessed February 18, 2021. https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/
 51. "CHAPTER 11. MANAGING STORAGE FOR VIRTUAL MACHINES." Red Hat Customer Portal. Accessed February 25, 2021. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#understanding-virtual-machine-storage_managing-storage-for-virtual-machines
+52. "How to install Proxmox VE 7.0." YouTube - H2DC - How to do Computers. October 20, 2021. Accessed August 7, 2022. https://www.youtube.com/watch?v=GYOlulPwxlE
