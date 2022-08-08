@@ -119,9 +119,18 @@ libvirt:
 Memory
 ''''''
 
-Enable Huge Pages and disable Transparent Hugepages (THP) on the hypervisor for better memory performance in virtual machines.
+Huge Pages
+&&&&&&&&&&
 
-View current Huge Pages allocation. The total should be "0" if it is disabled. The default size is 2048 KB on Fedora.
+Enable isolated Huge Pages and disable Transparent Huge Pages (THP) on the hypervisor for better memory performance in virtual machines. Instead of allocating RAM dynamically, the Linux kernel will isolate the RAM on boot so that the hypervisor will not use it.
+
+Verify that the processor supports Huge Pages. This command will return nothing if it does not. [53]
+
+.. code-block:: sh
+
+   $ grep --color pdpe1gb /proc/cpuinfo
+
+View current Huge Pages allocation. The total should be "0" if it is disabled. The default size is 2048 KB. Modern processors support setting the Huge Pages size to 1 GB which provides less overhead for the hypervisor.
 
 .. code-block:: sh
 
@@ -134,11 +143,88 @@ View current Huge Pages allocation. The total should be "0" if it is disabled. T
     HugePages_Surp:        0
     Hugepagesize:       2048 kB
 
-Calculate the optimal Huge Pages total based on the amount of RAM that will be allocated to virtual machines. For example, if 24GB of RAM will be allocated to virtual machines then the Huge Pages total should be set to ``12288``.
+Increase the Huge Pages size for Linux by modifying the GRUB configuration. [53]
+
+.. code-block:: sh
+
+   $ sudo vim /etc/default/grub
+   GRUB_CMDLINE_LINUX="<EXISTING_OPTIONS> hugepagesz=1GB hugepages=1"
+
+-  Optionally disable THP entirely to enforce the use of isolated Huge Pages.
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/default/grub
+      GRUB_CMDLINE_LINUX="<EXISTING_OPTIONS> transparent_hugepage=never hugepagesz=1GB hugepages=1"
+
+   -  THP can also be manually disabled until the next reboot. Note that if the GRUB method is used, it will set "enabled" to "never" on boot which means "defrag" does not need to be set to "never" since it is not in use. This manual method should be used on systems that will not be rebooted.
+
+      .. code-block:: sh
+
+         $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+         $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+
+Rebuild the GRUB configuration.
+
+-  UEFI:
+
+   .. code-block:: sh
+
+      $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+
+-  BIOS:
+
+   .. code-block:: sh
+
+      $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+Huge Pages must be configured to be used by the virtualization software. The hypervisor isolates and reserves the Huge Pages RAM and will otherwise make the memory unusable by other resources.
+
+-  libvirt:
+
+   .. code-block:: xml
+
+      <domain type='kvm'>
+          <memoryBacking>
+              <hugepages/>
+          </memoryBacking>
+      </domain>
+
+-  Proxmox [54]:
+
+   ::
+
+      $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+      hugepages: 1024
+
+In Fedora, services such as ``ktune`` and ``tuned`` will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
+
+Increase the security limits in Fedora to allow the maximum valuable of RAM (in kilobytes) for a virtual machine that can be used with Huge Pages.
+
+File: /etc/security/limits.d/90-mem.conf
 
 ::
 
-    <AMOUNT_OF_RAM_FOR_VMS_IN_KB> / <HUGEPAGES_SIZE> = <HUGEPAGES_TOTAL>
+   soft memlock 25165824
+   hard memlock 25165824
+
+Optionally calculate the optimal Huge Pages total based on the amount of RAM that will be allocated to virtual machines. For example, if 24GB of RAM will be allocated to virtual machines then the Huge Pages total should be set to ``245``. A virtual machine can be configured to only have part of its total RAM be Huge Pages.
+
+-  Equation:
+
+   ::
+
+      <AMOUNT_OF_RAM_FOR_VMS_IN_KB> / <HUGEPAGES_SIZE> = <HUGEPAGES_TOTAL>
+
+-  Example (24 GB):
+
+   ::
+
+      (24 GB x 1024 MB x 1024 KB) / 1024000 KB = 245
+
+   ::
+
+      (24 GB x 1024 MB x 1024 KB) / 2048 KB = 1228
 
 Enable Huge Pages by setting the total in sysctl.
 
@@ -150,58 +236,6 @@ Enable Huge Pages by setting the total in sysctl.
     $ sudo mkdir /hugepages
     $ sudo vim /etc/fstab
     hugetlbfs    /hugepages    hugetlbfs    defaults    0 0
-
-Huge Pages must be configured to be used by the virtualization software. The hypervisor isolates and reserves the Huge Pages RAM and will otherwise make the memory unusable by other resources.
-
-libvirt:
-
-.. code-block:: xml
-
-    <domain type='kvm'>
-        <memoryBacking>
-            <hugepages/>
-        </memoryBacking>
-    </domain>
-
-Disable THP using GRUB.
-
-File: /etc/default/grub
-
-.. code-block:: sh
-
-    GRUB_CMDLINE_LINUX="<EXISTING_OPTIONS> transparent_hugepage=never"
-
-Rebuild the GRUB configuration.
-
-UEFI:
-
-.. code-block:: sh
-
-    $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
-
-BIOS:
-
-.. code-block:: sh
-
-    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-
-Alternatively, THP can be manually disabled. Note that if the GRUB method is used, it will set "enabled" to "never" on boot which means "defrag" does not need to be set to "never" since it is not in use. This manual method should be used on systems that will not be rebooted.
-
-.. code-block:: sh
-
-    $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
-    $ echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
-
-In Fedora, services such as ktune and tuned will, by default, force THP to be enabled. Profiles can be modified in ``/usr/lib/tuned/`` on Fedora or in ``/etc/tune-profiles/`` on <= RHEL 7.
-
-Increase the security limits in Fedora to allow the maximum valuable of RAM (in kilobytes) for a virtual machine that can be used with Huge Pages.
-
-File: /etc/security/limits.d/90-mem.conf
-
-::
-
-    soft memlock 25165824
-    hard memlock 25165824
 
 Reboot the server and verify that the new settings have taken affect.
 
@@ -216,6 +250,10 @@ Reboot the server and verify that the new settings have taken affect.
     HugePages_Surp:        0
     Hugepagesize:       2048 kB
     Hugetlb:        16777216 kB
+    $ hugeadm --pool-list
+          Size  Minimum  Current  Maximum  Default
+       2097152        0        0        0        *
+    1073741824        0       24        0
 
 [33]
 
@@ -1642,3 +1680,5 @@ Bibliography
 50. "KVM Virtualization: Start VNC Remote Access For Guest Operating Systems." nixCraft. May 6, 2017. Accessed February 18, 2021. https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/
 51. "CHAPTER 11. MANAGING STORAGE FOR VIRTUAL MACHINES." Red Hat Customer Portal. Accessed February 25, 2021. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_virtualization/managing-storage-for-virtual-machines_configuring-and-managing-virtualization#understanding-virtual-machine-storage_managing-storage-for-virtual-machines
 52. "How to install Proxmox VE 7.0." YouTube - H2DC - How to do Computers. October 20, 2021. Accessed August 7, 2022. https://www.youtube.com/watch?v=GYOlulPwxlE
+53. "Huge pages part 3: Administration." LWN.net. June 21, 2011. Accessed August 7, 2022. https://lwn.net/Articles/448571/
+54. "Qemu/KVM Virtual Machines." Proxmox VE. May 4, 2022. Accessed August 7, 2022. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
