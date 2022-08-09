@@ -1544,13 +1544,38 @@ Nested virtualization also requires MAC spoofing to be enabled.
 
 [30]
 
-Proxmox
-~~~~~~~
+Proxmox Virutal Environment (VE)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Introduction
 ^^^^^^^^^^^^
 
 Proxmox was designed to be a free and open source alternative to VMware vSphere. It is based on Debian and KVM.
+
+Free Repository
+^^^^^^^^^^^^^^^
+
+By default, only the Proxmox VE Enterprise repository is configured at ``/etc/apt/sources.list.d/pve-enterprise.list``. This requires a valid paid subscription to use and provides all of the Proxmox packages and some newer Debian packages. As an alternative, Proxmox offers a free Proxmox VE No-Subscription repository. These packages are slightly newer than the enterprise repository and have not been tested as long.
+
+-  Proxmox VE 7:
+
+   .. code-block:: sh
+
+      $ cat <<EOF > /etc/apt/sources.list.d/pve-no-subscription.list
+      deb http://ftp.debian.org/debian bullseye main contrib
+      deb http://ftp.debian.org/debian bullseye-updates main contrib
+      deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+      deb http://security.debian.org/debian-security bullseye-security main contrib
+      EOF
+
+[55]
+
+Once complete, perform a full system upgrade and then reboot the server.
+
+.. code-block:: sh
+
+   $ apt-get update
+   $ apt-get dist-upgrade
 
 Local Storage
 ^^^^^^^^^^^^^
@@ -1682,3 +1707,4 @@ Bibliography
 52. "How to install Proxmox VE 7.0." YouTube - H2DC - How to do Computers. October 20, 2021. Accessed August 7, 2022. https://www.youtube.com/watch?v=GYOlulPwxlE
 53. "Huge pages part 3: Administration." LWN.net. June 21, 2011. Accessed August 7, 2022. https://lwn.net/Articles/448571/
 54. "Qemu/KVM Virtual Machines." Proxmox VE. May 4, 2022. Accessed August 7, 2022. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
+55. "Package Repositories." Proxmox VE. November 17, 2021. Accessed August 9, 2022. https://pve.proxmox.com/wiki/Package_Repositories
