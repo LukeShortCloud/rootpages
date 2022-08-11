@@ -1608,6 +1608,32 @@ Enable all types of storage to be allowed on the root file system.
 
 [52]
 
+NVIDIA Drivers
+^^^^^^^^^^^^^^
+
+If the hypervisor has a NVIDIA graphics card that is not used by a virtual machine, it will use less energy with the proprietary driver installed. The driver will automatically put the graphics card into a lower power state when idle. [56] AMD graphics cards have native support in the Linux kernel so no additional drivers need to be installed for them.
+
+-  Install the Linux kernel headers for Proxmox VE [57]:
+
+   .. code-block:: sh
+
+      $ apt install pve-headers-$(uname -r)
+
+-  Enable additional Debian repositories that contain the NVIDIA graphics driver:
+
+   .. code-block:: sh
+
+      $ apt-get install software-properties-common
+      $ apt-add-repository contrib
+      $ apt-add-repository non-free
+      $ apt-get update
+
+-  Install the NVIDIA graphics driver [58]:
+
+   .. code-block:: sh
+
+      $ apt-get install nvidia-driver
+
 VMware vSphere
 ~~~~~~~~~~~~~~
 
@@ -1708,3 +1734,6 @@ Bibliography
 53. "Huge pages part 3: Administration." LWN.net. June 21, 2011. Accessed August 7, 2022. https://lwn.net/Articles/448571/
 54. "Qemu/KVM Virtual Machines." Proxmox VE. May 4, 2022. Accessed August 7, 2022. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
 55. "Package Repositories." Proxmox VE. November 17, 2021. Accessed August 9, 2022. https://pve.proxmox.com/wiki/Package_Repositories
+56. "Trying to save power - can I completely “switch off” GPU?" Reddit r/VFIO. May 21, 2022. Accessed August 11, 2022. https://www.reddit.com/r/VFIO/comments/uujulb/trying_to_save_power_can_i_completely_switch_off/
+57. "PVE-Headers." Proxmox Support Forums. October 13, 2021. Accessed August 11, 2022. https://forum.proxmox.com/threads/pve-headers.97882/
+58. "Install NVIDIA Drivers on Debian 11." Linux Hint. March, 2022. Accessed August 11, 2022. https://linuxhint.com/install-nvidia-drivers-debian-11/
