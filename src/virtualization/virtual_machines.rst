@@ -1634,6 +1634,22 @@ If the hypervisor has a NVIDIA graphics card that is not used by a virtual machi
 
       $ apt-get install nvidia-driver
 
+UEFI Virtual Machines
+^^^^^^^^^^^^^^^^^^^^^
+
+Virtual machines with UEFI support may fail to boot from a network PXE server or ISO image with the error below due to an issue with pre-generated UEFI keys. [59]
+
+::
+
+    BdsDxe: failed to load Boot0001 "UEFI QEMU DVD-ROM QM00003 " from PciRoot(0x0)/Pci(0x1,0x1)/Ata(Secondary,Master,0x0): Access Denied
+
+This can be fixed by deleting and recreating the UEFI keys with pre-enrollment disabled.
+
+::
+
+    Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Remove > Yes
+    Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Add > EFI Disk > Pre-Enroll keys: No
+
 VMware vSphere
 ~~~~~~~~~~~~~~
 
@@ -1737,3 +1753,4 @@ Bibliography
 56. "Trying to save power - can I completely “switch off” GPU?" Reddit r/VFIO. May 21, 2022. Accessed August 11, 2022. https://www.reddit.com/r/VFIO/comments/uujulb/trying_to_save_power_can_i_completely_switch_off/
 57. "PVE-Headers." Proxmox Support Forums. October 13, 2021. Accessed August 11, 2022. https://forum.proxmox.com/threads/pve-headers.97882/
 58. "Install NVIDIA Drivers on Debian 11." Linux Hint. March, 2022. Accessed August 11, 2022. https://linuxhint.com/install-nvidia-drivers-debian-11/
+59. "Unable to PXE Boot UEFI-Based VMs." Reddit r/Proxmox. May 18, 2022. Accessed August 11, 2022. https://www.reddit.com/r/Proxmox/comments/qil7qy/unable_to_pxe_boot_uefibased_vms/
