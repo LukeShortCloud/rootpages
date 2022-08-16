@@ -1063,6 +1063,42 @@ Regular expressions (regex) are a set of characters that can be used to search f
 
 [12]
 
+Choosing a Programming Language
+-------------------------------
+
+Energy Efficiency
+~~~~~~~~~~~~~~~~~
+
+Here is the descending order of programming languages based on their energy efficiency [39]:
+
+1.  C
+2.  Rust
+3.  C++
+4.  Ada
+5.  Pascal
+6.  Erland
+7.  Go
+8.  Lisp
+9.  Haskell
+10.  Chapel
+11.  Fortran
+12.  Java
+13.  C#
+14.  Swift
+15.  F#
+16.  Dart
+17.  OCaml
+18.  Racket
+19.  TypeScript
+20.  JavaScript
+21.  Python
+22.  PHP
+23.  Hack
+24. Ruby
+25.  Perl
+26.  Lua
+27.  JRuby
+
 Learning a New Programming Language
 -----------------------------------
 
@@ -1142,3 +1178,4 @@ Bibliography
 36. "What's the difference between git clone --mirror and git clone --bare." Stack Overflow. October 23, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/3959924/whats-the-difference-between-git-clone-mirror-and-git-clone-bare
 37. "How do I convert a bare git repository into a normal one (in-place)?" Stack Overflow. July 28, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/10637378/how-do-i-convert-a-bare-git-repository-into-a-normal-one-in-place
 38. "Moving git repository and all its branches, tags to a new remote repository keeping commits history." GitHub niksumeiko/git.migrate. October 27, 2021. Accessed March 30, 2022. https://gist.github.com/niksumeiko/8972566
+39. "Python sucks in terms of energy efficiency - literally." The Next Web. November 24, 2021. Accessed August 16, 2022. https://thenextweb.com/news/python-progamming-language-energy-analysis
