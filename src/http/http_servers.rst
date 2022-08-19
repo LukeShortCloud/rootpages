@@ -439,6 +439,244 @@ configuration settings.
 
 [9]
 
+Squid
+-----
+
+Squid is a caching proxy. It can cache content to RAM and/or a directory. These are the supported protocols that can be proxied and cached [14]:
+
+-  FMP
+-  FTP
+-  Gopher
+-  GSS-HTTP
+-  HTTP
+-  HTTPS
+-  Multiling-HTTP
+-  WAIS
+
+There are some limiations with Squid proxy cache:
+
+-  Does not natively work with content delivery networks (CDNs) that change the HTTP headers or DNS. That content will not be cached unless filter rules for a specific CDN are added.
+
+   -  `Here <https://blog.thelifeofkenneth.com/2014/08/using-squid-storeids-to-optimize-steams.html>`__ is an example of how to configure a filter for the Steam CDN to work with Squid.
+
+-  For HTTPS caching, it does not use the original SSL/TLS certificate from the website. Proxy clients will only see certificates that are dynamically created by Squid.
+
+   - This requires setting up the CA of Squid on all proxy clients.
+
+Configuration
+~~~~~~~~~~~~~
+
+The Squid configuration file is ``/etc/squid/squid.conf``. The configuration settings below are listed in order of when they should be defined from first to last. Size types can be defined as ``bytes``, ``KB``, or ``MB``.
+
+-  ``acl localnet src <CIDR>`` = Networks that are allowed to use this Squid proxy.
+-  ``acl SSL_ports port 443`` = Allow proxying with HTTPS. This also requires ``acl Safe_ports port 443`` to be set.
+-  ``acl Safe_ports port <TCP_PORT>`` = The ports/services that will be proxied. Valid values are:
+
+   -  ``21`` = FTP.
+   -  ``70`` - Gopher.
+   -  ``80`` = HTTP.
+   -  ``210`` = WAIS.
+   -  ``443`` = HTTPS.
+   -  ``488`` = GSS-HTTP.
+   -  ``591`` = FMP.
+   -  ``777`` = Multiling-HTTP.
+   -  ``1025-65535`` = Proxy any service on this range of unregistered ports.
+
+-  ``acl CONNECT method CONNECT`` = This has to be defined after the ``acl Safe_ports port <TCP_PORT>`` rules. It allows connections to all of the ports defined by ``acl Safe_ports`` rules.
+-  ``http_access [allow|deny] <HOST>`` = Define what hosts and ports are allowed to access this Squid proxy.
+
+   -  Default:
+
+      ::
+
+         http_access deny !Safe_ports
+         http_access deny CONNECT !SSL_ports
+         http_access allow localhost manager
+         http_access deny manager
+         http_access allow localnet
+         http_access allow localhost
+         http_access deny all
+
+-  ``http_port <TCP_PORT> <OPTIONS>`` = The Squid proxy port to listen on. Other configuration options such as SSL/TLS certificates can be set here.
+
+   -  Default:
+
+      ::
+
+         http_port 3128
+
+-  ``cache_mem <SIZE> <SIZE_TYPE>`` = The total size of RAM cache for files.
+-  ``cache_dir ufs <DIRECTORY> <SIZE_IN_MB> <FIRST_LEVEL_DIRECTORY_COUNT> <SECOND_LEVEL_DIRECTORY_COUNT>`` = The directory, size, and count of directories to use for caching content when the RAM cache becomes full. The most important values to tweak are the directory path and cache size.
+
+   -  Default:
+
+      ::
+
+         cache_dir ufs /var/spool/squid 100 16 256
+
+-  ``minimum_object_size <SIZE> <SIZE_TYPE>`` = The minimum file size to cache in RAM or in a directory.
+-  ``maximum_object_size <SIZE> <SIZE_TYPE>`` = The maximum file size to cache in RAM or in a directory.
+-  ``minimum_object_size_in_memory <SIZE> <SIZE_TYPE>`` = The minimum file size to cache in RAM.
+-  ``maximum_object_size_in_memory <SIZE> <SIZE_TYPE>`` = The maximum file size to cache in RAM.
+-  ``refresh_pattern [-i] <REGULAR_EXPRESSION> <MINIMUM_CACHE_TIME_IN_MINUTES> <PERCENTAGE_OF_CACHE_TIME> <MAXIMUM_CACHE_TIME_IN_MINUTES <OPTIONS>`` = Regular expression patterns that determine what files will be cached. [15] Use ``-i`` to ignore character casing.
+
+   -  Default:
+
+      ::
+
+         refresh_pattern ^ftp:           1440    20%     10080
+         refresh_pattern ^gopher:        1440    0%      1440
+         refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+         refresh_pattern .               0       20%     4320
+
+   -  Examples:
+
+      -  ``refresh_pattern -i \.(bmp|eps|gif|ico|jpg|jpeg|jpegxl|jxl|png|tif|tiff|webp)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all images for a minimum of 1 day and a maximum of 30 days. This also ignores cache headers received from the HTTP server and enforces new caching times.
+      -  ``refresh_pattern -i \.(3gp|aac|au|avi|flac|flv|iso|m4a|mp3|mdi|mov|mp4|mpeg|ogg|qt|ram|swf|wav|wma|wmv|x-flv)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all audio/video files.
+      -  ``refresh_pattern -i \.(7z|7zip|arc|bcm|bin|br|brotli|bz2|bzip2|cpio|gz|gzip|pea|rar|raw|tar|tgz|wim|zip|xz|zst|zstd)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all archives.
+      -  ``refresh_pattern -i \.(cab|deb|dll|exe|msi|pkg|rpm|so|sys)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache executable, installer, and system files.
+      -  ``refresh_pattern -i \.(doc|docx|fodg|fodp|fods|fodt|md|odf|odg|odp|ods|odt|pdf|ppt|pptx|rtf|txt|text|xls|xlsx)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all documents.
+      -  ``refresh_pattern -i \.(css|js|jsp|htm|html|rss|xml|yaml|yml)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache website files.
+      -  ``refresh_pattern -i youtube.com/.* 1440 90% 40320`` = Cache all content on YouTube.
+      -  ``refresh_pattern (/cgi-bin/|\?) 0 0% 0`` = Do not cache dynamic websites that use CGI to prevent issues with them.
+      -  ``refresh_pattern . 1440 90% 40320`` = Cache everything. Squid cannot cache all types of content but it will cache what it can.
+
+[16]
+
+Status Codes
+~~~~~~~~~~~~
+
+Squid has an access log that provides information about files that proxy clients are trying to access. Viewing this file is useful for determining if caching is working based on status codes.
+
+.. code-block:: sh
+
+   $ sudo tail -f /var/log/squid/access.log
+
+Status codes:
+
+-  TCP_MISS/200 = A file was not found in the cache. If Squid is configured to cache the file type, it will do it automatically during this step.
+-  TCP_REFRESH_MODIFIED/200 = A cached file was found but the remote HTTP server reports that it needs to be invalidated/deleted and then updated.
+-  TCP_REFRESH_UNMODIFIED/200 = A cached file was found and the remote server reports that it does not need to be updated.
+-  TCP_INM_HIT/304 = A cached file was found and the remote HTTP server reports that it does not need to be updated.
+-  TCP_MEM_HIT/200 = A cached file was found and used from RAM.
+-  TCP_HIT/200 = A cached file was found and used from the local directory cache.
+-  NONE = A generic response code for unpredictable scenarios.
+
+Any code with ``HIT`` in the name means that the cache is working and is being served to the client.
+
+[17]
+
+HTTPS
+~~~~~
+
+For caching HTTPS content, Squid acts as middleware. It first gets the content from the HTTPS website, then it caches it, and finally it will serve it to proxy clients. The difference between HTTPS and HTTP caching is that HTTPS requires Squid to have its own certificate authority (CA) to automatically generate new SSL/TLS certificates for the HTTPS website it is proxying to the client. This is because the original websites SSL/TLS certificate has already been terminated and Squid cannot spoof that.
+
+**Server:**
+
+-  Install Squid with OpenSSL support compiled in.
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo apt-get update
+         $ sudo apt-get install squid-openssl
+
+-  Create a CA that will expire in 10 years. This command will generate a certificate and private signing key. Combine these two files into one file for easier use in Squid.
+
+   .. code-block:: sh
+
+      $ openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout squid-ca-key.pem -out squid-ca-cert.pem
+      $ cat squid-ca-cert.pem squid-ca-key.pem > squid-ca-cert-key.pem
+
+-  Move the certificate into the Squid configuration directory.
+
+   .. code-block:: sh
+
+      $ sudo mkdir /etc/squid/certs/
+      $ sudo mv squid-ca-cert-key.pem /etc/squid/certs/
+
+   -  On Fedora, correct the permissions of this new directory and CA file to be owned by ``squid``. [18] On Debian, it will use the ``root`` user and group so no change is necessary.
+
+      .. code-block:: sh
+
+         $ sudo chown squid:squid -R /etc/squid/certs
+
+-  Configure Squid to use the CA for assisting with HTTPS caching by using SSL/TLS bumping.
+
+   ::
+
+      # Allow proxy clients on a local network.
+      acl localnet src 192.168.1.0/24
+      # Allow caching for FTP, HTTP, and HTTPS.
+      acl SSL_ports port 443
+      acl Safe_ports port 21
+      acl Safe_ports port 80
+      acl Safe_ports port 443
+      acl CONNECT method CONNECT
+      ## Default access rules.
+      http_access deny !Safe_ports
+      http_access deny CONNECT !SSL_ports
+      http_access allow localhost manager
+      http_access deny manager
+      http_access allow localnet
+      http_access allow localhost
+      http_access deny all
+      # HTTPS proxy.
+      ## Cache 20 MB worth of SSL/TLS certificates (about 5000 certificates).
+      http_port 3128 ssl-bump \
+        cert=/etc/squid/certs/squid-ca-cert-key.pem \
+        generate-host-certificates=on dynamic_cert_mem_cache_size=20MB
+      sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/ssl_db -M 20MB
+      acl step1 at_step SslBump1
+      ssl_bump peek step1
+      ssl_bump bump all
+      ssl_bump splice all
+      # Cache size settings.
+      ## 4 GB in RAM.
+      cache_mem 4096 MB
+      ## 16 GB in local directory.
+      cache_dir ufs /var/spool/squid 16000 16 256
+      # Only cache files in RAM that are 20 MB or less in size.
+      minimum_object_size 0 bytes
+      maximum_object_size_in_memory 20 MB
+      # Cache files up to 1 GB in size.
+      maximum_object_size 1000 MB
+      # Do not cache CGI websites.
+      refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
+      # Cache everything else.
+      refresh_pattern . 1440 90% 40320
+
+-  Create the SSL/TLS certificate cache database.
+
+   .. code-block:: sh
+
+      $ sudo /usr/lib/squid/security_file_certgen -c -s /var/lib/ssl_db -M 20MB
+
+-  Start and enable the service.
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now squid
+
+[19]
+
+**Client:**
+
+-  `Import the CA <../security/linux_security.html#trusted-certificate-authorities>`__ to the system.
+-  Configure the system to use the proxy. On Linux, proxy settings use lowercase naming. On Windows, proxy settings use uppercase naming. Some applications support one or the other. It is best to set all possible combinations.
+
+   .. code-block:: sh
+
+      $ export http_proxy="<SQUID_SERVER_IP>:3128"
+      $ export https_proxy="${http_proxy}"
+      $ export ftp_proxy="${http_proxy}"
+      $ export HTTP_PROXY="${http_proxy}"
+      $ export HTTPS_PROXY="${http_proxy}"
+      $ export FTP_PROXY="${http_proxy}"
+
+-  Web browsers, such as Google Chrome and Mozilla Firefox, do not use the global proxy or CA. The proxy needs to be configured and the CA needs to be added manually to the web browser.
+
 OpenSSL
 -------
 
@@ -514,3 +752,9 @@ Bibliography
 11. "`NGINX <#nginx>`__ Module ngx\_http\_core\_module." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/http/ngx\_http\_core\_module.html
 12. "Welcome to OpenSSL!" Accessed November 27, 2016. https://www.openssl.org/
 13. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed November 27, 2016. http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl
+14. "40 Squid Caching Proxy Server." SUSE Documentation. Accessed August 16, 2022. https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-squid.html
+15. "How to cache all data with squid (Facebook, videos, downloads and .exe) on QNAP." Super User. July 4, 2019. Accessed August 17, 2022. https://superuser.com/questions/728995/how-to-cache-all-data-with-squid-facebook-videos-downloads-and-exe-on-qnap
+16. "Chapter 3. Configuring the Squid caching proxy server." Red Hat Customer Portal. Accessed August 17, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/deploying_web_servers_and_reverse_proxies/configuring-the-squid-caching-proxy-server_deploying-web-servers-and-reverse-proxies
+17. "How to live demo a web app with lousy internet." opensource.com. July 24, 2017. Accessed August 18, 2022. https://opensource.com/article/17/7/squid-proxy
+18. "Using Squid to Proxy SSL Sites." Karim's Blog. January 5, 2019. Accessed August 16, 2022. https://elatov.github.io/2019/01/using-squid-to-proxy-ssl-sites/
+19. "How I Saved Tons of GBs with HTTPs Caching." Medium - Rasika Perera. September 17, 2021. Accessed August 16, 2022. https://rasika90.medium.com/how-i-saved-tons-of-gbs-with-https-caching-41550b4ada8a
