@@ -463,6 +463,86 @@ There are some limiations with Squid proxy cache:
 
    - This requires setting up the CA of Squid on all proxy clients.
 
+Configuration
+~~~~~~~~~~~~~
+
+The Squid configuration file is ``/etc/squid/squid.conf``. The configuration settings below are listed in order of when they should be defined from first to last. Size types can be defined as ``bytes``, ``KB``, or ``MB``.
+
+-  ``acl localnet src <CIDR>`` = Networks that are allowed to use this Squid proxy.
+-  ``acl SSL_ports port 443`` = Allow proxying with HTTPS. This also requires ``acl Safe_ports port 443`` to be set.
+-  ``acl Safe_ports port <TCP_PORT>`` = The ports/services that will be proxied. Valid values are:
+
+   -  ``21`` = FTP.
+   -  ``70`` - Gopher.
+   -  ``80`` = HTTP.
+   -  ``210`` = WAIS.
+   -  ``443`` = HTTPS.
+   -  ``488`` = GSS-HTTP.
+   -  ``591`` = FMP.
+   -  ``777`` = Multiling-HTTP.
+   -  ``1025-65535`` = Proxy any service on this range of unregistered ports.
+
+-  ``acl CONNECT method CONNECT`` = This has to be defined after the ``acl Safe_ports port <TCP_PORT>`` rules. It allows connections to all of the ports defined by ``acl Safe_ports`` rules.
+-  ``http_access [allow|deny] <HOST>`` = Define what hosts and ports are allowed to access this Squid proxy.
+
+   -  Default:
+
+      ::
+
+         http_access deny !Safe_ports
+         http_access deny CONNECT !SSL_ports
+         http_access allow localhost manager
+         http_access deny manager
+         http_access allow localnet
+         http_access allow localhost
+         http_access deny all
+
+-  ``http_port <TCP_PORT> <OPTIONS>`` = The Squid proxy port to listen on. Other configuration options such as SSL/TLS certificates can be set here.
+
+   -  Default:
+
+      ::
+
+         http_port 3128
+
+-  ``cache_mem <SIZE> <SIZE_TYPE>`` = The total size of RAM cache for files.
+-  ``cache_dir ufs <DIRECTORY> <SIZE_IN_MB> <FIRST_LEVEL_DIRECTORY_COUNT> <SECOND_LEVEL_DIRECTORY_COUNT>`` = The directory, size, and count of directories to use for caching content when the RAM cache becomes full. The most important values to tweak are the directory path and cache size.
+
+   -  Default:
+
+      ::
+
+         cache_dir ufs /var/spool/squid 100 16 256
+
+-  ``minimum_object_size <SIZE> <SIZE_TYPE>`` = The minimum file size to cache in RAM or in a directory.
+-  ``maximum_object_size <SIZE> <SIZE_TYPE>`` = The maximum file size to cache in RAM or in a directory.
+-  ``minimum_object_size_in_memory <SIZE> <SIZE_TYPE>`` = The minimum file size to cache in RAM.
+-  ``maximum_object_size_in_memory <SIZE> <SIZE_TYPE>`` = The maximum file size to cache in RAM.
+-  ``refresh_pattern [-i] <REGULAR_EXPRESSION> <MINIMUM_CACHE_TIME_IN_MINUTES> <PERCENTAGE_OF_CACHE_TIME> <MAXIMUM_CACHE_TIME_IN_MINUTES <OPTIONS>`` = Regular expression patterns that determine what files will be cached. [15] Use ``-i`` to ignore character casing.
+
+   -  Default:
+
+      ::
+
+         refresh_pattern ^ftp:           1440    20%     10080
+         refresh_pattern ^gopher:        1440    0%      1440
+         refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+         refresh_pattern .               0       20%     4320
+
+   -  Examples:
+
+      -  ``refresh_pattern -i \.(bmp|eps|gif|ico|jpg|jpeg|jpegxl|jxl|png|tif|tiff|webp)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all images for a minimum of 1 day and a maximum of 30 days. This also ignores cache headers received from the HTTP server and enforces new caching times.
+      -  ``refresh_pattern -i \.(3gp|aac|au|avi|flac|flv|iso|m4a|mp3|mdi|mov|mp4|mpeg|ogg|qt|ram|swf|wav|wma|wmv|x-flv)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all audio/video files.
+      -  ``refresh_pattern -i \.(7z|7zip|arc|bcm|bin|br|brotli|bz2|bzip2|cpio|gz|gzip|pea|rar|raw|tar|tgz|wim|zip|xz|zst|zstd)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all archives.
+      -  ``refresh_pattern -i \.(cab|deb|dll|exe|msi|pkg|rpm|so|sys)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache executable, installer, and system files.
+      -  ``refresh_pattern -i \.(doc|docx|fodg|fodp|fods|fodt|md|odf|odg|odp|ods|odt|pdf|ppt|pptx|rtf|txt|text|xls|xlsx)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all documents.
+      -  ``refresh_pattern -i \.(css|js|jsp|htm|html|rss|xml|yaml|yml)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache website files.
+      -  ``refresh_pattern -i youtube.com/.* 1440 90% 40320`` = Cache all content on YouTube.
+      -  ``refresh_pattern (/cgi-bin/|\?) 0 0% 0`` = Do not cache dynamic websites that use CGI to prevent issues with them.
+      -  ``refresh_pattern . 1440 90% 40320`` = Cache everything. Squid cannot cache all types of content but it will cache what it can.
+
+[16]
+
 OpenSSL
 -------
 
@@ -539,3 +619,5 @@ Bibliography
 12. "Welcome to OpenSSL!" Accessed November 27, 2016. https://www.openssl.org/
 13. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed November 27, 2016. http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl
 14. "40 Squid Caching Proxy Server." SUSE Documentation. Accessed August 16, 2022. https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-squid.html
+15. "How to cache all data with squid (Facebook, videos, downloads and .exe) on QNAP." Super User. July 4, 2019. Accessed August 17, 2022. https://superuser.com/questions/728995/how-to-cache-all-data-with-squid-facebook-videos-downloads-and-exe-on-qnap
+16. "Chapter 3. Configuring the Squid caching proxy server." Red Hat Customer Portal. Accessed August 17, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/deploying_web_servers_and_reverse_proxies/configuring-the-squid-caching-proxy-server_deploying-web-servers-and-reverse-proxies
