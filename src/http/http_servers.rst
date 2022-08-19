@@ -439,6 +439,30 @@ configuration settings.
 
 [9]
 
+Squid
+-----
+
+Squid is a caching proxy. It can cache content to RAM and/or a directory. These are the supported protocols that can be proxied and cached [14]:
+
+-  FMP
+-  FTP
+-  Gopher
+-  GSS-HTTP
+-  HTTP
+-  HTTPS
+-  Multiling-HTTP
+-  WAIS
+
+There are some limiations with Squid proxy cache:
+
+-  Does not natively work with content delivery networks (CDNs) that change the HTTP headers or DNS. That content will not be cached unless filter rules for a specific CDN are added.
+
+   -  `Here <https://blog.thelifeofkenneth.com/2014/08/using-squid-storeids-to-optimize-steams.html>`__ is an example of how to configure a filter for the Steam CDN to work with Squid.
+
+-  For HTTPS caching, it does not use the original SSL/TLS certificate from the website. Proxy clients will only see certificates that are dynamically created by Squid.
+
+   - This requires setting up the CA of Squid on all proxy clients.
+
 OpenSSL
 -------
 
@@ -514,3 +538,4 @@ Bibliography
 11. "`NGINX <#nginx>`__ Module ngx\_http\_core\_module." NGINX Documentation. April 18, 2017. Accessed May 7, 2017. https://nginx.org/en/docs/http/ngx\_http\_core\_module.html
 12. "Welcome to OpenSSL!" Accessed November 27, 2016. https://www.openssl.org/
 13. "HAProxy Comodo SSL." Stack Overflow. August 31, 2013. Accessed November 27, 2016. http://stackoverflow.com/questions/18537855/haproxy-comodo-ssl
+14. "40 Squid Caching Proxy Server." SUSE Documentation. Accessed August 16, 2022. https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-squid.html
