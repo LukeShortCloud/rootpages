@@ -566,6 +566,117 @@ Any code with ``HIT`` in the name means that the cache is working and is being s
 
 [17]
 
+HTTPS
+~~~~~
+
+For caching HTTPS content, Squid acts as middleware. It first gets the content from the HTTPS website, then it caches it, and finally it will serve it to proxy clients. The difference between HTTPS and HTTP caching is that HTTPS requires Squid to have its own certificate authority (CA) to automatically generate new SSL/TLS certificates for the HTTPS website it is proxying to the client. This is because the original websites SSL/TLS certificate has already been terminated and Squid cannot spoof that.
+
+**Server:**
+
+-  Install Squid with OpenSSL support compiled in.
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo apt-get update
+         $ sudo apt-get install squid-openssl
+
+-  Create a CA that will expire in 10 years. This command will generate a certificate and private signing key. Combine these two files into one file for easier use in Squid.
+
+   .. code-block:: sh
+
+      $ openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 -extensions v3_ca -keyout squid-ca-key.pem -out squid-ca-cert.pem
+      $ cat squid-ca-cert.pem squid-ca-key.pem > squid-ca-cert-key.pem
+
+-  Move the certificate into the Squid configuration directory.
+
+   .. code-block:: sh
+
+      $ sudo mkdir /etc/squid/certs/
+      $ sudo mv squid-ca-cert-key.pem /etc/squid/certs/
+
+   -  On Fedora, correct the permissions of this new directory and CA file to be owned by ``squid``. [18] On Debian, it will use the ``root`` user and group so no change is necessary.
+
+      .. code-block:: sh
+
+         $ sudo chown squid:squid -R /etc/squid/certs
+
+-  Configure Squid to use the CA for assisting with HTTPS caching by using SSL/TLS bumping.
+
+   ::
+
+      # Allow proxy clients on a local network.
+      acl localnet src 192.168.1.0/24
+      # Allow caching for FTP, HTTP, and HTTPS.
+      acl SSL_ports port 443
+      acl Safe_ports port 21
+      acl Safe_ports port 80
+      acl Safe_ports port 443
+      acl CONNECT method CONNECT
+      ## Default access rules.
+      http_access deny !Safe_ports
+      http_access deny CONNECT !SSL_ports
+      http_access allow localhost manager
+      http_access deny manager
+      http_access allow localnet
+      http_access allow localhost
+      http_access deny all
+      # HTTPS proxy.
+      ## Cache 20 MB worth of SSL/TLS certificates (about 5000 certificates).
+      http_port 3128 ssl-bump \
+        cert=/etc/squid/certs/squid-ca-cert-key.pem \
+        generate-host-certificates=on dynamic_cert_mem_cache_size=20MB
+      sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/ssl_db -M 20MB
+      acl step1 at_step SslBump1
+      ssl_bump peek step1
+      ssl_bump bump all
+      ssl_bump splice all
+      # Cache size settings.
+      ## 4 GB in RAM.
+      cache_mem 4096 MB
+      ## 16 GB in local directory.
+      cache_dir ufs /var/spool/squid 16000 16 256
+      # Only cache files in RAM that are 20 MB or less in size.
+      minimum_object_size 0 bytes
+      maximum_object_size_in_memory 20 MB
+      # Cache files up to 1 GB in size.
+      maximum_object_size 1000 MB
+      # Do not cache CGI websites.
+      refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
+      # Cache everything else.
+      refresh_pattern . 1440 90% 40320
+
+-  Create the SSL/TLS certificate cache database.
+
+   .. code-block:: sh
+
+      $ sudo /usr/lib/squid/security_file_certgen -c -s /var/lib/ssl_db -M 20MB
+
+-  Start and enable the service.
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now squid
+
+[19]
+
+**Client:**
+
+-  `Import the CA <../security/linux_security.html#trusted-certificate-authorities>`__ to the system.
+-  Configure the system to use the proxy. On Linux, proxy settings use lowercase naming. On Windows, proxy settings use uppercase naming. Some applications support one or the other. It is best to set all possible combinations.
+
+   .. code-block:: sh
+
+      $ export http_proxy="<SQUID_SERVER_IP>:3128"
+      $ export https_proxy="${http_proxy}"
+      $ export ftp_proxy="${http_proxy}"
+      $ export HTTP_PROXY="${http_proxy}"
+      $ export HTTPS_PROXY="${http_proxy}"
+      $ export FTP_PROXY="${http_proxy}"
+
+-  Web browsers, such as Google Chrome and Mozilla Firefox, do not use the global proxy or CA. The proxy needs to be configured and the CA needs to be added manually to the web browser.
+
 OpenSSL
 -------
 
@@ -645,3 +756,5 @@ Bibliography
 15. "How to cache all data with squid (Facebook, videos, downloads and .exe) on QNAP." Super User. July 4, 2019. Accessed August 17, 2022. https://superuser.com/questions/728995/how-to-cache-all-data-with-squid-facebook-videos-downloads-and-exe-on-qnap
 16. "Chapter 3. Configuring the Squid caching proxy server." Red Hat Customer Portal. Accessed August 17, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/deploying_web_servers_and_reverse_proxies/configuring-the-squid-caching-proxy-server_deploying-web-servers-and-reverse-proxies
 17. "How to live demo a web app with lousy internet." opensource.com. July 24, 2017. Accessed August 18, 2022. https://opensource.com/article/17/7/squid-proxy
+18. "Using Squid to Proxy SSL Sites." Karim's Blog. January 5, 2019. Accessed August 16, 2022. https://elatov.github.io/2019/01/using-squid-to-proxy-ssl-sites/
+19. "How I Saved Tons of GBs with HTTPs Caching." Medium - Rasika Perera. September 17, 2021. Accessed August 16, 2022. https://rasika90.medium.com/how-i-saved-tons-of-gbs-with-https-caching-41550b4ada8a
