@@ -543,6 +543,29 @@ The Squid configuration file is ``/etc/squid/squid.conf``. The configuration set
 
 [16]
 
+Status Codes
+~~~~~~~~~~~~
+
+Squid has an access log that provides information about files that proxy clients are trying to access. Viewing this file is useful for determining if caching is working based on status codes.
+
+.. code-block:: sh
+
+   $ sudo tail -f /var/log/squid/access.log
+
+Status codes:
+
+-  TCP_MISS/200 = A file was not found in the cache. If Squid is configured to cache the file type, it will do it automatically during this step.
+-  TCP_REFRESH_MODIFIED/200 = A cached file was found but the remote HTTP server reports that it needs to be invalidated/deleted and then updated.
+-  TCP_REFRESH_UNMODIFIED/200 = A cached file was found and the remote server reports that it does not need to be updated.
+-  TCP_INM_HIT/304 = A cached file was found and the remote HTTP server reports that it does not need to be updated.
+-  TCP_MEM_HIT/200 = A cached file was found and used from RAM.
+-  TCP_HIT/200 = A cached file was found and used from the local directory cache.
+-  NONE = A generic response code for unpredictable scenarios.
+
+Any code with ``HIT`` in the name means that the cache is working and is being served to the client.
+
+[17]
+
 OpenSSL
 -------
 
@@ -621,3 +644,4 @@ Bibliography
 14. "40 Squid Caching Proxy Server." SUSE Documentation. Accessed August 16, 2022. https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-squid.html
 15. "How to cache all data with squid (Facebook, videos, downloads and .exe) on QNAP." Super User. July 4, 2019. Accessed August 17, 2022. https://superuser.com/questions/728995/how-to-cache-all-data-with-squid-facebook-videos-downloads-and-exe-on-qnap
 16. "Chapter 3. Configuring the Squid caching proxy server." Red Hat Customer Portal. Accessed August 17, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/deploying_web_servers_and_reverse_proxies/configuring-the-squid-caching-proxy-server_deploying-web-servers-and-reverse-proxies
+17. "How to live demo a web app with lousy internet." opensource.com. July 24, 2017. Accessed August 18, 2022. https://opensource.com/article/17/7/squid-proxy
