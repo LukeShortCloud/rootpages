@@ -563,48 +563,80 @@ GPU pass-through provides a virtual machine guest with full access to a graphics
 
 -  Enable IOMMU on the hypervisor via the bootloader's kernel options. This will provide a static ID to each hardware device. The "vfio-pci" kernel module also needs to start on boot.
 
-Intel:
+   -  AMD:
 
-::
+      ::
 
-    intel_iommu=on rd.driver.pre=vfio-pci
+         amd_iommu=on
 
-AMD:
+   -  Intel:
 
-::
+      ::
 
-    amd_iommu=on rd.driver.pre=vfio-pci
+         intel_iommu=on
 
 -  For the GRUB bootloader, rebuild the configuration.
 
-UEFI:
+   -  Arch Linux and Debian:
 
-.. code-block:: sh
+      .. code-block:: sh
 
-    $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-BIOS:
+   -  Fedora:
 
-.. code-block:: sh
+      -  UEFI:
 
-    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+         .. code-block:: sh
+
+            $ sudo grub2-mkconfig -o /boot/efi/EFI/<OPERATING_SYSTEM>/grub.cfg
+
+      -  Legacy BIOS:
+
+         .. code-block:: sh
+
+            $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 -  Find the IOMMU number for the graphics card. This should be the last alphanumeric set at the end of the line for the graphics card. The format should look similar to `XXXX:XXXX`. Add it to the options for the "vfio-pci" kernel module. This will bind a stub kernel driver to the device so that Linux does not use it.
 
-.. code-block:: sh
+   .. code-block:: sh
 
-    $ sudo lspci -k -nn -v | less
-    $ sudo vim /etc/modprobe.d/vfio.conf
-    options vfio-pci ids=XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ
+      $ sudo lspci -k -nn -v | grep -i -P "amd|nvidia"
+      $ sudo vim /etc/modprobe.d/vfio.conf
+      options vfio-pci ids=XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ disable_vga=1
+
+-  Allow VFIO to handle IOMMU interrupt remapping. This prevents issues when a virtual machine with PCI pass-through is shutdown.
+
+   .. code-block:: sh
+
+      echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" | sudo tee /etc/modprobe.d/iommu_unsafe_interrupts.conf
+      echo "options kvm ignore_msrs=1" | sudo tee /etc/modprobe.d/kvm.conf
 
 -  Rebuild the initramfs to include the VFIO related drivers.
 
-Fedora:
+   -  Arch Linux:
 
-.. code-block:: sh
+      .. code-block:: sh
 
-    $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci"' > /etc/dracut.conf.d/vfio.conf
-    $ sudo dracut --force
+         $ sudo sed -i 's/MODULES=(/MODULES=(vfio vfio_iommu_type1 vfio_pci vfio_virqfd /'g /etc/mkinitcpio.conf
+         $ sudo mkinitcpio --allpresets
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ echo "vfio
+         vfio_iommu_type1
+         vfio_pci
+         vfio_virqfd" | sudo tee -a /etc/modules
+         $ sudo update-initramfs -u
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci vfio_virqfd"' > /etc/dracut.conf.d/vfio.conf
+         $ sudo dracut --force
 
 -  Reboot the hypervisor operating system.
 
@@ -612,7 +644,7 @@ Fedora:
 
 Nvidia cards initialized in the guest with a driver version >= 337.88 can detect if the operating system is being virtualized. This can lead to a "Code: 43" error being returned by the driver and the graphics card not working. A work-a-round for this is to set a random "vendor\_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards.
 
-Libvirt:
+Libvirt [13]:
 
 .. code-block:: sh
 
@@ -626,7 +658,13 @@ Libvirt:
         </kvm>
     </features>
 
-[13]
+Proxmox [60]:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+   cpu: host,hidden=1,flags=+pcid
+   args: -cpu 'host,+kvm_pv_unhalt,+kvm_pv_eoi,hv_vendor_id=NV43FIX,kvm=off'
 
 Xen
 ~~~
@@ -1754,3 +1792,4 @@ Bibliography
 57. "PVE-Headers." Proxmox Support Forums. October 13, 2021. Accessed August 11, 2022. https://forum.proxmox.com/threads/pve-headers.97882/
 58. "Install NVIDIA Drivers on Debian 11." Linux Hint. March, 2022. Accessed August 11, 2022. https://linuxhint.com/install-nvidia-drivers-debian-11/
 59. "Unable to PXE Boot UEFI-Based VMs." Reddit r/Proxmox. May 18, 2022. Accessed August 11, 2022. https://www.reddit.com/r/Proxmox/comments/qil7qy/unable_to_pxe_boot_uefibased_vms/
+60. "The Ultimate Beginner's Guide to GPU Passthrough (Proxmox, Windows 10)." Reddit r/homelab. March 26, 2019. Accessed August 22, 2022. https://www.reddit.com/r/homelab/comments/b5xpua/the_ultimate_beginners_guide_to_gpu_passthrough/
