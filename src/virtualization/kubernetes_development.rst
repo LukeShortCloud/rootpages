@@ -4110,6 +4110,63 @@ Tanzu Editions
 
 [55][56]
 
+K8ssandra
+~~~~~~~~~
+
+K8ssandra is an operator for the Cassandra NoSQL database server. It was created by DataStax.
+
+Installation:
+
+-  `Install cert-manager <./kubernetes_administration.html#cert-manager>`__.
+-  Install the K8ssandra operator using the official Helm chart. This example will change the default storage to use persistent volume claims backed by "hostPath" for lab environments. The full list of Helm chart values can be found `here <https://github.com/k8ssandra/k8ssandra/blob/main/charts/k8ssandra/values.yaml>`__. [58]
+
+   .. code-block:: sh
+
+      $ helm repo add jetstack https://charts.jetstack.io
+      $ helm repo update
+      $ helm install k8ssandra-operator k8ssandra/k8ssandra-operator -n k8ssandra-operator --create-namespace --set cassandra.cassandraLibDirVolume.storageClass=hostpath --set global.clusterScoped=true
+
+-  Pods are scheduled to run on specific nodes and use anti-affinity rules to ensure that stateful sets are never deployed more than once onto a node.
+
+   .. code-block:: sh
+
+      $ kubectl annotate node <NODE> "cassandra.datastax.com/cluster"="demo"
+      $ kubectl annotate node <NODE> "cassandra.datastax.com/datacenter"="dc1"
+      $ kubectl annotate node <NODE> "cassandra.datastax.com/rack"="default"
+
+-  Deploy a Cassandra cluster. [59]
+
+   .. code-block:: sh
+
+      $ kubectl apply -f - <<EOF
+      ---
+      apiVersion: k8ssandra.io/v1alpha1
+      kind: K8ssandraCluster
+      metadata:
+        name: demo
+      spec:
+        cassandra:
+          serverVersion: "4.0.4"
+          datacenters:
+            - metadata:
+                name: dc1
+              size: 1
+              storageConfig:
+                cassandraDataVolumeClaimSpec:
+                  storageClassName: standard
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 1Gi
+              config:
+                jvmOptions:
+                  heapSize: 512M
+              stargate:
+                size: 1
+                heapSize: 256M
+      EOF
+
 Installation
 ------------
 
@@ -4221,3 +4278,5 @@ Bibliography
 55. "Compare VMware Tanzu Editions." VMware Tanzu. Accessed May 17, 2021. https://tanzu.vmware.com/tanzu/compare
 56. "Deploying and Managing Extensions and Shared Services." VMware Docs. August 19, 2021. Accessed August 23, 2021. https://kubernetes.io/docs/reference/using-api/health-checks/
 57. "Rewrites Support." GitHub nginxinc/kubernetes-ingress. August 16, 2021. Accessed May 3, 2022. https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/rewrites
+58. "K8ssandra FAQs." K8ssandra. March 17, 2022. Accessed August 23, 2022. https://docs.k8ssandra.io/faqs/
+59. "Single-cluster install with helm." K8ssandra. May 30, 2022. Accessed August 23, 2022. https://docs-v2.k8ssandra.io/install/local/single-cluster-helm/
