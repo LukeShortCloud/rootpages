@@ -116,6 +116,13 @@ libvirt:
     $ sudo virsh edit <VIRTUAL_MACHINE>
     <cpu mode='host-passthrough'/>
 
+Proxmox [60]:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+   cpu: host
+
 Memory
 ''''''
 
@@ -190,7 +197,7 @@ Huge Pages must be configured to be used by the virtualization software. The hyp
           </memoryBacking>
       </domain>
 
--  Proxmox [54]:
+-  Proxmox (set to "1024" or "2" MiB) [54]:
 
    ::
 
@@ -279,6 +286,12 @@ libvirt:
       <model type='virtio' />
     </interface>****
 
+Proxmox (define any valid MAC address and the network bridge to use) [47]:
+
+.. code-block:: sh
+
+   net0: virtio=<MAC_ADDRESS>,bridge=vmbr0
+
 Using a tap device (that will be assigned to an existing interface) or a
 bridge will speed up network connections.
 
@@ -347,6 +360,22 @@ libvirt:
         <readonly/>
       </disk>
 
+Proxmox [47]:
+
+-  Block:
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+      virtio0: local:iso/<ISO_IMAGE_NAME>,media=block,aio=threads,cache=none
+
+-  CDROM:
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+      ide0: local:iso/<ISO_IMAGE_NAME>,media=cdrom
+
 Virsh:
 
 -  Block:
@@ -389,14 +418,20 @@ If using a file system with copy-on-write capabilities, either (1) disable copy-
 PCI
 '''
 
-If possible, PCI pass-through provides the best performance as there is
-no virtualization overhead. The "GPU Pass-through" section expands upon this.
+If possible, PCI pass-through provides the best performance as there is no virtualization overhead. The "GPU Pass-through" section expands upon this. The PCI device address should be in the format of ``XXXX:YY:ZZ``.
 
 QEMU:
 
 .. code-block:: sh
 
     $ sudo qemu -net none -device vfio-pci,host=<PCI_DEVICE_ADDRESS> ...
+
+Proxmox [47]:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+   hostpci0: <PCI_DEVICE_ADDRESS>
 
 Networking
 ^^^^^^^^^^
@@ -1779,7 +1814,7 @@ Bibliography
 44. "Create a Terraform Module." Linode Guides & Tutorials. May 1, 2020. Accessed July 8, 2020. https://www.linode.com/docs/applications/configuration-management/terraform/create-terraform-module/
 45. "OpenStack Provider." Terraform Docs. Accessed July 18, 2020. https://www.terraform.io/docs/providers/openstack/index.html
 46. "How to create a vagrant VM from a libvirt vm/image." openATTIC. January 11, 2018. Accessed October 19, 2020. https://www.openattic.org/posts/how-to-create-a-vagrant-vm-from-a-libvirt-vmimage/
-47. "Qemu/KVM Virtual Machines." Proxmox VE Wiki. November 26, 2020. Accessed January 21, 2021. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
+47. "Qemu/KVM Virtual Machines." Proxmox VE Wiki. May 4, 2022. Accessed August 26, 2022. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
 48. "Providers VMware Configuration." Vagrant Documentation. November 23, 2020. Accessed February 10, 2021. https://www.vagrantup.com/docs/providers/vmware/configuration
 49. "VMware Integration." Vagrant by HashiCorp. Accessed February 10, 2021. https://www.vagrantup.com/vmware
 50. "KVM Virtualization: Start VNC Remote Access For Guest Operating Systems." nixCraft. May 6, 2017. Accessed February 18, 2021. https://www.cyberciti.biz/faq/linux-kvm-vnc-for-guest-machine/
