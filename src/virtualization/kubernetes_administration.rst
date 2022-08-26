@@ -291,7 +291,7 @@ Layers of TKGS:
 Networking
 ''''''''''
 
-CNI plugin [74]:
+CNI plugin [74][99]:
 
 -  Kubernetes >= 1.18 = Antrea
 -  Kubernetes <= 1.17 = Calico
@@ -602,7 +602,8 @@ Each version of VMware vSphere supports a range of Kubernetes versions that can 
    :header: vSphere, Kubernetes Minimum, Kubernetes Maximum
    :widths: 20, 20, 20
 
-   7.0 Update 2, v1.17.7+vmware.1-tkg.1.154236c, TBD
+   7.0 Update 3, v1.21.2---vmware.1-tkg.1.ee25d55, TBD
+   7.0 Update 2, v1.17.7+vmware.1-tkg.1.154236c, v1.20.12+vmware.1-tkg.1.b9a42f3
    7.0 Update 1, v1.16.12+vmware.1-tkg.1.da7afe7, v1.18.15+vmware.1-tkg.2.ebf6117
 
 View all available Kubernetes versions of TKC in TKGS:
@@ -2514,7 +2515,7 @@ Bibliography
 71. "Run the Installer Script." Harbor docs. October 28, 2020. Accessed April 16, 2021. https://goharbor.io/doc/2.1.0/install-config/run-installer-script/
 72. "Harbor." GitHub bitnami/charts. March 30, 2021. Accessed April 16, 2021. https://github.com/bitnami/charts/tree/master/bitnami/harbor
 73. "vSphere with Tanzu Configuration and Management." VMware Docs. April 3, 2021. Accessed April 19, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
-74. "List of Tanzu Kubernetes releases." VMware Docs. May 19, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
+74. "Verify Tanzu Kubernetes Cluster Compatibility for Update." VMware Docs. December 9, 2021. Accessed August 24, 2022. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-292482C2-A5FA-44B5-B26E-F887A91BB19D.html
 75. "Tanzu Kubernetes Cluster Networking." VMware Docs. April 21, 2021. Accessed June 10, 2021. https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-A7756D67-0B95-447D-A645-E2A384BF8135.html
 76. "Installation." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/installation/
 77. "Configuration." MetalLB, bare metal load-balancer for Kubernetes. 2021. Accessed October 12, 2021. https://metallb.universe.tf/configuration/
@@ -2539,3 +2540,4 @@ Bibliography
 96. "An introduction to crun, a fast and low-memory footprint container runtime." Red Hat Enable Sysadmin. August 3, 2020. Accessed May 18, 2020. https://www.redhat.com/sysadmin/introduction-crun
 97. "Performance Evaluation of Container Runtimes." Chair of Computer Architecture and Parallel Systems, TU Munich, Garching, Germany. 2020. Accessed May 18, 2022.
 98. "Installing with Helm." cert-manager Documentation. 2022. Accessed July 5, 2022. https://cert-manager.io/docs/installation/helm/
+99. "VMware Tanzu Kubernetes releases Release Notes." VMware Docs. July 29, 2022. Accessed August 24, 2022. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-releases/services/rn/vmware-tanzu-kubernetes-releases-release-notes/index.html
