@@ -250,6 +250,30 @@ Proton (Steam Play)
 
 Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__. Proton can be enabled for all games by going to ``Settings > Steam Play > Enable Steam Play for all other titles``. Compatibility will vary. [11]
 
+Remote Monitor
+--------------
+
+Parsec
+~~~~~~
+
+Parsec is a tool that can be used to remotely access macOS and Windows hosts. It supports Linux, macOS, and Windows hosts.
+
+Virtual Monitors
+^^^^^^^^^^^^^^^^
+
+Parsec requires a physical monitor to be plugged into the computer and turned on. There are a few ways to create virtual monitors so that a physical monitor is no longer required. [13]
+
+-  Paid versions of Parsec Teams and Enterprise provide support for creating virtual monitors.
+-  Hardware HDMI dummy plugs exist to fake having a monitor plugged in.
+-  On Windows hosts, use the `Amyuni Virtual Display Driver (usbmmid) <https://www.amyuni.com/forum/viewtopic.php?t=3030>`__.
+
+   -  This virtual display is not persistent on reboots. Create a scheduled task to start it as the Administrator on boot.
+
+      ::
+
+         Task Scheduler (taskschd.msc) > Create Basic Task... > Name: Virtual Monitor > Next > When do you want the task to start? When the computer starts > Next > Start a program > Next > Program/script: (select the "usbmidd.bat" file) > Next > Finish
+         Task Scheduler (taskschd.msc) > Task Scheduler (Local) > Task Scheduler Library > Virtual Monitor > Properties > (select "Run whether user is logged in or not" and "Run with highest privileges") > OK
+
 Image Processing
 ----------------
 
@@ -316,3 +340,4 @@ Bibliography
 10. "Frequently asked questions." flathub/com.valvesoftware.Steam. April 12, 2020. Accessed July 3, 2020. https://github.com/flathub/com.valvesoftware.Steam/wiki/Frequently-asked-questions
 11. "A simple guide to Steam Play, Valve's technology for playing Windows games on Linux." GamingOnLinux. July 12, 2019. Accessed July 3, 2020. https://www.gamingonlinux.com/articles/14552
 12. "Steam/Client troubleshooting." Gentoo Wiki. February 15, 2021. Accessed May 20, 2021. https://wiki.gentoo.org/wiki/Steam/Client_troubleshooting
+13. "Remote Streaming Without a Display." r/ParsecGaming. June 29, 2022. Accessed August 27, 2022. https://www.reddit.com/r/ParsecGaming/comments/kbzbhg/remote_streaming_without_a_display/
