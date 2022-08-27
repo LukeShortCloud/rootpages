@@ -701,6 +701,100 @@ Proxmox [60]:
    cpu: host,hidden=1,flags=+pcid
    args: -cpu 'host,+kvm_pv_unhalt,+kvm_pv_eoi,hv_vendor_id=NV43FIX,kvm=off'
 
+It is also possible that a GPU ROM may be required. [60] It can only be downloaded from the GPU a legacy BIOS boot system (not UEFI). [63]
+
+.. code-block:: sh
+
+   $ cd /sys/bus/pci/devices/<PCI_DEVICE_ADDRESS>/
+   $ echo 1 > rom
+   $ cat rom > /usr/share/kvm/gpu.rom
+   $ echo 0 > rom
+
+Troubleshooting
+'''''''''''''''
+
+Issue: a black screen is shown on the monitor connected to the GPU that is pass-throughed.
+
+Solutions:
+
+-  On the hypervisor, check the ``dmesg`` logs to see if there are any errors. If so, view the rest of this troubleshooting guide to see if the error and solution is listed.
+
+   .. code-block:: sh
+
+      $ sudo dmesg
+
+-  Some newer graphics cards have issues.
+
+   -  Use a VNC display to access the virtual machine during boot. Use the GPU after it has been booted.
+
+-  Older graphics cards do not support UEFI boot. Use legacy BIOS boot with SeaBIOS instead.
+
+----
+
+Error: ``BAR <NUMBER>: can't reserve [mem <MEMORY> 64bit pref]``
+
+::
+
+   $ sudo dmesg
+   [   62.665557] vfio-pci 0000:09:00.0: vfio_ecap_init: hiding ecap 0x1e@0x258
+   [   62.665588] vfio-pci 0000:09:00.0: vfio_ecap_init: hiding ecap 0x19@0x900
+   [   62.666956] vfio-pci 0000:09:00.0: BAR 3: can't reserve [mem 0xe0000000-0xe1ffffff 64bit pref]
+   [   62.667139] vfio-pci 0000:09:00.0: No more image in the PCI ROM
+   [   65.494712] vfio-pci 0000:09:00.0: No more image in the PCI ROM
+   [   65.494738] vfio-pci 0000:09:00.0: No more image in the PCI ROM
+
+Solutions:
+
+-  Edit ``/etc/default/grub``, add ``video=vesafb:off,efifb:off vga=off`` to ``GRUB_CMDLINE_LINUX_DEFAULT``, and then rebuild the GRUB configuration. [61]
+-  In the BIOS, disable CMS. The exact steps on how to do this will vary based on the motherboard.[62]
+
+----
+
+Error:  ``No NVIDIA devices probed.``
+
+::
+
+   $ sudo dmesg
+   [    7.205812] NVRM: The NVIDIA probe routine was not called for 1 device(s).
+   [    7.206258] NVRM: This can occur when a driver such as:
+                  NVRM: nouveau, rivafb, nvidiafb or rivatv
+                  NVRM: was loaded and obtained ownership of the NVIDIA device(s).
+   [    7.206259] NVRM: Try unloading the conflicting kernel module (and/or
+                  NVRM: reconfigure your kernel without the conflicting
+                  NVRM: driver(s)), then try loading the NVIDIA kernel module
+                  NVRM: again.
+   [    7.206260] NVRM: No NVIDIA devices probed.
+
+Solution:
+
+- This means that the NVIDIA driver could not be loaded. If the hypervisor has an Intel processor, edit ``/etc/default/grub``, add ``ibt=off`` to ``GRUB_CMDLINE_LINUX_DEFAULT``, and then rebuild the GRUB configuration. [64]
+
+----
+
+Errors: ``ignored rdmsr`` and ``ignored wrmsr``.
+
+::
+
+   $ sudo dmesg
+   [  493.113240] kvm [3020]: ignored rdmsr: 0xc001100d data 0x0
+   [  493.113248] kvm [3020]: ignored wrmsr: 0xc001100d data 0x0
+   [  493.223228] kvm [3020]: ignored rdmsr: 0xc001100d data 0x0
+   [  493.223236] kvm [3020]: ignored wrmsr: 0xc001100d data 0x0
+   [  493.223669] kvm [3020]: ignored rdmsr: 0xc001100d data 0x0
+   [  493.223674] kvm [3020]: ignored wrmsr: 0xc001100d data 0x0
+   [  493.224042] kvm [3020]: ignored rdmsr: 0xc001100d data 0x0
+   [  493.224047] kvm [3020]: ignored wrmsr: 0xc001100d data 0x0
+   [  493.224452] kvm [3020]: ignored rdmsr: 0xc001100d data 0x0
+   [  493.224460] kvm [3020]: ignored wrmsr: 0xc001100d data 0x0
+
+Solution:
+
+-  This is a harmless bug that can be ignored. [65]
+
+   .. code-block:: sh
+
+       $ echo "options kvm ignore_msrs=1 report_ignored_msrs=0" | sudo tee -a /etc/modprobe.d/kvm.conf
+
 Xen
 ~~~
 
@@ -1827,4 +1921,9 @@ Bibliography
 57. "PVE-Headers." Proxmox Support Forums. October 13, 2021. Accessed August 11, 2022. https://forum.proxmox.com/threads/pve-headers.97882/
 58. "Install NVIDIA Drivers on Debian 11." Linux Hint. March, 2022. Accessed August 11, 2022. https://linuxhint.com/install-nvidia-drivers-debian-11/
 59. "Unable to PXE Boot UEFI-Based VMs." Reddit r/Proxmox. May 18, 2022. Accessed August 11, 2022. https://www.reddit.com/r/Proxmox/comments/qil7qy/unable_to_pxe_boot_uefibased_vms/
-60. "The Ultimate Beginner's Guide to GPU Passthrough (Proxmox, Windows 10)." Reddit r/homelab. March 26, 2019. Accessed August 22, 2022. https://www.reddit.com/r/homelab/comments/b5xpua/the_ultimate_beginners_guide_to_gpu_passthrough/
+60. "The Ultimate Beginner's Guide to GPU Passthrough (Proxmox, Windows 10)." Reddit r/homelab. March 26, 2019. Accessed August 27, 2022. https://www.reddit.com/r/homelab/comments/b5xpua/the_ultimate_beginners_guide_to_gpu_passthrough/
+61. "BAR 0: can't reserve." Reddit r/VFIO. May 1, 2022. Accessed August 27, 2022. https://www.reddit.com/r/VFIO/comments/cktnhv/bar_0_cant_reserve/
+62. "PVE7: vfio-pci xxxx:xx:xx.x: No more image in the PCI ROM." Proxmox Support Forums. May 17, 2022. Accessed August 27, 2022. https://forum.proxmox.com/threads/pve7-vfio-pci-xxxx-xx-xx-x-no-more-image-in-the-pci-rom.108189/
+63. "cat: rom: Input/output error #4." GitHub awilliam/rom-parser. February 19, 2022. Accessed August 27, 2022. https://github.com/awilliam/rom-parser/issues/4
+64. "PSA. If you run kernel 5.18 with NVIDIA, pass `ibt=off` to your kernel cmd line if your NVIDIA driver refuses to load." Reddit r/archlinux. July 2, 2022. Accessed August 27, 2022. https://www.reddit.com/r/archlinux/comments/v0x3c4/psa_if_you_run_kernel_518_with_nvidia_pass_ibtoff/
+65. "Pci passthrough." Proxmox VE. September 1, 2021. Accessed August 27, 2022. https://pve.proxmox.com/wiki/Pci_passthrough#NVIDIA_Tips
