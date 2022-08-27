@@ -677,6 +677,9 @@ GPU pass-through provides a virtual machine guest with full access to a graphics
 
 [34][35]
 
+Hide Virtualization
+'''''''''''''''''''
+
 Nvidia cards initialized in the guest with a driver version >= 337.88 can detect if the operating system is being virtualized. This can lead to a "Code: 43" error being returned by the driver and the graphics card not working. A work-a-round for this is to set a random "vendor\_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards.
 
 Libvirt [13]:
@@ -709,6 +712,22 @@ It is also possible that a GPU ROM may be required. [60] It can only be download
    $ echo 1 > rom
    $ cat rom > /usr/share/kvm/gpu.rom
    $ echo 0 > rom
+
+Some games will refuse to start, such as Halo Infinite, if they detect if there is any hypervisor and not just KVM. Disable the ``hypervisor`` feature in QEMU to workaround this.
+
+Libvirt [66]:
+
+.. code-block:: xml
+
+   <feature policy='disable' name='hypervisor'/>
+
+Proxmox (add the ``-hypervisor`` CPU arguments list) [67]:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+   cpu: host,hidden=1,flags=+pcid
+   args: -cpu 'host,+kvm_pv_unhalt,+kvm_pv_eoi,hv_vendor_id=NV43FIX,kvm=off,-hypervisor'
 
 Troubleshooting
 '''''''''''''''
@@ -1927,3 +1946,5 @@ Bibliography
 63. "cat: rom: Input/output error #4." GitHub awilliam/rom-parser. February 19, 2022. Accessed August 27, 2022. https://github.com/awilliam/rom-parser/issues/4
 64. "PSA. If you run kernel 5.18 with NVIDIA, pass `ibt=off` to your kernel cmd line if your NVIDIA driver refuses to load." Reddit r/archlinux. July 2, 2022. Accessed August 27, 2022. https://www.reddit.com/r/archlinux/comments/v0x3c4/psa_if_you_run_kernel_518_with_nvidia_pass_ibtoff/
 65. "Pci passthrough." Proxmox VE. September 1, 2021. Accessed August 27, 2022. https://pve.proxmox.com/wiki/Pci_passthrough#NVIDIA_Tips
+66. "Get Halo Infinite running under a VM." Reddit r/VFIO. January 2, 2022. Accessed August 27, 2022. https://www.reddit.com/r/VFIO/comments/pvt9en/get_halo_infinite_running_under_a_vm/
+67. "How To set "<feature policy='disable' name='hypervisor'/>" in Proxmox." Reddit r/Proxmox. November 17, 2022. Accessed August 27, 2022. https://www.reddit.com/r/Proxmox/comments/quwmp7/how_to_set_feature_policydisable_namehypervisor/
