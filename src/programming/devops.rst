@@ -1066,6 +1066,25 @@ Regular expressions (regex) are a set of characters that can be used to search f
 Choosing a Programming Language
 -------------------------------
 
+Use Case
+~~~~~~~~
+
+This is an extremely biased list of the best programming language for each use case.
+
+-  Artificial intelligence (AI) and machine learning (ML) = 1. Python 2. R 3. Java
+-  Easiest to learn = 1. Python 2. Ruby
+-  Firmware = 1. C
+-  Portability = 1. Go 2. Java 3. C#
+-  Speed [40]
+
+   -  Fastest = 1. C 2. C++ 3. Rust 4. Go 5. Java
+   -  Slowest = 1. Lua 2. Ruby 3. Python 4. Perl 5. PHP
+
+-  Web development
+
+   -  Back-end = 1. Go 2. PHP 3. Java
+   -  Front-end = 1. HTML 2. JavaScript
+
 Energy Efficiency
 ~~~~~~~~~~~~~~~~~
 
@@ -1179,3 +1198,4 @@ Bibliography
 37. "How do I convert a bare git repository into a normal one (in-place)?" Stack Overflow. July 28, 2021. Accessed March 30, 2022. https://stackoverflow.com/questions/10637378/how-do-i-convert-a-bare-git-repository-into-a-normal-one-in-place
 38. "Moving git repository and all its branches, tags to a new remote repository keeping commits history." GitHub niksumeiko/git.migrate. October 27, 2021. Accessed March 30, 2022. https://gist.github.com/niksumeiko/8972566
 39. "Python sucks in terms of energy efficiency - literally." The Next Web. November 24, 2021. Accessed August 16, 2022. https://thenextweb.com/news/python-progamming-language-energy-analysis
+40. "Which programs are faster?" The Computer Language Benchmarks Game. Accessed August 31, 2022. https://sschakraborty.github.io/benchmark/which-programs-are-fastest.html
