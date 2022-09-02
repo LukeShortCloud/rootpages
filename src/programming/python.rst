@@ -5,6 +5,42 @@ Python 3
 
 These notes target Python >= 3.6 and should also mostly apply to older versions of Python.
 
+Versions
+--------
+
+The version of Python to use for a new project depends on the use case and/or operating system.
+
+For speed considerations, Python 3.11 is the first release of Python 3 to be faster than Python 2. [44] It is also about 25% faster than Python 3.10. [45]
+
+Here are default Python versions tied to long-term support Linux distributions [43]:
+
+.. csv-table::
+   :header: RHEL, Python
+   :widths: 20, 20
+
+   9, 3.9
+   8, 3.6
+   7, 2.7
+   6, 2.6
+
+.. csv-table::
+   :header: Ubuntu, Python
+   :widths: 20, 20
+
+   22.04, 3.10
+   20.04, 3.8
+   18.04, 3.6
+   16.04, 3.5
+
+.. csv-table::
+   :header: Debian, Python
+   :widths: 20, 20
+
+   11, 3.9
+   10, 3.7
+   9, 2.7
+   8, 2.7
+
 PEP
 ---
 
@@ -1787,3 +1823,6 @@ Bibliography
 40. "pdb - The Python Debugger." Python 3 Documentation. Jul 19, 2019. Accessed July 19, 2019. https://docs.python.org/3/library/pdb.html
 41. "Image processing with Python, NumPy." note.nkmk.me. October 20, 2020. Accessed November 3, 2020. https://note.nkmk.me/en/python-numpy-image-processing/
 42. "Python Requests - How to use system ca-certificates (debian/ubuntu)?" Stack Overflow. November 12, 2020. Accessed December 1, 2020. https://stackoverflow.com/questions/42982143/python-requests-how-to-use-system-ca-certificates-debian-ubuntu
+43. "DistroWatch.com." DistroWatch. September 1, 2022. Accessed September 1, 2022. https://distrowatch.com/
+44. "How Python 3.11 is gaining performance at the cost of 'a bit more memory'." DEVCLASS. May 31, 2022. Accessed September 1, 2022. https://devclass.com/2022/05/31/how-python-3-11-is-gaining-performance-at-the-cost-of-a-bit-more-memory/
+45. "What's New in Python 3.11." Python Documentation. September 1, 2022. Accessed September 1, 2022. https://docs.python.org/3.11/whatsnew/3.11.html
