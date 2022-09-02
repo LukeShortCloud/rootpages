@@ -1085,6 +1085,22 @@ This is an extremely biased list of the best programming language for each use c
    -  Back-end = 1. Go 2. PHP 3. Java
    -  Front-end = 1. HTML 2. JavaScript
 
+Popularity
+~~~~~~~~~~
+
+These are the top most active programming languages on GitHub in the year 2022 [41]:
+
+1.  Python
+2.  Java
+3.  JavaScript
+4.  C++
+5.  Go
+6.  TypeScript
+7.  PHP
+8.  Ruby
+9.  C
+10.  C#
+
 Energy Efficiency
 ~~~~~~~~~~~~~~~~~
 
@@ -1199,3 +1215,4 @@ Bibliography
 38. "Moving git repository and all its branches, tags to a new remote repository keeping commits history." GitHub niksumeiko/git.migrate. October 27, 2021. Accessed March 30, 2022. https://gist.github.com/niksumeiko/8972566
 39. "Python sucks in terms of energy efficiency - literally." The Next Web. November 24, 2021. Accessed August 16, 2022. https://thenextweb.com/news/python-progamming-language-energy-analysis
 40. "Which programs are faster?" The Computer Language Benchmarks Game. Accessed August 31, 2022. https://sschakraborty.github.io/benchmark/which-programs-are-fastest.html
+41. "Github Language Stats." GitHut 2.0. 2022. Accessed September 2, 2022. https://madnight.github.io/githut/#/pull_requests/2022/1
