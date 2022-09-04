@@ -51,6 +51,58 @@ Here are the last versions of Python supported on older versions of Windows [46]
    Vista, 3.8
    XP, 3.4
 
+Installation
+------------
+
+-  Windows:
+
+   -  `Download <https://www.python.org/downloads/windows/>`__ and use a Windows installer for Python.
+
+-  Linux and macOS:
+
+   -  Use pyenv to install any version of Python. [47]
+
+      -  Arch Linux:
+
+         .. code-block:: sh
+
+            $ sudo pacman -S -y
+            $ sudo pacman -S pyenv
+
+      -  Debian:
+
+         .. code-block:: sh
+
+            $ sudo apt-get update
+            $ sudo apt-get install build-essential curl git libbz2-dev libffi-dev libgdbm-dev liblzma-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libssl-dev llvm libxml2-dev libxmlsec1-dev lzma lzma-dev make tcl-dev tk-dev wget xz-utils zlib1g-dev
+            $ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+            $ echo '
+            export PYENV_ROOT="$HOME/.pyenv"
+            command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+            eval "$(pyenv init -)"' >> ~/.bashrc
+            $ bash
+
+      -  macOS:
+
+         .. code-block:: sh
+
+            $ brew update
+            $ brew install pyenv
+
+   -  Find, install, and use a specific version of Python.
+
+      .. code-block:: sh
+
+         $ pyenv install --list
+         $ pyenv install <VERSION>
+         $ pyenv local <VERSION>
+
+   -  Revert back to using the system Python version.
+
+      .. code-block:: sh
+
+         $ pyenv local system
+
 PEP
 ---
 
@@ -1837,3 +1889,4 @@ Bibliography
 44. "How Python 3.11 is gaining performance at the cost of 'a bit more memory'." DEVCLASS. May 31, 2022. Accessed September 1, 2022. https://devclass.com/2022/05/31/how-python-3-11-is-gaining-performance-at-the-cost-of-a-bit-more-memory/
 45. "What's New in Python 3.11." Python Documentation. September 1, 2022. Accessed September 1, 2022. https://docs.python.org/3.11/whatsnew/3.11.html
 46. "Python Releases for Windows." Python.org. August 2, 2022. Accessed September 4, 2022. https://www.python.org/downloads/windows/
+47. "Install pyenv on Ubuntu and Debian." bgasparotto. August 15, 2022. Accessed September 4, 2022. https://bgasparotto.com/install-pyenv-ubuntu-debian
