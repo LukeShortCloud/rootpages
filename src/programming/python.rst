@@ -33,13 +33,13 @@ Here are default Python versions tied to long-term support Linux distributions [
    16.04, 3.5
 
 .. csv-table::
-   :header: Debian, Python
+   :header: Debian [48], Python
    :widths: 20, 20
 
    11, 3.9
    10, 3.7
-   9, 2.7
-   8, 2.7
+   9, 3.5
+   8, 3.2
 
 Here are the last versions of Python supported on older versions of Windows [46]:
 
@@ -1890,3 +1890,4 @@ Bibliography
 45. "What's New in Python 3.11." Python Documentation. September 1, 2022. Accessed September 1, 2022. https://docs.python.org/3.11/whatsnew/3.11.html
 46. "Python Releases for Windows." Python.org. August 2, 2022. Accessed September 4, 2022. https://www.python.org/downloads/windows/
 47. "Install pyenv on Ubuntu and Debian." bgasparotto. August 15, 2022. Accessed September 4, 2022. https://bgasparotto.com/install-pyenv-ubuntu-debian
+48. "Python." Debian Wiki. May 5, 2022. Accessed September 4, 2022. https://wiki.debian.org/Python
