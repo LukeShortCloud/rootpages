@@ -41,6 +41,16 @@ Here are default Python versions tied to long-term support Linux distributions [
    9, 2.7
    8, 2.7
 
+Here are the last versions of Python supported on older versions of Windows [46]:
+
+.. csv-table::
+   :header: Windows, Python
+   :widths: 20, 20
+
+   7, 3.8
+   Vista, 3.8
+   XP, 3.4
+
 PEP
 ---
 
@@ -1826,3 +1836,4 @@ Bibliography
 43. "DistroWatch.com." DistroWatch. September 1, 2022. Accessed September 1, 2022. https://distrowatch.com/
 44. "How Python 3.11 is gaining performance at the cost of 'a bit more memory'." DEVCLASS. May 31, 2022. Accessed September 1, 2022. https://devclass.com/2022/05/31/how-python-3-11-is-gaining-performance-at-the-cost-of-a-bit-more-memory/
 45. "What's New in Python 3.11." Python Documentation. September 1, 2022. Accessed September 1, 2022. https://docs.python.org/3.11/whatsnew/3.11.html
+46. "Python Releases for Windows." Python.org. August 2, 2022. Accessed September 4, 2022. https://www.python.org/downloads/windows/
