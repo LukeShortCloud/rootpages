@@ -37,6 +37,33 @@ Day 1 Linux support for new hardware:
 2. NVIDIA
 3. AMD
 
+Recommended Size
+----------------
+
+Depending on the use case, these are the recommended minimum size of VRAM to have on the graphics card.
+
+Gaming [1][2]:
+
+.. csv-table::
+   :header: Game Resolution, VRAM (GB)
+   :widths: 20, 20
+
+   720p, 2
+   1080p, 4
+   1440p, 6
+   4K, 8
+
+Video editing [2][3]:
+
+.. csv-table::
+   :header: Video Resolution, VRAM (GB)
+   :widths: 20, 20
+
+   1080p, 4
+   4K, 6
+   6K, 8
+   8K, 10
+
 History
 -------
 
@@ -44,3 +71,7 @@ History
 
 Bibliography
 ------------
+
+1. "How Much VRAM Do You Need For Gaming?" GPU Mag. November 2, 2021. Accessed September 5, 2022. https://www.gpumag.com/how-much-vram-gaming/
+2. "How much VRAM do you need? Professional and Gaming Workloads explored." CG Director. May 9, 2022. Accessed September 5, 2022. https://www.cgdirector.com/how-much-vram-do-you-need/
+3. "Hardware Recommendations for Premiere Pro." Puget Systems. Accessed September 5, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Adobe-Premiere-Pro-143/Hardware-Recommendations
