@@ -59,6 +59,11 @@ Python 2
 
 In 2020, Python 2 became end-of-life. There are a lot of major changes between Python 2 and 3. For compatibility, the ``six`` library was created to provide standardized functions that work the same on both major versions of Python. It is named because 2 x 3 = 6. [49] The `Fedora Python Special Interest Group (SIG) <https://github.com/fedora-python>`__ also has a full `guide <https://portingguide.readthedocs.io/>`__ to help with specifics of porting native code over from 2 to 3.
 
+Python 4
+~~~~~~~~
+
+The creator of Python, Guido van Rossum, said that there will not be a Python 4. This is because the transition from Python 2 to 3 was long and painful. He, along with other developers of Python itself, have agreed to avoid a similar migration again. There would only be a Python 4 if there were compatibility issues with C extensions. [50]
+
 Installation
 ------------
 
@@ -1900,3 +1905,4 @@ Bibliography
 47. "Install pyenv on Ubuntu and Debian." bgasparotto. August 15, 2022. Accessed September 4, 2022. https://bgasparotto.com/install-pyenv-ubuntu-debian
 48. "Python." Debian Wiki. May 5, 2022. Accessed September 4, 2022. https://wiki.debian.org/Python
 49. "Six: Python 2 and 3 Compatibility Library." six. April 9, 2020. Accessed September 6, 2022. https://six.readthedocs.io/
+50. "Programming languages: Why Python 4.0 might never arrive, according to its creator." TechRepublic. May 24, 2021. Accessed September 6, 2022. https://www.techrepublic.com/article/programming-languages-why-python-4-0-will-probably-never-arrive-according-to-its-creator/
