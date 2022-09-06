@@ -250,8 +250,8 @@ Proton (Steam Play)
 
 Proton allows Windows games to run on Linux. A full list of games that are officially whitelisted and guaranteed to work can be found `here <https://steamdb.info/app/891390/>`__. Proton can be enabled for all games by going to ``Settings > Steam Play > Enable Steam Play for all other titles``. Compatibility will vary. [11]
 
-Remote Monitor
---------------
+Remote Access
+-------------
 
 Parsec
 ~~~~~~
@@ -273,6 +273,14 @@ Parsec requires a physical monitor to be plugged into the computer and turned on
 
          Task Scheduler (taskschd.msc) > Create Basic Task... > Name: Virtual Monitor > Next > When do you want the task to start? When the computer starts > Next > Start a program > Next > Program/script: (select the "usbmidd.bat" file) > Next > Finish
          Task Scheduler (taskschd.msc) > Task Scheduler (Local) > Task Scheduler Library > Virtual Monitor > Properties > (select "Run whether user is logged in or not" and "Run with highest privileges") > OK
+
+Virtual Audio
+^^^^^^^^^^^^^
+
+Parsec does not create any virtual audio devices. Instead, it forwards connected hardware audio from the Parsec host to the client. There are a few ways around this for a headless setup.
+
+-  Plug in and forward an audio device to the virtual machine.
+-  On macOS and Windows hosts, use the `VB-CABLE virtual audio device <https://vb-audio.com/Cable/>`__. [14]
 
 Image Processing
 ----------------
@@ -341,3 +349,4 @@ Bibliography
 11. "A simple guide to Steam Play, Valve's technology for playing Windows games on Linux." GamingOnLinux. July 12, 2019. Accessed July 3, 2020. https://www.gamingonlinux.com/articles/14552
 12. "Steam/Client troubleshooting." Gentoo Wiki. February 15, 2021. Accessed May 20, 2021. https://wiki.gentoo.org/wiki/Steam/Client_troubleshooting
 13. "Remote Streaming Without a Display." r/ParsecGaming. June 29, 2022. Accessed August 27, 2022. https://www.reddit.com/r/ParsecGaming/comments/kbzbhg/remote_streaming_without_a_display/
+14. "Unable To Hear The Game You're Playing." Parsec. Accessed September 6, 2022. https://support.parsec.app/hc/en-us/articles/115002700892-Unable-To-Hear-The-Game-You-re-Playing
