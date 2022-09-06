@@ -1,5 +1,5 @@
-Ansible
-=======
+Ansible 2
+=========
 
 .. contents:: Table of Contents
 
