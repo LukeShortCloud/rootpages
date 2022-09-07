@@ -684,19 +684,24 @@ Select the virtualization driver to use. The ``minikube`` installer will automat
 -  All
 
    -  docker
+   -  qemu2
    -  virtualbox
 
 -  Linux
 
    -  kvm2
+   -  podman
 
 -  macOS
 
    -  hyperkit
+   -  parallels
+   -  vmwarefusion
 
 -  Windows
 
-   - hyperv
+   -  hyperv
+   -  vmware
 
 Deploy Kubernetes. Optionally specify the Kubernetes version to use. If using the ``kvm2`` driver as the root user on Linux, the ``--force`` argument is also required.
 
