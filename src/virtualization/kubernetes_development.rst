@@ -2048,16 +2048,17 @@ Run a Job exactly once on every control plane and worker node by using a tolerat
              image: busybox:latest
              imagePullPolicy: IfNotPresent
              command:
-               - cat /mnt/etc/hostname
+               - cat
+               - /mnt/etc/hostname
              securityContext:
                privileged: true
              volumeMounts:
                 - name: root-filesystem
-                   mountPath: /mnt
+                  mountPath: /mnt
          volumes:
             - name: root-filesystem
-               hostPath:
-                 path: /
+              hostPath:
+                path: /
          restartPolicy: OnFailure
 
 Run a Job exactly once on every control plane node only (not the worker nodes) by using a toleration, pod anti-affinity, and node affinity.
