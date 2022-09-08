@@ -64,6 +64,18 @@ Video editing [2][3]:
    6K, 8
    8K, 10
 
+Machine learning (ML) [4][5]:
+
+.. csv-table::
+   :header: ML Workload, VRAM (GB)
+   :widths: 20, 20
+
+   Minimum, 8
+   Recommended, 24
+   Maximum, 48
+
+-  The amount of VRAM differs based on the type of ML model. Language models use the most amount of VRAM compared to image models which are more CPU-bound rather than GPU-bound. [5]
+
 History
 -------
 
@@ -75,3 +87,5 @@ Bibliography
 1. "How Much VRAM Do You Need For Gaming?" GPU Mag. November 2, 2021. Accessed September 5, 2022. https://www.gpumag.com/how-much-vram-gaming/
 2. "How much VRAM do you need? Professional and Gaming Workloads explored." CG Director. May 9, 2022. Accessed September 5, 2022. https://www.cgdirector.com/how-much-vram-do-you-need/
 3. "Hardware Recommendations for Premiere Pro." Puget Systems. Accessed September 5, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Adobe-Premiere-Pro-143/Hardware-Recommendations
+4. "Hardware Recommendations for Machine Learning & AI." Puget Systems. Accessed September 7, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Machine-Learning-AI-174/Hardware-Recommendations
+5. "Choosing the Best GPU for Deep Learning in 2020." The Lambda Deep Learning Blog. February 18, 2022. Accessed September 7, 2022. https://lambdalabs.com/blog/choosing-a-gpu-for-deep-learning/
