@@ -1298,23 +1298,29 @@ For lab deployments, create a single standalone cluster. [87]
 
    $ tanzu unmanaged-cluster create <STANDALONE_CLUSTER_NAME>
 
+-  secretgen-controller is not installed by default on the unmanaged cluster. This set of APIs are commonly used for other Tanzu applications. Use ``tanzu package`` to install it. [100]
+
+   .. code-block:: sh
+
+      $ tanzu package install secretgen-controller --package-name secretgen-controller.community.tanzu.vmware.com --version 0.7.1 --namespace tkg-system
+
 For production deployments, a single management Kubernetes cluster is created and then one or more Kubernetes workload clusters are created from that.
 
-   -  Create a management cluster using the Docker Engine. [83]
+-  Create a management cluster using the Docker Engine. [83]
 
-      .. code-block:: sh
+   .. code-block:: sh
 
-         $ tanzu management-cluster create -i docker --name <MANAGEMENT_CLUSTER_NAME> -v 10 --plan dev --ceip-participation=false
+      $ tanzu management-cluster create -i docker --name <MANAGEMENT_CLUSTER_NAME> -v 10 --plan dev --ceip-participation=false
 
-   -  Create one or more workload clusters using the management cluster. [83]
+-  Create one or more workload clusters using the management cluster. [83]
 
-      .. code-block:: sh
+   .. code-block:: sh
 
-         $ kubectl config get-contexts
-         $ kubectl config use-context <MANAGEMENT_CLUSTER-NAME>-admin@<MANAGEMENT_CLUSTER-NAME>
-         $ tanzu cluster create <WORKLOAD_CLUSTER_NAME> --plan dev
-         $ tanzu cluster kubeconfig get <WORKLOAD_CLUSTER_NAME> --admin
-         $ kubectl config use-context <WORKLOAD_CLUSTER-NAME>-admin@<WORKLOAD_CLUSTER-NAME>
+      $ kubectl config get-contexts
+      $ kubectl config use-context <MANAGEMENT_CLUSTER-NAME>-admin@<MANAGEMENT_CLUSTER-NAME>
+      $ tanzu cluster create <WORKLOAD_CLUSTER_NAME> --plan dev
+      $ tanzu cluster kubeconfig get <WORKLOAD_CLUSTER_NAME> --admin
+      $ kubectl config use-context <WORKLOAD_CLUSTER-NAME>-admin@<WORKLOAD_CLUSTER-NAME>
 
 Tanzu Packages
 ''''''''''''''
@@ -2546,3 +2552,4 @@ Bibliography
 97. "Performance Evaluation of Container Runtimes." Chair of Computer Architecture and Parallel Systems, TU Munich, Garching, Germany. 2020. Accessed May 18, 2022.
 98. "Installing with Helm." cert-manager Documentation. 2022. Accessed July 5, 2022. https://cert-manager.io/docs/installation/helm/
 99. "VMware Tanzu Kubernetes releases Release Notes." VMware Docs. July 29, 2022. Accessed August 24, 2022. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-releases/services/rn/vmware-tanzu-kubernetes-releases-release-notes/index.html
+100. "secretgen-controller installed by default in TCE unmanaged-clusters #3817." GitHub vmware-tanzu/community-edition. https://github.com/vmware-tanzu/community-edition/issues/3817
