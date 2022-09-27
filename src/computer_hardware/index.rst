@@ -7,6 +7,7 @@
    graphics_cards
    laptops
    monitors
+   networking
    processors
    ram
    storage_devices

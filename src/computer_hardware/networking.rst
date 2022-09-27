@@ -1,7 +1,9 @@
-Networking (Hardware)
-=====================
+Networking
+==========
 
-Networking hardware commonly includes switches, routers, and/or firewalls.
+.. contents:: Table of Contents
+
+Networking hardware commonly includes switches, routers, wireless access points, and/or firewalls.
 
 Virtualization
 --------------
@@ -22,7 +24,8 @@ The `GNS3 Marketplace <https://www.gns3.com/marketplace/appliances>`__ provides 
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/networking_hardware.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/computer_hardware/networking.rst>`__
+-  `< 2022.10.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking/networking_hardware.rst>`__
 -  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/networking_hardware.rst>`__
 
 Bibliography

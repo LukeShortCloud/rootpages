@@ -4,5 +4,4 @@
 
    dns_servers
    firewalls
-   networking_hardware
    linux
