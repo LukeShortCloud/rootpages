@@ -5,6 +5,22 @@ Networking
 
 Networking hardware commonly includes switches, routers, wireless access points, and/or firewalls.
 
+WiFi
+----
+
+Brands
+~~~~~~
+
+These are WiFi chipset manufacturers from order of best to worst Linux support [2]:
+
+1.  Mediatek
+2.  Qualcomm
+3.  Intel
+4.  (Other brands)
+5.  Realtek
+
+`morrownr <https://github.com/morrownr>`__ created a `USB WiFi guide <https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md>`__ that showcases consumer WiFi devices that use chipsets that are natively supported by the Linux kernel.
+
 Virtualization
 --------------
 
@@ -32,3 +48,4 @@ Bibliography
 ------------
 
 1. "[GNS3] Frequently Asked Questions." GNS3. Accessed May 7, 2018. https://gns3.com/software/faq
+2. "Need Your Help: We need to let Comfast know what we think about multi-state adapters... #70." GitHub morrownr/USB-WiFi. July 27, 2022. Accessed September 27, 2022. https://github.com/morrownr/USB-WiFi/issues/70#issuecomment-1196277552
