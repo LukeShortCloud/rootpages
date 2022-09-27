@@ -21,6 +21,22 @@ These are WiFi chipset manufacturers from order of best to worst Linux support [
 
 `morrownr <https://github.com/morrownr>`__ created a `USB WiFi guide <https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md>`__ that showcases consumer WiFi devices that use chipsets that are natively supported by the Linux kernel.
 
+Speed
+~~~~~
+
+According to Lifewire, these are the maximum speeds for each WiFi standard [3]:
+
+.. csv-table::
+   :header: Consumer Name, IEEE Name, Specification Speed (Mbps), Real-World Speed (Mbps)
+   :widths: 20, 20, 20, 20
+
+    WiFi 1, 802.11b, 11, 5.5
+    WiFi 2, 802.11a, 54, 20
+    WiFi 3, 802.11g, 54, 20
+    WiFi 4, 802.11n, 600, 100
+    WiFi 5, 802.11ac, 1300, 200
+    WiFi 6, 802.11ax, 10000, 2000
+
 Virtualization
 --------------
 
@@ -49,3 +65,4 @@ Bibliography
 
 1. "[GNS3] Frequently Asked Questions." GNS3. Accessed May 7, 2018. https://gns3.com/software/faq
 2. "Need Your Help: We need to let Comfast know what we think about multi-state adapters... #70." GitHub morrownr/USB-WiFi. July 27, 2022. Accessed September 27, 2022. https://github.com/morrownr/USB-WiFi/issues/70#issuecomment-1196277552
+3. "How Fast Is a Wi-Fi Network?" Lifewire. June 16, 2021. Accessed September 27, 2022.
