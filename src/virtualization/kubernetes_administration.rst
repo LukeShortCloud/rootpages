@@ -1334,11 +1334,13 @@ For production deployments, a single management Kubernetes cluster is created an
 Tanzu Packages
 ''''''''''''''
 
-Setup the Tanzu Packages repository globally:
+Tanzu Packages provided by Tanzu Community Edition (TCE) are the upstream variants of Tanzu Application Platform (TAP). They are a collection of cloud-native developer-focused applications that are installed using Carvel tools and container images.
+
+Setup the Tanzu Packages repository globally for TCE 0.12.0:
 
 .. code-block:: sh
 
-   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.11.0 --namespace tanzu-package-repo-global
+   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.12.0 --namespace tanzu-package-repo-global
 
 View the available packages to install:
 
@@ -2546,7 +2548,7 @@ Bibliography
 82. "Getting Started with Managed Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/getting-started/
 83. "Deploy a Management Cluster to Docker." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/docker-install-mgmt/
 84. "Delete Management Clusters." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/delete-mgmt/
-85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/package-management/
+85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed September 29, 2022. https://tanzucommunityedition.io/docs/v0.11/package-management/
 86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
 88. "Releases." GitHub vmware-tanzu/community-edition. May 18, 2022. Accessed September 29, 2022. https://github.com/vmware-tanzu/community-edition/releases
