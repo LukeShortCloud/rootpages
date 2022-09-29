@@ -583,7 +583,7 @@ Each Tanzu Kubernetes Grid Multicloud (TKGm) release supports up to three versio
 TCE
 ^^^
 
-Tanzu Community Edition (TCE) is the upstream variant of TKGm. Based on similar release dates, here are the equivalent versions. [88]
+Tanzu Community Edition (TCE) is the upstream variant of both TKGm and TAP. Based on similar release dates, here are the equivalent versions. [88]
 
 .. csv-table::
    :header: TCE, TKGm
@@ -592,6 +592,15 @@ Tanzu Community Edition (TCE) is the upstream variant of TKGm. Based on similar 
    0.10.0, 1.5.0
    0.8.0, 1.4.0
    0.4.0, 1.3.0
+
+.. csv-table::
+   :header: TCE, TAP
+   :widths: 20, 20
+
+   0.12.1, `1.2 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.2/tap/GUID-release-notes.html>`__
+   0.10.0, `1.1 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.1/tap/GUID-release-notes.html>`__
+   0.9.1, `1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.0/tap/GUID-release-notes.html>`__
+   0.7.0, `0.1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.4/tap/GUID-release-notes.html>`__
 
 TKGS
 ^^^^
@@ -2540,7 +2549,7 @@ Bibliography
 85. "Work with Packages." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/package-management/
 86. "Uninstall the Tanzu CLI." VMware Tanzu Community Edition Documentation. Accessed February 18, 2022. https://tanzucommunityedition.io/docs/latest/cli-uninstall/
 87. "Getting Started with Unmanaged Clusters." VMware Tanzu Community Edition Documentation. Accessed February 23, 2022. https://tanzucommunityedition.io/docs/latest/getting-started-unmanaged/
-88. "Releases." GitHub vmware-tanzu/community-edition. March 29, 2022. Accessed April 11, 2022. https://github.com/vmware-tanzu/community-edition/releases
+88. "Releases." GitHub vmware-tanzu/community-edition. May 18, 2022. Accessed September 29, 2022. https://github.com/vmware-tanzu/community-edition/releases
 89. "make docker driver highly preferred #8623." GitHub kubernetes/minikube. July 1, 2020. Accessed April 11, 2022. https://github.com/kubernetes/minikube/pull/8623
 90. "Create Persistent Volumes with Storage Classes." VMware Tanzu Community Edition Documentation. Accessed April 12, 2022. https://tanzucommunityedition.io/docs/v0.11/storage/
 91. "Cluster doesn't restart when docker restarts #148." GitHub kubernetes-sigs/kind. March 20, 2022. Accessed April 12, 2022. https://github.com/kubernetes-sigs/kind/issues/148#issuecomment-1044197449
