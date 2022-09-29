@@ -37,8 +37,8 @@ Day 1 Linux support for new hardware:
 2. NVIDIA
 3. AMD
 
-Recommended Size
-----------------
+Recommended VRAM Size
+---------------------
 
 Depending on the use case, these are the recommended minimum size of VRAM to have on the graphics card.
 
