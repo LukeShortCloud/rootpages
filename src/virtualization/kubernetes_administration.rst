@@ -1279,6 +1279,71 @@ Setup a TKG Management Cluster and then the production Kubernetes cluster using 
          $ kubectl get nodes -o wide
          $ kubectl get -n kube-system pods
 
+Tanzu Application Platform (TAP)
+''''''''''''''''''''''''''''''''
+
+Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu Packages from Tanzu Community Edition (TCE). They are a collection of cloud-native developer-focused applications that are installed using Carvel tools and container images. It requires a valid subscription to setup.
+
+-  Create a `VMware Tanzu Network account <https://network.tanzu.vmware.com/>`__. This is used as the container registry to pull the container images for TAP.
+-  Download the `Cluster Essentials for VMware Tanzu <https://network.tanzu.vmware.com/products/tanzu-cluster-essentials/>`__. These tools can be installed on Linux or macOS (not Windows).
+-  Extract the tools. For example, TAP 1.2.
+
+   .. code-block:: sh
+
+      $ mkdir ~/tanzu-cluster-essentials
+      $ tar -x -v -f tanzu-cluster-essentials-[darwin|linux]-amd64-1.2.tgz -C ~/tanzu-cluster-essentials
+
+-  Configure the installation by creating a new exports script.
+
+   .. code-block:: sh
+
+      $ ${EDITOR} ~/tanzu-cluster-essentials/exports.sh
+
+   ::
+
+      export INSTALL_BUNDLE=registry.tanzu.vmware.com/tanzu-cluster-essentials/cluster-essentials-bundle@sha256:<SHA256_CHECKSUM>
+      export INSTALL_REGISTRY_HOSTNAME=registry.tanzu.vmware.com
+      export INSTALL_REGISTRY_USERNAME='<VMWARE_TANZU_NETWORK_USERNAME>'
+      export INSTALL_REGISTRY_PASSWORD='<VMWARE_TANZU_NETWORK_PASSWORD>'
+
+-  Install the Kubernetes applications.
+
+   .. code-block:: sh
+
+      $ cd ~/tanzu-cluster-essentials/
+      $ . ./export.sh
+      $ ./install.sh --yes
+
+-  Load the client tools.
+
+   .. code-block:: sh
+
+      $ export PATH="${PATH}:${HOME}/tanzu-cluster-essentials"
+
+-  Setup the TAP repository. For example, TAP 1.2.2.
+
+   .. code-block:: sh
+
+      $ kubectl create ns tap-install
+      $ tanzu secret registry add tap-registry \
+        --username ${INSTALL_REGISTRY_USERNAME} \
+        --password ${INSTALL_REGISTRY_PASSWORD} \
+        --server ${INSTALL_REGISTRY_HOSTNAME} \
+        --namespace tap-install \
+        --export-to-all-namespaces \
+        --yes
+      $ tanzu package repository add tanzu-tap-repository \
+        --url registry.tanzu.vmware.com/tanzu-application-platform/tap-packages:1.2.2 \
+        --namespace tap-install
+
+-  View all of the available packages to install.
+
+   .. code-block:: sh
+
+      $ tanzu package available list --namespace tap-install
+
+[101][102]
+
 TCE
 ^^^
 
@@ -2564,3 +2629,5 @@ Bibliography
 98. "Installing with Helm." cert-manager Documentation. 2022. Accessed July 5, 2022. https://cert-manager.io/docs/installation/helm/
 99. "VMware Tanzu Kubernetes releases Release Notes." VMware Docs. July 29, 2022. Accessed August 24, 2022. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-releases/services/rn/vmware-tanzu-kubernetes-releases-release-notes/index.html
 100. "secretgen-controller installed by default in TCE unmanaged-clusters #3817." GitHub vmware-tanzu/community-edition. https://github.com/vmware-tanzu/community-edition/issues/3817
+101. "Deploying Cluster Essentials v1.2." VMware Docs. August 24, 2022. Accessed September 29, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.2/cluster-essentials/GUID-deploy.html
+102. "Installing Tanzu Application Platform package and profiles." VMware docs. September 29, 2022. Accessed September 29, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.2/tap/GUID-install.html
