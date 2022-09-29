@@ -19,9 +19,9 @@ Gaming [2]:
    :header: Use-case, Cores
    :widths: 20, 20
 
-   Very old games, 2
-   Old games, 4
-   Modern games, 6
+   Very old games (Windows XP), 2
+   Old games (Windows 7), 4
+   Modern games (Windows 10), 6
 
 Video editing [3][4]:
 

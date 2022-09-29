@@ -12,9 +12,9 @@ Gaming [1][4]:
    :header: Use-case, RAM (GB)
    :widths: 20, 20
 
-   Very old games, 4
-   Old games, 8
-   Modern games, 16
+   Very old games (Windows XP), 4
+   Old games (Windows 7), 8
+   Modern games (Windows 10), 16
 
 Video editing [2]:
 
