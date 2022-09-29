@@ -4995,13 +4995,19 @@ Red Hat to the public on September 7, 2017. [39] The source code for the
 project can be found in the
 `ansible/awx <https://github.com/ansible/awx>`__ repository on GitHub.
 
-Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [76]
+Based on the feature set, downstream branches merged in, and release dates, these are the versions of AWX that closely match Ansible Tower releases. [66][76]
 
--  AWX 9.0.1 = Ansible Tower 3.6.0
--  AWX 5.0.0 = Ansible Tower 3.5.0
--  AWX 2.1.2 = Ansible Tower 3.4.0
--  AWX 1.0.8 = Ansible Tower 3.3.0
--  AWX 1.0.0 = Ansible Tower 3.2.0
+.. csv-table::
+   :header: AWX, Ansible Tower
+   :widths: 20, 20
+
+   15.0.1, 3.8.0
+   11.2.0, 3.7.0
+   9.0.1, 3.6.0
+   5.0.0, 3.5.0
+   2.1.2, 3.4.0
+   1.0.8, 3.3.0
+   1.0.0, 3.2.0
 
 Install
 ^^^^^^^
@@ -5295,7 +5301,7 @@ Bibliography
 63. "Release and maintenance." Ansible Documentation. September 7, 2018. Accessed September 18, 2018. https://docs.ansible.com/ansible/latest/reference_appendices/release_and_maintenance.html
 64. "Frequently Asked Questions." Ansible Documentation. April 19, 2018. Accessed April 21, 2018. http://docs.ansible.com/ansible/latest/faq.html
 65. "Migrating Data Between AWX Installations." GitHub AWX. May 4, 2018. Accessed May 16, 2018. https://github.com/ansible/awx/blob/devel/DATA_MIGRATION.md
-66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. November 14, 2019. Accessed December 19, 2019. https://access.redhat.com/support/policy/updates/ansible-tower
+66. "Red Hat Ansible Tower Life Cycle." Red Hat Customer Portal. Accessed September 29, 2022. https://access.redhat.com/support/policy/updates/ansible-tower
 67. "Backing Up and Restoring Tower. Ansible Documentation. Accessed May 29, 2018. http://docs.ansible.com/ansible-tower/latest/html/administration/backup_restore.html
 68. "Replication, Clustering, and Connection Pooling." PostgreSQL Wiki. June 8, 2017. Accessed May 29, 2018. https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling
 69. "Rules." Ansible Lint Documentation. February 12, 2019. Accessed June 13, 2019. https://docs.ansible.com/ansible-lint/rules/rules.html
@@ -5305,7 +5311,7 @@ Bibliography
 73. "Ansible 2.7 Porting Guide." Ansible GitHub. September 11, 2018. Accessed September 12, 2018. https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/porting_guides/porting_guide_2.7.rst
 74. "ANSIBLE BEST PRACTICES: THE ESSENTIALS." Ansible. 2018. Accessed December 16, 2019. https://www.ansible.com/hubfs/2018_Content/AA%20BOS%202018%20Slides/Ansible%20Best%20Practices.pdf
 75. "OpenShift Deployment and Configuration." Ansible Documentation. Accessed September 14, 2018. https://docs.ansible.com/ansible-tower/latest/html/administration/openshift\_configuration.html
-76. "AWX Project." Ansible GitHub. June 19, 2019. Accessed June 19, 2019. https://github.com/ansible/awx
+76. "Releases." GitHub ansible/awx. September 16, 2022. Accessed September 29, 2022. https://github.com/ansible/awx/releases
 77. "Building Container Images with Buildah and Ansible." February 4, 2018. Accessed November 8, 2018. https://blog.tomecek.net/post/building-containers-with-buildah-and-ansible/
 78. "[Reusable] Roles." Ansible Documentation. November 15, 2018. Accessed November 26, 2018. https://docs.ansible.com/ansible/latest/user\_guide/playbooks\_reuse\_roles.html
 79. "Ansible 2.7 [ROADMAP]." Ansible Documentation. December 1, 2018. Accessed December 7, 2018. https://docs.ansible.com/ansible/latest/roadmap/ROADMAP\_2\_7.html
