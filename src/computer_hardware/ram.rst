@@ -6,14 +6,15 @@ Recommended Size
 
 Depending on the use-case, these are the recommended total size of system RAM to have.
 
-Gaming [1]:
+Gaming [1][4]:
 
 .. csv-table::
    :header: Use-case, RAM (GB)
    :widths: 20, 20
 
-   Most games, 8
-   All games, 16
+   Very old games, 4
+   Old games, 8
+   Modern games, 16
 
 Video editing [2]:
 
@@ -49,3 +50,4 @@ Bibliography
 1. "Is Buying More RAM a WASTE for Gamers? (2022)." YouTube - Linus Tech Tips. June 16, 2022. Accessed July 13, 2022. https://www.youtube.com/watch?v=H19_JKw4QN4
 2. "How Much Memory Do You Need for Video Editing?" Kingston Blog. February 2021. Accessed July 13, 2022. https://www.kingston.com/en/blog/pc-performance/how-much-memory-needed-for-video-editing
 3. "Hardware Recommendations for Machine Learning & AI." Puget Systems. Accessed September 7, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Machine-Learning-AI-174/Hardware-Recommendations
+4. "How Much Memory Do You Need for Gaming?" July, 2021. Accessed September 29, 2022. https://www.kingston.com/en/blog/gaming/how-much-memory-for-gaming
