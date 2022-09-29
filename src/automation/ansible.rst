@@ -16,9 +16,9 @@ Official documentation:
 
 -  `Stable <https://docs.ansible.com/ansible/latest/>`__
 -  `Development <https://docs.ansible.com/ansible/devel/>`__
+-  `2.10 <https://docs.ansible.com/ansible/2.10/>`__
 -  `2.9 <https://docs.ansible.com/ansible/2.9/>`__
 -  `2.8 <https://docs.ansible.com/ansible/2.8/>`__
--  `2.7 <https://docs.ansible.com/ansible/2.7/>`__
 
 Editions
 ~~~~~~~~
@@ -28,7 +28,7 @@ There are two editions of Ansible available. There is the upstream Ansible commu
 Deprecations
 ~~~~~~~~~~~~
 
-If a component in Ansible release ``N`` becomes deprecated then it is normally left unmaintained up until ``N + 4`` when it is fully removed. For example, a module deprecated in 2.8 will be removed in 2.12. Ansible aims to be as highly backwards compatible as possible with each minor release.
+If a component in Ansible release ``N`` becomes deprecated then it is normally left unmaintained up until ``N + 4`` when it is fully removed. For example, a module deprecated in 2.2 would have been removed in 2.6. Ansible aims to be as highly backwards compatible as possible with each minor release.
 
 Installation
 ------------
@@ -66,7 +66,7 @@ Source code:
     $ git clone https://github.com/ansible/ansible.git
     $ cd ./ansible/
     $ git branch -a | grep stable
-    $ git checkout remotes/origin/stable-2.7
+    $ git checkout remotes/origin/stable-2.10
     $ git submodule update --init --recursive
     $ source ./hacking/env-setup
 
