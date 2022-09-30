@@ -6,6 +6,13 @@ SteamOS 3
 Desktop Mode
 ------------
 
+Enable Desktop Mode
+~~~~~~~~~~~~~~~~~~~
+
+By default, the Steam Deck only works in Game Mode. Developer Mode must be enabled to access Desktop Mode.
+
+-  STEAM > Settings > System > SYSTEM SETTINGS > Enable Developer Mode: Yes
+
 Default User Account
 ~~~~~~~~~~~~~~~~~~~~
 
