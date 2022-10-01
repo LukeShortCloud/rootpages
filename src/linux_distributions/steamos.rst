@@ -27,6 +27,33 @@ There is no password by default. For running ``sudo`` commands, a password needs
 
       $ passwd
 
+Disable SteamOS Updates
+~~~~~~~~~~~~~~~~~~~~~~~
+
+SteamOS operating system updates can only be disabled from the Desktop Mode.
+
+-  Disable updates:
+
+   .. code-block:: sh
+
+      $ sudo steamos-readonly disable
+      $ sudo chmod -x /usr/bin/steamos-atomupd-client
+      $ sudo chmod -x /usr/bin/steamos-atomupd-mkmanifest
+      $ sudo chmod -x /usr/bin/steamos-update
+      $ sudo chmod -x /usr/bin/steamos-update-os
+      $ sudo steamos-readonly enable
+
+-  Re-enable updates:
+
+   .. code-block:: sh
+
+      $ sudo steamos-readonly disable
+      $ sudo chmod +x /usr/bin/steamos-atomupd-client
+      $ sudo chmod +x /usr/bin/steamos-atomupd-mkmanifest
+      $ sudo chmod +x /usr/bin/steamos-update
+      $ sudo chmod +x /usr/bin/steamos-update-os
+      $ sudo steamos-readonly enable
+
 History
 -------
 
