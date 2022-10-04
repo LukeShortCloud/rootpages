@@ -26,6 +26,8 @@ Here are default Python versions tied to long-term support Linux distributions [
    7, 2.7
    6, 2.6
 
+-  RHEL 8 also supports using their new AppStream repository to install other versions of Python: 2.7, 3.8, and 3.9. [51] RHEL 9 currently does not have additional Python packages in the AppStream repository. [52]
+
 .. csv-table::
    :header: Ubuntu, Python
    :widths: 20, 20
@@ -1906,3 +1908,5 @@ Bibliography
 48. "Python." Debian Wiki. May 5, 2022. Accessed September 4, 2022. https://wiki.debian.org/Python
 49. "Six: Python 2 and 3 Compatibility Library." six. April 9, 2020. Accessed September 6, 2022. https://six.readthedocs.io/
 50. "Programming languages: Why Python 4.0 might never arrive, according to its creator." TechRepublic. May 24, 2021. Accessed September 6, 2022. https://www.techrepublic.com/article/programming-languages-why-python-4-0-will-probably-never-arrive-according-to-its-creator/
+51. "Chapter 38. Installing and using Python." Red Hat Customer Portal. Accessed September 7, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/assembly_installing-and-using-python_configuring-basic-system-settings
+52. "Chapter 1. Introduction to Python." Red Hat Customer Portal. Accessed September 7, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_introduction-to-python_installing-and-using-dynamic-programming-languages
