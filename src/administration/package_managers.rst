@@ -279,9 +279,40 @@ Troubleshooting
 Errors
 ~~~~~~
 
-**Error: Invalid version flag: if** when running a ``yum [install|update]`` command.
+``Error: Invalid version flag: if`` when running a ``yum [install|update]`` command:
+
+Solution:
 
 -  This is due to a difference between EL 7 and 8 repositories. Check which major version of EL is configured for all of the YUM/DNF repositories. [17]
+
+----
+
+Error ``Operation is too slow`` when installing packages or updating database cache with Pacman:
+
+.. code-block:: sh
+
+   $ sudo pacman -S -y -y
+   :: Synchronizing package databases...
+   error: failed retrieving file '<REPOSITORY>.db' from <MIRROR_DOMAIN> : Operation too slow. Less than 1024 bytes/sec transferred the last 10 seconds
+
+Solutions [20]:
+
+-  Use faster Pacman mirrors.
+
+   -  For Arch Linux, use `Reflector <../linux_distributions/arch_linux.html#mirrors>`__.
+   -  For Manjaro, use `Pacman-mirrors <https://wiki.manjaro.org/index.php/Pacman-mirrors>`__.
+
+-  For slow internet connections, use ``wget`` for downloading packages. It will not stop downloading if the connection is too slow.
+
+   .. code-block:: sh
+
+      $ sudo pacman -S wget
+      $ sudo -E ${EDITOR} /etc/pacman.conf
+
+   .. code-block:: ini
+
+      [options]
+      XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
 
 History
 -------
@@ -313,3 +344,4 @@ Bibliography
 17. "Need to set up yum repository for locally-mounted DVD on Red Hat Enterprise Linux 7." Red Hat Knowledgebase. August 20, 2019. Accessed September 16, 2020. https://access.redhat.com/solutions/1355683#comment-1514411
 18. "LTSEnablementStack." Ubuntu Wiki. January 27, 2021. Accessed February 23, 2021. https://wiki.ubuntu.com/Kernel/LTSEnablementStack
 19. "pacman.conf(5)." Arch Linux. May 20, 2021. Accessed September 9, 2021. https://archlinux.org/pacman/pacman.conf.5.html
+20. "[Solved] Pacman transfer speed check." Arch Linux Forums. August 19, 2015. Accessed October 5, 2022. https://bbs.archlinux.org/viewtopic.php?id=137981
