@@ -57,11 +57,11 @@ Log into the IP address of the Raspberry Pi using the username ``pi`` and passwo
 Wi-Fi
 -----
 
-Starting with the release of the Raspberry Pi 3 Model B, the Raspberry Pi includes built-in Wi-Fi hardware. Connect to a Wi-Fi network using one of these methods:
+Starting with the release of the Raspberry Pi 3 Model B, the Raspberry Pi includes built-in Wi-Fi hardware. Connect to a Wi-Fi network using one of these methods [4]:
 
 - GUI = Select the Wi-Fi icon in the top-right of the desktop.
 - CLI = ``sudo raspi-config`` > Network Options > Wi-fi
-- CLI headless =  Mount the ``/boot/`` (first) partition of Raspberry Pi OS. Then create a file called ``wpa_supplicant.conf`` in that directory with these contents below. Configure the country, SSID (Wi-FI username), and PSK (Wi-Fi password). Upon the next boot, this file will be moved to the correct location and the WiFi service will be enabled and started automatically.
+- CLI headless =  Mount the ``/boot/`` (first) partition of Raspberry Pi OS. Then create a file called ``wpa_supplicant.conf`` in that directory with these contents below. Configure the country, SSID (Wi-Fi username), and PSK (Wi-Fi password). Upon the next boot, this file will be moved to the correct location and the WiFi service will be enabled and started automatically.
 
    ::
 
@@ -73,7 +73,22 @@ Starting with the release of the Raspberry Pi 3 Model B, the Raspberry Pi includ
           key_mgmt=WPA-PSK
       }
 
-[4]
+A static IP address can be setup by using the DHCP daemon. [17]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/dhcpcd.conf
+
+::
+
+   interface wlan0
+   static ip_address=<IPV4_ADDRESS>/24
+   static routers=<DEFAULT_GATEWAY>
+   static domain_name_servers=<DNS_SERVER>
+
+.. code-block:: sh
+
+   $ sudo reboot
 
 Projects
 --------
@@ -350,3 +365,4 @@ Bibliography
 14. "lights are very blinky. how can i slow them down?" Reddit r/LightShowPi. December 13, 2020. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/kcn0oy/lights_are_very_blinky_how_can_i_slow_them_down/
 15. "Custom channel frequencies, attenuate, min/max frequency." Reddit r/LightShowPi. December 19, 2021. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/rcrgh5/custom_channel_frequencies_attenuate_minmax/
 16. "Creating a Playlist for your LightShowPi (easy mode)." LightShowPi KB. December 8, 2017. Accessed May 14, 2022. https://lspkb.blogspot.com/2017/12/creating-playlist-for-your-lightshowpi.html
+17. "How Do I Set a Static IP Address on Raspberry Pi?" MUO - Technology, Simplified. March 12, 2022. Accessed October 9, 2022. https://www.makeuseof.com/raspberry-pi-set-static-ip/
