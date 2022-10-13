@@ -16,6 +16,15 @@ DevOps can be categorized into 5 topics known as the CALMS [17]:
 -  Measurement = Measure performance, usage, and other relevant information to help better define and shape the future of the application. For example, use an Elasticsearch, Logstash, and Kibana (ELK) stack to monitor applications.
 -  Sharing = Communication is the most important and hardest part of DevOps. Team members must be open to sharing ideas and working together on common goals.
 
+Books
+-----
+
+These are books in order of highest to lowest recommendation of reading:
+
+-  The DevOps Handbook
+-  The Phoenix Project
+-  The Unicorn Project
+
 Methodologies
 -------------
 
