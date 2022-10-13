@@ -41,7 +41,8 @@ Virtualization
 --------------
 
 GNS3
-^^^^
+~~~~
+
 The Graphical Network Simulator 3 (GNS3) is a free and open source software for setting up virtual lab environments consisting of switches and routers. Virtual images are provided by most of the major network manufacturers that can be used with GNS3. [1]
 
 -  `Arista's vEOS <https://eos.arista.com/veos-running-eos-in-a-vm/#Download_vEOS>`__
