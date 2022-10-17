@@ -90,6 +90,27 @@ A static IP address can be setup by using the DHCP daemon. [17]
 
    $ sudo reboot
 
+Upgrades
+--------
+
+Minor
+~~~~~
+
+Upgrading system packages to the latest minor release of Raspberry Pi OS is the same as upstream Debian.
+
+.. code-block:: sh
+
+   $ sudo apt-get update
+   $ sudo apt-get dist-upgrade
+   $ sudo reboot
+
+For upgrading the Linux kernel and firmware, use the `rpi-update <https://github.com/raspberrypi/rpi-update>`__ command.
+
+.. code-block:: sh
+
+   $ sudo rpi-update
+   $ sudo reboot
+
 Projects
 --------
 
