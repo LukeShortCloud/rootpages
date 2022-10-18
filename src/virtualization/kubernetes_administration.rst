@@ -1284,16 +1284,34 @@ Tanzu Application Platform (TAP)
 
 Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu Packages from Tanzu Community Edition (TCE). They are a collection of cloud-native developer-focused applications that are installed using Carvel tools and container images. It requires a valid subscription to setup.
 
--  Create a `VMware Tanzu Network account <https://network.tanzu.vmware.com/>`__. This is used as the container registry to pull the container images for TAP.
--  Download the `Cluster Essentials for VMware Tanzu <https://network.tanzu.vmware.com/products/tanzu-cluster-essentials/>`__. These tools can be installed on Linux or macOS (not Windows).
--  Extract the tools. For example, TAP 1.3.
+-  Create a `VMware Tanzu Network account <https://network.tanzu.vmware.com/>`__. This is used to download local CLI tools and to access the container registry to pull the container images for TAP.
+-  Download the `tanzu-tap-cli <https://network.pivotal.io/products/tanzu-application-platform>`__.
+-  Extrace the CLI tools.
+
+   .. code-block:: sh
+
+      $ mkdir ~/tanzu/
+      $ tar -x -v -f ~/Downloads/tanzu-framework-[darwin|linux]-amd64.tar -C ~/tanzu
+      $ sudo install ~/tanzu/cli/core/*/tanzu-core-[darwin|linux]_amd64 /usr/local/bin/tanzu
+      $ tanzu version
+
+-  Install the Tanzu CLI plugins. [103]
+
+   .. code-block:: sh
+
+      $ export TANZU_CLI_NO_INIT=true
+      $ tanzu plugin install --local ~/tanzu/cli all
+      $ tanzu plugin list
+
+-  Download the `Cluster Essentials for VMware Tanzu <https://network.tanzu.vmware.com/products/tanzu-cluster-essentials/>`__.
+-  Extract the installation files. For example, TAP 1.3.
 
    .. code-block:: sh
 
       $ mkdir ~/tanzu-cluster-essentials
-      $ tar -x -v -f tanzu-cluster-essentials-[darwin|linux]-amd64-1.3.tgz -C ~/tanzu-cluster-essentials
+      $ tar -x -v -f ~/Downloads/tanzu-cluster-essentials-[darwin|linux]-amd64-1.3.0.tgz -C ~/tanzu-cluster-essentials
 
--  Configure the installation by creating a new exports script.
+-  Configure the installation by creating a new exports script. The correct checksum can be found in `this guide <https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.3/cluster-essentials/GUID-deploy.html>`__.
 
    .. code-block:: sh
 
@@ -1311,14 +1329,21 @@ Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu P
    .. code-block:: sh
 
       $ cd ~/tanzu-cluster-essentials/
-      $ . ./export.sh
+      $ . ./exports.sh
       $ ./install.sh --yes
 
--  Load the client tools.
+-  Load the other optional client tools temporarily or install them globally.
 
    .. code-block:: sh
 
       $ export PATH="${PATH}:${HOME}/tanzu-cluster-essentials"
+
+   .. code-block:: sh
+
+      $ sudo install ~/tanzu-cluster-essentials/imgpkg /usr/local/bin/
+      $ sudo install ~/tanzu-cluster-essentials/kapp /usr/local/bin/
+      $ sudo install ~/tanzu-cluster-essentials/kbld /usr/local/bin/
+      $ sudo install ~/tanzu-cluster-essentials/ytt /usr/local/bin/
 
 -  Setup the TAP repository. For example, TAP 1.3.0.
 
@@ -2631,3 +2656,4 @@ Bibliography
 100. "secretgen-controller installed by default in TCE unmanaged-clusters #3817." GitHub vmware-tanzu/community-edition. https://github.com/vmware-tanzu/community-edition/issues/3817
 101. "Deploying Cluster Essentials v1.3." VMware Docs. October 7, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.3/cluster-essentials/GUID-deploy.html
 102. "Installing Tanzu Application Platform package and profiles." VMware docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install.html
+103. "Accepting Tanzu Application Platform EULAs and installing Tanzu CLI." VMware Docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install-tanzu-cli.html
