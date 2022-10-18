@@ -1286,12 +1286,12 @@ Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu P
 
 -  Create a `VMware Tanzu Network account <https://network.tanzu.vmware.com/>`__. This is used as the container registry to pull the container images for TAP.
 -  Download the `Cluster Essentials for VMware Tanzu <https://network.tanzu.vmware.com/products/tanzu-cluster-essentials/>`__. These tools can be installed on Linux or macOS (not Windows).
--  Extract the tools. For example, TAP 1.2.
+-  Extract the tools. For example, TAP 1.3.
 
    .. code-block:: sh
 
       $ mkdir ~/tanzu-cluster-essentials
-      $ tar -x -v -f tanzu-cluster-essentials-[darwin|linux]-amd64-1.2.tgz -C ~/tanzu-cluster-essentials
+      $ tar -x -v -f tanzu-cluster-essentials-[darwin|linux]-amd64-1.3.tgz -C ~/tanzu-cluster-essentials
 
 -  Configure the installation by creating a new exports script.
 
@@ -1320,7 +1320,7 @@ Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu P
 
       $ export PATH="${PATH}:${HOME}/tanzu-cluster-essentials"
 
--  Setup the TAP repository. For example, TAP 1.2.2.
+-  Setup the TAP repository. For example, TAP 1.3.0.
 
    .. code-block:: sh
 
@@ -1333,7 +1333,7 @@ Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu P
         --export-to-all-namespaces \
         --yes
       $ tanzu package repository add tanzu-tap-repository \
-        --url registry.tanzu.vmware.com/tanzu-application-platform/tap-packages:1.2.2 \
+        --url registry.tanzu.vmware.com/tanzu-application-platform/tap-packages:1.3.0 \
         --namespace tap-install
 
 -  View all of the available packages to install.
@@ -2629,5 +2629,5 @@ Bibliography
 98. "Installing with Helm." cert-manager Documentation. 2022. Accessed July 5, 2022. https://cert-manager.io/docs/installation/helm/
 99. "VMware Tanzu Kubernetes releases Release Notes." VMware Docs. July 29, 2022. Accessed August 24, 2022. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-releases/services/rn/vmware-tanzu-kubernetes-releases-release-notes/index.html
 100. "secretgen-controller installed by default in TCE unmanaged-clusters #3817." GitHub vmware-tanzu/community-edition. https://github.com/vmware-tanzu/community-edition/issues/3817
-101. "Deploying Cluster Essentials v1.2." VMware Docs. August 24, 2022. Accessed September 29, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.2/cluster-essentials/GUID-deploy.html
-102. "Installing Tanzu Application Platform package and profiles." VMware docs. September 29, 2022. Accessed September 29, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.2/tap/GUID-install.html
+101. "Deploying Cluster Essentials v1.3." VMware Docs. October 7, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.3/cluster-essentials/GUID-deploy.html
+102. "Installing Tanzu Application Platform package and profiles." VMware docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install.html
