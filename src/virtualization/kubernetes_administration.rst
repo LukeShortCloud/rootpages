@@ -258,6 +258,47 @@ TKGm stands for TKG Multicloud. It is a product for installing Kubernetes on-top
 TCE
 ^^^
 
+Tanzu Community Edition (TCE) is the upstream and open source variant of Tanzu Kubernetes Grid Multi-cloud (TKGm) and Tanzu Application Platform (TAP). These are the components that the project provides from the top-down [104]:
+
+-  Observability:
+
+   -  Fluent Bit = Log forwarding.
+   -  Grafana = Visualization.
+   -  Prometheus = Monitoring and alerting.
+
+-  Build and deploy:
+
+   -  Cartographer = Supply chain choreography.
+   -  Flux = Git monitoring.
+   -  Harbor = Container registry.
+   -  Knative = Serverless.
+   -  kpack = Build service.
+   -  Kubeapps = Application catalog.
+
+-  Services:
+
+   -  cert-manager = Certificates.
+   -  Open Policy Agent (OPA) = Policy management.
+   -  Pinniped = Authentication.
+   -  Velero = Data protection.
+
+-  Connectivity:
+
+   -  Contour and External DNS = Ingress and load balancing.
+   -  Antrea, Calico, and Multus = Container networking.
+
+-  Compute runtime:
+
+   -  Cluster API = Lifecycle management.
+   -  Carvel = Package management.
+   -  Kubernetes = Container runtime.
+
+TCE can run on these environments [104]:
+
+-  docker and Minikube = Local.
+-  VMware vSphere = On-premises.
+-  AWS and Microsoft Azure = Public cloud.
+
 Supported storage classes [90]:
 
 -  Amazon Elastic Block Store (EBS)
@@ -2657,3 +2698,4 @@ Bibliography
 101. "Deploying Cluster Essentials v1.3." VMware Docs. October 7, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.3/cluster-essentials/GUID-deploy.html
 102. "Installing Tanzu Application Platform package and profiles." VMware docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install.html
 103. "Accepting Tanzu Application Platform EULAs and installing Tanzu CLI." VMware Docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install-tanzu-cli.html
+104. "Open Source Tanzu Platform." VMware Tanzu Community Edition. 2022. Accessed October 19, 2022. https://tanzucommunityedition.io/
