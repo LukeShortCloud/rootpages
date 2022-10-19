@@ -732,7 +732,7 @@ Proxmox (add the ``-hypervisor`` CPU arguments list) [67]:
 Troubleshooting
 '''''''''''''''
 
-Issue: a black screen is shown on the monitor connected to the GPU that is pass-throughed.
+Issue: a black screen is shown on the monitor connected to the GPU that is pass-through.
 
 Solutions:
 
@@ -742,9 +742,9 @@ Solutions:
 
       $ sudo dmesg
 
--  Some newer graphics cards have issues.
+-  Some newer graphics cards do not display the boot sequence. For example, the NVIDIA GTX 1650 is reported as working whereas both the 2080 and 3060 do not.
 
-   -  Use a VNC display to access the virtual machine during boot. Use the GPU after it has been booted.
+   -  If the UEFI or system bootloader (such as GRUB) menu needs to be accessed, use a VNC display to access the virtual machine during boot. Once booted, the graphics card will then display the operating system. [68]
 
 -  Older graphics cards do not support UEFI boot. Use legacy BIOS boot with SeaBIOS instead.
 
@@ -1948,3 +1948,4 @@ Bibliography
 65. "Pci passthrough." Proxmox VE. September 1, 2021. Accessed August 27, 2022. https://pve.proxmox.com/wiki/Pci_passthrough#NVIDIA_Tips
 66. "Get Halo Infinite running under a VM." Reddit r/VFIO. January 2, 2022. Accessed August 27, 2022. https://www.reddit.com/r/VFIO/comments/pvt9en/get_halo_infinite_running_under_a_vm/
 67. "How To set "<feature policy='disable' name='hypervisor'/>" in Proxmox." Reddit r/Proxmox. November 17, 2022. Accessed August 27, 2022. https://www.reddit.com/r/Proxmox/comments/quwmp7/how_to_set_feature_policydisable_namehypervisor/
+68. "GPU Passthrough - not displaying boot sequence." Proxmox VE. December 30, 2021. Accessed October 17, 2022. https://forum.proxmox.com/threads/gpu-passthrough-not-displaying-boot-sequence.77997/
