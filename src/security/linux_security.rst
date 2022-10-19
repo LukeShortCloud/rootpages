@@ -80,6 +80,34 @@ View details about password expiration for a user.
 
    $ sudo chage --list <USER>
 
+sudo
+~~~~
+
+``sudo`` is a command used to provide elevated privileges in Linux so users can run commands as if they were the ``root`` user. It is similar to User Account Control (UAC) on Windows. It is installed by default on many Linux distributions except for a few such as Debian.
+
+A normal user account can run commands as if they were the ``root`` user by using the syntax ``sudo <COMMAND> <ARGUMENTS>``.
+
+The main configuration file is ``/etc/sudoers`` but it is recommended to create a new file ``/etc/sudoers.d/<FILE>`` for additional configurations. The permissions are very strict on these files and the configuration will not load if they are incorrect.
+
+.. code-block:: sh
+
+   $ sudo touch /etc/sudoers.d/example
+   $ sudo chmod 0440 /etc/sudoers.d/example
+   $ sudo chown root:root /etc/sudoers.d/example
+
+Configuration options [12]:
+
+-  ``<USERNAME> ALL=(ALL) <PATH_TO_COMMAND>`` = Allow a user to only run the specified command with ``sudo``.
+-  ``<USERNAME> ALL=(ALL) NOPASSWD: ALL`` = Allow a user to run any command with ``sudo`` without entering their password.
+-  ``<USERNAME> ALL=(ALL) ALL`` = Allow a user to run any command with ``sudo``.
+-  ``%sudo ALL=(ALL) ALL`` = Allow all users in the ``sudo`` group to run any command with ``sudo``.
+-  ``ALL ALL=(ALL) ALL`` = Allow every user to use sudo.
+-  ``Defaults <KEY1>=<VALUE1>,<KEY2>=<VALUE2>`` = Configure default settings for all valid ``sudo`` users.
+-  ``Defaults:<USERNAME> <KEY1>=<VALUE1>,<KEY2>=<VALUE2>`` = Configure default settings for a single specified ``sudo`` user.
+-  ``Defaults passwd_tries=<VALUE>`` = Default: ``5``. The number of times to allow a password to be entered in before locking a user account
+-  ``Defaults timestamp_timeout=<VALUE>`` = Default: ``15``. The number of minutes to wait before prompting a user to enter their password again. Set to ``0`` to always require a password. Set to ``-1`` to only ever require a password once.
+-  ``Defaults timestamp_type=global,timestamp_timeout=<VALUE>`` = Setting the timestamp type to ``global`` makes the settings apply to all TTYs. This means that when a user enters a password in one TTY for ``sudo``, it will be valid for all other logged in sessions of the same user.
+
 Kerberos
 ~~~~~~~~
 
@@ -388,3 +416,4 @@ Bibliography
 9. "OpenSSL Quick Reference Guide." DigiCert. Accessed March 21, 2021. https://www.digicert.com/kb/ssl-support/openssl-quick-reference-guide.htm
 10. "User:Grawity/Adding a trusted CA certificate." Arch Linux Wiki. June 16, 2020. Accessed April 30, 2021. https://wiki.archlinux.org/index.php/User:Grawity/Adding_a_trusted_CA_certificate
 11. "How To Set Up and Configure a Certificate Authority (CA) On Debian 10." Digital Ocean Community Tutorials. April 2, 2020. Accessed April 30, 2021. https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-debian-10
+12. "sudoers(5) - Linux man page." die.net. July 16, 2012. Accessed October 19, 2022. https://linux.die.net/man/5/sudoers
