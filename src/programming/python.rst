@@ -13,7 +13,7 @@ Choosing a Version
 
 The version of Python to use for a new project depends on the use case and/or operating system.
 
-For speed considerations, Python 3.11 is the first release of Python 3 to be faster than Python 2. [44] It is also about 25% faster than Python 3.10. [45]
+For speed considerations, Python 3.11 is the first release of Python 3 to be faster than Python 2. [44] It is also anywhere between 25% and 36.9% faster than Python 3.10. [45][55]
 
 Here are default Python versions tied to long-term support Linux distributions [43]:
 
@@ -1914,3 +1914,4 @@ Bibliography
 52. "Chapter 1. Introduction to Python." Red Hat Customer Portal. Accessed September 7, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_introduction-to-python_installing-and-using-dynamic-programming-languages
 53. "Run Your Python Code as Fast as C." Towards Data Science. April 17, 2021. Accessed October 20, 2022. https://towardsdatascience.com/run-your-python-code-as-fast-as-c-4ae49935a826
 54. "Downloading and Installing PyPy." PyPy documentation. 2022. Accessed October 20, 2022. https://doc.pypy.org/en/latest/install.html
+55. "Python 3.14 Will be Faster than C++." Towards Data Science. September 10, 2022. Accessed October 20, 2022. https://towardsdatascience.com/python-3-14-will-be-faster-than-c-a97edd01d65d
