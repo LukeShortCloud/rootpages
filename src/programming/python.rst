@@ -56,6 +56,8 @@ Here are the last versions of Python supported on older versions of Windows [46]
    Vista, 3.8
    XP, 3.4
 
+PyPy is an alternative Python interpreter that uses a just-in-time (JIT) compiler to turn Python code into a binary format. It can make Python code as fast and, in some cases, faster than compiled C code. [53] If using PyPy, it is recommended to use Python 3.7. [54]
+
 Python 2
 ~~~~~~~~
 
@@ -1910,3 +1912,5 @@ Bibliography
 50. "Programming languages: Why Python 4.0 might never arrive, according to its creator." TechRepublic. May 24, 2021. Accessed September 6, 2022. https://www.techrepublic.com/article/programming-languages-why-python-4-0-will-probably-never-arrive-according-to-its-creator/
 51. "Chapter 38. Installing and using Python." Red Hat Customer Portal. Accessed September 7, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/assembly_installing-and-using-python_configuring-basic-system-settings
 52. "Chapter 1. Introduction to Python." Red Hat Customer Portal. Accessed September 7, 2022. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_introduction-to-python_installing-and-using-dynamic-programming-languages
+53. "Run Your Python Code as Fast as C." Towards Data Science. April 17, 2021. Accessed October 20, 2022. https://towardsdatascience.com/run-your-python-code-as-fast-as-c-4ae49935a826
+54. "Downloading and Installing PyPy." PyPy documentation. 2022. Accessed October 20, 2022. https://doc.pypy.org/en/latest/install.html
