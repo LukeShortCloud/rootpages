@@ -258,7 +258,7 @@ TKGm stands for TKG Multicloud. It is a product for installing Kubernetes on-top
 TCE
 ^^^
 
-Tanzu Community Edition (TCE) is the upstream and open source variant of Tanzu Kubernetes Grid Multi-cloud (TKGm) and Tanzu Application Platform (TAP). These are the components that the project provides from the top-down [104]:
+Tanzu Community Edition (TCE) was the upstream and open source variant of Tanzu Kubernetes Grid Multi-cloud (TKGm) and Tanzu Application Platform (TAP). In 2022, about one year after TCE's launch, the project was retired and replaced by a free version of TKGm for personal use for up to 100 processor cores. [105] These are the components that the project provided from the top-down [104]:
 
 -  Observability:
 
@@ -624,13 +624,14 @@ Each Tanzu Kubernetes Grid Multicloud (TKGm) release supports up to three versio
 TCE
 ^^^
 
-Tanzu Community Edition (TCE) is the upstream variant of both TKGm and TAP. Based on similar release dates, here are the equivalent versions. [88]
+Tanzu Community Edition (TCE) was the upstream variant of both TKGm and TAP. Based on similar release dates, here are the equivalent versions. Version 0.13.0-dev.2 was the last release of TCE before the project was retired in 2022. [88][105][106]
 
 .. csv-table::
    :header: TCE, TKGm
    :widths: 20, 20
 
-   0.10.0, 1.5.0
+   0.13.0-dev.2, 1.6.0
+   0.12.1, 1.5.0
    0.8.0, 1.4.0
    0.4.0, 1.3.0
 
@@ -638,10 +639,11 @@ Tanzu Community Edition (TCE) is the upstream variant of both TKGm and TAP. Base
    :header: TCE, TAP
    :widths: 20, 20
 
+   0.13.0-dev.2, `1.3 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-release-notes.html>`__
    0.12.1, `1.2 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.2/tap/GUID-release-notes.html>`__
-   0.10.0, `1.1 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.1/tap/GUID-release-notes.html>`__
-   0.9.1, `1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.0/tap/GUID-release-notes.html>`__
-   0.7.0, `0.1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.4/tap/GUID-release-notes.html>`__
+   0.11.0, `1.1 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.1/tap/GUID-release-notes.html>`__
+   0.10.0, `1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.0/tap/GUID-release-notes.html>`__
+   0.8.0, `0.1.0 <https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/0.4/tap/GUID-release-notes.html>`__
 
 TKGS
 ^^^^
@@ -1413,13 +1415,15 @@ Tanzu Application Platform (TAP) packages are the downstream variants of Tanzu P
 TCE
 ^^^
 
+Tanzu Community Edition (TCE) was retired in 2022. For public or private cloud deployments, it is recommended to use see the free version of TKGm for personal use for up to 100 processors. For local workstation labs, it is recommended to use ``minikube`` or ``kind`` instead. [104]
+
 Install the ``tanzu`` CLI utility. [82]
 
 -  Linux:
 
    .. code-block:: sh
 
-      $ export TCE_VER="v0.11.0"
+      $ export TCE_VER="v0.12.1"
       $ wget https://github.com/vmware-tanzu/community-edition/releases/download/${TCE_VER}/tce-linux-amd64-${TCE_VER}.tar.gz
       $ tar -x -v -f tce-linux-amd64-${TCE_VER}.tar.gz
       $ cd tce-linux-amd64-${TCE_VER}
@@ -1467,11 +1471,11 @@ Tanzu Packages
 
 Tanzu Packages provided by Tanzu Community Edition (TCE) are the upstream variants of Tanzu Application Platform (TAP). They are a collection of cloud-native developer-focused applications that are installed using Carvel tools and container images.
 
-Setup the Tanzu Packages repository globally for TCE 0.12.0:
+Setup the Tanzu Packages repository globally for TCE 0.12.1:
 
 .. code-block:: sh
 
-   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.12.0 --namespace tanzu-package-repo-global
+   $ tanzu package repository add tce-repo --url projects.registry.vmware.com/tce/main:0.12.1 --namespace tanzu-package-repo-global
 
 View the available packages to install:
 
@@ -2698,4 +2702,6 @@ Bibliography
 101. "Deploying Cluster Essentials v1.3." VMware Docs. October 7, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/Cluster-Essentials-for-VMware-Tanzu/1.3/cluster-essentials/GUID-deploy.html
 102. "Installing Tanzu Application Platform package and profiles." VMware docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install.html
 103. "Accepting Tanzu Application Platform EULAs and installing Tanzu CLI." VMware Docs. October 18, 2022. Accessed October 18, 2022. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-install-tanzu-cli.html
-104. "Open Source Tanzu Platform." VMware Tanzu Community Edition. 2022. Accessed October 19, 2022. https://tanzucommunityedition.io/
+104. "Open Source Tanzu Platform." VMware Tanzu Community Edition. 2022. Accessed October 24, 2022. https://tanzucommunityedition.io/
+105. "Goodbye Tanzu Community Edition." October 21, 2022. Accessed October 24, 2022. https://www.vxav.fr/2022-10-21-goodbye-tanzu-community-edition-sad/
+106. "Tags." GitHub vmware-tanzu/community-edition. June 6, 2022. Accessed October 24, 2022. https://github.com/vmware-tanzu/community-edition/tags
