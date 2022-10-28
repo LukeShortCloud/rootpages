@@ -1126,7 +1126,7 @@ Installation:
 
    .. code-block:: sh
 
-      $ GO111MODULE="on" go get sigs.k8s.io/kind@v0.9.0
+      $ GO111MODULE="on" go get sigs.k8s.io/kind@v0.17.0
 
 -  macOS specific:
 
@@ -1146,7 +1146,8 @@ Usage:
 
    .. code-block:: sh
 
-      $ kind create cluster --image kindest/node:<TAG>
+      $ export KIND_NODE_VER="v1.25.3"
+      $ kind create cluster --image kindest/node:${KIND_NODE_VER}
 
 -  Or create a cluster using a Kubernetes manifest file for the Cluster API:
 
