@@ -40,7 +40,7 @@ Installation
    $ export GO_OS="linux"
    $ export GO_ARCH="amd64"
 
-.. codelbokc:: sh
+.. code-block:: sh
 
    $ wget https://dl.google.com/go/go${GO_VERSION}.${GO_OS}-${GO_ARCH}.tar.gz
    $ tar -C /usr/local -x -z -f go${GO_VERSION}.${GO_OS}-${GO_ARCH}.tar.gz
