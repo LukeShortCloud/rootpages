@@ -1147,22 +1147,26 @@ Usage:
    .. code-block:: sh
 
       $ export KIND_NODE_VER="v1.25.3"
-      $ kind create cluster --image kindest/node:${KIND_NODE_VER}
+      $ kind create cluster --image kindest/node:${KIND_NODE_VER} --name <KIND_CLUSTER_NAME>
 
--  Or create a cluster using a Kubernetes manifest file for the Cluster API:
+-  Or create a cluster using a Kubernetes manifest file for the Cluster API. This allows for more configuration options.
 
-   .. code-block:: sh
+   -  Syntax:
 
-      $ kind create cluster --config=<CLUSTER_MANIFEST>.yaml
+      .. code-block:: sh
 
-   .. code-block:: sh
+         $ kind create cluster --config=<CLUSTER_MANIFEST>.yaml
 
-      $ cat <<EOF | kind create cluster --config=-
-      kind: Cluster
-      apiVersion: kind.x-k8s.io/v1alpha4
-      nodes:
-      - role: control-plane
-      EOF
+   -  Create a cluster using the default values:
+
+      .. code-block:: sh
+
+         $ cat <<EOF | kind create cluster --config=-
+         kind: Cluster
+         apiVersion: kind.x-k8s.io/v1alpha4
+         nodes:
+         - role: control-plane
+         EOF
 
    -  Create a cluster with an Ingress Controller that is port-forwarded to the host (required for Docker on macOS and Windows, not Linux) [79]:
 
@@ -1197,13 +1201,40 @@ Usage:
          $ kubectl apply --filename https://projectcontour.io/quickstart/contour.yaml
          $ kubectl patch daemonsets --namespace projectcontour envoy --patch '{"spec":{"template":{"spec":{"nodeSelector":{"ingress":"true"},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}}}}'
 
--  Configure kubectl to use the cluster by default:
+[45]
+
+   -  Create a cluster with `Calico <https://github.com/projectcalico/calico>`__ as the container networking interface (CNI) instead of `kindnet <https://github.com/aojea/kindnet>`__. [107][108]
+
+      -  Create a kind cluster with the CNI disabled and configure the default Pod subnet used by Calico:
+
+         .. code-block:: sh
+
+            $ cat <<EOF | kind create cluster --config=-
+            kind: Cluster
+            apiVersion: kind.x-k8s.io/v1alpha4
+            networking:
+              disableDefaultCNI: true
+              podSubnet: 192.168.0.0/16
+            EOF
+
+      -  Install the latest version of Calico:
+
+         .. code-block:: sh
+
+            $ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+      -  Disable the reverse path filtering (RPF) check because it is not used in kind clusters and will lead to Calico being in a failed state on older versions of Kubernetes and kind:
+
+         .. code-block:: sh
+
+            $ kubectl -n kube-system set env daemonset/calico-node FELIX_IGNORELOOSERPF=true
+
+-  Configure kubectl to use the kind cluster (this happens automatically after ``kind create cluster``):
 
    .. code-block:: sh
 
-      $ kubectl config set-context kind-kind
-
-[45]
+      $ kubectl config get-contexts
+      $ kubectl config use-context kind-<CLUSTER_NAME>
 
 OpenShift Ansible
 ~~~~~~~~~~~~~~~~~
@@ -2706,3 +2737,5 @@ Bibliography
 104. "Open Source Tanzu Platform." VMware Tanzu Community Edition. 2022. Accessed October 24, 2022. https://tanzucommunityedition.io/
 105. "Goodbye Tanzu Community Edition." October 21, 2022. Accessed October 24, 2022. https://www.vxav.fr/2022-10-21-goodbye-tanzu-community-edition-sad/
 106. "Tags." GitHub vmware-tanzu/community-edition. June 6, 2022. Accessed October 24, 2022. https://github.com/vmware-tanzu/community-edition/tags
+107. "Configuration." kind. October 2, 2022. Accessed October 28, 2022. https://kind.sigs.k8s.io/docs/user/configuration/
+108. "Creating a Kind Cluster With Calico Networking." alexbrand's blog. September 30, 2019. Accessed October 28, 2022. https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/
