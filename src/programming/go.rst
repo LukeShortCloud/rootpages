@@ -34,10 +34,16 @@ Installation
 
 `Download Go <https://golang.org/dl/>`__, extract it, add the new Go binary $PATH and load it. [11]
 
-::
+.. code-block:: sh
 
-   $ wget https://dl.google.com/go/go<GO_VERSION>.<OPERATING_SYSTEM>-<CPU_ARCHITECTURE>.tar.gz
-   $ tar -C /usr/local -x -z -f go<GO_VERSION>.<OPERATING_SYSTEM>-<CPU_ARCHITECTURE>.tar.gz
+   $ export GO_VERSION="1.19.2"
+   $ export GO_OS="linux"
+   $ export GO_ARCH="amd64"
+
+.. codelbokc:: sh
+
+   $ wget https://dl.google.com/go/go${GO_VERSION}.${GO_OS}-${GO_ARCH}.tar.gz
+   $ tar -C /usr/local -x -z -f go${GO_VERSION}.${GO_OS}-${GO_ARCH}.tar.gz
    $ echo "PATH=$PATH:/usr/local/go/bin" >> ~/.profile
    $ . ~/.profile
 
