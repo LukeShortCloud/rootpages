@@ -148,11 +148,11 @@ Static networking example:
 
 [2]
 
-A Network configuration can be created for a WiFi interface. Using the
-"wpa\_supplicant" service, the WiFi password can be securely saved in a
+A Network configuration can be created for a Wi-Fi interface. Using the
+"wpa\_supplicant" service, the Wi-Fi password can be securely saved in a
 different file and will automatically be used by systemd-network.
 
-WiFi syntax:
+Wi-Fi syntax:
 
 .. code-block:: sh
 
@@ -160,7 +160,7 @@ WiFi syntax:
     $ sudo systemctl enable wpa_supplicant@<NIC>.conf
     $ sudo systemctl start wpa_supplicant@<NIC>.conf
 
-WiFi example:
+Wi-Fi example:
 
 .. code-block:: sh
 

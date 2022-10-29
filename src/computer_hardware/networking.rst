@@ -5,13 +5,13 @@ Networking
 
 Networking hardware commonly includes switches, routers, wireless access points, and/or firewalls.
 
-WiFi
-----
+Wi-Fi
+-----
 
 Brands
 ~~~~~~
 
-These are WiFi chipset manufacturers from order of best to worst Linux support [2]:
+These are Wi-Fi chipset manufacturers from order of best to worst Linux support [2]:
 
 1.  Mediatek
 2.  Qualcomm
@@ -19,24 +19,24 @@ These are WiFi chipset manufacturers from order of best to worst Linux support [
 4.  (Other brands)
 5.  Realtek
 
-`morrownr <https://github.com/morrownr>`__ created a `USB WiFi guide <https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md>`__ that showcases consumer WiFi devices that use chipsets that are natively supported by the Linux kernel.
+`morrownr <https://github.com/morrownr>`__ created a `USB Wi-Fi guide <https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md>`__ that showcases consumer Wi-Fi devices that use chipsets that are natively supported by the Linux kernel.
 
 Speed
 ~~~~~
 
-These are the maximum speeds for each WiFi standard [3][4]:
+These are the maximum speeds for each Wi-Fi standard [3][4]:
 
 .. csv-table::
    :header: Consumer Name, IEEE Name, Specification Speed (Mbps), Real-World Speed (Mbps), Real-World Speed (MBps)
    :widths: 20, 20, 20, 20, 20
 
-    WiFi 1, 802.11b, 11, 5.5, 0.7
-    WiFi 2, 802.11a, 54, 20, 2.5
-    WiFi 3, 802.11g, 54, 20, 2.5
-    WiFi 4, 802.11n, 600, 100, 12.5
-    WiFi 5, 802.11ac, 1300, 740, 92.5
-    WiFi 6, 802.11ax (5 GHz), 10000, 1150, 143.8
-    WiFi 6E, 802.11ax (6 GHz), 10000, 1800, 225.0
+    Wi-Fi 1, 802.11b, 11, 5.5, 0.7
+    Wi-Fi 2, 802.11a, 54, 20, 2.5
+    Wi-Fi 3, 802.11g, 54, 20, 2.5
+    Wi-Fi 4, 802.11n, 600, 100, 12.5
+    Wi-Fi 5, 802.11ac, 1300, 740, 92.5
+    Wi-Fi 6, 802.11ax (5 GHz), 10000, 1150, 143.8
+    Wi-Fi 6E, 802.11ax (6 GHz), 10000, 1800, 225.0
 
 Virtualization
 --------------

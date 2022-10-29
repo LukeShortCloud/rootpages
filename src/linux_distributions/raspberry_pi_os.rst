@@ -61,7 +61,7 @@ Starting with the release of the Raspberry Pi 3 Model B, the Raspberry Pi includ
 
 - GUI = Select the Wi-Fi icon in the top-right of the desktop.
 - CLI = ``sudo raspi-config`` > Network Options > Wi-fi
-- CLI headless =  Mount the ``/boot/`` (first) partition of Raspberry Pi OS. Then create a file called ``wpa_supplicant.conf`` in that directory with these contents below. Configure the country, SSID (Wi-Fi username), and PSK (Wi-Fi password). Upon the next boot, this file will be moved to the correct location and the WiFi service will be enabled and started automatically.
+- CLI headless =  Mount the ``/boot/`` (first) partition of Raspberry Pi OS. Then create a file called ``wpa_supplicant.conf`` in that directory with these contents below. Configure the country, SSID (Wi-Fi username), and PSK (Wi-Fi password). Upon the next boot, this file will be moved to the correct location and the Wi-Fi service will be enabled and started automatically.
 
    ::
 
