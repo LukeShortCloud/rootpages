@@ -24,7 +24,7 @@ These are WiFi chipset manufacturers from order of best to worst Linux support [
 Speed
 ~~~~~
 
-According to Lifewire, these are the maximum speeds for each WiFi standard [3]:
+These are the maximum speeds for each WiFi standard [3][4]:
 
 .. csv-table::
    :header: Consumer Name, IEEE Name, Specification Speed (Mbps), Real-World Speed (Mbps), Real-World Speed (MBps)
@@ -34,8 +34,9 @@ According to Lifewire, these are the maximum speeds for each WiFi standard [3]:
     WiFi 2, 802.11a, 54, 20, 2.5
     WiFi 3, 802.11g, 54, 20, 2.5
     WiFi 4, 802.11n, 600, 100, 12.5
-    WiFi 5, 802.11ac, 1300, 200, 25
-    WiFi 6, 802.11ax, 10000, 2000, 250
+    WiFi 5, 802.11ac, 1300, 740, 92.5
+    WiFi 6, 802.11ax (5 GHz), 10000, 1150, 143.8
+    WiFi 6E, 802.11ax (6 GHz), 10000, 1800, 225.0
 
 Virtualization
 --------------
@@ -67,3 +68,4 @@ Bibliography
 1. "[GNS3] Frequently Asked Questions." GNS3. Accessed May 7, 2018. https://gns3.com/software/faq
 2. "Need Your Help: We need to let Comfast know what we think about multi-state adapters... #70." GitHub morrownr/USB-WiFi. July 27, 2022. Accessed September 27, 2022. https://github.com/morrownr/USB-WiFi/issues/70#issuecomment-1196277552
 3. "How Fast Is a Wi-Fi Network?" Lifewire. June 16, 2021. Accessed September 27, 2022. https://www.lifewire.com/how-fast-is-a-wifi-network-816543
+4. "Wi-Fi 6 vs Wi-Fi 6e: What's the difference?" Tom's Guide. September 19, 2022. Accessed October 29, 2022. https://www.tomsguide.com/face-off/wi-fi-6-vs-wi-fi-6e-whats-the-difference
