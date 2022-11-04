@@ -27,6 +27,37 @@ There is no password by default. For running ``sudo`` commands, a password needs
 
       $ passwd
 
+Transfer Files with SFTP
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+SFTP provides FTP over the SSH protocol. This can be used to move files to and from the Steam Deck.
+
+-  Ensure that a password has been set for the ``deck`` user.
+
+   .. code-block:: sh
+
+      $ passwd
+
+-  Enable the SSH daemon.
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable --now sshd
+
+-  Find the current IP address.
+
+   .. code-block:: sh
+
+      $ ip address
+
+-  Use an SFTP client, such as FileZilla, from a different computer to connect to the Steam Deck.
+
+   -  Host: <STEAM_DECK_IP_ADDRESS>
+   -  Username: deck
+   -  Port: 22
+
+[1]
+
 Disable SteamOS Updates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -61,3 +92,5 @@ History
 
 Bibliography
 ------------
+
+1. "Transferring files from PC to Steam Deck with FileZilla FTP." GamingOnLinux. September 29, 2022. Accessed November 3, 2022. https://www.gamingonlinux.com/2022/09/transferring-files-from-pc-to-steam-deck-with-ftp/
