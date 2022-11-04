@@ -220,7 +220,7 @@ Supported infrastructure for installing OpenShift on [27]:
    -  Bare metal
    -  OpenStack
    -  Red Hat Virtualization (RHV)
-   -  VMWare vSphere
+   -  VMware vSphere
 
 PersistentVolume support [3]:
 
@@ -236,7 +236,7 @@ PersistentVolume support [3]:
 -  Local volume
 -  NFS
 -  Red Hat OpenShift Container Storage (Ceph RBD)
--  VMWare vSphere
+-  VMware vSphere
 
 Tanzu
 ~~~~~
@@ -1286,7 +1286,7 @@ TKGm
 Before installing a Kubernetes cloud with Tanzu, the ``tkg`` utility has to be set up.
 
 -  Install both ``docker`` and ``kubectl``.
--  Download the Tanzu-related binaries from `here <https://www.vmware.com/go/get-tkg>`__. A VMWare account is required to login and download it.
+-  Download the Tanzu-related binaries from `here <https://www.vmware.com/go/get-tkg>`__. A VMware account is required to login and download it.
 -  Extract the binaries:  ``tar -v -x -f tkg-linux-amd64-v${TKG_VERSION}-vmware.1.tar.gz``
 -  Move them into an executable location in ``$PATH``: ``chmod +x ./tkg/* && mv ./tkg/* ~/.local/bin/``
 -  Symlink the ``tkg`` binary: ``ln -s ~/.local/bin/tkg-linux-amd64-v${TKG_VERSION}+vmware.1 ~/.local/bin/tkg``
@@ -2669,8 +2669,8 @@ Bibliography
 36. "Deploy Management Clusters to Amazon EC2 with the CLI." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-aws-cli.html
 37. "Create Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-create.html
 38. "Connect to and Examine Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 27, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-connect.html
-39. "Delete Tanzu Kubernetes Clusters." VMWare Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-delete-cluster.html
-40. "Delete Management Clusters." VMWare Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-delete-management-cluster.html
+39. "Delete Tanzu Kubernetes Clusters." VMware Tanzu Kubernetes Grid Docs. October 26, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-tanzu-k8s-clusters-delete-cluster.html
+40. "Delete Management Clusters." VMware Tanzu Kubernetes Grid Docs. August 27, 2020. Accessed October 31, 2020. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-delete-management-cluster.html
 41. "[clusterctl] "clusterctl config provider" fails to show AWS, VSphere, and Azure info #2876." GitHub kubernetes-sigs/cluster-api. April 20, 2020. Accessed October 31, 2020.
 42. "Container runtimes." Kubernetes Documentation. October 28, 2020. Accessed November 14, 2020. https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 43. "Traefik & Kubernetes." Traefik Labs Docs. 2020. Accessed November 30, 2020. https://doc.traefik.io/traefik/providers/kubernetes-ingress/

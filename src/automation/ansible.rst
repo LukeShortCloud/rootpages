@@ -4774,7 +4774,7 @@ parts of Ansible Tower.
       -  Amazon EC2
       -  Google Compute Engine
       -  Microsoft Azure Resource Manager
-      -  VMWare vCenter
+      -  VMware vCenter
       -  Red Hat Satellite 6
       -  OpenStack
 

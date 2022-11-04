@@ -145,7 +145,7 @@ RHOSP supports running a virtualized Undercloud on these platforms [3]:
 -  Kernel-based Virtual Machine (QEMU with KVM acceleration)
 -  Red Hat Virtualization (RHV)
 -  Microsoft Hyper-V
--  VMWare ESX and ESXi
+-  VMware ESX and ESXi
 
 RHOSP only supports using libvirt with KVM as the compute hypervisor's virtualization technology. [28]
 

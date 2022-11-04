@@ -819,7 +819,7 @@ Xen
 
 Xen is a free and open source software hypervisor under the GNU General
 Public License (GPL). It was originally designed to be a competitor of
-VMWare. It is currently owned by Citrix and offers a paid support
+VMware. It is currently owned by Citrix and offers a paid support
 package for it's virtual machine hypervisor/manager XenServer. [14] By
 itself it can be used as a basic hypervisor, similar to QEMU. It can
 also be used with QEMU to provide accelerated hardware virtualization.
@@ -974,7 +974,7 @@ Common cloud providers:
 -  Kubernetes
 -  OpenStack
 -  Packet
--  VMWare Cloud
+-  VMware Cloud
 -  Vultr
 
 Database providers:
@@ -1571,7 +1571,7 @@ oVirt
 
 Supported operating systems: RHEL/CentOS 7
 
-oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMWare ESXi and XenServer. It is the open source upstream version of Red Hat Virtualization (RHV). It supports using network storage from NFS, Gluster, iSCSI, and other solutions.
+oVirt is an open-source API and GUI front-end for KVM virtualization similar to VMware ESXi and XenServer. It is the open source upstream version of Red Hat Virtualization (RHV). It supports using network storage from NFS, Gluster, iSCSI, and other solutions.
 
 oVirt has three components [39]:
 

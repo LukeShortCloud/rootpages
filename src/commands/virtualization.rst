@@ -378,7 +378,7 @@ Create and convert virtual machine images.
    :header: Usage, Explanation
    :widths: 20, 20
 
-   "convert -f vmdk vmawre_image.vmdk -O qcow2 kvm_image.qcow2", "convert a VMDK image to qcow2; valid options for -f/-O include raw, vmdk (VMWare), vpc (Hyper-V [vhd]), vdi (VirtualBox), qed (KVM) qcow2 (KVM, Xen)"
+   "convert -f vmdk vmawre_image.vmdk -O qcow2 kvm_image.qcow2", "convert a VMDK image to qcow2; valid options for -f/-O include raw, vmdk (VMware), vpc (Hyper-V [vhd]), vdi (VirtualBox), qed (KVM) qcow2 (KVM, Xen)"
    "create -f qcow2 example.qcow2 8G", "create an 8GB virtual machine image called 'example.qcow2'"
    "resize <IMAGENAME> +10G", "increase an image to be 10GB larger"
    "info", "show information about an image"
