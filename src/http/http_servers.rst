@@ -531,7 +531,7 @@ The Squid configuration file is ``/etc/squid/squid.conf``. The configuration set
 
    -  Examples:
 
-      -  ``refresh_pattern -i \.(bmp|eps|gif|ico|jpg|jpeg|jpegxl|jxl|png|tif|tiff|webp)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all images for a minimum of 1 day and a maximum of 30 days. This also ignores cache headers received from the HTTP server and enforces new caching times.
+      -  ``refresh_pattern -i \.(bmp|eps|gif|ico|jpg|jpeg|jpegxl|jxl|png|thumb|tif|tiff|webp)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all images for a minimum of 1 day and a maximum of 30 days. This also ignores cache headers received from the HTTP server and enforces new caching times.
       -  ``refresh_pattern -i \.(3gp|aac|au|avi|flac|flv|iso|m4a|mp3|mdi|mov|mp4|mpeg|ogg|qt|ram|swf|wav|wma|wmv|x-flv)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all audio/video files.
       -  ``refresh_pattern -i \.(7z|7zip|arc|bcm|bin|br|brotli|bz2|bzip2|cpio|gz|gzip|pea|rar|raw|tar|tgz|wim|zip|xz|zst|zstd)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache all archives.
       -  ``refresh_pattern -i \.(cab|deb|dll|exe|msi|pkg|rpm|so|sys)$ 1440 90% 40320 override-expire ignore-no-cache ignore-no-store ignore-private`` = Cache executable, installer, and system files.
