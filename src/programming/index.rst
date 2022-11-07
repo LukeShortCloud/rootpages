@@ -5,5 +5,6 @@
    c_and_c++
    devops
    go
+   machine_learning
    packaging
    python
