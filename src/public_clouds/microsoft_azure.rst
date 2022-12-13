@@ -430,6 +430,19 @@ View hints on how to set up storage sync service on a client device:
 
 [16]
 
+Networking
+~~~~~~~~~~
+
+Service Endpoints
+^^^^^^^^^^^^^^^^^
+
+By default, most Azure services provide a public endpoint that is accessible via the Internet. A Service Endpoint provides adds a subnet to a Virtual Network (VNet) so that Azure services can be accessed over a private network. This is easier to setup than a Private Link. [20][21]
+
+Private Links
+^^^^^^^^^^^^^
+
+Private Link is a newer alternative to Service Endpoints. Instead of adding a subnet to a Virtual Network (VNet), traffic is injected in and out of the VNet. All traffic is handled within the VNet making it more secure than a Service Endpoint. This is harder to setup than a Service Endpoint as it requires setting up custom DNS settings. [20][21]
+
 History
 -------
 
@@ -457,3 +470,5 @@ Bibliography
 17. "Compare Active Directory to Azure Active Directory." Microsoft Docs - Azure Active Directory. June 23, 2022. Accessed July 6, 2022. https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-compare-azure-ad-to-ad
 18. "What's the difference between AD vs Azure AD?" Compete 366. Accessed July 6, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
 19. "Add your custom domain name using the Azure Active Directory portal." Microsoft Docs - Azure Active Directory. May 24, 2022. Accessed July 8, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
+20. "Service Endpoints and Private Link - What's the difference?" samcogan.com. April 11, 2020. Accessed December 13, 2022. https://samcogan.com/service-endpoints-and-private-link-whats-the-difference/
+21. "Azure networking services overview." Microsoft Docs. July 26, 2022. Accessed December 13, 2022. https://learn.microsoft.com/en-us/azure/networking/fundamentals/networking-overview
