@@ -57,6 +57,19 @@ Enable and start the service:
 
 [2]
 
+Cooling
+-------
+
+A comparison was done between three different types of cooling methods for a laptop. These are differences in temperature (celsius) between each cooling method versus having the laptop on a desk. Using a cooling pad can provide the best results but, on average, a laptop stand is usually the best. [3]
+
+.. csv-table::
+   :header: Method, Min, Average, Max
+   :widths: 20, 20, 20, 20
+
+   Cooling Pad, -1.0, 3.4, 11
+   Vacuum Cooler, -1.0, 3.4, 7.0
+   Laptop Stand, 0.0, 3.6, 5.0
+
 History
 -------
 
@@ -67,3 +80,4 @@ Bibliography
 
 1. "Chapter 22. PCI-Express Runtime D3 (RTD3) Power Management." NVIDIA Accelerated Linux Graphics Driver README and Installation Guide. Accessed December 30, 2020. https://us.download.nvidia.com/XFree86/Linux-x86_64/455.45.01/README/dynamicpowermanagement.html
 2. "AdnanHodzic/auto-cpufreq." GitHub. January 9, 2022. Accessed February 5, 2022. https://github.com/AdnanHodzic/auto-cpufreq
+3. "The ULTIMATE Laptop Cooling Comparison - Pad vs Vacuum vs Stand." YouTube - Jarrod'sTech. March 23, 2020. Accessed December 20, 2022. https://www.youtube.com/watch?v=tXvKiy65pwg
