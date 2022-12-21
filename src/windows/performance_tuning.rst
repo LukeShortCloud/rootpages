@@ -137,6 +137,25 @@ Windows occasionally has updates to the operating system itself, other applicati
 
    Settings (ms-settings:) > Update & Security > Windows Update > Check for updates
 
+Disable Windows Search Indexing
+-------------------------------
+
+The Windows Search Index keeps a database of all files and their contents that are found on a drive. This is used for the search functionality in File Explorer. This uses a lot of processing power when it is indexing. The index can be disabled while keeping the search functionality working.
+
+-  Disable it for a specific local drive. [8]
+
+   ::
+
+      File Explorer > (right-click on "Local Disk (C:)") > Properties > General > uncheck "Allow files on this drive to have contents indexed in addition to file properties" > OK > Apply changes to drive C:\, subfolders and files > OK
+
+-  Or disable the entire Windows Search Indexing service. [9]
+
+   ::
+
+      Services (services.msc) > (right-click on "Windows Search") > Properties > General > Startup type: Disabled > Stop > OK
+
+Consider using an alternative search tool such as `Everything <https://www.voidtools.com/downloads/>`__ from voidtools that is faster and more efficient.
+
 Disable Windows Tips (Windows >= 8.1)
 -------------------------------------
 
@@ -165,3 +184,5 @@ Bibliography
 5. "How to Disable VBS and Speed Up Windows 11." Tom's Hardware. October 6, 2021. Accessed June 16, 2022. https://www.tomshardware.com/how-to/disable-vbs-windows-11
 6. "How Often Should I Defrag My HDD?" AOMEI Partition Assistant. March 4, 2022. Accessed June 17, 2022. https://www.diskpart.com/articles/how-often-should-I-defrag-my-hdd-0725.html
 7. "Ways to completely disable windows 8 1 help tips." Tutorials Point. October 23, 2019. Accessed June 17, 2022. https://www.tutorialspoint.com/ways-to-completely-disable-windows-8-1-help-tips
+8. "How to Disable Indexing in Windows 10 & 11." MajorGeeks. Accessed December 15, 2022. https://www.majorgeeks.com/content/page/disable_indexing_11.html
+9. "Manage Windows 10 Search Indexing." gHacks Technology News. October 26, 2021. Accessed December 15, 2022. https://www.ghacks.net/2017/08/10/manage-windows-10-search-indexing/
