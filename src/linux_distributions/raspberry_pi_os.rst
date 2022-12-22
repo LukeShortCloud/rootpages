@@ -48,11 +48,21 @@ SSH
 
 By default, SSH is disabled. Enable it to allow SSH access:
 
-- GUI = Raspberry Pi Configuration > Preferences > Interfaces> SSH: Enabled
-- CLI = ``sudo raspi-config`` > Interfacing Options > SSH: Yes > Ok > Finish
-- CLI headless = Mount the ``/boot/`` (first) partition and then create an empty directory called ``ssh`` in it. On the next boot, SSH will be enabled and started.
+-  GUI = Raspberry Pi Configuration > Preferences > Interfaces> SSH: Enabled
+-  CLI = ``sudo raspi-config`` > Interfacing Options > SSH: Yes > Ok > Finish
+-  CLI headless = Mount the ``/boot/`` (first) partition and then create an empty directory called ``ssh`` in it. On the next boot, SSH will be enabled and started.
 
-Log into the IP address of the Raspberry Pi using the username ``pi`` and password ``raspberry``. [1]
+On Raspberry Pi OS >= 11 (Bullseye), the username and password must first be configured.
+
+-  GUI = The GUI first-time setup wizard will prompt for a username and password.
+-  CLI = The CLI first-time setup wizard will prompt for a username and password.
+-  CLI headless
+
+   -  Mount the ``/boot/`` (first) partition and then create a file called ``userconf.txt``. Add the username and password to the file by using the syntax ``<USERNAME>:<ENCRYPTED_PASSWORD>``. Use the command ``echo '<PASSWORD>' | openssl passwd -6 -stdin`` to generate the encrypted password. On the next boot, the user will be created. [18]
+
+Run ``nmap -sP 192.168.1.0/24`` (or equivalent for the network address) to find the IP address that belongs to a "Raspberry Pi" device.
+
+On Raspberry Pi OS <= 10 (Buster), log into the IP address of the Raspberry Pi using the default username ``pi`` and password ``raspberry``. [1]
 
 Wi-Fi
 -----
@@ -387,3 +397,4 @@ Bibliography
 15. "Custom channel frequencies, attenuate, min/max frequency." Reddit r/LightShowPi. December 19, 2021. Accessed May 13, 2022. https://www.reddit.com/r/LightShowPi/comments/rcrgh5/custom_channel_frequencies_attenuate_minmax/
 16. "Creating a Playlist for your LightShowPi (easy mode)." LightShowPi KB. December 8, 2017. Accessed May 14, 2022. https://lspkb.blogspot.com/2017/12/creating-playlist-for-your-lightshowpi.html
 17. "How Do I Set a Static IP Address on Raspberry Pi?" MUO - Technology, Simplified. March 12, 2022. Accessed October 9, 2022. https://www.makeuseof.com/raspberry-pi-set-static-ip/
+18. "An update to Raspberry Pi OS Bullseye." Raspberry Pi. April 7, 2022. Accessed December 21, 2022. https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/
