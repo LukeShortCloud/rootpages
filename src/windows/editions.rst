@@ -3,6 +3,21 @@ Windows Editions
 
 .. contents:: Table of Contents
 
+Updates
+-------
+
+Here is a list of each Windows version and the year that they stopped getting updates.
+
+.. csv-table::
+   :header: Windows Version, Consumer Updates, Extended Security Updates (ESUs)
+   :widths: 20, 20, 20
+
+   XP [13], 2009, 2014
+   Vista [14], 2012, 2017
+   7 [15], 2020, 2023
+   8 [15], 2023, 2023
+   10, 2025 [16], 2032 [12]
+
 NT 10 (Windows 10 and 11)
 -------------------------
 
@@ -105,4 +120,8 @@ Bibliography
 9. "How to Restore Windows Photo Viewer in Windows 10." Windows 10 Help Forums. October 30, 2020. Accessed January 15, 2022. https://www.tenforums.com/tutorials/14312-restore-windows-photo-viewer-windows-10-a.html
 10. "How to Download APPX file of Any App from Windows Store." WindowsLoop. Accessed April 8, 2022. https://windowsloop.com/how-to-download-appx-file-of-any-app-from-windows-store/
 11. "The next Windows 10 Long Term Servicing Channel (LTSC) release." Microsoft Windows IT Pro Blog. February 18, 2021. Accessed July 19, 2022. https://techcommunity.microsoft.com/t5/windows-it-pro-blog/the-next-windows-10-long-term-servicing-channel-ltsc-release/ba-p/2147232
-12. "Windows for IoT Lifecycle pages." Microsoft Docs. May 2, 2022. Accessed July 18, 2022. https://docs.microsoft.com/en-us/windows/iot/product-family/product-lifecycle
+12. "Windows for IoT Lifecycle pages." Microsoft Docs. May 2, 2022. Accessed January 11, 2023. https://docs.microsoft.com/en-us/windows/iot/product-family/product-lifecycle
+13. "Windows XP - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-xp
+14. "Windows Vista - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-vista
+15. "This is the end, Windows 7 and 8 friends: Microsoft drops support this week." The Register. January 9, 2023. Accessed January 11, 2023. https://www.theregister.com/2023/01/09/microsoft_windows_7_8_support_ends/
+16. "Windows 10 Home and Pro - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro
