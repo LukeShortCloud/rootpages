@@ -11,6 +11,9 @@ spec:
   selector:
     matchLabels:
       app: rootpages
+  strategy:
+    # This deals with a situation where a Kubernetes node reboots which leads to the "emptyDir" ephemeral storage being lost.
+    type: Recreate
   template:
     metadata:
       labels:
