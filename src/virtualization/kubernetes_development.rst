@@ -1916,7 +1916,18 @@ Deployment
 -  replicas (integer) = Default is 1. The number of Pods to create.
 -  revisionHistoryLimit (integer) = Default is 10. The amount of ReplicaSets from a previous Deployment to keep for the purpose of a rollback.
 -  **selector** (`map of Selector <#selector>`_) = The ReplicaSet will match Pods with these labels.
--  strategy (map) = The Deployment strategy when updating and rolling back a Deployment.
+-  strategy (map)
+
+   -  rollingUpdate (map) = Configure what happens if the strategy type is "RollingUpdate".
+
+      -  maxSurge (string) = Default is "25%". The maximum percentage of Pods that can be created during a rolling update. If the replicas is set to 4, then 3 new Pods will be created first during a rolling update.
+      -  maxUnavailable (string) = Default is "25%". The maximum percentage of Pods that can be deleted during a rolling update. If the replicas is set to 4, then 3 Pods will be removed while the 4th one stays running.
+
+   -  type (string) = Default is "RollingUpdate". The Deployment strategy when updating and rolling back Pods.
+
+      -  Recreate = Delete and recreate all Pods at the same time. This will have down time.
+      -  RollingUpdate = Update some Pods at a time while leaving old versions running for high availability.
+
 -  **template** (`map of a Pod manifest <#pod>`_) = The Pod definition to manage as a Deployment.
 
    -  metadata (map) = Specify any non-``name`` value here.
@@ -1955,7 +1966,65 @@ Deployment example.
              ports:
                - containerPort: 8080
 
-[5]
+A Deployment with shared "emptyDir" ephemeral storage will lose the data if a Kubernetes node is rebooted. Change the rollout strategy to be "Recreate" (instead of the default of "RollingUpdate") to delete and recreate the Pods. Otherwise, the Pods will be stuck in a failed state upon a reboot.
+
+.. code-block:: yaml
+
+   ---
+   kind: Deployment
+   apiVersion: apps/v1
+   metadata:
+     name: deploy-website
+   spec:
+     replicas: 5
+     selector:
+       matchLabels:
+         foo: bar
+     strategy:
+       type: Recreate
+     template:
+       metadata:
+         labels:
+           foo: bar
+       spec:
+         initContainers:
+           - name: sphinx
+             image: sphinxdoc/sphinx
+             command:
+               - /bin/sh
+               - -c
+               - pip install sphinx_rtd_theme
+                 && apt-get update
+                 && apt-get -y install git
+                 && rm -rf rootpages
+                 && git clone --branch stable https://github.com/<USER>/<PROJECT>.git
+                 && cd <PROJECT>
+                 && make html
+                 && cd ..
+                 && mv ./<PROJECT>/build/html/* ./
+                 && rm -rf <PROJECT>
+             env:
+               - name: DEBIAN_FRONTEND
+                 value: noninteractive
+             volumeMounts:
+               - name: empty-dir
+                 mountPath: /tmp
+             workingDir: /tmp
+         containers:
+           - name: nginx
+             image: nginx
+             ports:
+               - name: http
+                 containerPort: 80
+             volumeMounts:
+               - name: empty-dir
+                 mountPath: /usr/share/nginx/html
+                 readOnly: true
+         volumes:
+           - name: empty-dir
+             emptyDir: {}
+
+[5][60]
 
 Job
 ^^^
@@ -4281,3 +4350,4 @@ Bibliography
 57. "Rewrites Support." GitHub nginxinc/kubernetes-ingress. August 16, 2021. Accessed May 3, 2022. https://github.com/nginxinc/kubernetes-ingress/tree/main/examples/rewrites
 58. "K8ssandra FAQs." K8ssandra. March 17, 2022. Accessed August 23, 2022. https://docs.k8ssandra.io/faqs/
 59. "Single-cluster install with helm." K8ssandra. May 30, 2022. Accessed August 23, 2022. https://docs-v2.k8ssandra.io/install/local/single-cluster-helm/
+60. "Deployments." Kubernetes Documentation. December 15, 2022. Accessed January 12, 2023. https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
