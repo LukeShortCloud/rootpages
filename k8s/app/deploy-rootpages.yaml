@@ -25,7 +25,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - "pip install sphinx_rtd_theme && apt-get update && apt-get -y install git && rm -rf rootpages && git clone https://github.com/ekultails/rootpages.git && cd rootpages && make html && cd .. && mv ./rootpages/build/html/* ./ && rm -rf rootpages"
+            - "pip install sphinx_rtd_theme && apt-get update && apt-get -y install git && rm -rf rootpages && git clone --branch stable https://github.com/ekultails/rootpages.git && cd rootpages && make html && cd .. && mv ./rootpages/build/html/* ./ && rm -rf rootpages"
           env:
             - name: DEBIAN_FRONTEND
               value: noninteractive
