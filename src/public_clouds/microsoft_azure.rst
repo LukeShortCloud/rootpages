@@ -443,6 +443,17 @@ Private Links
 
 Private Link is a newer alternative to Service Endpoints. Instead of adding a subnet to a Virtual Network (VNet), traffic is injected in and out of the VNet. All traffic is handled within the VNet making it more secure than a Service Endpoint. This is harder to setup than a Service Endpoint as it requires setting up custom DNS settings. [20][21]
 
+Virtual Network Peering
+^^^^^^^^^^^^^^^^^^^^^^^
+
+VNet peering attaches allows two private networks to route between each other. The private CIDRs on each network cannot overlap. VNet peers are non-transitive meaning that additional VNet peers for other networks will not chain together to allow access. There are two types of VNet peering: (1) regional for routing between the same Azure region and (2) global for routing between different Azure regions. [22]
+
+Create a VNet peer:
+
+::
+
+   Azure Portal > Virtual network > (select existing network) > Peerings > + Add
+
 History
 -------
 
@@ -472,3 +483,4 @@ Bibliography
 19. "Add your custom domain name using the Azure Active Directory portal." Microsoft Docs - Azure Active Directory. May 24, 2022. Accessed July 8, 2022. https://www.compete366.com/blog-posts/the-difference-between-ad-and-azure-ad-explained/
 20. "Service Endpoints and Private Link - What's the difference?" samcogan.com. April 11, 2020. Accessed December 13, 2022. https://samcogan.com/service-endpoints-and-private-link-whats-the-difference/
 21. "Azure networking services overview." Microsoft Docs. July 26, 2022. Accessed December 13, 2022. https://learn.microsoft.com/en-us/azure/networking/fundamentals/networking-overview
+22. "Azure - Virtual Network (VNet) Peering Overview." Medium - Awesome Azure. September 11, 2020. Accessed January 17, 2022. https://medium.com/awesome-azure/azure-virtual-network-vnet-peering-overview-introduction-a795517bd83b
