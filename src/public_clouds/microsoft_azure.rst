@@ -454,6 +454,29 @@ Create a VNet peer:
 
    Azure Portal > Virtual network > (select existing network) > Peerings > + Add
 
+Virtual Private Network (VPN) Gateway
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A VPN Gateway provides a secure way for on-site users to directly access virtual networks in Azure. It supports IPSec, OpenVN, and Secure Sockets Tunneling Protocol (SSTP). It can also be used for site-to-site connectivity for different Azure regions using IPSec only. [23]
+
+-  Create a VPN Gateway for site-to-site. This will take about 45 minutes.
+
+   ::
+
+      Azure Portal > Virtual network gateways > + Create > Gateway subnet address range: 10.0.1.0/27 > Public IP address: Create new
+
+-  Create two local network gateways.
+
+   ::
+
+      Azure Portal > Local network gateways > + Create
+
+-  Add a connection between the local network gateways and the VPN Gateway.
+
+   ::
+
+      Azure Portal > Virtual network gateways > (select an existing gateway) > Settings > Connections > + Add > Connection type: “Site-to-site (IPsec)” > Shared key (PSK): (this key needs to be the same on both sides)
+
 History
 -------
 
@@ -484,3 +507,4 @@ Bibliography
 20. "Service Endpoints and Private Link - What's the difference?" samcogan.com. April 11, 2020. Accessed December 13, 2022. https://samcogan.com/service-endpoints-and-private-link-whats-the-difference/
 21. "Azure networking services overview." Microsoft Docs. July 26, 2022. Accessed December 13, 2022. https://learn.microsoft.com/en-us/azure/networking/fundamentals/networking-overview
 22. "Azure - Virtual Network (VNet) Peering Overview." Medium - Awesome Azure. September 11, 2020. Accessed January 17, 2022. https://medium.com/awesome-azure/azure-virtual-network-vnet-peering-overview-introduction-a795517bd83b
+23. "What is Azure VPN Gateway?" Microsoft Learn. December 21, 2022. Accessed January 17, 2022. https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
