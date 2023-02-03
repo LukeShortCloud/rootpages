@@ -18,12 +18,23 @@ If using another antivirus program or if required for testing, it may be desired
 
 **Manually**
 
--  Windows 10
+-  Real-time protection
 
-   -  Real-time protection = Settings > Update & Security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off
-   -  Scheduled tasks = Task Scheduler > Task Scheduler (Local) > Task Scheduler Library > Microsoft > Windows > Windows Defender
+   -  Windows 10
 
-      -  Select each task and either `Disable` or `Delete` them: `Windows Defender Cache Maintenance`, `Windows Defender Cleanup`, `Windows Defender Scheduled Scan`, and `Windows Defender Verification`. [2]
+      -  Settings > Update & Security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off
+
+   -  Windows 11
+
+      - Settings > Privacy & security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off, Cloud-delivered protection: Off, Automatic sample submission: Off, and Tamper Protection: Off
+
+-  Scheduled tasks
+
+   -  Windows 10 and 11
+
+      -  Task Scheduler > Task Scheduler (Local) > Task Scheduler Library > Microsoft > Windows > Windows Defender
+
+         -  Select each task and either `Disable` or `Delete` them: `Windows Defender Cache Maintenance`, `Windows Defender Cleanup`, `Windows Defender Scheduled Scan`, and `Windows Defender Verification`. [2]
 
 **Automatically**
 
@@ -59,6 +70,8 @@ Disable
 ~~~~~~~
 
 For users who often need to use the Administrator account, it may be desired to disable UAC entirely.
+
+Windows 10 and 11:
 
 -  Control Panel > User Accounts > User Accounts > Change User Account Control settings > Never notify
 
