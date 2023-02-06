@@ -478,6 +478,22 @@ Lower space usage by [10]:
 
 A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
 
+Toolbox
+'''''''
+
+Fedora Silverblue is the only Linux distribution that uses Toolbox containers. It provides a way to install both CLI and GUI applications inside of a container as to not affect the read-only file system. It also provides additional features such as mounting the user's home directory, full access to ``/dev`` devices, networking passthrough, systemd support, and more.
+
+Requirements to create a Toolbox container [26]:
+
+-  Environment variables ``NAME`` and ``VERSION`` defined.
+-  Labels of ``com.github.containers.toolbox="true"``, ``name="$NAME"``, and ``version="$VERSION"``.
+-  ``bash`` and ``sudo`` binaries are installed.
+-  ``sudo`` is configured to allow the ``toolbox`` user to run privileged commands without the use of a password.
+
+   -  ``echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/toolbox``
+
+-  Default command is ``bash``.
+
 Networking
 ^^^^^^^^^^
 
@@ -671,3 +687,4 @@ Bibliography
 23. "Test an insecure registry." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/registry/insecure/
 24. "Docker Desktop for Mac user manual." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/docker-for-mac/
 25. "Debugging Kubernetes nodes with crictl." Kubernetes Documentation. December 10, 2020. Accessed July 20, 2021. https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/
+26. "Toolbox." ArchWiki. January 20, 2023. Accessed February 6, 2023. https://wiki.archlinux.org/title/Toolbox
