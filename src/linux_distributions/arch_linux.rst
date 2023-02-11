@@ -46,6 +46,19 @@ Parallel Downloads
 
 This is documented in `Administration - Package Managers - PKGBUILD - Pacman - Parallel Downloads <../administration/package_managers.html#parallel-downloads>`__.
 
+Linux Kernels
+-------------
+
+There are lots of Linux kernels available for Arch Linux. Here are the Linux kernels in order of fastest to slowest [2]:
+
+1. ``linux``
+2. ``linux-zen``
+3. ``linux-hardened``
+4. ``linux-lts``
+5. ``linux-rt``
+
+For being able to install additional drivers, it is recommended to also install the ``<LINUX_KERNEL>-headers`` package.
+
 History
 -------
 
@@ -55,3 +68,4 @@ Bibliography
 ------------
 
 1. "Reflector." ArchWiki. November 19, 2021. Accessed January 10, 2022. https://wiki.archlinux.org/title/reflector
+2. "The Performance Impact From Different Arch Linux Kernel Flavors." Phoronix. January 25, 2023. Accessed February 10, 2023. https://www.phoronix.com/review/arch-linux-kernels-2023/8
