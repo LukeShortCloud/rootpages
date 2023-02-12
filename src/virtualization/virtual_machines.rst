@@ -1566,6 +1566,21 @@ Common GUIs:
 -  virt-manager
 -  XenServer
 
+GNOME Boxes
+~~~~~~~~~~~
+
+GNOME Boxes can be installed on any Linux distribution using Flatpak:
+
+.. code-block:: sh
+
+   $ flatpak install org.gnome.Boxes
+
+File locations:
+
+-  ``~/.var/app/org.gnome.Boxes/data/gnome-boxes/images/<LINUX_DISTRIBUTION>`` = The QCOW2 image created for the virtual machine.
+-  ``~/Downloads/<LINUX_DISTRIBUTION_ISO>.iso`` = The ISO file downloaded to install the Linux distribution.
+
+
 oVirt
 ~~~~~
 
