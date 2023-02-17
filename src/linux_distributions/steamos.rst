@@ -11,6 +11,22 @@ Introduction
 
 Game Mode is the name of the default mode that Steam OS and the Steam Deck boots into. It is limited to only accessing games from the Steam library. This is not to be confused with Feral Interactive's `GameMode <https://github.com/FeralInteractive/gamemode>`__.
 
+Supported Controllers
+~~~~~~~~~~~~~~~~~~~~~
+
+These are controllers that are officially supported on SteamOS [4][5]:
+
+-  Nintendo Joy-Con controllers
+-  Nintendo Online classic controllers
+-  PlayStation Dualshock 4
+-  PlayStation Dualsense 5
+-  Steam Controller
+-  Xbox 360 controller
+-  Xbox One controller
+-  Xbox Series controller
+-  DirectInput controllers
+-  Generic XInput controllers
+
 Desktop Mode
 ------------
 
@@ -150,3 +166,5 @@ Bibliography
 1. "Transferring files from PC to Steam Deck with FileZilla FTP." GamingOnLinux. September 29, 2022. Accessed November 3, 2022. https://www.gamingonlinux.com/2022/09/transferring-files-from-pc-to-steam-deck-with-ftp/
 2. "OLD | EASY Performance Boosts for Steam Deck!" YouTube CryoByte33. October 14, 2022. Accessed November 20, 2022. https://www.youtube.com/watch?v=3iivwka513Y
 3. "EASY & SAFE Health & Performance Boosts | Steam Deck." YouTube CryoByte33. November 4, 2022. Accessed November 20, 2022. https://www.youtube.com/watch?v=od9_a1QQQns
+4. "How to use an external controller on Steam Deck." PCGamesN. June, 2022. Accessed February 16, 2023. https://www.pcgamesn.com/steam-deck/external-controller
+5. "Steam Client Beta - August 4." Steam Community. August 4, 2022. Accessed Februray 16, 2023. https://steamcommunity.com/groups/SteamClientBeta/announcements/detail/3387288790681635164
