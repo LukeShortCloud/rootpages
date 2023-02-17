@@ -64,6 +64,21 @@ The the unofficial Nvidia driver RPMs can be installed. Starting with Fedora 27 
 
 [1][2]
 
+Block Open Source Drivers
+'''''''''''''''''''''''''
+
+The proprietary drivers provide the best performance. It is possible for the open source drivers to load up first. That would prevent the proprietary driver from being able to load and bind to the NVIDIA graphics card. Block the open source driver from being able to load. [15]
+
+.. code-block:: sh
+
+   $ sudo vim /etc/modprobe.d/nouveau-blacklist.conf
+   blacklist nouveau
+   blacklist rivafb
+   blacklist nvidiafb
+   blacklist rivatv
+   blacklist nv
+   blacklist uvcvideo
+
 nvidia-xrun
 ^^^^^^^^^^^
 
@@ -350,3 +365,4 @@ Bibliography
 12. "Steam/Client troubleshooting." Gentoo Wiki. February 15, 2021. Accessed May 20, 2021. https://wiki.gentoo.org/wiki/Steam/Client_troubleshooting
 13. "Remote Streaming Without a Display." r/ParsecGaming. June 29, 2022. Accessed August 27, 2022. https://www.reddit.com/r/ParsecGaming/comments/kbzbhg/remote_streaming_without_a_display/
 14. "Unable To Hear The Game You're Playing." Parsec. Accessed September 6, 2022. https://support.parsec.app/hc/en-us/articles/115002700892-Unable-To-Hear-The-Game-You-re-Playing
+15. "blacklisting nouveau driver." Arch Linux Forums. March 20, 2021. Accessed February 16, 2023. https://bbs.archlinux.org/viewtopic.php?id=213042
