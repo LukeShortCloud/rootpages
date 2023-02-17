@@ -1644,6 +1644,31 @@ Solutions:
 
       crosh> vmc start --dlc-id="" termina
 
+----
+
+"**board overlay not found**" when building Chromium OS.
+
+::
+
+    (cr) ((ca80eae...)) <USER>@<HOSTNAME> ~/chromiumos/src/scripts $ setup_board --board=${BOARD}
+    <OMITTED>
+      File "/mnt/host/source/chromite/lib/portage_util.py", line 191, in _ListOverlays
+        raise MissingOverlayError('board overlay not found: %s' % board)
+    chromite.lib.portage_util.MissingOverlayError: board overlay not found: overlay-cuos-amd64
+    10:35:56.669: ERROR: Error occurred while updating the chroot. See the logs for more information.
+
+Solution:
+
+-  This happens because every overlay `requires <https://chromium.googlesource.com/chromiumos/chromite/+/main/lib/portage_util.py>`__ a ``metadata/layout.conf`` file (the relevant code is shown below). This can be copied from an existing layout and modified as needed.
+
+   ::
+
+      try:
+      --
+        | masters = key_value_store.LoadFile(
+        | os.path.join(GetOverlayRoot(overlay), 'metadata',
+        | 'layout.conf'))['masters'].split()
+
 History
 -------
 
