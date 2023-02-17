@@ -89,6 +89,30 @@ Top gamepads [1]:
 4.  PS3 Controller
 5.  Steam Controller
 
+Xbox Controllers
+^^^^^^^^^^^^^^^^
+
+The Linux kernel natively provides a ``xpad`` driver for wired original Xbox, Xbox 360, and Xbox One controllers. However, the Xbox One controller support conflicts with the new and improved ``xone`` driver. It is recommended to use ``xpad-noone`` instead of ``xpad`` to remove the overlapping support of Xbox One controllers. Otherwise, there were be problems with driver conflicts. [5] Bluetooth controllers natively work and do not require any additional setup.
+
+-  Install ``xpad-noone`` and block the usage of ``xpad``.
+
+   .. code-block:: sh
+
+      $ sudo git clone https://github.com/medusalix/xpad-noone /usr/src/xpad-noone-1.0
+      $ sudo dkms install -m xpad-noone -v 1.0 -k $(uname -r)
+      $ echo -e "\nblacklist xpad\n" | sudo tee -a /etc/modprobe.d/xbox-controllers.conf
+      $ sudo rmmod xpad
+      $ sudo modprobe xpad-noone
+
+-  Install the modern ``xone-dkms`` driver for handling Xbox One and Xbox Series controllers.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         $ yay -S xone-dkms-git
+         $ sudo modprobe xone-wired
+
 History
 -------
 
@@ -101,3 +125,4 @@ Bibliography
 2. "USB 3.2 Speed Comparison & Drive Benchmark." Everything USB. November 2019. Accessed August 25, 2021. https://www.everythingusb.com/speed.html
 3. "USB 3, USB 4, Thunderbolt, & USB-C --- everything you need to know." AppleInsider. August 24, 2020. Accessed August 25, 2021. https://appleinsider.com/articles/20/08/24/usb-3-usb-4-thunderbolt-usb-c----everything-you-need-to-know
 4. "Mouse polling rate." Arch Wiki. January 25, 2022. Accessed February 11, 2022. https://wiki.archlinux.org/title/mouse_polling_rate
+5. "Added information about xpad-noone #15." GitHub medusalix/xone. August 27, 2022. Accessed February 16, 2023. https://github.com/medusalix/xone/pull/15
