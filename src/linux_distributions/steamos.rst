@@ -128,6 +128,28 @@ Verify that the changes have been made:
 
 [2][3]
 
+Enable TPM
+~~~~~~~~~~
+
+The original Steam Deck BIOS had TPM support disabled. It was eventually enabled to allow Windows 11 to be installed onto the device. [6] However, SteamOS never re-enabled TPM support. Here is how to re-enable it [7]:
+
+-  Edit the GRUB configuration file: ``/etc/default/grub``.
+-  Go to the ``GRUB_CMDLINE_LINUX_DEFAULT=`` line and remove ``module_blacklist=tpm``.
+-  Update the GRUB boot menu.
+
+   .. code-block:: sh
+
+      $ sudo update-grub
+
+-  Reboot.
+-  Verify that TPM is working by seeing if the Linux device files exist.
+
+   .. code-block:: sh
+
+      $ find /dev -name "tmp*"
+      /dev/tpmrm0
+      /dev/tpm0
+
 Disable SteamOS Updates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -168,3 +190,5 @@ Bibliography
 3. "EASY & SAFE Health & Performance Boosts | Steam Deck." YouTube CryoByte33. November 4, 2022. Accessed November 20, 2022. https://www.youtube.com/watch?v=od9_a1QQQns
 4. "How to use an external controller on Steam Deck." PCGamesN. June, 2022. Accessed February 16, 2023. https://www.pcgamesn.com/steam-deck/external-controller
 5. "Steam Client Beta - August 4." Steam Community. August 4, 2022. Accessed Februray 16, 2023. https://steamcommunity.com/groups/SteamClientBeta/announcements/detail/3387288790681635164
+6. "Steam Deck adds Windows 11 support and BIOS fixes with beta update." XDA Portal & Forums. April 1, 2022. Accessed Feburary 17, 2023. https://www.xda-developers.com/steam-deck-windows-11-bios-beta/
+7. "How to use the TPM on Steam Deck in SteamOS." jiankun.lu. November 14, 2022. Accessed February 17, 2023. https://jiankun.lu/blog/how-to-use-the-tpm-on-steam-deck-in-steamos.html
