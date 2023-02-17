@@ -3,6 +3,14 @@ SteamOS 3
 
 .. contents:: Table of Contents
 
+Game Mode
+---------
+
+Introduction
+~~~~~~~~~~~~
+
+Game Mode is the name of the default mode that Steam OS and the Steam Deck boots into. It is limited to only accessing games from the Steam library. This is not to be confused with Feral Interactive's `GameMode <https://github.com/FeralInteractive/gamemode>`__.
+
 Desktop Mode
 ------------
 
