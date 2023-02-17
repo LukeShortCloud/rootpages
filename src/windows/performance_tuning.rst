@@ -20,9 +20,17 @@ Power plans determine how much power a computer can use. The lower the power usa
 
 It is recommended to switch from the default power plan of Balanced to High Performance instead.
 
-::
+-  Windows 11
 
-   Settings (ms-settings:) > System > Power & sleep > Power mode: Best performance
+   ::
+
+      Settings (ms-settings:) > Power & battery > Power mode: Best performance
+
+-  Windows 10
+
+   ::
+
+      Settings (ms-settings:) > System > Power & sleep > Power mode: Best performance
 
 Starting with Windows 10, it is also possible to use Ultimate Performance mode which will run the processor at its top clock speed at all times. This is very inefficient and not recommended. [1]
 
@@ -37,7 +45,7 @@ Starting with Windows 10, it is also possible to use Ultimate Performance mode w
 
    ::
 
-      Settings (ms-settings:) > System > Power & sleep > Related settings > Additional power settings > Show additional plans > Ultimate Performance
+      Control Panel > System and Security > Power Options > Selected plan: Ultimate Performance
 
 Replace Microsoft Defender
 --------------------------
@@ -51,7 +59,7 @@ Virtualization-based security (VBS) isolates RAM allocations of every applicatio
 
 ::
 
-      Settings (ms-settings:) > Update & Security > Windows Security > Device security > Memory integrity: Off
+   Settings (ms-settings:) > Privacy & security > Windows Security > Device security > Core isolation details > Memory integrity: Off
 
 Disable Startup Applications
 ----------------------------
@@ -67,9 +75,19 @@ Disable Background Applications (Windows >= 10)
 
 Background applications are allowed to launch silently and not appear in the taskbar. These applications can easily run without a user knowing. Disable some or all of the background applications [4]:
 
-::
+-  Windows 11 [10]
 
-   Settings (ms-settings:) > Privacy > App Permissions > Background apps > Let apps run in the background: Off
+   -  Open the "Registry Editor" and navigate to: ``HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows``.
+
+      -  Edit > New > Key > Name: AppPrivacy
+
+         -  (right-click on AppPrivacy) > New > DWORD (32-bit) Value > Value name: LetAppsRunInBackground, Value data: 2 > Base: Hexadecimal > OK
+
+-  Windows 10
+
+   ::
+
+      Settings (ms-settings:) > Privacy > App Permissions > Background apps > Let apps run in the background: Off
 
 Disable Scheduled Tasks
 -----------------------
@@ -85,9 +103,17 @@ Uninstall Programs
 
 If there are programs installed that will never be used again, then uninstall them. Otherwise, they take up storage space and may be running in the background.
 
-::
+-  Windows 11
 
-   Settings (ms-settings:) > Apps > Apps & features > (select an application)> Uninstall
+   ::
+
+      Settings (ms-settings:) > Apps > Installed apps > (select an application) > Uninstall
+
+-  Windows 10
+
+   ::
+
+      Settings (ms-settings:) > Apps > Apps & features > (select an application)> Uninstall
 
 Scan for Viruses
 ----------------
@@ -161,13 +187,21 @@ Disable Windows Tips (Windows >= 8.1)
 
 Windows monitors your behavior and provides tips based on your usage. Since it is always monitoring your actions in the background, it is utilizing system resources. These tips should be disabled.
 
--  Windows >= 10
+-  Windows 11
+
+   ::
+
+      Settings (ms-settings:) > System > Notifications > Additional settings > uncheck "Show the Windows welcome experience after updates" and "Get tips and suggestions when using Windows"
+
+-  Windows 10
 
    ::
 
       Settings (ms-settings:) > System > Notifications & actions > uncheck "Suggest ways I can finish setting up my device to get the most out of Windows"
 
-Windows 8.1 introduced "Help Tips" which is slightly different. It works as an on-going tutorial with pop-ups on how to use the Windows 8.1 interface. This can be disabled by setting the registry key ``HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\EdgeUI`` to a DWORD value of ``1``. [7]
+-  Windows 8.1
+
+   -  This version of Windows introduced "Help Tips" which is slightly different. It works as an on-going tutorial with pop-ups on how to use the Windows 8.1 interface. This can be disabled by setting the registry key ``HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\EdgeUI`` to a DWORD value of ``1``. [7]
 
 History
 -------
@@ -186,3 +220,4 @@ Bibliography
 7. "Ways to completely disable windows 8 1 help tips." Tutorials Point. October 23, 2019. Accessed June 17, 2022. https://www.tutorialspoint.com/ways-to-completely-disable-windows-8-1-help-tips
 8. "How to Disable Indexing in Windows 10 & 11." MajorGeeks. Accessed December 15, 2022. https://www.majorgeeks.com/content/page/disable_indexing_11.html
 9. "Manage Windows 10 Search Indexing." gHacks Technology News. October 26, 2021. Accessed December 15, 2022. https://www.ghacks.net/2017/08/10/manage-windows-10-search-indexing/
+10. "How to Disable Background Apps in Windows 11." MakeUsOf. September 22, 2022. Accessed February 16, 2023. https://www.makeuseof.com/windows-11-disable-background-apps/
