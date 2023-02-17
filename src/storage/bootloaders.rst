@@ -150,11 +150,17 @@ Common options:
 
 -  /etc/default/grub
 
-    -   GRUB\_DEFAULT = The default menu entry to autoboot into.
+   -  ``GRUB_DEFAULT`` = The default menu entry to autoboot into.
 
-        -  saved = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.
-        -  Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at "0".
-        -  Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7 (Core)".
+       -  ``saved`` = Boot from the last option selected. This is cached in the /boot/grub/grubenv file.
+       -  Alternatively, this can either be the number of the "menuentry" section, in order from top to bottom, starting at "0".
+       -  Or the menu entry title can be explicitly specified. For example, "CentOS Linux (3.10.0-327.13.1.el7.x86\_64) 7 (Core)".
+
+   -  ``GRUB_GFXPAYLOAD_LINUX`` = The graphics settings to use for the GRUB menu. [14][15]
+
+      -  ``auto`` = Let GRUB guess the best graphics settings to use.
+      -  ``text`` = Basic GRUB text rendering that works on all hardware.
+      -  ``keep`` = Use advanced graphical rendering that can show themes and images. For unsupported graphics devices, the system will be unbootable.
 
 .. code-block:: sh
 
@@ -489,3 +495,5 @@ Bibliography
 11. "Install Arch Linux on a removable medium." ArchWiki. July 12, 2021. Accessed July 17, 2021. https://wiki.archlinux.org/title/Install_Arch_Linux_on_a_removable_medium
 12. "Understanding the Various Grub Modules." Linux.org. March 2, 2015. Accessed February 5, 2022. https://www.linux.org/threads/understanding-the-various-grub-modules.11142/
 13. "GRUB error: sparse file not allowed." Support - Manjaro Linux. September 6, 2020. Accessed February 2022. https://forum.manjaro.org/t/grub-error-sparse-file-not-allowed/20267/6
+14. "15.1.13 gfxpayload." GNU GRUB Manual 2.06. Accessed February 16, 2023. https://www.gnu.org/software/grub/manual/grub/html_node/gfxpayload.html
+15. "GRUB gfxpayload blacklist." Launchpad Ubuntu. Accessed February 16, 2023. https://launchpad.net/ubuntu/xenial/+package/grub-gfxpayload-lists
