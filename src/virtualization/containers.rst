@@ -651,6 +651,15 @@ Solution:
         ]
       }
 
+----
+
+"**Unable to fetch some archives**" when trying to build a container using Debian as the base image.
+
+Solutions:
+
+-  ``RUN apt-get update`` in the Dockerfile before installing packages.
+-  Use ``docker build --no-cache`` to not re-use old package repository cache.
+
 History
 -------
 
