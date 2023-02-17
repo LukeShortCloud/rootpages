@@ -220,6 +220,27 @@ Installation:
 -  Debian (automatic): ``$ sudo apt-get install task-xfce-desktop``
 -  Fedora: ``$ sudo dnf groupinstall "Xfce Desktop"``
 
+Display Usage
+-------------
+
+Rotate Screen
+~~~~~~~~~~~~~
+
+When using Xorg, ``xrandr`` can rotate the screen. This needs to use a graphics driver that supports modesetting. Legacy drivers such as ``xf86-video-amdgpu``, ``xf86-video-intel``, ``xf86-video-nouveau``, or ``xf86-video-vmware`` will not work.
+
+-  View the list of displays. Rotate it in a specified direction.
+
+   .. code-block:: sh
+
+      $ xrandr
+      $ xrandr --output <DISPLAY> --rotate [left|right|normal|inverted]
+
+-  If this error occurs, then a legacy Xorg driver is installed that does not support modesetting. [16]
+
+   ::
+
+      xrandr: output eDP1 cannot use rotation "right" reflection "none"
+
 Gaming
 ------
 
@@ -366,3 +387,4 @@ Bibliography
 13. "Remote Streaming Without a Display." r/ParsecGaming. June 29, 2022. Accessed August 27, 2022. https://www.reddit.com/r/ParsecGaming/comments/kbzbhg/remote_streaming_without_a_display/
 14. "Unable To Hear The Game You're Playing." Parsec. Accessed September 6, 2022. https://support.parsec.app/hc/en-us/articles/115002700892-Unable-To-Hear-The-Game-You-re-Playing
 15. "blacklisting nouveau driver." Arch Linux Forums. March 20, 2021. Accessed February 16, 2023. https://bbs.archlinux.org/viewtopic.php?id=213042
+16. "xrandr cannot use rotation "normal" reflection "none"." Unix & Linux Stack Exchange. August 16, 2021. Accessed February 16, 2023. https://unix.stackexchange.com/questions/636886/xrandr-cannot-use-rotation-normal-reflection-none
