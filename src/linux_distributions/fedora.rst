@@ -94,6 +94,18 @@ Fedora will, at least, download package metadata by default and, at most, automa
       $ sudo rpm-ostree reload
       $ sudo systemctl disable rpm-ostreed-automatic.timer
 
+Fedora Silverblue
+-----------------
+
+Dual Booting
+~~~~~~~~~~~~
+
+Fedora Silverblue does not support customized partitions or sharing a drive with a different operating system. It is recommended to use the automated installer to install it onto its own storage device. [11]
+
+Through the use of ``os-prober`` (which is part of a default installation), a GRUB menu will be generated with all of the detected operating systems on each drive. This allows for partial dual-boot support.
+
+Two installations of Fedora Silverblue on the same system are also not supported and will lead to issues. [12]
+
 History
 -------
 
@@ -112,3 +124,5 @@ Bibliography
 8. "How to disable Gnome Software autostart." Reddit r/gnome. October 22, 2022. Accessed February 18, 2023. https://www.reddit.com/r/gnome/comments/gn8rs4/how_to_disable_gnome_software_autostart/
 9. "How can I disable automatic updates CHECKING?" Reddit r/Fedora. January 26, 2023. Accessed February 18, 2023. https://www.reddit.com/r/Fedora/comments/p10a5o/how_can_i_disable_automatic_updates_checking/
 10. "How to enable automatic system updates in Fedora Silverblue." barnix. May 26, 2020. Accessed February 18, 2023. https://barnix.io/how-to-enable-automatic-update-staging-in-fedora-silverblue/
+11. "Installing Fedora Silverblue." Fedora Documentation. September 3, 2022. Accessed February 18, 2023. https://docs.fedoraproject.org/en-US/fedora-silverblue/installation/#known-limitations
+12. "Installing Silverblue, side-by-side." Fedora People asamalik. April 13, 2019. Accessed February 18, 2023. https://asamalik.fedorapeople.org/fedora-docs-translations/en-US/fedora-silverblue/installation-dual-boot/
