@@ -55,6 +55,45 @@ Starting with Fedora 38, the Flathub repository (used for installing community F
    fedora  system,oci
    flathub system
 
+Disable Automatic System Updates
+--------------------------------
+
+Fedora will, at least, download package metadata by default and, at most, automatically install new packages. Updates can be disabled and handled manually instead.
+
+-  Fedora (all):
+
+   -  Disable GNOME Software Center from checking for updates and applying updates.
+
+      .. code-block:: sh
+
+         $ dconf write /org/gnome/software/allow-updates false
+         $ dconf write /org/gnome/software/download-updates false
+
+   -  Optionally also disable GNOME Software Center from starting on boot. [8]
+
+      .. code-block:: sh
+
+         $ sudo rm -f /etc/xdg/autostart/org.gnome.Software.desktop
+
+-  Fedora Workstation [9]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/dnf/dnf.conf
+      metadata_timer_sync=0
+      $ sudo systemctl disable dnf-makecache.timer
+      $ sudo systemctl disable dnf-automatic.timer
+
+-  Fedora Silverblue [10]:
+
+   .. code-block:: sh
+
+      $ sudo vim /etc/rpm-ostreed.conf
+      [Daemon]
+      AutomaticUpdatePolicy=none
+      $ sudo rpm-ostree reload
+      $ sudo systemctl disable rpm-ostreed-automatic.timer
+
 History
 -------
 
@@ -70,3 +109,6 @@ Bibliography
 5. "Fedora 38 To Get Rid Of Its Flathub Filtering, Allowing Many More Apps On Fedora." Phoronix. February 6, 2023. Accessed February 6, 2023. https://www.phoronix.com/news/Fedora-38-Unfiltered-Flathub
 6. "What "filter" was in place for flathub?" Reddit r/Fedora. May 1, 2022. Accessed February 6, 2023. https://www.reddit.com/r/Fedora/comments/rv43uv/what_filter_was_in_place_for_flathub/
 7. "Cannot open access to console, the root account is locked in emergency mode (dracut emergency shell)." Ask Fedora. November 21, 2021. Accessed February 18, 2023. https://ask.fedoraproject.org/t/cannot-open-access-to-console-the-root-account-is-locked-in-emergency-mode-dracut-emergency-shell/2010
+8. "How to disable Gnome Software autostart." Reddit r/gnome. October 22, 2022. Accessed February 18, 2023. https://www.reddit.com/r/gnome/comments/gn8rs4/how_to_disable_gnome_software_autostart/
+9. "How can I disable automatic updates CHECKING?" Reddit r/Fedora. January 26, 2023. Accessed February 18, 2023. https://www.reddit.com/r/Fedora/comments/p10a5o/how_can_i_disable_automatic_updates_checking/
+10. "How to enable automatic system updates in Fedora Silverblue." barnix. May 26, 2020. Accessed February 18, 2023. https://barnix.io/how-to-enable-automatic-update-staging-in-fedora-silverblue/
