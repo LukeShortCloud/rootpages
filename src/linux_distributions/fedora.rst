@@ -1,6 +1,8 @@
 Fedora
 ======
 
+.. contents:: Table of Contents
+
 Red Hat Enterprise Linux (RHEL)
 -------------------------------
 
@@ -15,6 +17,26 @@ RHEL is a downstream distribution, based on Fedora, aimed at servers.
    Price, Free up to 16 servers [3], Free, Free, Free
    Optional paid support, Yes, Yes, Yes, Yes
    Btrfs support, No, Yes [4], No, No
+
+Set root Password
+-----------------
+
+As of Fedora 28, the ``root`` user password is disabled for security reasons. This means that traditional emergency mode will not work and instead result in this error [7]:
+
+::
+
+   Cannot open access to console, the root account is locked.
+   See sulogin(8) man page for more details.
+   
+   Press Enter to continue.
+
+Set the ``root`` password to be able to enter emergency mode if ever needed:
+
+.. code-block:: sh
+
+   $ sudo passwd root
+
+If the password is not set and emergency mode needs to be accessed, Fedora provides a `guide <https://docs.fedoraproject.org/en-US/quick-docs/bootloading-with-grub2/#restoring-bootloader-using-live-disk>`__ on how to ``chroot`` into the file system from a recovery media. Then the password can be changed from there.
 
 Remove Flathub Filter
 ---------------------
@@ -47,3 +69,4 @@ Bibliography
 4. "Get Started With the Btrfs File System on Oracle Linux." Oracle Help Center. Accessed July 14, 2022. https://docs.oracle.com/en/learn/btrfs-ol8/index.html
 5. "Fedora 38 To Get Rid Of Its Flathub Filtering, Allowing Many More Apps On Fedora." Phoronix. February 6, 2023. Accessed February 6, 2023. https://www.phoronix.com/news/Fedora-38-Unfiltered-Flathub
 6. "What "filter" was in place for flathub?" Reddit r/Fedora. May 1, 2022. Accessed February 6, 2023. https://www.reddit.com/r/Fedora/comments/rv43uv/what_filter_was_in_place_for_flathub/
+7. "Cannot open access to console, the root account is locked in emergency mode (dracut emergency shell)." Ask Fedora. November 21, 2021. Accessed February 18, 2023. https://ask.fedoraproject.org/t/cannot-open-access-to-console-the-root-account-is-locked-in-emergency-mode-dracut-emergency-shell/2010
