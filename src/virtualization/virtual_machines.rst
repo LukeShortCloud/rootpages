@@ -1563,7 +1563,7 @@ Common GUIs:
 
 -  oVirt
 -  Proxmox
--  virt-manager
+-  Virtual Machine Manager (virt-manager)
 -  XenServer
 
 GNOME Boxes
@@ -1851,6 +1851,38 @@ This can be fixed by deleting and recreating the UEFI keys with pre-enrollment d
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Remove > Yes
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Add > EFI Disk > Pre-Enroll keys: No
 
+Virtual Machine Manager (virt-manager)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Virtual Machine Manager provides a more advanced alternative to GNOME Boxes.
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S install libvirt virt-manager
+
+-  Debian [69]:
+
+   .. code-block:: sh
+
+      $ sudo apt-get update
+      $ sudo apt-get install qemu-system libvirt-daemon-system virt-manager
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install libvirt virt-manager
+
+Enable the service:
+
+.. code-block:: sh
+
+   $ sudo systemctl enable --now libvirtd
+
 VMware vSphere
 ~~~~~~~~~~~~~~
 
@@ -1964,3 +1996,4 @@ Bibliography
 66. "Get Halo Infinite running under a VM." Reddit r/VFIO. January 2, 2022. Accessed August 27, 2022. https://www.reddit.com/r/VFIO/comments/pvt9en/get_halo_infinite_running_under_a_vm/
 67. "How To set "<feature policy='disable' name='hypervisor'/>" in Proxmox." Reddit r/Proxmox. November 17, 2022. Accessed August 27, 2022. https://www.reddit.com/r/Proxmox/comments/quwmp7/how_to_set_feature_policydisable_namehypervisor/
 68. "GPU Passthrough - not displaying boot sequence." Proxmox VE. December 30, 2021. Accessed October 17, 2022. https://forum.proxmox.com/threads/gpu-passthrough-not-displaying-boot-sequence.77997/
+69. "KVM." Debian Wiki. February 6, 2023. Accessed February 18, 2023. https://wiki.debian.org/KVM
