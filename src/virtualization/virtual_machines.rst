@@ -876,6 +876,19 @@ Common commands:
 
 -  **authconfig** = Configure authentication using options specified in the ``authconfig`` manual.
 -  autopart = Automatically create partitions.
+
+   -  --encrypted --passphrase <PASSWORD> = Encrypt the drive with the given password.
+   -  --type
+
+      -  btrfs = Use Btrfs subvolumes.
+      -  lvm = Use LVM volumes.
+      -  plan = Use standard partitions without Btrfs.
+      -  partition = Use standard partitions with Btrfs (no subvolumes).
+      -  thinp = Thinly provisioned partitions for efficient storage usage.
+
+   -  --fstype = Can be ``ext4`` or ``xfs``. It cannot be ``btrfs``. Use ``--type btrfs`` instead.
+   -  --no{boot|home|swap} = Do not create this partition.
+
 -  **bootloader** = Define how the bootloader should be installed.
 -  clearpart = Delete existing partitions.
 
@@ -888,11 +901,19 @@ Common commands:
    -  text = An interactive text installer that will prompt for missing options.
 
 -  **eula --accept** = Automatically accept the end-user license agreement (EULA).
--  firewall = Configure the firewall.
+-  firewall = Configure Firewalld
 
     -  --enable
     -  --disable
     -  --port = Specify the ports to open.
+    -  --service = Specify a known service in Firewalld to open ports for.
+    -  --use-system-default = Do not configure the firewall.
+
+-  firstboot = Configure the inital setup (requires the ``initial-setup`` package to be installed).
+
+   -  --disable = Default. Do not launch the initial setup agent on the first boot.
+   -  --enable = Launch the initial setup agent on the first boot.
+   -  --reconfig = Launch the initial setup agent on the first boot to allow changing settings that are required to have been set during the Kickstart (language, networking, root password, time, etc.).
 
 -  %include = Include another file this Kickstart file.
 -  **install** = Start the installer.
@@ -900,9 +921,23 @@ Common commands:
 -  **lang** = The primary language to use.
 -  mount = Manually specify a partition to mount.
 -  network = Configure the network settings.
--  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
--  partition = Manually create partitions.
+-  **ostreesetup** = Required for Fedora Silverblue to install the file system. A ``reboot`` is required after this step. The Kickstart installation will continue where it left off.
 
+   -  --osname = Default: "fedora".
+   -  --remote = Default: "fedora".
+   -  --url = Repository URL for the OCI image. Example: "https://kojipkgs.fedoraproject.org/compose/ostree/repo" or "file:///ostree/repo".
+   -  --ref = Extension of the repository URL that provides the OCI image. Example: "fedora/<MAJOR_VERSION>/<CPU_ARCHITECTURE>/{kinote|sericea|silverblue}".
+
+      -  Both the ``--url`` and ``ref`` are combined to make this URL: ``https://kojipkgs.fedoraproject.org/compose/ostree/repo/refs/heads/fedora/<MAJOR_VERSION>/<CPU_ARCHITECTURE>/<OPERATING_SYSTEM>``.
+
+   -  --nogpg = Do not verify the GPG signature of the OCI image.
+
+-  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
+-  part or partition = Manually create partitions.
+
+   -  --grow = Use all available storage space that is left.
+   -  --fstype {btrfs|ext2|ext3|ext4|swap|vfat|xfs}
+   -  --size = The size in MiB for the partition.
    -  UEFI devices need a dedicated partition for storing the EFI information. [16]
 
       -  part /boot/efi --fstype vfat --size=256 --ondisk=sda
@@ -910,6 +945,9 @@ Common commands:
 -  raid = Create a software RAID.
 -  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
 -  **rootpw** = Change the root password.
+
+   -  --lock = Do not change the root password and, instead, disable the account.
+
 -  selinux = Change the SELinux settings.
 
     -  --permissive
@@ -923,13 +961,126 @@ Common commands:
 -  sshkey = Add a SSH key to a specified user.
 -  **timezone** = Configure the timezone.
 -  url = Do a network installation using the specified URL to the operating system's repository.
--  user = Configure a new user.
+-  user = Configure a new user. Due to a bug, this function does not work on rpm-ostree operating systems. Manually create the user instead. [71]
+
+   -  --name
+   -  --groups
+
 -  vnc = Configure a VNC for remote graphical installations.
+-  xconfig = Configure the desktop environment. Do not use this function to get a headless server instead.
+
+   -  --defaultdesktop {GNOME|KDE} = Set the default desktop environment.
+   -  --startxonboot = Start the display manager and desktop environment automatically after boot. This supports both Xorg and Wayland back-ends.
+
 -  zerombr = Erase the partition table.
 
-[37][38]
+[37][38][70]
 
-An example of a basic Kickstart file can be found here: https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file.
+Examples
+''''''''
+
+Here are examples of common functions used in Kickstart files.
+
+Example Kickstart files:
+
+-  `CentOS 7 <https://marclop.svbtle.com/creating-an-automated-centos-7-install-via-kickstart-file>`__
+-  `Fedora 32 Silverblue <https://gist.github.com/offlinehacker/6dbcbe2cf8b59e08914490349cb009ec>`__
+-  `RHEL 9 <https://github.com/myllynen/misc/blob/master/rhel-9-base.ks>`__
+
+Only use the first storage device:
+
+.. code-block:: sh
+
+   ignoredisk --only-use=vda
+
+Clear any existing bootloader and partition information:
+
+.. code-block:: sh
+
+   zerombr
+   clearpart --all --initlabel --disklabel gpt --drives=vda
+
+Configure the bootloader to be installed at the beginning of the first drive:
+
+.. code-block:: sh
+
+   bootloader --location=mbr --boot-drive=vda
+
+Automatically partition a drive with Btrfs subvolumes:
+
+.. code-block:: sh
+
+   autopart --type btrfs
+
+Manually partition a drive to support legacy BIOS and UEFI boot:
+
+.. code-block:: sh
+
+   zerombr
+   clearpart --all --initlabel --disklabel gpt
+   part biosboot --fstype biosboot --size 1
+   part /boot/efi --fstype efi --size 99
+   part /boot --fstype ext4 --size 1000
+
+Fedora Silverblue (previously known as Fedora Atomic Host) setup:
+
+.. code-block:: sh
+
+   ostreesetup --osname fedora-silverblue --remote fedora-silverblue --url "https://kojipkgs.fedoraproject.org/compose/ostree/repo" --ref="fedora/37/x86_64/silverblue"
+   reboot
+
+Fedora Atomic Host (this is no longer maintained):
+
+.. code-block:: sh
+
+   ostreesetup --osname fedora-atomic --remote fedora-atomic --url="https://kojipkgs.fedoraproject.org/atomic/repo" --ref="fedora/29/x86_64/atomic-host"
+   reboot
+
+U.S.A. keyboard layout:
+
+.. code-block:: sh
+
+   keyboard --vckeymap=us --xlayouts='us'
+
+English language:
+
+.. code-block:: sh
+
+   lang en_US.UTF-8
+
+UTC timezone:
+
+.. code-block:: sh
+
+   timezone UTC --utc
+
+Create a user:
+
+.. code-block:: sh
+
+   user --name bob
+
+Create a user for Fedora Silverblue (there is a bug that prevents the Kickstart ``user`` function from working [71]):
+
+.. code-block:: sh
+
+   %post --logfile=/root/kickstart-post.log --erroronfail
+   echo '%wheel ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/wheel
+   useradd -g wheel bob
+   echo "bob:password" | chpasswd
+   %end
+
+Enable the GNOME desktop environment to always start after booting (assuming it has been installed):
+
+.. code-block:: sh
+
+   xconfig --defaultdesktop GNOME --startxonboot
+
+Launch the Fedora initial setup agent (requires the ``initial-setup`` package to be installed):
+
+.. code-block:: sh
+
+   firstboot --enable
 
 Terraform
 ~~~~~~~~~
@@ -1997,3 +2148,5 @@ Bibliography
 67. "How To set "<feature policy='disable' name='hypervisor'/>" in Proxmox." Reddit r/Proxmox. November 17, 2022. Accessed August 27, 2022. https://www.reddit.com/r/Proxmox/comments/quwmp7/how_to_set_feature_policydisable_namehypervisor/
 68. "GPU Passthrough - not displaying boot sequence." Proxmox VE. December 30, 2021. Accessed October 17, 2022. https://forum.proxmox.com/threads/gpu-passthrough-not-displaying-boot-sequence.77997/
 69. "KVM." Debian Wiki. February 6, 2023. Accessed February 18, 2023. https://wiki.debian.org/KVM
+70. "Kickstart Documentation." Pykickstart Documentation. Accessed February 18, 2023. https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
+71. "Bug 1838859 - user from kickstart is not created on ostreesetup based install." Red Hat Bugzilla. February 8, 2022. Accessed February 18, 2023. https://bugzilla.redhat.com/show_bug.cgi?id=1838859
