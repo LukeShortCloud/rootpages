@@ -2250,6 +2250,7 @@ MetalLB
                  protocol: layer2
                  addresses:
                    - <IP_ADDRESS_FIRST>-<IP_ADDRESS_LAST>
+                   - <NETWORK_ADDRESS>/<CIDR>
          EOF
 
 -  Automatic (Helm) [78]:
