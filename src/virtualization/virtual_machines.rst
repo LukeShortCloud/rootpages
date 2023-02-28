@@ -915,7 +915,7 @@ Common commands:
    -  --enable = Launch the initial setup agent on the first boot.
    -  --reconfig = Launch the initial setup agent on the first boot to allow changing settings that are required to have been set during the Kickstart (language, networking, root password, time, etc.).
 
--  %include = Include another file this Kickstart file.
+-  %include = Include another file this Kickstart file. End the list of included files b using ``%end``.
 -  **install** = Start the installer.
 -  **keyboard** = Configure the keyboard layout.
 -  **lang** = The primary language to use.
@@ -941,6 +941,12 @@ Common commands:
    -  UEFI devices need a dedicated partition for storing the EFI information. [16]
 
       -  part /boot/efi --fstype vfat --size=256 --ondisk=sda
+
+-  %post = Run commands after installation steps. End the list of post commands by using ``%end``.
+
+   -  --erroronfail = If any commands fail, the Kickstart will error out and fail.
+   -  --log = Log all output to a specified file.
+   -  --nochroot = Do not run commands inside of the ``/mnt/sysimage/`` chroot. It is possible to use both ``%post`` and ``%post --nochroot`` in a Kickstart file.
 
 -  raid = Create a software RAID.
 -  repo --name="<REPO_NAME>" --baseurl="<REPO_URL>" = Add a repository.
@@ -2148,5 +2154,5 @@ Bibliography
 67. "How To set "<feature policy='disable' name='hypervisor'/>" in Proxmox." Reddit r/Proxmox. November 17, 2022. Accessed August 27, 2022. https://www.reddit.com/r/Proxmox/comments/quwmp7/how_to_set_feature_policydisable_namehypervisor/
 68. "GPU Passthrough - not displaying boot sequence." Proxmox VE. December 30, 2021. Accessed October 17, 2022. https://forum.proxmox.com/threads/gpu-passthrough-not-displaying-boot-sequence.77997/
 69. "KVM." Debian Wiki. February 6, 2023. Accessed February 18, 2023. https://wiki.debian.org/KVM
-70. "Kickstart Documentation." Pykickstart Documentation. Accessed February 18, 2023. https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
+70. "Kickstart Documentation." Pykickstart Documentation. Accessed February 28, 2023. https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
 71. "Bug 1838859 - user from kickstart is not created on ostreesetup based install." Red Hat Bugzilla. February 8, 2022. Accessed February 18, 2023. https://bugzilla.redhat.com/show_bug.cgi?id=1838859
