@@ -495,15 +495,15 @@ A bare clone can be converted back into a usable git repsoitory. [37]
    .. code-block:: sh
 
       $ mkdir .git
-      $ mv branches ./git/
-      $ mv config ./git/
-      $ mv description ./git/
-      $ mv HEAD ./git/
-      $ mv hooks ./git/
-      $ mv info ./git/
-      $ mv objects ./git/
-      $ mv packed-refs ./git/
-      $ mv refs ./git/
+      $ mv branches ./.git/
+      $ mv config ./.git/
+      $ mv description ./.git/
+      $ mv HEAD ./.git/
+      $ mv hooks ./.git/
+      $ mv info ./.git/
+      $ mv objects ./.git/
+      $ mv packed-refs ./.git/
+      $ mv refs ./.git/
 
 -  Configure git to no longer treat this as a bare clone.
 
