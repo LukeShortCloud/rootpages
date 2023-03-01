@@ -94,8 +94,21 @@ Fedora will, at least, download package metadata by default and, at most, automa
       $ sudo rpm-ostree reload
       $ sudo systemctl disable rpm-ostreed-automatic.timer
 
-Fedora Silverblue
------------------
+rpm-ostree (Fedora Silverblue)
+------------------------------
+
+Spins
+~~~~~
+
+Fedora provides installations with different desktop environments. These are known as spins. For rpm-ostree distributions, they have special code names listed below. [13][14] Fedora Silverblue was the first spin and was originally called Fedora Atomic Host. [15]
+
+.. csv-table::
+   :header: Fedora Spin, Desktop Environment
+   :widths: 20, 20
+
+   Silverblue, GNOME
+   Kinoite, KDE Plasma
+   Sericea, Sway
 
 Dual Booting
 ~~~~~~~~~~~~
@@ -126,3 +139,6 @@ Bibliography
 10. "How to enable automatic system updates in Fedora Silverblue." barnix. May 26, 2020. Accessed February 18, 2023. https://barnix.io/how-to-enable-automatic-update-staging-in-fedora-silverblue/
 11. "Installing Fedora Silverblue." Fedora Documentation. September 3, 2022. Accessed February 18, 2023. https://docs.fedoraproject.org/en-US/fedora-silverblue/installation/#known-limitations
 12. "Installing Silverblue, side-by-side." Fedora People asamalik. April 13, 2019. Accessed February 18, 2023. https://asamalik.fedorapeople.org/fedora-docs-translations/en-US/fedora-silverblue/installation-dual-boot/
+13. "Fedora Kinoite: A fascinating take on the operating system." TechRepublic. December 22, 2021. Accessed February 28, 2023. https://www.techrepublic.com/article/fedora-kinoite-a-fascinating-take-on-the-operating-system/
+14. "Changes/Fedora Sway Spin." Fedora Project Wiki. December 19, 2022. Accessed February 28, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Sway_Spin
+15. "Fedora Atomic Host will now become Fedora Core OS." Destacados. Accessed February 28, 2023. https://blog.desdelinux.net/en/fedora-atomic-host-ahora-pasara-a-ser-fedora-core-os/
