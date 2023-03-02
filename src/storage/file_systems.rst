@@ -182,7 +182,7 @@ Mount options:
 NTFS
 ~~~~
 
-The New Technology File System (NT File System or NTFS) is the primary file system used by Windows. As of Linux kernel version 5.15, it is natively supported. [41]
+The New Technology File System (NT File System or NTFS) is the primary file system used by Windows. As of Linux kernel version 5.15, it is natively supported by the new ``ntfs3`` Linux kernel driver instead of the FUSE ``ntfs-3g`` driver. [41] The new driver is faster and also allows NTFS file systems to be writeable on Linux. [43] The original ``ntfs-3g`` CLI tool (not the driver) is still used with the new ``ntfs3`` driver.
 
 Installation:
 
@@ -196,13 +196,14 @@ Installation:
 
    .. code-block:: sh
 
-      $ sudo pacman -S ntfs-3g
+      $ sudo apt-get update
+      $ sudo apt-get install ntfs-3g
 
 -  Fedora:
 
    .. code-block:: sh
 
-      $ sudo pacman -S ntfs-3g
+      $ sudo dnf install ntfs-3g
 
 OpenZFS
 ~~~~~~~
@@ -1327,3 +1328,4 @@ Bibliography
 40. "How to mount an exFAT drive on Linux." Xmodulo. January 31, 2021. Accessed February 9, 2022. https://www.xmodulo.com/mount-exfat-drive-linux.html
 41. "Linux 5.15 Delivers Many Features With New NTFS Driver, In-Kernel SMB3 Server, New Hardware." Phoronix. September 13, 2021. Accessed March 30, 2022. https://www.phoronix.com/scan.php?page=article&item=linux-515-features&num=1
 42. "exFAT external drive not recognized on Windows." Ask Ubuntu. August 16, 2016. Accessed March 2, 2023. https://askubuntu.com/questions/706608/exfat-external-drive-not-recognized-on-windows
+43. "Kernel 5.15 : ntfs3 vs ntfs-3g." LinuxQuestions.org. September 9, 2021. Accessed March 2, 2023. https://www.linuxquestions.org/questions/slackware-14/kernel-5-15-ntfs3-vs-ntfs-3g-4175702945/
