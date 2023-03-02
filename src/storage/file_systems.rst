@@ -131,6 +131,12 @@ Installation:
 
          $ sudo dnf install exfat fuse-exfat
 
+Windows will not automatically mount a exFAT partition unless (1) it uses the GPT partitioning layout and (2) it has the ``msftdata`` flag on. [42]
+
+.. code-block:: sh
+
+   $ sudo parted /dev/<DEVICE> set <PARTITION_NUMBER> msftdata on
+
 ext4
 ~~~~
 
@@ -1320,3 +1326,4 @@ Bibliography
 39. "File systems." Arch Wiki. January 25, 2022. Accessed February 9, 2022. https://wiki.archlinux.org/title/file_systems
 40. "How to mount an exFAT drive on Linux." Xmodulo. January 31, 2021. Accessed February 9, 2022. https://www.xmodulo.com/mount-exfat-drive-linux.html
 41. "Linux 5.15 Delivers Many Features With New NTFS Driver, In-Kernel SMB3 Server, New Hardware." Phoronix. September 13, 2021. Accessed March 30, 2022. https://www.phoronix.com/scan.php?page=article&item=linux-515-features&num=1
+42. "exFAT external drive not recognized on Windows." Ask Ubuntu. August 16, 2016. Accessed March 2, 2023. https://askubuntu.com/questions/706608/exfat-external-drive-not-recognized-on-windows
