@@ -2,15 +2,15 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: rolebinding-travis-ci
+  name: rolebinding-github-actions
   namespace: ns-rootpages
   labels:
     auth: rootpages
 subjects:
   - kind: ServiceAccount
-    name: sa-travis-ci
+    name: sa-github-actions
     namespace: ns-rootpages
 roleRef:
   kind: Role
-  name: role-travis-ci
+  name: role-github-actions
   apiGroup: rbac.authorization.k8s.io

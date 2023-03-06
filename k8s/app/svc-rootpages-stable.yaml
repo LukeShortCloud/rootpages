@@ -2,14 +2,14 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: svc-rootpages
+  name: svc-rootpages-stable
   namespace: ns-rootpages
   labels:
-    app: rootpages
+    app: rootpages-stable
 spec:
   ports:
     - name: http
       port: 80
   selector:
-    app: rootpages
+    app: rootpages-stable
   type: ClusterIP

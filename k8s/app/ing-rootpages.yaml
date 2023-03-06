@@ -10,6 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: "clusterissuer-letsencrypt-production"
     acme.cert-manager.io/http01-edit-in-place: "true"
     cert-manager.io/issue-temporary-certificate: "true"
+    nginx.org/rewrites: "serviceName=svc-rootpages-main rewrite=/;serviceName=svc-rootpages-stable rewrite=/"
 spec:
   ingressClassName: nginx
   tls:
@@ -22,8 +23,22 @@ spec:
         paths:
           - backend:
               service:
-                name: svc-rootpages
+                name: svc-rootpages-stable
                 port:
                   number: 80
             path: /
+            pathType: Prefix
+          - backend:
+              service:
+                name: svc-rootpages-stable
+                port:
+                  number: 80
+            path: /stable
+            pathType: Prefix
+          - backend:
+              service:
+                name: svc-rootpages-main
+                port:
+                  number: 80
+            path: /latest
             pathType: Prefix

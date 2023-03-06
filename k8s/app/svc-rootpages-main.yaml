@@ -1,0 +1,15 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-rootpages-main
+  namespace: ns-rootpages
+  labels:
+    app: rootpages-main
+spec:
+  ports:
+    - name: http
+      port: 80
+  selector:
+    app: rootpages-main
+  type: ClusterIP

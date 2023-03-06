@@ -1,0 +1,59 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deploy-rootpages-main
+  namespace: ns-rootpages
+  labels:
+    app: rootpages-main
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rootpages-main
+  strategy:
+    # This deals with a situation where a Kubernetes node reboots which leads to the "emptyDir" ephemeral storage being lost.
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rootpages-main
+    spec:
+      initContainers:
+        - name: sphinx
+          image: sphinxdoc/sphinx:3.4.3
+          command:
+            - /bin/sh
+            - -c
+            - "pip install sphinx_rtd_theme && apt-get update && apt-get -y install git && rm -rf rootpages && git clone --branch main https://github.com/ekultails/rootpages.git && cd rootpages && make html && cd .. && mv ./rootpages/build/html/* ./ && rm -rf rootpages"
+          env:
+            - name: DEBIAN_FRONTEND
+              value: noninteractive
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /tmp
+          workingDir: /tmp
+      containers:
+        - name: nginx
+          image: nginx:1.19.0
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 256Mi
+          volumeMounts:
+            - name: tmp-dir
+              mountPath: /usr/share/nginx/html
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+      volumes:
+        - name: tmp-dir
+          emptyDir: {}

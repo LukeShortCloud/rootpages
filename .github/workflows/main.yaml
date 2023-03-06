@@ -1,0 +1,20 @@
+---
+name: Publish latest notes online
+on:
+  push:
+    branches:
+      - main
+env:
+  SA_GITHUB_ACTIONS_TOKEN: ${{ secrets.SA_GITHUB_ACTIONS_TOKEN }}
+jobs:
+  build:
+    name: Publish latest notes online
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Change directory
+        run: cd $GITHUB_WORKSPACE
+      - name: Download 'kubectl'
+        run: curl -LO 'https://storage.googleapis.com/kubernetes-release/release/v1.24.11/bin/linux/amd64/kubectl' && chmod +x ./kubectl
+      - name: Force a rolling update of the deployment
+        run: ./kubectl --insecure-skip-tls-verify --kubeconfig="/dev/null" --server=https://k8s.lukeshort.cloud:6443 --token=$SA_GITHUB_ACTIONS_TOKEN -n ns-rootpages patch deployment deploy-rootpages-main -p "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"date\":\"`date --utc --iso-8601=ns`\"}}}}}"

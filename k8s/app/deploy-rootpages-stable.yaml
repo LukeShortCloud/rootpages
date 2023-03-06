@@ -2,22 +2,22 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: deploy-rootpages
+  name: deploy-rootpages-stable
   namespace: ns-rootpages
   labels:
-    app: rootpages
+    app: rootpages-stable
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: rootpages
+      app: rootpages-stable
   strategy:
     # This deals with a situation where a Kubernetes node reboots which leads to the "emptyDir" ephemeral storage being lost.
     type: Recreate
   template:
     metadata:
       labels:
-        app: rootpages
+        app: rootpages-stable
     spec:
       initContainers:
         - name: sphinx

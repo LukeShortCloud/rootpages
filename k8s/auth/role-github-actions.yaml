@@ -2,7 +2,7 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: role-travis-ci
+  name: role-github-actions
   namespace: ns-rootpages
   labels:
     auth: rootpages
