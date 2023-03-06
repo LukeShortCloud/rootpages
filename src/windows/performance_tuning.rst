@@ -36,7 +36,7 @@ Starting with Windows 10, it is also possible to use Ultimate Performance mode w
 
 -  Run Windows PowerShell as Administrator and then execute this command to show the hidden Ultimate Performance power plan.
 
-   .. code-block:: powershell
+   ::
 
       PS C:\Windows\system32> powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
       Power Scheme GUID: 662d10a0-f646-4056-be5f-c104a4642c76  (Ultimate Performance)

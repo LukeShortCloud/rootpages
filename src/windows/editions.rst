@@ -69,7 +69,7 @@ Microsoft Store
 
 By default, the Microsoft Store is not installed on Windows Enterprise LTSC editions. As a workaround, all editions of Windows support manually downloading and installing APPX programs that are typically only available on the Microsoft Store. [10] This includes the Microsoft Store itself. The `LTSC-Add-MicrosoftStore <https://github.com/kkkgo/LTSC-Add-MicrosoftStore>`__ project on GitHub provides all of the required packages. Even though these packages are old, they will install on all versions of Windows Enterprise LTSC >= 2019. After the initial installation of the Microsoft Store, these can all be updated through the Microsoft Store itself.
 
-.. code-block:: powershell
+::
 
    PS C:\Windows\system32> cd $env:tmp
    PS C:\Users\<USER>\AppData\Local\Temp> Invoke-WebRequest -Uri https://github.com/lixuy/LTSC-Add-MicrosoftStore/archive/2019.zip -OutFile LTSC-Add-MicrosoftStore-2019.zip

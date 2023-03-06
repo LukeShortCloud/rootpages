@@ -127,7 +127,7 @@ Installation:
 
    -  Linux kernel < 5.4
 
-      .. code-block::
+      .. code-block:: sh
 
          $ sudo dnf install exfat fuse-exfat
 
