@@ -162,7 +162,7 @@ Example forwarding to CloudFlare [9]:
 
 [10]
 
-Authoratitive Server
+Authoritative Server
 ~~~~~~~~~~~~~~~~~~~~
 
 Use a separate file for each DNS zone. Define the file to use in the main ``Corefile``.

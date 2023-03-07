@@ -382,7 +382,7 @@ openstack baremetal
    node clean <NODE>, zero out all of the storage devices managed by Ironic
    "node clean --clean-steps '[{""interface"": ""deploy"", ""step"": ""erase_devices_metadata""}]' <NODE>", only clean the partition table metadata
    node vif list <NODE>, show all virtual interfaces from Neutron that are attached
-   node vif detach <VIF> <NODE>, detatch a virtual interface from the node
+   node vif detach <VIF> <NODE>, detach a virtual interface from the node
    introspection abort <NODE>, stop introspection
    introspection data save <NODE>, display the JSON output of the introspection data for a specific node
    introspection interface list <NODE>, list all of the network interfaces found during introspection

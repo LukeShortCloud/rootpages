@@ -280,14 +280,14 @@ SSL/TLS Certificates
 
 SSL/TLS certificates provide a symmetric key-pair, similar to SSH keys. SSL is an older protocol that is vulnerable and no longer supported. It was succeeded by TLS.
 
-A TLS cipher suite consist of 4 different alogirthms: (1) the key exchange, (2) the authentication, (3) the bulk encyrption, and (4) message authentication code (MAC). A server defines what cipher suite it supports. A client that connects to a server negotiates for a cipher suite that it is compatible with and then uses that for securely connecting. [6]
+A TLS cipher suite consist of 4 different algorithms: (1) the key exchange, (2) the authentication, (3) the bulk encyrption, and (4) message authentication code (MAC). A server defines what cipher suite it supports. A client that connects to a server negotiates for a cipher suite that it is compatible with and then uses that for securely connecting. [6]
 
 -  Key exchange = Encrypt both of the symmetric keys.
 -  Authentication = Sign and verify certificates.
--  Bulk encyrption = Encrypt data to and from a server. A key generated with this alogrithm requires a password.
+-  Bulk encyrption = Encrypt data to and from a server. A key generated with this algorithm requires a password.
 -  MAC = Checks the integrity of the data being sent and received.
 
-Top alogithms [7]:
+Top algorithms [7]:
 
 -  Key exchange:
 

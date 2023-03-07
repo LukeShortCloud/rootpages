@@ -211,7 +211,7 @@ Generate a base64-encoded key/password to be used for encrypting the Secrets.
    $ echo -n password | base64
    cGFzc3dvcmQ=
 
-Create a manifest for the EncryptionConfiguration API. Configure AES encryption for new Secret objects and allow old unencrypted Secrets to continue to work by using the no-operationg ``identity`` provider. For information on the specification and usage of this special API, refer to the `EncryptionConfiguration documentation <kubernetes_development.html#encryptionconfiguration>`__.
+Create a manifest for the EncryptionConfiguration API. Configure AES encryption for new Secret objects and allow old unencrypted Secrets to continue to work by using the no-operation ``identity`` provider. For information on the specification and usage of this special API, refer to the `EncryptionConfiguration documentation <kubernetes_development.html#encryptionconfiguration>`__.
 
 .. code-block:: sh
 

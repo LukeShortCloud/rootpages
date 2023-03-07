@@ -40,7 +40,7 @@ Resource APIs are used to create objects in Kubernetes. They define the desired 
 -  **kind (string)** = Name of the API to create an object from.
 -  **metadata (dictionary)** = Metadata for the object.
 
-   -  **name (string)** = The unique name of this object. Only one object with this Resoure kind and name can exist in a namespace.
+   -  **name (string)** = The unique name of this object. Only one object with this Resource kind and name can exist in a namespace.
    -  **labels (dictionary)** = Any key-value pair to help identify this object. This is optional but recommended to help find specific or related objects.
 
 -  **spec (dictionary)** = Provide information on how this object will be created and used. Valid inputs are different for every API. Not all APIs will have a spec.
@@ -259,7 +259,7 @@ CertificateSigningRequest
    -  ``kubernetes.io/kube-apiserver-client`` = Certificates will be valid for interfacing directly with the kube-apiserver as an end-user client. ``csr.spec.usages`` must include ``["client auth"]`` and can also add ``["digital signature", "key encipherment"]``. Subjects can be anything.
    -  ``kubernetes.io/kube-apiserver-client-kubelet`` = Similar to ``kubernetes.io/kube-apiserver-client`` except this certificate should be used for Kubernetes components and not end-users. ``csr.spec.usages`` must be set to ``["client auth", "digital signature", "key encipherment"]``. Subjects must be ``["system:<COMPONENT_NAME>"]``.
    -  ``kubernetes.io/kubelet-serving`` = Certificates will be valid for kubelet processes only. ``csr.spec.usages`` must be set to ``["digital signature", "key encipherment", "server auth"]``. Subjects must be ``["system:<COMPONENT_NAME>"]``.
-   -  ``kubernetes.io/legacy-unknown`` = Used by legacy third-party Kubernetes distrubtions. Not supported by upstream Kubernetes.
+   -  ``kubernetes.io/legacy-unknown`` = Used by legacy third-party Kubernetes distributions. Not supported by upstream Kubernetes.
 
 -  uid (string) = A unique identifer for the user that will be tied to this certificate. This way, the same username can be used more than once without conflict.
 -  usages (list of strings) = The purpose of the certificate.
@@ -1076,7 +1076,7 @@ A role for creating and modifying, but not deleting, PersistentVolume and Persis
          - update
          - watch
 
-A role for managining specific existing Deployment objects.
+A role for managing specific existing Deployment objects.
 
 .. code-block:: yaml
 
@@ -1478,7 +1478,7 @@ Secret using all of it's available options.
 Metadata
 ~~~~~~~~
 
-Metadata APIs are used to change the behvaior of other objects. [5]
+Metadata APIs are used to change the behavior of other objects. [5]
 
 -  admissionregistration.k8s.io
 
@@ -1825,7 +1825,7 @@ Workload APIs manage running applications. [5]
 
    -  DaemonSet = Manages Kubernetes Pods that run on worker nodes. Objects created using this API are usually for logging or networking.
    -  Deployment = Uses both the Pod and ReplicaSet API along with managing the life-cycle of an application. It is designed for stateless applications.
-   -  ReplicaSet = New API for manging replicas that has support for label selectors.
+   -  ReplicaSet = New API for managing replicas that has support for label selectors.
    -  StatefulSet = Similar to a Deployment except it can handle persistent storage along with ordered scaling and rolling updates. Each new Pod created will have a new persistent volume claim created (if applicable). [1]
 
 -  batch
@@ -2711,7 +2711,7 @@ Cluster
 -  Shortname: (None)
 -  Namespaced: false
 
-``Cluster`` is an API desgined by the ``kind`` special interest group. It is designed to help configure development Kubernetes clusters.
+``Cluster`` is an API designed by the ``kind`` special interest group. It is designed to help configure development Kubernetes clusters.
 
 ----
 
@@ -3013,7 +3013,7 @@ Service
          -  autoscaling.knative.dev/scale-down-delay (string) = Default: ``0s``. The number of seconds to wait to scale-down after a target is being under-utilized. This can be in the format of ``<SECONDS>s`` or ``<MINUTES>m`` and cannot exceed one hour.
          -  autoscaling.knative.dev/target (float) = Default: ``100``. A number representing the metric target that must be exceeded before Knative will scale-up the number of Pods. Depending on the metric, this may be a percentage.
          -  autoscaling.knative.dev/target-utilization-percentage (float) = Default: ``70``. A number representing the percentage of the target to watch for before scaling up additional Pods earlier.
-         -  autoscaling.knative.dev/window (string) = Default: ``60s``. The stable amount of time that Knative takes into account when decieding if Pods need to be scaled up or down.
+         -  autoscaling.knative.dev/window (string) = Default: ``60s``. The stable amount of time that Knative takes into account when deciding if Pods need to be scaled up or down.
 
 [53][54]
 
@@ -3452,8 +3452,8 @@ Add persistent storage to the control plane and worker nodes. [51]
              capacity:
                storage: 100Gi
 
-(Common Reoccuring Fields)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+(Common Recurring Fields)
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Containers
 ^^^^^^^^^^
@@ -3575,7 +3575,7 @@ Probe
 
    -  command (list of strings) = The command and arguments to execute.
 
--  failureThreshold (integer) = Default is 3. Minimimum number of probe failures allowed.
+-  failureThreshold (integer) = Default is 3. Minimum number of probe failures allowed.
 -  httpGet (map)
 -  initialDelaySeconds (integer) = Seconds to delay before starting a probe.
 -  periodSeconds (integer) = Default is 10. The interval, in seconds, to run a probe.
@@ -3682,7 +3682,7 @@ An object can declaratively bind itself to a Namespace by specifying it in the m
 Image Pull Secrets (imagePullSecrets)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some container registires require authentication for any access or to gain more privileges when interacting with a container registry. Kubernetes has a special Secret type of "docker-registry" (kubernetes.io/dockerconfigjson) for storing container registry credentials and using them for Pods when they need to pull images.
+Some container registries require authentication for any access or to gain more privileges when interacting with a container registry. Kubernetes has a special Secret type of "docker-registry" (kubernetes.io/dockerconfigjson) for storing container registry credentials and using them for Pods when they need to pull images.
 
 If not using "credsStore" for storing credentials, then the ``docker login`` configuration file can be directly imported into Kubernetes as a Secret object.
 
@@ -3725,7 +3725,7 @@ If using a Helm chart via the CLI, then the value can be set using this syntax:
 Persistent Storage
 ~~~~~~~~~~~~~~~~~~
 
-By default, all storage is emphemeral. The PersistentVolume (PV) and PersistentVolumeClaim (PVC) APIs provide a way to persistently store information for use-cases such as databases. A PV defines the available storage and connection details for the Kubernetes cluster to use. A PVC defines the storage allocation for use by a Pod.
+By default, all storage is ephemeral. The PersistentVolume (PV) and PersistentVolumeClaim (PVC) APIs provide a way to persistently store information for use-cases such as databases. A PV defines the available storage and connection details for the Kubernetes cluster to use. A PVC defines the storage allocation for use by a Pod.
 
 The example below shows how to configure static storage for a Pod using a directory on a Worker Node.
 
@@ -3894,7 +3894,7 @@ A taint is a special label that can be set on a Node to prevent Pods from being 
 
 Taint effects:
 
--  NoExecute = All Pods will be evicited from the Node.
+-  NoExecute = All Pods will be evicted from the Node.
 -  NoPreferNoSchedule = Only schedule a Pod on this Node if no other Node can run the Pod.
 -  NoSchedule = Do not schedule Pods on this Node.
 
@@ -4391,7 +4391,7 @@ Bibliography
 31. "Authorization Overview." Kubernetes Documentation. January 7, 2021. Accessed March 15, 2021. https://kubernetes.io/docs/reference/access-authn-authz/authorization/
 32. "Using RBAC Authorization." Kubernetes Documentation. January 14, 2021. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 33. "Certificate Signing Requests." Kubernetes Documentation. October 20, 2020. Accessed March 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/
-34. "SelfSigned." cert-manager Docuemtnation. August 27, 2020. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/selfsigned/
+34. "SelfSigned." cert-manager Documentation. August 27, 2020. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/selfsigned/
 35. "CA." cert-manager Documentation. February 4, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/configuration/ca/
 36. "Securing NGINX-ingress." cert-manager Documentation. March 14, 2021. Accessed March 31, 2021. https://cert-manager.io/docs/tutorials/acme/ingress/
 37. "Setting up CA Issuers." cert-manager Documentation. 2018. Accessed March 31, 2021. https://docs.cert-manager.io/en/release-0.11/tasks/issuers/setup-ca.html

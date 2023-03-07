@@ -3009,7 +3009,7 @@ Install the Minion services.
 Scaling (Large Overcloud)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-RHOSP 13 (Queens) supports deploying 500 Overcloud nodes. The Undercloud needs resource allocations related directly to how many Overcloude nodes will be deployed: 1 CPU core and 8GB RAM per every 15 nodes. Undercloud services require a few other configuration tweaks to handle the large capacity. [66] Set the ``NodeCreateBatchSize`` Heat parameter to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
+RHOSP 13 (Queens) supports deploying 500 Overcloud nodes. The Undercloud needs resource allocations related directly to how many Overcloud nodes will be deployed: 1 CPU core and 8GB RAM per every 15 nodes. Undercloud services require a few other configuration tweaks to handle the large capacity. [66] Set the ``NodeCreateBatchSize`` Heat parameter to a value equal to the number of Overcloud nodes. This will greatly decrease the initial Heat template processing time.
 
 Puppet
 ~~~~~~
@@ -3136,11 +3136,11 @@ Services:
 
 -  RHOCP operators:
 
-   -  AMQ Interconnect = Recieves metrics and events from Red Hat AMQ on RHOSP. These are then sent to the Smart Gateway.
-   -  Smart Gateway = Routes metrics to Prometheus and events to ElasticSearch.
+   -  AMQ Interconnect = Receives metrics and events from Red Hat AMQ on RHOSP. These are then sent to the Smart Gateway.
+   -  Smart Gateway = Routes metrics to Prometheus and events to Elasticsearch.
    -  Prometheus = Stores all of the time-series metrics onto a persistent storage backend. Provides a dashboard and API to search the data.
-   -  AlertManager = Waits for an alert rule to be triggered by Prometheus. Once an alert is recieved, the AlertManager sends communication to the system administrators about possible issues.
-   -  ElasticSearch = Stores all of the events onto a persistent storage backend. Provides a dashboard and API to search the data.
+   -  AlertManager = Waits for an alert rule to be triggered by Prometheus. Once an alert is received, the AlertManager sends communication to the system administrators about possible issues.
+   -  Elasticsearch = Stores all of the events onto a persistent storage backend. Provides a dashboard and API to search the data.
 
 -  Visual dashboard:
 

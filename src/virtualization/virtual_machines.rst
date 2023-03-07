@@ -909,7 +909,7 @@ Common commands:
     -  --service = Specify a known service in Firewalld to open ports for.
     -  --use-system-default = Do not configure the firewall.
 
--  firstboot = Configure the inital setup (requires the ``initial-setup`` package to be installed).
+-  firstboot = Configure the initial setup (requires the ``initial-setup`` package to be installed).
 
    -  --disable = Default. Do not launch the initial setup agent on the first boot.
    -  --enable = Launch the initial setup agent on the first boot.
@@ -1526,7 +1526,7 @@ Provider specific options:
    -  memsize (string) = The size, in MiB, of RAM to allocate.
    -  numvcpus (string) = The number of vCPU cores to allocate.
 
-The ``vmware_desktop`` provider requries a license from Vagrant. It can be used on two different computers. A new license is required when there is a new major version of the provider plugin. [49]
+The ``vmware_desktop`` provider requires a license from Vagrant. It can be used on two different computers. A new license is required when there is a new major version of the provider plugin. [49]
 
 Networks
 ''''''''
@@ -2049,7 +2049,7 @@ Terminology:
 
 -  ESXi hypervisor = Previously Linux based, now a proprietary UNIX-like operating system. This is the base operating system and hypervisor software suite that is installed onto a node.
 -  vSphere = Has two meanings. (1) The entire collection of VMware virtualization products or (2) a management dashboard for a single region of ESXi hypervisors.
--  vCenter Server = Manange and operate vSphere infrastructure such as clusters, NSX-T, DRS, vSANs, and more.
+-  vCenter Server = Manage and operate vSphere infrastructure such as clusters, NSX-T, DRS, vSANs, and more.
 -  vSAN = Storage from each ESXi hypervisor can be pooled together in as a virtual storage area network (vSAN) device. This is a hyperconverged infrastructure.
 -  vSphere cluster = A group of two or more ESXi hypervisors that typically share a common vSAN back-end.
 -  NSX-T = A fork of Open vSwitch. Used for virtual networking across nodes.

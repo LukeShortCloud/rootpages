@@ -83,7 +83,7 @@ Differences between Azure AD and traditional AD [17][18]:
    :widths: 20, 20, 20
 
    Directory structure, Flat, Hierarchical
-   Permission managment, "Domains/forests, organization units (OUs), and groups", Azure RBAC
+   Permission management, "Domains/forests, organization units (OUs), and groups", Azure RBAC
    Group policy support, No, Yes
    Authentication integration, "OAuth2, SAML, and WS-Federation", "Kerberos, LDAP, or NTLM"
    Supported Windows computers, Windows >= 10, Windows >= XP

@@ -488,7 +488,7 @@ A mirror clone is similar except it keeps information about the original "origin
    $ ls -1
    <GIT_REPOSITORY_URL>.git
 
-A bare clone can be converted back into a usable git repsoitory. [37]
+A bare clone can be converted back into a usable git repository. [37]
 
 -  Recreate the ".git" directory.
 
@@ -668,7 +668,7 @@ Keywords [27]:
     -  MIME-Version = The version of MIME to use.
 
         -  Content-Type = A HTTP header that specifies what the format of the resource representation.
-        -  Content-Disposition = Specify if an attachment will be shown automatically (inline) or shown as a separate attachment (attachtment).
+        -  Content-Disposition = Specify if an attachment will be shown automatically (inline) or shown as a separate attachment (attachment).
         -  Content-Transfer-Encoding = The encoding for the data.
 
 -  Headers = The metadata of a message that describe details of how it should be processed.
@@ -746,7 +746,7 @@ Write operations:
 Big O Notation
 --------------
 
-The Big O Notation is used to explain the complexity and time required for a function to return in programming. The letter `O` repesents the "order". The letter `N` presents the number of input values for the function. Programmers should try to refactor their code to achieve a scale of `O(1)` which is a constant time and can scale efficiently no matter how much input data is provided.
+The Big O Notation is used to explain the complexity and time required for a function to return in programming. The letter `O` represents the "order". The letter `N` presents the number of input values for the function. Programmers should try to refactor their code to achieve a scale of `O(1)` which is a constant time and can scale efficiently no matter how much input data is provided.
 
 -  O(1) = The function will always take the same amount of time to return.
 -  O(N) = Time to completion scales linearly based on the input given.

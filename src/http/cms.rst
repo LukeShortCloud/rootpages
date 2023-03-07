@@ -6,7 +6,7 @@ Content Management Systems (CMSs)
 Introduction
 ------------
 
-A CMS provides a framework to create a website without having to code it from scratch or even knowing HTML. It automates the process of creating new webpages and can use different themes and plugins. Most CMSs have search engine opitmizations (SEOs). The goal of a CMS is to make creating a website easy. [1]
+A CMS provides a framework to create a website without having to code it from scratch or even knowing HTML. It automates the process of creating new webpages and can use different themes and plugins. Most CMSs have search engine optimizations (SEOs). The goal of a CMS is to make creating a website easy. [1]
 
 Hugo
 ----

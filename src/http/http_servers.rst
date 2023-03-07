@@ -453,7 +453,7 @@ Squid is a caching proxy. It can cache content to RAM and/or a directory. These 
 -  Multiling-HTTP
 -  WAIS
 
-There are some limiations with Squid proxy cache:
+There are some limitations with Squid proxy cache:
 
 -  Does not natively work with content delivery networks (CDNs) that change the HTTP headers or DNS. That content will not be cached unless filter rules for a specific CDN are added.
 

@@ -6,7 +6,7 @@ Processors
 Simultaneous Multithreading (SMT)
 ---------------------------------
 
-SMT, also known as Hyper-Threading Technology (HTT) on Intel processors, allows each processor to act as two logical processors. For example, a proccessor with 4 physical cores will have a total of 8 logical threads. A processor with SMT enabled will have around a 30% increase in performance. [1]
+SMT, also known as Hyper-Threading Technology (HTT) on Intel processors, allows each processor to act as two logical processors. For example, a processor with 4 physical cores will have a total of 8 logical threads. A processor with SMT enabled will have around a 30% increase in performance. [1]
 
 Recommended Number of Cores
 ---------------------------

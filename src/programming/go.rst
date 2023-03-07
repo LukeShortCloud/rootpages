@@ -163,7 +163,7 @@ Data Types
 -  ``nil`` = An empty/null variable.
 -  ``string`` = String. Alphanumeric UTF-8 values. Strings that are written out using double quotes (``"``) only. Single quotes are reserved for defining a rune (single character) data type.
 -  ``uint``, ``uint8``, ``uint16``, ``uint32``, ``uint64``, ``uintptr`` = Unsigned integer that only supports positive whole numbers.
--  ``iota`` = An integer that starts at zero. In a variable block decleration, each new ``iota`` variable adds one to the count. This is commonly used as a value for many variables in a ``const`` block. [32]
+-  ``iota`` = An integer that starts at zero. In a variable block declaration, each new ``iota`` variable adds one to the count. This is commonly used as a value for many variables in a ``const`` block. [32]
 -  ``_`` = A null character. Anything assigned to this will be discarded. This is useful for loops because Go does not support creating variables that are not used.
 
 Example ``iota`` usage:

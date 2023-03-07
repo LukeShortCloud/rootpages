@@ -108,7 +108,7 @@ Registries
 
 A container registry stores Open Container Initiative (OCI) formatted images. These can universally be used across any modern cloud-native platform.
 
-Here are a list of different container registiries that exist [22]:
+Here are a list of different container registries that exist [22]:
 
 -  Amazon Elastic Container Registry (ECR)
 -  Docker Hub

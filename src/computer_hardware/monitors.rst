@@ -46,7 +46,7 @@ Every monitor uses a panel technology. This is a large factor in determining the
 
 
 .. csv-table::
-   :header: Panel Technology, Price\*, Viewing Angles, Contrast Ratio, Color Accuracy, Reponse Time\*
+   :header: Panel Technology, Price\*, Viewing Angles, Contrast Ratio, Color Accuracy, Response Time\*
    :widths: 20, 20, 20, 20, 20, 20
 
    In Plane Switching (IPS), High, High, Medium, High, High
@@ -102,7 +102,7 @@ HDR provides a standard for color accuracy and high contrast. Only video games a
    -  Over 1000 nits (and have better whites)
    -  Or over 540 nits (and have better blacks)
 
-Only mid- to high-end TVs support the brightness and WCG. Most low-end TVs do not meet all of the requirements to display true HDR content. Many companies have their own technology for helping to deliever WCG colors. [10]
+Only mid- to high-end TVs support the brightness and WCG. Most low-end TVs do not meet all of the requirements to display true HDR content. Many companies have their own technology for helping to deliver WCG colors. [10]
 
 Proprietary WCG backlight technologies:
 

@@ -231,7 +231,7 @@ Manage Kubernetes resources via the API.
 
    "run -i --tty <NAME> --image=<IMAGE_NAME>:<IMAGE_VERSION> --restart=Never /bin/sh", "start a Pod with a single container and enter into it via a Bash shell"
    run <POD_NAME> --restart=Never --rm -it -- <COMMAND> <ARG1>, run a container once and then delete it
-   get ingress.v1beta1.extensions, "show all of the (now deprecated) resources from the ""Ingress"" API from apiVersion ""extesnions/v1beta"""
+   get ingress.v1beta1.extensions, "show all of the (now deprecated) resources from the ""Ingress"" API from apiVersion ""extensions/v1beta"""
    explain ingress --api-version=extensions/v1beta1, explain the beta version of the Ingress API
 
 minikube
@@ -318,7 +318,7 @@ The libpod library provides a utility to manage and run containers with CRI-O an
    rm --all, Remove all stopped containers
    rmi --all, Remove all images
    --tls-verify=false, Disable TLS verification (allow HTTP and insecure HTTPS traffic from registries
-   logout --all, logout of all container registires
+   logout --all, logout of all container registries
    system reset, "delete all build cache, containers, images, and pods; this is an alias for `podman unshare rm -rf ~/.local/share/container ~/.config/containers`"
 
 oVirt
@@ -517,7 +517,7 @@ Installation utility for virtual machines.
    "--network bridge=<BRIDGE_DEVICE>,<OPTIONS>", "connect the VM to an existing network bridge"
    "--network network=<LIBVIRT_NETWORK>,<OPTIONS>", "connect the VM to an existing libvirt network (""default"" by default)"
    "--network <BRIDGE_OR_NETWORK>,model=[virtio|e1000|rtl8139|vmxnet3]", "configure the virtual network interface card model to use via the ""model"" option"
-   --cdrom <PATH_TO_ISO>, Specify the ISO to use for the installation of the operating system. It will be detacted after the installation is complete / the VM reboots.
+   --cdrom <PATH_TO_ISO>, Specify the ISO to use for the installation of the operating system. It will be detached after the installation is complete / the VM reboots.
    "--location", "network location of the tree file for the OS installation information"
    "--nographics", "install via a CLI console"
    "--graphics {vnc,listen=<ADDRESS>,port=<PORT>,password=<PASS>}", "use VNC to install the OS via a GUI; other specific options can also be defined such as to listen on all IPs with the 0.0.0.0 wildcard"

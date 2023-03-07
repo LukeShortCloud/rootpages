@@ -1051,7 +1051,7 @@ Encrypt a partition non-interactively:
 
    $ echo <PASSWORD> | sudo cryptsetup -q luksFormat /dev/<DEVICE><PARTITION_NUMBER>
 
-Open the encrypted partition as a specificed ``/dev/mapper/<DEVICE_MAPPER_NAME>`` device which can be formatted and mounted as normal.
+Open the encrypted partition as a specified ``/dev/mapper/<DEVICE_MAPPER_NAME>`` device which can be formatted and mounted as normal.
 
 .. code-block:: sh
 

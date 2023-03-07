@@ -6,7 +6,7 @@ Windows Display
 HDR
 ---
 
-High Dynamic Range (HDR) media provides more realistic colors. HDR support requires a supported graphics device, driver, montior, and video cable. [1]
+High Dynamic Range (HDR) media provides more realistic colors. HDR support requires a supported graphics device, driver, monitor, and video cable. [1]
 
 Enable HDR10
 ~~~~~~~~~~~~

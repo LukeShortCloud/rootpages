@@ -248,7 +248,7 @@ There are currently four offerings for TKG [54]:
 -  **TKG Multicloud (TKGm)** or **TKG** = TKGm, sometimes referred to as just TKG, supports creating and managing infrastructure on Amazon Web Services, Microsoft Azure, and VMware vSphere 6. For VMware vSphere 7, TKGm can be used but TKGS is recommended instead.
 -  **Tanzu Community Edition (TCE)** = The free and open source upstream version of TKGm.
 -  **TKG Services (TKGS)** = VMware vSphere 7 creates and manages the Kubernetes cluster.
--  **TKG Integrated Edition (TKGI)** = Previosuly Enterprise PKS. Uses BOSH to deploy and manage virtual machines for the Kubernetes cluster. BOSH supports creating infrastructure on Alibaba Cloud, Amazon Web Services, Google Cloud Platform, Microsoft Azure, OpenStack, and VMware vSphere. [55]
+-  **TKG Integrated Edition (TKGI)** = Previously known as Enterprise PKS. Uses BOSH to deploy and manage virtual machines for the Kubernetes cluster. BOSH supports creating infrastructure on Alibaba Cloud, Amazon Web Services, Google Cloud Platform, Microsoft Azure, OpenStack, and VMware vSphere. [55]
 
 TKGm
 ^^^^
@@ -379,7 +379,7 @@ Release highlights:
 -  `1.4 <https://kubernetes.io/blog/2016/09/kubernetes-1-4-making-it-easy-to-run-on-kuberentes-anywhere/>`__
 
    -   `kubeadm <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm/>`__ introduced for installing Kubernetes clusters.
-   -  ScheduledJob objects (later named to `CronJob <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/>`__) added to run an application during a regularyly scheduled time.
+   -  ScheduledJob objects (later named to `CronJob <https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/>`__) added to run an application during a regularly scheduled time.
    -  `PodSecurityPolicies <https://kubernetes.io/docs/concepts/policy/pod-security-policy/>`__ object added for setting the security context of containers.
    -  `Anti- and Inter-Affinity <https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity>`__ for helping to select which Nodes a Pod will be deployed on.
    -  AppArmor support.
@@ -387,7 +387,7 @@ Release highlights:
 
 -  `1.5 <https://kubernetes.io/blog/2016/12/kubernetes-1-5-supporting-production-workloads/>`__
 
-   -  `kubefed <https://github.com/kubernetes-sigs/kubefed/blob/master/docs/userguide.md>`__ command for manginging federated Kubernetes clusters.
+   -  `kubefed <https://github.com/kubernetes-sigs/kubefed/blob/master/docs/userguide.md>`__ command for managing federated Kubernetes clusters.
    -  `PodDistruptionBudget <https://kubernetes.io/docs/tasks/run-application/configure-pdb/>`__ object allows for managing Node eviction rules.
    -  Windows container support.
    -  `Container Runtime Interface (CRI) <https://developer.ibm.com/technologies/containers/blogs/kube-cri-overview/>`__ allows different runtimes besides docker.
@@ -459,7 +459,7 @@ Release highlights:
 
    -  CRDs are now stable.
    -  Metrics now use a registry (just as how all other Kubernetes services do).
-   -  ``kubeadm`` now supports joining and reseting Windows Nodes.
+   -  ``kubeadm`` now supports joining and resetting Windows Nodes.
    -  CSI support on Windows.
    -  `EndpointSlice API <https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/>`__ introduced as a scalable alternative to Endpoints.
 
@@ -1719,7 +1719,7 @@ TCE
 
          $ tanzu management-cluster delete <MANAGEMENT_CLUSTER_NAME>
 
-      -  If there are any problems deleting a managment cluster, try forcing a delete.
+      -  If there are any problems deleting a management cluster, try forcing a delete.
 
          .. code-block:: sh
 
@@ -2007,7 +2007,7 @@ Admission Controllers provide a way to regulate the Kubernetes APIs. Here are al
    $ kubectl exec --namespace kube-system -it kube-apiserver-controlplane -- kube-apiserver --help | grep enable-admission
          --enable-admission-plugins strings       admission plugins that should be enabled in addition to default enabled ones (NamespaceLifecycle, LimitRanger, ServiceAccount, TaintNodesByCondition, Priority, DefaultTolerationSeconds, DefaultStorageClass, StorageObjectInUseProtection, PersistentVolumeClaimResize, RuntimeClass, CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, MutatingAdmissionWebhook, ValidatingAdmissionWebhook, ResourceQuota). Comma-delimited list of admission plugins: AlwaysAdmit, AlwaysDeny, AlwaysPullImages, CertificateApproval, CertificateSigning, CertificateSubjectRestriction, DefaultIngressClass, DefaultStorageClass, DefaultTolerationSeconds, DenyEscalatingExec, DenyExecOnPrivileged, EventRateLimit, ExtendedResourceToleration, ImagePolicyWebhook, LimitPodHardAntiAffinityTopology, LimitRanger, MutatingAdmissionWebhook, NamespaceAutoProvision, NamespaceExists, NamespaceLifecycle, NodeRestriction, OwnerReferencesPermissionEnforcement, PersistentVolumeClaimResize, PersistentVolumeLabel, PodNodeSelector, PodSecurityPolicy, PodTolerationRestriction, Priority, ResourceQuota, RuntimeClass, SecurityContextDeny, ServiceAccount, StorageObjectInUseProtection, TaintNodesByCondition, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
 
-A detailed explaination of each built-in Kubernetes Admission Controller can be found `here <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/>`__.
+A detailed explanation of each built-in Kubernetes Admission Controller can be found `here <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/>`__.
 
 Find which Admission Controllers are enabled or disabled:
 
@@ -2760,7 +2760,7 @@ Solutions:
       $ kubectl get nodes
       # Stop k3s.
       $ sudo systemctl stop k3s
-      # Set the date back manually. Or use a time synchornization program such as 'chronyd' or 'ntpd'.
+      # Set the date back manually. Or use a time synchronization program such as 'chronyd' or 'ntpd'.
       $ sudo date -s 20210310
 
 [53]

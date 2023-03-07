@@ -85,7 +85,7 @@ Ubuntu
 Hardware Enablement
 ^^^^^^^^^^^^^^^^^^^
 
-Hardware Enablement (HWE), or Ubuntu LTS enablement, provides select backports from newer Ubuntu releases to allow newer hardware to work. Starting with Ubuntu Desktop 20.04.1 (not Server), the HWE packages are installed by default in each minor relese.
+Hardware Enablement (HWE), or Ubuntu LTS enablement, provides select backports from newer Ubuntu releases to allow newer hardware to work. Starting with Ubuntu Desktop 20.04.1 (not Server), the HWE packages are installed by default in each minor release.
 
 Ubuntu 18.04:
 

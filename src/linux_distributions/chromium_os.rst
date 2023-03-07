@@ -539,7 +539,7 @@ Optionally configure additional ``USE`` flags for by Portage/emerge while buildi
    (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ vim ../overlays/overlay-${BOARD}/profiles/base/make.defaults
    USE="${USE} <USE_FLAG_1> <USE_FLAG_2>"
 
-Install base system packages into a new chroot created at ``/boot/${BOARD}``. Everytime this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Optionally add the ``--force`` argument to delete and recreate the chroot for the board.
+Install base system packages into a new chroot created at ``/boot/${BOARD}``. Every time this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Optionally add the ``--force`` argument to delete and recreate the chroot for the board.
 
 .. code-block:: sh
 
@@ -552,7 +552,7 @@ Configure the password for the ``chronos`` user.
    (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./set_shared_user_password.sh
    Enter password for shared user account: Password set in /etc/shared_user_passwd.txt
 
-Install all the packages. Similar to the ``setup_board`` command, everytime this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Specify the ``--nowithdebug`` argument to not compile packages with debug mode enabled. The configuration for Portage/emerge that is used is saved to the file ``../../chroot/build/${BOARD}/packages/Packages``.
+Install all the packages. Similar to the ``setup_board`` command, every time this command is ran it also runs ``update_chroot`` to ensure it has the latest updates. Specify the ``--nowithdebug`` argument to not compile packages with debug mode enabled. The configuration for Portage/emerge that is used is saved to the file ``../../chroot/build/${BOARD}/packages/Packages``.
 
 .. code-block:: sh
 
@@ -829,7 +829,7 @@ Other useful branches:
 
 -  ``merge/continuous/chromeos-kernelupstream-<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>`` = The specified `mainline <https://www.kernel.org/>`__ Linux kernel with Chromium OS patches.
 
-   -  ``merge/continuous/chromeos-kernelupstream-<KERNEL_VERSION_MANJOR>.<KERNEL_VERSION_MINOR>-rc<KERNEL_VERSION_RELEASE_CANDIDATE>``
+   -  ``merge/continuous/chromeos-kernelupstream-<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>-rc<KERNEL_VERSION_RELEASE_CANDIDATE>``
 
 -  ``merge/upstream-kernel`` = The latest mainline Linux kernel with Chromium OS patches.
 -  ``stable-merge/linux/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>.<KERNEL_VERSION_PATCH>`` = The specified `stable <https://mirrors.edge.kernel.org/pub/linux/kernel/>`__ Linux kernel.
@@ -1718,7 +1718,7 @@ Bibliography
 22. "ChromeOS Firmware Utility Script." MrChromebox.tech. Accessed September 5, 2020. https://mrchromebox.tech/#fwscript
 23. "service.cc" vm_tools - chromiumos/platform2 - Git at Google. November 14, 2020. Accessed December 5, 2020. https://chromium.googlesource.com/chromiumos/platform2/+/master/vm_tools/concierge/service.cc
 24. "How to Enable USB Booting on Chromebook." wikiHow. November 30, 2020. Accessed February 25, 2021. https://www.wikihow.com/Enable-USB-Booting-on-Chromebook
-25. "Remove RootFS Verification & make Read/Write." Cr-48ite. January 4, 2012. Accessed Feburary 28, 2021. https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write
+25. "Remove RootFS Verification & make Read/Write." Cr-48ite. January 4, 2012. Accessed February 28, 2021. https://sites.google.com/site/cr48ite/getting-technical/remove-rootfs-verification-make-read-write
 26. "Chromebook writable root." Way of the nix's - Computer Security & Full Stack Development. Accessed February 28, 2021. https://xn--1ca.se/chromebook-writable-root/
 27. "Build chrome os kernel and kernel modules." GitHub dnschneid/crouton. March 22, 2018. Accessed March 15, 2021. https://github.com/dnschneid/crouton/wiki/Build-chrome-os-kernel-and-kernel-modules
 28. "Custom Kernel Modules for Chromebook." The Critically Cognitive. April 17, 2017. Accessed March 15, 2021. https://criticallycognitive.wordpress.com/2017/04/16/custom-kernel-modules-for-chromebook/
