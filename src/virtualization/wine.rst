@@ -333,6 +333,7 @@ Examples:
    AUDIODEV, ``/dev/dsp``, The audio device to use.
    MIXERDEV, ``/dev/mixer``, The device to use for mixer controls.
    WINE, ``/usr/bin/wine``, This variable is only used for Winetricks. The full path to the Wine binary to use.
+   "WINE_D3D_CONFIG=""renderer=<RENDERER>""", ``gl``, "The WineD3D back-end engine to use. Valid options are ""gl"" (OpenGL), ""vulkan"", or ""no3d"" (disable rendering). [20][21]"
 
 [4]
 
@@ -404,13 +405,23 @@ then native DLLs.
 Graphics Translations
 ---------------------
 
+Introduction
+~~~~~~~~~~~~
+
 These are useful graphics translation layers for running Windows games using Wine and alternative back-end drivers. In some scenarios, a combination of these are required to get games working.
 
 -  `dgVoodoo 2 <http://dege.freeweb.hu/>`__ = Glide (Voodoo) and DirectX <= 9 to DirectX 11.
+-  `D8VK <https://github.com/AlpyneDreams/d8vk>`__ = DirectX 8 to Vulkan.
+
+    -  This project also has experimental support for `DirectX 7 to Vulkan <https://github.com/AlpyneDreams/d8vk/tree/d3d7>`__.
+
 -  `D9VK <https://github.com/Joshua-Ashton/d9vk>`__ = This has been merged directly into DXVK. DirectX 9 to Vulkan.
 -  `DXVK <https://github.com/doitsujin/dxvk>`__ = DirectX 9, 10, and 11 to Vulkan.
 -  `MoltenVK (mac OS) <https://moltengl.com/moltenvk/>`__ = Vulkan to Metal.
 -  `WineD3D <https://www.winehq.org/>`__ = DirectX <= 11 to `OpenGL 4.4 <https://source.winehq.org/git/wine.git/commitdiff/0db4d1c251d293333e2721a78d6156008a90ff6f>`__. Older versions of OpenGL will still work but will not expose as many working features of DirectX.
+
+   -  The newer back-end engine Damavand for WineD3D provides Vulkan to DirectX 10 and 11. [22]
+
 -  `Vkd3d <https://wiki.winehq.org/Vkd3d>`__ = DirectX 12 to Vulkan.
 
 Forks
@@ -511,3 +522,5 @@ Bibliography
 18. "Working on Wine Part 2 - Wine's Build Process." CodeWeavers Blog. January 8, 2019. Accessed March 7, 2023. https://www.codeweavers.com/blog/aeikum/2019/1/8/working-on-wine-part-2-wines-build-process
 19. "configure: error: FreeType 32-bit development files not found." FedoraForum.org. January 3, 2023. Accessed March 7, 2023. https://forums.fedoraforum.org/showthread.php?329486-configure-error-FreeType-32-bit-development-files-not-found
 20. "Wine [8.0] Announcement." WineHQ. Accessed March 7, 2023. https://www.winehq.org/announce/8.0
+21. "wine/dlls/wined3d/wined3d_main.c." GitLab wine/wine. December 3, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/wined3d_main.c#L447-L464
+22. "wine/dlls/wined3d/adapter_vk.c." GitLab wine/wine. December 4, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/adapter_vk.c#L2092
