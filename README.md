@@ -41,7 +41,7 @@ openSUSE:
 $ sudo zypper install python3-Sphinx python3-sphinx_rtd_theme
 ```
 
-Some operating systems will install the `sphinx-build` binary with a different suffix to inidicate that it is using Python 3. For ease of use, consider symlinking that to be `sphinx-build`.
+Some operating systems will install the `sphinx-build` binary with a different suffix to indicate that it is using Python 3. For ease of use, consider symlinking that to be `sphinx-build`.
 
 ```
 $ sudo ln -s /usr/bin/sphinx-build-3* /usr/local/bin/sphinx-build
@@ -163,7 +163,7 @@ There are a lot of [issues open on GitHub that have the label "new content."](ht
 
 ### Quarterly Updates
 
-Every three months, Root Pages is tagged as a milestone release. The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Quarterly updates minimize breakage to bookmarks and links compared to a rolling release model. Formatting, grammer, and spelling errors should be checked and corrected before each tagged release.
+Every three months, Root Pages is tagged as a milestone release. The four releases in a year are: `YYYY.01.01`, `YYYY.04.01`, `YYYY.07.01`, and `YYYY.10.01`. Quarterly updates minimize breakage to bookmarks and links compared to a rolling release model. Formatting, grammar, and spelling errors should be checked and corrected before each tagged release.
 
 ### Yearly Updates
 
@@ -173,7 +173,7 @@ The copyright year in `src/conf.py` needs to be updated.
 
 ### License
 
-Root Pages, and all of it's content, is provided under the GNU Free Documentation License (GFDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 licence are also applied to this project.
+Root Pages, and all of it's content, is provided under the GNU Free Documentation License (GFDL) v1.3. Additional disclaimers related to warranty and liability from the GPLv3 license are also applied to this project.
 
 Files:
 
