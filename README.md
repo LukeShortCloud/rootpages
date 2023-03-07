@@ -89,6 +89,14 @@ Specify the format that the reStructuredText should be transformed and output in
 $ sphinx-build -b <OUTPUT_FORMAT> src/ build/
 ```
 
+## Spell Checking
+
+A custom dictionary is provided to do spell checking. However, the `hunspell` command does not reliably use every word in the dictionary so manual review is still required.
+
+```
+$ hunspell -l -d en_US -p ./hunspell_dictionary_root_pages.txt src/*/*.rst
+```
+
 ## Translations
 
 Root Pages can also be translated into a different language.
