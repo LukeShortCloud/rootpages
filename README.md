@@ -11,7 +11,7 @@ All Root Pages are written in the reStructuredText (RST) markup language. Sphinx
 * Stable updates: https://rootpages.lukeshort.cloud/
 * Latest development updates: https://rootpages.lukeshort.cloud/latest/
 
-The latest updates to Root Pages are automatically tested via [Travis CI](https://travis-ci.org/). The latest build is pushed to a Kubernetes cluster on every successful build. Tags are published quarterly which Travis CI will automatically push the built website to [GitHub Pages](https://pages.github.com/). The hosted website is stored in the "gh-pages" branch.
+All commits to Root Pages are automatically tested via a GitHub Actions workflow. The latest successful build of the "main" branch is pushed to a Kubernetes cluster. Tags are published and a "stable" branch is updated quarterly.
 
 ## Install
 
