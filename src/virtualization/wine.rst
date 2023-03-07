@@ -424,6 +424,29 @@ These are useful graphics translation layers for running Windows games using Win
 
 -  `Vkd3d <https://wiki.winehq.org/Vkd3d>`__ = DirectX 12 to Vulkan.
 
+DXVK
+~~~~
+
+Releases
+^^^^^^^^
+
+Release highlights:
+
+-  `2.1 <https://github.com/doitsujin/dxvk/releases/tag/v2.1>`__
+    - Supports HDR10.
+-  `2.0 <https://github.com/doitsujin/dxvk/releases/tag/v2.0>`__
+    - Requires Vulkan 1.3.
+-  `1.5.2 <https://github.com/doitsujin/dxvk/releases/tag/v1.5.2>`__
+    - Requires Vulkan 1.1.
+-  `1.5 <https://github.com/doitsujin/dxvk/releases/tag/v1.5>`__
+    - Translates DirectX 9 to Vulkan through the use of the merged-in `D9VK <https://github.com/Joshua-Ashton/d9vk>`__ project.
+-  `0.7.0 <https://github.com/doitsujin/dxvk/releases/tag/v0.70>`__
+    - Translates DirectX 10 to Vulkan.
+-  `0.20 <https://github.com/doitsujin/dxvk/releases/tag/v0.20>`__
+    - The first ever release of DXVK. It only supports one game.
+    - Translates DirectX 11 to Vulkan.
+    - Requires Vulkan 1.0.
+
 Forks
 -----
 
