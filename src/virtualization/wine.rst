@@ -3,17 +3,14 @@
 
 .. contents:: Table of Contents
 
-Wine Is Not an Emulator (Wine) is a compatibility layer that translates
-Windows systems calls into native POSIX system calls. This provides a
-fast way to run Windows programs natively on UNIX-like systems. [1]
+Introduction
+------------
 
-The ReactOS project is a free and open source operating system built
-from scratch. The main goal is to mirror the Windows NT operating
-systems. Work on recreating Windows libraries (DLLs) is shared between
-ReactOS and the Wine project. [2]
+Wine Is Not an Emulator (Wine) is a compatibility layer that translates Windows systems calls into native POSIX system calls. This provides a fast way to run Windows programs natively on UNIX-like systems. [1]
 
-Both projects are clean-room reversed engineered to prevent legal
-issues. [3]
+The ReactOS project is a free and open source operating system built from scratch. The main goal is to mirror the Windows NT operating systems. Work on recreating Windows libraries (DLLs) from Wine is imported and re-used in ReactOS. [2]
+
+Both ReactOS [9] and Wine are clean-room reversed engineered to prevent legal issues. However, the Wine project recommends not to use ReactOS source code. [3]
 
 Environment Variables
 ---------------------
@@ -208,9 +205,10 @@ Bibliography
 
 1. "WineHQ." WineHQ. October 20, 2017. Accessed October 29, 2017. https://www.winehq.org/
 2. "Wine." ReactOS Wiki. April 28, 2017. Accessed October 29, 2017. https://www.reactos.org/wiki/WINE
-3. "Clean Room Guidelines." WineHQ. February 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Clean\_Room\_Guidelines
+3. "Clean Room Guidelines." WineHQ. July 6, 2022. Accessed March 7, 2023. https://wiki.winehq.org/Clean\_Room\_Guidelines
 4. "Wine User's Guide." WineHQ. September 15, 2017. Accessed October 29, 2017. https://wiki.winehq.org/Wine\_User%27s\_Guide
 5. "Debug Channels." WineHQ. November 13, 2016. Accessed October 29, 2017. https://wiki.winehq.org/Debug\_Channels
 6. "Lutris Wine Versions." PlayOnLinux Forum. April 3, 2018. Accessed June 16, 2018. https://www.playonlinux.com/en/topic-15838-Lutris\_Wine\_Versions.html
 7. "Valve officially confirm a new version of 'Steam Play' which includes a modified version of Wine." GamingOnLinux. August 21, 2018. Accessed March 8, 2020. https://www.gamingonlinux.com/articles/valve-officially-confirm-a-new-version-of-steam-play-which-includes-a-modified-version-of-wine.12400
 8. "How to run another .exe in an existing proton wine prefix." GitHub michaelbutler/Steam_Proton_Exe.md. September 11, 2020. Accessed March 12, 2021. https://gist.github.com/michaelbutler/f364276f4030c5f449252f2c4d960bd2
+9. "RESET, REBOOT, RESTART, LEGAL ISSUES AND THE LONG ROAD TO 0.3." ReactOS Project. January 27, 2006. Accessed March 7, 2023. https://reactos.org/project-news/reset-reboot-restart-legal-issues-and-long-road-03/
