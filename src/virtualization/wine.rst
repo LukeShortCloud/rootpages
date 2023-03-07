@@ -12,6 +12,294 @@ The ReactOS project is a free and open source operating system built from scratc
 
 Both ReactOS [9] and Wine are clean-room reversed engineered to prevent legal issues. However, the Wine project recommends not to use ReactOS source code. [3]
 
+Installation
+------------
+
+Binary Packages
+~~~~~~~~~~~~~~~
+
+Here is how to install both the 32-bit and 64-bit libraries for Wine. This includes recommended dependencies such as Mono (open source .NET Framework) and Gecko (open source Internet Explorer based on Firefox).
+
+-  Arch Linux [10]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pacman.conf
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+      $ sudo pacman -S -y -y
+      $ sudo pacman -S wine wine-mono wine-gecko
+
+-  Debian [11]:
+
+   .. code-block:: sh
+
+      $ sudo dpkg --add-architecture i386
+      $ sudo apt update
+      $ sudo apt install wine wine32 wine64 libwine libwine:i386 fonts-wine
+
+-  Fedora [12]:
+
+   .. code-block:: sh
+
+      $ sudo dnf install wine
+
+Compile From Source Code
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Compiling Wine from source code allows testing out new versions and features sooner. The build can also be highly configured.
+
+-  Install 64-bit build dependencies.
+
+   -  Fedora [13][14][15][16]:
+
+      .. code-block:: sh
+
+         $ sudo dnf install \
+             audiofile-devel \
+             autoconf \
+             bison \
+             ccache \
+             chrpath \
+             clang \
+             cups-devel \
+             dbus-devel \
+             dbus-libs \
+             desktop-file-utils \
+             flex \
+             fontconfig-devel \
+             fontforge \
+             fontpackages-devel \
+             freeglut-devel \
+             freetype-devel \
+             freetype-devel \
+             gcc \
+             gettext-devel \
+             giflib-devel \
+             git \
+             glibc-devel.i686 \
+             gnutls-devel \
+             gsm-devel \
+             gstreamer1-devel \
+             gstreamer1-plugins-base-devel \
+             krb5-devel \
+             libappstream-glib \
+             libattr-devel \
+             libgphoto2-devel \
+             libieee1284-devel \
+             libpcap-devel \
+             librsvg2 \
+             librsvg2-devel \
+             libstdc++-devel \
+             libunwind-devel \
+             libusb1-devel \
+             libusbx-devel \
+             libv4l-devel \
+             libva-devel \
+             libX11-devel \
+             libXcomposite-devel \
+             libXcursor-devel \
+             libXext-devel \
+             libXfixes-devel \
+             libXi-devel \
+             libXinerama-devel \
+             libXmu-devel \
+             libXrandr-devel \
+             libXrender-devel \
+             libXxf86dga-devel \
+             libXxf86vm-devel \
+             lld \
+             make \
+             mesa-libGL-devel \
+             mesa-libGLU-devel \
+             mesa-libOSMesa-devel \
+             mingw32-FAudio \
+             mingw32-gcc \
+             mingw32-lcms2 \
+             mingw32-libpng \
+             mingw32-libtiff \
+             mingw32-libxml2 \
+             mingw32-libxslt \
+             mingw32-vkd3d \
+             mingw32-vulkan-headers \
+             mingw32-zlib \
+             mingw64-FAudio \
+             mingw64-gcc \
+             mingw64-lcms2 \
+             mingw64-libpng \
+             mingw64-libtiff \
+             mingw64-libxml2 \
+             mingw64-libxslt \
+             mingw64-vkd3d \
+             mingw64-vulkan-headers \
+             mingw64-zlib \
+             mpg123-devel \
+             ocl-icd-devel \
+             opencl-headers \
+             openldap-devel \
+             perl-generators \
+             pulseaudio-libs-devel \
+             samba-devel \
+             sane-backends-devel \
+             SDL2-devel \
+             systemd-devel \
+             unixODBC-devel \
+             vulkan-devel \
+             vulkan-headers
+
+-  Install 32-bit build dependencies.
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ sudo dnf install \
+             audiofile-devel.i686 \
+             autoconf \
+             ccache \
+             clang.i686 \
+             cups-devel.i686 \
+             dbus-devel.i686 \
+             dbus-libs.i686 \
+             fontconfig-devel.i686 \
+             fontforge.i686 \
+             freeglut-devel.i686 \
+             freetype-devel.i686 \
+             freetype-devel.i686 \
+             gcc \
+             gettext-devel.i686 \
+             giflib-devel.i686 \
+             git \
+             glibc-devel.i686 \
+             gnutls-devel.i686 \
+             gsm-devel.i686 \
+             gstreamer1-devel.i686 \
+             gstreamer1-plugins-base-devel.i686 \
+             krb5-devel.i686 \
+             libappstream-glib.i686 \
+             libattr-devel.i686 \
+             libgphoto2-devel.i686 \
+             libieee1284-devel.i686 \
+             libpcap-devel.i686 \
+             librsvg2.i686 \
+             librsvg2-devel.i686 \
+             libstdc++-devel.i686 \
+             libunwind-devel.i686 \
+             libusb1-devel.i686 \
+             libv4l-devel.i686 \
+             libva-devel.i686 \
+             libX11-devel.i686 \
+             libXcomposite-devel.i686 \
+             libXcursor-devel.i686 \
+             libXext-devel.i686 \
+             libXfixes-devel.i686 \
+             libXi-devel.i686 \
+             libXinerama-devel.i686 \
+             libXmu-devel.i686 \
+             libXrandr-devel.i686 \
+             libXrender-devel.i686 \
+             libXxf86dga-devel.i686 \
+             libXxf86vm-devel.i686 \
+             lld.i686 \
+             make \
+             mesa-libGL-devel.i686 \
+             mesa-libGLU-devel.i686 \
+             mesa-libOSMesa-devel.i686 \
+             mingw32-FAudio \
+             mingw32-gcc \
+             mingw32-lcms2 \
+             mingw32-libpng \
+             mingw32-libtiff \
+             mingw32-libxml2 \
+             mingw32-libxslt \
+             mingw32-vkd3d \
+             mingw32-vulkan-headers \
+             mingw32-zlib \
+             mingw64-FAudio \
+             mingw64-gcc \
+             mingw64-lcms2 \
+             mingw64-libpng \
+             mingw64-libtiff \
+             mingw64-libxml2 \
+             mingw64-libxslt \
+             mingw64-vkd3d \
+             mingw64-vulkan-headers \
+             mingw64-zlib \
+             ocl-icd-devel.i686 \
+             opencl-headers \
+             openldap-devel.i686 \
+             perl-generators \
+             pulseaudio-libs-devel.i686 \
+             samba-devel.i686 \
+             sane-backends-devel.i686 \
+             SDL2-devel.i686 \
+             systemd-devel.i686 \
+             vulkan-headers \
+             vulkan-loader-devel.i686
+
+-  Download the official Wine git repository.
+
+   .. code-block:: sh
+
+      $ git clone https://gitlab.winehq.org/wine/wine.git
+      $ cd wine
+
+Common ``./configure`` arguments [13]:
+
+-  ``--enable-win64`` = Build 64-bit Wine. By default, 32-bit Wine is built.
+-  ``--with-wine64 <DIRECTORY>`` = Build 32-bit Wine with support for 64-bit by referencing the directory where 64-bit Wine was built.
+-  ``--enable-archs=i386,x86_64`` = Build Wine with WoW64 support. This only requires 64-bit dependencies but still allows 32-bit Windows programs to work.
+-  ``CC="ccache gcc" CROSSCC="ccache x86_64-w64-mingw32-gcc" --enable-win64`` = Use ``ccache`` to speed up rebulding 64-bit Wine. [17]
+-  ``CC="ccache gcc" CROSSCC="ccache i686-w64-mingw32-gcc" --with-wine64 <DIRECTORY>`` = Use ``ccache`` to speed rebuilding 32-bit Wine.
+
+Example configure usage:
+
+-  Configure the use of Fedora's non-standard location of the FreeType2 source files. [19]
+
+   .. code-block:: sh
+
+      $ ./configure CFLAGS="-I/usr/include/freetype2"
+
+Example builds:
+
+-  Build 32-bit only Wine. [13]
+
+   .. code-block:: sh
+
+      $ ./configure CC="ccache gcc" CROSSCC="ccache i686-w64-mingw32-gcc"
+      $ make -j $(nproc)
+
+-  Build standard Wine with support for both 32-bit and 64-bit Windows programs. [13][18]
+
+   .. code-block:: sh
+
+      $ mkdir win64
+      $ cd win64
+      $ ../configure CC="ccache gcc" CROSSCC="ccache x86_64-w64-mingw32-gcc" --enable-win64
+      $ make -j $(nproc)
+      $ cd ..
+      $ mkdir win32
+      $ cd win32
+      $ ../configure CC="ccache gcc" CROSSCC="ccache i686-w64-mingw32-gcc" --with-wine64=../win64
+      $ make -j $(nproc)
+      $ cd ..
+
+   -  Once built, use ``tools/winewrapper`` to run 32-bit or 64-bit Windows programs. This script looks for the correct library and binary locations for Wine and sets temporary environment variables for the local installation to work.
+
+-  Build Wine with WoW64 support. [20]
+
+   .. code-block:: sh
+
+      $ ./configure CC="ccache gcc" CROSSCC="ccache x86_64-w64-mingw32-gcc" --enable-archs=i386,x86_64
+      $ make -j $(nproc)
+
+   -  Verify that WoW64 support was built successfully by ensuring that the 32-bit Wine executable file is actually a 64-bit Linux binary.
+
+      .. code-block:: sh
+
+         $ file ./loader/wine
+         loader/wine: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=6f687b3c6288a675b9fb777dccf1c585caed7acb, for GNU/Linux 3.2.0, with debug_info, not stripped
+
 Environment Variables
 ---------------------
 
@@ -212,3 +500,14 @@ Bibliography
 7. "Valve officially confirm a new version of 'Steam Play' which includes a modified version of Wine." GamingOnLinux. August 21, 2018. Accessed March 8, 2020. https://www.gamingonlinux.com/articles/valve-officially-confirm-a-new-version-of-steam-play-which-includes-a-modified-version-of-wine.12400
 8. "How to run another .exe in an existing proton wine prefix." GitHub michaelbutler/Steam_Proton_Exe.md. September 11, 2020. Accessed March 12, 2021. https://gist.github.com/michaelbutler/f364276f4030c5f449252f2c4d960bd2
 9. "RESET, REBOOT, RESTART, LEGAL ISSUES AND THE LONG ROAD TO 0.3." ReactOS Project. January 27, 2006. Accessed March 7, 2023. https://reactos.org/project-news/reset-reboot-restart-legal-issues-and-long-road-03/
+10. "How to Install Wine on Arch Linux." Installing Wine on Linux. December 14, 2022. Accessed March 7, 2023. https://wine.htmlvalidator.com/install-wine-on-arch-linux.html
+11. "Wine." Debian Wiki. January 3, 2023. Accessed March 7, 2023. https://wiki.debian.org/Wine
+12. "Wine." Fedora Docs. March 7, 2023. Accessed March 7, 2023. https://docs.fedoraproject.org/en-US/quick-docs/wine/
+13. "Building Wine." WineHQ Wiki. December 2, 2022. Accessed March 7, 2023. https://wiki.winehq.org/Building_Wine
+14. "Help Building Wine For Fedora and Updating Build Instructions." WineHQ Forums. January 30, 2020. Accessed March 7, 2023. https://forum.winehq.org/viewtopic.php?t=33373
+15. "F19: can't find libudev." FedoraForum.org. October 7, 2013. Accessed March 7, 2023. https://forums.fedoraforum.org/showthread.php?292206-F19-can-t-find-libudev
+16. "wine.spec." Fedora Source Packages rpms/wine f38. February 22, 2023. Accessed March 7, 2023. https://src.fedoraproject.org/rpms/wine/blob/f38/f/wine.spec
+17. "Building a MinGW WoW64 Wine with a custom vkd3d build." WineHQ Wiki. June 2, 2022. Accessed March 7, 2023. https://wiki.winehq.org/Building_a_MinGW_WoW64_Wine_with_a_custom_vkd3d_build
+18. "Working on Wine Part 2 - Wine's Build Process." CodeWeavers Blog. January 8, 2019. Accessed March 7, 2023. https://www.codeweavers.com/blog/aeikum/2019/1/8/working-on-wine-part-2-wines-build-process
+19. "configure: error: FreeType 32-bit development files not found." FedoraForum.org. January 3, 2023. Accessed March 7, 2023. https://forums.fedoraforum.org/showthread.php?329486-configure-error-FreeType-32-bit-development-files-not-found
+20. "Wine [8.0] Announcement." WineHQ. Accessed March 7, 2023. https://www.winehq.org/announce/8.0
