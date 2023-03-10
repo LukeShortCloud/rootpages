@@ -1130,7 +1130,15 @@ Installation:
 
       $ GO111MODULE="on" go get sigs.k8s.io/kind@v0.17.0
 
--  macOS specific:
+-  Linux:
+
+   .. code-block:: sh
+
+      $ export KIND_VER="v0.17.0"
+      $ sudo -E wget https://kind.sigs.k8s.io/dl/${KIND_VER}/kind-linux-amd64 -O /usr/local/bin/kind
+      $ sudo chmod +x /usr/local/bin/kind
+
+-  macOS:
 
    .. code-block:: sh
 
