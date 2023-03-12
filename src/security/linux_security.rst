@@ -425,11 +425,28 @@ Install the CLI tool for HashiCorp Vault. [13] It can be used as a client or ser
       $ sudo mv ./vault /usr/local/bin/
       $ vault --version
 
-Start the server in "dev" mode.
+Server
+^^^^^^
+
+For testing purposes, it is recommended to start the server in "dev" mode. This starts the server with the following changes [15]:
+
+-  Unsealed database makes all contents visible via plaintext. [16]
+-  Ephemeral RAM storage for database contents.
+-  The server URL uses HTTP instead of HTTPS.
+-  ``vault login`` is not required.
+-  The key-value (KV) secrets engine version 2 is enabled by default.
+
+   -  On production deployments, this engine is disabled and it defaults to version 1. [17]
+
+Start the server in "dev" mode. By default, a root token will be dynamically generated. The server can also be started with a consistent root token.
 
 .. code-block:: sh
 
    $ vault server -dev
+
+.. code-block:: sh
+
+   $ vault server -dev -dev-root-token-id=root
 
 Verify that the server is working. [14]
 
@@ -471,5 +488,8 @@ Bibliography
 10. "User:Grawity/Adding a trusted CA certificate." Arch Linux Wiki. June 16, 2020. Accessed April 30, 2021. https://wiki.archlinux.org/index.php/User:Grawity/Adding_a_trusted_CA_certificate
 11. "How To Set Up and Configure a Certificate Authority (CA) On Debian 10." Digital Ocean Community Tutorials. April 2, 2020. Accessed April 30, 2021. https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-debian-10
 12. "sudoers(5) - Linux man page." die.net. July 16, 2012. Accessed October 19, 2022. https://linux.die.net/man/5/sudoers
-13. "Install Vault." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/downloads
-14. "Starting the Server." HasiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-dev-server
+13. "Install Vault." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/downloadsa
+14. "Starting the Server." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-dev-server
+15. ""Dev" Server Mode." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/concepts/dev-server
+16. "Seal/Unseal." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/concepts/seal
+17. "KV Secrets Engine - Version 2." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2
