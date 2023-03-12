@@ -394,6 +394,60 @@ Fedora [11]:
    $ sudo cp ca.crt /etc/pki/ca-trust/source/anchors/
    $ sudo update-ca-trust
 
+Encryption
+----------
+
+HashiCorp Vault
+~~~~~~~~~~~~~~~
+
+Installation
+^^^^^^^^^^^^
+
+Install the CLI tool for HashiCorp Vault. [13] It can be used as a client or server.
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ export VAULT_VER=1.13.0
+      $ wget "https://releases.hashicorp.com/vault/${VAULT_VER}/vault_${VAULT_VER}_linux_amd64.zip"
+      $ unzip vault_${VAULT_VER}_linux_amd64.zip
+      $ sudo mv ./vault /usr/local/bin/
+      $ vault --version
+
+-  macOS:
+
+   .. code-block:: sh
+
+      $ export VAULT_VER=1.13.0
+      $ wget "https://releases.hashicorp.com/vault/${VAULT_VER}/vault_${VAULT_VER}_darwin_amd64.zip"
+      $ unzip vault_${VAULT_VER}_darwin_amd64.zip
+      $ sudo mv ./vault /usr/local/bin/
+      $ vault --version
+
+Start the server in "dev" mode.
+
+.. code-block:: sh
+
+   $ vault server -dev
+
+Verify that the server is working. [14]
+
+.. code-block:: sh
+
+   $ export VAULT_ADDR="http://127.0.0.1:8200"
+   $ vault status
+
+Log in manually or by exporting the token as an environment variable.
+
+.. code-block:: sh
+
+   $ vault login
+
+.. code-block:: sh
+
+   $ export VAULT_TOKEN=<VAULT_ROOT_TOKEN>
+
 History
 -------
 
@@ -417,3 +471,5 @@ Bibliography
 10. "User:Grawity/Adding a trusted CA certificate." Arch Linux Wiki. June 16, 2020. Accessed April 30, 2021. https://wiki.archlinux.org/index.php/User:Grawity/Adding_a_trusted_CA_certificate
 11. "How To Set Up and Configure a Certificate Authority (CA) On Debian 10." Digital Ocean Community Tutorials. April 2, 2020. Accessed April 30, 2021. https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-debian-10
 12. "sudoers(5) - Linux man page." die.net. July 16, 2012. Accessed October 19, 2022. https://linux.die.net/man/5/sudoers
+13. "Install Vault." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/downloads
+14. "Starting the Server." HasiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-dev-server
