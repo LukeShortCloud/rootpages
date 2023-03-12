@@ -465,6 +465,57 @@ Log in manually or by exporting the token as an environment variable.
 
    $ export VAULT_TOKEN=<VAULT_ROOT_TOKEN>
 
+Secrets Engines
+^^^^^^^^^^^^^^^
+
+Cubbyhole
+'''''''''
+
+The ``cubbyhole`` secrets engine is enabled by default and cannot be disabled. Each user in Vault has their own ``cubbyhole`` for storing secrets. Only the owner can access these secrets. Not even the root account has access to them without unsealing the database. [18][19]
+
+-  Create a secret using ``cubbyhole``:
+
+   .. code-block:: sh
+
+      $ vault write cubbyhole/secret-store foo=bar
+      Success! Data written to: cubbyhole/secret-store
+      $ vault read cubbyhole/secret-store
+      Key    Value
+      ---    -----
+      foo    bar
+
+The only way to share a secret is to create a wrapper token. This provides a single-use token that expires immediately after it has been used.
+
+-  Create a wrapper token that will last for 5 minutes:
+
+   .. code-block:: sh
+
+      $ vault kv get -wrap-ttl=300 cubbyhole/secret-store
+      Key                              Value
+      ---                              -----
+      wrapping_token:                  hvs.CAESIIF2lySTD8Xnsps667buHhLatBV9XOc45LJU-8_dVMW6Gh4KHGh2cy5SeWZQaW9lSUE3cDVVdmw4TDc4RnhEYUk
+      wrapping_accessor:               5DU2dloysFqLnGDHhwbBaQkg
+      wrapping_token_ttl:              5m
+      wrapping_token_creation_time:    2023-03-12 13:20:30.283721643 -0600 MDT
+      wrapping_token_creation_path:    cubbyhole/secret-store
+
+-  A different user can then use that token to decrypt the secret once. [20]
+
+   .. code-block:: sh
+
+      $ export VAULT_TOKEN=hvs.CAESIIF2lySTD8Xnsps667buHhLatBV9XOc45LJU-8_dVMW6Gh4KHGh2cy5SeWZQaW9lSUE3cDVVdmw4TDc4RnhEYUk
+      $ vault unwrap
+      Key    Value
+      ---    -----
+      foo    bar
+      $ vault unwrap
+      Error unwrapping: Error making API request.
+      
+      URL: PUT http://127.0.0.1:8200/v1/sys/wrapping/unwrap
+      Code: 400. Errors:
+      
+      * wrapping token is not valid or does not exist
+
 History
 -------
 
@@ -493,3 +544,6 @@ Bibliography
 15. ""Dev" Server Mode." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/concepts/dev-server
 16. "Seal/Unseal." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/concepts/seal
 17. "KV Secrets Engine - Version 2." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2
+18. "Cubbyhole Secrets Engine." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/docs/secrets/cubbyhole
+19. "Cubbyhole secret backend per user identity #3229." GitHub hashicorp/vault. February 2, 2023. Accessed March 12, 2023. https://github.com/hashicorp/vault/issues/3229
+20. "Cubbyhole Response Wrapping." HashiCorp Developer. Accessed March 12, 2023. https://developer.hashicorp.com/vault/tutorials/secrets-management/cubbyhole-response-wrapping
