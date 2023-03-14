@@ -3,6 +3,46 @@ Graphics Drivers
 
 .. contents:: Table of Contents
 
+Mesa
+----
+
+List of Drivers
+~~~~~~~~~~~~~~~
+
+Mesa is a library that provides a unified collection of open source graphics drivers for UNIX-like operating systems.
+
+**Vulkan**
+
+.. csv-table::
+   :header: Vendor, Driver, Minimum Hardware, Vulkan Version, Official
+   :widths: 20, 20, 20, 20, 20
+
+   AMD, radv, GCN, 1.3, No
+   Intel, anv, Gen 7, 1.3, Yes
+   NVIDIA [19], nvk, Turing, Partial 1.0, No
+   Apple [20], agxv, M1, Partial 1.0, No
+   Broadcom, v3dv, VC5, 1.2, Yes
+   Mali, panvk, Valhall [16], Partial 1.0 [17], No
+   Qualcomm, tu (Turnip), Adreno 6XX\*, 1.3, No
+
+\* Adreno 650 and newer GPUs provide the best Vulkan support. The Turnip driver will run on older Adreno 6XX series hardware but their support is incomplete. [14][15]
+
+**OpenGL**
+
+.. csv-table::
+   :header: Vendor, Driver, Minimum Hardware, OpenGL Version, OpenGL ES Version, Official
+   :widths: 20, 20, 20, 20, 20, 20
+
+   AMD, radeonsi, Southern Island, 4.6, 3.2, Yes
+   Intel, i965, Gen 8, 4.6, 3.2, Yes
+   NVIDIA, nouveau/nv<NUMBER>, Riva TNT, 4.5, 3.1, No
+   Apple, agx, M1, Partial 2.1 [18], Partial 2.0 [18], No
+   Broadcom, v3d, VC5, (None), 3.1, Yes
+   Mali, panfrost, Midgard v4, 3.1, 3.1, No
+   Qualcomm, freedreno, Adreno A2XX, 4.5, 3.2, No
+
+[11][12][13]
+
 AMD
 ---
 
@@ -158,3 +198,13 @@ Bibliography
 8. "SDB:AMDGPU-PRO." openSUSE Wiki. July 17, 2019. Accessed December 10, 2019. https://en.opensuse.org/SDB:AMDGPU-PRO
 9. "AMD OverDrive Overclocking To Finally Work For Radeon Navi GPUs With Linux 5.5 Kernel." Phoronix. November 16, 2019. Accessed December 10, 2019. https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.5-AMD-Navi-Overclocking
 10. “nvidia-xrun.” Arch Linux Wiki. Accessed November 4, 2018. September 11, 2018. https://wiki.archlinux.org/index.php/nvidia-xrun
+11. "Home." The Mesa 3D Graphics Library. Accessed March 14, 2023. https://www.mesa3d.org/
+12. "Platforms and Drivers." The Mesa 3D Graphics Library latest documentation. Accessed March 14, 2023. https://docs.mesa3d.org/systems.html
+13. "Mesamatrix." The Mesa drivers matrix. February 6, 2023. Accessed March 14, 2023. https://mesamatrix.net/
+14. "How To Guide Getting Freedreno Turnip (Mesa Vulkan Driver) on a Poco F3." XDA Forums. February 15, 2022. Accessed March 14, 2023. https://forum.xda-developers.com/t/getting-freedreno-turnip-mesa-vulkan-driver-on-a-poco-f3.4323871/page-3#post-86420275
+15. "Mesa's Turnip Now Advertises Vulkan 1.3 Support." Phoronix Forums. September 22, 2022. Accessed March 14, 2023. https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/vulkan/1347399-mesa-s-turnip-now-advertises-vulkan-1-3-support?p=1347507#post1347507
+16. "panvk: Drop support for Midgard." GitLab Mesa/mesa. February 20, 2023. Accessed March 14, 2023. https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16915
+17. "panvk: Stop advertising Vulkan 1.1." freedesktop.org git repository browser. March 14, 2022. Accessed March 14, 2023. https://cgit.freedesktop.org/mesa/mesa/commit/?id=a35e721162bb7dad087e75fd07fec08bc635dc96
+18. "Apple GPU drivers now in Asahi Linux." Alyssa Rosenzweig. December 7, 2022. Accessed March 14, 2023. https://rosenzweig.io/blog/asahi-gpu-part-7.html
+19. "Introducing NVK." Collabora News & Blog. October 4, 2022. Accessed March 29, 2023. https://www.collabora.com/news-and-blog/news-and-events/introducing-nvk.html
+20. "Tales of the M1 GPU." Asahi Linux. November, 2022. Accessed March 29, 2023. https://asahilinux.org/2022/11/tales-of-the-m1-gpu/
