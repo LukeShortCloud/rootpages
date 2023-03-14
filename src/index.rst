@@ -26,6 +26,12 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Graphics
+
+   graphics/index
+
+.. toctree::
+   :maxdepth: 1
    :caption: HTTP
 
    http/index

@@ -3454,7 +3454,6 @@ numvcpus
 nv
 NV43FIX
 nvidia
-Nvidia
 nvidiafb
 nvme
 NVMe

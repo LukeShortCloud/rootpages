@@ -3,7 +3,6 @@
    :caption: Administration
 
    authentication
-   graphics
    linux_kernel
    macs
    mail_servers
