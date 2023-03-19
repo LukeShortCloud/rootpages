@@ -205,19 +205,26 @@ In case you also want to build a source RPM (SRPM) run:
 
 Sections:
 
--  ``%description`` = Provide a description of the program.
+-  ``%description`` = **Required.** Provide a description of the program.
 -  ``%prep`` = Define how to extract the source code for building.
--  ``%setup`` =
--  ``%build`` = This is where the program is built from the source code.
--  ``%install`` = Copy files to a directory structure under
-   ``%{buildroot}`` that mirrors where their installed location. The
-   ``%{buildroot}`` is the top-level directory of a typical Linux file
-   system hierarchy.
--  ``%file`` = These are the files that should be copied over during
-   installation. Permissions can also be set.
 
-   -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a
-      file or folder to give it custom permissions.
+   -  ``%setup`` = This macro can only happen during the ``%prep`` stage.
+   -  ``%patch`` = Patch the source code with a provided patch file.
+
+-  ``%build`` = This is where the program is built from the source code.
+-  ``%install`` = Copy files to a directory structure under ``%{buildroot}`` that mirrors where their installed location. The ``%{buildroot}`` is the top-level directory of a typical Linux file system hierarchy.
+-  ``%file`` = These are the files that should be copied over during installation. Permissions can also be set.
+
+   -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a file or folder to give it custom permissions.
+
+-  ``%changelog`` = **Required.** Provide a change log for the RPM spec. The syntax for the change log is shown below.
+
+   ::
+
+      %changelog
+      * <DAY_OF_THE_WEEK_NAME> <MONTH> <DAY_OF_THE_WEEK_NUMBER> <YEAR> <AUTHOR_FIRST_NAME> <AUTHOR_LAST_NAME> <<AUTHOR_EMAIL>> <RPM_VERSION>-<RPM_RELEASE>
+      - <CHANGE_LOG_SENTENCE_1>
+      - <CHANGE_LOG_SENTENCE_2>
 
 [4]
 
@@ -366,6 +373,52 @@ location of the patch file.
     patch < %{_sourcedir}/<FILE_NAME>
 
 [8]
+
+Examples
+~~~~~~~~
+
+-  Use the summary as the description.
+
+   ::
+
+      Summary: This package provides program X
+
+      %description
+      %{summary}.
+
+-  Automatically generate a change log either based on (1) a file or (2) git history. [14]
+
+   ::
+
+       %changelog
+       %autochangelog
+
+-  Manually create a change log.
+
+   ::
+
+      %changelog
+      * Sat Dec 24 2020 Foo Bar <foobar@foobar.tld> 1.0-1
+      - Initial RPM release
+
+-  Automatically extract an archive and change into the directory of it. This assumes that both the archive name (without the extension) and the directory name will be exactly the same.
+
+   ::
+
+      %prep
+      %autosetup -n <ARCHIVE>.<EXTENSION>
+
+-  Automatically extract all archives but do not change directory during the ``%setup`` phase. This is useful for when the archive name is different from the extracted directory name. [15] For example, this is useful for GitHub downloads of source code.
+
+   ::
+
+      Source0: https://github.com/<USERNAME>/<PROJECT>/archive/<COMMIT>.zip
+
+      %prep
+      %setup -q -c
+
+      %install
+      cd <PROJECT>-<COMMIT>
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
@@ -531,3 +584,5 @@ Bibliography
 11. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
 12. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
 13. "AUR submission guidelines." Arch Linux Wiki. February 20, 2022. Accessed April 5, 2022. https://wiki.archlinux.org/title/AUR_submission_guidelines
+14. "Using the %autochangelog Macro." rpmautospec. 2021. Accessed April 12, 2023. https://docs.pagure.org/Fedora-Infra.rpmautospec/autochangelog.html
+15. "RPM Spec file %setup macro when you don't know the root name?" Unix & Linux Stack Exchange. April 2, 2020. Accessed April 12, 2023. https://unix.stackexchange.com/questions/577441/rpm-spec-file-setup-macro-when-you-dont-know-the-root-name
