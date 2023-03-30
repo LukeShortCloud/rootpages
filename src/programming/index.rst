@@ -8,3 +8,4 @@
    machine_learning
    packaging
    python
+   rust
