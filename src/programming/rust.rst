@@ -75,6 +75,76 @@ It is recommended to install Rust in one of two ways. Either (1) globally for us
          $ rustc --version
          rustc 1.68.2 (9eb3afe9e 2023-03-27)
 
+Functions
+---------
+
+Examples
+~~~~~~~~
+
+-  Create a minimal Rust program.
+
+   -  Example:
+
+      .. code-block:: rust
+
+         fn main() {
+             println!("This is a simple Rust program!");
+         }
+
+      -  Build the source file and then run the resulting binary. [12]
+
+         .. code-block:: sh
+
+            $ rustc <FILE>.rs
+            $ ./<FILE>
+            This is a simple Rust program!
+
+-  Create a function that returns a value.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         fn <FUNCTION_NAME>() -> <RETURN_DATA_TYPE> {
+             <RETURN_VALUE>
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         fn main() {
+             let x = foobar();
+             println!("foobar returned {x}")
+         }
+         
+         fn foobar() -> i8 {
+             3
+         }
+
+-  Create a function that uses parameters.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         fn <FUNCTION_NAME>(<PARAMETER_1_VARIABLE_NAME>: <PARAMETER_1_DATA_TYPE>, <PARAMETER_2_VARIaBLE_NAME>: <PARAMETER_2_DATA_TYPE>) {
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         fn main() {
+             display_numbers(1, 2)
+         }
+         
+         fn display_numbers(foo: i16, bar: i16) {
+             println!("foo = {foo} and bar = {bar}");
+         }
+
+[13]
+
 History
 -------
 
@@ -94,3 +164,5 @@ Bibliography
 9. "Rust." Fedora Developer Portal. Accessed March 30, 2023. https://developer.fedoraproject.org/tech/languages/rust/rust-installation.html
 10. "Install Rust." Rust Programming Language. Accessed March 30, 2023. https://www.rust-lang.org/tools/install
 11. "How to Install Rust and Cargo on Ubuntu and Other Linux Distributions." It's FOSS. March 29, 2023. Accessed March 30, 2023. https://itsfoss.com/install-rust-cargo-ubuntu-linux/
+12. "Hello World." Rust By Example. Accessed March 31, 2023. https://doc.rust-lang.org/rust-by-example/hello.html
+13. "Functions." The Rust Programming Language. Accessed March 31, 2023. https://doc.rust-lang.org/book/ch03-03-how-functions-work.html
