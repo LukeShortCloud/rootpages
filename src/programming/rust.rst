@@ -145,6 +145,45 @@ Examples
 
 [13]
 
+Macros
+~~~~~~
+
+Macros are denoted by a ``!`` or ``?``. [14] At compile time, the macro is replaced by actual code. It is faster than a traditional function and reduces the need to write duplicate code. The most common built-in macros in Rust are ``panic!``, ``println!``, and ``vec!``. [15]
+
+-  Print line macro:
+
+   .. code-block::  rust
+
+      println!("{}", foobar);
+
+-  Print line macro expanded at compile time [14]:
+
+   .. code-block:: rust
+
+      {
+          ::std::io::_print(::core::fmt::Arguments::new_v1(
+              &["", "\n"],
+              &match (&foobar,) {
+                  (arg0,) => [::core::fmt::ArgumentV1::new(
+                      arg0,
+                      ::core::fmt::Display::fmt,
+                  )],
+              },
+          ));
+      };
+
+It is possible to create new custom macros using ``macro_rules!``.
+
+-  Create a macro that does not require any parameters. [15]
+
+   .. code-block:: rust
+
+      macro_rules! <NEW_MACRO_NAME> {
+          () => {
+              // Add logic here.
+          }
+      }
+
 History
 -------
 
@@ -166,3 +205,5 @@ Bibliography
 11. "How to Install Rust and Cargo on Ubuntu and Other Linux Distributions." It's FOSS. March 29, 2023. Accessed March 30, 2023. https://itsfoss.com/install-rust-cargo-ubuntu-linux/
 12. "Hello World." Rust By Example. Accessed March 31, 2023. https://doc.rust-lang.org/rust-by-example/hello.html
 13. "Functions." The Rust Programming Language. Accessed March 31, 2023. https://doc.rust-lang.org/book/ch03-03-how-functions-work.html
+14. "Why does the println! function use an exclamation mark in Rust?" Stack Overflow. November 22, 2021. Accessed March 31, 2023. https://stackoverflow.com/questions/29611387/why-does-the-println-function-use-an-exclamation-mark-in-rust
+15. "Rust Macro." Programiz. Accessed March 31, 2023. https://www.programiz.com/rust/macro
