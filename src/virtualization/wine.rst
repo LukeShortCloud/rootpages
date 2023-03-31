@@ -424,6 +424,8 @@ These are useful graphics translation layers for running Windows games using Win
 
 -  `Vkd3d <https://wiki.winehq.org/Vkd3d>`__ = DirectX 12 to Vulkan.
 
+   -  `VKD3D-Proton <https://github.com/HansKristian-Work/vkd3d-proton>`__ = A fork of Vkd3d that is focused on gaming. Valve only tests this project on AMD and NVIDIA GPUs (not Intel).
+
 DXVK
 ~~~~
 
