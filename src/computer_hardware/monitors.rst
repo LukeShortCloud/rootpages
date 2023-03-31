@@ -122,6 +122,23 @@ There are different certification standards for HDR. The color bit depth determi
 
 Computer operating systems have partial support for HDR. Most applications do not natively support it. Windows 10 and Netflix require buying Microsoft's HEVC Video Extension for video playback streaming to work. [11]
 
+Color Depth
+-----------
+
+Every monitor has a color depth that determines how many colors it can display.
+
+.. csv-table::
+   :header: Bits of Color Depth, Bits Per Pixel, Number of Colors, HDR
+   :widths: 20, 20, 20, 20
+
+   8, 24, 16 million, SDR
+   10, 30, 1 billion, HDR10 and HDR10+
+   12, 36, 68 billion, Dolby Vision
+
+[21][22]
+
+Some monitors use 8-bit color depth with Frame Rate Control (FRC) to provide fake 10-bit support. This is also known as 8-bit with dithering. It smooths the transition of colors from one pixel to the next to make the colors appear more natural and to reduce banding. [23]
+
 Refresh Rate
 ------------
 
@@ -146,6 +163,7 @@ With modern day technology, it is almost possible to reproduce the image quality
 -  8K resolution
 -  100% of the Rec. 2020 color spectrum
 -  10,000 nit brightness
+-  12-bit color depth
 -  240 Hz
 
 History
@@ -176,3 +194,6 @@ Bibliography
 18. "How many frames per second can the human eye see?" 100fps. Accessed June 28, 2020. http://www.100fps.com/how_many_frames_can_humans_see.htm
 19. "Frames Per Second and Refresh Rates: Understanding the Tech." Scholarly Gamers. June 18, 2019. Accessed June 28, 2020. https://www.scholarlygamers.com/top-news/2019/06/18/frames-per-second-and-refresh-rates-understanding-the-tech/
 20. "HDR10 vs HDR10+ vs Dolby Vision Which is better?" RTINGS.com. March 20, 2019. Accessed July 5, 2020.  https://www.rtings.com/tv/learn/hdr10-vs-dolby-vision
+21. "What are 8-bit, 10-bit, 12-bit, 4:4:4, 4:2:2 and 4:2:0?" Datavideo. January 7, 2020. Accessed March 31, 2023. https://www.datavideo.com/us/article/412/what-are-8-bit-10-bit-12-bit-4-4-4-4-2-2-and-4-2-0
+22. "AMD’s 10-bit Video Output Technology." AMD. Accessed March 31, 2023. https://www.amd.com/system/files/documents/10-bit-video-output.pdf
+23. "What Is 10-Bit (And 12-Bit) Color?" Tom's Hardware. June 23, 2022. Accessed March 31, 2023. https://www.tomshardware.com/news/what-is-10-bit-color,36912.html
