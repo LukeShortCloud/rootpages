@@ -62,7 +62,8 @@ For being able to install additional drivers, it is recommended to also install 
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/arch_linux.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/unix_distributions/arch_linux.rst>`__
+-  `< 2023.04.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/arch_linux.rst>`__
 
 Bibliography
 ------------

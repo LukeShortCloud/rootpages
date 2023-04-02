@@ -38,12 +38,6 @@ Welcome to Root Pages!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Distributions
-
-   linux_distributions/index
-
-.. toctree::
-   :maxdepth: 1
    :caption: Networking
 
    networking/index
@@ -83,6 +77,12 @@ Welcome to Root Pages!
    :caption: Storage
 
    storage/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: UNIX Distributions
+
+   unix_distributions/index
 
 .. toctree::
    :maxdepth: 1

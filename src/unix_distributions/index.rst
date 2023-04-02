@@ -1,6 +1,6 @@
 .. toctree::
    :maxdepth: 1
-   :caption: Linux Distributions
+   :caption: UNIX Distributions
 
    arch_linux
    chromium_os

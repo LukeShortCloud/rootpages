@@ -1688,7 +1688,8 @@ Solution:
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/chromium_os.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/unix_distributions/chromium_os.rst>`__
+-  `< 2023.04.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/chromium_os.rst>`__
 -  `< 2021.07.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/chromebook.rst>`__
 
 Bibliography

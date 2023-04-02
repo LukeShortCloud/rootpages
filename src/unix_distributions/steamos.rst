@@ -180,7 +180,8 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/steamos.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/unix_distributions/steamos.rst>`__
+-  `< 2023.04.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/linux_distributions/steamos.rst>`__
 
 Bibliography
 ------------
