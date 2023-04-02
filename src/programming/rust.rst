@@ -75,6 +75,73 @@ It is recommended to install Rust in one of two ways. Either (1) globally for us
          $ rustc --version
          rustc 1.68.2 (9eb3afe9e 2023-03-27)
 
+Data Types
+----------
+
+Overview
+~~~~~~~~
+
+.. csv-table::
+   :header: Name, Data Type
+   :widths: 20, 20
+
+   i8, 8-bit integer.
+   u8, 8-bit unsigned integer.
+   i16, 16-bit integer.
+   u16, 16-bit unsigned integer.
+   i32, 32-bit integer.
+   u32, 32-bit unsigned integer.
+   i64, 64-bit integer.
+   u64, 64-bit unsigned integer.
+   i128, 128-bit integer.
+   u128, 128-bit unsigned integer.
+   isize, Integer the size of the CPU architecture.
+   usize, Unsigned integer the size of the CPU architecture.
+   f32, 32-bit float.
+   f64, 64-bit float.
+   bool, Boolean of ``true`` or ``false``.
+   char, Character.
+
+[16][17]
+
+Variable Declaration
+~~~~~~~~~~~~~~~~~~~~
+
+Rust can guess the correct data type to use for a variable.
+
+.. code-block:: rust
+
+   let <VARIABLE_NAME> = <VALUE>;
+
+Otherwise, the data type can be explicitly set.
+
+.. code-block:: rust
+
+   let <VARIABLE_NAME>: <DATA_TYPE> = <VALUE>;
+
+Arrays
+~~~~~~
+
+-  An array has a defined length.
+
+   .. code-block:: rust
+
+      let <VARIABLE_NAME>: [<DATA_TYPE>;<LENGTH>] = [<VALUE_1>, <VALUE_2>];
+
+-  A slice has an undefined size.
+
+   .. code-block:: rust
+
+      let <VARIABLE_NAME> = [<VALUE_1>, <VALUE_2>];
+
+-  A tuple is similar to an array but it can store more than on data type.
+
+   .. code-block:: rust
+
+      let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
+
+[16][17]
+
 Functions
 ---------
 
@@ -207,3 +274,5 @@ Bibliography
 13. "Functions." The Rust Programming Language. Accessed March 31, 2023. https://doc.rust-lang.org/book/ch03-03-how-functions-work.html
 14. "Why does the println! function use an exclamation mark in Rust?" Stack Overflow. November 22, 2021. Accessed March 31, 2023. https://stackoverflow.com/questions/29611387/why-does-the-println-function-use-an-exclamation-mark-in-rust
 15. "Rust Macro." Programiz. Accessed March 31, 2023. https://www.programiz.com/rust/macro
+16. "Data Types." The Rust Programming Language. Accessed April 1, 2023. https://doc.rust-lang.org/book/ch03-02-data-types.html
+17. "An Overview of Rust’s Built-In Data Types." MakeUseOf. February 19, 2023. Accessed April 1, 2023. https://www.makeuseof.com/rust-data-types-built-in-overview/
