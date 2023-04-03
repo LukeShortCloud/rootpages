@@ -297,6 +297,40 @@ It is possible to create new custom macros using ``macro_rules!``.
           }
       }
 
+Conditionals
+------------
+
+Control and Operators
+~~~~~~~~~~~~~~~~~~~~~
+
+.. csv-table::
+   :header: Comparison Operator, Description
+   :widths: 20, 20
+
+   "==", Equal to.
+   "!=", Not equal to.
+   ">", Greater than.
+   "<", Less than.
+   ">=", Greater than or equal to.
+   "<=", Lesser than or equal to.
+
+[20]
+
+.. csv-table::
+   :header: Logical Operator, Description
+   :widths: 20, 20
+
+   &&, All booleans must be true.
+   ||, At least one boolean must be true.
+   !, No booleans can be true.
+
+[21]
+
+Control statements for loops [22]:
+
+-  break = Stop the current loop.
+-  continue = Move onto the next iteration of the loop.
+
 History
 -------
 
@@ -324,3 +358,6 @@ Bibliography
 17. "An Overview of Rust’s Built-In Data Types." MakeUseOf. February 19, 2023. Accessed April 1, 2023. https://www.makeuseof.com/rust-data-types-built-in-overview/
 18. "Storing UTF-8 Encoded Text with Strings." The Rust Programming Language. Accessed April 3, 2023. https://doc.rust-lang.org/book/ch08-02-strings.html
 19. "How to Use Strings in Rust." Linux Hint. 2022. Accessed April 3, 2023. https://linuxhint.com/strings-in-rust/
+20. "Rust Comparison Operators." Electronics Reference. Accessed April 3, 2023. https://electronicsreference.com/rust/rust-operators/comparison-operators/
+21. "Logical Operators." CodinGame. Novembe 29, 2022. Accessed April 3, 2023. https://www.codingame.com/playgrounds/54888/rust-for-python-developers---operators/logical-operators
+22. "Rust Control Structures and How to Use Them." MakeUseOf. March 11, 2023. Accessed April 3, 2023. https://www.makeuseof.com/rust-program-control-structures-how-to-use/?newsletter_popup=1
