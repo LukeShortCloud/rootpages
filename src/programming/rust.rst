@@ -101,6 +101,7 @@ Overview
    f64, 64-bit float.
    bool, Boolean of ``true`` or ``false``.
    char, Character.
+   &str, A pointer to a string of characters. [18]
 
 [16][17]
 
@@ -141,6 +142,51 @@ Arrays
       let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
 
 [16][17]
+
+Strings
+~~~~~~~
+
+Rust will automatically create a string as a pointer location to a collection of two or more ``char`` s. All characters use UTF-8.
+
+-  Create a string. By default, the size of the pointer is immutable and cannot be changed.
+
+   .. code-block:: rust
+
+      let <VARIABLE>: &str = "<STRING>";
+
+-  Create a mutable string that can change its memory size. If this memory size is never changed, the Rust compiler will provide a warning.
+
+   .. code-block:: rust
+
+      let mut <VARIABLE>: &str = "<STRING>";
+
+-  Slice a string by specifying the index to start at and the index to stop before getting to.
+
+   .. code-block:: rust
+
+      let gnb: &str = "good and bad";
+      println!("{}", &gnb[0..4]);
+      println!("{}", &gnb[1..3]);
+
+   ::
+
+      good
+      oo
+
+-  Add two strings together. The first string needs to be converted to a string object and the second string needs to be a pointer.
+
+   .. code-block:: rust
+
+      let foo: &str = "Foo";
+      let bar: &str = "Bar";
+      let foobar = foo.to_string() + &bar;
+      println!("{}", &foobar);
+
+   ::
+
+      FooBar
+
+[18][19]
 
 Functions
 ---------
@@ -276,3 +322,5 @@ Bibliography
 15. "Rust Macro." Programiz. Accessed March 31, 2023. https://www.programiz.com/rust/macro
 16. "Data Types." The Rust Programming Language. Accessed April 1, 2023. https://doc.rust-lang.org/book/ch03-02-data-types.html
 17. "An Overview of Rust’s Built-In Data Types." MakeUseOf. February 19, 2023. Accessed April 1, 2023. https://www.makeuseof.com/rust-data-types-built-in-overview/
+18. "Storing UTF-8 Encoded Text with Strings." The Rust Programming Language. Accessed April 3, 2023. https://doc.rust-lang.org/book/ch08-02-strings.html
+19. "How to Use Strings in Rust." Linux Hint. 2022. Accessed April 3, 2023. https://linuxhint.com/strings-in-rust/
