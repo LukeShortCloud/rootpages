@@ -331,6 +331,112 @@ Control statements for loops [22]:
 -  break = Stop the current loop.
 -  continue = Move onto the next iteration of the loop.
 
+For
+~~~
+
+The ``for`` loop is used to iterate over an existing array or a dynamic range of numbers.
+
+-  Create a loop with an existing array.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         for <ITEM> in <ARRAY> {
+             // Add logic for using the "<ITEM>" variable.
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let vegetables = ["asparagus", "broccoli", "carrot"];
+         for veg in vegetables {
+             println!("{}", veg);
+         }
+
+      ::
+
+         asparagus
+         broccoli
+         carrot
+
+-  Create a loop using a dynamic range of integers.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         for <INTEGER> in <RANGE_INTEGER_START>..<RANGE_INTEGER_END> {
+             // Add logic for using the "<INTEGER>" variable.
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         for x in 0..2 {
+             println!("{x}");
+         }
+
+      ::
+
+         0
+         1
+
+-  Create a loop that goes through a specific range of array indexes.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         for <ITEM_INDEX> in <RANGE_INTEGER_START>..<RANGE_INTEGER_END> {
+             // Add logic for using the "<ARRAY>[<ITEM_INDEX>]" variable.
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let vegetables = ["asparagus", "broccoli", "carrot"];
+         for x in 1..3 {
+             println!("{}", vegetables[x]);
+         }
+
+      ::
+
+         broccoli
+         carrot
+
+[23]
+
+-  Create a loop that iterates through both the index and item in the array.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         for (<INDEX>, <ITEM>) in <ARRAY>.iter().enumerate() {
+             // Add logic for using the "<INDEX>" and "<ITEM>" variables.
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let vegetables = ["asparagus", "broccoli", "carrot"];
+         for (n, veg) in vegetables.iter().enumerate() {
+             println!("Index = {}, Vegetable = {}", n, veg);
+         }
+
+      ::
+
+         Index = 0, Vegetable = asparagus
+         Index = 1, Vegetable = broccoli
+         Index = 2, Vegetable = carrot
+
+[24]
+
 History
 -------
 
@@ -361,3 +467,5 @@ Bibliography
 20. "Rust Comparison Operators." Electronics Reference. Accessed April 3, 2023. https://electronicsreference.com/rust/rust-operators/comparison-operators/
 21. "Logical Operators." CodinGame. Novembe 29, 2022. Accessed April 3, 2023. https://www.codingame.com/playgrounds/54888/rust-for-python-developers---operators/logical-operators
 22. "Rust Control Structures and How to Use Them." MakeUseOf. March 11, 2023. Accessed April 3, 2023. https://www.makeuseof.com/rust-program-control-structures-how-to-use/?newsletter_popup=1
+23. "Arrays and for loops." Comprehensive Rust. Accessed April 4, 2023. https://google.github.io/comprehensive-rust/exercises/day-1/for-loops.html
+24. "How to iterate over an array in Rust?" Hacker Touch. March 12, 2023. Accessed April 4, 2023. https://www.hackertouch.com/how-to-iterate-over-an-array-in-rust.html
