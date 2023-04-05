@@ -437,6 +437,51 @@ The ``for`` loop is used to iterate over an existing array or a dynamic range of
 
 [24]
 
+While
+~~~~~
+
+Unlike most other programming languages, Rust has the increment for a ``while`` loop inside and at the end of a block. [25]
+
+
+-  Create an incrementing loop.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         while <COMPARISON> {
+             // Add logic here.
+             // Increment the variable used for the loop.
+         }
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let mut count: i8 = 0;
+         while count < 5 {
+             println!("{count}");
+             count += 1;
+         }
+
+      ::
+
+         0
+         1
+         2
+         3
+         4
+
+-  Create an infinite loop. Use ``break`` to end the loop at any time.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         while true {
+             // Add logic here.
+         }
+
 History
 -------
 
@@ -469,3 +514,4 @@ Bibliography
 22. "Rust Control Structures and How to Use Them." MakeUseOf. March 11, 2023. Accessed April 3, 2023. https://www.makeuseof.com/rust-program-control-structures-how-to-use/?newsletter_popup=1
 23. "Arrays and for loops." Comprehensive Rust. Accessed April 4, 2023. https://google.github.io/comprehensive-rust/exercises/day-1/for-loops.html
 24. "How to iterate over an array in Rust?" Hacker Touch. March 12, 2023. Accessed April 4, 2023. https://www.hackertouch.com/how-to-iterate-over-an-array-in-rust.html
+25. "Rust - While Loop." GeeksforGeeks. March 2, 2022. https://www.geeksforgeeks.org/rust-while-loop/
