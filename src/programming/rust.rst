@@ -437,6 +437,42 @@ The ``for`` loop is used to iterate over an existing array or a dynamic range of
 
 [24]
 
+If
+~~
+
+In Rust, ``if`` statement blocks all need to return the same data type. [26]
+
+-  Syntax:
+
+   .. code-block:: rust
+
+      if <COMPARISON_1> {
+          // Add logic here.
+      } else if <COMPARISON_2> {
+          // Add logic here.
+      }
+      else {
+          // Add logic here.
+      }
+
+-  Example:
+
+   .. code-block:: rust
+
+      let cost: f32 = 2.99;
+      if cost < 3.0 {
+          println!("This costs less than $3!")
+      } else if cost > 3.0 {
+          println!("This costs more than $3!")
+      }
+      else {
+          println!("This costs exactly $3!")
+      }
+
+   ::
+
+      This costs less than $3!
+
 While
 ~~~~~
 
@@ -514,4 +550,5 @@ Bibliography
 22. "Rust Control Structures and How to Use Them." MakeUseOf. March 11, 2023. Accessed April 3, 2023. https://www.makeuseof.com/rust-program-control-structures-how-to-use/?newsletter_popup=1
 23. "Arrays and for loops." Comprehensive Rust. Accessed April 4, 2023. https://google.github.io/comprehensive-rust/exercises/day-1/for-loops.html
 24. "How to iterate over an array in Rust?" Hacker Touch. March 12, 2023. Accessed April 4, 2023. https://www.hackertouch.com/how-to-iterate-over-an-array-in-rust.html
-25. "Rust - While Loop." GeeksforGeeks. March 2, 2022. https://www.geeksforgeeks.org/rust-while-loop/
+25. "Rust - While Loop." GeeksforGeeks. March 2, 2022. Accessed April 5, 2023. https://www.geeksforgeeks.org/rust-while-loop/
+26. "if/else." Rust By Example. Accessed April 6, 2023. https://doc.rust-lang.org/rust-by-example/flow_control/if_else.html
