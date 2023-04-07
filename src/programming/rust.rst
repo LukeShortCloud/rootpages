@@ -518,6 +518,37 @@ Unlike most other programming languages, Rust has the increment for a ``while`` 
              // Add logic here.
          }
 
+Match
+~~~~~
+
+A Rust ``match`` is the same as ``switch/case`` in other programming langauges. [27]
+
+-  Syntax:
+
+   .. code-block:: rust
+
+      match <VARIABLE> {
+          <EXPECTED_VALUE_1> => <ADD_LOGIC_HERE>,
+          <EXPECTED_VALUE_2> => <ADD_LOGIC_HERE>,
+      }
+
+-  Example:
+
+   .. code-block:: rust
+
+      let xbox_release_year: i16 = 2005;
+      match xbox_release_year {
+          2001 | 2002 | 2003 | 2004 => println!("Original Xbox"),
+          2005 ..= 2012 => println!("Xbox 360"),
+          2013 ..= 2019 => println!("Xbox One"),
+          2020 => println!("Xbox Series"),
+          _ => println!("Invalid year."),
+      }
+
+   ::
+
+      Xbox 360
+
 History
 -------
 
@@ -552,3 +583,4 @@ Bibliography
 24. "How to iterate over an array in Rust?" Hacker Touch. March 12, 2023. Accessed April 4, 2023. https://www.hackertouch.com/how-to-iterate-over-an-array-in-rust.html
 25. "Rust - While Loop." GeeksforGeeks. March 2, 2022. Accessed April 5, 2023. https://www.geeksforgeeks.org/rust-while-loop/
 26. "if/else." Rust By Example. Accessed April 6, 2023. https://doc.rust-lang.org/rust-by-example/flow_control/if_else.html
+27. "Rust - Switch." W3schools. Accessed April 7, 2023. https://www.w3schools.io/languages/rust-match/
