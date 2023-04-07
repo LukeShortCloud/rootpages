@@ -22,7 +22,7 @@ Tutorials
 
 -  Hands-on workshops [2]:
 
-   1.  `A Tour of Go <https://tourofrust.com/>`__ = Free.
+   1.  `Experiment: Improving the Rust Book <https://rust-book.cs.brown.edu/>`__ = Free.
    2.  `rustlings <https://github.com/rust-lang/rustlings>`__ = Free.
    3.  `Exercism <https://exercism.org/>`__ = Free.
 
