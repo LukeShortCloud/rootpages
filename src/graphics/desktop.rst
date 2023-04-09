@@ -3,6 +3,52 @@ Desktop
 
 .. contents:: Table of Contents
 
+Display Managers
+----------------
+
+Introduction
+~~~~~~~~~~~~
+
+The display manager (DM) is responsible for authenticating a user and launching a desktop environment. Here are a few popular DMs available on Linux distributions [6][7]:
+
+-  GNOME Display Manager (GDM) = Specific to the GNOME desktop environment.
+-  Light Display Manager (LightDM) = Generic DM used to launch any desktop environment (including GNOME).
+
+Automatically Login User
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is how to automatically login a user after a given timeout. A reboot is required for these changes to take affect.
+
+-  GDM [5]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/gdm/custom.conf
+
+   .. code-block:: ini
+
+      [daemon]
+      AutomaticLoginEnbable=true
+      AutomaticLogin=<USER>
+      TimedLoginEnable=true
+      TimedLogin=<USER>
+      TimedLoginDelay=<SECONDS>
+
+-  LightDM [6]:
+
+   .. code-block:: sh
+
+      $ sudo groupadd --system autologin
+      $ gpasswd -a <USER> autologin
+      $ sudo -E ${EDITOR} /etc/lightdm/lightdm.conf
+
+   .. code-block:: ini
+
+      [SeatDefaults]
+      autologin-guest = false
+      autlogin-user = <USER>
+      autologin-user-timeout = <SECONDS>
+
 Window Managers
 ---------------
 
@@ -27,6 +73,9 @@ Tiled window managers specialize in splitting up windows into tiles/boxes that c
 
 Desktop Environments
 --------------------
+
+Introduction
+~~~~~~~~~~~~
 
 Desktop environments (DEs) are built on top of windows managers. They provide the full functionality of a graphical desktop by bundling applications for managing media, files, and network connections. Some DEs have created their own custom window managers as well. [1]
 
@@ -183,3 +232,6 @@ Bibliography
 2. "Remote Streaming Without a Display." r/ParsecGaming. June 29, 2022. Accessed August 27, 2022. https://www.reddit.com/r/ParsecGaming/comments/kbzbhg/remote_streaming_without_a_display/
 3. "Unable To Hear The Game You're Playing." Parsec. Accessed September 6, 2022. https://support.parsec.app/hc/en-us/articles/115002700892-Unable-To-Hear-The-Game-You-re-Playing
 4. "xrandr cannot use rotation "normal" reflection "none"." Unix & Linux Stack Exchange. August 16, 2021. Accessed February 16, 2023. https://unix.stackexchange.com/questions/636886/xrandr-cannot-use-rotation-normal-reflection-none
+5. "Configure automatic login." GNOME Library. Accessed April 9, 2023. https://help.gnome.org/admin/system-admin-guide/stable/login-automatic.html.en
+6. "How to Login Automatically to Linux [most distros support]." FOSTips. September 2, 2022. Accessed April 9, 2023. https://fostips.com/login-automatically-linux/
+7. "Display manager." ArchWiki. April 7, 2023. Accessed April 9, 2023. https://wiki.archlinux.org/title/display_manager
