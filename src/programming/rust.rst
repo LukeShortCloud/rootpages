@@ -19,6 +19,7 @@ Tutorials
    4.  `Rust in Action <https://www.rustinaction.com/>`__ = Paid.
    5.  `Rust Design Patterns <https://rust-unofficial.github.io/patterns/>`__ = Free.
    6.  `The Rust Performance Book <https://nnethercote.github.io/perf-book/>`__ = Free.
+   7.  `The Cargo Book <https://doc.rust-lang.org/cargo/guide/>`__ = Free.
 
 -  Hands-on workshops [2]:
 
@@ -549,6 +550,111 @@ A Rust ``match`` is the same as ``switch/case`` in other programming langauges. 
 
       Xbox 360
 
+Cargo and Crates Packaging
+--------------------------
+
+Cargo is the official package manager for Rust dependencies. It installs packages known as crates. All of the available crates can be found `here <https://crates.io/>`__.
+
+-  Create a skeleton directory for a new Rust project. This will automatically create a "Hello, world!" program, ``Cargo.toml`` package configuration file, and a git initialized directory.
+
+   .. code-block:: sh
+
+      $ cargo new <PROJECT_NAME>
+      $ tree -a <RPOJECT_NAME>/
+      <PROJECT_NAME>/
+      ├── Cargo.toml
+      ├── .git
+      │   ├── config
+      │   ├── description
+      │   ├── HEAD
+      │   ├── hooks
+      │   │   ├── applypatch-msg.sample
+      │   │   ├── commit-msg.sample
+      │   │   ├── fsmonitor-watchman.sample
+      │   │   ├── post-update.sample
+      │   │   ├── pre-applypatch.sample
+      │   │   ├── pre-commit.sample
+      │   │   ├── pre-merge-commit.sample
+      │   │   ├── prepare-commit-msg.sample
+      │   │   ├── pre-push.sample
+      │   │   ├── pre-rebase.sample
+      │   │   ├── pre-receive.sample
+      │   │   ├── push-to-checkout.sample
+      │   │   └── update.sample
+      │   ├── info
+      │   │   └── exclude
+      │   ├── objects
+      │   │   ├── info
+      │   │   └── pack
+      │   └── refs
+      │       ├── heads
+      │       └── tags
+      ├── .gitignore
+      └── src
+          └── main.rs
+      
+      11 directories, 20 files
+
+-  The ``Cargo.toml`` file contains important information about the name, version, and dependencies of a package.
+
+   .. code-block:: sh
+
+      $ cat <PROJECT_NAME>/Cargo.toml
+
+   .. code-block:: ini
+
+      [package]
+      name = "<PROJECT_NAME>"
+      version = "0.1.0"
+      edition = "2021"
+      
+      # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+      
+      [dependencies]
+
+-  Add dependencies to a ``Cargo.toml`` file.
+
+   .. code-block:: ini
+
+      [dependencies]
+      <CRATE_PACKAGE> = "<VERSION>"
+
+-  Install dependencies from a local ``Cargo.toml`` file.
+
+   .. code-block:: sh
+
+      $ cargo install --path .
+
+-  Update all locally installed dependencies or just a specific create.
+
+   .. code-block:: sh
+
+      $ cargo update
+
+   .. code-block:: sh
+
+      $ cargo update -p <CRATE_PACKAGE>
+
+-  Automatically download the dependencies and build a Rust program.
+
+   .. code-block:: sh
+
+      $ cargo build
+
+-  Run the built program.
+
+   .. code-block:: sh
+
+      $ cargo run
+
+-  Remove built binaries.
+
+  .. code-block:: sh
+
+     $ cargo clean
+
+[28][29]
+
 History
 -------
 
@@ -584,3 +690,5 @@ Bibliography
 25. "Rust - While Loop." GeeksforGeeks. March 2, 2022. Accessed April 5, 2023. https://www.geeksforgeeks.org/rust-while-loop/
 26. "if/else." Rust By Example. Accessed April 6, 2023. https://doc.rust-lang.org/rust-by-example/flow_control/if_else.html
 27. "Rust - Switch." W3schools. Accessed April 7, 2023. https://www.w3schools.io/languages/rust-match/
+28. "Getting started with the Rust package manager, Cargo." opensource.com. March 3, 2020. Accessed April 12, 2023. https://opensource.com/article/20/3/rust-cargo
+29. "Rust from the beginning, project management with Cargo." DEV Community. July 5, 2022. Accessed April 12, 2023. https://dev.to/azure/rust-from-the-beginning-project-management-with-cargo-5017
