@@ -141,6 +141,14 @@ Devices without this can still sideload the Google Play Store and related depend
 -  `Google Play Services (com.google.android.gms) <https://www.apkmirror.com/apk/google-inc/google-play-services/>`__ = Download the latest version for the CPU architecture of the device.
 -  `Google Play Store (com.android.vending) <https://www.apkmirror.com/apk/google-inc/google-play-store/variant-%7B%22arches_slug%22:%5B%22armeabi%22,%22armeabi-v7a%22,%22mips%22,%22mips64%22,%22x86%22,%22x86_64%22%5D,%22dpis_slug%22:%5B%22nodpi%22%5D%7D/>`__ = Download the latest version.
 
+Apps
+----
+
+Google Meet
+~~~~~~~~~~~
+
+Google Meet can be used for audio and/or video calls. The audio codec used is Lyra which is very data efficient. [9][10] That codec uses a low birate when uploading from the sender. On the receiver side, it uses artificial intelligence to enhance the audio quality. Lyra 2 came out in 2022 which can use a minimum bitrate of 56 kbps. [11] The codec is automatically used when low bandwidth is detected. [12]
+
 History
 -------
 
@@ -157,3 +165,7 @@ Bibliography
 6. "Beginner's guide to installing Lineage OS on your Android device." Anroid Authority. March 9, 2023. Accessed April 11, 2023. https://www.androidauthority.com/lineageos-install-guide-893303/
 7. "Install LineageOS on lemonadep." LineageOS Wiki. April 11, 2023. Accessed April 11, 2023. https://wiki.lineageos.org/devices/lemonadep/install
 8. "Hardware Support." GitHub LineageOS/charter. April 10, 2023. Accessed April 11, 2023. https://github.com/LineageOS/charter/blob/master/device-support-requirements.md#hardware-support
+9. "Google Lyra will enable voice calls for another billion users." Tech Xplore. April 7, 2021. Accessed April 11, 2023. https://techxplore.com/news/2021-04-google-lyra-enable-voice-billion.html
+10. "Google Duo is Google Meet." Google Workspace Admin Help. Accessed April 11, 2023. https://support.google.com/a/answer/12206824?hl=en
+11. "Lyra V2 - a better, faster, and more versatile speech codec." Google Open Source Blog. September 30, 2022. Accessed April 11, 2023. https://opensource.googleblog.com/2022/09/lyra-v2-a-better-faster-and-more-versatile-speech-codec.html
+12. "Lyra, Satin and the future of voice codecs in WebRTC." BlogGeek.Me. April 19, 2021. Accessed April 11, 2023. https://bloggeek.me/lyra-satin-webrtc-voice-codecs/
