@@ -169,6 +169,11 @@ Google Meet
 
 Google Meet can be used for audio and/or video calls. The audio codec used is Lyra which is very data efficient. [9][10] That codec uses a low birate when uploading from the sender. On the receiver side, it uses artificial intelligence to enhance the audio quality. Lyra 2 came out in 2022 which can use a minimum bitrate of 56 kbps. [11] The codec is automatically used when low bandwidth is detected. [12]
 
+Raspberry Pi
+------------
+
+For the Raspberry Pi single-board computers, it is recommended to use custom LineageOS ROMs from `KonstaKANG.com <https://konstakang.com/devices/rpi4/>`__. They provide both a tablet ROM and an Android TV ROM. [15]
+
 History
 -------
 
@@ -191,3 +196,4 @@ Bibliography
 12. "Lyra, Satin and the future of voice codecs in WebRTC." BlogGeek.Me. April 19, 2021. Accessed April 11, 2023. https://bloggeek.me/lyra-satin-webrtc-voice-codecs/
 13. "Google Play Store Vs. Amazon App Store: The Clash of The App Store Players." Mobile App Daily. March 14, 2023. Accessed April 11, 2023. https://www.mobileappdaily.com/google-play-store-vs-amazon-app-store
 14. "APKUpdater." GitHub rumboalla/apkupdater. March 14, 2023. Accessed April 11, 2023. https://github.com/rumboalla/apkupdater
+15. "Installing Android on Raspberry Pi 4 with Play Store." RaspberryTips. August 14, 2022. Accessed April 11, 2023. https://raspberrytips.com/android-raspberry-pi-4/
