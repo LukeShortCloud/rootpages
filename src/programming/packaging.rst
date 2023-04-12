@@ -468,6 +468,39 @@ Build the binary RPM(s). The RPM(s), along with the log files, will be stored at
 
 [16]
 
+Fedora Packages
+~~~~~~~~~~~~~~~
+
+Fedora provides an automated system to download and build RPM packages using the ``fedpkg`` tool.
+
+-  Install ``fedpkg``.
+
+   .. code-block:: sh
+
+      $ sudo dnf install fedpkg
+
+-  Download the package repository.
+
+   .. code-block:: sh
+
+      $ fedpkg clone -a <GIT_REPOSITORY>
+      $ cd <GIT_REPOSITORY>
+      $ git checkout origin/f<FEDORA_MAJOR_VERSION>
+
+-  Install build dependencies.
+
+   .. code-block:: sh
+
+      $ sudo dnf builddep <RPM_SPEC>
+
+-  Build the RPM package.
+
+   .. code-block:: sh
+
+      $ fedkpkg local
+
+[18]
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
@@ -636,3 +669,4 @@ Bibliography
 15. "RPM Spec file %setup macro when you don't know the root name?" Unix & Linux Stack Exchange. April 2, 2020. Accessed April 12, 2023. https://unix.stackexchange.com/questions/577441/rpm-spec-file-setup-macro-when-you-dont-know-the-root-name
 16. "How do I get rpmbuild to download all of the sources for a particular .spec?" Stack Overflow  April 25, 2020. Accessed April 12, 2023. https://stackoverflow.com/questions/33177450/how-do-i-get-rpmbuild-to-download-all-of-the-sources-for-a-particular-spec
 17. "Building RPM packages with mock." packagecloud. May 10, 2015. Accessed April 12, 2023. https://blog.packagecloud.io/building-rpm-packages-with-mock/
+18. "Building a custom kernel." Fedora Project Wiki. August 16, 2022. Accessed April 12, 2023. https://fedoraproject.org/wiki/Building_a_custom_kernel
