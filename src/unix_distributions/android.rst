@@ -129,6 +129,26 @@ A custom ROM can finally be installed after the bootloader has been unlocked and
 App Stores
 ----------
 
+Amazon Appstore
+~~~~~~~~~~~~~~~
+
+The `Amazon Appstore <https://www.amazon.com/gp/mas/get/android>`__ is found on Kindle devices and can be sideloaded on other phones as well. It is the second largest Android app store behind Google Play. [13] It hosts free and paid apps.
+
+APKUpdater
+~~~~~~~~~~
+
+`APKUpdater <https://github.com/rumboalla/apkupdater/releases>`__ is not an app store but provides functionality to update local apps. It checks other app stores for updates that it can download. Those app stores include: APKMirror, Aptoide, F-Droid, and Google Play. [14]
+
+Aptoide
+~~~~~~~
+
+`Aptoide <https://en.aptoide.com/download?package_uname=aptoide>`__ is a community-driven app store. All apps on this platform are free but not necessarily open source.
+
+F-Droid
+~~~~~~~
+
+`F-Droid <https://f-droid.org/en/>`__ provides a collection of free and open source apps.
+
 Google Play
 ~~~~~~~~~~~
 
@@ -169,3 +189,5 @@ Bibliography
 10. "Google Duo is Google Meet." Google Workspace Admin Help. Accessed April 11, 2023. https://support.google.com/a/answer/12206824?hl=en
 11. "Lyra V2 - a better, faster, and more versatile speech codec." Google Open Source Blog. September 30, 2022. Accessed April 11, 2023. https://opensource.googleblog.com/2022/09/lyra-v2-a-better-faster-and-more-versatile-speech-codec.html
 12. "Lyra, Satin and the future of voice codecs in WebRTC." BlogGeek.Me. April 19, 2021. Accessed April 11, 2023. https://bloggeek.me/lyra-satin-webrtc-voice-codecs/
+13. "Google Play Store Vs. Amazon App Store: The Clash of The App Store Players." Mobile App Daily. March 14, 2023. Accessed April 11, 2023. https://www.mobileappdaily.com/google-play-store-vs-amazon-app-store
+14. "APKUpdater." GitHub rumboalla/apkupdater. March 14, 2023. Accessed April 11, 2023. https://github.com/rumboalla/apkupdater
