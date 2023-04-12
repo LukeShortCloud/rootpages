@@ -420,6 +420,54 @@ Examples
       %install
       cd <PROJECT>-<COMMIT>
 
+Building a RPM with Mock
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mock creates a chroot of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution.
+
+Install tools required to build RPMs.
+
+.. code-block:: sh
+
+   $ sudo dnf install mock rpm-build rpmdevtools
+
+Allow a non-root user to user Mock.
+
+.. code-block:: sh
+
+   $ sudo usermod -a -G mock <USER>
+
+Initialize Mock for the same operating system release as the host or a specified one. Valid releases can be found at ``/etc/mock/<RELEASE>.cfg``.
+
+.. code-block:: sh
+
+   $ mock --init
+
+.. code-block:: sh
+
+   $ ls -1 /etc/mock/
+   $ mock -r <RELEASE> --init
+
+Download the required external source code using the ``spectool`` command. These will be saved to ``~/rpmbuild/SOURCES/``. The ``rpmbuild`` command cannot download source code. [17]
+
+.. code-block:: sh
+
+   $ spectool -g -R <RPM_SPEC_FILE>
+
+Build a source RPM.
+
+.. code-block:: sh
+
+   $ rpmbuild -bs <RPM_SPEC_FILE>
+
+Build the binary RPM(s). The RPM(s), along with the log files, will be stored at ``/var/lib/mock/<RELEASE>/result/``.
+
+.. code-block:: sh
+
+   $ mock ~/rpmbuild/SRPMS/<SOURCE_RPM_NAME>.src.rpm
+
+[16]
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
@@ -586,3 +634,5 @@ Bibliography
 13. "AUR submission guidelines." Arch Linux Wiki. February 20, 2022. Accessed April 5, 2022. https://wiki.archlinux.org/title/AUR_submission_guidelines
 14. "Using the %autochangelog Macro." rpmautospec. 2021. Accessed April 12, 2023. https://docs.pagure.org/Fedora-Infra.rpmautospec/autochangelog.html
 15. "RPM Spec file %setup macro when you don't know the root name?" Unix & Linux Stack Exchange. April 2, 2020. Accessed April 12, 2023. https://unix.stackexchange.com/questions/577441/rpm-spec-file-setup-macro-when-you-dont-know-the-root-name
+16. "How do I get rpmbuild to download all of the sources for a particular .spec?" Stack Overflow  April 25, 2020. Accessed April 12, 2023. https://stackoverflow.com/questions/33177450/how-do-i-get-rpmbuild-to-download-all-of-the-sources-for-a-particular-spec
+17. "Building RPM packages with mock." packagecloud. May 10, 2015. Accessed April 12, 2023. https://blog.packagecloud.io/building-rpm-packages-with-mock/
