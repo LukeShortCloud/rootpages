@@ -164,6 +164,19 @@ Devices without this can still sideload the Google Play Store and related depend
 Apps
 ----
 
+GCam
+~~~~
+
+The Google Camera (GCam) app is exclusive to Google Pixel phones. It offers better picture quality over the stock Android camera app.
+
+GCam can be installed on any Android device that supports the Camera2 API.
+
+-  Use can app such as "Camera2 API Probe", "Camera2 Info", or "- Camera2 Test -" to verify the hardware support for the Camera2 API. The device must have either "FULL" or "LEVEL_3" hardware support.
+-  Install the "Google Photos" app as this is required to preview photos in the GCam app.
+-  Download and install GCam for the relevant Android version of the device from `here <https://www.celsoazevedo.com/files/android/google-camera/dev-suggested/>`__.
+
+[16][17]
+
 Google Meet
 ~~~~~~~~~~~
 
@@ -197,3 +210,5 @@ Bibliography
 13. "Google Play Store Vs. Amazon App Store: The Clash of The App Store Players." Mobile App Daily. March 14, 2023. Accessed April 11, 2023. https://www.mobileappdaily.com/google-play-store-vs-amazon-app-store
 14. "APKUpdater." GitHub rumboalla/apkupdater. March 14, 2023. Accessed April 11, 2023. https://github.com/rumboalla/apkupdater
 15. "Installing Android on Raspberry Pi 4 with Play Store." RaspberryTips. August 14, 2022. Accessed April 11, 2023. https://raspberrytips.com/android-raspberry-pi-4/
+16. "How to Install GCam on Non-Google Pixel Phones." Geekflare Articles. November 22, 2022. Accessed April 12, 2023. https://geekflare.com/install-gcam-on-non-pixel-phones/
+17. "How To Install and Use GCam." Google Camera Port. Accessed April 12, 2023. https://www.celsoazevedo.com/files/android/google-camera/how-to/
