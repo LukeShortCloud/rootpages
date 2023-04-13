@@ -523,6 +523,23 @@ Error Messages
 
 [12]
 
+----
+
+Error when building a RPM stating that an ambigous Python shebang is not allowed.
+
+::
+
+   *** ERROR: ambiguous python shebang in /usr/bin/<PYTHON_FILE>: #!/bin/env python. Change it to python3 (or python2) explicitly.
+
+Solution:
+
+-  RPM builds will fail with an error if the shebang of a Python program does not explicility use "python2" or "python3" ("python" is not allowed). Update the source code either during the ``%prep`` (recommended) or ``%install`` phase.
+
+   ::
+
+      %prep
+      sed -i s'/env\ python/env\ python3/'g %{buildroot}/usr/bin/<PYTHON_FILE>
+
 PKGBUILD (Arch Linux)
 ---------------------
 
