@@ -242,10 +242,221 @@ Usage:
 
 [18][19]
 
+Termux:X11
+''''''''''
+
+Termux:X11 is an experimental app that provides a Xwayland display server to work in a Termux proot environment. This runs locally so a desktop environment or a single graphical application can be seen on the Android device.
+
+Known issues:
+
+-  Termux:X11 only works with Debian 11. It is confirmed to not work with newer Linux distributions such as Arch Linux and Ubuntu 22.04. [21]
+-  Mouse events are not fully captured making gaming difficult. [22]
+-  Wayland is not fully supported. Only legacy Xorg applications are fully supported.
+-  Stability issues. This project is still very experimental.
+
+
+Desktop Environment
+&&&&&&&&&&&&&&&&&&&
+
+Install and configure a Linux proot with a desktop environment. This can be accessed via the Termux:X11 once it is fully set up.
+
+-  Download ande sideload the latest GitHub Actions build artifact that is from the "master" branch from `here <https://github.com/termux/termux-x11/actions/workflows/debug_build.yml>`__. It is required to be logged into GitHub to be able to download it.
+-  Unzip the archive.
+
+   .. code-block:: sh
+
+      $ unzip termux-x11.zip
+      Archive:  termux-x11.zip
+        inflating: app-debug.apk
+        inflating: output-metadata.json
+        inflating: termux-x11-<VERSION>-all.deb
+        inflating: termux-x11-<VERSION>-any.pkg.tar.xz
+
+-  Install the ``app-debug.apk`` on the Android device.
+-  In Termux, update all packages.
+
+   .. code-block:: sh
+
+      (termux)$ pkg update
+
+-  Install dependencies for Termux:X11. This includes launching a PulseAudio server when the Termux app starts for sound support.
+
+   .. code-block:: sh
+
+      (termux)$ pkg install pulseaudio
+      (termux)$ nano ~/.profile
+      pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
+      pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
+      (termux)$ pkg install x11-repo
+      (termux)$ pkg install xwayland xorg-server-xvfb
+
+-  Install the Debian package for Termux:X11 in Termux. This first requires giving Termux access to the Android file system.
+
+   .. code-block:: sh
+
+      (termux)$ termux-setup-storage
+      (termux)$ dpkg -i storage/shared/Download/termux-x11/termux-x11-<VERSION>-all.deb
+
+-  Allow Termux:X11 to run commands within the Termux app.
+
+   .. code-block:: sh
+
+      (termux)$ nano ~/.termux/termux.properties
+      allow-external-apps = yes
+
+-  Force stop and then re-open the Termux app to load up the new properties that were just configured.
+-  Open the Termux:X11 app and leave it open in the background.
+-  Switch to the Termux app. Install and use either Arch Linux or Debian (recommended). A non-root user is required.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         (termux)$ proot-distro install archlinux
+         (termux)$ proot-distro login archlinux
+         (archlinux)$ pacman -Syyu
+         (archlinux)$ nano /etc/locale.gen
+         en_US.UTF-8 UTF-8
+         (archlinux)$ echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+         (archlinux)$ locale-gen
+         (archlinux)$ ln -s /usr/share/zoneinfo/<COUNTRY>/<CITY> /etc/localtime
+         (archlinux)$ passwd root
+         (archlinux)$ useradd -m -g users -G wheel,audio,video,storage -s /bin/bash <USER>
+         (archlinux)$ passwd <USER>
+         (archlinux)$ pacman -S sudo
+         (archlinux)$ echo '<USER> ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/<USER>
+         (archlinux)$ chmod 0440 /etc/sudoers.d/<USER>
+         (archlinux)$ su - <USER>
+         (archlinux)$ nano ~/.profile
+         export PULSE_SERVER=127.0.0.1
+         pulseaudio --start --disable-shm=1 --exit-idle-time=-1
+         (archlinux)$ sudo pacman -S firefox networkmanager pulseaudio xfce4 xfce4-goodies xorg xorg-server
+         (archlinux)$ sudo pacman -S --needed base-devel git && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         (termux)$ proot-distro install debian
+         (termux)$ proot-distro login debian
+         (debian)$ apt-get update
+         (debian)$ apt-get upgrade
+         (debian)$ apt-get install locales
+         (debian)$ nano /etc/locale.gen
+         en_US.UTF-8 UTF-8
+         (debian)$ echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+         (debian)$ locale-gen
+         (debian)$ rm -f /etc/localtime
+         (debian)$ ln -s /usr/share/zoneinfo/<COUNTRY>/<CITY> /etc/localtime
+         (debian)$ passwd root
+         (debian)$ groupadd storage
+         (debian)$ groupadd wheel
+         (debian)$ useradd -m -g users -G wheel,audio,video,storage -s /bin/bash <USER>
+         (debian)$ passwd <USER>
+         (debian)$ apt-get install sudo
+         (debian)$ echo '<USER> ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/<USER>
+         (debian)$ chmod 0440 /etc/sudoers.d/<USER>
+         (debian)$ su - <USER>
+         (debian)$ nano ~/.profile
+         export PULSE_SERVER=127.0.0.1
+         pulseaudio --start --disable-shm=1 --exit-idle-time=-1
+         (debian)$ sudo pacman -S firefox-esr network-manager pulseaudio xfce4 xfce4-goodies xorg xserver-xorg-core
+
+-  Optionally configure and start a VNC server. This can only be accessed from a VNC viewer app on the Android device itself. VNC is also a slower desktop streaming protocol so gaming is not possible. Termux:X11 is recommended instead because it provides direct access to the display server.
+
+   -  Install a VNC server.
+
+      -  Arch Linux:
+
+         .. code-block:: sh
+
+            (archlinux)$ sudo pacman -S tigervnc
+
+      -   Debian [28]:
+
+         .. code-block:: sh
+
+            (debian)$ sudo apt-get install tigervnc-standalone-server tigervnc-common tightvncserver
+
+   -  Configure and start a VNC server.
+
+      .. code-block:: sh
+
+         (archlinux)$ vncpasswd
+         (archlinux)$ nano ~/.vnc/config
+         session=xfce4
+         geometry=1920x1080
+         localhost
+         (archlinux)$ nano ~/.vnc/xstartup
+         #!/bin/bash
+         unset SESSION_MANAGER
+         unset DBUS_SESSION_BUS_ADDRESS
+         export PULSE_SERVER=127.0.0.1
+         pulseaudio --start --disable-shm=1 --exit-idle-time=-1
+         dbus-launch --exit-with-session xfce4-session
+         (archlinux)$ vncserver :1
+
+-  Start the display server in Termux (not the proot).
+
+   .. code-block:: sh
+
+      (debian)$ exit
+      (termux)$ XDG_RUNTIME_DIR="${TMPDIR}" termux-x11 :1 &
+
+-  Enter the proot. The temporary directory must be shared to access information about the Xorg display server that Xwayland is emulating.
+
+   .. code-block:: sh
+
+      (termux)$ proot-distro login --user <USER> --shared-tmp debian
+
+-  Launch the XFCE desktop environment. [23]
+
+   .. code-block:: sh
+
+      (debian)$ export DISPLAY=:1 XDG_RUNTIME_DIR="${TMPDIR}"
+      (debian)$ dbus-launch --exit-with-session xfce4-session &
+
+[24][25][26][27]
+
 Raspberry Pi
 ------------
 
 For the Raspberry Pi single-board computers, it is recommended to use custom LineageOS ROMs from `KonstaKANG.com <https://konstakang.com/devices/rpi4/>`__. They provide both a tablet ROM and an Android TV ROM. [15]
+
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when starting Xwayland using Termux:X11.
+
+::
+
+   (termux)$ DISPLAY=:0 termux-x11
+   Starting Xwayland
+   _XSERVTransSocketUNIXCreateListener: ...SocketCreateListener() failed
+   _XSERVTransMakeAllCOTSServerListeners: server already running
+   (EE)
+   Fatal server error:
+   (EE) Cannot establish any listening sockets - Make sure an X server isn't already running(EE)
+
+Solutions:
+
+-  If Xwayland is already running, either kill off the related processes or reboot the Android device. [29]
+
+   .. code-block:: sh
+
+      (termux)$ killall xwayland
+
+-  If Xwayland is not running, clean the temporary directory as it may contain various X11 lock files. [30]
+
+   .. code-block:: sh
+
+      (termux)$ rm -rf ${TMPDIR}/*
+      (termux)$ rm -rf ${TMPDIR}/.*
+
+-  There used to be a known bug about a related issue. Update to the latest version of Termux:X11. [29]
 
 History
 -------
@@ -275,3 +486,13 @@ Bibliography
 18. "PRoot." Termux Wiki. Accessed April 13, 2023. https://wiki.termux.com/wiki/PRoot
 19. "PRoot Distro." GitHub termux/proot-distro. April 6, 2023. Accessed April 12, 2023. https://github.com/termux/proot-distro
 20. "Do not install Termux from Play Store!" Reddit r/termux. December 24, 2022. Accessed April 12, 2023. https://www.reddit.com/r/termux/comments/zu8ets/do_not_install_termux_from_play_store/
+21. "Unable to get Termux:X11 working in a proot-distro #299." GitHub termux/termux-x11. April 15, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/299
+22. "Mouse capture #223." GitHub termux/termux-x11. February 21, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/223
+23. "xfce4-session stays just black #205." GitHub termux/termux-x11. March 17, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/205
+24. "How to install Arch Linux ARM on Android phone (Termux Proot-distro)." Ivon's Blog. August 7, 2022. Accessed May 5, 2023. https://ivonblog.com/en-us/posts/termux-proot-distro-archlinux/
+25. "How to use Termux X11 - The X server on Android phone." Ivon's Blog. March 8, 2023. Accessed May 5, 2023. https://ivonblog.com/en-us/posts/termux-x11/
+26. "setting up termux-x11." udroid wiki. April 22, 2023. Accessed May 5, 2023. https://udroid-rc.gitbook.io/udroid-wiki/udroid-landing/setting-up-gui/termux-x11
+27. "Graphical Environment." Termux Wiki. Accessed May 5, 2023. https://wiki.termux.com/wiki/Graphical_Environment
+28. "Install and Configure TigerVNC VNC Server on Debian 11/10." ComputingForGeeks. February 16, 2023. Accessed May 5, 2023. https://computingforgeeks.com/install-and-configure-tigervnc-vnc-server-on-debian/
+29. "running termux-x11 fails #222." GitHub termux/termux-x11. March 3, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/222
+30. "unable to start termux x11 #151." GitHub termux/termux-x11. February 5, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/151
