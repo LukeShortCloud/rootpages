@@ -182,6 +182,66 @@ Google Meet
 
 Google Meet can be used for audio and/or video calls. The audio codec used is Lyra which is very data efficient. [9][10] That codec uses a low birate when uploading from the sender. On the receiver side, it uses artificial intelligence to enhance the audio quality. Lyra 2 came out in 2022 which can use a minimum bitrate of 56 kbps. [11] The codec is automatically used when low bandwidth is detected. [12]
 
+Linux
+-----
+
+Termux (PRroot)
+~~~~~~~~~~~~~~~
+
+Termux is an app that is available from F-Droid. The app hosted on the Google Play Store is no longer recommended as it is very outdated and unmaintained. [20] Termux provides a CLI tool known as `PRoot Distro <https://github.com/termux/proot-distro>`__. PRoot allows a non-root user to access and use a chroot environment. It supports setting up the following Linux distributions:
+
+-  Alpine Linux
+-  Arch Linux
+-  Debian
+-  Fedora
+-  Manjaro
+-  OpenSUSE
+-  Pardus
+-  Ubuntu
+-  Void Linux
+
+Usage:
+
+-  View the current list of supported Linux distributions:
+
+   .. code-block:: sh
+
+      $ proot-distro list
+
+-  Install the ``proot-distro`` CLI tool.
+
+   .. code-block:: sh
+
+      $ pkg install proot-distro
+
+-  Install a Linux distrubtion. By default, it will use an alias that is the same name as the Linux distribution. That alias can be changed during install or renamed later.
+
+   .. code-block:: sh
+
+      $ proot-distro install <LINUX_DISTRO>
+
+   .. code-block:: sh
+
+      $ proot-distro install --override-alias <ALIAS> <LINUX_DiSTRO>
+
+   .. code-block:: sh
+
+      $ proot-distro rename <OLD_ALIAS> <NEW_ALIAS>
+
+-  Login to the proot.
+
+   .. code-block:: sh
+
+      $ proot-distro login <ALIAS>
+
+-  Delete the proot.
+
+   .. code-block:: sh
+
+      $ proot-distro remove <ALIAS>
+
+[18][19]
+
 Raspberry Pi
 ------------
 
@@ -212,3 +272,6 @@ Bibliography
 15. "Installing Android on Raspberry Pi 4 with Play Store." RaspberryTips. August 14, 2022. Accessed April 11, 2023. https://raspberrytips.com/android-raspberry-pi-4/
 16. "How to Install GCam on Non-Google Pixel Phones." Geekflare Articles. November 22, 2022. Accessed April 12, 2023. https://geekflare.com/install-gcam-on-non-pixel-phones/
 17. "How To Install and Use GCam." Google Camera Port. Accessed April 12, 2023. https://www.celsoazevedo.com/files/android/google-camera/how-to/
+18. "PRoot." Termux Wiki. Accessed April 13, 2023. https://wiki.termux.com/wiki/PRoot
+19. "PRoot Distro." GitHub termux/proot-distro. April 6, 2023. Accessed April 12, 2023. https://github.com/termux/proot-distro
+20. "Do not install Termux from Play Store!" Reddit r/termux. December 24, 2022. Accessed April 12, 2023. https://www.reddit.com/r/termux/comments/zu8ets/do_not_install_termux_from_play_store/
