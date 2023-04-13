@@ -205,19 +205,26 @@ In case you also want to build a source RPM (SRPM) run:
 
 Sections:
 
--  ``%description`` = Provide a description of the program.
+-  ``%description`` = **Required.** Provide a description of the program.
 -  ``%prep`` = Define how to extract the source code for building.
--  ``%setup`` =
--  ``%build`` = This is where the program is built from the source code.
--  ``%install`` = Copy files to a directory structure under
-   ``%{buildroot}`` that mirrors where their installed location. The
-   ``%{buildroot}`` is the top-level directory of a typical Linux file
-   system hierarchy.
--  ``%file`` = These are the files that should be copied over during
-   installation. Permissions can also be set.
 
-   -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a
-      file or folder to give it custom permissions.
+   -  ``%setup`` = This macro can only happen during the ``%prep`` stage.
+   -  ``%patch`` = Patch the source code with a provided patch file.
+
+-  ``%build`` = This is where the program is built from the source code.
+-  ``%install`` = Copy files to a directory structure under ``%{buildroot}`` that mirrors where their installed location. The ``%{buildroot}`` is the top-level directory of a typical Linux file system hierarchy.
+-  ``%file`` = These are the files that should be copied over during installation. Permissions can also be set.
+
+   -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a file or folder to give it custom permissions.
+
+-  ``%changelog`` = **Required.** Provide a change log for the RPM spec. The syntax for the change log is shown below.
+
+   ::
+
+      %changelog
+      * <DAY_OF_THE_WEEK_NAME> <MONTH> <DAY_OF_THE_WEEK_NUMBER> <YEAR> <AUTHOR_FIRST_NAME> <AUTHOR_LAST_NAME> <<AUTHOR_EMAIL>> <RPM_VERSION>-<RPM_RELEASE>
+      - <CHANGE_LOG_SENTENCE_1>
+      - <CHANGE_LOG_SENTENCE_2>
 
 [4]
 
@@ -367,6 +374,133 @@ location of the patch file.
 
 [8]
 
+Examples
+~~~~~~~~
+
+-  Use the summary as the description.
+
+   ::
+
+      Summary: This package provides program X
+
+      %description
+      %{summary}.
+
+-  Automatically generate a change log either based on (1) a file or (2) git history. [14]
+
+   ::
+
+       %changelog
+       %autochangelog
+
+-  Manually create a change log.
+
+   ::
+
+      %changelog
+      * Sat Dec 24 2020 Foo Bar <foobar@foobar.tld> 1.0-1
+      - Initial RPM release
+
+-  Automatically extract an archive and change into the directory of it. This assumes that both the archive name (without the extension) and the directory name will be exactly the same.
+
+   ::
+
+      %prep
+      %autosetup -n <ARCHIVE>.<EXTENSION>
+
+-  Automatically extract all archives but do not change directory during the ``%setup`` phase. This is useful for when the archive name is different from the extracted directory name. [15] For example, this is useful for GitHub downloads of source code.
+
+   ::
+
+      Source0: https://github.com/<USERNAME>/<PROJECT>/archive/<COMMIT>.zip
+
+      %prep
+      %setup -q -c
+
+      %install
+      cd <PROJECT>-<COMMIT>
+
+Building a RPM with Mock
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Mock creates a chroot of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution.
+
+Install tools required to build RPMs.
+
+.. code-block:: sh
+
+   $ sudo dnf install mock rpm-build rpmdevtools
+
+Allow a non-root user to user Mock.
+
+.. code-block:: sh
+
+   $ sudo usermod -a -G mock <USER>
+
+Initialize Mock for the same operating system release as the host or a specified one. Valid releases can be found at ``/etc/mock/<RELEASE>.cfg``.
+
+.. code-block:: sh
+
+   $ mock --init
+
+.. code-block:: sh
+
+   $ ls -1 /etc/mock/
+   $ mock -r <RELEASE> --init
+
+Download the required external source code using the ``spectool`` command. These will be saved to ``~/rpmbuild/SOURCES/``. The ``rpmbuild`` command cannot download source code. [17]
+
+.. code-block:: sh
+
+   $ spectool -g -R <RPM_SPEC_FILE>
+
+Build a source RPM.
+
+.. code-block:: sh
+
+   $ rpmbuild -bs <RPM_SPEC_FILE>
+
+Build the binary RPM(s). The RPM(s), along with the log files, will be stored at ``/var/lib/mock/<RELEASE>/result/``.
+
+.. code-block:: sh
+
+   $ mock ~/rpmbuild/SRPMS/<SOURCE_RPM_NAME>.src.rpm
+
+[16]
+
+Fedora Packages
+~~~~~~~~~~~~~~~
+
+Fedora provides an automated system to download and build RPM packages using the ``fedpkg`` tool.
+
+-  Install ``fedpkg``.
+
+   .. code-block:: sh
+
+      $ sudo dnf install fedpkg
+
+-  Download the package repository.
+
+   .. code-block:: sh
+
+      $ fedpkg clone -a <GIT_REPOSITORY>
+      $ cd <GIT_REPOSITORY>
+      $ git checkout origin/f<FEDORA_MAJOR_VERSION>
+
+-  Install build dependencies.
+
+   .. code-block:: sh
+
+      $ sudo dnf builddep <RPM_SPEC>
+
+-  Build the RPM package.
+
+   .. code-block:: sh
+
+      $ fedkpkg local
+
+[18]
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
@@ -388,6 +522,23 @@ Error Messages
    error: Bad exit status from /var/tmp/rpm-tmp.0Sev9I (%prep)
 
 [12]
+
+----
+
+Error when building a RPM stating that an ambigous Python shebang is not allowed.
+
+::
+
+   *** ERROR: ambiguous python shebang in /usr/bin/<PYTHON_FILE>: #!/bin/env python. Change it to python3 (or python2) explicitly.
+
+Solution:
+
+-  RPM builds will fail with an error if the shebang of a Python program does not explicility use "python2" or "python3" ("python" is not allowed). Update the source code either during the ``%prep`` (recommended) or ``%install`` phase.
+
+   ::
+
+      %prep
+      sed -i s'/env\ python/env\ python3/'g %{buildroot}/usr/bin/<PYTHON_FILE>
 
 PKGBUILD (Arch Linux)
 ---------------------
@@ -531,3 +682,8 @@ Bibliography
 11. "PKGBUILD(5) Manual Page." Arch Linux Man Pages. February 26, 2016. Accessed November 19, 2016. https://www.archlinux.org/pacman/PKGBUILD.5.html
 12. "RPM spec patch application fails." Stack Overflow. August 22, 2016. Accessed March 27, 2020. https://stackoverflow.com/questions/39052950/rpm-spec-patch-application-fails
 13. "AUR submission guidelines." Arch Linux Wiki. February 20, 2022. Accessed April 5, 2022. https://wiki.archlinux.org/title/AUR_submission_guidelines
+14. "Using the %autochangelog Macro." rpmautospec. 2021. Accessed April 12, 2023. https://docs.pagure.org/Fedora-Infra.rpmautospec/autochangelog.html
+15. "RPM Spec file %setup macro when you don't know the root name?" Unix & Linux Stack Exchange. April 2, 2020. Accessed April 12, 2023. https://unix.stackexchange.com/questions/577441/rpm-spec-file-setup-macro-when-you-dont-know-the-root-name
+16. "How do I get rpmbuild to download all of the sources for a particular .spec?" Stack Overflow  April 25, 2020. Accessed April 12, 2023. https://stackoverflow.com/questions/33177450/how-do-i-get-rpmbuild-to-download-all-of-the-sources-for-a-particular-spec
+17. "Building RPM packages with mock." packagecloud. May 10, 2015. Accessed April 12, 2023. https://blog.packagecloud.io/building-rpm-packages-with-mock/
+18. "Building a custom kernel." Fedora Project Wiki. August 16, 2022. Accessed April 12, 2023. https://fedoraproject.org/wiki/Building_a_custom_kernel
