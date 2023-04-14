@@ -189,6 +189,104 @@ Rust will automatically create a string as a pointer location to a collection of
 
 [18][19]
 
+Structs and Enums
+~~~~~~~~~~~~~~~~~
+
+A ``struct`` is a custom data type. It can hold zero or many variables of different data types.
+
+-  Create a ``struct`` that uses every data type in Rust.
+
+   .. code-block:: rust
+
+      // Enable the ability to debug the output of this new data type.
+      #[derive(Debug)]
+      struct ExampleData {
+          example_bool: bool,
+          example_char: char,
+          example_i8: i8,
+          example_i16: i16,
+          example_i32: i32,
+          example_i64: i64,
+          example_u8: u8,
+          example_u16: u16,
+          example_u32: u32,
+          example_u64: u64,
+          example_f32: f32,
+          example_f64: f64,
+          example_string: String,
+          example_array: [i32; 2],
+          example_tuple: (i32, f64),
+          example_option: Option<String>,
+          example_enum: ExampleEnum,
+      }
+      
+      #[derive(Debug)]
+      enum ExampleEnum {
+          Variant1,
+          Variant2(i32),
+          Variant3 { field1: String, field2: u32 },
+      }
+      
+      fn main() {
+          let data = ExampleData {
+              example_bool: false,
+              example_char: 'C',
+              example_i8: -16,
+              example_i16: -1024,
+              example_i32: -1_000_000,
+              example_i64: -8_000_000_000,
+              example_u8: 42,
+              example_u16: 1024,
+              example_u32: 1_000_000,
+              example_u64: 8_000_000_000,
+              example_f32: 3.14,
+              example_f64: 3.14159265359,
+              example_string: String::from("This is a string!"),
+              example_array: [1, 2],
+              example_tuple: (42, 3.14),
+              example_option: Some(String::from("Optional field")),
+              example_enum: ExampleEnum::Variant1,
+          };
+
+          println!("{:?}", data);
+      }
+
+   ::
+
+      ExampleData { example_bool: false, example_char: 'C', example_i8: -16, example_i16: -1024, example_i32: -1000000, example_i64: -8000000000, example_u8: 42, example_u16: 1024, example_u32: 1000000, example_u64: 8000000000, example_f32: 3.14, example_f64: 3.14159265359, example_string: "This is a string!", example_array: [1, 2], example_tuple: (42, 3.14), example_option: Some("Optional field"), example_enum: Variant1 }
+
+An ``enum`` is a collection of ``struct`` s into a single data type.
+
+-  Create a new ``enum`` data type.
+
+   .. code-block:: rust
+
+      fn main() {
+          #[derive(Debug)]
+          enum Car {
+              Car,
+              CarMake(String),
+              CarModel(String),
+              CarYear(i32),
+              CarReleaseYears([i32; 2]),
+          }
+      
+          let honda_civic_car = Car::Car;
+          let honda_civic_car_make = Car::CarMake(String::from("Honda"));
+          let honda_civic_car_model = Car::CarModel(String::from("Civic"));
+          let honda_civic_car_year = Car::CarYear(2023);
+          let honda_civic_car_release_years = Car::CarReleaseYears([2022, 2023]);
+      
+          println!("{:?}, {:?}, {:?}, {:?}, {:?}",
+              honda_civic_car, honda_civic_car_make, honda_civic_car_model, honda_civic_car_year, honda_civic_car_release_years);
+      }
+
+   ::
+
+      Car, CarMake("Honda"), CarModel("Civic"), CarYear(2023), CarReleaseYears([2022, 2023])
+
+[30]
+
 Functions
 ---------
 
@@ -692,3 +790,4 @@ Bibliography
 27. "Rust - Switch." W3schools. Accessed April 7, 2023. https://www.w3schools.io/languages/rust-match/
 28. "Getting started with the Rust package manager, Cargo." opensource.com. March 3, 2020. Accessed April 12, 2023. https://opensource.com/article/20/3/rust-cargo
 29. "Rust from the beginning, project management with Cargo." DEV Community. July 5, 2022. Accessed April 12, 2023. https://dev.to/azure/rust-from-the-beginning-project-management-with-cargo-5017
+30. "What is an enum in Rust?" Educative. Accessed April 14, 2023. https://www.educative.io/answers/what-is-an-enum-in-rust
