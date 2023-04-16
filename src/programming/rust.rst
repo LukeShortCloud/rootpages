@@ -103,6 +103,7 @@ Overview
    bool, Boolean of ``true`` or ``false``.
    char, Character.
    &str, A pointer to a string of characters. [18]
+   Vec<T>, A vector with data type ``T`` defined. [31]
 
 [16][17]
 
@@ -130,19 +131,48 @@ Arrays
 
       let <VARIABLE_NAME>: [<DATA_TYPE>;<LENGTH>] = [<VALUE_1>, <VALUE_2>];
 
--  A slice has an undefined size.
-
-   .. code-block:: rust
-
-      let <VARIABLE_NAME> = [<VALUE_1>, <VALUE_2>];
-
 -  A tuple is similar to an array but it can store more than on data type.
 
    .. code-block:: rust
 
       let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
 
+-  A slice has an undefined size until the Rust code is compiled.
+
+   .. code-block:: rust
+
+      let <VARIABLE_NAME> = [<VALUE_1>, <VALUE_2>];
+
 [16][17]
+
+-  A vector has an undefined size until the Rust program runs.
+
+   -  Create a vector using a method.
+
+      .. code-block:: rust
+
+         let mut example_vector: Vec<i8> = Vec::new();
+         example_vector.push(1);
+         example_vector.push(2);
+         example_vector.push(3);
+         println!("{:?}", example_vector);
+
+      ::
+
+         [1, 2, 3]
+
+   -  Create a vector using a macro.
+
+      .. code-block:: rust
+
+         let mut example_vector = vec![1, 2, 3];
+         println!("{:?}", example_vector);
+
+      ::
+
+         [1, 2, 3]
+
+[31]
 
 Strings
 ~~~~~~~
@@ -791,3 +821,4 @@ Bibliography
 28. "Getting started with the Rust package manager, Cargo." opensource.com. March 3, 2020. Accessed April 12, 2023. https://opensource.com/article/20/3/rust-cargo
 29. "Rust from the beginning, project management with Cargo." DEV Community. July 5, 2022. Accessed April 12, 2023. https://dev.to/azure/rust-from-the-beginning-project-management-with-cargo-5017
 30. "What is an enum in Rust?" Educative. Accessed April 14, 2023. https://www.educative.io/answers/what-is-an-enum-in-rust
+31. "Rust - Vectors." GeeksforGeeks. July 1, 2022. Accessed April 15, 2023. https://www.geeksforgeeks.org/rust-vectors/
