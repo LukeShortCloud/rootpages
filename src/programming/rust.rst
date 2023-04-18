@@ -678,6 +678,51 @@ A Rust ``match`` is the same as ``switch/case`` in other programming langauges. 
 
       Xbox 360
 
+File Input and Output
+---------------------
+
+File handling is done via the ``std::fs`` library.
+
+-  Read a file.
+
+   .. code-block:: rust
+
+      use std::fs;
+      
+      fn main() {
+          // Store the entire file contents as a single string.
+          let contents = fs::read_to_string("<FILE_NAME>").expect("Failed to open file");
+          // Store each individual character into a vector.
+          //let contents = fs::read("<FILE_NAME>").expect("Failed to open file");
+          println!("{}", contents);
+      }
+
+-  Write to a file.
+
+   .. code-block:: rust
+
+      use std::fs;
+      
+      fn main() {
+          let contents = "<STRING>";
+          fs::write("<FILE_NAME>", contents).expect("Failed to write to file");
+      }
+
+-  Append to a file and use advanced operations with ``std::fs::OpenOptions::new()``.
+
+   .. code-block:: rust
+
+      use std::fs;
+      use std::io::Write;
+      
+      fn main() {
+          let contents = "<STRING>\n";
+          let mut f = fs::OpenOptions::new().append(true).create(true).open("<FILE_NAME>").expect("Failed to open file");
+          f.write_all(contents.as_bytes()).expect("Failed to write to file");
+      }
+
+[32][33]
+
 Cargo and Crates Packaging
 --------------------------
 
@@ -822,3 +867,5 @@ Bibliography
 29. "Rust from the beginning, project management with Cargo." DEV Community. July 5, 2022. Accessed April 12, 2023. https://dev.to/azure/rust-from-the-beginning-project-management-with-cargo-5017
 30. "What is an enum in Rust?" Educative. Accessed April 14, 2023. https://www.educative.io/answers/what-is-an-enum-in-rust
 31. "Rust - Vectors." GeeksforGeeks. July 1, 2022. Accessed April 15, 2023. https://www.geeksforgeeks.org/rust-vectors/
+32. "What's the de-facto way of reading and writing files in Rust 1.x?" Stack Overflow. May 4, 2022. Accessed April 17, 2023. https://stackoverflow.com/questions/31192956/whats-the-de-facto-way-of-reading-and-writing-files-in-rust-1-x
+33. "How to read and write files in Rust." opensource.com. January 2, 2023. Accessed April 17, 2023. https://opensource.com/article/23/1/read-write-files-rust
