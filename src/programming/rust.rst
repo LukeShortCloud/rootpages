@@ -808,11 +808,15 @@ Cargo is the official package manager for Rust dependencies. It installs package
 
       $ cargo update -p <CRATE_PACKAGE>
 
--  Automatically download the dependencies and build a Rust program.
+-  Automatically download the dependencies and build a Rust program. By default, this uses ``target/debug``. It is also possible to build with the ``target/release`` profile that includes performance optimizations. [34]
 
    .. code-block:: sh
 
       $ cargo build
+
+   .. code-block:: sh
+
+      $ cargo build --release
 
 -  Run the built program.
 
@@ -869,3 +873,4 @@ Bibliography
 31. "Rust - Vectors." GeeksforGeeks. July 1, 2022. Accessed April 15, 2023. https://www.geeksforgeeks.org/rust-vectors/
 32. "What's the de-facto way of reading and writing files in Rust 1.x?" Stack Overflow. May 4, 2022. Accessed April 17, 2023. https://stackoverflow.com/questions/31192956/whats-the-de-facto-way-of-reading-and-writing-files-in-rust-1-x
 33. "How to read and write files in Rust." opensource.com. January 2, 2023. Accessed April 17, 2023. https://opensource.com/article/23/1/read-write-files-rust
+34. "Hello, Cargo!" The Rust Programming Language. Accessed April 18, 2023. https://doc.rust-lang.org/book/ch01-03-hello-cargo.html
