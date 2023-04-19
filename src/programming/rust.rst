@@ -853,6 +853,102 @@ Cargo is the official package manager for Rust dependencies. It installs package
 
 [28][29]
 
+Libraries
+---------
+
+Serde
+~~~~~
+
+Serde provides a standardized library to serialize and deserialize common formats, such as JSON and YAML, within Rust. The name comes from a combination of the two words ``ser`` ialize and ``de`` serialize. [37]
+
+Serde YAML
+^^^^^^^^^^
+
+-  Add Serde YAML as a dependency in the ``Cargo.toml`` file of the project.
+
+   .. code-block:: ini
+
+      [dependencies]
+      serde = { version = "1.0", features = ["derive"] }
+      serde_yaml = "0.9"
+
+-  Read various different data types from a YAML file.
+
+   .. code-block:: yaml
+
+      ---
+      foo: "bar"
+      pi: 3.14
+      counting_up:
+      - 1
+      - 2
+      - 3
+      # Data type: Vec<Vec<i16>>
+      star_trek_years:
+      - [1987, 1993, 1995]
+      - [2009, 2013, 2016]
+      # Data type: bool
+      today_will_be_a_good_day: true
+
+   .. code-block:: rust
+
+      use serde::{Deserialize, Serialize};
+      use serde_yaml::{self};
+      
+      #[derive(Debug, Serialize, Deserialize)]
+      struct YamlConfig {
+          foo: String,
+          pi: f32,
+          counting_up: Vec<i8>,
+          star_trek_years: Vec<Vec<i16>>,
+          today_will_be_a_good_day: bool,
+      }
+      
+      fn main() {
+          let yaml_file = std::fs::File::open("example.yml").expect("Failed to open file");
+          let yaml_values: YamlConfig = serde_yaml::from_reader(yaml_file).expect("Faild to load values");
+          println!("{:?}", yaml_values);
+      }
+
+   ::
+
+      YamlConfig { foo: "bar", pi: 3.14, counting_up: [1, 2, 3], star_trek_years: [[1987, 1993, 1995], [2009, 2013, 2016]], today_will_be_a_good_day: true }
+
+-  Read a specific value from a YAML file. This is useful for pulling information from a map.
+
+   .. code-block:: yaml
+
+      ---
+      star_trek:
+        captain: "kirk"
+        starship: "enterprise"
+        year: 1966
+
+   .. code-block:: rust
+
+      use serde::{Deserialize, Serialize};
+      use serde_yaml::{Value, Mapping};
+      
+      #[derive(Debug, Deserialize)]
+      struct YamlConfig {
+          star_trek: Mapping,
+      }
+      
+      fn main() {
+          let yaml_file = std::fs::File::open("example2.yml").expect("Failed to open file");
+          let yaml_values: YamlConfig = serde_yaml::from_reader(yaml_file).expect("Faild to load values");
+          let captain = yaml_values.star_trek.get(&Value::String("captain".to_string())).unwrap().as_str().unwrap();
+          let starship = yaml_values.star_trek.get(&Value::String("starship".to_string())).unwrap().as_str().unwrap();
+          let year = yaml_values.star_trek.get(&Value::String("year".to_string())).unwrap().as_i64().unwrap();
+          println!("{}, {}, {}", captain, starship, year);
+      }
+
+   ::
+
+      kirk, enterprise, 1966
+
+[38][39]
+
 History
 -------
 
@@ -897,3 +993,6 @@ Bibliography
 34. "Hello, Cargo!" The Rust Programming Language. Accessed April 18, 2023. https://doc.rust-lang.org/book/ch01-03-hello-cargo.html
 35. "Rust: let vs const." Nicky blogs. September 21, 2020. Accessed April 18, 2023. https://nickymeuleman.netlify.app/garden/rust-let-const
 36. "Snake Case VS Camel Case VS Pascal Case VS Kebab Case – What's the Difference Between Casings?" freeCodeCamp Programming Tutorials. November 29, 2022. Accessed April 18, 2023. https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/
+37. "Overview." Serde. Accessed April 19, 2023. https://serde.rs/
+38. "Serde YAML." GitHub dtolnay/serde-yaml. April 5, 2023. Accessed April 19, 2023. https://github.com/dtolnay/serde-yaml
+39. "How to read and write YAML in Rust with Serde." TMS Developer Blog. September 8, 2021. Accessed April 19, 2023. https://tms-dev-blog.com/how-to-read-and-write-yaml-in-rust-with-serde/
