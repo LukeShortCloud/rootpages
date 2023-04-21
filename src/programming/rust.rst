@@ -338,6 +338,55 @@ An ``enum`` is a collection of ``struct`` s into a single data type.
 
 [30]
 
+Standard Input and Output
+-------------------------
+
+-  Use the built-in macro ``println!("")`` to print messages to standard output.
+
+   .. code-block:: rust
+
+      fn main() {
+          println!("Star Wars: Andor");
+      }
+
+   ::
+
+      Star Wars: Andor
+
+-  Read from stanard input using the built-in ``std::io`` library. [40][41]
+
+   .. code-block:: rust
+
+      use std::io;
+      
+      fn main() {
+          println!("Who are you?");
+          let mut name = String::new();
+          io::stdin().read_line(&mut name).expect("Unable to read from standard input");
+          name.pop();
+          println!("Your name is {}.", name);
+      }
+
+   ::
+
+      Your name is Andor
+      .
+
+-  Stanard input captures all newlines characters. These can be removed by using the built-in string function ``<STRING>.pop()`` to remove the last character. [42]
+
+   .. code-block:: rust
+
+      fn remove_newline_characters(string_name: &mut String) {
+          // Linux uses "\n" for the newline character.
+          if string_name.ends_with('\n') {
+              string_name.pop();
+              // Windows uses "\r\n" for the newline character.
+              if string_name.ends_with('\r') {
+                  string_name.pop();
+              }
+          }
+      }
+
 Functions
 ---------
 
@@ -996,3 +1045,6 @@ Bibliography
 37. "Overview." Serde. Accessed April 19, 2023. https://serde.rs/
 38. "Serde YAML." GitHub dtolnay/serde-yaml. April 5, 2023. Accessed April 19, 2023. https://github.com/dtolnay/serde-yaml
 39. "How to read and write YAML in Rust with Serde." TMS Developer Blog. September 8, 2021. Accessed April 19, 2023. https://tms-dev-blog.com/how-to-read-and-write-yaml-in-rust-with-serde/
+40. "Standard I/O in Rust." GeeksforGeeks. March 17, 2021. Accessed April 21, 2023. https://www.geeksforgeeks.org/standard-i-o-in-rust/
+41. "Rust - Input Output." tutorialspoint. Accessed April 21, 2023. https://www.tutorialspoint.com/rust/rust_input_output.htm
+42. "rust - Remove single trailing newline from String without cloning." Stack Overflow. January 25, 2023. Accessed April 21, 2023. https://stackoverflow.com/questions/37888042/remove-single-trailing-newline-from-string-without-cloning
