@@ -125,6 +125,47 @@ Use the Rust formatter on an entire project.
 
 [43][44]
 
+Clippy
+~~~~~~
+
+Rust provides a limited linter that is automatically run when using ``rustc`` or ``cargo check``. Newer versions of Rust also ship with a separate and more advanced linter known as ``clippy``.
+
+It is installed by default when installing Rust with ``rustup`` unless using the "minimal" toolchain. It can be installed by running this command:
+
+.. code-block:: sh
+
+   $ rustup component add clippy
+
+Run the linter on a specific file.
+
+.. code-block:: sh
+
+   $ clippy-driver <RUST_SOURCE_FILE>.rs
+
+Run the linter on an entire project.
+
+.. code-block:: sh
+
+   $ cargo clippy
+
+`Here <https://rust-lang.github.io/rust-clippy/stable/index.html>`__ is a list of every lint rule along with its group and warning level.
+
+Convert a lint error down to a warning.
+
+-  Syntax:
+
+   .. code-block:: rust
+
+      $ cargo clippy -- -W clippy::<LINT_RULE>
+
+-  Example:
+
+   .. code-block:: rust
+
+      $ cargo clippy -- -W clippy::possible_missing_comma
+
+[45][46]
+
 Data Types
 ----------
 
@@ -1090,3 +1131,5 @@ Bibliography
 42. "rust - Remove single trailing newline from String without cloning." Stack Overflow. January 25, 2023. Accessed April 21, 2023. https://stackoverflow.com/questions/37888042/remove-single-trailing-newline-from-string-without-cloning
 43. "rustfmt." GitHub rust-lang/rustfmt. April 1, 2023. Accessed April 23, 2023. https://github.com/rust-lang/rustfmt/
 44. "Configuring Rustfmt." Rustfmt. Accessed April 23, 2023. https://rust-lang.github.io/rustfmt/
+45. "Usage." Clippy Documentation. Accessed April 23, 2023. https://doc.rust-lang.org/nightly/clippy/usage.html
+46. "Linting in Rust with Clippy." LogRocket Blog. February 24, 2023. Accessed April 23, 2023. https://blog.logrocket.com/rust-linting-clippy/
