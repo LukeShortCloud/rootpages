@@ -85,6 +85,46 @@ Variables
 -  Variable names should use ``snake_case``.
 -  Constant names should use ``SCREAMING_SNAME_CASE``. [35][36]
 
+rustfmt
+~~~~~~~
+
+The ``rustfmt`` tool that will automatically format Rust code to be in a standardized style. It uses a style that is approved by the Rust project but can be configured for individual preference.
+
+It is installed by default when installing Rust with ``rustup`` unless using the "minimal" toolchain. It can be installed by running this command:
+
+.. code-block:: sh
+
+   $ rustup component add rustfmt
+
+``rustfmt`` is highly configurable allowing formatting to be adjusted or turned off on a per-rule basis by using a ``rustfmt.toml`` or ``.rustfmt.toml`` file. All of the available configuration options are listed `here <https://rust-lang.github.io/rustfmt/>`__.
+
+-  Syntax:
+
+   ::
+
+      <RULE> = <VALUE>
+
+-  Example:
+
+   ::
+
+      # Increase from the default value of 60.
+      array_width = 80
+
+Use the Rust formatter on a single file.
+
+.. code-block:: sh
+
+   $ rustfmt <RUST_SOURCE_FILE>.rs
+
+Use the Rust formatter on an entire project.
+
+.. code-block:: sh
+
+   $ cargo fmt
+
+[43][44]
+
 Data Types
 ----------
 
@@ -1048,3 +1088,5 @@ Bibliography
 40. "Standard I/O in Rust." GeeksforGeeks. March 17, 2021. Accessed April 21, 2023. https://www.geeksforgeeks.org/standard-i-o-in-rust/
 41. "Rust - Input Output." tutorialspoint. Accessed April 21, 2023. https://www.tutorialspoint.com/rust/rust_input_output.htm
 42. "rust - Remove single trailing newline from String without cloning." Stack Overflow. January 25, 2023. Accessed April 21, 2023. https://stackoverflow.com/questions/37888042/remove-single-trailing-newline-from-string-without-cloning
+43. "rustfmt." GitHub rust-lang/rustfmt. April 1, 2023. Accessed April 23, 2023. https://github.com/rust-lang/rustfmt/
+44. "Configuring Rustfmt." Rustfmt. Accessed April 23, 2023. https://rust-lang.github.io/rustfmt/
