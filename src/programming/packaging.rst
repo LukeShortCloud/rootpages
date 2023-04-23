@@ -420,10 +420,61 @@ Examples
       %install
       cd <PROJECT>-<COMMIT>
 
-Building a RPM with Mock
-~~~~~~~~~~~~~~~~~~~~~~~~
+Building a RPM
+~~~~~~~~~~~~~~
 
-Mock creates a chroot of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution.
+rpmbuild
+^^^^^^^^
+
+Install tools requires to build RPMs.
+
+.. code-block:: sh
+
+   $ sudo dnf install rpm-build rpmdevtools
+
+Create all of the directories required for ``rpmbuild``.
+
+.. code-block:: sh
+
+   $ mkdir -p ~/rpmbuild/BUILD/
+   $ mkdir ~/rpmbuild/BUILDROOT/
+   $ mkdir ~/rpmbuild/RPMS/
+   $ mkdir ~/rpmbuild/SOURCES/
+   $ mkdir ~/rpmbuild/SRPMS/
+
+Copy local source files to the ``~/rpmbuild/SOURCES/`` directory.
+
+Download the required external source files using the ``spectool`` command. These will be saved to ``~/rpmbuild/SOURCES/``. The ``rpmbuild`` command cannot download source code. [17]
+
+.. code-block:: sh
+
+   $ spectool -g -R <RPM_SPEC_FILE>
+
+Install build dependencies.
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install 'dnf-command(builddep)'
+      $ sudo dnf builddep <RPM_SPEC_FILE>
+
+Optionally build the source RPM.
+
+.. code-block:: sh
+
+   $ rpmbuild -bs <RPM_SPEC_FILE>
+
+Build the binary RPM(s). The RPM(s) will be stored at ``~/rpmbuild/RPMS/<CPU_ARCHITECTURE>/``.
+
+.. code-block:: sh
+
+   $ rpmbuild -bb <RPM_SPEC_FILE>
+
+Mock
+^^^^
+
+Mock creates a chroot of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution. Mock does not work within a container. Instead, use the standard ``rpmbuild -bb <SPEC_FILE>`` command to build a binary RPM from within a container.
 
 Install tools required to build RPMs.
 
