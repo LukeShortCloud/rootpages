@@ -20,6 +20,7 @@ Tutorials
    5.  `Rust Design Patterns <https://rust-unofficial.github.io/patterns/>`__ = Free.
    6.  `The Rust Performance Book <https://nnethercote.github.io/perf-book/>`__ = Free.
    7.  `The Cargo Book <https://doc.rust-lang.org/cargo/guide/>`__ = Free.
+   8.  `Rust Language Cheat Sheet <https://cheats.rs/>`__ = Free.
 
 -  Hands-on workshops [2]:
 
@@ -84,6 +85,40 @@ Variables
 
 -  Variable names should use ``snake_case``.
 -  Constant names should use ``SCREAMING_SNAME_CASE``. [35][36]
+
+Comments
+~~~~~~~~
+
+Code comments are to help other developers working on the same project. It provides details about what is happening when the code itself may not be obvious. The are ignored by the compiler when building a binary program.
+
+-  Create standard a single line or multiple lines comment.
+
+   .. code-block:: rust
+
+      // This is one a single line.
+
+   .. code-block:: rust
+
+      /* This
+       * spans
+       */ more than one line.
+
+-  Create documentation. Documentation for a crate or module starts at the start of the source code file. It has both a single line and multiple lines syntax.
+
+   .. code-block:: rust
+
+      //! # New Library
+      //!
+      //! This new library provides advanced features.
+
+
+   .. code-block:: rust
+
+      /*! # New Library
+
+       This new library provides advanced features. */
+
+[47][48]
 
 rustfmt
 ~~~~~~~
@@ -1133,3 +1168,5 @@ Bibliography
 44. "Configuring Rustfmt." Rustfmt. Accessed April 23, 2023. https://rust-lang.github.io/rustfmt/
 45. "Usage." Clippy Documentation. Accessed April 23, 2023. https://doc.rust-lang.org/nightly/clippy/usage.html
 46. "Linting in Rust with Clippy." LogRocket Blog. February 24, 2023. Accessed April 23, 2023. https://blog.logrocket.com/rust-linting-clippy/
+47. "Comments and Docs." Rust By Practice. Accessed April 23, 2023. https://practice.rs/comments-docs.html
+48. "Rust Language Cheat Sheet." Rust Language Cheat Sheet. April 19, 2023. Accessed April 23, 2023. https://cheats.rs/
