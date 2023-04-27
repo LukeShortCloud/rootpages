@@ -1114,6 +1114,64 @@ Serde YAML
 
 [38][39]
 
+Error Handling
+--------------
+
+Most built-in Rust functions return an ``enum`` data type that contains one of two values: (1) the data type of a successful run or (2) an error message as a string.
+
+.. code-block:: rust
+
+   enum Result<Type, Error> {
+       Ok(Type),
+       Err(Error),
+   }
+
+If ``Result::Err`` is returned, it uses the macro ``panic!("{}", Error);`` to end the program and print out an error message.
+
+A function can be called with ``.expect()`` appended to it. If there is an error, this will override the panic error message and provide a new custom one.
+
+.. code-block:: rust
+
+   use std::fs::File;
+
+   let file = File::open("foobar.txt").expect("Could not open file");
+
+The ``?`` operator is used to end a function immediately if there is an error. Unlike a panic, the program will not exit. It will return the error code as part of a ``enum Result<>`` data type.
+
+.. code-block:: rust
+
+   use std::io;
+   use std::fs::File;
+
+   fn read_foobar() -> Result<String, io::Error> {
+       let file = File::open("foobar.txt")?;
+       println!("Looks like the file was opened. What a great day!");
+       Ok(String::from("The file was opened successfully!"))
+   }
+
+   fn main() {
+       let foobar = read_foobar();
+       println!("{:?}", foobar);
+       println!("This program has now completed with no panics!");
+   }
+
+-  Success message:
+
+   ::
+
+      Looks like the file was opened. What a great day!
+      Ok("The file was opened successfully!")
+      This program has now completed with no panics!
+
+-  Failure message:
+
+   ::
+
+      Err(Os { code: 2, kind: NotFound, message: "No such file or directory" })
+      This program has now completed with no panics!
+
+[49][50]
+
 History
 -------
 
@@ -1170,3 +1228,5 @@ Bibliography
 46. "Linting in Rust with Clippy." LogRocket Blog. February 24, 2023. Accessed April 23, 2023. https://blog.logrocket.com/rust-linting-clippy/
 47. "Comments and Docs." Rust By Practice. Accessed April 23, 2023. https://practice.rs/comments-docs.html
 48. "Rust Language Cheat Sheet." Rust Language Cheat Sheet. April 19, 2023. Accessed April 23, 2023. https://cheats.rs/
+49. "Error Handling In Rust - A Deep Dive." Luca Palmieri. May 13, 2021. Accessed April 26, 2023. https://www.lpalmieri.com/posts/error-handling-rust/
+50. "Recoverable Errors with Result." Experiment: Improving the Rust Book. Accessed April 26, 2023. https://rust-book.cs.brown.edu/ch09-02-recoverable-errors-with-result.html
