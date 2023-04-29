@@ -1,5 +1,5 @@
-Macs
-====
+macOS
+=====
 
 .. contents:: Table of Contents
 
@@ -58,7 +58,8 @@ Homebrew is an unofficial package manager for macOS.
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/macs.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/unix_distributions/macos.rst>`__
+-  `< 2023.04.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/macs.rst>`__
 
 Bibliography
 ------------

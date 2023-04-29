@@ -4,7 +4,6 @@
 
    authentication
    linux_kernel
-   macs
    mail_servers
    operating_systems
    package_managers
