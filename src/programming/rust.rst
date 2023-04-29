@@ -1018,6 +1018,105 @@ Cargo is the official package manager for Rust dependencies. It installs package
 
 [28][29]
 
+Testing
+-------
+
+Rust uses various ``assert_*`` macros to compare the output of a function against an expected result.
+
+Built-in macros [51]:
+
+-  ``assert!``
+-  ``assert_eq!``
+-  ``assert_ne!``
+
+`claim <https://crates.io/crates/claim>`__ crate macros [53]:
+
+-  ``assert_err!``
+-  ``assert_ge!``
+-  ``assert_gt!``
+-  ``assert_le!``
+-  ``assert_lt!``
+-  ``assert_matches!``
+-  ``assert_none!``
+-  ``assert_ok!``
+-  ``assert_ok_eq!``
+-  ``assert_pending!``
+-  ``assert_some!``
+-  ``assert_some_eq!``
+-  ``assert_ready!``
+-  ``assert_ready_eq!``
+-  ``assert_ready_err!``
+-  ``assert_ready_ok!``
+
+Unit tests (not integration tests) go into the bottom of the same file that contains the Rust code that is being tested. Define a "tests" module and add the annotation ``#[cfg(test)]``. That makes it so that running ``$ cargo build`` will not build the tests. Instead, use ``$ cargo test`` to build and run tests. Every unit test function needs to have the ``#[test]`` annotation. All other functions used for setup should not have that annotation.
+
+.. code-block:: rust
+
+   #[cfg(test)]
+   mod tests {
+       fn initial_tests_setup() {
+           // Add non-test code here.
+       }
+
+       #[test]
+       fn first_unit_test() {
+           // Add test code here.
+       }
+   }
+
+Integration tests should go into ``tests/integration_tests.rs``. All other non-unit tests should also go into separate files in the ``tests/`` directory. Since these files are dedicated to tests, they do not need to be wrapped into a "tests" module.
+
+.. code-block:: rust
+
+   #[test]
+   fn first_integration_test() {
+       // Add test code here.
+   }
+
+Any tests that take too long to run or are considered flaky should have the annotation ``#[ignore]`` above the function and after the ``#[test]`` annotation. These tests will not be run by default.
+
+.. code-block:: rust
+
+   #[test]
+   #[ignore]
+   fn very_time_consuming_integration_test() {
+       // Add test code here.
+   }
+
+Tests can be written in one of two ways. It can either use an ``assert_*`` macro or a custom ``Result<Type, Error>`` can be returned.
+
+.. code-block:: rust
+
+   #[test]
+   fn expect_one() -> Result<(), String> {
+       let foobar_output = foobar();
+       assert_eq!(foobar_output, 1);
+   }
+
+.. code-block:: rust
+
+   #[test]
+   fn expect_one() -> Result<(), String> {
+       let foobar_output = foobar();
+       if foobar_output == 1 {
+           Ok(())
+       } else {
+           Err(String::from("This function should always return one!"))
+       }
+   }
+
+Commands to run tests with ``cargo``:
+
+-  ``cargo build`` = Build a production binary without tests.
+-  ``cargo test`` = Run all tests.
+-  ``cargo test -- --show-output`` = Run all tests and show output of all tests including ones that passed successfully.
+-  ``cargo test -- integration_tests`` = Only run the integration tests.
+-  ``cargo test <FUNCTION_NAME>`` = Only run the specified test.
+-  ``cargo test -- --ignored`` = Run all tests including ones marked as ignored.
+-  ``cargo test -- --test-threads=1`` = Run one test at a time. The default is to run tests in parallel.
+
+[52][53]
+
 Libraries
 ---------
 
@@ -1230,3 +1329,6 @@ Bibliography
 48. "Rust Language Cheat Sheet." Rust Language Cheat Sheet. April 19, 2023. Accessed April 23, 2023. https://cheats.rs/
 49. "Error Handling In Rust - A Deep Dive." Luca Palmieri. May 13, 2021. Accessed April 26, 2023. https://www.lpalmieri.com/posts/error-handling-rust/
 50. "Recoverable Errors with Result." Experiment: Improving the Rust Book. Accessed April 26, 2023. https://rust-book.cs.brown.edu/ch09-02-recoverable-errors-with-result.html
+51. "Create std." Rust. Accessed April 29, 2023. https://doc.rust-lang.org/std/#macros
+52. "Writing Automated Tests." The Rust Programming Language. Accessed April 29, 2023. https://doc.rust-lang.org/book/ch11-00-testing.html
+53. "Assertion macros for Rust." SVARTALF. March 13, 2020. Accessed April 29, 2023. https://svartalf.info/posts/2020-03-13-assertion-macros-for-rust/
