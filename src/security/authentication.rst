@@ -247,7 +247,8 @@ How to create users and groups in Windows Active Directory:
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/authentication.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/security/authentication.rst>`__
+-  `< 2023.04.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/administration/authentication.rst>`__
 -  `< 2019.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/src/authentication.rst>`__
 -  `< 2018.01.01 <https://github.com/LukeShortCloud/rootpages/commits/main/markdown/authentication.md>`__
 
