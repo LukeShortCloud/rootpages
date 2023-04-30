@@ -1018,6 +1018,61 @@ Cargo is the official package manager for Rust dependencies. It installs package
 
 [28][29]
 
+Logging
+-------
+
+Rust does not provide a built-in logging library. Instead, the popular and easy-to-use ``log`` crate is recommended. It prints all logs to standard error (not standard output) by default. The log levels are color-coded, show the date and time, show the log level, and show which binary the log is coming from.
+
+-  Install the ``log`` crate and its dependency of ``env_logger`` by specifying them in the ``Cargo.toml`` file.
+
+   .. code-block:: ini
+
+      [dependencies]
+      log = "0.4"
+      env_logger = "0.9"
+
+-  Create a simple program to use all of the log levels. By default, only the error logs will be printed out.
+
+   .. code-block:: rust
+
+      use log::*;
+      
+      fn main() {
+          // Start the logger.
+          env_logger::init();
+          // Use various logging functions.
+          debug!("Starting main function.");
+          info!("Function started successfully.");
+          warn!("Configuration mismatch. Ignoring.");
+          error!("Unable to fix a problem!");
+          trace!("There was a problem on line X.");
+      }
+
+   .. code-block:: sh
+
+      $ cargo run
+      [2023-04-30T18:11:19Z ERROR logging] Unable to fix a problem!
+
+   -  Set the log output to be "trace" to see every level of logs. Alternatively, the log level can be set to the name of the main binary.
+
+      .. code-block:: sh
+
+         $ cd target/debug/
+         $ RUST_LOG=trace ./logging
+         [2023-04-30T18:11:47Z DEBUG logging] Starting main function.
+         [2023-04-30T18:11:47Z INFO  logging] Function started successfully.
+         [2023-04-30T18:11:47Z WARN  logging] Configuration mismatch. Ignoring.
+         [2023-04-30T18:11:47Z ERROR logging] Unable to fix a problem!
+         [2023-04-30T18:11:47Z TRACE logging] There was a problem on line X.
+         $ RUST_LOG=logging ./logging
+         [2023-04-30T18:13:22Z DEBUG logging] Starting main function.
+         [2023-04-30T18:13:22Z INFO  logging] Function started successfully.
+         [2023-04-30T18:13:22Z WARN  logging] Configuration mismatch. Ignoring.
+         [2023-04-30T18:13:22Z ERROR logging] Unable to fix a problem!
+         [2023-04-30T18:13:22Z TRACE logging] There was a problem on line X.
+
+[54][55]
+
 Testing
 -------
 
@@ -1332,3 +1387,5 @@ Bibliography
 51. "Create std." Rust. Accessed April 29, 2023. https://doc.rust-lang.org/std/#macros
 52. "Writing Automated Tests." The Rust Programming Language. Accessed April 29, 2023. https://doc.rust-lang.org/book/ch11-00-testing.html
 53. "Assertion macros for Rust." SVARTALF. March 13, 2020. Accessed April 29, 2023. https://svartalf.info/posts/2020-03-13-assertion-macros-for-rust/
+54. "Logging in Rust." Medium. April 11, 2021. Accessed April 30, 2023. https://medium.com/nerd-for-tech/logging-in-rust-e529c241f92e
+55. "Comparing logging and tracing in Rust." LogRocket Blog. May 27, 2022. Accessed April 30, 2023. https://blog.logrocket.com/comparing-logging-tracing-rust/
