@@ -782,8 +782,8 @@ Workflow file syntax:
    ---
    name: <WORKFLOW_NAME>
    on:
-     - <EVENT_1>:
-     - <EVENT_2>:
+     <EVENT_1>:
+     <EVENT_2>:
    jobs:
      <JOB_1>:
      <JOB_2>:
@@ -796,7 +796,8 @@ Common events:
    -  page_build = When code is pushed to the GitHub Pages "gh-pages" branch.
    -  pull (map)
 
-      -  branches (list of strings) = A list of branches.
+      -  branches (list of strings) = A list of branches to run on.
+      -  branches-ignore (list of strings) = A list of branches to not run on.
 
    -  pull_request (map)
 
@@ -820,6 +821,14 @@ Common events:
 
       -  cron (string) = A crontab string to use for the schedule.
 
+   -  workflow_call (map) = Set as an empty map to allow this workflow to be called from other workflows.
+   -  workflow_run (map) = Workflows to monitor. Using ``on.workflow_run`` only works on the default branch. [42] For testing, it is possible to temporarily change the default branch in the GitHub settings of the repository. Instead of using this, it is recommended to use ``jobs.<JOB>.uses`` to run workflows from another file. [43]
+
+      -  workflows (list of strings) = The workflow ``name`` to use.
+      -  types (list of strings) = The status of the workflow.
+
+         -  completed = Wait for the workflow to be completed.
+
 [31]
 
 Common job attributes:
@@ -840,13 +849,17 @@ Common job attributes:
          -  ports (list of integers)
          -  volumes (list of strings)
 
-      -  needs (list of strings) = List other jobs that must be completed before this job starts.
+      -  if (boolean) = Only run this job if this condition is true.
+
+         -  ${{ always() && !cancelled() && needs.<JOB>.result == 'success' }} = Only run if the specified job was not cancelled and it succeeds. [44]
+
+      -  needs (list of strings) = List other jobs that must be completed before this job starts. By default, without this, all jobs run in parallel at the same time.
       -  **runs-on** (string)
 
-         -  macos-[10.15|11.0]
+         -  macos-[11|12|13|latest]
          -  self-hosted = A custom CI environment can be setup and used.
-         -  ubuntu-[16.04|18.04|20.04]
-         -  windows-2019
+         -  ubuntu-[20.04|22.04|latest]
+         -  windows-[2019|2022|latest]
 
       -  services (map) = Specify one or more containers to run. Refer to ``jobs.<JOB_NAME>.container`` for the usage.
       -  steps (list of maps)
@@ -855,6 +868,9 @@ Common job attributes:
           -  name (string) = Describe what the step is doing.
           -  run (string) = The command(s) to run.
           -  uses (string) = An action to use from another file, branch, container, or git repository.
+          -  working-directory (string) = The working directory to use for this step.
+
+      -  uses (string) = The full path to another GitHub workflow to run: ``<GIT_USER_NAME>/<GIT_PROJECT_NAME>/.github/workflows/build.yml@<BRANCH_TAG_OR_COMMIT_HASH>``. This requires the specified workflow to have ``on.workflow_call`` set.
 
 [32]
 
@@ -879,6 +895,146 @@ A job running in a virtual machine:
    jobs:
      virtual-machine-example:
        runs-on: ubuntu-20.04
+
+A job that runs on specified branches.
+
+.. code-block:: yaml
+
+   ---
+   name: Run only on the main branch
+   on:
+     push:
+       branches:
+         - main
+
+A job that runs on all branches except for specificed branches.
+
+.. code-block:: yaml
+
+   ---
+   name: Run on all branches except foobar
+   on:
+     push:
+       branches-ignore:
+         - foobar
+
+A job step that uses a different directory. By default, the directory is reset on every step. [45][46]
+
+.. code-block:: yaml
+
+   ---
+   name: Change directory with cd
+   jobs:
+     change_directory:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v3
+         - name: Change directory and run command
+           run: |
+             cd ${GITHUB_WORKSPACE}
+             git log
+
+.. code-block:: yaml
+
+   ---
+   name: Change directory with working-directory
+   jobs:
+     change_directory:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v3
+         - name: Change directory and run command
+           working-directory: ${{ env.GITHUB_WORKSPACE }}
+           run: git log
+
+.. code-block:: yaml
+
+   ---
+   name: Change directory with a custom working-directory set as default
+   jobs:
+     change_directory:
+       runs-on: ubuntu-latest
+       defaults:
+         run:
+           working-directory: ${{ env.GITHUB_WORKSPACE }}
+       steps:
+         - uses: actions/checkout@v3
+         - name: Run command
+           run: git log
+
+A job that runs a workflow from another workflow file. It is recommended to use ``jobs.<JOB>.uses`` instead of ``on.workflow_run.workflows`` since (1) this does not require the GitHub Actions workflow to be in the default branch, (2) it is easier, and (3) it allows other ``on`` parameters to work. [42][43]
+
+.. code-block:: yaml
+
+   ---
+   # File: .github/workflows/build.yml
+   name: Build
+   on:
+     push:
+       branches:
+         - '*'
+     workflow_call:
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Build
+           run: echo Building
+
+.. code-block:: yaml
+
+   ---
+   # File: .github/workflows/upload.yml
+   name: Upload
+   on:
+     push:
+       branches:
+         - '*'
+   jobs:
+     build:
+       uses: <GIT_USER_NAME>/<GIT_PROJECT_NAME>/.github/workflows/build.yml@<BRANCH_TAG_OR_COMMIT_HASH>
+     upload:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Upload
+           run: echo Uploading
+
+A job that runs only if another job succeeds. [44]
+
+.. code-block:: yaml
+
+   ---
+   name: Run two jobs
+   on:
+     push:
+       branches:
+         - '*'
+   jobs:
+     first_job:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Trigger a failure
+           run: false
+     second_job:
+       runs-on: ubuntu-latest
+       needs:
+         - first_job
+       if: ${{ always() && !cancelled() && needs.first_job.result == 'success' }}
+       steps:
+         - name: Trigger a success
+           run: true
+
+
+A job that only runs if a specific folder (or sub-folder) was modified.
+
+.. code-block:: yaml
+
+   ---
+   name: Run only if files are modified in the foobar folder or its sub-folders
+   on:
+     push:
+       paths:
+         - 'foobar/**'
 
 Travis CI
 ^^^^^^^^^
@@ -1215,7 +1371,7 @@ Bibliography
 29. "What is MIME ( Multi-Purpose Internet Mail Extensions )." InterServer Tips. September 22, 2016. Accessed December 29, 2020. https://www.interserver.net/tips/kb/mime-multi-purpose-internet-mail-extensions/
 30. Difference between URL, URI and URN - Interview Questions." Java 67. Accessed December 29, 2020. https://www.java67.com/2013/01/difference-between-url-uri-and-urn.html
 31. "Events that trigger workflows." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/events-that-trigger-workflows
-32. "Workflow syntax for GitHub Actions." GitHub Docs. 2021. Accessed March 23, 2021. https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+32. "Workflow syntax for GitHub Actions." GitHub Docs. 2023. Accessed May 2, 2023. https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 33. "GitHub to replace 'master' with 'main' starting next month." ZDNet. September 19, 2020. Accessed September 24, 2021. https://www.zdnet.com/article/github-to-replace-master-with-main-starting-next-month/
 34. "5 steps to change GitHub default branch from master to main." Steven M. Mortimer. July 23, 2020. Accessed September 24, 2021. https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
 35. "Integrated Terminal." Visual Studio Code. October 7, 2021. Accessed October 11, 2021. https://code.visualstudio.com/docs/editor/integrated-terminal
@@ -1225,3 +1381,8 @@ Bibliography
 39. "Python sucks in terms of energy efficiency - literally." The Next Web. November 24, 2021. Accessed August 16, 2022. https://thenextweb.com/news/python-progamming-language-energy-analysis
 40. "Which programs are faster?" The Computer Language Benchmarks Game. Accessed August 31, 2022. https://sschakraborty.github.io/benchmark/which-programs-are-fastest.html
 41. "Github Language Stats." GitHut 2.0. 2022. Accessed September 2, 2022. https://madnight.github.io/githut/#/pull_requests/2022/1
+42. "GitHub Actions: add more details for "workflow_run" event #799." GitHub github/docs. October 6, 2022. Accessed May 2, 2023. https://github.com/github/docs/issues/799
+43. "Dependencies Between Workflows on Github Actions." Stack Overflow. May 8, 2022. Accessed May 2, 2023. https://stackoverflow.com/questions/58457140/dependencies-between-workflows-on-github-actions
+44. "How to run github action job after all conditional jobs, even it's didn't ran?" Stack Overflow. February 2, 2022. Accessed May 2, 2023. https://stackoverflow.com/questions/70959792/how-to-run-github-action-job-after-all-conditional-jobs-even-its-didnt-ran
+45. "Running actions in another directory." Stack Overflow. December 9, 2021. Accessed May 3, 2023. https://stackoverflow.com/questions/58139175/running-actions-in-another-directory
+46. "Use working-directory for entire job #25742." GitHub Community. March 21, 2023. Accessed May 3, 2023. https://github.com/orgs/community/discussions/25742
