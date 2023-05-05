@@ -552,6 +552,56 @@ Fedora provides an automated system to download and build RPM packages using the
 
 [18]
 
+Repositories
+~~~~~~~~~~~~
+
+Fedora Copr
+^^^^^^^^^^^
+
+Fedora Copr is a free build system and repository for RPM-based Linux distributions. The source code of a RPM can be provided in one of many ways for it to be built and hosted:
+
+-  URL = The URL to the source RPM.
+-  Upload = Manually upload a source RPM.
+-  Source code management (SCM) = The URL to a SCM repository that hosts the source RPM files. It will be built with one of the selected tools:
+
+   -  rpkg (default) = Fedora Copr requires any source code that would normally be downloaded to be uploaded as "lookaisde" cache. [19][20]
+   -  Tito = Requires Tito to manage the version of the RPM insteaad of the spec file.
+   -  Makefile = Runs ``make srpm``. Only works for the root directory of the project.
+
+-  Custom script = Provide a shell script to build the SRPM. No Internet access, no chroot, and no package manager are provided for this build type.
+
+[21]
+
+Upload a SRPM
+'''''''''''''
+
+-  Generate a Fedora Copr token from `here <https://copr.fedorainfracloud.org/api/>`__. This token is randomly generated and is only valid for 6 months. That provides the contents of the configuration file that should be stored at ``~/.config/copr``.
+
+-  Install the CLI client for Fedora Copr.
+
+   .. code-block:: sh
+
+      $ sudo dnf install copr-cli
+
+-  Optionally create a new project if one does not already exist.
+
+   .. code-block:: sh
+
+      $ copr-cli create --chroot fedora-<FEDORA_MAJOR_VERSION>-i386 --chroot fedora-<FEDORA_MAJOR_VERSION>-x86_64 <PROJECT_NAME>
+
+-  Upload a source RPM and build a binary RPM. This command will not exit until a build either succeeds or fails. [22]
+
+   .. code-block:: sh
+
+      $ copr-clir build <PROJECT_NAME> ~/rpmbuild/SRPMS/*.src.rpm
+
+-  Optionally enable the repository to install the built packages. [23]
+
+   .. code-block:: sh
+
+      $ sudo dnf install 'dnf-command(copr)'
+      $ sudo dnf copr enable <USER_NAME>/<PROJECT_NAME>
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
@@ -738,3 +788,8 @@ Bibliography
 16. "How do I get rpmbuild to download all of the sources for a particular .spec?" Stack Overflow  April 25, 2020. Accessed April 12, 2023. https://stackoverflow.com/questions/33177450/how-do-i-get-rpmbuild-to-download-all-of-the-sources-for-a-particular-spec
 17. "Building RPM packages with mock." packagecloud. May 10, 2015. Accessed April 12, 2023. https://blog.packagecloud.io/building-rpm-packages-with-mock/
 18. "Building a custom kernel." Fedora Project Wiki. August 16, 2022. Accessed April 12, 2023. https://fedoraproject.org/wiki/Building_a_custom_kernel
+19. "rpmbuild: better react on lookaside cache failure? #391." GitHub fedora-copr/copr. January 10, 2023. Accessed May 5, 2023. https://github.com/fedora-copr/copr/issues/391
+20. "COPR fedoraproject.org builder refuses to download sources specified in my .spec file." Stack Overflow. October 4, 2022. Accessed May 5, 2023. https://stackoverflow.com/questions/71805959/copr-fedoraproject-org-builder-refuses-to-download-sources-specified-in-my-spec
+21. "User Documentation." Copr Buildsystem. Accessed May 5, 2023. https://docs.pagure.org/copr.copr/user_documentation.html
+22. "Copr command line interface." Fedora Developer Portal. Accessed May 5, 2023. https://developer.fedoraproject.org/deployment/copr/copr-cli.html
+23. "Using the DNF software package manager." Fedora Documentation. October 15, 2022. Accessed May 5, 2023. https://docs.fedoraproject.org/en-US/quick-docs/dnf/
