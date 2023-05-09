@@ -418,6 +418,123 @@ Install and configure a Linux proot with a desktop environment. This can be acce
 
 [24][25][26][27]
 
+Graphics Hardware Acceleration
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+-  Install pre-built packages for virglrenderer and Mesa's Zink. [31]
+
+   .. code-block:: sh
+
+      (termux)$ pkg update
+      (termux)$ pkg install virglrenderer
+      (termux)$ pkg install tur-repo
+      (termux)$ pkg install mesa-zink
+
+-  Or manually compile virglrenderer and Mesa's Zink. [32]
+
+   -  Install the build dependencies for virglrenderer.
+
+      .. code-block:: sh
+
+         (termux)$ pkg update
+         (termux)$ pkg upgrade
+         (termux)$ pkg install x11-repo
+         (termux)$ pkg update
+         (termux)$ pkg install autoconf automake binutils bison clang cmake git glfw flex libandroid-shmem-static libdrm libjpeg-turbo libpciaccess libpixman libtool libx11 libxkbfile libxdamage libxfixes libxfont2 libxinerama libxxf86vm lld llvm make mesa-vulkan-icd-swrast ndk-sysroot ndk-multilib ninja python swiftshader vulkan-extension-layer vulkan-headers vulkan-loader vulkan-loader-generic vulkan-tools xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm xkeyoard-config xorg-xkbcomp xorg-font-util xorg-util-macros xorg-xrandr xorgproto xtrans
+         (termux)$ pip install --user mako meson
+         (termux)$ pkg install virglrenderer-android
+
+   -  Download and compile libxshmfence.
+
+      .. code-block:: sh
+
+         (termux)$ cd ${TMPDIR}
+         (termux)$ git clone --depth 1 -b libxshmfence-1.3.2 https://gitlab.freedesktop.org/xorg/lib/libxshmfence.git
+         (termux)$ cd libxshmfence
+         (termux)$ ./autogen.sh --prefix="${PREFIX}" --with-shared-memory-dir="${TMPDIR}"
+         (termux)$ sed -i s/values.h/limits.h/ ./src/xshmfence_futex.h
+         (termux)$ make -j $(nproc) install CPPFLAGS="-DMAXINT=INT_MAX"
+
+   -  Download and compile mesa.
+
+      .. code-block:: sh
+
+         (termux)$ cd ${TMPDIR}
+         (termux)$ git clone --depth 1 -b 22.3 https://gitlab.freedesktop.org/mesa/mesa.git
+         (termux)$ cd mesa
+         (termux)$ sed -i '40s+^$+#include "X11/Xlib.h"+' src/egl/main/egldisplay.h
+         (termux)$ sed -i 's/^import os$/import os, shutil\ndef link(src, dest):\n shutil.copyfile(src, dest)\ndef unlink(src):\n os.remove(src)\nos.link = link\nos.unlink = unlink/' bin/install_megadrivers.py
+         (termux)$ mkdir build
+         (termux)$ cd build
+         (termux)$ LDFLAGS='-l:libandroid-shmem.a -llog' meson .. -Dprefix=$PREFIX -Dplatforms=x11 -Dgbm=enabled -Ddri-drivers='' -Dgallium-drivers=zink,swrast -Dllvm=disabled -Dvulkan-drivers='' -Dcpp_rtti=false -Dc_args=-Wno-error=incompatible-function-pointer-types -Dbuildtype=release
+         (termux)$ rm $PREFIX/lib/libglapi.so*
+         (termux)$ rm $PREFIX/lib/libGL.so*
+         (termux)$ rm $PREFIX/lib/libGLES*
+         (termux)$ rm $PREFIX/lib/libEGL*
+         (termux)$ rm $PREFIX/lib/libgbm*
+         (termux)$ ninja install
+
+   -  Download and compile libepoxy.
+
+      .. code-block:: sh
+
+         (termux)$ cd ${TMPDIR}
+         (termux)$ git clone --depth 1 -b 1.5.10 https://github.com/anholt/libepoxy.git
+         (termux)$ cd libepoxy
+         (termux)$ mkdir build
+         (termux)$ cd build
+         (termux)$ meson -Dprefix=$PREFIX -Dbuildtype=release -Dglx=yes -Degl=yes -Dtests=false -Dc_args=-U__ANDROID__ ..
+         (termux)$ rm $PREFIX/lib/libepoxy.so*
+         (termux)$ ninja install
+
+   -  Download and compile virglrenderer.
+
+      .. code-block:: sh
+
+         (termux)$ cd ${TMPDIR}
+         (termux)$ git clone https://gitlab.freedesktop.org/virgl/virglrenderer.git
+         (termux)$ cd virglrenderer
+         (termux)$ git checkout fb441ecd0bdb0c9df253841b313e075238a64e2e
+         (termux)$ sed -i 's+"/tmp+"/data/data/com.termux/files/usr/tmp+' vtest/vtest_protocol.h
+         (termux)$ mkdir build
+         (termux)$ cd build
+         (termux)$ meson -Dbuildtype=release -Dprefix=$PREFIX -Dplatforms=egl ..
+         (termux)$ ninja install
+
+-  Start the virgl server for Android.
+
+   .. code-block:: sh
+
+      (termux)$ MESA_NO_ERROR=1 MESA_GL_VERSION_OVERRIDE=4.0 GALLIUM_DRIVER=zink virgl_test_server --use-egl-surfaceless &
+
+-  Start the display server.
+
+   .. code-block:: sh
+
+      (termux)$ XDG_RUNTIME_DIR="${TMPDIR}" termux-x11 :1 &
+
+-  Enter the proot. The temporary directory must be shared to access information about the Xorg display server that Xwayland is emulating.
+
+   .. code-block:: sh
+
+      (termux)$ proot-distro login --user <USER> --shared-tmp debian
+
+-  Launch the XFCE desktop environment.
+
+   .. code-block:: sh
+
+      (debian)$ export DISPLAY=:1 XDG_RUNTIME_DIR="${TMPDIR}"
+      (debian)$ dbus-launch --exit-with-session xfce4-session &
+
+-  Load demo OpenGL and Vulkan applications to make sure they work.
+
+   .. code-block:: sh
+
+      (debian)$ sudo apt-get install mesa-utils
+      (debian)$ glxgears
+      (debian)$ sudo apt-get install vulkan-tools
+      (debian)$ vkcube
+
 Raspberry Pi
 ------------
 
@@ -496,3 +613,5 @@ Bibliography
 28. "Install and Configure TigerVNC VNC Server on Debian 11/10." ComputingForGeeks. February 16, 2023. Accessed May 5, 2023. https://computingforgeeks.com/install-and-configure-tigervnc-vnc-server-on-debian/
 29. "running termux-x11 fails #222." GitHub termux/termux-x11. March 3, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/222
 30. "unable to start termux x11 #151." GitHub termux/termux-x11. February 5, 2023. Accessed May 5, 2023. https://github.com/termux/termux-x11/issues/151
+31. "Hardware Acceleration in Proot?" Reddit r/termux. December 24, 2022. Accessed May 10, 2023. https://www.reddit.com/r/termux/comments/wa6p4g/hardware_acceleration_in_proot/
+32. "virglrenderer: Termux GPU hardware acceleration tutorial." Ivon's Blog. March 13, 2023. Accessed May 10, 2023. https://ivonblog.com/en-us/posts/termux-virglrenderer/
