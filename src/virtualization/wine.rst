@@ -426,6 +426,35 @@ These are useful graphics translation layers for running Windows games using Win
 
    -  `VKD3D-Proton <https://github.com/HansKristian-Work/vkd3d-proton>`__ = A fork of Vkd3d that is focused on gaming. Valve only tests this project on AMD and NVIDIA GPUs (not Intel).
 
+D8VK
+~~~~
+
+Releases
+^^^^^^^^
+
+Release highlights:
+
+-  `1.0.0 <https://github.com/AlpyneDreams/d8vk/releases/tag/d8vk-v1.0>`__
+
+   -  The first stable release.
+   -  Most Direct3D 8 games work now.
+   -  Supports being built with Microsoft Visual Studio (instead of only MinGW-w32).
+   -  Performance was benchmarked to be up to 4x faster than WineD3D.
+
+-  `0.10.0 <https://github.com/AlpyneDreams/d8vk/releases/tag/d8vk-v0.10>`__
+
+   -  The first relese to support Linux.
+   -  Rebased on DXVK 2.0.
+
+        -  Now requires Vulkan 1.3 because of this.
+
+   -  A handful of games work.
+
+-  `0.1.0 <https://github.com/AlpyneDreams/d8vk/releases/tag/v0.1.0>`__
+
+   -  The first ever release of DXVK. It primarily only supports basic game demos.
+   -  This build only works on Windows.
+
 DXVK
 ~~~~
 
