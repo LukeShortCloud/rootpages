@@ -418,7 +418,7 @@ These are useful graphics translation layers for running Windows games using Win
 -  `D9VK <https://github.com/Joshua-Ashton/d9vk>`__ = This has been merged directly into DXVK. DirectX 9 to Vulkan.
 -  `DXVK <https://github.com/doitsujin/dxvk>`__ = DirectX 9, 10, and 11 to Vulkan.
 -  `MoltenVK (mac OS) <https://moltengl.com/moltenvk/>`__ = Vulkan to Metal.
--  `WineD3D <https://www.winehq.org/>`__ = DirectX <= 11 to `OpenGL 4.4 <https://source.winehq.org/git/wine.git/commitdiff/0db4d1c251d293333e2721a78d6156008a90ff6f>`__. Older versions of OpenGL will still work but will not expose as many working features of DirectX.
+-  `WineD3D <https://www.winehq.org/>`__ = DirectX 8 through 11 to `OpenGL 4.4 <https://source.winehq.org/git/wine.git/commitdiff/0db4d1c251d293333e2721a78d6156008a90ff6f>`__. [23] Older versions of OpenGL will still work but will not expose as many working features of DirectX.
 
    -  The newer back-end engine Damavand for WineD3D provides Vulkan to DirectX 10 and 11. [22]
 
@@ -578,3 +578,4 @@ Bibliography
 20. "Wine [8.0] Announcement." WineHQ. Accessed March 7, 2023. https://www.winehq.org/announce/8.0
 21. "wine/dlls/wined3d/wined3d_main.c." GitLab wine/wine. December 3, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/wined3d_main.c#L447-L464
 22. "wine/dlls/wined3d/adapter_vk.c." GitLab wine/wine. December 4, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/adapter_vk.c#L2092
+23. "Wrappers." Emulation General Wiki. May 10, 2023. Accessed May 10, 2023. https://emulation.gametechwiki.com/index.php/Wrappers
