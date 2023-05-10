@@ -286,10 +286,12 @@ Example builds:
 
    -  Once built, use ``tools/winewrapper`` to run 32-bit or 64-bit Windows programs. This script looks for the correct library and binary locations for Wine and sets temporary environment variables for the local installation to work.
 
--  Build Wine with WoW64 support. [20]
+-  Build Wine with WoW64 support. [20] It is recommended to use a special branch from a CodeWeavers employee that has extra WoW64 patches applied on-top of the latest Wine release.
 
    .. code-block:: sh
 
+      $ git clone --branch wow https://gitlab.winehq.org/jacek/wine.git
+      $ cd wine
       $ ./configure CC="ccache gcc" CROSSCC="ccache x86_64-w64-mingw32-gcc" --enable-archs=i386,x86_64
       $ make -j $(nproc)
 
