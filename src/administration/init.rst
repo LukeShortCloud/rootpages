@@ -27,6 +27,108 @@ When adding new unit files, it is required to run this command to update the sys
 
    $ sudo systemctl daemon-reload
 
+Creating a Unit File
+~~~~~~~~~~~~~~~~~~~~
+
+All unit files are ini configuration files that use this layout:
+
+.. code-block:: ini
+
+   [Unit]
+   Description=<DESCRIPTION_ABOUT_UNIT>
+
+   [<UNIT_TYPE>]
+   <UNIT_CONFIG_KEY>=<UNIT_CONFIG_VALUE>
+
+   [Install]
+   WantedBy=<SYSTEMD_TARGET>
+
+Configuration options for unit files:
+
+-  Run a unit during a normal boot.
+
+   .. code-block:: ini
+
+      [Install]
+      WantedBy=multi-user.target
+
+-  Log standard output and/or standard error of a service to a file.
+
+   .. code-block:: ini
+
+      [Service]
+      StandardOutput=<PATH_TO_FILE>
+      StandardError=<PATH_TO_FILE>
+
+-  Create a service that runs exactly once.
+
+   .. code-block:: ini
+
+      [Service]
+      Type=oneshot
+      ExecStart=<PATH_TO_EXECTUABLE>
+      ExecStart=/bin/systemctl --no-reload disable %n
+
+-  Run the unit file if the file or directory does not exist.
+
+   .. code-block:: ini
+
+      [Unit]
+      ConditionPathExists=!<PATH_TO_FILE>
+
+-  Do not timeout while starting a service.
+
+   .. code-block:: ini
+
+      [Service]
+      TimeoutSec=infinity
+
+-  Start a service after a specified amount of time.
+
+   .. code-block:: ini
+
+      [Service]
+      ExecStartPre=/bin/sleep 0.5
+      ExecStart=/usr/bin/foobar
+
+-  Automatically restart a service if it fails. [5]
+
+   .. code-block:: ini
+
+      [Service]
+      ExecStart=/usr/bin/foobar
+      Restart=on-failure
+      RestartSec=0.1s
+
+-  Run two or more commands. systemd will run one command at a time starting from top to bottom.
+
+   .. code-block:: ini
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/sh -c "echo foo"
+      ExecStart=/bin/sh -c "echo bar"
+      RemainAfterExit=yes
+      TimeoutSec=0
+
+-  Start a unit after the networking service is online. If there is no network interface on the computer, then systemd will consider the networking services to be online.
+
+   .. code-block:: ini
+
+      [Unit]
+      After=network-online.target
+      Wants=network-online.target
+
+   -  Depending on the networking service used, enable it to wait to be online. [6]
+
+      .. code-block:: sh
+
+         $ sudo systemctl enable NetworkManager-wait-online.service
+
+      .. code-block:: sh
+
+         $ sudo systemctl enable systemd-networkd-wait-online.service
+
 History
 -------
 
@@ -39,3 +141,5 @@ Bibliography
 2. "init." ArchWiki. March 12, 2023. Accessed May 11, 2023. https://wiki.archlinux.org/title/init
 3. "Understanding Systemd Units and Unit Files." DigitalOcean Tutorials. February 17, 2015. Accessed May 11, 2023. https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files
 4. "Where do I put my systemd unit file?" Unix & Linux Stack Exchange. March 10, 2023. Accessed May 11, 2023. https://unix.stackexchange.com/questions/224992/where-do-i-put-my-systemd-unit-file
+5. "Auto-restart a crashed service in systemd." Mattias Geniar. January 13, 2020. Accessed May 11, 2023. https://ma.ttias.be/auto-restart-crashed-service-systemd/
+6. "Network Configuration Synchronization Points." systemd.io. 2022. Accessed May 11, 2023. https://systemd.io/NETWORK_ONLINE/
