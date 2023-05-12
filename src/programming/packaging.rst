@@ -174,7 +174,14 @@ Common variables:
    documentation, etc.) then "noarch" can be used.
 -  Requires = List the RPM packages that are dependencies needed for
    your program to work.
--  License = The license of the program.
+-  License = The license of the program. If using a standard open source license, use the official abbreviation for it as defined by the `SPDX License List <https://spdx.org/licenses/>`__. Common open source licenses:
+
+   -  ``Apache-1.0``, ``Apache-1.1``, or ``Apache-2.0``.
+   -  ``BSD-1-Clause``, ``BSD-2-Clause``, ``BSD-3-Clause``, or ``BSD-4-Clause``.
+   -  ``GPL-1.0-only``, ``GPL-1.0-or-later``, ``GPL-2.0-only``, ``GPL-2.0-or-later``, ``GPL-3.0-only`` or ``GPL-3.0-or-later``.
+   -  ``MIT``.
+   -  ``WTFPL``.
+
 -  URL = A URL link to the program's or, if that is not available, the
    developer's website.
 -  Source = A tarball of the source code. It should follow the naming
@@ -188,7 +195,7 @@ Sample SPEC file:
     Version: 1.0.0
     Release: 1%{?dist}
     Summary: This is my first RPM
-    License: GPLv3
+    License: GPL-3.0-only
     URL: http://example.tld/
 
 If you want to build the RPM, simply run:
