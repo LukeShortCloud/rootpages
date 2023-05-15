@@ -303,6 +303,14 @@ View the current value of a property and set a new one.
    $ sudo zfs get <PROPERTY> <POOL_NAME>/<DATASET_NAME>
    $ sudo zfs set <PROPERTY>=<VALUE> <POOL_NAME>/<DATASET_NAME>
 
+Change the name of a ZFS pool. [44]
+
+.. code-block:: sh
+
+   $ sudo zpool export <ZFS_POOL_NAME_ORIGINAL>
+   $ sudo zpool import <ZFS_POOL_NAME_ORIGINAL> <ZFS_POOL_NAME_NEW>
+   $ sudo zpool list
+
 Adaptive Replacement Cache (ARC)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1329,3 +1337,4 @@ Bibliography
 41. "Linux 5.15 Delivers Many Features With New NTFS Driver, In-Kernel SMB3 Server, New Hardware." Phoronix. September 13, 2021. Accessed March 30, 2022. https://www.phoronix.com/scan.php?page=article&item=linux-515-features&num=1
 42. "exFAT external drive not recognized on Windows." Ask Ubuntu. August 16, 2016. Accessed March 2, 2023. https://askubuntu.com/questions/706608/exfat-external-drive-not-recognized-on-windows
 43. "Kernel 5.15 : ntfs3 vs ntfs-3g." LinuxQuestions.org. September 9, 2021. Accessed March 2, 2023. https://www.linuxquestions.org/questions/slackware-14/kernel-5-15-ntfs3-vs-ntfs-3g-4175702945/
+44. "Renaming a ZFS pool." Prefetch Technologies. November 15, 2006. Accessed May 15, 2023. https://prefetch.net/blog/2006/11/15/renaming-a-zfs-pool/
