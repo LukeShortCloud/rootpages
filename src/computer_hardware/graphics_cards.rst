@@ -76,6 +76,8 @@ Machine learning (ML) [4][5]:
 
 -  The amount of VRAM differs based on the type of ML model. Language models use the most amount of VRAM compared to image models which are more CPU-bound rather than GPU-bound. [5]
 
+Integrated GPUs (iGPUs) can use up to half of the available system RAM. [6] Since RAM is slower than VRAM, it is recommended to use the fastest RAM available. [7]
+
 History
 -------
 
@@ -89,3 +91,5 @@ Bibliography
 3. "Hardware Recommendations for Premiere Pro." Puget Systems. Accessed September 5, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Adobe-Premiere-Pro-143/Hardware-Recommendations
 4. "Hardware Recommendations for Machine Learning & AI." Puget Systems. Accessed September 7, 2022. https://www.pugetsystems.com/recommended/Recommended-Systems-for-Machine-Learning-AI-174/Hardware-Recommendations
 5. "Choosing the Best GPU for Deep Learning in 2020." The Lambda Deep Learning Blog. February 18, 2022. Accessed September 7, 2022. https://lambdalabs.com/blog/choosing-a-gpu-for-deep-learning/
+6. "What is VRAM and how much do I have?" LEVVVEL. March 6, 2023. Accessed May 16, 2023. https://levvvel.com/what-is-vram-and-how-much-do-i-have/
+7. "VRAM vs. RAM: What’s the Difference?" History-Computer. December 7, 2022. Accessed May 16, 2023. https://history-computer.com/vram-vs-ram/
