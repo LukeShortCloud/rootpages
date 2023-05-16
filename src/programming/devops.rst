@@ -565,6 +565,15 @@ Here is how to completely migrate all commits, branches, and tags from one git r
 
 [38]
 
+Download a Git Repository Archive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instead of using ``git clone``, it may be desired to download an archive of just the source code without the git revision history. [47]
+
+-  Branch = ``https://github.com/<GITHUB_USER_NAME>/<GITHUB_PROJECT>/archive/refs/heads/<BRANCH>.tar.gz``
+-  Commit Hash = ``https://github.com/<GITHUB_USER_NAME>/<GITHUB_PROJECT>/archive/<COMMIT_HASH>.tar.gz``
+-  Tag = ``https://github.com/<GITHUB_USER_NAME>/<GITHUB_PROJECT>/archive/refs/tags/<TAG>.tar.gz``
+
 Versioning
 ----------
 
@@ -1386,3 +1395,4 @@ Bibliography
 44. "How to run github action job after all conditional jobs, even it's didn't ran?" Stack Overflow. February 2, 2022. Accessed May 2, 2023. https://stackoverflow.com/questions/70959792/how-to-run-github-action-job-after-all-conditional-jobs-even-its-didnt-ran
 45. "Running actions in another directory." Stack Overflow. December 9, 2021. Accessed May 3, 2023. https://stackoverflow.com/questions/58139175/running-actions-in-another-directory
 46. "Use working-directory for entire job #25742." GitHub Community. March 21, 2023. Accessed May 3, 2023. https://github.com/orgs/community/discussions/25742
+47. "Downloading source code archives." GitHub Docs. Accessed May 16, 2023. https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives
