@@ -129,6 +129,14 @@ Configuration options for unit files:
 
          $ sudo systemctl enable systemd-networkd-wait-online.service
 
+Preset Files
+~~~~~~~~~~~~
+
+System packages can define if a unit should be enabled or disabled by default. [7]
+
+-  Create a file called ``/usr/lib/systemd/system-preset/<UNIT>.<UNIT_TYPE>``.
+-  Edit the file with the contents of ``enable <UNIT>.<UNIT_TYPE>`` or ``disable <UNIT.<UNIT_TYPE>``.
+
 History
 -------
 
@@ -143,3 +151,4 @@ Bibliography
 4. "Where do I put my systemd unit file?" Unix & Linux Stack Exchange. March 10, 2023. Accessed May 11, 2023. https://unix.stackexchange.com/questions/224992/where-do-i-put-my-systemd-unit-file
 5. "Auto-restart a crashed service in systemd." Mattias Geniar. January 13, 2020. Accessed May 11, 2023. https://ma.ttias.be/auto-restart-crashed-service-systemd/
 6. "Network Configuration Synchronization Points." systemd.io. 2022. Accessed May 11, 2023. https://systemd.io/NETWORK_ONLINE/
+7. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html

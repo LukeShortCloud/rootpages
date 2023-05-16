@@ -427,6 +427,17 @@ Examples
       %install
       cd <PROJECT>-<COMMIT>
 
+-  Build a RPM with systemd support. This example will install a systemd service file to ``/lib/systemd/system/example.service`` and enabled it by default by using a preset file at ``/usr/lib/systemd/system-preset/10-example.preset``. [24][25][26]
+
+   ::
+
+      BuildRequires: systemd
+
+      %install
+      mkdir -p %{buildroot}%{_unitdir} %{buildroot}%{_presetdir}
+      cp -v example.service %{buildroot}/%{_unitdir}
+      echo "enable example.service" > %{buildroot}%{_presetdir}/10-example.preset
+
 Building a RPM
 ~~~~~~~~~~~~~~
 
@@ -800,3 +811,6 @@ Bibliography
 21. "User Documentation." Copr Buildsystem. Accessed May 5, 2023. https://docs.pagure.org/copr.copr/user_documentation.html
 22. "Copr command line interface." Fedora Developer Portal. Accessed May 5, 2023. https://developer.fedoraproject.org/deployment/copr/copr-cli.html
 23. "Using the DNF software package manager." Fedora Documentation. October 15, 2022. Accessed May 5, 2023. https://docs.fedoraproject.org/en-US/quick-docs/dnf/
+24. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html
+25. "RPM Packaging Guide." RPM Packaging Guide. February 20, 2023. Accessed May 16, 2023. https://rpm-packaging-guide.github.io/
+26. "Packaging:Systemd." Fedora Project Wiki. January 25, 2018. Accssed May 16, 2023. https://fedoraproject.org/wiki/Packaging:Systemd
