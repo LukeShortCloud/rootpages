@@ -573,6 +573,36 @@ Fedora provides an automated system to download and build RPM packages using the
 Repositories
 ~~~~~~~~~~~~
 
+Creating a Repository
+^^^^^^^^^^^^^^^^^^^^^
+
+Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is ``el/$releasever/$basearch/`` where ``$releasever`` is the release version and ``$basearch`` is the CPU architecture. However, any directory can be used.
+
+In this example, a default Apache web server will have the repository access via the URL "http://localhost/el/7/x86\_64/." Be sure to place your RPMs in this directory. [27]
+
+.. code-block:: sh
+
+    $ sudo yum install createrepo
+    $ sudo mkdir -p /var/www/html/el/7/x86_64/
+
+.. code-block:: sh
+
+    $ sudo createrepo /var/www/html/el/7/x86_64/
+
+The "createrepo" command will create 4 or 5 files.
+
+-  repomd.xml = An index for the other repository metadata files.
+-  primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc.
+-  filelists.xml = Contains the full listing of every directory and file.
+-  other.xml = Holds a changelog of all the packages.
+-  groups.xml = If a repository has a "group" that should install multiple packages, the group is specified here. By default, this file is not created when running "createrepo"without any arguments. [28]
+
+If new packages are added and/or signed via a GPG key then the repository cache needs to be updated again. [29]
+
+.. code-block:: sh
+
+    $ sudo createrepo --update /var/www/html/el/7/x86_64/
+
 Fedora Copr
 ^^^^^^^^^^^
 
@@ -814,3 +844,6 @@ Bibliography
 24. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html
 25. "RPM Packaging Guide." RPM Packaging Guide. February 20, 2023. Accessed May 16, 2023. https://rpm-packaging-guide.github.io/
 26. "Packaging:Systemd." Fedora Project Wiki. January 25, 2018. Accssed May 16, 2023. https://fedoraproject.org/wiki/Packaging:Systemd
+27. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
+28. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
+29. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo

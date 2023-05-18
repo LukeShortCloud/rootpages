@@ -121,7 +121,7 @@ Arch Linux uses ``pacman`` as the default package manager to manage PKGBUILD pac
 Parallel Downloads
 ^^^^^^^^^^^^^^^^^^
 
-The ``pacman`` package manager only downloads a single package at a time by default. It is recommended configure this to download five packages in parallel at a time. [19]
+The ``pacman`` package manager only downloads a single package at a time by default. It is recommended configure this to download five packages in parallel at a time. [4]
 
 .. code-block:: sh
 
@@ -183,40 +183,6 @@ using a mirrorlist.
     #baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
     gpgcheck=1
     gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-
-Creating a Repository
-^^^^^^^^^^^^^^^^^^^^^
-
-Any directory can be used as a repository to host RPMs. The standard naming convention used for RHEL based operating systems is ``el/$releasever/$basearch/`` where ``$releasever`` is the release version and ``$basearch`` is the CPU architecture. However, any directory can be used.
-
-In this example, a default Apache web server will have the repository
-access via the URL "http://localhost/el/7/x86\_64/." Be sure to
-place your RPMs in this directory. [1]
-
-.. code-block:: sh
-
-    $ sudo yum install createrepo
-    $ sudo mkdir -p /var/www/html/el/7/x86_64/
-
-.. code-block:: sh
-
-    $ sudo createrepo /var/www/html/el/7/x86_64/
-
-The "createrepo" command will create 4 or 5 files.
-
--  repomd.xml = An index for the other repository metadata files.
--  primary.xml = Contains metadata for all packages including the name, version, architecture, file sizes, checksums, dependencies, etc.
--  filelists.xml = Contains the full listing of every directory and file.
--  other.xml = Holds a changelog of all the packages.
--  groups.xml = If a repository has a "group" that should install multiple packages, the group is specified here. By default, this file is not created when running "createrepo"without any arguments. [5]
-
-If new packages are added and/or signed via a GPG key then the
-repository cache needs to be updated again. [4]
-
-.. code-block:: sh
-
-    $ sudo createrepo --update /var/www/html/el/7/x86_64/
 
 Common Repositories
 ^^^^^^^^^^^^^^^^^^^
@@ -295,7 +261,7 @@ Error ``Operation is too slow`` when installing packages or updating database ca
    :: Synchronizing package databases...
    error: failed retrieving file '<REPOSITORY>.db' from <MIRROR_DOMAIN> : Operation too slow. Less than 1024 bytes/sec transferred the last 10 seconds
 
-Solutions [20]:
+Solutions [5]:
 
 -  Use faster Pacman mirrors.
 
@@ -328,8 +294,8 @@ Bibliography
 1. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
 2. "Fedora 24 System Administrator's Guide" Fedora Documentation. 2016. Accessed June 28, 2016. https://docs.fedoraproject.org/en-US/Fedora/24/html/System\_Administrators\_Guide/sec-Setting\_repository\_Options.html
 3. "yum.conf - Configuration file for yum(8)." Die. Accessed June 28, 2016. http://linux.die.net/man/5/yum.conf
-4. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
-5. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
+4. "pacman.conf(5)." Arch Linux. May 20, 2021. Accessed September 9, 2021. https://archlinux.org/pacman/pacman.conf.5.html
+5. "[Solved] Pacman transfer speed check." Arch Linux Forums. August 19, 2015. Accessed October 5, 2022. https://bbs.archlinux.org/viewtopic.php?id=137981
 6. "EPEL." Fedora Project. March 1, 2017. Accessed May 14, 2017. https://fedoraproject.org/wiki/EPEL
 7. "IUS Community Project." IUS. May 5, 2017. Accessed May 14, 2017. https://ius.io/
 8. "Welcome to the ELRepo Project." ELRepo. April 4, 2017. Accessed May 14, 2017. http://elrepo.org/tiki/tiki-index.php
@@ -343,5 +309,3 @@ Bibliography
 16. "UnattendedUpgrades." Debian Wiki. August 19, 2019. Accessed September 5, 2020. https://wiki.debian.org/UnattendedUpgrades
 17. "Need to set up yum repository for locally-mounted DVD on Red Hat Enterprise Linux 7." Red Hat Knowledgebase. August 20, 2019. Accessed September 16, 2020. https://access.redhat.com/solutions/1355683#comment-1514411
 18. "LTSEnablementStack." Ubuntu Wiki. January 27, 2021. Accessed February 23, 2021. https://wiki.ubuntu.com/Kernel/LTSEnablementStack
-19. "pacman.conf(5)." Arch Linux. May 20, 2021. Accessed September 9, 2021. https://archlinux.org/pacman/pacman.conf.5.html
-20. "[Solved] Pacman transfer speed check." Arch Linux Forums. August 19, 2015. Accessed October 5, 2022. https://bbs.archlinux.org/viewtopic.php?id=137981
