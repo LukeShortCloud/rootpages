@@ -480,6 +480,92 @@ Release highlights:
     - Translates DirectX 11 to Vulkan.
     - Requires Vulkan 1.0.
 
+Build
+^^^^^
+
+-  Install the build dependencies for DXVK.
+
+   -  Fedora [24]:
+
+      .. code-block:: sh
+
+         $ sudo dnf install \
+             gcc \
+             gcc-c++ \
+             glslang \
+             meson \
+             mingw64-binutils \
+             mingw64-cpp \
+             mingw64-filesystem \
+             mingw64-gcc \
+             mingw64-gcc-c++ \
+             mingw64-headers \
+             mingw64-winpthreads-static \
+             mingw32-binutils \
+             mingw32-cpp \
+             mingw32-filesystem \
+             mingw32-gcc \
+             mingw32-gcc-c++ \
+             mingw32-headers \
+             mingw32-winpthreads-static \
+             wine-devel
+
+-  Download the DXVK source code.
+
+   .. code-block:: sh
+
+      $ export DXVK_VER="2.2"
+      $ git clone --depth 1 --branch "v${DXVK_VER}" https://github.com/doitsujin/dxvk.git
+      $ cd dxvk
+      $ git submodule update --init --recursive
+
+-  Compile DXVK. [25]
+
+   .. code-block:: sh
+
+      $ meson setup --cross-file build-win32.txt --buildtype release build.w32
+      $ cd build.w32
+      $ ninja
+      $ cd ..
+      $ meson setup --cross-file build-win64.txt --buildtype release build.w64
+      $ cd build.w64
+      $ ninja
+      $ cd ..
+
+-  The DLL files will be located at:
+
+   -  build.[w32|w64]/src/d3d9/d3d9.dll
+   -  build.[w32|w64]/src/d3d10/d3d10core.dll
+   -  build.[w32|w64]/src/d3d11/d3d11.dll
+   -  build.[w32|w64]/src/dxgi/dxgi.dll
+
+-  Copy these files to the Wine prefix (``~/.wine/`` by default).
+
+   .. code-block:: sh
+
+      $ cp ./build.w32/src/*/*.dll ${WINE_PREFIX}/drive_c/windows/syswow64/
+      $ cp ./build.w64/src/*/*.dll ${WINE_PREFIX}/drive_c/windows/system32/
+
+Usage
+^^^^^
+
+-  Either `build <#build>`__ or `download <https://github.com/doitsujin/dxvk/releases>`__ a DXVK release.
+-  Copy the 32-bit DLLs to ``${WINE_PREFIX}/drive_c/windows/syswow64/``.
+-  Copy the 64-bit DLLs to ``${WINE_PREFIX}/drive_c/windows/system32/``.
+-  Use Wine with overrides for those DLLs to use the native versions instead of Wine's built-in DLLs.
+
+   -  For the CLI, this can be set via the ``WINEDLLOVERRIDES`` enviornment variable.
+
+      .. code-block:: sh
+
+         $ WINEDLLOVERRIDES="dxgi=n;d3d9=n;d3d10core=n;d3d11=n" wine
+
+   -  For the GUI, this can be set via the Wine configuration tool by going to the "Libraries" tab and adding overrides for ``dxgi``, ``d3d9``, ``d3d10core``, and ``d3d11``. [25]
+
+      .. code-block:: sh
+
+         $ winecfg
+
 Forks
 -----
 
@@ -581,3 +667,5 @@ Bibliography
 21. "wine/dlls/wined3d/wined3d_main.c." GitLab wine/wine. December 3, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/wined3d_main.c#L447-L464
 22. "wine/dlls/wined3d/adapter_vk.c." GitLab wine/wine. December 4, 2022. Accessed March 7, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/adapter_vk.c#L2092
 23. "Wrappers." Emulation General Wiki. May 10, 2023. Accessed May 10, 2023. https://emulation.gametechwiki.com/index.php/Wrappers
+24. "wine-dxvk." Fedora Package Sources rpms/wine-dxvk. January 21, 2023. Accessed May 19, 2023. https://src.fedoraproject.org/rpms/wine-dxvk/blob/rawhide/f/wine-dxvk.spec
+25. "DXVK." GitHub doitsujin/dxvk. May 19, 2023. Accessed May 19, 2023. https://github.com/doitsujin/dxvk
