@@ -587,7 +587,6 @@ Various different frameworks exist for helping to install Windows applications o
 -  `PlayOnLinux 4 <https://www.playonlinux.com/>`__ (PoL 4) = Uses bash scripts to help with installing Windows applications.
 -  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official successor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installing applications.
 -  `Steam Play <https://steamcommunity.com/games/221410/announcements/detail/1696055855739350561>`__ = Uses Proton, a forked version of Wine, to natively run Windows games on Linux using the Steam gaming platform.
--  `Winepak <https://www.winepak.org/>`__ = Uses flatpak to package the required dependencies for different Windows applications.
 
 PlayOnLinux 4
 ~~~~~~~~~~~~~
