@@ -546,10 +546,54 @@ Build
       $ cp ./build.w32/src/*/*.dll ${WINE_PREFIX}/drive_c/windows/syswow64/
       $ cp ./build.w64/src/*/*.dll ${WINE_PREFIX}/drive_c/windows/system32/
 
-Usage
-^^^^^
+Installation
+^^^^^^^^^^^^
+
+Automatic:
+
+-  With ``winetricks``.
+
+   -  Update ``winetricks``, view all of the available versions that can be installed, and then install the latest version.
+
+      .. code-block:: sh
+
+         $ sudo winetricks --self-update
+         $ winetricks list-all | grep dxvk
+         $ winetrick dxvk
+
+-  With a package manager.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         $ yay -S dxvk-bin
+
+   -  Debian [26]:
+
+      .. code-block:: sh
+
+         $ sudo apt-get update
+         $ sudo apt-get install dxvk-wine32-development dxvk-wine64-development
+
+   -  Fedora:
+
+      .. code-block:: sh
+
+         $ sudo dnf install wine-dxvk.i686 wine-dxvk.x86_64
+
+Manual:
 
 -  Either `build <#build>`__ or `download <https://github.com/doitsujin/dxvk/releases>`__ a DXVK release.
+
+   -  Download:
+
+      .. code-block:: sh
+
+         $ export DXVK_VER=2.2
+         $ wget "https://github.com/doitsujin/dxvk/releases/download/v${DXVK_VER}/dxvk-${DXVK_VER}.tar.gz"
+         $ tar -x -v -f dxvk-${DXVK_VER}.tar.gz
+
 -  Copy the 32-bit DLLs to ``${WINE_PREFIX}/drive_c/windows/syswow64/``.
 -  Copy the 64-bit DLLs to ``${WINE_PREFIX}/drive_c/windows/system32/``.
 -  Use Wine with overrides for those DLLs to use the native versions instead of Wine's built-in DLLs.
@@ -668,3 +712,4 @@ Bibliography
 23. "Wrappers." Emulation General Wiki. May 10, 2023. Accessed May 10, 2023. https://emulation.gametechwiki.com/index.php/Wrappers
 24. "wine-dxvk." Fedora Package Sources rpms/wine-dxvk. January 21, 2023. Accessed May 19, 2023. https://src.fedoraproject.org/rpms/wine-dxvk/blob/rawhide/f/wine-dxvk.spec
 25. "DXVK." GitHub doitsujin/dxvk. May 19, 2023. Accessed May 19, 2023. https://github.com/doitsujin/dxvk
+26. "Package: dxvk (2.1-1)." Debian -- Packages. Accessed May 26, 2023. https://packages.debian.org/sid/utils/dxvk
