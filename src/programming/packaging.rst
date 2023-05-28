@@ -692,38 +692,48 @@ Solution:
 PKGBUILD (Arch Linux)
 ---------------------
 
+Creating a PKGBUILD
+~~~~~~~~~~~~~~~~~~~
+
 Arch Linux packages are design to be simple and easy to create. A
 PKGBUILD file is compressed with a software's contents into a XZ
 tarball. This can contain either the source code or compiled program.
 
-Required Variables:
+Syntax:
 
--  pkgname = Name of the software.
--  pkgver = Version of the software.
--  pkgrel = Version of the package (only increase if the PKGBUILD file
-   has been modified and not the software).
--  arch = The architecture the software is built for. Any architecture
-   that applies should be defined. Valid options: x86\_64, i686, arm
-   (armv5), armv6h, armv7h, aarch64 (armv8 64-bit), or any.
+::
 
-Optional Variables:
+   <KEY>="<STRING_VALUE>"
+   <KEY>=("<ARRAY_VALUE_0>"
+          "<ARRAY_VALUE_1>")
+
+   <FUNCTION>() {
+       <FUNCTION_LOGIC_LINE_1>
+       <FUNCTION_LOGIC_LINE_2>
+   }
+
+Required variables:
+
+-  ``pkgname`` = String. Name of the software.
+-  ``pkgver`` = String. Version of the software.
+-  ``pkgrel`` = String. Version of the package (only increase if the PKGBUILD file has been modified and not the software).
+-  ``arch`` = Array. The architecture the software is built for. Any architecture that applies should be defined. Valid options: ``x86_64``, ``i686``, ``arm`` (armv5), ``armv6h``, ``armv7h``, ``aarch64`` (armv8 64-bit), or ``any``.
+
+Optional variables:
 
 -  pkgdesc = A brief description of the software.
 -  url = The URL of the software's website.
--  license = The license of the software. Valid options: GPL, BSD, MIT,
-   Apache, etc.
+-  license = The license of the software. Valid options: ``custom:<CUSTOM_LICENSE_NAME>``, ``unknown``, GPLv2, BSD, MIT, Apache, etc.
 -  depends = List other package version dependencies.
 -  optdepends = List optional dependencies and a brief description.
--  makedepends = List packages required to build the software from
-   source.
--  provides = List tools that are provided by the package but do not
-   necessarily have file names.
+-  makedepends = List packages required to build the software from source.
+-  provides = List tools that are provided by the package but do not necessarily have file names.
 -  conflicts = List any conflicting packages.
 -  replaces = List packages that this software should replace.
 
 [9]
 
-Functions
+**Functions**
 
 Required:
 
