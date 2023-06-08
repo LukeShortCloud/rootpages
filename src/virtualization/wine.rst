@@ -428,6 +428,8 @@ These are useful graphics translation layers for running Windows games using Win
 
    -  `VKD3D-Proton <https://github.com/HansKristian-Work/vkd3d-proton>`__ = A fork of Vkd3d that is focused on gaming. Valve only tests this project on AMD and NVIDIA GPUs (not Intel).
 
+-  `D3DMetal <https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/>`__ = DirectX 10, 11, and 12 to Metal. This is bundled with Apple's Game Porting Toolkit. DirectX 9 is part of the toolkit but it uses the OpenGL backend instead of Metal and is unmodified from the upstream implmentation in Wine. The DirectX 10 and 11 translation is based off of the DXVK project but modified to run on Metal instead of Vulkan. The source code is proprietary. [27] The license does not allow for redistributing D3DMetal. [28]
+
 D8VK
 ~~~~
 
@@ -713,3 +715,5 @@ Bibliography
 24. "wine-dxvk." Fedora Package Sources rpms/wine-dxvk. January 21, 2023. Accessed May 19, 2023. https://src.fedoraproject.org/rpms/wine-dxvk/blob/rawhide/f/wine-dxvk.spec
 25. "DXVK." GitHub doitsujin/dxvk. May 19, 2023. Accessed May 19, 2023. https://github.com/doitsujin/dxvk
 26. "Package: dxvk (2.1-1)." Debian -- Packages. Accessed May 26, 2023. https://packages.debian.org/sid/utils/dxvk
+27. "Apple's Game Porting Toolkit seems to have a D3DMetal.framework with full implementations of DirectX 12 to 9 on Metal." Reddit r/macgaming. June 7, 2023. June 7, 2023. https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/
+28. "D3DMetal license." Twitter Longhorn @never_released. June 6, 2023. Accessed June 7, 2023. https://twitter.com/never_released/status/1666191614253907968
