@@ -617,12 +617,61 @@ Forks
 
 Many forks of the upstream Wine project exist.
 
--  `CrossOver <https://www.codeweavers.com/products/more-information/source>`__ = The commercial product of Wine made by CodeWeavers which employees the primary Wine developers.
--  `Lutris <https://github.com/lutris/lutris/wiki/Wine-Builds>`__ = A combination of patches from Proton, Proton GE, and TKG.
--  `Proton <https://github.com/ValveSoftware/Proton>`__ = Officially developed by CodeWeavers and funded by Valve, it aims to provide better compatibility and performance for gaming. It bundles DXVK, Vkd3d, Mono, FAudio, fsync, missing fonts, and OpenVR.
--  `Proton-tkg <https://github.com/Tk-Glitch/PKGBUILDS/tree/master/proton-tkg>`__ = A highly configurable set of scripts for building Wine with Proton patches.
--  `Proton GE <https://github.com/GloriousEggroll/proton-ge-custom/releases>`__ = The latest development version of Wine with Staging and Proton patches. It also uses `protonfixes <https://github.com/simons-public/protonfixes>`__ to apply workarounds for certain games.
--  `Staging <https://github.com/wine-staging/wine-staging>`__ = Experimental patches that are either too large/complex, lack tests, or are hacky workarounds for specific applications. The goal is to provide a place to test patches as they continue to be worked on to be merged into upstream Wine.
+**For Linux and macOS:**
+
+-  `Wine <https://www.winehq.org/>`__ = The official Wine project.
+
+   -  Download the source code `here <https://dl.winehq.org/wine/source/>`__.
+   -  Download the binary program `here (official package) <https://wiki.winehq.org/Download>`__, `here (unofficial portable Linux binary) <https://github.com/Kron4ek/Wine-Builds/releases>`__, or `here (unofficial portable macOS binary) <https://github.com/Gcenx/macOS_Wine_builds/releases>`__.
+
+-  `Staging <https://wiki.winehq.org/Wine-Staging>`__ = Experimental patches that are either too large, too complex, lack tests, or are hacky workarounds for specific applications. The goal is to provide a place to test patches before they are merged into upstream Wine.
+
+   -  Download the source code `here <https://github.com/wine-staging/wine-staging>`__.
+   -  Download the binary program `here (official package) <https://wiki.winehq.org/Download>`__, `here (unofficial portable Linux binary) <https://github.com/Kron4ek/Wine-Builds/releases>`__, or `here (unofficial portable macOS binary) <https://github.com/Gcenx/macOS_Wine_builds/releases>`__.
+
+-  `CrossOver <https://www.codeweavers.com/>`__ = The commercial product of Wine made by CodeWeavers which employees most of the upstream Wine developers. It is available for ChromeOS, Linux, and macOS.
+
+   -  Download the source code `here <https://media.codeweavers.com/pub/crossover/source/>`__.
+   -  Download the binary program `here (official CrossOver package) <https://www.codeweavers.com/crossover/download-links/>`__ or `here (unofficial macOS build of CrossOver Wine) <https://github.com/Gcenx/winecx/releases>`__.
+
+**For Linux only:**
+
+-  `Lutris <https://github.com/lutris/docs/blob/master/WineBuilds.md>`__ = A combination of patches from Proton, Proton GE, and TKG. As of 2023, these have been replaced by Wine GE Proton builds.
+
+   -  Download the source code `here <https://github.com/lutris/wine>`__.
+   -  Download the binary program `here <https://github.com/lutris/wine/releases>`__.
+
+-  `Proton <https://partner.steamgames.com/doc/steamdeck/proton>`__ = Officially developed by CodeWeavers and funded by Valve, it aims to provide better compatibility and performance for gaming on Linux. It bundles DXVK, VKD3D-Proton, Mono, FAudio, fsync, missing fonts, and OpenVR.
+
+   -  Download the source code `here <https://github.com/ValveSoftware/Proton>`__.
+   -  Download the binary program from Steam or `here (unofficial portable Linux binary) <https://github.com/Kron4ek/Wine-Builds/releases>`__.
+
+-  `Proton-tkg <https://github.com/Tk-Glitch/PKGBUILDS/tree/master/proton-tkg>`__ = A highly configurable set of scripts for building Wine with Proton patches. The default build uses Proton Experimental with Wine Staging patches. It is unofficially known as Broton Experimental.
+
+   -  Download the source code `here <https://github.com/Tk-Glitch/wine-proton-tkg>`__.
+   -  Download the binary program `here <https://github.com/Frogging-Family/wine-tkg-git/blob/master/README.md#proton-nightly-builds>`__.
+
+-  `Wine-tkg <https://github.com/Tk-Glitch/PKGBUILDS/tree/master/wine-tkg-git>`__ = Proton-tkg without the Steam client integration patches.
+
+   -  Download the source code `here <https://github.com/Tk-Glitch/wine-tkg>`__.
+   -  Download the binary program `here <https://github.com/Frogging-Family/wine-tkg-git/blob/master/README.md#wine-nightly-builds>`__.
+
+-  `GE Proton (or proton-ge-custom) <https://github.com/GloriousEggroll/proton-ge-custom>`__ = Proton Experimental patched with the latest versions of dependencies from unreleased git code. A select few patches from Wine Staging are also used. An improved fork of `protonfixes <https://github.com/simons-public/protonfixes>`__ is bundled to apply workarounds for certain games. GStreamer bad and ugly plugins are provided for playing all types of media files.
+
+   -  Download the source code `here <https://github.com/GloriousEggroll/proton-ge-custom>`__.
+   -  Download the binary program `here <https://github.com/GloriousEggroll/proton-ge-custom/releases>`__.
+
+-  `Wine GE Proton (or wine-ge-custom) <https://github.com/GloriousEggroll/wine-ge-custom>`__ = GE Proton with patches to remove Steam client integration.
+
+   -  Download the source code `here <https://github.com/GloriousEggroll/wine-ge-custom>`__.
+   -  Download the binary program `here <https://github.com/GloriousEggroll/wine-ge-custom/releases>`__.
+
+**For macOS only:**
+
+-  `Whisky <https://github.com/IsaacMarovitz/Whisky>`__ = An open source alternative to CrossOver Mac. This uses Apple's Game Porting Toolkit to run games.
+
+   -  Download the source code `here <https://github.com/IsaacMarovitz/Whisky>`__.
+   -  Download the binary program `here <https://github.com/IsaacMarovitz/Whisky/releases>`__.
 
 Frameworks
 ----------
