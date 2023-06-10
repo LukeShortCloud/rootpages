@@ -925,6 +925,10 @@ Common installation environment variables [50]:
 
 -  INSTALL_K3S_VERSION = The version of k3s to install. Specify a `k3s tag from GitHub <https://github.com/k3s-io/k3s/tags>`__.
 -  INSTALL_K3S_CHANNEL = ``stable`` (default), ``latest``, or ``testing``. The current version tied to the channel is listed `here <https://update.k3s.io/v1-release/channels>`__.
+-  INSTALL_K3S_EXEC = CLI arguments to pass to the k3s binary.
+
+   -  ``--disable=traefik`` = Disable the Traefik Ingress Controller.
+
 -  K3S_URL = The Control Plane endpoint URL to connect to. The URL is provided after a successful installation of the first Control Plane Node. This variable will also set the Node to become a Worker Node.
 -  K3S_TOKEN = Required for the Worker Node. The token credential to connect to the Kubernetes cluster.
 
@@ -1001,6 +1005,26 @@ For storage, k3s supports all of the stable Container Storage Interface (CSI) an
 -  YanRongYun
 
 [11]
+
+Remove Traefik
+^^^^^^^^^^^^^^
+
+By default, k3s provides Traefik as the Ingress Controller. It may be preferred to disable this to use a different Ingress Controller instead.
+
+-  Install k3s with Traefik disabled.
+
+   .. code-block:: sh
+
+      $ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+
+-  If k3s was already installed with Traefik enabled, it can be disabled manually. [114]
+
+   .. code-block:: sh
+
+      $ sudo helm -n kube-system delete traefik traefik-crd
+      $ sudo kubectl -n kube-system delete helmchart traefik traefik-crd
+      $ sudo touch /var/lib/rancher/k3s/server/manifests/traefik.yaml.skip
+      $ sudo systemctl restart k3s
 
 Minishift
 ~~~~~~~~~
@@ -2911,3 +2935,4 @@ Bibliography
 111. https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.2/vmware-tanzu-kubernetes-grid-12/GUID-mgmt-clusters-vsphere-cli.html
 112. "Using Admission Controllers." Kubernetes Documentation. July 13, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
 113. "Kubernetes admission controllers in 5 minutes." sysdig. February 18, 2021. Accessed February 21, 2023. https://sysdig.com/blog/kubernetes-admission-controllers/
+114. "Unable to disable Traefik #1160." GitHub k3s-io/k3s. February 23, 2023. Accessed June 10, 2023. https://github.com/k3s-io/k3s/issues/1160#issuecomment-1133559423
