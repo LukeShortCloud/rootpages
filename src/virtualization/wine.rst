@@ -683,6 +683,22 @@ Various different frameworks exist for helping to install Windows applications o
 -  `Phoenicis <https://github.com/PhoenicisOrg/phoenicis>`__ = This is the official successor to PlayOnLinux, unofficially known as PlayOnLinux 5. It uses a JSON structure to define dependencies and uses Java helper functions to assist with installing applications.
 -  `Steam Play <https://steamcommunity.com/games/221410/announcements/detail/1696055855739350561>`__ = Uses Proton, a forked version of Wine, to natively run Windows games on Linux using the Steam gaming platform.
 
+Lutris
+~~~~~~
+
+Add a Game Shortcut to Steam
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Lutris supports adding non-Steam games to the Steam client. First exit Steam completely. Then create the Steam shortcut.
+
+- (Right-click on the Steam icon in the system tray) > Exit Steam
+- (Right-click on a game in Lutris) > Create Steam shortcut
+
+If this does not work on the Steam Deck, create a desktop shortcut first and then add that to Steam. [29]
+
+- (Right-click on a game in Lutris) > Create desktop shortcut
+- (Right-click on the desktop shortcut for the game) > Add to Steam
+
 PlayOnLinux 4
 ~~~~~~~~~~~~~
 
@@ -766,3 +782,4 @@ Bibliography
 26. "Package: dxvk (2.1-1)." Debian -- Packages. Accessed May 26, 2023. https://packages.debian.org/sid/utils/dxvk
 27. "Apple's Game Porting Toolkit seems to have a D3DMetal.framework with full implementations of DirectX 12 to 9 on Metal." Reddit r/macgaming. June 7, 2023. June 7, 2023. https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/
 28. "D3DMetal license." Twitter Longhorn @never_released. June 6, 2023. Accessed June 7, 2023. https://twitter.com/never_released/status/1666191614253907968
+29. "'Create Steam shortcut' doesn't seem to work on Steam Deck." Reddit r/Lutris. March 28, 2023. Accessed June 11, 2023. https://www.reddit.com/r/Lutris/comments/u9rt4e/create_steam_shortcut_doesnt_seem_to_work_on/
