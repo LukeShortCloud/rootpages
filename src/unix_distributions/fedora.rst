@@ -18,6 +18,35 @@ RHEL is a downstream distribution, based on Fedora, aimed at servers.
    Optional paid support, Yes, Yes, Yes, Yes
    Btrfs support, No, Yes [4], No, No
 
+Releases
+--------
+
+Fedora releases:
+
+-  38
+
+   -  `Flathub is no longer filtered to only show Fedora approved packages <https://fedoraproject.org/wiki/Changes/UnfilteredFlathub>`__.
+   -  `Fedora Budgie Spin is a new workstation spin with the Budgie desktop environment <https://fedoramagazine.org/announcing-fedora-38/>`__.
+   -  `Fedora Sericea is a new rpm-ostreee spin that uses the Sway window tiling manager <https://fedoramagazine.org/announcing-fedora-38/>`__.
+   -  `Fedora Phosh is a new workstation spin that uses the Phosh desktop environment <https://fedoramagazine.org/announcing-fedora-38/>`__.
+
+-  37
+
+   -  `Raspberry Pi 4 is now the first Pi to be officially supported by Fedora <https://fedoramagazine.org/announcing-fedora-37/>`__.
+
+-  35
+
+   -  `Fedora Kinoite is a new rpm-ostree spin, the second behind Fedora Silverblue, that uses the KDE Plasma desktop environment <https://fedoramagazine.org/announcing-fedora-35/>`__.
+
+-  34
+
+   -  `Btrfs now uses Zstandard compression for new installs <https://fedoraproject.org/wiki/Changes/BtrfsTransparentCompression>`__.
+   -  `PipeWire is now the default audio server <https://fedoramagazine.org/announcing-fedora-35/>`__.
+
+-  33
+
+   -  `Btrfs is now the default file system for new installs <https://fedoraproject.org/wiki/Changes/BtrfsByDefault>`__.
+
 Set root Password
 -----------------
 
