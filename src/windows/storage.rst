@@ -22,6 +22,23 @@ Restore the backup:
 
 [4]
 
+BitLocker
+---------
+
+BitLocker is a drive encryption tool for Windows. It requires UEFI and TPM >= 1.2 to work. It will not work with legacy BIOS boot. [5] Secure Boot is not a requirement but strongly recommended as an additional layer of security. BitLocker will detect if Secure Boot was turned on or off. In either case, it will ask for a recovery key. [6]
+
+As of Windows 8, if a Windows account is made using a Microsoft account, Windows will automatically upload BitLocker recovery keys online. They can be accessed `here <https://account.microsoft.com/devices/recoverykey>`__. [7]
+
+Enable BitLocker encryption [8]:
+
+-  Windows 11:
+
+   -  Settings > Privacy & security > Device encryption: On
+
+-  Windows 10:
+
+   -  Settings > Update & Security > Device encryption: On
+
 NFS
 ---
 
@@ -123,3 +140,7 @@ Bibliography
 2. "NFS Mount not showing in Windows Explorer." Super User. September 10, 2021. Accessed December 20, 2021. https://superuser.com/questions/599641/nfs-mount-not-showing-in-windows-explorer/696913
 3. "What is System Restore?" Microsoft Support. Accessed June 15, 2022. https://support.microsoft.com/en-us/topic/what-is-system-restore-a9d1b33f-1df9-e0f2-8aa3-d904cd940ee4
 4. "Create a system restore point." Microsoft Support. Accessed June 15, 2022. https://support.microsoft.com/en-us/windows/create-a-system-restore-point-77e02e2a-3298-c869-9974-ef5658ea3be9
+5. "BitLocker Overview and Requirements FAQ." Microsoft Learn. Accessed June 21, 2023. https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/bitlocker-overview-and-requirements-faq
+6. "Secure Boot and Bitlocker." Windows 10 Forums. August 11, 2017. Accessed June 21, 2023. https://www.tenforums.com/antivirus-firewalls-system-security/90970-secure-boot-bitlocker.html
+7. "BitLocker Recovery - Unlock a Drive in Windows 8." Windows 8 Help Forums. July 27, 2016. Accessed June 21, 2023. https://www.eightforums.com/threads/bitlocker-recovery-unlock-a-drive-in-windows-8.21433/
+8. "Turn on device encryption." Microsoft Support. Accessed June 21, 2023. https://support.microsoft.com/en-us/windows/turn-on-device-encryption-0c453637-bc88-5f74-5105-741561aae838
