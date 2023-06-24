@@ -485,6 +485,12 @@ NFSv3 ports:
 
 Install:
 
+-  Arch Linux
+
+   .. code-block:: sh
+
+      $ sudo dnf install nfs-utils
+
 -  Debian
 
    .. code-block:: sh
@@ -500,6 +506,12 @@ Install:
 **Server**
 
 Install:
+
+-  Arch Linux
+
+   .. code-block:: sh
+
+      $ sudo dnf install nfs-utils
 
 -  Debian
 
