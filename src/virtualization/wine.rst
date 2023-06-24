@@ -428,7 +428,7 @@ These are useful graphics translation layers for running Windows games using Win
 
    -  `VKD3D-Proton <https://github.com/HansKristian-Work/vkd3d-proton>`__ = A fork of Vkd3d that is focused on gaming. Valve only tests this project on AMD and NVIDIA GPUs (not Intel).
 
--  `D3DMetal <https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/>`__ = DirectX 10, 11, and 12 to Metal. This is bundled with Apple's Game Porting Toolkit. DirectX 9 is part of the toolkit but it uses the OpenGL backend instead of Metal and is unmodified from the upstream implmentation in Wine. The DirectX 10 and 11 translation is based off of the DXVK project but modified to run on Metal instead of Vulkan. The source code is proprietary. [27] The license does not allow for redistributing D3DMetal. [28]
+-  `D3DMetal <https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/>`__ = DirectX 12 to Metal. This is bundled with Apple's Game Porting Toolkit. That toolkit also has support for DirectX 11 and 10 by using DXVK with MoltenVK. DirectX 9 is stubbed out and does not work. The source code of D3DMetal is proprietary. [27] The license does not allow for redistributing D3DMetal. [28]
 
 D8VK
 ~~~~
