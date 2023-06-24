@@ -717,7 +717,53 @@ SMB Ports:
 Samba
 ^^^^^
 
-Samba is a CIFS server created for UNIX servers. The default configuration file is located at ``/etc/samba/smb.conf`` and is in an "ini" format. Samba share settings can be set at the ``[global]`` or in a ``[<SHARE_NAME>]``. Global settings cannot be defined in a ``[<SHARE_NAME>]``. [14] Boolean settings can have a value of ``false``/``no`` or ``true``/``yes``.
+CIFS and SMB are network file system protocols created by Microsoft. Samba is an open source server created for UNIX-like servers that implements these protocols.
+
+**Client**
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S cifs-utils
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo apt-get install cifs-utils
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install cifs-utils
+
+**Server**
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S samba
+
+-  Debian [45]:
+
+   .. code-block:: sh
+
+      $ sudo apt-get samba samba-client
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install samba samba-client
+
+The default configuration file is located at ``/etc/samba/smb.conf`` and is in an "ini" format. Samba share settings can be set at the ``[global]`` or in a ``[<SHARE_NAME>]``. Global settings cannot be defined in a ``[<SHARE_NAME>]``. [14] Boolean settings can have a value of ``false``/``no`` or ``true``/``yes``.
 
 .. code-block:: ini
 
@@ -1350,3 +1396,4 @@ Bibliography
 42. "exFAT external drive not recognized on Windows." Ask Ubuntu. August 16, 2016. Accessed March 2, 2023. https://askubuntu.com/questions/706608/exfat-external-drive-not-recognized-on-windows
 43. "Kernel 5.15 : ntfs3 vs ntfs-3g." LinuxQuestions.org. September 9, 2021. Accessed March 2, 2023. https://www.linuxquestions.org/questions/slackware-14/kernel-5-15-ntfs3-vs-ntfs-3g-4175702945/
 44. "Renaming a ZFS pool." Prefetch Technologies. November 15, 2006. Accessed May 15, 2023. https://prefetch.net/blog/2006/11/15/renaming-a-zfs-pool/
+45. "Samba file sharing server." Debian Wiki. January 27, 2021. Accessed June 24, 2023. https://wiki.debian.org/Samba/ServerSimple
