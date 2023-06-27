@@ -37,7 +37,7 @@ Start the installer:
 History
 -------
 
--  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/unix_distributions/asahi_linux.rst>`__
+-  `Latest <https://github.com/LukeShortCloud/rootpages/commits/main/src/unix_distributions/asahi_linux.rst>`__
 
 Bibliography
 ------------
