@@ -478,22 +478,6 @@ Lower space usage by [10]:
 
 A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
 
-Toolbox
-'''''''
-
-Fedora Silverblue is the only Linux distribution that uses Toolbox containers. It provides a way to install both CLI and GUI applications inside of a container as to not affect the read-only file system. It also provides additional features such as mounting the user's home directory, full access to ``/dev`` devices, networking passthrough, systemd support, and more.
-
-Requirements to create a Toolbox container [26]:
-
--  Environment variables ``NAME`` and ``VERSION`` defined.
--  Labels of ``com.github.containers.toolbox="true"``, ``name="$NAME"``, and ``version="$VERSION"``.
--  ``bash`` and ``sudo`` binaries are installed.
--  ``sudo`` is configured to allow the ``toolbox`` user to run privileged commands without the use of a password.
-
-   -  ``echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/toolbox``
-
--  Default command is ``bash``.
-
 Networking
 ^^^^^^^^^^
 
@@ -620,6 +604,174 @@ able to run.
 Templates that can be referenced for LXC container creation can be found
 in the ``/usr/share/lxc/templates/`` directory.
 
+Wrappers
+--------
+
+Introduction
+~~~~~~~~~~~~
+
+Wrappers provide a layer of abstraction over container engines to make them easier to use.
+
+Distrobox
+~~~~~~~~~
+
+Distrobox fully supports CLI and GUI applications (including audio), USB devices, and sharing storage devices. It can use the ``docker`` or ``podman`` container engine.
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S distrobox
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install distrobox
+
+-  Ubuntu (not Debian):
+
+   .. code-block:: sh
+
+      $ sudo apt-get install distrobox
+
+-  Other Linux distributions:
+
+   .. code-block:: sh
+
+      $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+
+   -  Uninstall:
+
+      .. code-block:: sh
+
+         $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/uninstall | sudo sh
+
+-  Non-root installation:
+
+   .. code-block:: sh
+
+      $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
+      $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/extras/install-podman | sh -s -- --prefix ~/.local
+      $ export PATH="${PATH}:$HOME/.local/bin:$HOME/.local/podman/bin"
+      $ echo "export PATH="${PATH}:$HOME/.local/bin:$HOME/.local/podman/bin" >> ~/.profile
+
+   -  Uninstall:
+
+      .. code-block:: sh
+
+         $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/uninstall | sh -s -- --prefix ~/.local
+         $ rm -r -f $HOME/.local/podman/
+
+Ensure that the local user can control the Xorg server:
+
+.. code-block:: sh
+
+   $ xhost +si:localuser:$USER
+   $ echo "xhost +si:localuser:$USER" >> ~/.xinitrc
+
+Create a new container with a container image:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ distrobox create --pull --image archlinux:latest --name archlinux
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ distrobox create --image debian:12 --name debian-12
+
+-  Fedora Toolbox:
+
+   .. code-block:: sh
+
+      $ distrobox create --image registry.fedoraproject.org/fedora-toolbox:38 --name fedora-toolbox-38
+
+Create a container (optionally with additional features):
+
+-  Create a basic container. By default, this will use the latest stable fedora-toolbox container.
+
+   .. code-block:: sh
+
+      $ distrobox create <CONTAINER_NAME>
+
+-  Create a container with NVIDIA support (requires Distrobox >= 1.5.0):
+
+   .. code-block:: sh
+
+      $ distrobox --version
+      $ distrobox create --nvidia --image <CONTAINER_IMAGE>:<CONTAINER_TAG> <CONTAINER_NAME>
+
+-  Create a container with ``root`` access to the host operating system:
+
+   .. code-block:: sh
+
+      $ distrobox create --root --image <CONTAINER_IMAGE>:<CONTAINER_TAG> <CONTAINER_NAME>
+
+-  Create a container with a volume from the host mounted in (by default, only ``/home/$USER/`` is mounted):
+
+   .. code-block:: sh
+
+      $ distrobox create --volume /media --image <CONTAINER_IMAGE>:<CONTAINER_TAG> <CONTAINER_NAME>
+
+-  Create a container with systemd support (requires a container image with systemd installed, Distrobox >= 1.5.0 can install it during the initialization stage):
+
+   .. code-block:: sh
+
+      $ distrobox create --init --image docker.io/almalinux/9-init alamalinux-9-init
+
+   .. code-block:: sh
+
+      $ distrobox create --init --additional-packages "systemd" --image debian:12 debian-12-init
+
+Enter the container. This will automatically run ``distrobox-init`` inside the container which installs required dependencies (such as ``sudo``), creates a user account that mirros that name and ID of the host user, manages mounts, sets up audio and graphics integration, and more [27]:
+
+.. code-block:: sh
+
+   $ distrobox enter <CONTAINER_NAME>
+
+Alternatively, enter a ``root`` container. If a container was not created with ``--root``, this will not work.
+
+.. code-block:: sh
+
+   $ distrobox enter --root <CONTAINER_NAME>
+
+List all containers managed by Distrobox:
+
+.. code-block:: sh
+
+   $ distrobox list
+
+Delete a Distrobox container:
+
+.. code-block:: sh
+
+   $ distrobox stop <CONTAINER_NAME>
+   $ distrobox rm <CONTAINER_NAME>
+
+[28][29][30]
+
+Toolbox
+~~~~~~~
+
+Fedora Silverblue is the only Linux distribution that uses Toolbox containers. It provides a way to install both CLI and GUI applications inside of a container as to not affect the read-only file system. It also provides additional features such as mounting the user's home directory, full access to ``/dev`` devices, networking passthrough, systemd support, and more.
+
+Requirements to create a Toolbox container [26]:
+
+-  Environment variables ``NAME`` and ``VERSION`` defined.
+-  Labels of ``com.github.containers.toolbox="true"``, ``name="$NAME"``, and ``version="$VERSION"``.
+-  ``bash`` and ``sudo`` binaries are installed.
+-  ``sudo`` is configured to allow the ``toolbox`` user to run privileged commands without the use of a password.
+
+   -  ``echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/toolbox``
+
+-  Default command is ``bash``.
+
 Troubleshooting
 ---------------
 
@@ -697,3 +849,7 @@ Bibliography
 24. "Docker Desktop for Mac user manual." Docker Documentation. Accessed April 21, 2021. https://docs.docker.com/docker-for-mac/
 25. "Debugging Kubernetes nodes with crictl." Kubernetes Documentation. December 10, 2020. Accessed July 20, 2021. https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/
 26. "Toolbox." ArchWiki. January 20, 2023. Accessed February 6, 2023. https://wiki.archlinux.org/title/Toolbox
+27. "distrobox-init(1)." Arch manual page. Accessed June 27, 2023. https://man.archlinux.org/man/extra/distrobox/distrobox-init.1.en
+28. "Distrobox." Arch Wiki. June 18, 2023. Accessed June 27, 2023. https://wiki.archlinux.org/title/Distrobox
+29. "Distrobox." GitHub 89luca89/distrobox. June 25, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox
+30. "Useful tips." GitHub 89luca89/distrobox. June 15, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md
