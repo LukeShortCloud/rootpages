@@ -35,6 +35,15 @@ Fedora:
 $ sudo dnf install python3-sphinx python3-sphinx_rtd_theme
 ```
 
+macOS:
+
+```
+$ brew install python3
+$ pip3 install -U sphinx sphinx-rtd-theme
+$ export PYTHON_VERSION="3.9"
+$ export PATH="$PATH:${HOME}/Library/Python/${PTYHON_VERSION}/bin/"
+```
+
 openSUSE:
 
 ```
