@@ -56,7 +56,7 @@ Modern versions of Windows 10 Enterprise LTSC are only supported for 5 years com
    Windows 10 Enterprise LTSB 2016, 10, 10, `Windows 10 Version 1607 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2016>`__
    Windows 10 Enterprise LTSC 2019, 10, 10, `Windows 10 Version 1809 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2019>`__
    Windows 10 Enterprise LTSC 2021, 5, 10, `Windows 10 Version 21H2 <https://docs.microsoft.com/en-us/windows/whats-new/ltsc/whats-new-windows-10-2021>`__
-   Windows 11 Enterprise LTSC 2024, 5, 10, ""
+   Windows 11 Enterprise LTSC 2024, 5, 10, `Windows 11 Version 22H2 <https://techcommunity.microsoft.com/t5/windows-it-pro-blog/windows-client-roadmap-update/ba-p/3805227>`__
 
 [5][6][12]
 
