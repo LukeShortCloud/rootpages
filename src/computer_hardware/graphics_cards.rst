@@ -78,6 +78,20 @@ Machine learning (ML) [4][5]:
 
 Integrated GPUs (iGPUs) can use up to half of the available system RAM. [6] Since RAM is slower than VRAM, it is recommended to use the fastest RAM available. [7]
 
+Best Legacy Cards
+-----------------
+
+32-bit
+~~~~~~
+
+32-bit operating systems, such as Windows XP, only support graphics cards with 3 GB of VRAM. There are sometimes driver limitations, too. [8]
+
+Windows XP:
+
+- Best performance = NVIDIA GTX 780 Ti [9]
+- Best NVIDIA card for the era = NVIDIA 8800 GT [9]
+- Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
+
 History
 -------
 
@@ -93,3 +107,8 @@ Bibliography
 5. "Choosing the Best GPU for Deep Learning in 2020." The Lambda Deep Learning Blog. February 18, 2022. Accessed September 7, 2022. https://lambdalabs.com/blog/choosing-a-gpu-for-deep-learning/
 6. "What is VRAM and how much do I have?" LEVVVEL. March 6, 2023. Accessed May 16, 2023. https://levvvel.com/what-is-vram-and-how-much-do-i-have/
 7. "VRAM vs. RAM: What’s the Difference?" History-Computer. December 7, 2022. Accessed May 16, 2023. https://history-computer.com/vram-vs-ram/
+8. "Radeon R9 290x on Windows XP 32bit. Was anybody able to install it?" Reddit r/windowsxp. April 28, 2023. Accessed July 11, 2023. https://www.reddit.com/r/windowsxp/comments/10qn8lk/radeon_r9_290x_on_windows_xp_32bit_was_anybody/
+9. "Best WinXP Video Card." VOGONS. February 16, 2018. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=47815&start=80
+10. "WinXP retro gaming PC." Linus Tech Tips. August 11, 2022. Accessed July 11, 2023. https://linustechtips.com/topic/1408436-winxp-retro-gaming-pc/
+11. "HD7990 in WinXP?" VOGONS. April 24, 2022. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=79494
+12. "What would be the fastest XP Setup with XP Era Hardware?" VOGONS. June 22, 2019. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=66873&start=60
