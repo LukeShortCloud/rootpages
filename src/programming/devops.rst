@@ -1340,6 +1340,35 @@ These are the most important concepts to learn when studying a new language, lis
 
 -  Graphical user interface (GUI) framework
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error ``fatal: early EOF`` when downloading a large git repository:
+
+::
+
+    $ git clone https://src.fedoraproject.org/rpms/kernel.git
+    Cloning into 'kernel'...
+    remote: Enumerating objects: 96449, done.
+    remote: Counting objects: 100% (11902/11902), done.
+    remote: Compressing objects: 100% (4260/4260), done.
+    fetch-pack: unexpected disconnect while reading sideband packet
+    fatal: early EOF
+    fatal: fetch-pack: invalid index-pack output
+    Could not execute clone: Failed to execute command.
+
+Solutions [48]:
+
+-  The Internet connection is not stable. Try using an Ethernet connection or using a different Internet connection.
+-  The default git buffer size is 1 MiB. Configure it to be 100 MiB instead.
+
+   .. code-block:: sh
+
+      $ git config --global http.postBuffer 104857600
+
 History
 -------
 
@@ -1396,3 +1425,4 @@ Bibliography
 45. "Running actions in another directory." Stack Overflow. December 9, 2021. Accessed May 3, 2023. https://stackoverflow.com/questions/58139175/running-actions-in-another-directory
 46. "Use working-directory for entire job #25742." GitHub Community. March 21, 2023. Accessed May 3, 2023. https://github.com/orgs/community/discussions/25742
 47. "Downloading source code archives." GitHub Docs. Accessed May 16, 2023. https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives
+48. "Github - unexpected disconnect while reading sideband packet." Stack Overflow. July 19, 2023. Accessed July 19, 2023. https://stackoverflow.com/questions/66366582/github-unexpected-disconnect-while-reading-sideband-packet
