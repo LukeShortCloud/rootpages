@@ -357,6 +357,9 @@ File: /etc/dracut.conf
 Build
 -----
 
+Upstream
+~~~~~~~~
+
 -  Install the build dependencies for the Linux kernel:
 
    -  Debian:
@@ -461,6 +464,76 @@ Build
 
 [18][19]
 
+Fedora
+~~~~~~
+
+-  Install the required packages to build Fedora packages:
+
+   .. code-block:: sh
+
+      $ sudo dnf install fedora-packager fedpkg grubby ncurses-devel pesign rpmdevtools
+
+-  Download the Fedora package for the Linux kernel. This first requires increasing the git buffer size or else the download of the large git repository will fail.
+
+   .. code-block:: sh
+
+      $ git config --global http.postBuffer 157286400
+      $ fedpkg clone -a kernel
+      $ cd kernel
+
+-  Switch to the desired branch to build.
+
+   .. code-block:: sh
+
+      $ git checkout origin/f<FEDORA_MAJOR_VERSION>
+
+-  Install the build dependencies of the Linux kernel and the source files needed for building the RPMs.
+
+   .. code-block:: sh
+
+      $ sudo dnf install 'dnf-command(builddep)'
+      $ sudo dnf builddep kernel.spec
+      $ fedpkg sources
+
+-  Fix the PKI signing keys permissions which are required for the Linux kernel.
+
+   .. code-block:: sh
+
+      $ sudo /usr/libexec/pesign/pesign-authorize
+
+-  Change the build name to something other than the default of "local". This prevents conflicts with other kernels built with the default options. In the example below, it is changed to "custom". [20]
+
+   .. code-block:: sh
+
+      $ sed -i 's/# define buildid .local/%define buildid .custom/g' kernel.spec
+
+-  Build a release kernel using Mock to isolate dependencies. By default, kernels are built with debugging support which are slower and bigger. This can be disabled. [21][22]
+
+   .. code-block:: sh
+
+      $ fedpkg --release f<FEDORA_MAJOR_VERSION> mockbuild --without debug --without debuginfo --with release
+
+-  The resulting RPMs will be saved to: ``$(pwd)/results_kernel/<KERNEL_FULL_VERSION>/<RPM_RELEASE>.<RPM_LOCAL_NAME>.fc<FEDORA_MAJOR_VERSION>``.  For example, the directory should look similar to this:
+
+   .. code-block:: sh
+
+      $ ls -1 results_kernel/6.3.13/200.custom.fc38/
+      build.log
+      hw_info.log
+      installed_pkgs.log
+      kernel-6.3.13-200.custom.fc38.src.rpm
+      kernel-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-core-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-devel-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-devel-matched-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-modules-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-modules-core-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-modules-extra-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-modules-internal-6.3.13-200.custom.fc38.x86_64.rpm
+      kernel-uki-virt-6.3.13-200.custom.fc38.x86_64.rpm
+      root.log
+      state.log
+
 Install
 -------
 
@@ -545,3 +618,6 @@ Bibliography
 17. "capabilities (7)." Linux manual page. June 20, 2021. Accessed August 2, 2021. https://man7.org/linux/man-pages/man7/capabilities.7.html
 18. "BuildADebianKernelPackage." Debian Wiki. December 1, 2021. Accessed January 10, 2022. https://wiki.debian.org/BuildADebianKernelPackage
 19. "How to compile vanilla Linux kernel from source on Fedora." LinuxConfig.org. May 30, 2019. Accessed January 10, 2022. https://linuxconfig.org/how-to-compile-vanilla-linux-kernel-from-source-on-fedora
+20. "Building a custom kernel." Fedora Project Wiki. August 16, 2022. Accessed July 19, 2023. https://fedoraproject.org/wiki/Building_a_custom_kernel
+21. "Build a fedora kernel: Updated." ASUS NoteBook Linux. Accessed July 19, 2023. https://asus-linux.org/blog/fedora-kernel-build/
+22. "Has anyone managed to build a Fedora patched kernel in 2022?" Reddit r/Fedora. December 12, 2022. Accessed July 19, 2023. https://www.reddit.com/r/Fedora/comments/zgdkrc/has_anyone_managed_to_build_a_fedora_patched/
