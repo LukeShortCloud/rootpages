@@ -55,36 +55,36 @@ Windows Vista Professional or better is required for the NFS client and server f
 
           ::
 
-             C:\> Get-WindowsFeature -Name NFS*
-             C:\> Install-WindowsFeature -Name NFS-Client
+             C:\Windows\System32>Get-WindowsFeature -Name NFS*
+             C:\Windows\System32>Install-WindowsFeature -Name NFS-Client
 
 -  Stop the NFS client.
 
    ::
 
-      C:\> nfsadmin client stop
+      C:\Windows\System32>nfsadmin client stop
 
--  Configure the anonymous UID and GID to be ``0`` (root) from the Windows NFS client side. Open the "Registry Editor" and navigate to: ``HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default``.
+-  Configure the anonymous UID and GID to be ``0`` (root) from the Windows NFS client side. Alternatively, if the NFS server is using a different UID and GID, use those IDs instead. Open the "Registry Editor" and navigate to: ``HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ClientForNFS\CurrentVersion\Default``.
 
    -  Edit > New > DWORD (32-bit Value) > Name: AnonymousUID
 
-      -  (right-click on the AnonymousUID) > Modify... > Value data: 0 > Base: Decimal > OK
+      -  (right-click on the AnonymousUID) > Modify... > Base: Decimal > Value data: 0 > OK
 
    -  Edit > New > DWORD (32-bit Value) > Name: AnonymousGID
 
-      -  (right-click on the AnonymousGID) > Modify... > Value data: 0 > Base: Decimal > OK
+      -  (right-click on the AnonymousGID) > Modify... > Base: Decimal > Value data: 0 > OK
 
 -  Start the NFS client to load the new changes.
 
    ::
 
-      C:\> nfsadmin client start
+      C:\Windows\System32>nfsadmin client start
 
 -  Configure the NFS client to allow files to be executable, readable, and writable.
 
    ::
 
-      C:\> nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i
+      C:\Windows\System32>nfsadmin client localhost config fileaccess=755 SecFlavors=+sys -krb5 -krb5i
 
 -  As a non-Administrator account, mount a NFS share. This way, it will show up in File Explorer as a normal unprivileged user. [2]
 
@@ -92,19 +92,19 @@ Windows Vista Professional or better is required for the NFS client and server f
 
      ::
 
-        C:\Users\<USER>> mount -o anon \\<NFS_SERVER_ADDRESS>\<NFS_PATH> <DRIVE_LETTER>:
+        C:\Users\<USER>>mount -o anon \\<NFS_SERVER_ADDRESS>\<NFS_PATH> <DRIVE_LETTER>:
 
   -  Example:
 
      ::
 
-        C:\Users\winuser> mount -o anon \\192.168.1.123\exports\foobar N:
+        C:\Users\<USER>>mount -o anon \\192.168.1.123\exports\foobar N:
 
 -  Verify that the mount was created.
 
    ::
 
-      C:\Users\winuser> mount
+      C:\Users\<USER>>mount
 
       Local    Remote                         Properties
       --------------------------------------------------------------------
@@ -120,7 +120,7 @@ Windows Vista Professional or better is required for the NFS client and server f
 
    ::
 
-      C:\Users\winuser> umount N:
+      C:\Users\<USER>>umount N:
 
       Disconnecting           N:      \\192.168.1.123\exports\foobar
 
