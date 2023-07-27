@@ -39,8 +39,11 @@ Enable BitLocker encryption [8]:
 
    -  Settings > Update & Security > Device encryption: On
 
+Linux File Systems
+-------------------
+
 NFS
----
+~~~
 
 Windows Vista Professional or better is required for the NFS client and server features. For older versions of Windows, the Windows Services for UNIX (SFU) software package provides many client utilities including a NFS client.
 
@@ -128,6 +131,13 @@ Windows Vista Professional or better is required for the NFS client and server f
 
 [1]
 
+Zone Identifier Files
+~~~~~~~~~~~~~~~~~~~~~
+
+When accessing Windows Subsystem for Linux (WSL) or Network File System (NFS) files, Windows >=10 will creates a file called ``<FILE_NAME>:Zone.Identifier`` for every file ``<FILE_NAME>``. WSL uses CIFS/SMB to share files between the virtual machine and the host. All network files have a zone identifiter to configure the security of what these network files can do. [9] This feature can be disabled to prevent these extra zone identifier files from being created [10]:
+
+-  Local Group Policy Editor (gpedit.msc) > User Configuration > Administrative Templates > Windows Components > Attachment Manager > Do not preserve zone information in file attachments > Enabled > OK
+
 History
 -------
 
@@ -144,3 +154,5 @@ Bibliography
 6. "Secure Boot and Bitlocker." Windows 10 Forums. August 11, 2017. Accessed June 21, 2023. https://www.tenforums.com/antivirus-firewalls-system-security/90970-secure-boot-bitlocker.html
 7. "BitLocker Recovery - Unlock a Drive in Windows 8." Windows 8 Help Forums. July 27, 2016. Accessed June 21, 2023. https://www.eightforums.com/threads/bitlocker-recovery-unlock-a-drive-in-windows-8.21433/
 8. "Turn on device encryption." Microsoft Support. Accessed June 21, 2023. https://support.microsoft.com/en-us/windows/turn-on-device-encryption-0c453637-bc88-5f74-5105-741561aae838
+9. "About URL Security Zones." Microsoft Learn. August 15, 2017. Accessed July 26, 2023. https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537183(v=vs.85)
+10. "Zone.Identifier Files when copying from Windows to WSL filestructure #4609." GitHub microsoft/WSL. July 15, 2023. Accessed July 26, 2023. https://github.com/microsoft/WSL/issues/4609#issuecomment-1079657697
