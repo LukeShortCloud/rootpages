@@ -15,11 +15,11 @@ Windows 10 and 11 natively support the open HDR10 standard. Starting with Window
 
 Windows 11
 
--  Settings > System > Display > Use HDR > Use HDR: On, HDR video streaming: On, Auto HDR: On
+-  Settings (ms-settings:) > System > Display > Use HDR > Use HDR: On, HDR video streaming: On, Auto HDR: On
 
 Windows 10
 
--  Settings > System > Display  > Use HDR: On
+-  Settings (ms-settings:) > System > Display  > Use HDR: On
 
 Enable Dolby Vision
 ~~~~~~~~~~~~~~~~~~~

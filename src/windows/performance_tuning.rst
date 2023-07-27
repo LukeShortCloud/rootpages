@@ -45,7 +45,7 @@ Starting with Windows 10, it is also possible to use Ultimate Performance mode w
 
    ::
 
-      Control Panel > System and Security > Power Options > Selected plan: Ultimate Performance
+      Control Panel (Control Panel) > System and Security > Power Options > Selected plan: Ultimate Performance
 
 Replace Microsoft Defender
 --------------------------
@@ -172,7 +172,7 @@ The Windows Search Index keeps a database of all files and their contents that a
 
    ::
 
-      File Explorer > (right-click on "Local Disk (C:)") > Properties > General > uncheck "Allow files on this drive to have contents indexed in addition to file properties" > OK > Apply changes to drive C:\, subfolders and files > OK
+      File Explorer (Explorer) > (right-click on "Local Disk (C:)") > Properties > General > uncheck "Allow files on this drive to have contents indexed in addition to file properties" > OK > Apply changes to drive C:\, subfolders and files > OK
 
 -  Or disable the entire Windows Search Indexing service. [9]
 

@@ -12,7 +12,7 @@ Open a Command Prompt as the Administrator user. Run this command to view the li
 
 ::
 
-   C:\Windows\system32>wsl --list --online
+   C:\Windows\System32>wsl --list --online
 
 This is the list of officially supported Linux distributions:
 
@@ -26,13 +26,13 @@ Select the operating system to install. By default, if no Linux distribution is 
 
 ::
 
-   C:\Windows\system32>wsl --install -d <LINUX_DISTRO_NAME>
+   C:\Windows\System32>wsl --install -d <LINUX_DISTRO_NAME>
 
 Reboot to finish the installation. Then open a Command Prompt and run either ``bash`` or ``wsl`` to open a Linux terminal. [1]
 
 On Windows 11, there is a false-positive report from the control flow guard (CFG) protection that prevents WSL 2 from starting. Disable it to be able to use WSL 2. [2]
 
--  Windows Security > App & browser control > Exploit protection settings > Control flow guard (CFG): Off by default
+-  Windows Security (windowsdefender:) > App & browser control > Exploit protection settings > Control flow guard (CFG): Off by default
 
 History
 -------

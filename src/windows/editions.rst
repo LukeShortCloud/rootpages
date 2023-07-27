@@ -84,7 +84,7 @@ By default, Windows Photo Viewer is installed but not enabled in Windows LTSC ed
 
 -  Download the `Restore_Windows_Photo_Viewer_ALL_USERS_with_Sort_order_fix.reg <https://www.tenforums.com/attachments/tutorials/198321d1533487488-restore-windows-photo-viewer-windows-10-a-restore_windows_photo_viewer_all_users_with_sort_order_fix.reg>`__ fix.
 -  Right-click on the downloaded file and select "Open with > Registry Editor".
--  Windows Settings > Apps > Default apps > Photo viewer > + Choose a default > Windows Photo Viewer
+-  Settings (ms-settings:) > Apps > Default apps > Photo viewer > + Choose a default > Windows Photo Viewer
 
 [9]
 

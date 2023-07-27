@@ -33,11 +33,11 @@ Enable BitLocker encryption [8]:
 
 -  Windows 11:
 
-   -  Settings > Privacy & security > Device encryption: On
+   -  Settings (ms-settings:) > Privacy & security > Device encryption: On
 
 -  Windows 10:
 
-   -  Settings > Update & Security > Device encryption: On
+   -  Settings (ms-settings:) > Update & Security > Device encryption: On
 
 Linux File Systems
 -------------------
@@ -51,7 +51,7 @@ Windows Vista Professional or better is required for the NFS client and server f
 
 -  Install the NFS client services:
 
-   -  GUI: Control Panel > Programs > Programs and Features > Turn Windows features on or off > Services for NFS > OK
+   -  GUI: Control Panel (Control Panel) > Programs > Programs and Features > Turn Windows features on or off > Services for NFS > OK
    -  CLI:
 
       - Check if the NFS client feature is available. If so, install it.

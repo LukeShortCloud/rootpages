@@ -20,19 +20,19 @@ If using another antivirus program or if required for testing, it may be desired
 
 -  Real-time protection
 
-   -  Windows 10
-
-      -  Settings > Update & Security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off
-
    -  Windows 11
 
-      - Settings > Privacy & security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off, Cloud-delivered protection: Off, Automatic sample submission: Off, and Tamper Protection: Off
+      -  Settings (ms-settings:) > Privacy & security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off, Cloud-delivered protection: Off, Automatic sample submission: Off, and Tamper Protection: Off
+
+   -  Windows 10
+
+      -  Settings (ms-settings:) > Update & Security > Windows Security > Virus & threat protection > Manage settings > Real-time protection: Off
 
 -  Scheduled tasks
 
-   -  Windows 10 and 11
+   -  Windows 11 and 10
 
-      -  Task Scheduler > Task Scheduler (Local) > Task Scheduler Library > Microsoft > Windows > Windows Defender
+      -  Task Scheduler (taskschd.msc) > Task Scheduler (Local) > Task Scheduler Library > Microsoft > Windows > Windows Defender
 
          -  Select each task and either `Disable` or `Delete` them: `Windows Defender Cache Maintenance`, `Windows Defender Cleanup`, `Windows Defender Scheduled Scan`, and `Windows Defender Verification`. [2]
 
@@ -44,22 +44,22 @@ If using another antivirus program or if required for testing, it may be desired
 
       ::
 
-         PS> Invoke-WebRequest -Uri https://github.com/W4RH4WK/Debloat-Windows-10/archive/master.zip -OutFile Debloat-Windows-10.zip
-         PS> Expand-Archive Debloat-Windows-10.zip
-         PS> cd .\Debloat-Windows-10\Debloat-Windows-10-master\scripts\
+         PS C:\Windows\system32> Invoke-WebRequest -Uri https://github.com/W4RH4WK/Debloat-Windows-10/archive/master.zip -OutFile Debloat-Windows-10.zip
+         PS C:\Windows\system32> Expand-Archive Debloat-Windows-10.zip
+         PS C:\Windows\system32> cd .\Debloat-Windows-10\Debloat-Windows-10-master\scripts\
 
    -  Allow the PowerShell scripts to be executable.
 
       ::
 
-         PS> Set-ExecutionPolicy Unrestricted -Scope CurrentUser
-         PS> ls -Recurse *.ps*1 | Unblock-File
+         PS C:\Windows\system32> Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+         PS C:\Windows\system32> ls -Recurse *.ps*1 | Unblock-File
 
    -  Disable Windows Defender.
 
       ::
 
-         PS> .\disable-windows-defender.ps1
+         PS C:\Windows\system32> .\disable-windows-defender.ps1
 
 User Account Control (UAC)
 --------------------------
@@ -71,9 +71,9 @@ Disable
 
 For users who often need to use the Administrator account, it may be desired to disable UAC entirely.
 
-Windows 10 and 11:
+-  Windows 11 and 10
 
--  Control Panel > User Accounts > User Accounts > Change User Account Control settings > Never notify
+   -  Control Panel (Control Panel) > User Accounts > User Accounts > Change User Account Control settings > Never notify
 
 History
 -------
