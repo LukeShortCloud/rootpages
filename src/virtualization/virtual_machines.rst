@@ -1915,6 +1915,17 @@ Free Repository
 
 By default, only the Proxmox VE Enterprise repository is configured at ``/etc/apt/sources.list.d/pve-enterprise.list``. This requires a valid paid subscription to use and provides all of the Proxmox packages and some newer Debian packages. As an alternative, Proxmox offers a free Proxmox VE No-Subscription repository. These packages are slightly newer than the enterprise repository and have not been tested as long.
 
+-  Proxmox VE 8:
+
+   .. code-block:: sh
+
+      $ cat <<EOF > /etc/apt/sources.list.d/pve-no-subscription.list
+      deb http://ftp.debian.org/debian bookworm main contrib
+      deb http://ftp.debian.org/debian bookworm-updates main contrib
+      deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+      deb http://security.debian.org/debian-security bookworm-security main contrib
+      EOF
+
 -  Proxmox VE 7:
 
    .. code-block:: sh
@@ -1928,12 +1939,7 @@ By default, only the Proxmox VE Enterprise repository is configured at ``/etc/ap
 
 [55]
 
-Once complete, perform a full system upgrade and then reboot the server.
-
-.. code-block:: sh
-
-   $ apt-get update
-   $ apt-get dist-upgrade
+Perform a minor `upgrade <#upgrades>`__ to complete the installation.
 
 Local Storage
 ^^^^^^^^^^^^^
@@ -2007,6 +2013,62 @@ This can be fixed by deleting and recreating the UEFI keys with pre-enrollment d
 
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Remove > Yes
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Add > EFI Disk > Pre-Enroll keys: No
+
+Upgrades
+^^^^^^^^
+
+**Minor**
+
+-  Using ``apt-get upgrade`` can break the installation of Proxmox. Always use ``apt-get dist-upgrade`` instead. [72][73]
+
+   .. code-block:: sh
+
+      $ pveversion
+      $ sudo apt-get update
+      $ sudo apt-get dist-upgrade
+      $ pveversion
+
+-  Reboot.
+
+**Major**
+
+-  Proxmox VE 7 to 8:
+
+   -  Perform a minor upgrade.
+   -  Verify the current version.
+
+      .. code-block:: sh
+
+         $ pveversion
+
+   -  Read the known upgrade issues for `Debian 12 Bookworm <https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html>`__ and `Proxmox VE 8 <https://pve.proxmox.com/wiki/Roadmap#8.0-known-issues>`__.
+   -  Run the official checklist to see what upgrade problems may occur.
+
+      .. code-block:: sh
+
+         $ sudo pve7to8 --full
+
+   -  Update Debian repositories.
+
+      .. code-block:: sh
+
+         $ sudo sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
+         $ sudo sed -i -e 's/bullseye/bookworm/g' /etc/apt/sources.list.d/pve-*.list
+         $ sudo apt-get update
+
+   -  Upgrade from Debian 11 Bullseye with Proxmox VE 7 to Debian 12 Bookworm with Proxmox VE 8. [74]
+
+      .. code-block:: sh
+
+         $ sudo apt-get dist-upgrade
+
+   -  Verify the new version.
+
+      .. code-block:: sh
+
+         $ pveversion
+
+   -  Reboot.
 
 Virtual Machine Manager (virt-manager)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2139,7 +2201,7 @@ Bibliography
 52. "How to install Proxmox VE 7.0." YouTube - H2DC - How to do Computers. October 20, 2021. Accessed August 7, 2022. https://www.youtube.com/watch?v=GYOlulPwxlE
 53. "Huge pages part 3: Administration." LWN.net. June 21, 2011. Accessed August 7, 2022. https://lwn.net/Articles/448571/
 54. "Qemu/KVM Virtual Machines." Proxmox VE. May 4, 2022. Accessed August 7, 2022. https://pve.proxmox.com/wiki/Qemu/KVM_Virtual_Machines
-55. "Package Repositories." Proxmox VE. November 17, 2021. Accessed August 9, 2022. https://pve.proxmox.com/wiki/Package_Repositories
+55. "Package Repositories." Proxmox VE. June 22, 2023. Accessed July 29, 2023. https://pve.proxmox.com/wiki/Package_Repositories
 56. "Trying to save power - can I completely “switch off” GPU?" Reddit r/VFIO. May 21, 2022. Accessed August 11, 2022. https://www.reddit.com/r/VFIO/comments/uujulb/trying_to_save_power_can_i_completely_switch_off/
 57. "PVE-Headers." Proxmox Support Forums. October 13, 2021. Accessed August 11, 2022. https://forum.proxmox.com/threads/pve-headers.97882/
 58. "Install NVIDIA Drivers on Debian 11." Linux Hint. March, 2022. Accessed August 11, 2022. https://linuxhint.com/install-nvidia-drivers-debian-11/
@@ -2156,3 +2218,6 @@ Bibliography
 69. "KVM." Debian Wiki. February 6, 2023. Accessed February 18, 2023. https://wiki.debian.org/KVM
 70. "Kickstart Documentation." Pykickstart Documentation. Accessed February 28, 2023. https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html
 71. "Bug 1838859 - user from kickstart is not created on ostreesetup based install." Red Hat Bugzilla. February 8, 2022. Accessed February 18, 2023. https://bugzilla.redhat.com/show_bug.cgi?id=1838859
+72. "pve7to8 not present." Proxmox Support Forum. July 27, 2023. Accessed July 29, 2023. https://forum.proxmox.com/threads/pve7to8-not-present.129479/
+73. "Proxmox VE Administration Guide." Proxmox VE Documentation. June 25, 2023. Accessed July 29, 2023. https://pve.proxmox.com/pve-docs/pve-admin-guide.html#_system_software_updates
+74. "Upgrade from 7 to 8." Proxmox VE. July 18, 2023. Accessed July 29, 2023. https://pve.proxmox.com/wiki/Upgrade_from_7_to_8
