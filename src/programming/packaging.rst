@@ -562,11 +562,29 @@ Fedora provides an automated system to download and build RPM packages using the
 
       $ sudo dnf builddep <RPM_SPEC>
 
--  Build the RPM package.
+-  Optionally create a source RPM.  ``fedpkg srpm`` is a wrapper around ``rpmbuild -bs``. [30]
 
    .. code-block:: sh
 
-      $ fedkpkg local
+      $ fedpkg srpm
+
+-  Build the RPM package using local host dependencies.
+
+   .. code-block:: sh
+
+      $ fedpkg local
+
+-  Build the RPM using Mock to isolate build dependencies.
+
+   .. code-block:: sh
+
+      $ fedpkg mockbuild
+
+-  Build the RPM and manually set the release (for example, to ``f38``) if the git repository is not on a standard branch.
+
+   .. code-block:: sh
+
+      $ fedpkg --release f38 local
 
 [18]
 
@@ -857,3 +875,4 @@ Bibliography
 27. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
 28. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
 29. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
+30. "#11 fedpkg should allow adding options to rpmbuild command line." Pagure.io. May 11, 2018. Accessed July 28, 2023. https://pagure.io/fedpkg/issue/11
