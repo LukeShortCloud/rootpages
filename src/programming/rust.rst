@@ -1026,6 +1026,20 @@ Cargo is the official package manager for Rust dependencies. It installs package
 
 [28][29]
 
+-  As of Rust 1.69.0, debug builds provide minimal debugging information to make builds faster by default. This can be re-enabled to help troubleshoot build issues. [56]
+
+   .. code-block:: sh
+
+      $ cat <PROJECT_NAME>/Cargo.toml
+
+   .. code-block:: yaml
+
+      [profile.dev.build-override]
+      debug = true
+
+      [profile.release.build-override]
+      debug = true
+
 Logging
 -------
 
