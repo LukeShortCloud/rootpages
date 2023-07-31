@@ -77,6 +77,14 @@ It is recommended to install Rust in one of two ways. Either (1) globally for us
          $ rustc --version
          rustc 1.68.2 (9eb3afe9e 2023-03-27)
 
+   -  When an update is available, Rust can be updated via the local ``rustup`` command. [56]
+
+      .. code-block:: sh
+
+         $ rustup update stable
+         $ rustc --version
+         rustc 1.71.0 (8ede3aae2 2023-07-12)
+
 Style Guide
 -----------
 
@@ -1389,3 +1397,4 @@ Bibliography
 53. "Assertion macros for Rust." SVARTALF. March 13, 2020. Accessed April 29, 2023. https://svartalf.info/posts/2020-03-13-assertion-macros-for-rust/
 54. "Logging in Rust." Medium. April 11, 2021. Accessed April 30, 2023. https://medium.com/nerd-for-tech/logging-in-rust-e529c241f92e
 55. "Comparing logging and tracing in Rust." LogRocket Blog. May 27, 2022. Accessed April 30, 2023. https://blog.logrocket.com/comparing-logging-tracing-rust/
+56. "Announcing Rust 1.69.0." Rust Blog. April 20, 2023. Accessed July 30, 2023. https://blog.rust-lang.org/2023/04/20/Rust-1.69.0.html
