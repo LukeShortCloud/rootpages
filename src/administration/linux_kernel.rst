@@ -507,32 +507,55 @@ Fedora
 
       $ sed -i 's/# define buildid .local/%define buildid .custom/g' kernel.spec
 
--  Build a release kernel using Mock to isolate dependencies. By default, kernels are built with debugging support which are slower and bigger. This can be disabled. [21][22]
+-  Build the kernel.
 
-   .. code-block:: sh
+   -  RPM
 
-      $ fedpkg --release f<FEDORA_MAJOR_VERSION> mockbuild --without debug --without debuginfo --with release
+      -  Build and package a release kernel as RPMs using Mock to isolate dependencies. By default, kernels are built with debugging support which are slower and bigger. They are named ``kernel-debug-<VERSION>.rpm``. [23] This can be disabled. [21][22] If the user doing the build is not in the ``mock`` group, the ``fedpkg`` command will manually prompt the user to enter the ``root`` password.
 
--  The resulting RPMs will be saved to: ``$(pwd)/results_kernel/<KERNEL_FULL_VERSION>/<RPM_RELEASE>.<RPM_LOCAL_NAME>.fc<FEDORA_MAJOR_VERSION>``.  For example, the directory should look similar to this:
+         .. code-block:: sh
 
-   .. code-block:: sh
+            $ sudo usermod -a -G mock ${USER}
+            $ fedpkg --release f<FEDORA_MAJOR_VERSION> mockbuild --without debug --without debuginfo --with release
 
-      $ ls -1 results_kernel/6.3.13/200.custom.fc38/
-      build.log
-      hw_info.log
-      installed_pkgs.log
-      kernel-6.3.13-200.custom.fc38.src.rpm
-      kernel-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-core-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-devel-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-devel-matched-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-modules-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-modules-core-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-modules-extra-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-modules-internal-6.3.13-200.custom.fc38.x86_64.rpm
-      kernel-uki-virt-6.3.13-200.custom.fc38.x86_64.rpm
-      root.log
-      state.log
+      -  The resulting RPMs will be saved to: ``$(pwd)/results_kernel/<KERNEL_FULL_VERSION>/<RPM_RELEASE>.<RPM_LOCAL_NAME>.fc<FEDORA_MAJOR_VERSION>``.  For example, the directory should look similar to this:
+
+         .. code-block:: sh
+
+            $ ls -1 results_kernel/6.3.13/200.custom.fc38/
+            build.log
+            hw_info.log
+            installed_pkgs.log
+            kernel-6.3.13-200.custom.fc38.src.rpm
+            kernel-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-core-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-devel-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-devel-matched-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-modules-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-modules-core-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-modules-extra-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-modules-internal-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-uki-virt-6.3.13-200.custom.fc38.x86_64.rpm
+            root.log
+            state.log
+
+   -  SRPM
+
+      -  Build a source RPM package with the sources for the release kernel. This is normally configured via RPM build configurations (BCONF) statements such as ``--with`` and ``--without`` [24] but it is not possible to create a SRPM with those pre-defined. Fedora Copr also does not support changing these values. Instead, manually modify the ``kernel.spec`` file.
+
+         .. code-block:: sh
+
+            $ sed -i s'/%define with_debug     %{?_without_debug:     0} %{?!_without_debug:     1}/%define with_debug 0/'g kernel.spec
+            $ sed -i s'/%define with_debuginfo %{?_without_debuginfo: 0} %{?!_without_debuginfo: 1}/%define with_debuginfo 0/'g kernel.spec
+            $ sed -i s'/%define with_release   %{?_with_release:      1} %{?!_with_release:      0}/%define with_release 1/'g kernel.spec
+            $ fedpkg --release f38 srpm
+
+      -  The resulting SRPM will be saved to the current working directory.
+
+         .. code-block:: sh
+
+            $ ls -1 | grep src.rpm
+            kernel-6.3.13-200.custom.fc38.src.rpm
 
 Install
 -------
@@ -621,3 +644,5 @@ Bibliography
 20. "Building a custom kernel." Fedora Project Wiki. August 16, 2022. Accessed July 19, 2023. https://fedoraproject.org/wiki/Building_a_custom_kernel
 21. "Build a fedora kernel: Updated." ASUS NoteBook Linux. Accessed July 19, 2023. https://asus-linux.org/blog/fedora-kernel-build/
 22. "Has anyone managed to build a Fedora patched kernel in 2022?" Reddit r/Fedora. December 12, 2022. Accessed July 19, 2023. https://www.reddit.com/r/Fedora/comments/zgdkrc/has_anyone_managed_to_build_a_fedora_patched/
+23. "KernelDebugStrategy." Fedora Project Wiki. August 11, 2016. Accessed July 28, 2023. https://fedoraproject.org/wiki/KernelDebugStrategy
+24. "Conditional Builds." RPM Package Manager. Accessed July 30, 2023. https://rpm-software-management.github.io/rpm/manual/conditionalbuilds.html
