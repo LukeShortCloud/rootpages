@@ -85,6 +85,11 @@ Installation
 Proprietary
 ^^^^^^^^^^^
 
+Redistribution
+''''''''''''''
+
+As of NVIDIA proprietary driver version 535.43.02, both the Linux kernel driver and the GSP firmware binary are allowed to be redistributed by anyone. Before this, operating system maintainers required explicit written permission from NVIDIA to distribute these files. [21][22] The GSP firmware will also allow the open source drivers to perform better. They will have the ability to support newer hardware and run them at higher clock speeds while gaming or lower clock speeds while idle. [23]
+
 Fedora
 ''''''
 
@@ -208,3 +213,6 @@ Bibliography
 18. "Apple GPU drivers now in Asahi Linux." Alyssa Rosenzweig. December 7, 2022. Accessed March 14, 2023. https://rosenzweig.io/blog/asahi-gpu-part-7.html
 19. "Introducing NVK." Collabora News & Blog. October 4, 2022. Accessed March 29, 2023. https://www.collabora.com/news-and-blog/news-and-events/introducing-nvk.html
 20. "Tales of the M1 GPU." Asahi Linux. November, 2022. Accessed March 29, 2023. https://asahilinux.org/2022/11/tales-of-the-m1-gpu/
+21. "NVIDIA Cleans Up GSP Firmware Binary License." Phoronix. May 31, 2023. Accessed July 31, 2023. https://www.phoronix.com/news/NVIDIA-GSP-Firmware-License
+22. "License For Customer Use of NVIDIA Software." NVIDIA. Accessed July 31, 2023. https://www.nvidia.com/content/DriverDownloads/licence.php?lang=us
+23. "NVK update: Enabling new extensions, conformance status & more." Collabora. June 26, 2023. Accessed July 31, 2023. https://www.collabora.com/news-and-blog/news-and-events/nvk-update-enabling-new-extensions-conformance-status-more.html
