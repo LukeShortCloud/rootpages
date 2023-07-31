@@ -201,7 +201,7 @@ Common Repositories
    "Wine", "Fedora", "Yes", "The latest stable, development, and staging packages for Wine.", `Installing <https://wiki.winehq.org/Fedora>`__
 
 Red Hat Repositories
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Red Hat provides different repositories for Red Hat Enterprise Linux operating systems. Many of these provide access to licensed downstream software maintained by the company and obtained through subscriptions.
 
@@ -233,6 +233,39 @@ Fedora, by default, only provides free and open source software (no proprietary 
    $ fedy
 
 [15]
+
+Exclude Package Updates
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Examples:
+
+-  Temporarily exclude kernel and NVIDIA updates.
+
+   .. code-block:: sh
+
+      $ sudo dnf update --exclude=kernel* --exclude=nvidia*
+
+-  Permanently exclude Firefox, kernel, and Shutter updates for Fedora. [19]
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/yum.repos.d/fedora-updates.repo
+
+   .. code-block:: ini
+
+      [updates]
+      exclude=firefox* kernel* shutter
+
+-  Exclude 32-bit packages from being installed and updated system-wide. [20]
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/dnf/dnf.conf
+
+   .. code-block:: ini
+
+      [main]
+      exclude=*.i?86 *.i686
 
 Flatpak
 -------
@@ -309,3 +342,5 @@ Bibliography
 16. "UnattendedUpgrades." Debian Wiki. August 19, 2019. Accessed September 5, 2020. https://wiki.debian.org/UnattendedUpgrades
 17. "Need to set up yum repository for locally-mounted DVD on Red Hat Enterprise Linux 7." Red Hat Knowledgebase. August 20, 2019. Accessed September 16, 2020. https://access.redhat.com/solutions/1355683#comment-1514411
 18. "LTSEnablementStack." Ubuntu Wiki. January 27, 2021. Accessed February 23, 2021. https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+19. "How do I exclude kernel or other packages from getting updated in Red Hat Enterprise Linux while updating system via yum?" Red Hat Customer Portal. August 15, 2022. Accessed July 31, 2023. https://www.tecmint.com/exclude-package-updates-yum-dnf-command/
+20. "How to Disable Package Updates Using YUM/DNF in RHEL Linux." TecMint. December 9, 2021. Accessed July 31, 2023. https://access.redhat.com/solutions/10185
