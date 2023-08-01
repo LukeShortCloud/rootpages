@@ -1975,7 +1975,7 @@ Enable all types of storage to be allowed on the root file system.
 NVIDIA Drivers
 ^^^^^^^^^^^^^^
 
-If the hypervisor has a NVIDIA graphics card that is not used by a virtual machine, it will use less energy with the proprietary driver installed. The driver will automatically put the graphics card into a lower power state when idle. [56] AMD graphics cards have native support in the Linux kernel so no additional drivers need to be installed for them.
+If the hypervisor has a NVIDIA graphics card that is not used by a virtual machine, it will use less energy with the proprietary driver installed. The driver will automatically put the graphics card into a lower power state when idle. [56][75] AMD graphics cards have native support in the Linux kernel so no additional drivers need to be installed for them.
 
 -  Install the Linux kernel headers for Proxmox VE [57]:
 
@@ -2221,3 +2221,4 @@ Bibliography
 72. "pve7to8 not present." Proxmox Support Forum. July 27, 2023. Accessed July 29, 2023. https://forum.proxmox.com/threads/pve7to8-not-present.129479/
 73. "Proxmox VE Administration Guide." Proxmox VE Documentation. June 25, 2023. Accessed July 29, 2023. https://pve.proxmox.com/pve-docs/pve-admin-guide.html#_system_software_updates
 74. "Upgrade from 7 to 8." Proxmox VE. July 18, 2023. Accessed July 29, 2023. https://pve.proxmox.com/wiki/Upgrade_from_7_to_8
+75. "High Power Consumption with VM off (vfio-pci)." Reddit r/VFIO. July 14, 2022. Accessed July 31, 2023. https://www.reddit.com/r/VFIO/comments/lgavgk/high_power_consumption_with_vm_off_vfiopci/
