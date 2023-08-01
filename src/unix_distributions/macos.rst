@@ -6,25 +6,14 @@ macOS
 Window Positioning
 ------------------
 
-ShiftIt
-~~~~~~~
+Rectangle
+~~~~~~~~~
 
-`ShiftIt <https://github.com/fikovnik/ShiftIt>`__ is one of the few free window positioning/tiling software for macOS. Once started, it will appear in the menu bar. A drop list is provided of the default shortcuts.
+`Rectangle <https://github.com/rxhanson/Rectangle>`__ is a free and open source window tiling software for macOS. It adds native windows snapping similar to Windows. It also adds a variety of shortcuts for more customizations. [7]
 
-Activate ShiftIt:
+Shortcuts:
 
--  Mac: ``CONTROL`` + ``OPTION`` + ``COMMAND``
--  Windows: ``CTRL`` + ``ALT`` + ``WINDOWS``
-
-Immediately after that, press additional keys for the desired usage:
-
--  ``1``, ``2``, ``3``, or ``4`` = Move a window to the desired quadrant.
--  ``UP_ARROW``, ``DOWN_ARROW``, ``LEFT_ARROW``, or ``RIGHT_ARROW`` = Move a window to align with the specified part of the screen.
--  ``p`` (previous) or ``n`` (next) = Move a window to the next monitor.
--  ``=`` or ``-`` = Increase or decrease the size of a window.
--  ``c`` = Center the window.
--  ``m`` = Maximize a window.
--  ``f`` - Fullscreen a window.
+-  ``control`` + ``option`` + ``[left|right] arrow`` = Move a window to be on half of the screen.
 
 Rosetta
 -------
@@ -95,3 +84,4 @@ Bibliography
 4. "Apple ARM Macs: What you need to know now." July 15, 2020. Accessed July 5, 2023. https://www.computerworld.com/article/3566912/apple-arm-macs-what-you-need-to-know-now.html
 5. "If you need to install Rosetta on your Mac." Apple Support. June 26, 2023. Accessed July 5, 2023. https://support.apple.com/en-us/HT211861
 6. "How to Install x86_64 Homebrew Packages on Apple M1 MacBook." Medium. July 26, 2021. Accessed July 5, 2023. https://medium.com/mkdir-awesome/how-to-install-x86-64-homebrew-packages-on-apple-m1-macbook-54ba295230f
+7. "How to get true window snapping in MacOS." ZDNET. July 5, 2023. Accessed July 31, 2023. https://www.zdnet.com/article/how-to-get-true-window-snapping-in-macos/
