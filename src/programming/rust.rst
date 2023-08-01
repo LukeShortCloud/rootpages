@@ -465,6 +465,9 @@ An ``enum`` is a collection of ``struct`` s into a single data type.
 Standard Input and Output
 -------------------------
 
+Introduction
+~~~~~~~~~~~~
+
 -  Use the built-in macro ``println!("")`` to print messages to standard output.
 
    .. code-block:: rust
@@ -496,7 +499,7 @@ Standard Input and Output
       Your name is Andor
       .
 
--  Stanard input captures all newlines characters. These can be removed by using the built-in string function ``<STRING>.pop()`` to remove the last character. [42]
+-  Standard input captures all newlines characters. These can be removed by using the built-in string function ``<STRING>.pop()`` to remove the last character. [42]
 
    .. code-block:: rust
 
@@ -510,6 +513,11 @@ Standard Input and Output
               }
           }
       }
+
+ANSI Color Codes
+~~~~~~~~~~~~~~~~
+
+Rust does not support the traditional octal escape sequences commonly used with ANSI color codes. Instead, use hexadecimal. For example, a blue octal color code of ``\033[34m`` should be rewritten as a hexadecimal code of ``\x1b[34m``. A full guide on the usage of ANSI can be found `here <shell.html#ansi-colors>`__. Alternatively, use the `colored <https://docs.rs/colored/latest/colored/>`__ create to make color coding even easier and the code more readable. [57]
 
 Functions
 ---------
@@ -1412,3 +1420,4 @@ Bibliography
 54. "Logging in Rust." Medium. April 11, 2021. Accessed April 30, 2023. https://medium.com/nerd-for-tech/logging-in-rust-e529c241f92e
 55. "Comparing logging and tracing in Rust." LogRocket Blog. May 27, 2022. Accessed April 30, 2023. https://blog.logrocket.com/comparing-logging-tracing-rust/
 56. "Announcing Rust 1.69.0." Rust Blog. April 20, 2023. Accessed July 30, 2023. https://blog.rust-lang.org/2023/04/20/Rust-1.69.0.html
+57. "How do I print colored text to the terminal in Rust?" Stack Overflow. January 24, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/69981449/how-do-i-print-colored-text-to-the-terminal-in-rust
