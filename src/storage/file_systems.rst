@@ -467,6 +467,9 @@ Network
 NFS
 ~~~
 
+Linux Client and Server
+^^^^^^^^^^^^^^^^^^^^^^^
+
 The Network File System (NFS) aims to universally provide a way to
 remotely mount directories between servers. All subdirectories from a
 shared directory will also be available.
@@ -556,6 +559,7 @@ NFS export options:
    writing, the other processes wait for it to finish.
 -  async (default) = Multiple writes are optimized to run in parallel.
    These writes may be cached in memory.
+-  insecure = Allow NFS server connections from non-standard client ports.
 -  sec = Specify a type of Kerberos authentication to use.
 
    -  krb5 = Use Kerberos for authentication only.
@@ -569,6 +573,20 @@ have the "nfs\_t" file context for SELinux to work properly.
 
     $ sudo semanage fcontext -a -t nfs_t "/path/to/dir{/.*)?"
     $ sudo restorecon -R "/path/to/dir"
+
+macOS Client
+^^^^^^^^^^^^
+
+macOS defaults to using NFS version 3 but also supports version 4. [46]
+
+-  Configure the macOS client to use NFS version 4 by default instead of 3.
+
+   .. code-block:: sh
+
+      $ sudo nano /etc/nfs.conf
+      nfs.client.mount.options = vers=4
+
+-  Configure the Linux NFS server to use the "insecure" export option. [47] macOS uses non-standard client ports. [48]
 
 Windows Client
 ^^^^^^^^^^^^^^
@@ -1341,6 +1359,56 @@ Solution:
 
 -  Install the package for CIFS client tools: ``cifs-utils``.
 
+----
+
+Mounting a NFS export on macOS fails because ``rpc.statd`` is not running on the server.
+
+::
+
+   $ sudo mount -t nfs 10.10.10.5:/export /Users/sjobs/NFSDocuments
+   mount_nfs: can't mount with remote locks when server (10.10.10.5) is not running rpc.statd: RPC prog. not avail
+   mount: /Users/sjobs/NFSDocuments failed with 74
+
+Solutions [46]:
+
+-  The NFS server may be running NFS version 4 which does not require the ``rpc.statd`` service.
+
+   -  Force the use of NFS version 4.
+
+      -  Temporarily: ``$ sudo mount -t nfs -o ver=4``
+      -  Permanently:
+
+         .. code-block:: sh
+
+            $ sudo nano /etc/nfs.conf
+            nfs.client.mount.options = vers=4
+
+   -  Alternatively, enable backwards compatibility on the NFS server.
+
+      .. code-block:: sh
+
+         $ sudo systemctl enable --now rpc-statd
+
+----
+
+Mounting a NFS export on macOS with a generic error message saying ``Operation not permitted``.
+
+::
+
+   $ sudo mount -t nfs 10.10.10.5:/export /Users/sjobs/NFSDocuments
+   mount_nfs: can't mount /export from 10.10.10.5 onto /Users/sjobs/NFSDocuments: Operation not permitted
+   mount: /Users/sjobs/NFSDocuments failed with 1
+
+Solutions:
+
+-  The ``mount`` command needs to be run with ``sudo``.
+-  macOS uses non-standard NFS client ports. The NFS server needs to update the export to include the "insecure" option. [46]
+
+   .. code-block:: sh
+
+      $ sudo nano /etc/exports
+      $ sudo systemctl restart nfs-server
+
 History
 -------
 
@@ -1397,3 +1465,6 @@ Bibliography
 43. "Kernel 5.15 : ntfs3 vs ntfs-3g." LinuxQuestions.org. September 9, 2021. Accessed March 2, 2023. https://www.linuxquestions.org/questions/slackware-14/kernel-5-15-ntfs3-vs-ntfs-3g-4175702945/
 44. "Renaming a ZFS pool." Prefetch Technologies. November 15, 2006. Accessed May 15, 2023. https://prefetch.net/blog/2006/11/15/renaming-a-zfs-pool/
 45. "Samba file sharing server." Debian Wiki. January 27, 2021. Accessed June 24, 2023. https://wiki.debian.org/Samba/ServerSimple
+46. "AFP vs NFS vs SMB Performance on macOS Mojave." Photography Life. April 25, 2020. Accessed August 2, 2023. https://photographylife.com/afp-vs-nfs-vs-smb-performance
+47. "Can't mount NFS share on Mac OS Big Sur shared from Ubuntu 21.04 - rpc.statd not running." Ask Ubuntu. July 13, 2022. Accessed August 2, 2023. https://askubuntu.com/questions/1344687/cant-mount-nfs-share-on-mac-os-big-sur-shared-from-ubuntu-21-04-rpc-statd-not
+48. "mount.nfs: rpc.statd is not running but is required for remote locking." Super User. August 14, 2020. Accessed August 2, 2023. https://superuser.com/questions/657071/mount-nfs-rpc-statd-is-not-running-but-is-required-for-remote-locking
