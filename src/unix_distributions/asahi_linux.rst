@@ -34,6 +34,36 @@ Start the installer:
 
 [1]
 
+Uninstallation
+--------------
+
+**Manual (RECOMMENDED)**
+
+The manual process for uninstalling Asahi Linux is less likely to corrupt the macOS installation.
+
+-  Find and delete the EFI partition for Asahi Linux.
+
+   .. code-block:: sh
+
+      $ diskutil list | grep ASAHI
+      $ diskutil eraseVolume JHFS+ drive /dev/<DEVICE>
+
+-  Delete the other Asahi Linux partitions using Disk Utility. This will automatically resize the macOS partition to use all available space again.
+
+   -  Disk Utility > Partition > (delete only these 3 partitions: (1) "drive" or "driver" which is 500 MB, (2) Asahi Linux which is 2.5 GB, and (3) the large partition that is NOT "Macintosh HD") > Apply > Partition > Done
+
+-  Reboot macOS. If Asahi Linux was configured to boot by default instead of macOS, the boot process will fail saying "Custom kernel failed to boot." Configure the Mac to use macOS by default [2]:
+
+   -  Startup Disk... > Macintosh HD > Restart...
+
+**Automatic (NOT recommended)**
+
+The automatic process for uninstalling Asahi Linux is more likely to corrupt the macOS installation. [3]
+
+.. code-block:: sh
+
+   $ curl -L https://alx.sh/wipe-linux | sudo sh
+
 History
 -------
 
@@ -43,3 +73,5 @@ Bibliography
 ------------
 
 1. "The first Asahi Linux Alpha Release is here!" Ashai Linux. March 18, 2022. Accessed June 17, 2023. https://asahilinux.org/2022/03/asahi-linux-alpha-release/
+2. "How to Uninstall Asahi Linux on M1 Mac - Remove all Partitions & Volumes." YouTube Mr. Macintosh. March 24, 2022. Accessed August 2, 2023. https://www.youtube.com/watch?v=nMnWTq2H-N0
+3. "How to uninstall?" Reddit r/AsahiLinux. July 23, 2023. Accessed August 2, 2023. https://www.reddit.com/r/AsahiLinux/comments/vs4qp1/how_to_uninstall/
