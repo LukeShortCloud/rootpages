@@ -92,6 +92,27 @@ Windows XP:
 - Best NVIDIA card for the era = NVIDIA 8800 GT [9]
 - Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
 
+Power Cables
+------------
+
+Graphics cards have a specific wattage requirement. They draw power from the PCIe slot and often require more power. That can be supplied through additional cables from the power supply.
+
+.. csv-table::
+   :header: Power Source, Wattage
+   :widths: 20, 20
+
+   PCIe x1 slot, 10
+   PCIe x4 slot, 25
+   PCIe x8 slot, 25 [13]
+   PCIe x16 slot, 75
+   6-pin PCIe cable, 75
+   8-pin PCIe cable, 150 [14]
+   12VHPWR PCIe cable, 600 [15]
+
+All versions of PCIe (currently 1.0 through 5.0) support the same wattage output. [14][16]
+
+It is not recommended to use a single Molex or SATA to 6-pin adapter due to the fire hazard risk if the GPU draws excessive power. [17] Both Molex and SATA power cables only provide 54 watts. [18][20] For 75 watts, use two Molex or SATA cables to convert to one 6-pin. [19] Avoid creating an 8-pin adapter, as it won't supply enough power (150 watts). [20]
+
 History
 -------
 
@@ -112,3 +133,11 @@ Bibliography
 10. "WinXP retro gaming PC." Linus Tech Tips. August 11, 2022. Accessed July 11, 2023. https://linustechtips.com/topic/1408436-winxp-retro-gaming-pc/
 11. "HD7990 in WinXP?" VOGONS. April 24, 2022. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=79494
 12. "What would be the fastest XP Setup with XP Era Hardware?" VOGONS. June 22, 2019. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=66873&start=60
+13. "Without attaching additional power cables, how much can a PCIe x16 graphics card draw from the motherboard's slot?" TechSpot. Accessed August 3, 2023. https://www.techspot.com/trivia/27-without-attaching-additional-power-cables-how-much-can/
+14. "PCI-E 3.0 Slot Power." Overclock.net. August 2, 2013. Accessed August 3, 2023. https://www.overclock.net/threads/pci-e-3-0-slot-power.1414801/
+15. "PCIe Gen5 "12VHPWR" Connector to Deliver Up to 600 Watts of Power for Next-Generation Graphics Cards." TechPowerUp. October 11, 2021. Accessed August 3, 2023. https://www.techpowerup.com/287682/pcie-gen5-12vhpwr-connector-to-deliver-up-to-600-watts-of-power-for-next-generation-graphics-cards
+16. "What's the PCIe power specs allowed for each 1.0 , 1.1a , 2.0 , 2.1 and 3.0 rated slot?" EVGA. September 24, 2011. Accessed August 3, 2023. https://forums.evga.com/What39s-the-PCIe-power-specs-allowed-for-each-10-11a-20-21-and-30-rated-slot-m1238513.aspx
+17. "[SOLVED] Molex vs SATA to PCIE wattage." Tom's Hardware. April 2, 2019. Accessed August 3, 2023. https://forums.tomshardware.com/threads/molex-vs-sata-to-pcie-wattage.3466610/#post-20958258
+18. "Can’t afford a Gaming PC? This one's $169." YouTube Linus Tech Tips. October 15, 2022. Accessed August 3, 2023. https://www.youtube.com/watch?v=YLC9rZ2e0Ms
+19. "GPU power from molex." Tom's Hardware. February 19, 2014. Accessed August 3, 2023. https://forums.tomshardware.com/threads/gpu-power-from-molex.1709339/
+20. "2 Molex to 8 Pin Adapter GPU | Everything You Need to Know." Hardware Centric. May 14, 2023. Accessed August 3, 2023. https://www.hardwarecentric.com/2-molex-to-8-pin-adapter/
