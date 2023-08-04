@@ -462,6 +462,15 @@ An ``enum`` is a collection of ``struct`` s into a single data type.
 
 [30]
 
+Both ``enum`` and ``struct`` can be created as empty void variables. Each void ``struct`` is considered a different type of data and is known as a zero-sized type (ZST). However, all empty ``enum`` variables are type-less. A ``struct`` is more efficient when it comes to resolving traits compared to an ``enum``. [58][59]
+
+-  Create an empty ``enum`` and ``struct``.
+
+   .. code-block:: sh
+
+      struct EmptyStruct {}
+      enum EmptyEnum {}
+
 Standard Input and Output
 -------------------------
 
@@ -1421,3 +1430,5 @@ Bibliography
 55. "Comparing logging and tracing in Rust." LogRocket Blog. May 27, 2022. Accessed April 30, 2023. https://blog.logrocket.com/comparing-logging-tracing-rust/
 56. "Announcing Rust 1.69.0." Rust Blog. April 20, 2023. Accessed July 30, 2023. https://blog.rust-lang.org/2023/04/20/Rust-1.69.0.html
 57. "How do I print colored text to the terminal in Rust?" Stack Overflow. January 24, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/69981449/how-do-i-print-colored-text-to-the-terminal-in-rust
+58. "Exotically Sized Types." The Rustonomicon. Accessed August 3, 2023. https://doc.rust-lang.org/nomicon/exotic-sizes.html
+59. "Enum vs structs implementing a trait." Reddit r/rust. May 13, 2020. Accessed August 3, 2023. https://www.reddit.com/r/rust/comments/ghk31y/enum_vs_structs_implementing_a_trait/
