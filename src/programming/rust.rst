@@ -471,6 +471,32 @@ Both ``enum`` and ``struct`` can be created as empty void variables. Each void `
       struct EmptyStruct {}
       enum EmptyEnum {}
 
+A ``struct`` can have default values set.
+
+-  Create a variable with all or some default values set.
+
+   .. code-block:: rust
+
+      #[derive(Debug)]
+      struct Car {
+          manual_transmission: bool,
+          year: i16,
+          top_speed: i8,
+      }
+
+      // This implementation name must be "Default".
+      impl Default for Car {
+          // This function name must be "default".
+          fn default () -> Car {
+              Car{manual_transmission: false, year: 2023, top_speed: 88}
+          }
+      }
+
+      fn main() {
+        let car_default_all = Car::default();
+        let car_default_some = Car{manual_transmission: true, ..Default::default()};
+      }
+
 Standard Input and Output
 -------------------------
 
@@ -1432,3 +1458,4 @@ Bibliography
 57. "How do I print colored text to the terminal in Rust?" Stack Overflow. January 24, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/69981449/how-do-i-print-colored-text-to-the-terminal-in-rust
 58. "Exotically Sized Types." The Rustonomicon. Accessed August 3, 2023. https://doc.rust-lang.org/nomicon/exotic-sizes.html
 59. "Enum vs structs implementing a trait." Reddit r/rust. May 13, 2020. Accessed August 3, 2023. https://www.reddit.com/r/rust/comments/ghk31y/enum_vs_structs_implementing_a_trait/
+60. "Initialising Empty Structs in Rust." GitHub ChrisWellsWood/empty_rust_structs.md. June 5, 2019. Accessed August 4, 2023. https://gist.github.com/ChrisWellsWood/84421854794037e760808d5d97d21421
