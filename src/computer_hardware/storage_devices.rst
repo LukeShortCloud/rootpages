@@ -40,6 +40,19 @@ Secure Digital (SD) cards [3]:
    UHS-III, 600
    SD Express, 4000
 
+Average Size
+------------
+
+Here are the average storage drive sizes for each era of Windows operating systems by the time the next Windows release came out.
+
+.. csv-table::
+   :header: Windows, Size (GB)
+   :widths: 20, 20
+
+   Windows XP (2007), 100 [4]
+   Windows 7 (2012), 700 [5]
+   Windows 10 (2021), 1000 [6]
+
 HDD Magnetic Recording
 ----------------------
 
@@ -61,3 +74,6 @@ Bibliography
 1. "Buyer beware—that 2TB-6TB “NAS” drive you’ve been eyeing might be SMR." Ars Technica. April 17, 2020. Accessed August 12, 2020. https://arstechnica.com/gadgets/2020/04/caveat-emptor-smr-disks-are-being-submarined-into-unexpected-channels/
 2. "Multi-Layer SSDs: What Are SLC, MLC, TLC, QLC, and PLC?." How-To Geek. October 28, 2019. Accessed August 12, 2020. https://www.howtogeek.com/444787/multi-layer-ssds-what-are-slc-mlc-tlc-qlc-and-mlc/
 3. "Bus Speed (Default Speed/High Speed/UHS/SD Express)." SD Assocation. Accessed August 2, 2021. https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/
+4. "2007 HDD Rundown: Can High Capacities Meet High Performance?" Tom's Hardware. January 16, 2007. Accessed August 7, 2023. https://www.tomshardware.com/reviews/2007-hdd-rundown,1522.html
+5. "Average capacity of Seagate and Western Digital hard disk drives (HDDs) worldwide from 3rd quarter 2011 to 1st quarter 2016." Statista. May 12, 2016. Accessed August 7, 2023. https://www.statista.com/statistics/751847/worldwide-seagate-western-digital-average-hard-drive-capacity/
+6. "Client SSDs: Samsung Retains No.1 Spot, SSDs Outsell HDDs by 2.6x." Tom's Hardware. August 20, 2021. Accessed August 7, 2023. https://www.tomshardware.com/news/client-ssds-outsell-client-hdds-by-2-6-times-in-q2
