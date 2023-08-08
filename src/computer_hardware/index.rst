@@ -8,6 +8,7 @@
    laptops
    monitors
    networking
+   power_supply_units
    processors
    ram
    storage_devices

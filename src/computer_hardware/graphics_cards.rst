@@ -111,7 +111,7 @@ Graphics cards have a specific wattage requirement. They draw power from the PCI
 
 All versions of PCIe (currently 1.0 through 5.0) support the same wattage output. [14][16]
 
-It is not recommended to use a single Molex or SATA to 6-pin adapter due to the fire hazard risk if the GPU draws excessive power. [17] Both Molex and SATA power cables only provide 54 watts. [18][20] For 75 watts, use two Molex or SATA cables to convert to one 6-pin. [19] Avoid creating an 8-pin adapter, as it won't supply enough power (150 watts). [20]
+It is not recommended to use a single SATA to 6-pin adapter due to the fire hazard risk if the GPU draws excessive power. [17] SATA power cables only provide 54 watts. [18][20] Molex power cables provide 156 watts. [21] For 75 watts, use one Molex or two SATA cables to convert to one 6-pin. [19] For 150 watts, use one Molex or three SATA cables to convert to one 8-pin adapter. [20]
 
 History
 -------
@@ -141,3 +141,4 @@ Bibliography
 18. "Can’t afford a Gaming PC? This one's $169." YouTube Linus Tech Tips. October 15, 2022. Accessed August 3, 2023. https://www.youtube.com/watch?v=YLC9rZ2e0Ms
 19. "GPU power from molex." Tom's Hardware. February 19, 2014. Accessed August 3, 2023. https://forums.tomshardware.com/threads/gpu-power-from-molex.1709339/
 20. "2 Molex to 8 Pin Adapter GPU | Everything You Need to Know." Hardware Centric. May 14, 2023. Accessed August 3, 2023. https://www.hardwarecentric.com/2-molex-to-8-pin-adapter/
+21. "Maximum Safe Wattage of PSU Cables." GPU Mining Resources. March 15, 2019. https://www.gpuminingresources.com/p/psu-cables.html
