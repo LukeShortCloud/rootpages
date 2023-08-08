@@ -497,6 +497,22 @@ A ``struct`` can have default values set.
         let car_default_some = Car{manual_transmission: true, ..Default::default()};
       }
 
+An ``Option`` is a special type of ``enum``. [61] It is a way to store value of ``None`` or any specific data type and check if a value exists while avoiding panics. [62]
+
+-  Create and use an ``Option`` variable.
+
+   .. code-block:: rust
+
+      fn main() {
+          let number_of_students: Option<i8> = Some(3);
+          //let number_of_students: Option<i8> = None;
+
+          match number_of_students {
+              Some(num) => println!("There are {} students here.", num),
+              None => println!("There are no students here."),
+          }
+      }
+
 Standard Input and Output
 -------------------------
 
@@ -1459,3 +1475,5 @@ Bibliography
 58. "Exotically Sized Types." The Rustonomicon. Accessed August 3, 2023. https://doc.rust-lang.org/nomicon/exotic-sizes.html
 59. "Enum vs structs implementing a trait." Reddit r/rust. May 13, 2020. Accessed August 3, 2023. https://www.reddit.com/r/rust/comments/ghk31y/enum_vs_structs_implementing_a_trait/
 60. "Initialising Empty Structs in Rust." GitHub ChrisWellsWood/empty_rust_structs.md. June 5, 2019. Accessed August 4, 2023. https://gist.github.com/ChrisWellsWood/84421854794037e760808d5d97d21421
+61. "Rust: Using Options by example." Ameya's blog. October 23, 2017. Accessed August 7, 2023. https://www.ameyalokare.com/rust/2017/10/23/rust-options.html
+62. "Option and Result." Easy Rust. Accessed August 7, 2023. https://dhghomon.github.io/easy_rust/Chapter_31.html#option-and-result
