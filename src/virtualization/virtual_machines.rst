@@ -2014,6 +2014,41 @@ This can be fixed by deleting and recreating the UEFI keys with pre-enrollment d
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Remove > Yes
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Add > EFI Disk > Pre-Enroll keys: No
 
+Drive Pass-through
+^^^^^^^^^^^^^^^^^^
+
+The Proxmox GUI does not support adding bare metal drives. Instead, use the CLI.
+
+-  Find the virtual machine to add the disk to and see what SCSI device numbers are already attached.
+
+   .. code-block:: sh
+
+      $ sudo qm list
+      $ sudo qm config <VM_ID> | grep -P "^scsi"
+
+-  View the existing drives. Then find the disk ID path.
+
+   .. code-block:: sh
+
+      $ lsblk -o name,size,model,serial
+      $ sudo ls -1 /dev/disk/by-id/
+
+-  Add the SCSI device using the next sequential number after what is already used. At the very least, an existing vitual machine will normally have ``scsi0`` already set as the boot drive.
+
+   .. code-block:: sh
+
+      $ sudo qm set <VM_ID> -scsi<NUMBER> /dev/disk/by-id/<DISK_ID>
+
+-  If the drive is a SSD, use the Proxmox GUI to enable SSD emulation. [77]
+
+   -  (Select the virtual machine) > Hardware > (select the SCSI device) > Advanced > SSD emulation: Yes > OK
+
+-  This drive can be hot unplugged at any time. [76]
+
+   .. code-block:: sh
+
+      $ sudo qm unlink <VM_ID> --idlist scsi<NUMBER>
+
 Upgrades
 ^^^^^^^^
 
@@ -2222,3 +2257,5 @@ Bibliography
 73. "Proxmox VE Administration Guide." Proxmox VE Documentation. June 25, 2023. Accessed July 29, 2023. https://pve.proxmox.com/pve-docs/pve-admin-guide.html#_system_software_updates
 74. "Upgrade from 7 to 8." Proxmox VE. July 18, 2023. Accessed July 29, 2023. https://pve.proxmox.com/wiki/Upgrade_from_7_to_8
 75. "High Power Consumption with VM off (vfio-pci)." Reddit r/VFIO. July 14, 2022. Accessed July 31, 2023. https://www.reddit.com/r/VFIO/comments/lgavgk/high_power_consumption_with_vm_off_vfiopci/
+76. "Passthrough Physical Disk to Virtual Machine (VM)." Proxmox VE. December 6, 2022. Accessed August 8, 2023. https://pve.proxmox.com/wiki/Passthrough_Physical_Disk_to_Virtual_Machine_(VM)
+77. "How to Passthrough a Disk in Proxmox." WunderTech. February 28, 2023. Accessed August 8, 2023. https://www.wundertech.net/how-to-passthrough-a-disk-in-proxmox/
