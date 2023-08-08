@@ -328,7 +328,7 @@ ARC usage:
 
    .. code-block:: sh
 
-      $ sudo zpool add <POOL> cache <STORAGE_DEVICE>
+      $ sudo zpool add <ZFS_POOL> cache <STORAGE_DEVICE>
 
 -  View a summary of the ARC cache statistics.
 
@@ -341,6 +341,14 @@ ARC usage:
    .. code-block:: sh
 
       $ sudo arcstat
+
+-  Remove a L2ARC cache device. Verify that the cache device was listed before and removed afterwards. [49]
+
+   .. code-block:: sh
+
+      $ sudo zpool status
+      $ sudo zpool remove <ZFS_POOL> <STORAGE_DEVICE>
+      $ sudo zpool status
 
 NFS and Samba Support
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1468,3 +1476,4 @@ Bibliography
 46. "AFP vs NFS vs SMB Performance on macOS Mojave." Photography Life. April 25, 2020. Accessed August 2, 2023. https://photographylife.com/afp-vs-nfs-vs-smb-performance
 47. "Can't mount NFS share on Mac OS Big Sur shared from Ubuntu 21.04 - rpc.statd not running." Ask Ubuntu. July 13, 2022. Accessed August 2, 2023. https://askubuntu.com/questions/1344687/cant-mount-nfs-share-on-mac-os-big-sur-shared-from-ubuntu-21-04-rpc-statd-not
 48. "mount.nfs: rpc.statd is not running but is required for remote locking." Super User. August 14, 2020. Accessed August 2, 2023. https://superuser.com/questions/657071/mount-nfs-rpc-statd-is-not-running-but-is-required-for-remote-locking
+49. "Remove ZIL/L2ARC device." Proxmox Support Forum. May 12, 2021. Accessed August 8, 2023. https://forum.proxmox.com/threads/remove-zil-l2arc-device.48181/
