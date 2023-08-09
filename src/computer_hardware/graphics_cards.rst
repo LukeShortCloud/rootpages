@@ -8,11 +8,16 @@ Linux Support
 
 Here are various rankings for each major graphics cards vendor on Linux.
 
-Stable drivers:
+Ease of driver installation and updates:
 
-1. Intel
+1. AMD and Intel
 2. NVIDIA
-3. AMD
+
+Stable driver in gameplay:
+
+1. AMD
+2. NVIDIA
+3. Intel
 
 Linux performance:
 
@@ -22,19 +27,26 @@ Linux performance:
 
 Open source and native Linux support:
 
-1. Intel
-2. AMD
+1. AMD
+2. Intel
 3. NVIDIA
 
 Hybrid graphics support on laptops:
 
 1. NVIDIA
 2. AMD
+3. Intel
 
 Day 1 Linux support for new hardware:
 
-1. Intel
-2. NVIDIA
+1. AMD
+2. Intel
+3. NVIDIA
+
+Machine learning support:
+
+1. NVIDIA
+2. Intel
 3. AMD
 
 Recommended VRAM Size
