@@ -113,6 +113,21 @@ All versions of PCIe (currently 1.0 through 5.0) support the same wattage output
 
 It is not recommended to use a single SATA to 6-pin adapter due to the fire hazard risk if the GPU draws excessive power. [17] SATA power cables only provide 54 watts. [18][20] Molex power cables provide 156 watts. [21] For 75 watts, use one Molex or two SATA cables to convert to one 6-pin. [19] For 150 watts, use one Molex or three SATA cables to convert to one 8-pin adapter. [20]
 
+PCIe Power Only
+~~~~~~~~~~~~~~~
+
+These are the best graphics cards that are (1) low-profile and (2) do not require a 6-pin or 8-pin power PCIe power cable. They can be fully powered by the PCIe slot and are suitable for desktops with limited space and/or power supplies that have a low wattage.
+
+-  AMD:
+
+   -  1. AMD Radeon RX 6400 [22]
+   -  2. AMD Radeon RX 560
+
+-  NVIDIA:
+
+   -  1. NVIDIA GeForce GTX 1650
+   -  2. NVIDIA GeForce GTX 1050 Ti [23][24]
+
 History
 -------
 
@@ -142,3 +157,6 @@ Bibliography
 19. "GPU power from molex." Tom's Hardware. February 19, 2014. Accessed August 3, 2023. https://forums.tomshardware.com/threads/gpu-power-from-molex.1709339/
 20. "2 Molex to 8 Pin Adapter GPU | Everything You Need to Know." Hardware Centric. May 14, 2023. Accessed August 3, 2023. https://www.hardwarecentric.com/2-molex-to-8-pin-adapter/
 21. "Maximum Safe Wattage of PSU Cables." GPU Mining Resources. March 15, 2019. https://www.gpuminingresources.com/p/psu-cables.html
+22. "Best GPU without power pin?" Linus Tech Tips Forums. July 31, 2022. Accessed August 8, 2023. https://linustechtips.com/topic/1446662-best-gpu-without-power-pin/
+23. "How many low profile graphics cards are there?" Quora. May 11, 2023. Accessed August 8, 2023. https://www.quora.com/How-many-low-profile-graphics-cards-are-there
+24. "Graphics card compatible with HP Z230." Reddit r/PcMasterRaceBuilds. October 23, 2023. Accessed August 8, 2023. https://www.reddit.com/r/PcMasterRaceBuilds/comments/jgqtsg/graphics_card_compatible_with_hp_z230/?rdt=59793
