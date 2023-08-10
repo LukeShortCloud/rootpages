@@ -138,6 +138,15 @@ When accessing Windows Subsystem for Linux (WSL) or Network File System (NFS) fi
 
 -  Local Group Policy Editor (gpedit.msc) > User Configuration > Administrative Templates > Windows Components > Attachment Manager > Do not preserve zone information in file attachments > Enabled > OK
 
+Bootloader
+----------
+
+If dual-booting with different versions of Windows, it is possible to delete the boot entries for the other operating systems to help remove those different versions from the drive. [11]
+
+-  >= Windows XP:
+
+   -  System Configuration (msconfig) > Boot > ("Delete" all the entries except for the "Default OS") > OK
+
 History
 -------
 
@@ -156,3 +165,4 @@ Bibliography
 8. "Turn on device encryption." Microsoft Support. Accessed June 21, 2023. https://support.microsoft.com/en-us/windows/turn-on-device-encryption-0c453637-bc88-5f74-5105-741561aae838
 9. "About URL Security Zones." Microsoft Learn. August 15, 2017. Accessed July 26, 2023. https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537183(v=vs.85)
 10. "Zone.Identifier Files when copying from Windows to WSL filestructure #4609." GitHub microsoft/WSL. July 15, 2023. Accessed July 26, 2023. https://github.com/microsoft/WSL/issues/4609#issuecomment-1079657697
+11. "How to Delete Old Boot Menu Options on Windows 10." MakeUseOf. November 8, 2022. Accessed August 9, 2023. https://www.makeuseof.com/tag/delete-boot-menu-options-windows/
