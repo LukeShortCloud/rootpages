@@ -266,7 +266,7 @@ Create a pool and then a dataset within the pool. Verify it was created.
 
 .. code-block:: sh
 
-   $ sudo zpool create <POOL_NAME> <DEVICE_NAME>
+   $ sudo zpool create <POOL_NAME> <STORAGE_DEVICE_OR_FILE>
    $ sudo zfs create <POOL_NAME>/<DATASET_NAME>
    $ sudo zfs list
 
@@ -328,7 +328,7 @@ ARC usage:
 
    .. code-block:: sh
 
-      $ sudo zpool add <ZFS_POOL> cache <STORAGE_DEVICE>
+      $ sudo zpool add <ZFS_POOL> cache <STORAGE_DEVICE_OR_FILE>
 
 -  View a summary of the ARC cache statistics.
 
@@ -347,8 +347,19 @@ ARC usage:
    .. code-block:: sh
 
       $ sudo zpool status
-      $ sudo zpool remove <ZFS_POOL> <STORAGE_DEVICE>
+      $ sudo zpool remove <ZFS_POOL> <STORAGE_DEVICE_OR_FILE>
       $ sudo zpool status
+
+ZFS Intent Log (ZIL)
+^^^^^^^^^^^^^^^^^^^^
+
+ZIL is a write buffer for a ZFS pool. By default, it uses existing drives in a pool. A Seconary Log (SLOG) can be configured to be a dedicated device for the ZIL. It is recommended to use a fast SSD with high IOPS, DRAM cache, and power loss protection (PLP) for the SLOG. It is similar in concept to the L2ARC except this is for write (not read) operations. It is possible, but not recommended, to put the L2ARC and SLOG cache on different partitions of the same drive. [54][60]
+
+-  Add a SLOG to a ZFS pool.
+
+   .. code-block:: sh
+
+      $ sudo zpool add <ZFS_POOL> log <STORAGE_DEVICE_OR_FILE>
 
 NFS and Samba Support
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1593,9 +1604,10 @@ Bibliography
 51. "Higher l2arc_write_max is considered harmful." Days of a mirror admin. December 4, 2011. Accessed August 8, 2023. https://mirror-admin.blogspot.com/2011/12/higher-l2arcwritemax-is-considered.html
 52. "ZFS tuning cheat sheet." JRS Systems: the blog. July 8, 2023. Accessed August 8, 2023. https://jrs-s.net/2018/08/17/zfs-tuning-cheat-sheet/
 53. "zfsprops.7." OpenZFS documentation. April 18, 2023. Accessed August 8, 2023. https://openzfs.github.io/openzfs-docs/man/master/7/zfsprops.7.html
-54. "Configuring ZFS Cache for High-Speed IO." Linux Hint. 2021. Accessed August 8, 2023. https://linuxhint.com/configure-zfs-cache-high-speed-io/
+54. "Configuring ZFS Cache for High-Speed IO." Linux Hint. 2021. Accessed August 9, 2023. https://linuxhint.com/configure-zfs-cache-high-speed-io/
 55. "ZFS: re-compress existing files after change in compression algorithm." Server Fault. September 4, 2019. Accessed August 8, 2023. https://serverfault.com/questions/933387/zfs-re-compress-existing-files-after-change-in-compression-algorithm
 56. "OpenZFS: All about the cache vdev or L2ARC." Klara Inc Articles. Accessed August 8, 2023. https://klarasystems.com/articles/openzfs-all-about-l2arc/
 57. "Workload Tuning." OpenZFS documentation. April 20, 2023. Accessed August 8, 2023. https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html
 58. "A simple (real world) ZFS compression speed an compression ratio benchmark." Reddit r/zfs. March 15, 2022. Accessed August 9, 2023. https://www.reddit.com/r/zfs/comments/svnycx/a_simple_real_world_zfs_compression_speed_an/
 59. "Reducing AWS Fargate Startup Times with zstd Compressed Container Images." AWS Blog. October 19, 2022. Accessed August 9, 2023. https://aws.amazon.com/blogs/containers/reducing-aws-fargate-startup-times-with-zstd-compressed-container-images/
+60. "What is ZIL and how does it affect Write Coalescing performance." Reddit r/qnap. July 12, 2022. Accessed August 9, 2023. https://www.reddit.com/r/qnap/comments/vww2fc/what_is_zil_and_how_does_it_affect_write/
