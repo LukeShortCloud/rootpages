@@ -133,12 +133,17 @@ These are the best graphics cards that are (1) low-profile and (2) do not requir
 -  AMD:
 
    -  1. AMD Radeon RX 6400 [22]
-   -  2. AMD Radeon RX 560
+   -  2. AMD Radeon RX 560 [23]
 
 -  NVIDIA:
 
-   -  1. NVIDIA GeForce GTX 1650
-   -  2. NVIDIA GeForce GTX 1050 Ti [23][24]
+   -  1. NVIDIA RTX 4000 SFF Ada Generation
+
+      -  This is a 2-slot card.
+      -  The performance of this card is similar to the 3070 but it is as fast as the 3090 Ti in some scenarios. [25]
+
+   -  2. NVIDIA GeForce GTX 1650
+   -  3. NVIDIA GeForce GTX 1050 Ti [23][24]
 
 History
 -------
@@ -172,3 +177,4 @@ Bibliography
 22. "Best GPU without power pin?" Linus Tech Tips Forums. July 31, 2022. Accessed August 8, 2023. https://linustechtips.com/topic/1446662-best-gpu-without-power-pin/
 23. "How many low profile graphics cards are there?" Quora. May 11, 2023. Accessed August 8, 2023. https://www.quora.com/How-many-low-profile-graphics-cards-are-there
 24. "Graphics card compatible with HP Z230." Reddit r/PcMasterRaceBuilds. October 23, 2023. Accessed August 8, 2023. https://www.reddit.com/r/PcMasterRaceBuilds/comments/jgqtsg/graphics_card_compatible_with_hp_z230/?rdt=59793
+25. "Nvidia's Tiny RTX 4000 SFF 20GB Offers RTX 3070 Performance at 70W." Tom's Hardware. March 22, 2023. Accessed August 9, 2023. https://www.tomshardware.com/news/nvidia-tiny-rtx-4000-sff-launched
