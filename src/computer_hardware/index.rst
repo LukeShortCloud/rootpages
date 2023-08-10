@@ -3,6 +3,7 @@
    :caption: Computer Hardware
 
    accessories
+   desktops
    electrical_equipment
    graphics_cards
    laptops
