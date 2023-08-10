@@ -405,6 +405,118 @@ Samba [25]:
       $ sudo apt install cifs-utils
       $ sudo mount -t cifs -o username=foo,password=foobar //127.0.0.1/<POOL>_<DATASET> /mnt
 
+Properties and Options
+^^^^^^^^^^^^^^^^^^^^^^
+
+ZFS settings are configured in one of two ways:
+
+1.  Properties can be set using ``sudo zfs set <PROPERTY>=<VALUE> <POOL_NAME>/<DATASET_NAME>``.
+2.  ZFS kernel module settings can be set by creating a modprobe configuration file, updating the initramfs, and rebooting. [54]
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ sudo -E ${EDITOR} /etc/modprobe.d/zfs.conf
+         options zfs <KEY_1>=<VALUE_1> <KEY_2>=<VALUE_2>
+
+      -  Arch Linux:
+
+         .. code-block:: sh
+
+            $ sudo mkinitcpio -P
+
+      -  Debian:
+
+         .. code-block:: sh
+
+            $ sudo update-initramfs -u
+
+      -  Fedora:
+
+         .. code-block:: sh
+
+            $ sudo dracut --regenerate-all
+
+**Properties [53]:**
+
+.. code-block:: sh
+
+   $ man zfsprops
+
+.. csv-table::
+   :header: Property, Default Value, Description
+   :widths: 20, 20, 20
+
+   atime, on, Update the access time for every file that is opened.
+   casesensitivity, sensitive, "If file and directory names should be case sensitive. Use ``insensitive`` if OpenZFS will be used for Samba, Wine, or Windows. [57]"
+   compression, on (lzjb), Compression method to use for each file.
+   xattr, on, How to store Linux extended attributes. ``on`` uses hidden files. ``sa`` uses file system inodes which are faster. [52]
+
+**Kernel Module Options:**
+
+.. code-block:: sh
+
+   $ sudo modinfo zfs
+
+.. csv-table::
+   :header: Option, Default Value, Description
+   :widths: 20, 20, 20
+
+   l2arc_headroom, 2, "A multiplier of ``l2arc_write_max`` for how much new data should be written to the L2ARC cache. With default values, the L2ARC writes 675 GiB per day. [56] Use ``0`` to make the L2ARC cache persistent. [50]"
+   l2arc_noprefetch, 1, If ZFS should guess what files will be accessed next and automatically store them in L2ARC.
+   l2arc_write_max, 8388508 (8 MiB), "The amount of data to write to the L2ARC cache. It is recommended to modify ``l2arc_headroom`` instead of changing ``l2arc_write_max`` as that affects the frequency of when data is written to the L2ARC cache. It can become either too slow or too fast. [51]"
+   zfs_arc_max, (50% of available bytes of RAM), The amount of RAM to use for ARC cache.
+
+Performance Tuning
+^^^^^^^^^^^^^^^^^^
+
+**General**
+
+-  Disable access times to lower the IOPS load by up to half. [52]
+
+   .. code-block:: sh
+
+      $ sudo zfs set atime=off <POOL_NAME>/<DATASET_NAME>
+
+-  Enable Zstandard compression. The default compression level of 3 provides a good balance of compression to performance ration and is better than Gzip and LZ4. [58][59] Even the lowest compression level will save space while using minimal CPU resources. Existing files cannot be compressed. [55] Use one of these two settings [53]:
+
+   .. code-block:: sh
+
+      $ sudo zfs set compression=zstd-3 <POOL_NAME>/<DATASET_NAME>
+
+   .. code-block:: sh
+
+      $ sudo zfs set compression=zstd-fast-1 <POOL_NAME>/<DATASET_NAME>
+
+-  Store extended attributes as part of the file system instead of hidden files. This increases the performance of SELinux. [52]
+
+   .. code-block:: sh
+
+      $ sudo zfs set xattr=sa <POOL_NAME>/<DATASET_NAME>
+
+**Cache**
+
+-  Set the ARC cache to be larger than the default of 50% of RAM on the system. These requires configuring the kernel module and then rebuilding the initramfs so the option takes affect when the file system is initialized. [54]
+
+   -  Example (100 GB):
+
+      ::
+
+         options zfs zfs_arc_max=107374182400
+
+-  Configure L2ARC cache to be persistent across reboots. Requires OpenZFS 2.0 or newer. [50]
+
+   ::
+
+      options zfs l2arc_headroom=0
+
+-  Prevent L2ARC from guessing what files should be cached. This wastes time and resources. [51]
+
+   ::
+
+      options zfs l2arc_noprefetch=1
+
 Swap
 ~~~~
 
@@ -1477,3 +1589,13 @@ Bibliography
 47. "Can't mount NFS share on Mac OS Big Sur shared from Ubuntu 21.04 - rpc.statd not running." Ask Ubuntu. July 13, 2022. Accessed August 2, 2023. https://askubuntu.com/questions/1344687/cant-mount-nfs-share-on-mac-os-big-sur-shared-from-ubuntu-21-04-rpc-statd-not
 48. "mount.nfs: rpc.statd is not running but is required for remote locking." Super User. August 14, 2020. Accessed August 2, 2023. https://superuser.com/questions/657071/mount-nfs-rpc-statd-is-not-running-but-is-required-for-remote-locking
 49. "Remove ZIL/L2ARC device." Proxmox Support Forum. May 12, 2021. Accessed August 8, 2023. https://forum.proxmox.com/threads/remove-zil-l2arc-device.48181/
+50. "OpenZFS 2.2-rc3 Released With Linux 6.4 Support." Phoronix Forums. July 28, 2023. Accessed August 8, 2023. https://www.phoronix.com/forums/forum/software/general-linux-open-source/1400550-openzfs-2-2-rc3-released-with-linux-6-4-support
+51. "Higher l2arc_write_max is considered harmful." Days of a mirror admin. December 4, 2011. Accessed August 8, 2023. https://mirror-admin.blogspot.com/2011/12/higher-l2arcwritemax-is-considered.html
+52. "ZFS tuning cheat sheet." JRS Systems: the blog. July 8, 2023. Accessed August 8, 2023. https://jrs-s.net/2018/08/17/zfs-tuning-cheat-sheet/
+53. "zfsprops.7." OpenZFS documentation. April 18, 2023. Accessed August 8, 2023. https://openzfs.github.io/openzfs-docs/man/master/7/zfsprops.7.html
+54. "Configuring ZFS Cache for High-Speed IO." Linux Hint. 2021. Accessed August 8, 2023. https://linuxhint.com/configure-zfs-cache-high-speed-io/
+55. "ZFS: re-compress existing files after change in compression algorithm." Server Fault. September 4, 2019. Accessed August 8, 2023. https://serverfault.com/questions/933387/zfs-re-compress-existing-files-after-change-in-compression-algorithm
+56. "OpenZFS: All about the cache vdev or L2ARC." Klara Inc Articles. Accessed August 8, 2023. https://klarasystems.com/articles/openzfs-all-about-l2arc/
+57. "Workload Tuning." OpenZFS documentation. April 20, 2023. Accessed August 8, 2023. https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Workload%20Tuning.html
+58. "A simple (real world) ZFS compression speed an compression ratio benchmark." Reddit r/zfs. March 15, 2022. Accessed August 9, 2023. https://www.reddit.com/r/zfs/comments/svnycx/a_simple_real_world_zfs_compression_speed_an/
+59. "Reducing AWS Fargate Startup Times with zstd Compressed Container Images." AWS Blog. October 19, 2022. Accessed August 9, 2023. https://aws.amazon.com/blogs/containers/reducing-aws-fargate-startup-times-with-zstd-compressed-container-images/
