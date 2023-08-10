@@ -28,9 +28,9 @@ Dolby Vision is not natively supported on Windows. It requires installing variou
 
 Microsoft Store apps:
 
--  HEVC codec = Paid. Required to decode Dolby Vision video files.
--  Dolby Vision Extensions = Free. Required to add Dolby Vision support to Windows.
--  Dolby Access = Free trial. Optional for playing Dolby Vision video files. This also provides support for Digital Theater Sound (DTS) and Dolby Atmos surround sound.
+-  `HEVC Video Extensions <https://apps.microsoft.com/store/detail/hevc-video-extensions/9NMZLZ57R3T7>`__ = Paid. Required codec to decode Dolby Vision video files.
+-  `Dolby Vision Extensions <https://apps.microsoft.com/store/detail/dolby-vision-extensions/9PLTG1LWPHLF>`__ = Free. Required to add Dolby Vision support to Windows.
+-  `Dolby Access <https://apps.microsoft.com/store/detail/dolby-access/9N0866FS04W8>`__ = Free trial. Optional for playing Dolby Vision video files. This also provides support for Digital Theater Sound (DTS) and Dolby Atmos surround sound.
 
 History
 -------
