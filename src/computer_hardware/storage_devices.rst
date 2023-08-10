@@ -63,6 +63,14 @@ NAND Flash Types
 
 All SSDs (including NVMe) use a specific type of NAND flash: single-level cell (SLC), multi-level cell (MLC), triple-level (TLC), quad-level cell (QLC), or penta-level cell (PLC). These describe how many bits are stored in each cell. A higher amount of bits leads to higher storage capacity, lower the reliability (if a cell dies then more bits are lost), lower life span (more writes happen on each cell), and slower speed (more bits need to be written to store data). The most common type in 2019 is TLC. [2]
 
+Power Loss Protection (PLP)
+---------------------------
+
+PLP is a feature found in enterprise-grade drives. [7] It prevents file system corruption due to a power outage. There are two types of PLP [8]:
+
+-  Firmware = The DRAM cache stores the mapping table and will finish writing data once the drive has been turned on again.
+-  Hardware = Capacitors on the drive keep it running so DRAM cache can safely finish writing to the drive before turning the drive off.
+
 History
 -------
 
@@ -77,3 +85,5 @@ Bibliography
 4. "2007 HDD Rundown: Can High Capacities Meet High Performance?" Tom's Hardware. January 16, 2007. Accessed August 7, 2023. https://www.tomshardware.com/reviews/2007-hdd-rundown,1522.html
 5. "Average capacity of Seagate and Western Digital hard disk drives (HDDs) worldwide from 3rd quarter 2011 to 1st quarter 2016." Statista. May 12, 2016. Accessed August 7, 2023. https://www.statista.com/statistics/751847/worldwide-seagate-western-digital-average-hard-drive-capacity/
 6. "Client SSDs: Samsung Retains No.1 Spot, SSDs Outsell HDDs by 2.6x." Tom's Hardware. August 20, 2021. Accessed August 7, 2023. https://www.tomshardware.com/news/client-ssds-outsell-client-hdds-by-2-6-times-in-q2
+7. "Power loss protection (PLP)." Samsung_SSD_845DC_05_Power_loss_protection_PLP.pdf. 2014. Accessed August 9, 2023. https://www.kingston.com/en/blog/servers-and-data-centers/ssd-power-loss-protection
+8. "A Closer Look At SSD Power Loss Protection." Kingston Blog. March, 2019. Accessed August 9, 2023. https://download.semiconductor.samsung.com/resources/others/Samsung_SSD_845DC_05_Power_loss_protection_PLP.pdf
