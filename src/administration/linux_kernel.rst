@@ -516,7 +516,7 @@ Fedora
          .. code-block:: sh
 
             $ sudo usermod -a -G mock ${USER}
-            $ fedpkg --release f<FEDORA_MAJOR_VERSION> mockbuild --without debug --without debuginfo --with release
+            $ fedpkg --release f<FEDORA_MAJOR_VERSION> mockbuild --without debug --without debuginfo --with release --with headers
 
       -  The resulting RPMs will be saved to: ``$(pwd)/results_kernel/<KERNEL_FULL_VERSION>/<RPM_RELEASE>.<RPM_LOCAL_NAME>.fc<FEDORA_MAJOR_VERSION>``.  For example, the directory should look similar to this:
 
@@ -531,6 +531,7 @@ Fedora
             kernel-core-6.3.13-200.custom.fc38.x86_64.rpm
             kernel-devel-6.3.13-200.custom.fc38.x86_64.rpm
             kernel-devel-matched-6.3.13-200.custom.fc38.x86_64.rpm
+            kernel-headers-6.3.13-200.custom.fc38.x86_64.rpm
             kernel-modules-6.3.13-200.custom.fc38.x86_64.rpm
             kernel-modules-core-6.3.13-200.custom.fc38.x86_64.rpm
             kernel-modules-extra-6.3.13-200.custom.fc38.x86_64.rpm
@@ -548,6 +549,8 @@ Fedora
             $ sed -i s'/%define with_debug     %{?_without_debug:     0} %{?!_without_debug:     1}/%define with_debug 0/'g kernel.spec
             $ sed -i s'/%define with_debuginfo %{?_without_debuginfo: 0} %{?!_without_debuginfo: 1}/%define with_debuginfo 0/'g kernel.spec
             $ sed -i s'/%define with_release   %{?_with_release:      1} %{?!_with_release:      0}/%define with_release 1/'g kernel.spec
+            $ sed -i s'/%define with_headers   %{?_without_headers:   0} %{?!_without_headers:   1}/%define with_headers 1/'g kernel.spec
+            $ sed -i s'/with_headers 0/with_headers 1/'g kernel.spec
             $ fedpkg --release f38 srpm
 
       -  The resulting SRPM will be saved to the current working directory.
