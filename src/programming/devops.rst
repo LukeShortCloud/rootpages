@@ -213,6 +213,9 @@ Developers can use these resources to learn how to properly use git: https://try
 GitHub
 ^^^^^^
 
+Introduction
+''''''''''''
+
 GitHub was the first public git service and it is where the official code for the ``git`` program itself is stored and managed. GitHub Enterprise is a paid and supported solution for running private GitHub servers. https://github.com/
 
 Patches can accessed by going to:
@@ -230,6 +233,23 @@ View commits from a specific author:
 View SSH public keys for a specific user:
 
 ``https://github.com/<USER>.keys``
+
+Issues Template
+'''''''''''''''
+
+GitHub allows creating one or more templates to use for GitHub Issues [49]:
+
+-  Settings > Features > Issues > Set up templates
+
+This will be saved to ``.github/ISSUE_TEMPLATE/<ISSUE_TEMPLATE_NAME_SNAKE_CASE>.md``.
+
+Ask for information that will be helpful for troubleshooting bugs or investigating the addition of new features:
+
+-  Short summary.
+-  Exact error messasges.
+-  Steps to replicate the issue.
+-  Expected results.
+-  Versions used.
 
 GitPrep
 ^^^^^^^
@@ -1426,3 +1446,4 @@ Bibliography
 46. "Use working-directory for entire job #25742." GitHub Community. March 21, 2023. Accessed May 3, 2023. https://github.com/orgs/community/discussions/25742
 47. "Downloading source code archives." GitHub Docs. Accessed May 16, 2023. https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives
 48. "Github - unexpected disconnect while reading sideband packet." Stack Overflow. July 19, 2023. Accessed July 19, 2023. https://stackoverflow.com/questions/66366582/github-unexpected-disconnect-while-reading-sideband-packet
+49. "Configuring issue templates for your repository." GitHub Docs. Accessed August 12, 2023. https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
