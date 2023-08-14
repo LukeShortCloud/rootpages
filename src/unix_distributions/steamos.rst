@@ -177,6 +177,39 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
       $ sudo chmod +x /usr/bin/steamos-update-os
       $ sudo steamos-readonly enable
 
+Enable the Pacman Package Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pacman can be used to install additional operating system packages. Installed packages will be removed whenever there is an operating system update. [8]
+
+-  Allow the ``/`` and ``/usr/`` directories to be writable.
+
+   .. code-block:: sh
+
+      $ sudo steamos-readonly disable
+      $ sudo systemd-sysext unmerge
+
+-  Populate the GPG keys used to verify Pacman packages.
+
+   .. code-block:: sh
+
+      $ sudo pacman-key --init
+      $ sudo pacman-key --populate
+      $ sudo pacman-key --refresh-keys
+
+-  Pacman can now be used to install packages.
+
+   .. code-block:: sh
+
+      $ sudo pacman -S <PACKAGE>
+
+-  When done, re-enable the read-only file systems. [9][10]
+
+   .. code-block:: sh
+
+      $ sudo systemd-sysext merge
+      $ sudo steamos-readonly enable
+
 History
 -------
 
@@ -193,3 +226,6 @@ Bibliography
 5. "Steam Client Beta - August 4." Steam Community. August 4, 2022. Accessed February 16, 2023. https://steamcommunity.com/groups/SteamClientBeta/announcements/detail/3387288790681635164
 6. "Steam Deck adds Windows 11 support and BIOS fixes with beta update." XDA Portal & Forums. April 1, 2022. Accessed February 17, 2023. https://www.xda-developers.com/steam-deck-windows-11-bios-beta/
 7. "How to use the TPM on Steam Deck in SteamOS." jiankun.lu. November 14, 2022. Accessed February 17, 2023. https://jiankun.lu/blog/how-to-use-the-tpm-on-steam-deck-in-steamos.html
+8. "Why does updating SteamOS wipe all installed Pacman packages?" Steam Deck General Discussions. March 26, 2022. Accessed August 13, 2023. https://steamcommunity.com/app/1675200/discussions/0/3181237058689666854/
+9. "How I set up a VPN connection." Reddit r/SteamDeck. July 9, 2023. Accessed August 13, 2023. https://www.reddit.com/r/SteamDeck/comments/wsvyfw/how_i_set_up_a_vpn_connection/?utm_source=share&utm_medium=android_app&utm_name=androidcss&utm_term=1&utm_content=1
+10. "Unlock Steam Deck." Chris Titus Tech. July 27, 2022. Accessed August 13, 2023. https://christitus.com/unlock-steam-deck/
