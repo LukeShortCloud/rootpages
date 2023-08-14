@@ -260,39 +260,50 @@ scheduling settings are:
 I/O
 ~~~
 
-The kernel provides many input/output (I/O) schedulers to configure how
-a hard drive handles a queue of read/write requests from the operating
-system. Different schedulers can be used to adjust performance based on
-the hardware and/or software requirements.
+The kernel provides many input/output (I/O) schedulers to configure how a hard drive handles a queue of read/write requests from the operating system. Different schedulers can be used to adjust performance based on the hardware and/or software requirements. There are two types of scheulers:
 
--  Deadline = Large I/O requests are done in high-priority sectors until
-   smaller I/O requests are about to time out. Then Deadline takes care
-   of the small tasks before continuing with the original large I/O
-   task. This is ideal for heavy read/write applications on a spinning
-   disk drive.
--  CFQ (Completely Fair Queueing) = All I/O requests are treated equally and are handled in the order that they are received. [6]
+-  Non-multiqueue = Legacy. These are single-threaded. Deprecated since Linux 5.3.
+-  Multiqueue = Modern. These are multi-threaded.
 
-   -  This is the only scheduler that ``ionice`` works with to change the I/O priority. [25]
+**Non-multiqueue Schedulers:**
 
--  NOOP (No Operation) = Only basic merging of read and/or write
-   requests and no rescheduling. This is ideal for virtual drives (such
-   as QCOW2) where the hypervisor node handles the I/O scheduling [7]
-   and physical flash based media or RAID cards with write-back cache
-   where the hardware's firmware takes care of the sorting. [6]
+-  cfq = Completely Fair Queueing. All I/O requests are treated equally and are handled in the order that they are received. [6]
+
+   -  Usage: MMC and SD cards. [28]
+   -  This is the only non-multiqueue scheduler that ``ionice`` works with to change the I/O priority. [25]
+
+-  deadline = Large I/O requests are done in high-priority sectors until smaller I/O requests are about to time out. Then Deadline takes care of the small tasks before continuing with the original large I/O task.
+
+   -  Usage: spinning hard disk drive with heavy I/O operations.
+
+-  noop = No Operation. Only basic merging of read and/or write requests and no rescheduling.
+
+   -  Usage: virtual drives (such as QCOW2) where the hypervisor node handles the I/O scheduling [7], SSDs, or RAID cards with write-back cache where the firmware of the hardware takes care of the sorting. [6]
+
+**Multiqueue Schedulers:**
+
+-  bfq = Budget Fair Queuing. The multiqueue equivalent for CFQ.
+
+   -  This is the only multiqueue scheduler that ``ionice`` works with to change the I/O priority. [27]
+
+-  kyber = A small scheduler that uses minimal logic to provide higher throughput and lower latency. [29]
+-  mq-deadline = The multiqueue equivalent for Deadline.
+-  none = The multiqueue equivalent for NOOP.
+
+[30][31]
 
 Temporarily change the scheduler to one of the three options:
 
 .. code-block:: sh
 
-    $ sudo echo {deadline|cfg|noop} > /sys/block/<DEVICE>/queue/scheduler
+    $ sudo echo [bfq|kyber|mq-deadline|none] > /sys/block/<DEVICE>/queue/scheduler
 
-Permanently change the scheduler by appending the existing
-GRUB\_CMDLINE\_LINUX kernel arguments:
+Permanently change the scheduler by appending the existing GRUB\_CMDLINE\_LINUX kernel arguments:
 
 .. code-block:: sh
 
     $ sudo vim /etc/default/grub
-    GRUB_CMDLINE_LINUX="elevator={deadline|cfg|noop}"
+    GRUB_CMDLINE_LINUX="elevator=<IO_SCHEDULER>"
     $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 [7]
@@ -300,7 +311,7 @@ GRUB\_CMDLINE\_LINUX kernel arguments:
 Priority
 ^^^^^^^^
 
-When using the CFQ scheduler, the ``ionice`` command can be used to set different priorities for running processes. Typical usage of the command is to run ``ionice -c <IONICE_CLASS> -n <PRIORITY> -p <PID>``.
+When using the BFQ or CFQ scheduler, the ``ionice`` command can be used to set different priorities for running processes. Typical usage of the command is to run ``ionice -c <IONICE_CLASS> -n <PRIORITY> -p <PID>``.
 
 Classes:
 
@@ -684,3 +695,8 @@ Bibliography
 24. "Conditional Builds." RPM Package Manager. Accessed July 30, 2023. https://rpm-software-management.github.io/rpm/manual/conditionalbuilds.html
 25. "Block io priorities." The Linux Kernel documentation. March 11, 2005. Accessed August 13, 2023. https://docs.kernel.org/block/ioprio.html
 26. "Linux Tips: nice and ionice." Tiger Computing. June 12, 2018. Accessed August 13, 2023. https://www.tiger-computing.co.uk/linux-tips-nice-and-ionice/
+27. "Tuning I/O performance." System Analysis and Tuning Guide. Accessed August 23, 2023. https://doc.opensuse.org/documentation/leap/tuning/html/book-tuning/cha-tuning-io.html
+28. "Linux 6.3 Now Suggests The BFQ I/O Scheduler When Building MMC/SD Support." Phoronix. March 1, 2023. Accessed August 13, 2023. https://www.phoronix.com/news/Linux-6.3-MMC-BFQ-Suggests
+29. "Two new block I/O schedulers for 4.12." LWN.net April 24, 2017. Accessed August 13, 2023. https://lwn.net/Articles/720675/
+30. "Noop now named none." SUSE Communities. November 29, 2019. Accessed August 13, 2023. https://www.suse.com/c/noop-now-named-none/
+31. "IOSchedulers." Ubuntu Wiki. September 10, 2019. Accessed August 13, 2023. https://wiki.ubuntu.com/Kernel/Reference/IOSchedulers
