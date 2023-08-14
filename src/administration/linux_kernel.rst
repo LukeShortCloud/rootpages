@@ -270,8 +270,10 @@ the hardware and/or software requirements.
    of the small tasks before continuing with the original large I/O
    task. This is ideal for heavy read/write applications on a spinning
    disk drive.
--  CFQ (Completely Fair Queueing) = All I/O requests are treated equally
-   and are handled in the order that they are received. [6]
+-  CFQ (Completely Fair Queueing) = All I/O requests are treated equally and are handled in the order that they are received. [6]
+
+   -  This is the only scheduler that ``ionice`` works with to change the I/O priority. [25]
+
 -  NOOP (No Operation) = Only basic merging of read and/or write
    requests and no rescheduling. This is ideal for virtual drives (such
    as QCOW2) where the hypervisor node handles the I/O scheduling [7]
@@ -294,6 +296,37 @@ GRUB\_CMDLINE\_LINUX kernel arguments:
     $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 [7]
+
+Priority
+^^^^^^^^
+
+When using the CFQ scheduler, the ``ionice`` command can be used to set different priorities for running processes. Typical usage of the command is to run ``ionice -c <IONICE_CLASS> -n <PRIORITY> -p <PID>``.
+
+Classes:
+
+-  0 = None. On modern Linux, this is the same as 2 (best-effort).
+-  1 = Realtime. Use the I/O immediately.
+-  2 = Best-effort. This is the default if no class is provided. Use a round-robin algorithm.
+-  3 = Idle. Wait for the I/O usage to be low.
+
+Priority:
+
+-  0 = Highest.
+-  7 = Lowest.
+
+Give a running process the highest I/O priority:
+
+.. code-block:: sh
+
+   $ ionice -c 1 -n 0 <PID>
+
+Give a running process the lowest I/O priority:
+
+.. code-block:: sh
+
+   $ ionice -c 3 -n 7 <PID>
+
+[25][26]
 
 Initial RAM File System
 -----------------------
@@ -649,3 +682,5 @@ Bibliography
 22. "Has anyone managed to build a Fedora patched kernel in 2022?" Reddit r/Fedora. December 12, 2022. Accessed July 19, 2023. https://www.reddit.com/r/Fedora/comments/zgdkrc/has_anyone_managed_to_build_a_fedora_patched/
 23. "KernelDebugStrategy." Fedora Project Wiki. August 11, 2016. Accessed July 28, 2023. https://fedoraproject.org/wiki/KernelDebugStrategy
 24. "Conditional Builds." RPM Package Manager. Accessed July 30, 2023. https://rpm-software-management.github.io/rpm/manual/conditionalbuilds.html
+25. "Block io priorities." The Linux Kernel documentation. March 11, 2005. Accessed August 13, 2023. https://docs.kernel.org/block/ioprio.html
+26. "Linux Tips: nice and ionice." Tiger Computing. June 12, 2018. Accessed August 13, 2023. https://www.tiger-computing.co.uk/linux-tips-nice-and-ionice/
