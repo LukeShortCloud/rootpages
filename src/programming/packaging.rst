@@ -537,6 +537,83 @@ Build the binary RPM(s). The RPM(s), along with the log files, will be stored at
 
 [16]
 
+GPG Signing
+^^^^^^^^^^^
+
+Signing a binary RPM package with a GPG key ensures that it has not been tampered with.
+
+-  Create a GPG key pair. It will be saved to ``~/.gnupg/``.
+
+   .. code-block:: sh
+
+      $ gpg --gen-key
+      Real name: <FIRST_NAME> <LAST_NAME>
+      Email address: <EMAIL_ADDRESS>
+      You selected this USER-ID:
+          "<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>"
+
+-  Find the GPG key ID and use it to generate a plaintext public key file. [31]
+
+   .. code-block:: sh
+
+      $ gpg --list-keys
+      $ gpg --export --armor <GPG_KEY_ID> > ~/.gnupg/gpg-public-key.asc
+
+-  Import the GPG key on all of the systems that will install the signed RPMs.
+
+   .. code-block:: sh
+
+      $ sudo rpm import ~/.gnupg/gpg-public-key.asc
+
+-  Optionally set that GPG key as the default for signing. [32]
+
+   .. code-block:: sh
+
+      $ ${EDITOR} ~/.rpmmacros
+      %_gpg_name <EMAIL_ADDRESS>
+
+-  Install the RPM signing tool.
+
+   .. code-block:: sh
+
+      $ sudo dnf install rpm-sign
+
+-  Use the default GPG key to sign an existing binary RPM.
+
+   .. code-block:: sh
+
+      $ rpm --addsign <BINARY_RPM>
+
+-  Or define a GPG key to sign with.
+
+   .. code-block:: sh
+
+      $ rpm --define "_gpg_name <EMAIL_ADDRESS>" --addsign <BINARY_RPM>
+
+-  Verify the GPG signature. [33]
+
+   .. code-block:: sh
+
+      $ rpm --checksig <BINARY_RPM>
+
+-  Create a repository with the RPM package included and then sign the repository metadata.
+
+   .. code-block:: sh
+
+      $ creatrepo .
+      $ gpg --detach-sign --armor repodata/repomd.xml
+
+-  On a client system that will install these packages, configure the repository. [34]
+
+  .. code-block:: ini
+
+     [<REPOSITORY_NAME_SNAKE_CASE>]
+     name=<REPOSITORY_NAME_HUMAN_FRIENDLY>
+     baseurl=<REPOSITORY_URL>
+     enabled=1
+     gpgcheck=1
+     gpgkey=<PUBLIC_GPG_KEY_URL>"
+
 Fedora Packages
 ~~~~~~~~~~~~~~~
 
@@ -876,3 +953,7 @@ Bibliography
 28. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
 29. "createrepo(8) - Linux man page." Die. Accessed June 28, 2016. http://linux.die.net/man/8/createrepo
 30. "#11 fedpkg should allow adding options to rpmbuild command line." Pagure.io. May 11, 2018. Accessed July 28, 2023. https://pagure.io/fedpkg/issue/11
+31. "How to export and import keys with GPG." Linux Hint. 2021. Accessed August 14, 2023. https://linuxhint.com/export-import-keys-with-gpg/
+32. "Signing and Creating a Repository for RPM Packages." CDOT Wiki. July 17, 2017. Accessed August 14, 2023. https://hussainaliakbar.github.io/signing-and-verifying-rpm-packages/
+33. "Signing and Verifying RPM Packages." Hussain Ali Akbar. April 25, 2018. Accessed August 14, 2023. https://wiki.cdot.senecacollege.ca/wiki/Signing_and_Creating_a_Repository_for_RPM_Packages
+34. "Creating and hosting your own rpm packages and yum repo." Earthly. June 24, 2021. Accessed August 14, 2023. https://earthly.dev/blog/creating-and-hosting-your-own-rpm-packages-and-yum-repo/
