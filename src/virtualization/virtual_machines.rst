@@ -2108,6 +2108,9 @@ Upgrades
 Virtual Machine Manager (virt-manager)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Installation
+^^^^^^^^^^^^
+
 Virtual Machine Manager provides a more advanced alternative to GNOME Boxes.
 
 Installation:
@@ -2136,6 +2139,49 @@ Enable the service:
 .. code-block:: sh
 
    $ sudo systemctl enable --now libvirtd
+
+Disable Secure Boot
+^^^^^^^^^^^^^^^^^^^
+
+Upstream Virtual Machine Manager does not enforce secure boot on UEFI. However, some operating systems, such as Fedora, do enforce secure boot.
+
+The workarounds below assume the Fedora path for OVMF files which is ``/usr/share/edk2/ovmf/``. On Arch Linux, this path is ``/usr/share/edk2/x64/``.
+
+**New Virtual Machine**
+
+GUI:
+
+-  When creating a new virtual machine, check the box for "Customize configuration before install" > Overview > Firmware: "UEFI x86_64: /usr/share/edk2/ovmf/OVMF_CODE.fd" > Apply > Begin Installation
+
+CLI:
+
+-  Copy and use the UEFI NVRAM settings for insecure boot. [78]
+
+   .. code-block:: sh
+
+      $ sudo cp /usr/share/edk2/ovmf/OVMF_VARS.fd /var/lib/libvirt/qemu/nvram/<VM_NAME>_VARS.fd
+      $ sudo virt-install \
+          --name <VM_NAME>
+          --boot loader=/usr/share/edk2/ovmf/OVMF_CODE.fd,loader.readonly=yes,loader.secure='no',loader.type=pflash,nvram=/var/lib/libvirt/qemu/nvram/<VM_NAME>_VARS.fd
+
+**Existing Virtual Machine**
+
+-  Modify the libvirt XML to set ``secure='no'``.
+
+   .. code-block:: sh
+
+      $ sudo virsh edit <VM_NAME>
+
+   .. code-block:: xml
+
+      <loader readonly='yes' secure='no' type='pflash'>/usr/share/edk2/ovmf/OVMF_CODE.secboot.fd</loader>
+
+-  Delete the secure boot UEFI NVRAM settings and replace them with the insecure boot settings. [79]
+
+   .. code-block:: sh
+
+      $ sudo rm -f /var/lib/libvirt/qemu/nvram/<VM_NAME>_VARS.fd
+      $ sudo cp /usr/share/edk2/ovmf/OVMF_VARS.fd /var/lib/libvirt/qemu/nvram/<VM_NAME>_VARS.fd
 
 VMware vSphere
 ~~~~~~~~~~~~~~
@@ -2259,3 +2305,5 @@ Bibliography
 75. "High Power Consumption with VM off (vfio-pci)." Reddit r/VFIO. July 14, 2022. Accessed July 31, 2023. https://www.reddit.com/r/VFIO/comments/lgavgk/high_power_consumption_with_vm_off_vfiopci/
 76. "Passthrough Physical Disk to Virtual Machine (VM)." Proxmox VE. December 6, 2022. Accessed August 8, 2023. https://pve.proxmox.com/wiki/Passthrough_Physical_Disk_to_Virtual_Machine_(VM)
 77. "How to Passthrough a Disk in Proxmox." WunderTech. February 28, 2023. Accessed August 8, 2023. https://www.wundertech.net/how-to-passthrough-a-disk-in-proxmox/
+78. "Disable Secure-Boot from Virt-Install Command Line." SmoothNet. May 19, 2022. Accessed AUgust 15, 2023. https://www.smoothnet.org/disable-secure-boot-from-virt-install/
+79. "RHEL: Booting a virtual machine with UEFI but without secure boot." Andreas Karis Blog. June 25, 2021. Accessed August 15, 2023. https://andreaskaris.github.io/blog/linux/libvirt-uefi-without-secureboot/
