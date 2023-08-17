@@ -964,6 +964,43 @@ Once the treefiles have been created, the rpm-ostree distribution can be built. 
 
 [17][18]
 
+Upgrades
+~~~~~~~~
+
+Unlike Fedora Workstation [19], rpm-ostree distributions do not officially support skip upgrades of going from X to X+2 because it is untested.
+
+-  Minor update of a rpm-ostree distribution:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree update
+
+-  Major upgrade of Fedora Silverblue [20]:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree rebase fedora:fedora/<FEDORA_MAJOR_VERSION>/x86_64/silverblue
+
+rpm-ostree distributions have issues upgrading when there are third-party RPMs installed that are versioned for a specific version of Fedora. This can be worked around by doing an update that will also uninstall the old package and then re-install the new package.
+
+-  Minor update of Fedora [21][22]:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree update \
+          --uninstall rpmfusion-free-release --uninstall rpmfusion-nonfree-release --uninstall google-chrome-stable \
+          --install rpmfusion-free-release --install rpmfusion-nonfree-release --install google-chrome-stable
+
+-  Major upgrade of Fedora Silverblue [23]:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree rebase fedora:fedora/<FEDORA_MAJOR_VERSION_NEW>/x86_64/silverblue \
+         --uninstall rpmfusion-free-release-<FEDORA_MAJOR_VERSION_ORIGINAL>-1.noarch \
+         --uninstall rpmfusion-nonfree-release-<FEDORA_MAJOR_VERSION_ORIGINAL>-1.noarch \
+         --install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-<FEDORA_MAJOR_VERSION_NEW>.noarch.rpm \
+         --install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-<FEDORA_MAJOR_VERSION_NEW>.noarch.rpm
+
 History
 -------
 
@@ -991,3 +1028,8 @@ Bibliography
 16. "Treefile reference." November 15, 2022. Accessed February 28, 2023. https://coreos.github.io/rpm-ostree/treefile/
 17. "workstation-ostree-config." Fedora Pagure. February 16, 2023. Accessed February 28, 2023. https://pagure.io/workstation-ostree-config/tree/f38
 18. "VinnyVynce/silvernobara." GitHub. November 28, 2022. Accessed February 28, 2023. https://github.com/VinnyVynce/silvernobara/tree/f37
+19. "Upgrading Fedora Using DNF System Plugin." Fedora Documentation. May 4, 2023. Accessed August 17, 2023. https://docs.fedoraproject.org/en-US/quick-docs/dnf-system-upgrade/#sect-how-many-releases-can-i-upgrade-across-at-once
+20. "Updates, Upgrades & Rollbacks." Fedora Documentation. August 17, 2023. Accessed August 17, 2023. https://docs.fedoraproject.org/en-US/fedora-silverblue/updates-upgrades-rollbacks/
+21. "How does Silverblue handle installation and updating of local rpm files?" Reddit r/Fedora. December 11, 2022. Accessed August 17, 2023. https://www.reddit.com/r/Fedora/comments/zj024l/how_does_silverblue_handle_installation_and/
+22. "Layered rpms do not get updated from repositories #1978." GitHub coreos/rpm-ostree. December 13, 2022. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/issues/1978
+23. "[Fedora Silverblue] Rebase from F36 to F37 stops on error and hangs ( _g_dbus_worker_do_read_cb) #4150." GitHub coreos/rpm-ostree. March 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/issues/4150
