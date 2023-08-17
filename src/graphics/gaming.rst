@@ -54,7 +54,7 @@ Various settings can be configured to make the Steam client use less system reso
 
    -  Friends & Chat
 
-      -  Sign in to friends whem Steam Clien starts: No
+      -  Sign in to friends whem Steam Client starts: No
       -  Enable Animated Avatars & Animated Avatar Frames in your Friends List and Chat: No
       -  Remember my open chats: No
 
@@ -73,7 +73,7 @@ Various settings can be configured to make the Steam client use less system reso
 
       -  Enable Shader Pre-caching: No
 
-         -  Only disable this on devices that are not the Steam Deck. Valve provides pre-compiled shaders for it.
+         -  Only disable this on devices that are not the Steam Deck running the official SteamOS. Valve provides pre-compiled shaders for it.
          -  The graphics driver needs to support graphics pipeline library (GPL) for faster shader compilation that does not require pre-caching.
 
             -  AMD = `Mesa 23.1.0 <https://lists.freedesktop.org/archives/mesa-announce/2023-May/000720.html>`__
