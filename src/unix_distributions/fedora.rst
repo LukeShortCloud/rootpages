@@ -172,6 +172,10 @@ Common options [16][17]:
 -  exclude-packages (list of strings) = A list of recommended packages to not install.
 -  include (string) = Include another treefile.
 -  metadata (map of strings) = Optional metadata that will appear when running the command ``rpm-ostree compose tree --print-metadata-json``.
+-  modules (map of lists) = Modular stream repositories to enable.
+
+   -  enable (list of strings) = Repositories to enable with the format of ``<MODULE_NAME>:<MODULE_VERSION>``. The actual repository configuration file to import needs to be defined at the top-level ``repos:`` list. [24][25]
+
 -  mutate-os-release (string) = The major version of the operating system.
 -  packages (list of strings) = A list of packages to install as part of the base distribution.
 -  packages-``<CPU_ARCHITECTURE>`` (list of strings) = A list of packages to install as part of the base distribution if the specified CPU architecture is being used.
@@ -182,6 +186,21 @@ Common options [16][17]:
 -  selinux (boolean) = Default: true. If SELinux should be enabled.
 
 Examples:
+
+-  Use a modular stream repository to install a package.
+
+   .. code-block:: yaml
+
+      ---
+      packages:
+        - akmkod-nvidia
+        - nvidia-driver
+        - nvidia-driver-cuda
+      modules:
+        enable:
+          - nvidia-driver:latest-dkms
+      repos:
+        - nvidia-x86_64
 
 -  Unofficial Fedora Silvernobara 37 [18]:
 
@@ -1033,3 +1052,5 @@ Bibliography
 21. "How does Silverblue handle installation and updating of local rpm files?" Reddit r/Fedora. December 11, 2022. Accessed August 17, 2023. https://www.reddit.com/r/Fedora/comments/zj024l/how_does_silverblue_handle_installation_and/
 22. "Layered rpms do not get updated from repositories #1978." GitHub coreos/rpm-ostree. December 13, 2022. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/issues/1978
 23. "[Fedora Silverblue] Rebase from F36 to F37 stops on error and hangs ( _g_dbus_worker_do_read_cb) #4150." GitHub coreos/rpm-ostree. March 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/issues/4150
+24. "Extensions." rpm-ostree. March 28, 2022. Accessed August 17, 2023. https://coreos.github.io/rpm-ostree/extensions/
+25. "Add support for modules #2760." GitHub coreos/rpm-ostree. April 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/pull/2760
