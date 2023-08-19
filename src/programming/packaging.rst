@@ -3,6 +3,55 @@ Packaging
 
 .. contents:: Table of Contents
 
+GPG Keys
+--------
+
+Usage
+~~~~~
+
+Signing a binary package with a GPG key ensures that it has not been tampered with. DEB, PKGBUILD, and RPM packages all support signing with a GPG public and private key pair.
+
+-  Create a GPG key pair. It will be saved to ``~/.gnupg/``. Either use the defaults by running ``gpg --gen-key`` or ``gpg --full-generate-key`` to configure all of the options including the encryption type, bit size, and expiration time.
+
+   .. code-block:: sh
+
+      $ gpg --gen-key
+      Real name: <FIRST_NAME> <LAST_NAME>
+      Email address: <EMAIL_ADDRESS>
+      You selected this USER-ID:
+          "<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>"
+
+-  Find the GPG key ID and use it to generate a plaintext public key file. [31]
+
+   .. code-block:: sh
+
+      $ gpg --list-keys
+      $ gpg --export --armor <GPG_KEY_ID> > ~/.gnupg/gpg-public-key.asc
+
+-  Optionally send the GPG key to a remote server. Verify that it was uploaded. [41][42]
+
+   .. code-block:: sh
+
+      $ gpg --send-keys <GPG_KEY_ID>
+      $ gpg --recv-keys <GPG_KEY_ID>
+
+-  Unlock the private GPG key by using a password via standard input. [45]
+
+   .. code-block:: sh
+
+      $ echo "<PASSWORD>" | gpg --passphrase-fd 0
+
+-  Export the private GPG key and then import it as a different user. [43]
+
+   .. code-block:: sh
+
+      $ gpg --list-secret-keys
+      $ gpg --export-secret-keys <GPG_KEY_ID> > /tmp/gpg-private.key
+      $ chown <OTHER_USER> /tmp/gpg-private.key
+      $ su - <OTHER_USER>
+      $ gpg --import /tmp/gpg-private.key
+      $ rm -f /tmp/gpg-private.key
+
 DEB (Debian)
 ------------
 
@@ -540,24 +589,7 @@ Build the binary RPM(s). The RPM(s), along with the log files, will be stored at
 GPG Signing
 ^^^^^^^^^^^
 
-Signing a binary RPM package with a GPG key ensures that it has not been tampered with.
-
--  Create a GPG key pair. It will be saved to ``~/.gnupg/``.
-
-   .. code-block:: sh
-
-      $ gpg --gen-key
-      Real name: <FIRST_NAME> <LAST_NAME>
-      Email address: <EMAIL_ADDRESS>
-      You selected this USER-ID:
-          "<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>"
-
--  Find the GPG key ID and use it to generate a plaintext public key file. [31]
-
-   .. code-block:: sh
-
-      $ gpg --list-keys
-      $ gpg --export --armor <GPG_KEY_ID> > ~/.gnupg/gpg-public-key.asc
+-  `Create <#creation>`__ a GPG key pair.
 
 -  Import the GPG key on all of the systems that will install the signed RPMs.
 
@@ -790,6 +822,9 @@ PKGBUILD (Arch Linux)
 Creating a PKGBUILD
 ~~~~~~~~~~~~~~~~~~~
 
+PKGBUILD File
+^^^^^^^^^^^^^
+
 Arch Linux packages are design to be simple and easy to create. A
 PKGBUILD file is compressed with a software's contents into a XZ
 tarball. This can contain either the source code or compiled program.
@@ -869,6 +904,92 @@ Required:
 
 [10][11]
 
+GPG Signing
+^^^^^^^^^^^
+
+-  `Create <#creation>`__ a GPG key pair. Even if this key is added and signed by the ``pacman-key`` command later on, the local user needs access to the GPG key. Otherwise, ``makepkg`` or ``repo-add`` will complain that the GPG key ID does not exist. [35]
+-  Import a GPG key.
+
+   -  Use a public GPG key file:
+
+      .. code-block:: sh
+
+         $ sudo pacman-key --add ~/.gnupg/gpg-public-key.asc
+
+   -  Use a public GPG key from a server:
+
+      .. code-block:: sh
+
+         $ sudo pacman-key --recv-keys <GPG_KEY_ID>
+
+-  Verify that the key has been imported.
+
+   .. code-block:: sh
+
+      $ pacman-key --list-keys
+
+-  Load the key and then verify that it has been imported. [36] Otherwise, installing packages with the GPG key will result in this error: ``error: <PACKAGE>: signature from "<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>" is unknown trust``.
+
+   .. code-block:: sh
+
+      $ sudo pacman-key --init
+      $ sudo pacman-key --lsign-key <GPG_KEY_ID>
+
+**Build and Sign Packages**
+
+-  Configure ``makepkg`` to sign packages by default.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/makepkg.conf
+      BUILDENV=(!distcc color !ccache check sign)
+      PACKAGER="<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>"
+      GPGKEY="<GPG_KEY_ID>"
+
+-  Or manually run ``makepkg --sign --key <GPG_KEY_ID>``.
+
+-  Force the repository metadata to be updated to use the GPG key. [37][38][39]
+
+   .. code-block:: sh
+
+      $ repo-add --verify --sign <PKGBUILD_REPOSITORY_NAME>.db.tar.gz ./*.pkg*
+
+**Sign Existing Packages**
+
+-  Create a detached GPG signature. This command only works for a single package at a time. Pacman requires using no armor for the GPG signing which creates a binary ``*.sig`` file. Using armor plaintext ``*.asc`` signatures is not supported.
+
+   .. code-block:: sh
+
+      $ gpg --detach-sign --no-armor <PACKAGE>
+
+-  Force the repository metadata to be updated to use the GPG key. [40]
+
+   .. code-block:: sh
+
+      $ repo-add --verify --sign <PKGBUILD_REPOSITORY_NAME>.db.tar.gz ./*.pkg*
+
+**Verify the GPG Key Works** [38]
+
+-  By default, Pacman requries that packages need to be signed with a GPG key but the databse does not.
+
+   .. code-block:: ini
+
+      SigLevel = Required DatabaseOptional
+
+-  Require the database to also be signed.
+
+   .. code-block:: ini
+
+      [<PKGBUILD_REPOSITORY_NAME>]
+      SigLevel = Required
+
+-  Require a GPG key but do not check if it is authentic or expired.
+
+   .. code-block:: ini
+
+      [<PKGBUILD_REPOSITORY_NAME>]
+      SigLevel = Required DatabaseOptional TrustAll
+
 AUR Submission
 ~~~~~~~~~~~~~~
 
@@ -911,6 +1032,54 @@ Optional files:
 There should not be any binary or source code hosted in the AUR git repository.
 
 [13]
+
+Troubleshooting
+~~~~~~~~~~~~~~~
+
+Error when trying to build a signed PKGBUILD:
+
+.. code-block:: sh
+
+   $ makepkg --sign --key <GPG_KEY_ID>
+   ==> ERROR: The key <GPG_KEY_ID> does not exist in your keyring.
+
+Solution:
+
+-  The GPG key exists for a different user. [35] Export the private GPG key and then import it as a different user. [43]
+
+   .. code-block:: sh
+
+      $ gpg --list-secret-keys
+      $ gpg --export-secret-keys <GPG_KEY_ID> > /tmp/gpg-private.key
+      $ chown <OTHER_USER> /tmp/gpg-private.key
+      $ su - <OTHER_USER>
+      $ gpg --import /tmp/gpg-private.key
+      $ rm -f /tmp/gpg-private.key
+
+----
+
+Permission errors when running commands that require entering a password to unlock the private GPG key:
+
+.. code-block:: sh
+
+   $ gpg --import <GPG_KEY_FILE>.asc
+   gpg: key 1c424e039f4444af: "<FIRST_NAME> <LAST_NAME> <EMAIL_ADDRESS>" not changed
+   gpg: key 1c424e039f4444af/bec914517aa203f3: error sending to agent: Permission denied
+   gpg: key 1c424e039f4444af/bec914517aa203f3: error sending to agent: Permission denied
+   gpg: error reading '<GPG_KEY_FILE>.asc': Permission denied
+   gpg: import from '<GPG_KEY_FILE>.asc' failed: Permission denied
+   gpg: Total number processed: 0
+   gpg:              unchanged: 1
+   gpg:       secret keys read: 1
+
+Solutions:
+
+-  GPG needs to be able to access the TTY to get standard input for the GPG key password. The easiest way to do this is to start a ``screen`` or ``tmux`` session. Then run the ``gpg --import`` command again. [44]
+-  Pass the password to the GPG command by using standard input. [45]
+
+   .. code-block:: sh
+
+      $ echo "<PASSWORD>" | gpg --import --passphrase-fd 0 <GPG_KEY_FILE>.asc
 
 History
 -------
@@ -957,3 +1126,14 @@ Bibliography
 32. "Signing and Creating a Repository for RPM Packages." CDOT Wiki. July 17, 2017. Accessed August 14, 2023. https://hussainaliakbar.github.io/signing-and-verifying-rpm-packages/
 33. "Signing and Verifying RPM Packages." Hussain Ali Akbar. April 25, 2018. Accessed August 14, 2023. https://wiki.cdot.senecacollege.ca/wiki/Signing_and_Creating_a_Repository_for_RPM_Packages
 34. "Creating and hosting your own rpm packages and yum repo." Earthly. June 24, 2021. Accessed August 14, 2023. https://earthly.dev/blog/creating-and-hosting-your-own-rpm-packages-and-yum-repo/
+35. "SOLVED: makepkg fails at signing package." Arch Linux Forums. May 25, 2012. Accessed August 16, 2023. https://bbs.archlinux.org/viewtopic.php?id=142128
+36. "pacman-key Command Examples." The Geek Diary. Accessed August 16, 2023. https://www.thegeekdiary.com/pacman-key-command-examples/
+37. "DeveloperWiki:Package signing." ArchWiki. September 25, 2022. Accessed August, 2023. https://wiki.archlinux.org/title/DeveloperWiki:Package_signing
+38. "pacman/Package signing." ArchWiki. August 13, 2023. Accessed August 19, 2023. https://wiki.archlinux.org/title/Pacman/Package_signing
+39. "Pacman Package Signing – 1: Makepkg and Repo-add." Allan McRae. August 7, 2011. Accessed August 16, 2023. http://allanmcrae.com/2011/08/pacman-package-signing-1-makepkg-and-repo-add/
+40. "pacman-sign-guide." GitHub Gist elieux/guide.md. October 4, 2015. Accessed August 16, 2023. https://gist.github.com/elieux/fad9451bbfc4ddb5cde7
+41. "Create Personal Arch Linux Package Repository via GitHub Pages." sainnhe's blog. February 23, 2021. Accessed August 19, 2023. https://www.sainnhe.dev/post/create-personal-arch-linux-package-repository/
+42. "Create a key to sign your packages." ArcoLinuxIso. September 11, 2020. Accessed August 19, 2023. https://www.arcolinuxiso.com/create-a-key-to-sign-your-packages/
+43. "GPG: Extract private key and import on different machine." makandra cards. January 1, 2016. Accessed August 19, 2023. https://makandracards.com/makandra-orga/37763-gpg-extract-private-key-and-import-on-different-machine
+44. "Add documentation for configuring GnuPG #33." GitHub. coolacid/docker-misp. November 4, 2022. Accessed August 19, 2023. https://github.com/coolacid/docker-misp/issues/33
+45. "How to use Gnupg's passphrase-fd argument?" Stack Overflow. March 26, 2019. Accessed August 19, 2023. https://stackoverflow.com/questions/19895122/how-to-use-gnupgs-passphrase-fd-argument
