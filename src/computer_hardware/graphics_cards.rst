@@ -135,6 +135,10 @@ These are the best graphics cards that are (1) low-profile and (2) do not requir
    -  1. AMD Radeon RX 6400 [22]
    -  2. AMD Radeon RX 560 [23]
 
+-  Intel:
+
+   -  1. Intel Arc Pro A50 [26]
+
 -  NVIDIA:
 
    -  1. NVIDIA RTX 4000 SFF Ada Generation
@@ -178,3 +182,4 @@ Bibliography
 23. "How many low profile graphics cards are there?" Quora. May 11, 2023. Accessed August 8, 2023. https://www.quora.com/How-many-low-profile-graphics-cards-are-there
 24. "Graphics card compatible with HP Z230." Reddit r/PcMasterRaceBuilds. October 23, 2023. Accessed August 8, 2023. https://www.reddit.com/r/PcMasterRaceBuilds/comments/jgqtsg/graphics_card_compatible_with_hp_z230/?rdt=59793
 25. "Nvidia's Tiny RTX 4000 SFF 20GB Offers RTX 3070 Performance at 70W." Tom's Hardware. March 22, 2023. Accessed August 9, 2023. https://www.tomshardware.com/news/nvidia-tiny-rtx-4000-sff-launched
+26. "Intel Arc Pro A-Series Graphics." Intel Products. Accessed August 20, 2023. https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/workstations/a-series/overview.html
