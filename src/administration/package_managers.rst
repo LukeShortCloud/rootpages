@@ -3,10 +3,10 @@ Package Managers
 
 .. contents:: Table of Contents
 
-Commands
---------
+Common Commands
+----------------
 
-These are the commands used for common operator tasks when handling packages.
+These are the commands used for common operation tasks when handling packages.
 
 .. csv-table::
    :header: Action, APT (Debian), DNF/YUM (Fedora), Pacman (Arch Linux), Zyyper (openSUSE)
@@ -18,6 +18,7 @@ These are the commands used for common operator tasks when handling packages.
    Operating system upgrade, apt-get dist-upgrade, dnf distro-sync, pacman -Syyu, zypper dist-upgrade
    Search for a package based on it's name, apt-cache search, dnf search, pacman -Ss, zypper search
    Search for a package based on a file it has, apt-file search, dnf whatprovides, pacman -F, zypper --provides --match-exact
+   Download a package, apt-get download, dnf download, pacman -S -w, zypper download
 
 DEB
 ---
