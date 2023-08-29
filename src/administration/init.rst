@@ -129,6 +129,20 @@ Configuration options for unit files:
 
          $ sudo systemctl enable systemd-networkd-wait-online.service
 
+-  Configure environment variables in the systemd unit file or source them from an external file. [8]
+
+   .. code-block:: ini
+
+      [Service]
+      Environment=foo=bar
+      EnvironmentFile=/app/env
+
+   .. code-block:: sh
+
+      $ cat /app/env
+      app_host=127.0.0.1
+      app_address=80
+
 Preset Files
 ~~~~~~~~~~~~
 
@@ -152,3 +166,4 @@ Bibliography
 5. "Auto-restart a crashed service in systemd." Mattias Geniar. January 13, 2020. Accessed May 11, 2023. https://ma.ttias.be/auto-restart-crashed-service-systemd/
 6. "Network Configuration Synchronization Points." systemd.io. 2022. Accessed May 11, 2023. https://systemd.io/NETWORK_ONLINE/
 7. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html
+8. "Using environment variables in systemd units." Flatcar Container Linux. Accessed August 29, 2023. https://www.flatcar.org/docs/latest/setup/systemd/environment-variables/
