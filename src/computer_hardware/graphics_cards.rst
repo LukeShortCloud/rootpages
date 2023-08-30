@@ -90,11 +90,11 @@ Machine learning (ML) [4][5]:
 
 Integrated GPUs (iGPUs) can use up to half of the available system RAM. [6] Since RAM is slower than VRAM, it is recommended to use the fastest RAM available. [7]
 
-Best Legacy Cards
------------------
+Best Graphics Cards
+-------------------
 
-32-bit
-~~~~~~
+Legacy 32-bit
+~~~~~~~~~~~~~
 
 32-bit operating systems, such as Windows XP, only support graphics cards with 3 GB of VRAM. There are sometimes driver limitations, too. [8]
 
@@ -104,8 +104,37 @@ Windows XP:
 - Best NVIDIA card for the era = NVIDIA 8800 GT [9]
 - Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
 
+Ray Tracing
+~~~~~~~~~~~
+
+These are the best discrete graphics card vendors for ray traced graphics [27]:
+
+1.  NVIDIA
+2.  Intel
+3.  AMD
+
+Best Supported
+~~~~~~~~~~~~~~
+
+Based on popular hardware that uses a specific GPU architecture, PC graphics cards based on those same architectures should, in theory, have the most stable drivers.
+
+AMD:
+
+1.  Radeon DNA (RDNA) 2 = PlayStation 5 [28], Steam Deck [29], and Xbox Series X|S [30].
+2.  Graphics Core Next (GCN) 2 = PlayStation 4 Pro [31] and Xbox One X|S [32].
+3.  Graphics Core Next (GCN) 1 = PlayStation 4 [38][39] and Xbox One. [40]
+
+NVIDIA:
+
+1.  Ada Lovelace = GeForce NOW servers in 2023. [33][34]
+2.  Turing = GeForce NOW servers in 2019. [35][36]
+3.  Maxwell = Nintendo Switch. [37]
+
 Power Cables
 ------------
+
+Introduction
+~~~~~~~~~~~~
 
 Graphics cards have a specific wattage requirement. They draw power from the PCIe slot and often require more power. That can be supplied through additional cables from the power supply.
 
@@ -183,3 +212,17 @@ Bibliography
 24. "Graphics card compatible with HP Z230." Reddit r/PcMasterRaceBuilds. October 23, 2023. Accessed August 8, 2023. https://www.reddit.com/r/PcMasterRaceBuilds/comments/jgqtsg/graphics_card_compatible_with_hp_z230/?rdt=59793
 25. "Nvidia's Tiny RTX 4000 SFF 20GB Offers RTX 3070 Performance at 70W." Tom's Hardware. March 22, 2023. Accessed August 9, 2023. https://www.tomshardware.com/news/nvidia-tiny-rtx-4000-sff-launched
 26. "Intel Arc Pro A-Series Graphics." Intel Products. Accessed August 20, 2023. https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/workstations/a-series/overview.html
+27. "How is the driveres for A770 in 2023?" Reddit r/intel. March 1, 2023. Accessed August 29, 2023. https://www.reddit.com/r/intel/comments/11ey5a0/how_is_the_drivers_for_a770_in_2023/
+28. "Sony reveals full PS5 hardware specifications / Begun, the console wars have." The Verge. March 18, 2020. Accessed August 29, 2023. https://www.theverge.com/2020/3/18/21183181/sony-ps5-playstation-5-specs-details-hardware-processor-8k-ray-tracing
+29. "Valve details Steam Deck hardware, the AMD Zen2/RDNA2 SoC is codenamed Aerith." VideoCardz.com. November 12, 2021. Accessed August 29, 2023. https://videocardz.com/newz/valve-details-steam-deck-hardware-the-amd-zen2-rdna2-soc-is-codenamed-aerith
+30. "A Closer Look at How Xbox Series X|S Integrates Full AMD RDNA 2 Architecture." Xbox Wire. October 28, 2020. Accessed August 29, 2023. https://news.xbox.com/en-us/2020/10/28/a-closer-look-at-how-xbox-series-xs-integrates-full-amd-rdna-2-architecture/
+31. "AMD Playstation 4 Pro GPU: specs and benchmarks." Technical City. Accessed August 29, 2023. https://technical.city/en/video/Playstation-4-Pro-GPU
+32. "AMD Xbox One X GPU." TechPowerUp. Accessed August 29, 2023. https://www.techpowerup.com/gpu-specs/xbox-one-x-gpu.c2977
+33. "GeForce NOW RTX 4080 Server Upgrade." NVIDIA. Accesssed August 29, 2023. https://www.nvidia.com/en-us/geforce-now/server-upgrade/
+34. "GeForce RTX 4080." NVIDIA. Accessed August 29, 2023. https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4080/
+35. "New servers on GeForce NOW." Reddit r/GeForceNOW. January 28, 2020. Accessed August 29, 2023. https://www.reddit.com/r/GeForceNOW/comments/ctinfx/new_servers_on_geforce_now/
+36. "NVIDIA Tesla T10 16 GB." TechPowerUp. Accessed August 29, 2023. https://www.techpowerup.com/gpu-specs/tesla-t10-16-gb.c4036
+37. "Nintendo Switch Uses Stock NVIDIA Tegra X1 T210 CPU & GM20B Maxwell Core." Wccftetch. March 16, 2017. Accessed August 29, 2023. https://wccftech.com/nintendo-switch-tegra-x-1-nvidia-maxwell/
+38. "Add Liverpool radeon chip support." GitHub fail0verflow/ps4-linux. January 3, 2016. Accessed August 29, 2023. https://github.com/fail0verflow/ps4-linux/commit/244902f4739e4b62791a20986a892f1e2bf415f9
+39. "AMD Radeon HD 7790 Review Feat. Sapphire: The First Desktop Sea Islands." AnandTech. March 22, 2013. Accessed August 29, 2023. https://www.anandtech.com/show/6837/amd-radeon-7790-review-feat-sapphire-the-first-desktop-sea-islands/2
+40. "Xbox One S GPU." System Requirements. Accessed August 29, 2023. https://gamesystemrequirements.com/gpu/xbox-one-s-gpu
