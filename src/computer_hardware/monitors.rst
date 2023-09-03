@@ -162,8 +162,11 @@ With modern day technology, it is almost possible to reproduce the image quality
 
 -  8K resolution
 -  100% of the Rec. 2020 color spectrum
--  10,000 nit brightness
--  12-bit color depth
+-  Dolby Vision HDR
+
+   -  10,000-nit brightness
+   -  12-bit color depth
+
 -  240 Hz
 
 History
