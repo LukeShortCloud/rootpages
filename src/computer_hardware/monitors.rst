@@ -169,6 +169,21 @@ With modern day technology, it is almost possible to reproduce the image quality
 
 -  240 Hz
 
+Movie Formats
+-------------
+
+Here is a comparison between all physical movie formats.
+
+.. csv-table::
+   :header: Name, Resolution, HDR Support [24], Video Codec Support, Maximum Format Size
+   :widths: 20, 20, 20, 20, 20
+
+   4K UHD Blu-ray, 4096x2160 [25], Yes, H.265 (HEVC) and VP9, 100 GB
+   1080p HD Blu-ray, 1920x1080, No, "H.264 (MPEG-4 AVC), H.262 (MPEG-2), and SMPTE VC-1 [26]", 50 GB
+   480p DVD, 720x480, No, H.262 (MPEG-2), 8.5 GB
+
+[27]
+
 History
 -------
 
@@ -200,3 +215,7 @@ Bibliography
 21. "What are 8-bit, 10-bit, 12-bit, 4:4:4, 4:2:2 and 4:2:0?" Datavideo. January 7, 2020. Accessed March 31, 2023. https://www.datavideo.com/us/article/412/what-are-8-bit-10-bit-12-bit-4-4-4-4-2-2-and-4-2-0
 22. "AMD’s 10-bit Video Output Technology." AMD. Accessed March 31, 2023. https://www.amd.com/system/files/documents/10-bit-video-output.pdf
 23. "What Is 10-Bit (And 12-Bit) Color?" Tom's Hardware. June 23, 2022. Accessed March 31, 2023. https://www.tomshardware.com/news/what-is-10-bit-color,36912.html
+24. "Is HDR Available on Regular Blu-ray Discs?" Sound & Vision. September 25, 2017. Accessed September 2, 2023. https://www.soundandvision.com/content/hdr-available-regular-blu-ray-discs
+25. "What does UHD mean? What is the difference between UHD and 4K?" DEXON Systems. November 22, 2022. Accessed September 2, 2023. https://dexonsystems.com/blog/what-is-uhd
+26. "What audio and video codecs are supported on Blu-ray Disc media?" Sony. May 25, 2022. Accessed September 2, 2023. https://www.sony.com/electronics/support/home-video-blu-ray-disc-players-recorders/ubp-x800/articles/00029663
+27. "4K UHD VS Blu ray VS DVD Comparison: Top Differences and Advantages." MacX DVD Ripper Pro. January 13, 2021. Accessed September 2, 2023. https://www.macxdvd.com/mac-dvd-video-converter-how-to/bluray-vs-dvd-vs-4k-uhd.htm
