@@ -88,9 +88,9 @@ Fedora installation:
 .. code-block:: sh
 
     $ sudo dnf -y install qemu-kvm libvirt
-    $ sudo systemctl enable --now libvirt
     $ sudo groupadd libvirt
     $ sudo usermod -a -G libvirt $USER
+    $ sudo systemctl enable --now libvirtd
 
 Performance Tuning
 ^^^^^^^^^^^^^^^^^^
