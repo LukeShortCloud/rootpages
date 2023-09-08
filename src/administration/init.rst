@@ -45,12 +45,19 @@ All unit files are ini configuration files that use this layout:
 
 Configuration options for unit files:
 
--  Run a unit during a normal boot.
+-  Run a system unit during a normal boot.
 
    .. code-block:: ini
 
       [Install]
       WantedBy=multi-user.target
+
+-  Run a user unit during login.
+
+   .. code-block:: sh
+
+      [Install]
+      WantedBy=default.target
 
 -  Log standard output and/or standard error of a service to a file.
 
@@ -151,6 +158,37 @@ System packages can define if a unit should be enabled or disabled by default. [
 -  Create a file called ``/usr/lib/systemd/system-preset/<UNIT>.<UNIT_TYPE>``.
 -  Edit the file with the contents of ``enable <UNIT>.<UNIT_TYPE>`` or ``disable <UNIT.<UNIT_TYPE>``.
 
+Enable Services on Boot
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Enable a system service to start on boot. [9]
+
+-  Automatically:
+
+   .. code-block:: sh
+
+      $ sudo systemctl enable <UNIT>
+
+-  Manually:
+
+   .. code-block:: sh
+
+      $ sudo ln -s /usr/lib/systemd/system/<UNIT>.service /etc/systemd/system/multi-user.target.wants/<UNIT>.service
+
+Enable a user service to start when the login. [10]
+
+-  Automatically:
+
+   .. code-block:: sh
+
+      $ systemctl --user enable <UNIT>
+
+-  Manually:
+
+   .. code-block:: sh
+
+      $ ln -s ~/.config/systemd/user/<UNIT>.service ~/.config/systemd/user/default.target.wants/<UNIT>.service
+
 History
 -------
 
@@ -167,3 +205,5 @@ Bibliography
 6. "Network Configuration Synchronization Points." systemd.io. 2022. Accessed May 11, 2023. https://systemd.io/NETWORK_ONLINE/
 7. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html
 8. "Using environment variables in systemd units." Flatcar Container Linux. Accessed August 29, 2023. https://www.flatcar.org/docs/latest/setup/systemd/environment-variables/
+9. "Use systemd to Start a Linux Service at Boot." Linode Docs. March 9, 2023. Accessed September 8, 2023. https://www.linode.com/docs/guides/start-service-at-boot/
+10. "Start a systemd user service at boot." Super User. August 14, 2023. Accessed September 8, 2023. https://superuser.com/questions/1025091/start-a-systemd-user-service-at-boot
