@@ -137,6 +137,7 @@ Fedora provides installations with different desktop environments. These are kno
 
    Silverblue, GNOME
    Kinoite, KDE Plasma
+   Lazurite, LXQt [26]
    Sericea, Sway
 
 Dual Booting
@@ -1054,3 +1055,4 @@ Bibliography
 23. "[Fedora Silverblue] Rebase from F36 to F37 stops on error and hangs ( _g_dbus_worker_do_read_cb) #4150." GitHub coreos/rpm-ostree. March 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/issues/4150
 24. "Extensions." rpm-ostree. March 28, 2022. Accessed August 17, 2023. https://coreos.github.io/rpm-ostree/extensions/
 25. "Add support for modules #2760." GitHub coreos/rpm-ostree. April 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/pull/2760
+26. "Rename LXQt variant to Fedora Lazurite." Fedora Pagure workstation-ostree-config. April 21, 2023. Accessed Septmeber 8, 2023. https://pagure.io/workstation-ostree-config/c/4930d909b66d92aae4612fcfd4389b9e64ae4323?branch=f38
