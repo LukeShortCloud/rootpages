@@ -595,7 +595,7 @@ GPG Signing
 
    .. code-block:: sh
 
-      $ sudo rpm import ~/.gnupg/gpg-public-key.asc
+      $ sudo rpm --import ~/.gnupg/gpg-public-key.asc
 
 -  Optionally set that GPG key as the default for signing. [32]
 
