@@ -138,6 +138,7 @@ Fedora provides installations with different desktop environments. These are kno
    Silverblue, GNOME
    Kinoite, KDE Plasma
    Lazurite, LXQt [26]
+   Onyx, Budgie [27]
    Sericea, Sway
 
 Dual Booting
@@ -1056,3 +1057,4 @@ Bibliography
 24. "Extensions." rpm-ostree. March 28, 2022. Accessed August 17, 2023. https://coreos.github.io/rpm-ostree/extensions/
 25. "Add support for modules #2760." GitHub coreos/rpm-ostree. April 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/pull/2760
 26. "Rename LXQt variant to Fedora Lazurite." Fedora Pagure workstation-ostree-config. April 21, 2023. Accessed Septmeber 8, 2023. https://pagure.io/workstation-ostree-config/c/4930d909b66d92aae4612fcfd4389b9e64ae4323?branch=f38
+27. "Fedora Onyx." Fedora Project Wiki. May 25, 2023. Accessed September 15, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Onyx
