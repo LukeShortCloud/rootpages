@@ -988,6 +988,9 @@ Once the treefiles have been created, the rpm-ostree distribution can be built. 
 Upgrades
 ~~~~~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 Unlike Fedora Workstation [19], rpm-ostree distributions do not officially support skip upgrades of going from X to X+2 because it is untested.
 
 -  Minor update of a rpm-ostree distribution:
@@ -1021,6 +1024,35 @@ rpm-ostree distributions have issues upgrading when there are third-party RPMs i
          --uninstall rpmfusion-nonfree-release-<FEDORA_MAJOR_VERSION_ORIGINAL>-1.noarch \
          --install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-<FEDORA_MAJOR_VERSION_NEW>.noarch.rpm \
          --install https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-<FEDORA_MAJOR_VERSION_NEW>.noarch.rpm
+
+ostree Remotes
+^^^^^^^^^^^^^^
+
+All remote update servers have their configuration files stored at ``/etc/ostree/remotes.d/<REMOTE>.conf``. Here are the contents of the default Fedora remote configuration file ``fedora.conf``:
+
+.. code-block:: ini
+
+   [remote "fedora"]
+   url=https://ostree.fedoraproject.org
+   gpg-verify=true
+   gpgkeypath=/etc/pki/rpm-gpg/
+   contenturl=mirrorlist=https://ostree.fedoraproject.org/mirrorlist
+
+A custom remote server can be added by either using the CLI or manually adding a configuration file.
+
+-  CLI [28]:
+
+   .. code-block:: sh
+
+      $ sudo ostree remote add --set=gpg-verify=false <REMOTE_NAME> '<REMOTE_REPO_URL>'
+
+-  Configuration file:
+
+   .. code-block:: ini
+
+      [remote "<REMOTE_NAME>"]
+      url=<REMOTE_REPO_URL>
+      gpg-verify=false
 
 History
 -------
@@ -1058,3 +1090,4 @@ Bibliography
 25. "Add support for modules #2760." GitHub coreos/rpm-ostree. April 23, 2023. Accessed August 17, 2023. https://github.com/coreos/rpm-ostree/pull/2760
 26. "Rename LXQt variant to Fedora Lazurite." Fedora Pagure workstation-ostree-config. April 21, 2023. Accessed Septmeber 8, 2023. https://pagure.io/workstation-ostree-config/c/4930d909b66d92aae4612fcfd4389b9e64ae4323?branch=f38
 27. "Fedora Onyx." Fedora Project Wiki. May 25, 2023. Accessed September 15, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Onyx
+28. "Rebasing to New Versions." Fedora Documentation. September 15, 2023. Accessed September 15, 2023. https://docs.fedoraproject.org/en-US/iot/rebasing/
