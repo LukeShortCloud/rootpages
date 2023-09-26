@@ -552,6 +552,16 @@ Example Java <=9 usage in a docker compose file that utilizes an environment var
 
    CMD java -XX:+PrintFlagsFinal $JAVA_OPTS -jar app.jar
 
+Multi-Architecture Support
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``docker buildx build`` command can be used as a replacement for ``docker build`` to create a container image based on the CPU architecture of the running host. In the ``Dockerfile``, the ``ARCH`` argument needs to be set to an empty value. [31]
+
+::
+
+   ARG ARCH=
+   FROM ${ARCH}ubuntu:latest
+
 Container Tools (buildah, podman, and skopeo)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -853,3 +863,4 @@ Bibliography
 28. "Distrobox." Arch Wiki. June 18, 2023. Accessed June 27, 2023. https://wiki.archlinux.org/title/Distrobox
 29. "Distrobox." GitHub 89luca89/distrobox. June 25, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox
 30. "Useful tips." GitHub 89luca89/distrobox. June 15, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md
+31. "Multi-arch build and images, the simple way." Docker Blog. April 30, 2020. Accessed September 25, 2023. https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
