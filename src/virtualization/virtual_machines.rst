@@ -1070,7 +1070,7 @@ Create a user for Fedora Silverblue (there is a bug that prevents the Kickstart 
 
 .. code-block:: sh
 
-   %post --logfile=/root/kickstart-post.log --erroronfail
+   %post
    echo '%wheel ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/wheel
    useradd -g wheel bob
    echo "bob:password" | chpasswd
@@ -1087,6 +1087,13 @@ Launch the Fedora initial setup agent (requires the ``initial-setup`` package to
 .. code-block:: sh
 
    firstboot --enable
+
+Enable persistent debug logging for the post-installation tasks [80]:
+
+.. code-block:: sh
+
+   %post --logfile=/root/ks-post.log --erroronfail
+   set -x
 
 Terraform
 ~~~~~~~~~
@@ -2307,3 +2314,4 @@ Bibliography
 77. "How to Passthrough a Disk in Proxmox." WunderTech. February 28, 2023. Accessed August 8, 2023. https://www.wundertech.net/how-to-passthrough-a-disk-in-proxmox/
 78. "Disable Secure-Boot from Virt-Install Command Line." SmoothNet. May 19, 2022. Accessed AUgust 15, 2023. https://www.smoothnet.org/disable-secure-boot-from-virt-install/
 79. "RHEL: Booting a virtual machine with UEFI but without secure boot." Andreas Karis Blog. June 25, 2021. Accessed August 15, 2023. https://andreaskaris.github.io/blog/linux/libvirt-uefi-without-secureboot/
+80. "Logging all the commands executed during a kickstart installation to file and screen." Server Fault. April 6, 2011. Accessed September 28, 2023. https://serverfault.com/questions/256305/logging-all-the-commands-executed-during-a-kickstart-installation-to-file-and-sc
