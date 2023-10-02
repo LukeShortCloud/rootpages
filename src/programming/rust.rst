@@ -1021,7 +1021,7 @@ Cargo is the official package manager for Rust dependencies. It installs package
       
       11 directories, 20 files
 
--  The ``Cargo.toml`` file contains important information about the name, version, and dependencies of a package.
+-  The ``Cargo.toml`` file contains important information about the name, version, and dependencies of a package. The edition is the version and format of the ``Cargo.toml`` itself. Valid editions include: ``2015``, ``2018``, and ``2021``.
 
    .. code-block:: sh
 
