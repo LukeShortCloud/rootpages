@@ -57,7 +57,7 @@ author = 'Luke Short'
 # built documents.
 #
 # The short X.Y version.
-version = '2023.10.01-dev'
+version = '2023.10.01'
 # The full version, including alpha/beta/rc tags.
 #release = ''
 
