@@ -254,6 +254,25 @@ These are examples configurations for ``/etc/default/grub``. Use ``grub-mkconfig
 
 [12]
 
+UEFI Boot Name
+~~~~~~~~~~~~~~
+
+When using the UEFI boot menu provided by the BIOS of a motherboard, each operating system has its own name. It is possible to configure this name by using ``efibootmgr`` and then re-generating the GRUB configuration file.
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo efibootmgr --create --disk /dev/<DEVICE> --part <EFI_PARTITION_NUMBER> --label "Arch Linux Custom Boot Name" --loader /EFI/BOOT/BOOTX64.efi
+      $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo efibootmgr --create --disk /dev/<DEVICE> --part <EFI_PARTITION_NUMBER> --label "Fedora Custom Boot Name" --loader \\EFI\\fedora\\shimx64.efi
+      $ sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
 Recovery
 ~~~~~~~~
 
@@ -497,3 +516,5 @@ Bibliography
 13. "GRUB error: sparse file not allowed." Support - Manjaro Linux. September 6, 2020. Accessed February 2022. https://forum.manjaro.org/t/grub-error-sparse-file-not-allowed/20267/6
 14. "15.1.13 gfxpayload." GNU GRUB Manual 2.06. Accessed February 16, 2023. https://www.gnu.org/software/grub/manual/grub/html_node/gfxpayload.html
 15. "GRUB gfxpayload blacklist." Launchpad Ubuntu. Accessed February 16, 2023. https://launchpad.net/ubuntu/xenial/+package/grub-gfxpayload-lists
+16. "Use Linux efibootmgr Command to Manage UEFI Boot Menu." LinuxBabe. November 13, 2022. Accessed October 4, 2023. https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
+17. "Kickstart overcoming UEFi or converting from MBR." Light At The End Of The Tunnel. May 10, 2021. Accessed October 4, 2023. https://pkje.net/meander/2016/09/01/kickstart-overcoming-uefi-or-converting-from-mbr/
