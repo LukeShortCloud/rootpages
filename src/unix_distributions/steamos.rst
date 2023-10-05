@@ -82,6 +82,23 @@ SFTP provides FTP over the SSH protocol. This can be used to move files to and f
 
 [1]
 
+Remote Desktop
+~~~~~~~~~~~~~~
+
+Users can share their SteamOS screen for collaborating and/or troubleshooting. This requires being in `Desktop Mode <#enable-desktop-mode>`__.
+
+Solutions that work on SteamOS:
+
+-  `AnyDesk <../graphics/desktop.html#anydesk>`__ = The most reliable solution.
+-  Steam Remote Play [11] = This can be buggy. Requires minimizing the selected program once a Remote Play connection is working.
+
+   -  Games > Add a Non-Steam Game to My Library... > Konsole > Add Selected Programs
+
+Solutions that do NOT work on SteamOS:
+
+-  Chrome Remote Desktop = Requires installing and using a DEB package.
+-  KDE Remote Desktop Connection (KRDC) = Requires installing and using ``krfb`` on SteamOS. Only works on local networks.
+
 Increase Swap Size and VRAM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -229,3 +246,4 @@ Bibliography
 8. "Why does updating SteamOS wipe all installed Pacman packages?" Steam Deck General Discussions. March 26, 2022. Accessed August 13, 2023. https://steamcommunity.com/app/1675200/discussions/0/3181237058689666854/
 9. "How I set up a VPN connection." Reddit r/SteamDeck. July 9, 2023. Accessed August 13, 2023. https://www.reddit.com/r/SteamDeck/comments/wsvyfw/how_i_set_up_a_vpn_connection/?utm_source=share&utm_medium=android_app&utm_name=androidcss&utm_term=1&utm_content=1
 10. "Unlock Steam Deck." Chris Titus Tech. July 27, 2022. Accessed August 13, 2023. https://christitus.com/unlock-steam-deck/
+11. "Tutorial: A quick and easy way to control the Deck remotely." Reddit r/SteamDeck. December 14, 2022. Accessed October 4, 2023. https://www.reddit.com/r/SteamDeck/comments/tfjjhx/tutorial_a_quick_and_easy_way_to_control_the_deck/
