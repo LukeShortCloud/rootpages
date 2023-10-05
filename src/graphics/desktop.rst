@@ -161,6 +161,46 @@ When using Xorg, ``xrandr`` can rotate the screen. This needs to use a graphics 
 Remote Access
 -------------
 
+Comparison
+~~~~~~~~~~
+
+Use case:
+
+-  AnyDesk = Free and no account required.
+-  Parsec = Best desktop streaming service for gaming but requires a free account.
+
+AnyDesk
+~~~~~~~
+
+AnyDesk is proprietary, does not require an account, and offers online remote desktop sharing with essential features such as copy and paste.
+
+Benefits of a paid account:
+
+-  Privacy mode to disable the physical remote monitor. [8]
+-  Support for more than on monitor. [9]
+-  Ability to connect to more than 3 devices.
+-  Recording.
+-  Tech support.
+-  User management.
+-  Wake-on-LAN. [10]
+
+Installation:
+
+.. code-block:: sh
+
+   $ flatpak install com.anydesk.Anydesk
+
+Usage:
+
+-  Open "AnyDesk" on two different computers.
+
+   .. code-block:: sh
+
+      $ flatpak run com.anydesk.Anydesk
+
+-  Select the "New Session" tab.
+-  Note the "Your Address" from the remote computer. Enter that unique AnyDesk address on the client computer in the "Remote Desk" field and then select "Connect".
+
 Parsec
 ~~~~~~
 
@@ -235,3 +275,6 @@ Bibliography
 5. "Configure automatic login." GNOME Library. Accessed April 9, 2023. https://help.gnome.org/admin/system-admin-guide/stable/login-automatic.html.en
 6. "How to Login Automatically to Linux [most distros support]." FOSTips. September 2, 2022. Accessed April 9, 2023. https://fostips.com/login-automatically-linux/
 7. "Display manager." ArchWiki. April 7, 2023. Accessed April 9, 2023. https://wiki.archlinux.org/title/display_manager
+8. "Screen Privacy." AnyDesk Help Center. Accessed October 4, 2023. https://support.anydesk.com/knowledge/screen-privacy
+9. "what is the deal with free vs paid." Reddit r/AnyDesk. March 24, 2020. Accessed October 4, 2023. https://www.reddit.com/r/AnyDesk/comments/fo51wn/what_is_the_deal_with_free_vs_paid/?rdt=50890
+10. "AnyDesk Free vs Paid - How They Compare." Splashtop. September 12, 2023. Accessed October 4, 2023. https://www.splashtop.com/blog/anydesk-free-vs-paid
