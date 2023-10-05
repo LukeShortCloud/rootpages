@@ -204,7 +204,7 @@ Usage:
 Parsec
 ~~~~~~
 
-Parsec is a tool that can be used to remotely access macOS and Windows hosts. It supports Linux, macOS, and Windows hosts.
+Parsec is a tool that can be used to remotely access macOS and Windows hosts. It supports Linux, macOS, and Windows as clients. Hosting support for Linux is not currently in development but may come in 2024 or 2025. [11]
 
 Virtual Monitors
 ^^^^^^^^^^^^^^^^
@@ -278,3 +278,4 @@ Bibliography
 8. "Screen Privacy." AnyDesk Help Center. Accessed October 4, 2023. https://support.anydesk.com/knowledge/screen-privacy
 9. "what is the deal with free vs paid." Reddit r/AnyDesk. March 24, 2020. Accessed October 4, 2023. https://www.reddit.com/r/AnyDesk/comments/fo51wn/what_is_the_deal_with_free_vs_paid/?rdt=50890
 10. "AnyDesk Free vs Paid - How They Compare." Splashtop. September 12, 2023. Accessed October 4, 2023. https://www.splashtop.com/blog/anydesk-free-vs-paid
+11. "Hosting on Linux." Reddit r/ParsecGaming. January 4, 2023. Accessed October 4, 2023. https://www.reddit.com/r/ParsecGaming/comments/102svaf/hosting_on_linux/
