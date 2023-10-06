@@ -177,10 +177,12 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
    .. code-block:: sh
 
       $ sudo steamos-readonly disable
+      $ sudo systemd-sysext unmerge
       $ sudo chmod -x /usr/bin/steamos-atomupd-client
       $ sudo chmod -x /usr/bin/steamos-atomupd-mkmanifest
       $ sudo chmod -x /usr/bin/steamos-update
       $ sudo chmod -x /usr/bin/steamos-update-os
+      $ sudo systemd-sysext merge
       $ sudo steamos-readonly enable
 
 -  Re-enable updates:
@@ -188,10 +190,12 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
    .. code-block:: sh
 
       $ sudo steamos-readonly disable
+      $ sudo systemd-sysext unmerge
       $ sudo chmod +x /usr/bin/steamos-atomupd-client
       $ sudo chmod +x /usr/bin/steamos-atomupd-mkmanifest
       $ sudo chmod +x /usr/bin/steamos-update
       $ sudo chmod +x /usr/bin/steamos-update-os
+      $ sudo systemd-sysext merge
       $ sudo steamos-readonly enable
 
 Enable the Pacman Package Manager
