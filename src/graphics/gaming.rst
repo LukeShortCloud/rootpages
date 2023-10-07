@@ -92,6 +92,15 @@ Launch arguments for Steam:
 
 [4][5]
 
+Disable Steam Client Updates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Launch Steam with the following arguments to completely disable updates [6]:
+
+.. code-block:: sh
+
+   $ steam -noverifyfiles -nobootstrapupdate -skipinitialbootstrap -norepairfiles -overridepackageurl
+
 Troubleshooting
 ---------------
 
@@ -124,3 +133,4 @@ Bibliography
 3. "Steam/Client troubleshooting." Gentoo Wiki. February 15, 2021. Accessed May 20, 2021. https://wiki.gentoo.org/wiki/Steam/Client_troubleshooting
 4. "Why is steam using 27% CPU, and how can I stop it from using so much?" Reddit r/Steam. September 22, 2020. Accessed August 16, 2023. https://www.reddit.com/r/Steam/comments/ixi9ed/why_is_steam_using_27_cpu_and_how_can_i_stop_it/
 5. "How To Optimize Steam for Competitive Gaming." Forgeary. April 8, 2023. Accessed August 16, 2023. https://forgeary.com/optimize-steam/
+6. "Disabling Steam client auto-updates." Steam Help and Tips. December 15, 2019. Accessed October 6, 2023. https://steamcommunity.com/discussions/forum/1/1639788130289877816/
