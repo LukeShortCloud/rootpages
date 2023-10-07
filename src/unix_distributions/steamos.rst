@@ -198,6 +198,77 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
       $ sudo systemd-sysext merge
       $ sudo steamos-readonly enable
 
+Disable Steam Client Updates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Disable the read-only file system to make it writable.
+
+   .. code-block:: sh
+
+      $ sudo steamos-readonly disable
+      $ sudo systemd-sysext unmerge
+
+-  Edit the ``/usr/bin/gamescope-session`` file.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /usr/bin/gamescope-session
+
+   -  Before:
+
+      .. code-block:: sh
+
+         steamargs=("-steamos3" "-steampal" "-steamdeck" "-gamepadui")
+
+   -  After:
+
+      .. code-block:: sh
+
+         steamargs=("-steamos3" "-steampal" "-steamdeck" "-gamepadui" "-noverifyfiles" "-nobootstrapupdate" "-skipinitialbootstrap" "-norepairfiles" "-overridepackageurl")
+
+-  Edit the ``/usr/bin/steam-jupiter`` file.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /usr/bin/steam-jupiter
+
+   -  Before:
+
+      .. code-block:: sh
+
+         exec /usr/lib/steam/steam -steamdeck "$@"
+
+   -  After:
+
+      .. code-block:: sh
+
+         exec /usr/lib/steam/steam -steamdeck -noverifyfiles -nobootstrapupdate -skipinitialbootstrap -norepairfiles -overridepackageurl "$@"
+
+-  Edit the ``/usr/share/applications/steam.desktop`` file.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /usr/share/applications/steam.desktop
+
+   -  Before:
+
+      .. code-block:: ini
+
+         Exec=/usr/bin/steam %U
+
+   -  After:
+
+      .. code-block:: ini
+
+         Exec=/usr/bin/steam -noverifyfiles -nobootstrapupdate -skipinitialbootstrap -norepairfiles -overridepackageurl %U
+
+-  Re-enable the read-only file system:
+
+   .. code-block:: sh
+
+      $ sudo systemd-sysext merge
+      $ sudo steamos-readonly enable
+
 Enable the Pacman Package Manager
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
