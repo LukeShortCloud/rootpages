@@ -27,6 +27,30 @@ These are controllers that are officially supported on SteamOS [4][5]:
 -  DirectInput controllers
 -  Generic XInput controllers
 
+Decky Loader
+~~~~~~~~~~~~
+
+Decky Loader provides a standardized way to install and launch plugins for the Steam Deck in Game Mode.
+
+Installation:
+
+-  `Enable and enter Destkop Mode <#enable-desktop-mode>`__.
+-  `Configure a user password to be able to use "sudo" commands <#default-user-account>`__.
+-  `Download <https://github.com/SteamDeckHomebrew/decky-installer/releases/latest/download/decky_installer.desktop>`__ the Decky Loader desktop shortcut for the installer.
+
+   -  Ensure that the file extension is ``.desktop``.
+
+-  Use the "Dolphin" file manager to move the file from the Downloads folder to the Desktop folder.
+-  Double-click on the "decky_installer.desktop" file to execute it.
+-  Enter the "sudo" password when prompted.
+
+Usage:
+
+-  `Return to Game Mode <#enable-desktop-mode>`__.
+-  ... (also known as the Quick Access Menu [QAM]) > (move down to the bottom and select the new power plug icon) > (move to the right and select the shop icon to install plugins)
+
+[12][13]
+
 Desktop Mode
 ------------
 
@@ -332,3 +356,5 @@ Bibliography
 9. "How I set up a VPN connection." Reddit r/SteamDeck. July 9, 2023. Accessed August 13, 2023. https://www.reddit.com/r/SteamDeck/comments/wsvyfw/how_i_set_up_a_vpn_connection/?utm_source=share&utm_medium=android_app&utm_name=androidcss&utm_term=1&utm_content=1
 10. "Unlock Steam Deck." Chris Titus Tech. July 27, 2022. Accessed August 13, 2023. https://christitus.com/unlock-steam-deck/
 11. "Tutorial: A quick and easy way to control the Deck remotely." Reddit r/SteamDeck. December 14, 2022. Accessed October 4, 2023. https://www.reddit.com/r/SteamDeck/comments/tfjjhx/tutorial_a_quick_and_easy_way_to_control_the_deck/
+12. "Decky Loader README.md." GitHub SteamDeckHomebrew/decky-loader. August 25, 2023. Accessed October 8, 2023. https://github.com/SteamDeckHomebrew/decky-loader
+13. "Steam Deck: How To Install Decky Loader." Game Rant. May 6, 2023. Accessed October 8, 2023. https://gamerant.com/steam-deck-how-install-decky-loader-guide/
