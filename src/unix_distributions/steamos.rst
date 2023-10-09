@@ -42,6 +42,11 @@ Enter Desktop Mode using one of these two methods:
 -  STEAM > Power > Switch to Desktop
 -  (Hold the power button for 2 seconds) > Switch to Desktop
 
+Leave Desktop Mode and return to Game Mode using one of these two methods:
+
+-  Double-click on the "Steam Deck" desktop shortcut.
+-  Start Menu > (select the left arrow to the right of the "Shut Down" button) > Log Out > OK
+
 Default User Account
 ~~~~~~~~~~~~~~~~~~~~
 
