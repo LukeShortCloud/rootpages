@@ -51,6 +51,28 @@ Usage:
 
 [12][13]
 
+DeckMTP
+^^^^^^^
+
+Media Transfer Protocol (MTP) is typically used to connect an Android phone to a PC via a USB cable to manage the storage. [14] DeckMTP provides a way to allow a USB-C cable to plug into a Steam Deck and a PC to transfer files. This feature requires turning on Dual-Role Device (DRD) support in the BIOS.
+
+Known issues when DRD is enabled [15]:
+
+-  USB boot does not work.
+-  USB support in Windows (if installed on the Steam Deck) does not work.
+
+Enabling DRD:
+
+-  Boot the Steam Deck by holding the "volume up" button and the "power" button.
+-  After hearing the beep, release the "power" button (but keep holding "volume up"). Eventually, the BIOS will appear.
+-  Setup Utility > Advanced > USB Configuration > USB Dual Role Device: DRD
+
+   -  By default, this is set to "XHCI".
+
+-  Exit > Exit Saving Changes > Yes
+
+DeckMTP is disabled by default. Open the plugin to enable it.
+
 Desktop Mode
 ------------
 
@@ -392,3 +414,5 @@ Bibliography
 11. "Tutorial: A quick and easy way to control the Deck remotely." Reddit r/SteamDeck. December 14, 2022. Accessed October 4, 2023. https://www.reddit.com/r/SteamDeck/comments/tfjjhx/tutorial_a_quick_and_easy_way_to_control_the_deck/
 12. "Decky Loader README.md." GitHub SteamDeckHomebrew/decky-loader. August 25, 2023. Accessed October 8, 2023. https://github.com/SteamDeckHomebrew/decky-loader
 13. "Steam Deck: How To Install Decky Loader." Game Rant. May 6, 2023. Accessed October 8, 2023. https://gamerant.com/steam-deck-how-install-decky-loader-guide/
+14. "What is MTP?" Garmin Customer Support. Accessed October 9, 2023. https://support.garmin.com/en-US/?faq=ycfanFPMus028WBG13MEOA
+15. "DeckMTP README.md." GitHub dafta/DeckMTP. May 4, 2023. Accessed October 9, 2023. https://github.com/dafta/DeckMTP
