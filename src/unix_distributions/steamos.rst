@@ -336,6 +336,40 @@ Pacman can be used to install additional operating system packages. Installed pa
       $ sudo systemd-sysext merge
       $ sudo steamos-readonly enable
 
+Steam Deck BIOS
+---------------
+
+Boot into External Storage
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One time only:
+
+-  Boot the Steam Deck by holding the "volume down" button and the "power" button.
+-  After hearing the beep, release the "power" button (but keep holding "volume down"). Eventually, the manual BIOS boot menu will appear.
+
+Always:
+
+-  Boot the Steam Deck by holding the "volume up" button and the "power" button.
+-  After hearing the beep, release the "power" button (but keep holding "volume up"). Eventually, the BIOS will appear.
+-  Setup Utility > Boot
+
+   -  Add Boot Options: First
+   -  USB Boot: Enabled
+
+-  Exit > Exit Saving Changes > Yes
+
+In a situation where a USB-C dock is used that has (1) no USB storage device plugged in and (2) an Ethernet port, it will attempt to do a network PXE boot first before booting into the internal drive. This will take a long time to timeout.
+
+Disable network PXE boot:
+
+-  Boot the Steam Deck by holding the "volume up" button and the "power" button.
+-  After hearing the beep, release the "power" button (but keep holding "volume up"). Eventually, the BIOS will appear.
+-  Setup Utility > Boot
+
+   -  Network Stack: Disabled
+
+-  Exit > Exit Saving Changes > Yes
+
 History
 -------
 
