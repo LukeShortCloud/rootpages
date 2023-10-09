@@ -37,6 +37,11 @@ By default, the Steam Deck only works in Game Mode. Developer Mode must be enabl
 
 -  STEAM > Settings > System > SYSTEM SETTINGS > Enable Developer Mode: Yes
 
+Enter Desktop Mode using one of these two methods:
+
+-  STEAM > Power > Switch to Desktop
+-  (Hold the power button for 2 seconds) > Switch to Desktop
+
 Default User Account
 ~~~~~~~~~~~~~~~~~~~~
 
