@@ -30,6 +30,9 @@ These are controllers that are officially supported on SteamOS [4][5]:
 Decky Loader
 ~~~~~~~~~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 Decky Loader provides a standardized way to install and launch plugins for the Steam Deck in Game Mode.
 
 Installation:
@@ -50,6 +53,22 @@ Usage:
 -  ... (also known as the Quick Access Menu [QAM]) > (move down to the bottom and select the new power plug icon) > (move to the right and select the shop icon to install plugins)
 
 [12][13]
+
+AutoFlatpaks
+^^^^^^^^^^^^
+
+This plugin can update all or specific Flatpaks. It can also uninstall Flatpaks. By default, updates are manual. Automatic updates can be scheduled to run on a specific interval of days, hours, and/or minutes. [16]
+
+Enable automatic updates:
+
+-  SETTINGS > Unattended Upgrades: Yes
+
+Disable notifications:
+
+-  NOTIFICATIONS
+
+   -  Toast: No
+   -  Sound: No
 
 DeckMTP
 ^^^^^^^
@@ -416,3 +435,4 @@ Bibliography
 13. "Steam Deck: How To Install Decky Loader." Game Rant. May 6, 2023. Accessed October 8, 2023. https://gamerant.com/steam-deck-how-install-decky-loader-guide/
 14. "What is MTP?" Garmin Customer Support. Accessed October 9, 2023. https://support.garmin.com/en-US/?faq=ycfanFPMus028WBG13MEOA
 15. "DeckMTP README.md." GitHub dafta/DeckMTP. May 4, 2023. Accessed October 9, 2023. https://github.com/dafta/DeckMTP
+16. "Decky-AutoFlatpaks Plugin README.md." GitHub jurassicplayer/decky-autoflatpaks. March 27, 2023. Accessed October 10, 2023. https://github.com/jurassicplayer/decky-autoflatpaks
