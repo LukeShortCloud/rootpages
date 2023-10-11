@@ -95,12 +95,19 @@ DeckMTP is disabled by default. Open the plugin to enable it.
 Desktop Mode
 ------------
 
-Enable Desktop Mode
-~~~~~~~~~~~~~~~~~~~
+Enable Developer Mode
+~~~~~~~~~~~~~~~~~~~~~
 
-By default, the Steam Deck only works in Game Mode. Developer Mode must be enabled to access Desktop Mode.
+Developer Mode adds a "Developer" tab to Settings. Here, game developers can enable the SteamOS Devkit Service to pair with a PC that is running the SteamOS Devkit Client Tool. Games can easily be transferred over to the Steam Deck with optional settings to profile CPU and GPU performance of those games. [17]
+
+Developer Mode is not required to access the desktop or to modify the file system. [18]
+
+Enable Developer Mode:
 
 -  STEAM > Settings > System > SYSTEM SETTINGS > Enable Developer Mode: Yes
+
+Enter Desktop Mode
+~~~~~~~~~~~~~~~~~~
 
 Enter Desktop Mode using one of these two methods:
 
@@ -436,3 +443,5 @@ Bibliography
 14. "What is MTP?" Garmin Customer Support. Accessed October 9, 2023. https://support.garmin.com/en-US/?faq=ycfanFPMus028WBG13MEOA
 15. "DeckMTP README.md." GitHub dafta/DeckMTP. May 4, 2023. Accessed October 9, 2023. https://github.com/dafta/DeckMTP
 16. "Decky-AutoFlatpaks Plugin README.md." GitHub jurassicplayer/decky-autoflatpaks. March 27, 2023. Accessed October 10, 2023. https://github.com/jurassicplayer/decky-autoflatpaks
+17. "How to load and run games on Steam Deck." Steamworks Documentation. Accessed October 11, 2023. https://partner.steamgames.com/doc/steamdeck/loadgames
+18. "Everyone's got the wrong idea about Dev Mode on the Steam Deck." ViewSink. April 3, 2022. Accessed October 11, 2023. https://viewsink.com/you-probably-have-no-idea-what-dev-mode-does-on-the-steam-deck/
