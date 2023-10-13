@@ -966,6 +966,12 @@ Once the treefiles have been created, the rpm-ostree distribution can be built. 
 
       $ sudo rpm-ostree compose tree --unified-core --repo=<REPOSITORY_DIRECTORY> --cachedir=<CACHE_DIRECTORY> fedora-silverblue.yaml
 
+-  Optionally, at a later date, check to see if there are updates available to the packages by running the command again without the cache.
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree compose tree --unified-core --repo=<REPOSITORY_DIRECTORY> --force-nocache fedora-silverblue.yaml
+
 -  Update the repository with metadata about the new build.
 
    .. code-block:: sh
