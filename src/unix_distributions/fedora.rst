@@ -6,7 +6,9 @@ Fedora
 Red Hat Enterprise Linux (RHEL)
 -------------------------------
 
-RHEL is a downstream distribution, based on Fedora, aimed at servers.
+RHEL is a downstream distribution, based on Fedora, aimed at servers. There are various corporate and community distributions of Enterprise Linux (EL).
+
+Comparison:
 
 .. csv-table::
    :header: FEATURE, RHEL, Oracle Linux, AlmaLinux, Rocky Linux
@@ -17,6 +19,14 @@ RHEL is a downstream distribution, based on Fedora, aimed at servers.
    Price, Free up to 16 servers [3], Free, Free, Free
    Optional paid support, Yes, Yes, Yes, Yes
    Btrfs support, No, Yes [4], No, No
+
+Most popular EL distributions [29]:
+
+1.  Rocky Linux
+2.  RHEL
+3.  AlmaLinux
+4.  CentOS Stream
+5.  Oracle Linux
 
 Releases
 --------
@@ -1097,3 +1107,4 @@ Bibliography
 26. "Rename LXQt variant to Fedora Lazurite." Fedora Pagure workstation-ostree-config. April 21, 2023. Accessed Septmeber 8, 2023. https://pagure.io/workstation-ostree-config/c/4930d909b66d92aae4612fcfd4389b9e64ae4323?branch=f38
 27. "Fedora Onyx." Fedora Project Wiki. May 25, 2023. Accessed September 15, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Onyx
 28. "Rebasing to New Versions." Fedora Documentation. September 15, 2023. Accessed September 15, 2023. https://docs.fedoraproject.org/en-US/iot/rebasing/
+29. "Rocky Linux Is the Most Preferred Enterprise Linux Distribution." Linuxiac. October 5, 2023. Accessed October 16, 2023. https://linuxiac.com/rocky-linux-is-the-most-preferred-enterprise-linux-distribution/
