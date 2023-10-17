@@ -418,6 +418,19 @@ Verify that the changes have been made:
 
 [2][3]
 
+Undervolting
+~~~~~~~~~~~~
+
+As of SteamOS 3.5 and BIOS version 118, the Steam Deck officially supports undervolting. [19] This can be used to improve battery life or to help out with overclocking.
+
+Adjust the voltage in increments of -10 going from 0 mV (no offset) to -50 mV (maximum offset):
+
+- Press the "volume up" and "power" buttons to enter the BIOS > Setup Utility > Advanced > [CPU|GPU|SOC] voltage offset > Exit > Exit Saving Changes
+
+Most Steam Decks will work with an offset of -20 mV for each component. [20]
+
+If there are any major stability issues, increase the offset by +10 mV. In a worst-case scenario where the Steam Deck cannot boot or get into the BIOS, reset the CMOS settings by pressing the "volume down", "..." (quick access menu), and "power" buttons at the same time until the power LED starts to blink. [19]
+
 History
 -------
 
@@ -445,3 +458,5 @@ Bibliography
 16. "Decky-AutoFlatpaks Plugin README.md." GitHub jurassicplayer/decky-autoflatpaks. March 27, 2023. Accessed October 10, 2023. https://github.com/jurassicplayer/decky-autoflatpaks
 17. "How to load and run games on Steam Deck." Steamworks Documentation. Accessed October 11, 2023. https://partner.steamgames.com/doc/steamdeck/loadgames
 18. "Everyone's got the wrong idea about Dev Mode on the Steam Deck." ViewSink. April 3, 2022. Accessed October 11, 2023. https://viewsink.com/you-probably-have-no-idea-what-dev-mode-does-on-the-steam-deck/
+19. "Steam Deck Gets Easy Undervolting Controls With Firmware 118." Tom's Hardware. October 15, 2023. Accessed October 16, 2023. https://www.tomshardware.com/news/steam-deck-gets-easy-undervolting-controls-with-firmware-118
+20. "How's everyone's undervolt going?" Reddit r/SteamDeck. October 13, 2023. Accessed October 16, 2023. https://www.reddit.com/r/SteamDeck/comments/12ihaga/hows_everyones_undervolt_going/
