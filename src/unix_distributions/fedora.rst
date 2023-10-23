@@ -133,6 +133,34 @@ Fedora will, at least, download package metadata by default and, at most, automa
       $ sudo rpm-ostree reload
       $ sudo systemctl disable rpm-ostreed-automatic.timer
 
+Workstation Upgrades
+--------------------
+
+-  Update to the latest minor version of Fedora. Reboot when finished to load the changes.
+
+   .. code-block:: sh
+
+      $ sudo dnf upgrade --refresh
+      $ sudo reboot
+
+-  Install the upgrade plugin.
+
+   .. code-block:: sh
+
+      $ sudo dnf install dnf-plugin-system-upgrade
+
+-  Download the packages for the next major version or do a skip upgrade to the version after that. Skip upgrades are fully supported on Fedora Workstation.
+
+   .. code-block:: sh
+
+      $ sudo dnf system-upgrade download --releasever=<FEDORA_MAJOR_VERSION>
+
+-  Install the upgraded packages. [30]
+
+   .. code-block:: sh
+
+      $ sudo dnf system-upgrade reboot
+
 rpm-ostree (Fedora Silverblue)
 ------------------------------
 
@@ -1108,3 +1136,4 @@ Bibliography
 27. "Fedora Onyx." Fedora Project Wiki. May 25, 2023. Accessed September 15, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Onyx
 28. "Rebasing to New Versions." Fedora Documentation. September 15, 2023. Accessed September 15, 2023. https://docs.fedoraproject.org/en-US/iot/rebasing/
 29. "Rocky Linux Is the Most Preferred Enterprise Linux Distribution." Linuxiac. October 5, 2023. Accessed October 16, 2023. https://linuxiac.com/rocky-linux-is-the-most-preferred-enterprise-linux-distribution/
+30. https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
