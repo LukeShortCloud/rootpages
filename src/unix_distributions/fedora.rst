@@ -1136,4 +1136,4 @@ Bibliography
 27. "Fedora Onyx." Fedora Project Wiki. May 25, 2023. Accessed September 15, 2023. https://fedoraproject.org/wiki/Changes/Fedora_Onyx
 28. "Rebasing to New Versions." Fedora Documentation. September 15, 2023. Accessed September 15, 2023. https://docs.fedoraproject.org/en-US/iot/rebasing/
 29. "Rocky Linux Is the Most Preferred Enterprise Linux Distribution." Linuxiac. October 5, 2023. Accessed October 16, 2023. https://linuxiac.com/rocky-linux-is-the-most-preferred-enterprise-linux-distribution/
-30. https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
+30. "Upgrading Fedora Using DNF System Plugin." Fedora Documentation. May 4, 2023. Accessed October 23, 2023. https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
