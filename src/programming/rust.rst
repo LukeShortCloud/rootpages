@@ -282,11 +282,25 @@ Arrays
 
       let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
 
--  A slice has an undefined size until the Rust code is compiled.
+-  A slice is a portion of an existing array, tuple, or vector. It supports a dynamic length.
 
-   .. code-block:: rust
+   -  Syntax:
 
-      let <VARIABLE_NAME> = [<VALUE_1>, <VALUE_2>];
+      .. code-block:: rust
+
+         let slice: &[<DATA_TYPE>] = &<ARRAY_TUPLE_OR_VECTOR_NAME>[<INDEX_RANGE>];
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let young_age_milestones: [i8; 4] = [12, 16, 18, 21];
+         let last_young_age_milestone: &[i8] = &young_age_milestones[2..4];
+         println!("{:?}", last_young_age_milestone);
+
+      ::
+
+         [18, 21]
 
 [16][17]
 
