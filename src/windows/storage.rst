@@ -22,6 +22,17 @@ Restore the backup:
 
 [4]
 
+Page (Swap) File
+----------------
+
+The page file in Windows is the same as a swap file in Linux. It helps to offload RAM by using local storage instead. By default, Windows will not create a page file that is larger than 4 GB. [12] For gaming, it is `recommended <../storage/file_systems.html#swap>`__ to set the page file size to be large enough that the total temporary page file and RAM size combined is 24 GB for a dGPU or 32 GB for an iGPU.
+
+Increase the page file size [13]:
+
+::
+
+   System Properties (sysdm.cpl) > Advanced > Performance > Settings... > Advanced > Virtual memory > Change... > (uncheck "Automatically manage paging file size for all drives") > (check "Custom size:") > (set the "Initial size (MB):" and "Maximum size (MB):" to the desired values) > OK
+
 BitLocker
 ---------
 
@@ -166,3 +177,5 @@ Bibliography
 9. "About URL Security Zones." Microsoft Learn. August 15, 2017. Accessed July 26, 2023. https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms537183(v=vs.85)
 10. "Zone.Identifier Files when copying from Windows to WSL filestructure #4609." GitHub microsoft/WSL. July 15, 2023. Accessed July 26, 2023. https://github.com/microsoft/WSL/issues/4609#issuecomment-1079657697
 11. "How to Delete Old Boot Menu Options on Windows 10." MakeUseOf. November 8, 2022. Accessed August 9, 2023. https://www.makeuseof.com/tag/delete-boot-menu-options-windows/
+12. "Introduction to page files." Microsoft Learn. March 20, 2023. Accessed October 24, 2023. https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/introduction-to-the-page-file
+13. "What is a swap file (swap space or page file)?" TechTarget. Accessed October 24, 2023. https://www.techtarget.com/searchwindowsserver/definition/swap-file-swap-space-or-pagefile
