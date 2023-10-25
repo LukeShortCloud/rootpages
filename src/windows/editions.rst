@@ -6,6 +6,9 @@ Windows Editions
 Updates
 -------
 
+End-of-Life Dates
+~~~~~~~~~~~~~~~~~
+
 Here is a list of each Windows version and the year that they stopped getting updates.
 
 .. csv-table::
@@ -17,6 +20,40 @@ Here is a list of each Windows version and the year that they stopped getting up
    7 [15], 2020, 2023
    8 [15], 2023, 2023
    10, 2025 [16], 2032 [12]
+
+Disable Updates
+~~~~~~~~~~~~~~~
+
+Windows 10 and 11 Home edition does not have an easy way to disable updates. However, all Windows editions can have their updates disabled by using the registry. [17]
+
+::
+
+   Registry Editor (regedit) > HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU
+
+-  For Windows Home edition, the "WindowsUpdate" and "AU" keys will be missing. These need to be manually created.
+-  Edit > New > DWORD (32-bit Value) > Name: NoAutoUpdate
+
+   -  (right-click on "NoAutoUpdate") > Modify… > Base: Decimal > Value data: 1 > OK
+
+Optionally, a major target version can be set for Windows Updates. It will never update beyond that version as long as it is supported. [18]
+
+::
+
+   Registry Editor (regedit) > HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
+
+-  For Windows Home edition, the "ProductVersion" value will be missing. This needs to be manually created.
+
+   -  Edit > New > String Value > Name: ProductVersion
+
+      -  (right-click on "ProductVersion") > Modify… > Value data: "Windows 11" (or "Windows 10") > OK
+
+-  Edit > New > DWORD (32-bit Value) > Name: TargetReleaseVersion
+
+   -  (right-click on "TargetReleaseVersion") > Modify… > Base: Decimal > Value data: 1 > OK
+
+-  Edit > New > String Value > Name: TargetReleaseVersionInfo
+
+   -  (right-click on "TargetReleaseVersionInfo") > Modify… > Value data: 22H2 (or any desired major version) > OK
 
 NT 10 (Windows 10 and 11)
 -------------------------
@@ -125,3 +162,5 @@ Bibliography
 14. "Windows Vista - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-vista
 15. "This is the end, Windows 7 and 8 friends: Microsoft drops support this week." The Register. January 9, 2023. Accessed January 11, 2023. https://www.theregister.com/2023/01/09/microsoft_windows_7_8_support_ends/
 16. "Windows 10 Home and Pro - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro
+17. "How to Stop Windows 11 Automatic Updates – 5 Ways." MiniTool Software. May 18, 2023. Accessed October 24, 2023. https://www.minitool.com/data-recovery/how-to-stop-windows-11-update.html
+18. "Specify Target Feature Update Version in Windows 11." Windows 11 Forum. January 31, 2022. Accessed October 24, 2023. https://www.elevenforum.com/t/specify-target-feature-update-version-in-windows-11.3811/
