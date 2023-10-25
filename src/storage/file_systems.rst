@@ -538,7 +538,7 @@ Swap is a special file system that cannot be mounted. It is used by the operatin
 -  2-8GB = RAM
 -  > 8GB = 8GB
 
-`Tests <../unix_distributions/steamos.html#increase-swap-size-and-vram>`__ on the Steam Deck show that a total of 32 GB of tmpfs (RAM and swap) provide the best gaming performance for APUs. Anything beyond that provides no performance benefits. This assumes that the iGPU from the APU will use 4 GB as VRAM. For the best results, add swap to a fast drive such as a NVMe drive.
+`Tests <../unix_distributions/steamos.html#increase-swap-size-and-vram>`__ on the Steam Deck show that a total of 32 GB of tmpfs (RAM and swap) provide the best gaming performance for APUs. Anything beyond that provides no performance benefits. This assumes that the iGPU from the APU will use 8 GB as VRAM. That means that systems with dGPUs can use 24 GB of tmpfs instead. For the best results, add swap to a fast drive such as a NVMe drive.
 
 RAIDs
 -----
