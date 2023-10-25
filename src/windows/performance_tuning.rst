@@ -168,6 +168,11 @@ Disable Windows Updates
 
 Windows Updates use a lot of resources when it is updating. Consider `disabling automatic updates <editions.html#disable-updates>`__ and doing manual updates instead.
 
+Increase Page File Size
+-----------------------
+
+`Increasing the page file <storage.html#page-swap-file>`__ on systems with a small amount of RAM can help speed them up. This is especially helpful when using a fast drive such as a NVMe drive.
+
 Disable Windows Search Indexing
 -------------------------------
 
