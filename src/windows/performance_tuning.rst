@@ -163,6 +163,11 @@ Windows occasionally has updates to the operating system itself, other applicati
 
    Settings (ms-settings:) > Update & Security > Windows Update > Check for updates
 
+Disable Windows Updates
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Windows Updates use a lot of resources when it is updating. Consider `disabling automatic updates <editions.html#disable-updates>`__ and doing manual updates instead.
+
 Disable Windows Search Indexing
 -------------------------------
 
