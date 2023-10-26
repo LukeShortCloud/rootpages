@@ -1297,11 +1297,9 @@ Serde YAML
       - 1
       - 2
       - 3
-      # Data type: Vec<Vec<i16>>
       star_trek_years:
       - [1987, 1993, 1995]
       - [2009, 2013, 2016]
-      # Data type: bool
       today_will_be_a_good_day: true
 
    .. code-block:: rust
