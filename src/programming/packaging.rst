@@ -633,7 +633,7 @@ GPG Signing
    .. code-block:: sh
 
       $ creatrepo .
-      $ gpg --detach-sign --armor repodata/repomd.xml
+      $ gpg --local-user "<EMAIL_ADDRESS>" --detach-sign --armor repodata/repomd.xml
 
 -  On a client system that will install these packages, configure the repository. [34]
 
@@ -960,7 +960,7 @@ GPG Signing
 
    .. code-block:: sh
 
-      $ gpg --detach-sign --no-armor <PACKAGE>
+      $ gpg --local-user "<EMAIL_ADDRESS>" --detach-sign --no-armor <PACKAGE>
 
 -  Force the repository metadata to be updated to use the GPG key. [40]
 
