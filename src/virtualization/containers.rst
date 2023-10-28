@@ -659,21 +659,23 @@ Installation:
 
          $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/uninstall | sudo sh
 
--  Non-root installation:
+-  Non-root installation [32]:
 
    .. code-block:: sh
 
       $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
-      $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/extras/install-podman | sh -s -- --prefix ~/.local
-      $ export PATH="${PATH}:$HOME/.local/bin:$HOME/.local/podman/bin"
-      $ echo "export PATH="${PATH}:$HOME/.local/bin:$HOME/.local/podman/bin" >> ~/.profile
+      $ sudo touch /etc/subuid /etc/subgid
+      $ sudo usermod --add-subuid 100000-165535 --add-subgid 100000-165535 $USER
+      $ export PODMAN_LAUNCHER_VERSION="0.0.3"
+      $ curl --location --output ~/.local/bin/podman https://github.com/89luca89/podman-launcher/releases/download/v${PODMAN_LAUNCHER_VERSION}/podman-launcher-amd64
+      $ chmod +x ~/.local/bin/podman
 
    -  Uninstall:
 
       .. code-block:: sh
 
          $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/uninstall | sh -s -- --prefix ~/.local
-         $ rm -r -f $HOME/.local/podman/
+         $ rm ~/.local/bin/podman
 
 Ensure that the local user can control the Xorg server:
 
@@ -864,3 +866,4 @@ Bibliography
 29. "Distrobox." GitHub 89luca89/distrobox. June 25, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox
 30. "Useful tips." GitHub 89luca89/distrobox. June 15, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md
 31. "Multi-arch build and images, the simple way." Docker Blog. April 30, 2020. Accessed September 25, 2023. https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+32. "Install Podman in a static manner." GitHub 89luca89/distrobox. September 20, 2023. Accessed October 26, 2023. https://github.com/89luca89/distrobox/blob/main/docs/posts/install_podman_static.md
