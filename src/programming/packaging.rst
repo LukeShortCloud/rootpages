@@ -904,6 +904,18 @@ Required:
 
 [10][11]
 
+PKGBUILD Examples
+^^^^^^^^^^^^^^^^^
+
+-  Rename a package by changing the name, increasing the package release version, and setting the old package name to be a conflict and this package to be a replacement.
+
+   ::
+
+      pkgname=newfoobar
+      pkgrel=2
+      conflicts("foobar")
+      replaces=("foobar")
+
 GPG Signing
 ^^^^^^^^^^^
 
@@ -993,6 +1005,9 @@ GPG Signing
 AUR Submission
 ~~~~~~~~~~~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 The Arch Linux User (AUR) repository allows developers to easily upload their own packages. Here are the steps on how to submit a new package to the AUR.
 
 **SSH Key Pair**
@@ -1032,6 +1047,16 @@ Optional files:
 There should not be any binary or source code hosted in the AUR git repository.
 
 [13]
+
+Rename Package
+^^^^^^^^^^^^^^
+
+Renaming a package on the AUR involves the following steps [46][47]:
+
+1.  Create a new AUR package with the new name.
+2.  On the old AUR package page, select the "Submit Request" and set the type to "Merge".
+3.  Enter the new package name for the "Merge into:" box.
+4.  In the comments box, explain that the package has been renamed.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
@@ -1137,3 +1162,5 @@ Bibliography
 43. "GPG: Extract private key and import on different machine." makandra cards. January 1, 2016. Accessed August 19, 2023. https://makandracards.com/makandra-orga/37763-gpg-extract-private-key-and-import-on-different-machine
 44. "Add documentation for configuring GnuPG #33." GitHub. coolacid/docker-misp. November 4, 2022. Accessed August 19, 2023. https://github.com/coolacid/docker-misp/issues/33
 45. "How to use Gnupg's passphrase-fd argument?" Stack Overflow. March 26, 2019. Accessed August 19, 2023. https://stackoverflow.com/questions/19895122/how-to-use-gnupgs-passphrase-fd-argument
+46. "Home." AUR. Accessed October 28, 2023. https://aur.archlinux.org/
+47. "KDE package guidelines." ArchWiki. October 26, 2023. Accessed October 28, 2023. https://wiki.archlinux.org/title/KDE_package_guidelines
