@@ -133,6 +133,36 @@ There is no password by default. For running ``sudo`` commands, a password needs
 
       $ passwd
 
+Move Shader Cache
+~~~~~~~~~~~~~~~~~
+
+The Steam client will automatically download shader cache for each game. This will include (1) Vulkan shader cache and (2) converted multimedia formats. This cache takes up a lot of space and can be an issue for the 64 GB model of the Steam Deck as it is only stored on the internal drive. As a workaround, the shader cache can be moved to a microSD card. [21]
+
+-  Close and exit the Steam client completely to ensure it is not creating or downloading shader cache.
+-  Create a shader cache directory on the microSD card.
+
+   .. code-block:: sh
+
+      $ mkdir /run/media/mmcblk0p1/steamapps/shadercache/
+
+-  Move the shader cache from the internal drive to the microSD card. This can take a long time.
+
+   .. code-block:: sh
+
+      $ mv /home/deck/.steam/steam/steamapps/shadercache/* /run/media/mmcblk0p1/steamapps/shadercache/
+
+-  Delete the shader cache folder on the internal drive.
+
+   .. code-block:: sh
+
+      $ rm -r -f /home/deck/.steam/steam/steamapps/shadercache
+
+-  Create a symlink to the microSD card.
+
+   .. code-block:: sh
+
+      $ ln -s /run/media/mmcblk0p1/steamapps/shadercache /home/deck/.steam/steam/steamapps/shadercache
+
 Transfer Files with SFTP
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -460,3 +490,4 @@ Bibliography
 18. "Everyone's got the wrong idea about Dev Mode on the Steam Deck." ViewSink. April 3, 2022. Accessed October 11, 2023. https://viewsink.com/you-probably-have-no-idea-what-dev-mode-does-on-the-steam-deck/
 19. "Steam Deck Gets Easy Undervolting Controls With Firmware 118." Tom's Hardware. October 15, 2023. Accessed October 16, 2023. https://www.tomshardware.com/news/steam-deck-gets-easy-undervolting-controls-with-firmware-118
 20. "How's everyone's undervolt going?" Reddit r/SteamDeck. October 13, 2023. Accessed October 16, 2023. https://www.reddit.com/r/SteamDeck/comments/12ihaga/hows_everyones_undervolt_going/
+21. "Is Shader Cache and compatdata filling your 64GB internal SSD? Here's the fix!" Reddit r/SteamDeck. July 2, 2022. Accessed November 1, 2023. https://www.reddit.com/r/SteamDeck/comments/tz9rza/is_shader_cache_and_compatdata_filling_your_64gb/
