@@ -236,7 +236,9 @@ The original Steam Deck BIOS had TPM support disabled. It was eventually enabled
 Disable SteamOS Updates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-SteamOS operating system updates can only be disabled from the Desktop Mode.
+An upgrade of the SteamOS operating system is only forced during the first-time setup. [22] After that, upgrades can be manually applied by going to: STEAM > Settings > System > Check For Updates. If there is an upgrade availabe, select "Apply" to reboot and install it.
+
+It is possible to force disable SteamOS operating system updates from the Desktop Mode to be extra safe.
 
 -  Disable updates:
 
@@ -266,6 +268,8 @@ SteamOS operating system updates can only be disabled from the Desktop Mode.
 
 Disable Steam Client Updates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Steam client updates are required and forced. [22] They will not be applied until a user restarts the Steam Deck or manually applies the update in Settings. However, it is possible to disable them.
 
 -  Disable the read-only file system to make it writable.
 
@@ -491,3 +495,4 @@ Bibliography
 19. "Steam Deck Gets Easy Undervolting Controls With Firmware 118." Tom's Hardware. October 15, 2023. Accessed October 16, 2023. https://www.tomshardware.com/news/steam-deck-gets-easy-undervolting-controls-with-firmware-118
 20. "How's everyone's undervolt going?" Reddit r/SteamDeck. October 13, 2023. Accessed October 16, 2023. https://www.reddit.com/r/SteamDeck/comments/12ihaga/hows_everyones_undervolt_going/
 21. "Is Shader Cache and compatdata filling your 64GB internal SSD? Here's the fix!" Reddit r/SteamDeck. July 2, 2022. Accessed November 1, 2023. https://www.reddit.com/r/SteamDeck/comments/tz9rza/is_shader_cache_and_compatdata_filling_your_64gb/
+22. "How to avoid SteamOS 3.3 update." Reddit r/SteamDeck. August 7, 2022. Accessed November 2, 2023. https://www.reddit.com/r/SteamDeck/comments/wie6lc/how_to_avoid_steamos_33_update/
