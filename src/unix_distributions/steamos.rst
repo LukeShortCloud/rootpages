@@ -119,6 +119,26 @@ Leave Desktop Mode and return to Game Mode using one of these two methods:
 -  Double-click on the "Steam Deck" desktop shortcut.
 -  Start Menu > (select the left arrow to the right of the "Shut Down" button) > Log Out > OK
 
+Permanently boot into Desktop Mode by default:
+
+-  Xorg (recommended):
+
+   .. code-block:: sh
+
+      $ steamos-session-select plasma-x11-persistent
+
+-  Wayland (not recommended):
+
+   .. code-block:: sh
+
+      $ steamos-session-select plasma-wayland-persistent
+
+Restore the default of booting into Game Mode by default [23]:
+
+.. code-block:: sh
+
+   $ steamos-session-select gamescope
+
 Default User Account
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -496,3 +516,4 @@ Bibliography
 20. "How's everyone's undervolt going?" Reddit r/SteamDeck. October 13, 2023. Accessed October 16, 2023. https://www.reddit.com/r/SteamDeck/comments/12ihaga/hows_everyones_undervolt_going/
 21. "Is Shader Cache and compatdata filling your 64GB internal SSD? Here's the fix!" Reddit r/SteamDeck. July 2, 2022. Accessed November 1, 2023. https://www.reddit.com/r/SteamDeck/comments/tz9rza/is_shader_cache_and_compatdata_filling_your_64gb/
 22. "How to avoid SteamOS 3.3 update." Reddit r/SteamDeck. August 7, 2022. Accessed November 2, 2023. https://www.reddit.com/r/SteamDeck/comments/wie6lc/how_to_avoid_steamos_33_update/
+23. "Is there a way to always start Steam deck in desktop mode?" Reddit r/SteamDeck. August 25, 2023. Accessed November 5, 2023. https://www.reddit.com/r/SteamDeck/comments/wirkk7/is_there_a_way_to_always_start_steam_deck_in/
