@@ -276,6 +276,31 @@ Variables are immutable by default and cannot be changed.
 
       const <VARIABLE_NAME>: <DATA_TYPE> = <VALUE>;
 
+Scope
+~~~~~
+
+Variables are scoped to ``{ }`` blocks.
+
+A variable from an outter block is inherited to inner blocks. However, inner blocks can have a shadow variable that has the same name as a variable from an outter block. That shadow variable can be assigned to a different locally scoped value. Variables within an inner block do not exist in the outter block. [63]
+
+.. code-block:: rust
+
+   fn main() {
+       let foo = 1;
+       {
+           println!("{}", foo);
+           let foo = 2;
+           println!("{}", foo);
+       }
+       println!("{}", foo);
+   }
+
+::
+
+   1
+   2
+   1
+
 Arrays
 ~~~~~~
 
@@ -1498,3 +1523,4 @@ Bibliography
 60. "Initialising Empty Structs in Rust." GitHub ChrisWellsWood/empty_rust_structs.md. June 5, 2019. Accessed August 4, 2023. https://gist.github.com/ChrisWellsWood/84421854794037e760808d5d97d21421
 61. "Rust: Using Options by example." Ameya's blog. October 23, 2017. Accessed August 7, 2023. https://www.ameyalokare.com/rust/2017/10/23/rust-options.html
 62. "Option and Result." Easy Rust. Accessed August 7, 2023. https://dhghomon.github.io/easy_rust/Chapter_31.html#option-and-result
+63. "Variables and Mutability." The Rust Programming Language. Accessed November 6, 2023. https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html
