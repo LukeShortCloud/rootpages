@@ -158,6 +158,15 @@ Move Shader Cache
 
 The Steam client will automatically download shader cache for each game. This will include (1) Vulkan shader cache and (2) converted multimedia formats. This cache takes up a lot of space and can be an issue for the 64 GB model of the Steam Deck as it is only stored on the internal drive. As a workaround, the shader cache can be moved to a microSD card. [21]
 
+Automatically:
+
+-  `Install and open CryoUtilities <#increase-swap-size-and-vram>`__.
+-  Storage > Sync Game Data > Sync > Submit > Confirm > OK
+
+This moves the shader cache of games on the microSD card to ``/run/media/mmcblk0p1/cryoutilities_steam_data/shadercache/`` by creating a symlink for each game.
+
+Manually:
+
 -  Close and exit the Steam client completely to ensure it is not creating or downloading shader cache.
 -  Create a shader cache directory on the microSD card.
 
@@ -449,7 +458,23 @@ CryoUtilities provides a streamlined way to increase the swap file size, decreas
    $ wget https://raw.githubusercontent.com/CryoByte33/steam-deck-utilities/main/InstallCryoUtilities.desktop
    $ chmod +x InstallCryoUtilities.desktop
 
-Select the "InstallCryoUtilities.desktop" shortcut to install the tools. Then select the new "CryoUtilities" desktop shortcut. This will have prompts to walk through setting up the 16 GB swap file and 1% swappiness level.
+Select the "InstallCryoUtilities.desktop" shortcut to install the tools. Configure a 16 GB swap file and set the swappiness to 0.5% (the minimum).
+
+
+-  GUI:
+
+   -  Double-click on the "CryoUtilities" desktop shortcut to open it.
+   -  Swap > Swap File > Resize > 16 > Resize Swap File > OK
+   -  Swap > Swappiness > Change > 1 > Change Swappiness > OK
+
+-  CLI:
+
+   .. code-block:: sh
+
+      $ sudo ~/.cryo_utilities/cryo_utilities swap 16
+      $ sudo ~/.cryo_utilities/cryo_utilities swappiness 1
+
+Verify that the changes have been made.
 
 .. code-block:: sh
 
