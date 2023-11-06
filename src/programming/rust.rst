@@ -243,29 +243,38 @@ Overview
 Variable Declaration
 ~~~~~~~~~~~~~~~~~~~~
 
--  Rust can guess the correct data type to use for a variable.
+Variables are immutable by default and cannot be changed.
+
+-  Rust can guess the correct data type to use for a variable when a data type is not defined. The variable name should follow the ``snake_case`` naming convention.
 
    .. code-block:: rust
 
       let <VARIABLE_NAME> = <VALUE>;
 
--  Otherwise, the data type can be explicitly set.
+-  Create a variable with the data type explicitly set.
 
    .. code-block:: rust
 
       let <VARIABLE_NAME>: <DATA_TYPE> = <VALUE>;
 
--  By default, all variables are immutable and cannot be changed. Create a mutable variable.
+-  Create a mutable variable whose value can be changed.
 
    .. code-block:: rust
 
       let mut <VARIABLE_NAME> = <VALUE>;
 
--  Constants are immutable and global variables that must be defined outside of a function. [35]
+-  Convert a mutable variable to be an immutable variable.
 
    .. code-block:: rust
 
-      const <VARIABLE_NAME> = <VALUE>;
+      let mut <VARIABLE_NAME> = <VALUE>;
+      let <VARIABLE_NAME> = <VARIABLE_NAME>;
+
+-  Constants are immutable and global variables that must be defined outside of a function. A data type is required. The variable name should follow the ``SCREAMING_SNAKE_CASE`` naming convention. [35]
+
+   .. code-block:: rust
+
+      const <VARIABLE_NAME>: <DATA_TYPE> = <VALUE>;
 
 Arrays
 ~~~~~~
@@ -1461,7 +1470,7 @@ Bibliography
 32. "What's the de-facto way of reading and writing files in Rust 1.x?" Stack Overflow. May 4, 2022. Accessed April 17, 2023. https://stackoverflow.com/questions/31192956/whats-the-de-facto-way-of-reading-and-writing-files-in-rust-1-x
 33. "How to read and write files in Rust." opensource.com. January 2, 2023. Accessed April 17, 2023. https://opensource.com/article/23/1/read-write-files-rust
 34. "Hello, Cargo!" The Rust Programming Language. Accessed April 18, 2023. https://doc.rust-lang.org/book/ch01-03-hello-cargo.html
-35. "Rust: let vs const." Nicky blogs. September 21, 2020. Accessed April 18, 2023. https://nickymeuleman.netlify.app/garden/rust-let-const
+35. "Rust: let vs const." Nicky blogs. September 21, 2020. Accessed November 6, 2023. https://nickymeuleman.netlify.app/garden/rust-let-const
 36. "Snake Case VS Camel Case VS Pascal Case VS Kebab Case – What's the Difference Between Casings?" freeCodeCamp Programming Tutorials. November 29, 2022. Accessed April 18, 2023. https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/
 37. "Overview." Serde. Accessed April 19, 2023. https://serde.rs/
 38. "Serde YAML." GitHub dtolnay/serde-yaml. April 5, 2023. Accessed April 19, 2023. https://github.com/dtolnay/serde-yaml
