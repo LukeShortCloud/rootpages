@@ -47,6 +47,21 @@ The Steam Deck offers two special buttons that are not available on other device
 
 [24][25]
 
+Steam Deck shortcuts for Big Picture Mode [26][27]:
+
+.. csv-table::
+   :header: ACTION, BUTTON COMBINATION, NOTES
+   :widths: 20, 20, 20
+
+   Show all shortcuts, ``STEAM``, Keep holding down ``STEAM`` for at least 2 seconds
+   Activate virtual mouse, ``STEAM`` + ``RIGHT_TOUCHPAD``, Keep holding down ``STEAM``
+   Left mouse click, ``STEAM`` + ``RIGHT_TRIGGER``, ""
+   Right mouse click, ``STEAM`` + ``LEFT_TRIGGER``, ""
+   Open virtual keyboard, ``STEAM`` + ``X``, Requires being in a game or in Desktop Mode
+   Magnify the screen, ``STEAM`` + ``LEFT_BUMPER``, Requires being in a game
+   Take a screenshot, ``STEAM`` + ``RIGHT_BUMPER``, ""
+   Force close a game, ``STEAM`` + ``B``, Hold down ``B`` for 3 seconds
+
 Decky Loader
 ~~~~~~~~~~~~
 
@@ -564,3 +579,5 @@ Bibliography
 23. "Is there a way to always start Steam deck in desktop mode?" Reddit r/SteamDeck. August 25, 2023. Accessed November 5, 2023. https://www.reddit.com/r/SteamDeck/comments/wirkk7/is_there_a_way_to_always_start_steam_deck_in/
 24. "Keyboard shortcuts for Steam & ... special buttons?" Reddit r/SteamDeck. July 7, 2023. Accessed November 6, 2023. https://www.reddit.com/r/SteamDeck/comments/wof9kk/keyboard_shortcuts_for_steam_special_buttons/
 25. "Controller shortcut for the ... button?" Reddit r/SteamDeck. September 28, 2022. Accessed November 6, 2023. https://www.reddit.com/r/SteamDeck/comments/xq8gnw/controller_shortcut_for_the_button/
+26. "These are all the Steam Deck shortcuts." XDA Portal & Forums. May 11, 2023. Accessed November 6, 2023. https://www.xda-developers.com/steam-deck-shortcuts/
+27. "Steam Deck shortcuts you need to know." AllGamers. February 13, 2023. Accessed November 6, 2023. https://ag.hyperxgaming.com/article/13255/steam-deck-shortcuts-you-need-to-know
