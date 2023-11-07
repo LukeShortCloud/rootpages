@@ -27,6 +27,26 @@ These are controllers that are officially supported on SteamOS [4][5]:
 -  DirectInput controllers
 -  Generic XInput controllers
 
+Shortcuts
+~~~~~~~~~
+
+The Steam Deck offers two special buttons that are not available on other devices: the ``STEAM`` and the ``...`` Quick Access Menu (QAM) buttons. Steam Big Picture Mode has special button combinations for replicating these two buttons.
+
+.. csv-table::
+   :header: CONTROLLER, BUTTON COMBINATION, STEAM ACTION
+   :widths: 20, 20, 20
+
+   Keyboard, ``CTRL`` + ``1``, ``STEAM``
+   Keyboard, ``CTRL`` + ``2``, ``...`` (QAM)
+   Nintendo, ``HOME``, ``STEAM``
+   Nintendo, ``HOME`` + ``B``, ``...`` (QAM)
+   PlayStation, ``PLAYSTATION_LOGO``, ``STEAM``
+   PlayStation, ``PLAYSTATION_LOGO`` + ``X``, ``...`` (QAM)
+   Xbox, ``XBOX_LOGO``, ``STEAM``
+   Xbox, ``XBOX_LOGO`` + ``A``, ``...`` (QAM)
+
+[24][25]
+
 Decky Loader
 ~~~~~~~~~~~~
 
@@ -542,3 +562,5 @@ Bibliography
 21. "Is Shader Cache and compatdata filling your 64GB internal SSD? Here's the fix!" Reddit r/SteamDeck. July 2, 2022. Accessed November 1, 2023. https://www.reddit.com/r/SteamDeck/comments/tz9rza/is_shader_cache_and_compatdata_filling_your_64gb/
 22. "How to avoid SteamOS 3.3 update." Reddit r/SteamDeck. August 7, 2022. Accessed November 2, 2023. https://www.reddit.com/r/SteamDeck/comments/wie6lc/how_to_avoid_steamos_33_update/
 23. "Is there a way to always start Steam deck in desktop mode?" Reddit r/SteamDeck. August 25, 2023. Accessed November 5, 2023. https://www.reddit.com/r/SteamDeck/comments/wirkk7/is_there_a_way_to_always_start_steam_deck_in/
+24. "Keyboard shortcuts for Steam & ... special buttons?" Reddit r/SteamDeck. July 7, 2023. Accessed November 6, 2023. https://www.reddit.com/r/SteamDeck/comments/wof9kk/keyboard_shortcuts_for_steam_special_buttons/
+25. "Controller shortcut for the ... button?" Reddit r/SteamDeck. September 28, 2022. Accessed November 6, 2023. https://www.reddit.com/r/SteamDeck/comments/xq8gnw/controller_shortcut_for_the_button/
