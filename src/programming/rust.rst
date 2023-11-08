@@ -642,7 +642,7 @@ Examples
             $ ./<FILE>
             This is a simple Rust program!
 
--  Create a function that returns a value.
+-  Create a function that returns a value. The last line of a function can end without a semicolon to denote that it will be a return value. This avoids needing to write ``return <RETURN_VALUE>;`` and instead to simply write ``<RETURN_VALUE>``. It is best practice to avoid using the ``return`` keyword.
 
    -  Syntax:
 
