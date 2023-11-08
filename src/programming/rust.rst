@@ -304,6 +304,9 @@ A variable from an outter block is inherited to inner blocks. However, inner blo
 Arrays
 ~~~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 -  An array has a defined length.
 
    .. code-block:: rust
@@ -366,6 +369,15 @@ Arrays
          [1, 2, 3]
 
 [31]
+
+Limitations
+^^^^^^^^^^^
+
+Arrays work normally when they have 32 or less items. After that, they lose the ``Default`` trait [64] and can only use ``Copy`` and ``Clone`` trait operations. [65]
+
+Tuples work normally when they have 12 or less items. After that, they lose the ability to print out all of their items due to a limitation of a built-in macro. [66]
+
+For arrays or tuples of larger sizes, it is recommended to use a vector instead which does not have these limitations.
 
 Strings
 ~~~~~~~
@@ -1524,3 +1536,6 @@ Bibliography
 61. "Rust: Using Options by example." Ameya's blog. October 23, 2017. Accessed August 7, 2023. https://www.ameyalokare.com/rust/2017/10/23/rust-options.html
 62. "Option and Result." Easy Rust. Accessed August 7, 2023. https://dhghomon.github.io/easy_rust/Chapter_31.html#option-and-result
 63. "Variables and Mutability." The Rust Programming Language. Accessed November 6, 2023. https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html
+64. "Primitive Type array." Rust. Accessed November 8, 2023. https://doc.rust-lang.org/std/primitive.array.html
+65. "Why are Rust Arrays Limited To 32 Values?" Reddit r/rust. August 29, 2019. Accessed November 8, 2023. https://www.reddit.com/r/rust/comments/cwxeye/why_are_rust_arrays_limited_to_32_values/
+66. "Why is tuple formatting limited to 12 items in Rust?" Stack Overflow. August 14, 2018. Accessed November 8, 2023. https://stackoverflow.com/questions/51846320/why-is-tuple-formatting-limited-to-12-items-in-rust
