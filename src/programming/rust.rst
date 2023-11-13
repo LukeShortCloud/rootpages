@@ -309,15 +309,31 @@ Introduction
 
 -  An array has a defined length.
 
-   .. code-block:: rust
+   -  Create an array.
 
-      let <VARIABLE_NAME>: [<DATA_TYPE>;<LENGTH>] = [<VALUE_1>, <VALUE_2>];
+      .. code-block:: rust
+
+         let <VARIABLE_NAME>: [<DATA_TYPE>;<LENGTH>] = [<VALUE_1>, <VALUE_2>];
+
+   -  Access an array.
+
+      .. code-block:: rust
+
+         let item_number_one = <ARRAY_VARIABLE_NAME>[0];
 
 -  A tuple is similar to an array but it can store more than on data type.
 
-   .. code-block:: rust
+   -  Create a tuple.
 
-      let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
+      .. code-block:: rust
+
+         let <VARIABLE_NAME>: (<DATA_TYPE_1>, <DATA_TYPE_2>) = (<VALUE_1>, <VALUE_2>);
+
+   -  Access a tupe. Notice that the syntax is different compared to arrays and vectors.
+
+      .. code-block:: rust
+
+         let item_number_one = <TUPLE_VARIABLE_NAME>.0;
 
 -  A slice is a portion of an existing array, tuple, or vector. It supports a dynamic length.
 
@@ -367,6 +383,12 @@ Introduction
       ::
 
          [1, 2, 3]
+
+   -  Access a vector. It is the same usage as an array (but not a tuple). [69]
+
+      .. code-block:: rust
+
+         let item_number_one = <VECTOR_VARIABLE_NAME>[0];
 
 [31]
 
@@ -1596,3 +1618,4 @@ Bibliography
 66. "Why is tuple formatting limited to 12 items in Rust?" Stack Overflow. August 14, 2018. Accessed November 8, 2023. https://stackoverflow.com/questions/51846320/why-is-tuple-formatting-limited-to-12-items-in-rust
 67. "Rust Modules Tutorial." KoderHQ. Accessed November 13, 2023. https://www.koderhq.com/tutorial/rust/module/
 68. "Explaining Rust’s Modules." Better Programming. October 15, 2020. Accessed November 13, 2023. https://betterprogramming.pub/explaining-rusts-modules-420d38eed6c5
+69. "Rust Tuple Examples." Dot Net Perls. April 20, 2023. Accessed November 13, 2023. https://www.dotnetperls.com/tuple-rust
