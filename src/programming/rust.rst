@@ -1316,6 +1316,61 @@ Commands to run tests with ``cargo``:
 Libraries
 ---------
 
+Custom Modules
+~~~~~~~~~~~~~~
+
+Module files can be created next to the ``main.rs`` file.
+
+-  For any given ``<MODULE>.rs`` file, it can be imported via the syntax ``use <MODULE>;``.
+
+   .. code-block:: rust
+
+      use <MODULE>;
+
+      fn main() {
+         <MODULE>::<FUNCTION>();
+      }
+
+-  It is also possible to import specific functions instead of the entire module.
+
+   .. code-block:: rust
+
+      use <MODULE>::<FUNCTION>;
+
+      fn main() {
+         <FUNCTION>();
+      }
+
+-  Modules can be imported from a nested directory by specifying the full file path and the module name.
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         use <MODULE_FIRST_DIRECTORY>::<MODULE_SECOND_DIRECTORY>::<MODULE>;
+
+   -  Example:
+
+      .. code-block:: rust
+
+         // Full path: foo/bar/tools/compression.rs
+         use foo::bar::tools::compression;
+
+-  A module can be given a nickname instead of using its actual name.
+
+   .. code-block:: rust
+
+      use extremely_long_module_name_here as elmnh;
+
+-  Only public functions from within a module are allowed to be used in another file.
+
+   .. code-block:: rust
+
+      pub fn <FUNCTION>() {
+      }
+
+[67][68]
+
 Serde
 ~~~~~
 
@@ -1539,3 +1594,5 @@ Bibliography
 64. "Primitive Type array." Rust. Accessed November 8, 2023. https://doc.rust-lang.org/std/primitive.array.html
 65. "Why are Rust Arrays Limited To 32 Values?" Reddit r/rust. August 29, 2019. Accessed November 8, 2023. https://www.reddit.com/r/rust/comments/cwxeye/why_are_rust_arrays_limited_to_32_values/
 66. "Why is tuple formatting limited to 12 items in Rust?" Stack Overflow. August 14, 2018. Accessed November 8, 2023. https://stackoverflow.com/questions/51846320/why-is-tuple-formatting-limited-to-12-items-in-rust
+67. "Rust Modules Tutorial." KoderHQ. Accessed November 13, 2023. https://www.koderhq.com/tutorial/rust/module/
+68. "Explaining Rust’s Modules." Better Programming. October 15, 2020. Accessed November 13, 2023. https://betterprogramming.pub/explaining-rusts-modules-420d38eed6c5
