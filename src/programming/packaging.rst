@@ -269,7 +269,7 @@ Sections:
 
 -  ``%build`` = This is where the program is built from the source code.
 -  ``%install`` = Copy files to a directory structure under ``%{buildroot}`` that mirrors where their installed location. The ``%{buildroot}`` is the top-level directory of a typical Linux file system hierarchy.
--  ``%file`` = These are the files that should be copied over during installation. Permissions can also be set.
+-  ``%files`` = These are the files that should be copied over during installation. Permissions can also be set.
 
    -  ``%attr(<MODE>, <USER>, <GROUP>)`` = Define this in front of a file or folder to give it custom permissions.
 
@@ -486,6 +486,21 @@ Examples
       mkdir -p %{buildroot}%{_unitdir} %{buildroot}%{_presetdir}
       cp -v example.service %{buildroot}/%{_unitdir}
       echo "enable example.service" > %{buildroot}%{_presetdir}/10-example.preset
+
+-  Specify configuration files that should not be overridden during package updates.
+
+   ::
+
+      %files
+      %config /etc/foobar.conf
+
+-  Specify specific or generic permissions.
+
+   ::
+
+      %files
+      %attr(0755, root, root) /usr/bin/foobar
+      %attr(0640, , ) /var/lib/foobar/database.db
 
 Building a RPM
 ~~~~~~~~~~~~~~
