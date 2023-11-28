@@ -188,6 +188,11 @@ Through the use of ``os-prober`` (which is part of a default installation), a GR
 
 Two installations of Fedora Silverblue on the same system are also not supported and will lead to issues. [12]
 
+RPM GPG Keys
+~~~~~~~~~~~~
+
+On Fedora Workstation, GPG keys used for signing RPMs and repositories need to be manually added to the trusted RPM database by running the command ``rpm --import <GPG_KEY>``. That command does not work on rpm-ostree distributions due to that database being in the read-only file system. Instead, all of the ``/etc/pki/rpm-gpg/RPM-GPG-KEY-*`` keys are automatically trusted. [31]
+
 Build
 ~~~~~
 
@@ -1137,3 +1142,4 @@ Bibliography
 28. "Rebasing to New Versions." Fedora Documentation. September 15, 2023. Accessed September 15, 2023. https://docs.fedoraproject.org/en-US/iot/rebasing/
 29. "Rocky Linux Is the Most Preferred Enterprise Linux Distribution." Linuxiac. October 5, 2023. Accessed October 16, 2023. https://linuxiac.com/rocky-linux-is-the-most-preferred-enterprise-linux-distribution/
 30. "Upgrading Fedora Using DNF System Plugin." Fedora Documentation. May 4, 2023. Accessed October 23, 2023. https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
+31. "rpm-ostree - Man Page." ManKier. Accessed November 28, 2023. https://www.mankier.com/1/rpm-ostree
