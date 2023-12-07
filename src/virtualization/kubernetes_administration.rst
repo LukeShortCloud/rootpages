@@ -567,7 +567,7 @@ Release highlights:
    -  CNI introduces breaking changes. For ``containerd``, first upgrade to version >= 1.6.4 or >= 1.5.11. For ``CRI-O``, first upgrade to version >= 1.24.
    -  Dynamic Kubelet configuration has been removed from the kubelet (but not yet for the kube-apiserver).
    -  Any new beta APIs will be disabled by default. Previously, alpha APIs are disabled and beta APIs are enabled. Now only stable APIs will be enabled by default.
-   -  Kubernetes releases are now signed.
+   -  Kubernetes release signing is available in an alpha state.
    -  Service objects that are of type LoadBalancer now support more than one back-end using the annotation ``service.kubernetes.io/load-balancer-class: <LOAD_BALANCER_CLASS>``.
    -  OpenAPI v3 is now beta.
    -  gRPC pod probes are now beta.
@@ -588,6 +588,17 @@ Release highlights:
    -  GlusterFS storage volume driver has been deprecated.
    -  Flocker, Quobyte, and StorageOS volume drivers have been removed.
    -  vSphere volume driver now requires vSphere >= 7.0u2.
+
+-  `1.26 <https://kubernetes.io/blog/2022/12/09/kubernetes-v1-26-release/>`__ [117][118]
+
+   -  Official Kubernetes container images are now hosted on a new registry: ``registry.k8s.io``.
+   -  Kubenretes release signing is now in beta.
+   -  containerd minimum requirment is now 1.6.0.
+   -  Dynamic kubelet configuration via a ConfigMap has been removed.
+   -  Service LoadBalancers now support both UDP and TCP on the same port.
+   -  Service.spec.trafficPolicy added for more control over traffic routing.
+   -  Windows containers now support running in a privileged mode.
+   -  Cinder (OpenStack) and GlusterFS storage volume driver has been removed.
 
 OpenShift
 ~~~~~~~~~
@@ -2950,3 +2961,5 @@ Bibliography
 114. "Unable to disable Traefik #1160." GitHub k3s-io/k3s. February 23, 2023. Accessed June 10, 2023. https://github.com/k3s-io/k3s/issues/1160#issuecomment-1133559423
 115. "Kubernetes Removals and Major Changes In 1.25." Kubernetes Blog. August 4, 2022. Accessed December 6, 2023. https://kubernetes.io/blog/2022/08/04/upcoming-changes-in-kubernetes-1-25/
 116. "Kubernetes 1.25 - What’s new?" Sysdig. August 16, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-25-whats-new/
+117. "Kubernetes v1.26: Electrifying." Kubernetes Blog. December 9, 2022. Accessed December 6, 2023. https://kubernetes.io/blog/2022/11/18/upcoming-changes-in-kubernetes-1-26/
+118. "Kubernetes 1.26 - What’s new?" Sysdig. November 30, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-26-whats-new/
