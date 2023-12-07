@@ -577,6 +577,18 @@ Release highlights:
 
       -  CSIStorageCapacity
 
+-  `1.25 <https://kubernetes.io/blog/2022/08/23/kubernetes-v1-25-release/>`__ [115][116]
+
+   -  cgroups v2 support is now stable.
+   -  kube-scheduler ComponentConfig is now stable for dynamically configuring the service.
+   -  User-scoped namespaces are now supported.
+   -  Ephemeral containers via ``kubectl debug`` for troubleshooting purposes is now stable.
+   -  PodSecurity admission controller is now a stable replacement for the PodSecurityPolicy API.
+   -  PodSecurityPolicy API has been removed.
+   -  GlusterFS storage volume driver has been deprecated.
+   -  Flocker, Quobyte, and StorageOS volume drivers have been removed.
+   -  vSphere volume driver now requires vSphere >= 7.0u2.
+
 OpenShift
 ~~~~~~~~~
 
@@ -2936,3 +2948,5 @@ Bibliography
 112. "Using Admission Controllers." Kubernetes Documentation. July 13, 2021. Accessed August 25, 2021. https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
 113. "Kubernetes admission controllers in 5 minutes." sysdig. February 18, 2021. Accessed February 21, 2023. https://sysdig.com/blog/kubernetes-admission-controllers/
 114. "Unable to disable Traefik #1160." GitHub k3s-io/k3s. February 23, 2023. Accessed June 10, 2023. https://github.com/k3s-io/k3s/issues/1160#issuecomment-1133559423
+115. "Kubernetes Removals and Major Changes In 1.25." Kubernetes Blog. August 4, 2022. Accessed December 6, 2023. https://kubernetes.io/blog/2022/08/04/upcoming-changes-in-kubernetes-1-25/
+116. "Kubernetes 1.25 - What’s new?" Sysdig. August 16, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-25-whats-new/
