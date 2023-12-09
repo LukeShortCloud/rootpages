@@ -680,6 +680,18 @@ Fedora provides an automated system to download and build RPM packages using the
       $ cd <GIT_REPOSITORY>
       $ git checkout origin/f<FEDORA_MAJOR_VERSION>
 
+-  Download remote source files from Fedora. This downloads all of the files listed in the ``sources`` file based on (1) the project name and (2) the checksum from this URL: ``https://src.fedoraproject.org/repo/pkgs/rpms/<RPM>/<FILE>/<CHECKSUM_METHOD>/<CHECKSUM_HASH/<FILE>``.
+
+   .. code-block:: sh
+
+      $ fedpkg sources --outdir ~/rpmbuild/SOURCES/
+
+-  Copy local source files which might be needed for the build.
+
+   .. code-block:: sh
+
+      $ cp ./* ~/rpmbuild/SOURCES/
+
 -  Install build dependencies.
 
    .. code-block:: sh
