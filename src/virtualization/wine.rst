@@ -458,6 +458,15 @@ These are useful graphics translation layers for running Windows games using Win
 
 -  `D3DMetal <https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/>`__ = DirectX 12 to Metal. This is bundled with Apple's Game Porting Toolkit. That toolkit also has support for DirectX 11 and 10 by using DXVK with MoltenVK. DirectX 9 is stubbed out and does not work. The source code of D3DMetal is proprietary. [27] The license does not allow for redistributing D3DMetal. [28]
 
+OpenGL
+~~~~~~
+
+Wine supports direct OpenGL passthrough for the following versions of OpenGL [33]:
+
+-  4.4
+-  3.2
+-  1.0
+
 D8VK
 ~~~~
 
@@ -814,3 +823,4 @@ Bibliography
 30. "WineDependencies.md." GitHub lutris/docs. July 23, 2022. Accessed December 12, 2023. https://github.com/lutris/docs/blob/master/WineDependencies.md
 31. "How to get out of Wine Dependency hell." GloriousEggroll's Blog. October 20, 2017. Accessed December 12, 2023. https://www.gloriouseggroll.tv/how-to-get-out-of-wine-dependency-hell/
 32. "Which kind of dependencies (suggested, recommended…) does DNF install?" Fedora Project. June 12, 2019. Accessed December 12, 2023. https://discussion.fedoraproject.org/t/which-kind-of-dependencies-suggested-recommended-does-dnf-install/74111
+33. "adapter_gl.c." GitLab wine/wine. December 19, 2022. Accessed December 12, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/adapter_gl.c#L5289-L5294
