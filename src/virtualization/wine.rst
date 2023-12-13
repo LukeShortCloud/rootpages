@@ -20,29 +20,57 @@ Binary Packages
 
 Here is how to install both the 32-bit and 64-bit libraries for Wine. This includes recommended dependencies such as Mono (open source .NET Framework) and Gecko (open source Internet Explorer based on Firefox).
 
--  Arch Linux [10]:
+-  Arch Linux
 
-   .. code-block:: sh
+   -  Minimal [10]:
 
-      $ sudo -E ${EDITOR} /etc/pacman.conf
-      [multilib]
-      Include = /etc/pacman.d/mirrorlist
-      $ sudo pacman -S -y -y
-      $ sudo pacman -S wine wine-mono wine-gecko
+      .. code-block:: sh
 
--  Debian [11]:
+         $ sudo -E ${EDITOR} /etc/pacman.conf
+         [multilib]
+         Include = /etc/pacman.d/mirrorlist
+         $ sudo pacman -S -y -y
+         $ sudo pacman -S wine wine-mono wine-gecko
 
-   .. code-block:: sh
+   -  Full:
 
-      $ sudo dpkg --add-architecture i386
-      $ sudo apt update
-      $ sudo apt install wine wine32 wine64 libwine libwine:i386 fonts-wine
+      .. code-block:: sh
 
--  Fedora [12]:
+         $ sudo pacman -S alsa-lib alsa-plugins dosbox cups giflib gnutls gsm gst-plugins-base-libs gtk3 lib32-alsa-lib lib32-alsa-plugins lib32-giflib lib32-gnutls lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libldap lib32-libpng lib32-libva lib32-libxcomposite lib32-libxinerama lib32-libxslt lib32-mpg123 lib32-ncurses lib32-openal lib32-opencl-icd-loader lib32-sdl2 lib32-vkd3d lib32-vulkan-icd-loader libgphoto2 libjpeg-turbo libldap libpng libva libxcomposite libxinerama libxslt mpg123 ncurses openal opencl-icd-loader samba sane sdl2 v4l-utils lib32-v4l-utils vkd3d vulkan-icd-loader wine-gecko wine-mono winetricks
 
-   .. code-block:: sh
+-  Debian
 
-      $ sudo dnf install wine
+   -  Minimal [11]:
+
+      .. code-block:: sh
+
+         $ sudo dpkg --add-architecture i386
+         $ sudo apt update
+         $ sudo apt install wine wine32 wine64 libwine libwine:i386 fonts-wine
+
+   -  Full:
+
+      .. code-block:: sh
+
+         $ sudo dpkg --add-architecture i386
+         $ sudo apt update
+         $ sudo apt install --install-recommends wine wine32 wine64 fonts-wine libasound2-plugins:i386 libdbus-1-3:i386 libsdl2-2.0-0:i386 libsqlite3-0:i386 libwine libwine:i386
+
+-  Fedora
+
+   -  Minimal:
+
+      .. code-block:: sh
+
+         $ sudo dnf install wine-core wine-core.i686
+
+   -  Full [12][32]:
+
+      .. code-block:: sh
+
+         $ sudo dnf install --setopt=install_weak_deps=True wine alsa-plugins-pulseaudio.i686 dosbox-staging.x86_64 flac-libs.i686 json-c.i686 libICE.i686 libSM.i686 libXtst.i686 libasyncns.i686 liberation-narrow-fonts.noarch libieee1284.i686 libogg.i686 libsndfile.i686 libuuid.i686 libva.i686 libvorbis.i686 libwayland-client.i686 libwayland-server.i686 llvm-libs.i686 mesa-dri-drivers.i686 mesa-filesystem.i686 mesa-libEGL.i686 mesa-libgbm.i686 nss-mdns.i686 ocl-icd.i686 pulseaudio-libs.i686 sane-backends-libs.i686 tcp_wrappers-libs.i686 unixODBC.i686 samba-common-tools.x86_64 samba-libs.x86_64 samba-winbind.x86_64 samba-winbind-clients.x86_64 samba-winbind-modules.x86_64
+
+[30][31]
 
 Compile From Source Code
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -783,3 +811,6 @@ Bibliography
 27. "Apple's Game Porting Toolkit seems to have a D3DMetal.framework with full implementations of DirectX 12 to 9 on Metal." Reddit r/macgaming. June 7, 2023. June 7, 2023. https://www.reddit.com/r/macgaming/comments/142tomx/apples_game_porting_toolkit_seems_to_have_a/
 28. "D3DMetal license." Twitter Longhorn @never_released. June 6, 2023. Accessed June 7, 2023. https://twitter.com/never_released/status/1666191614253907968
 29. "'Create Steam shortcut' doesn't seem to work on Steam Deck." Reddit r/Lutris. March 28, 2023. Accessed June 11, 2023. https://www.reddit.com/r/Lutris/comments/u9rt4e/create_steam_shortcut_doesnt_seem_to_work_on/
+30. "WineDependencies.md." GitHub lutris/docs. July 23, 2022. Accessed December 12, 2023. https://github.com/lutris/docs/blob/master/WineDependencies.md
+31. "How to get out of Wine Dependency hell." GloriousEggroll's Blog. October 20, 2017. Accessed December 12, 2023. https://www.gloriouseggroll.tv/how-to-get-out-of-wine-dependency-hell/
+32. "Which kind of dependencies (suggested, recommended…) does DNF install?" Fedora Project. June 12, 2019. Accessed December 12, 2023. https://discussion.fedoraproject.org/t/which-kind-of-dependencies-suggested-recommended-does-dnf-install/74111
