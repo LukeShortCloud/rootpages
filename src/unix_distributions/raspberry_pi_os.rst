@@ -114,12 +114,19 @@ Upgrading system packages to the latest minor release of Raspberry Pi OS is the 
    $ sudo apt-get dist-upgrade
    $ sudo reboot
 
-For upgrading the Linux kernel and firmware, use the `rpi-update <https://github.com/raspberrypi/rpi-update>`__ command.
+For upgrading to the latest pre-release Linux kernel and firmware (not recommended), use the `rpi-update <https://github.com/raspberrypi/rpi-update>`__ command.
 
 .. code-block:: sh
 
    $ sudo rpi-update
    $ sudo reboot
+
+If there are issues encountered after a ``rpi-update``, it can be reverted by running [19]:
+
+.. code-block:: sh
+
+   $ sudo apt update
+   $ sudo apt install --reinstall raspi-firmware
 
 Projects
 --------
@@ -399,3 +406,4 @@ Bibliography
 16. "Creating a Playlist for your LightShowPi (easy mode)." LightShowPi KB. December 8, 2017. Accessed May 14, 2022. https://lspkb.blogspot.com/2017/12/creating-playlist-for-your-lightshowpi.html
 17. "How Do I Set a Static IP Address on Raspberry Pi?" MUO - Technology, Simplified. March 12, 2022. Accessed October 9, 2022. https://www.makeuseof.com/raspberry-pi-set-static-ip/
 18. "An update to Raspberry Pi OS Bullseye." Raspberry Pi. April 7, 2022. Accessed December 21, 2022. https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/
+19. "Raspberry Pi OS." Raspberry Pi Documentation. Accessed December 20, 2023. https://www.raspberrypi.com/documentation/computers/os.html
