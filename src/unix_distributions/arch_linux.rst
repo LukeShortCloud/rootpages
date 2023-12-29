@@ -66,6 +66,78 @@ Parallel Downloads
 
 This is documented in `Administration - Package Managers - PKGBUILD - Pacman - Parallel Downloads <../administration/package_managers.html#parallel-downloads>`__.
 
+Pacman GPG Keyrings
+-------------------
+
+The Arch Linux GPG keyring, used for verifying package integrity, constantly change along with rolling release updates. These occasionally need to be updated for Pacman upgrades to work. Use one of the methods below to update the keyring.
+
+1.  Manually update the keyring.
+
+   -  Using ``pacman``:
+
+      -  Arch Linux:
+
+         .. code-block:: sh
+
+            $ sudo pacman -S -y
+            $ sudo pacman -S archlinux-keyring
+
+      -  Manjaro:
+
+         .. code-block:: sh
+
+            $ sudo pacman -S -y
+            $ sudo pacman -S archlinux-keyring manjaro-keyring
+
+   -  Using ``pacman-key``:
+
+      .. code-block:: sh
+
+         $ sudo pacman-key --refresh-keys
+
+2.  Reset the keyring.
+
+   .. code-block:: sh
+
+      $ sudo rm -r -f /etc/pacman.d/gnupg
+      $ sudo pacman-key --init
+
+   -  Populate the keyrings.
+
+      -  Arch Linux:
+
+         -  Using ``pacman``:
+
+            .. code-block:: sh
+
+               $ sudo pacman -S -y
+               $ sudo pacman -S archlinux-keyring
+
+         -  Using ``pacman-key``:
+
+            .. code-block:: sh
+
+               $ sudo pacman-key --populate archlinux
+
+      -  Manjaro:
+
+         -  Using ``pacman``:
+
+            .. code-block:: sh
+
+               $ sudo pacman -S -y
+               $ sudo pacman -S archlinux-keyring manjaro-keyring
+
+         -  Using ``pacman-key``:
+
+            .. code-block:: sh
+
+               $ sudo pacman-key --populate archlinux manjaro
+
+[4][5]
+
+On an Arch Linux or Manjaro live installation environment, it takes a few minutes after boot to automatically update the keyring in the background.
+
 Linux Kernels
 -------------
 
@@ -91,3 +163,5 @@ Bibliography
 1. "Reflector." ArchWiki. November 19, 2021. Accessed January 10, 2022. https://wiki.archlinux.org/title/reflector
 2. "The Performance Impact From Different Arch Linux Kernel Flavors." Phoronix. January 25, 2023. Accessed February 10, 2023. https://www.phoronix.com/review/arch-linux-kernels-2023/8
 3. "grow live rootfs ?" Arch Linux Forums. December 30, 2017. Accessed October 26, 2023. https://bbs.archlinux.org/viewtopic.php?id=210389
+4. "pacman/Package signing." ArchWiki. November 21, 2023. Accessed December 28, 2023. https://wiki.archlinux.org/title/Pacman/Package_signing
+5. "Pacman troubleshooting." Manjaro. October 9, 2023. Accessed December 28, 2023. https://wiki.manjaro.org/index.php/Pacman_troubleshooting
