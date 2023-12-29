@@ -936,7 +936,7 @@ A job that runs on specified branches.
        branches:
          - main
 
-A job that runs on all branches except for specificed branches.
+A job that runs on all branches except for specificed branches. [50]
 
 .. code-block:: yaml
 
@@ -946,6 +946,16 @@ A job that runs on all branches except for specificed branches.
      push:
        branches-ignore:
          - foobar
+
+.. code-block:: yaml
+
+   ---
+   name: Run on all branches except foobar
+   on:
+     push:
+       branches:
+         - '**'
+         - !foobar
 
 A job step that uses a different directory. By default, the directory is reset on every step. [45][46]
 
@@ -1447,3 +1457,4 @@ Bibliography
 47. "Downloading source code archives." GitHub Docs. Accessed May 16, 2023. https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives
 48. "Github - unexpected disconnect while reading sideband packet." Stack Overflow. July 19, 2023. Accessed July 19, 2023. https://stackoverflow.com/questions/66366582/github-unexpected-disconnect-while-reading-sideband-packet
 49. "Configuring issue templates for your repository." GitHub Docs. Accessed August 12, 2023. https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+50. "GitHub Actions: how to target all branches EXCEPT master?" Stack Overflow. December 18, 2023. Accessed December 29, 2023. https://stackoverflow.com/questions/57699839/github-actions-how-to-target-all-branches-except-master
