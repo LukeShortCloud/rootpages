@@ -795,6 +795,31 @@ Control statements for loops [22]:
 -  break = Stop the current loop.
 -  continue = Move onto the next iteration of the loop.
 
+It is possible to label a loop to specify where exactly to ``break`` or ``continue``. [70]
+
+-  Syntax:
+
+   .. code-block:: rust
+
+      '<LABEL_NAME>: <LOOP> {
+          <CONTROL_STATEMENT> '<LABEL_NAME>'
+      }
+
+-  Example:
+
+   .. code-block:: rust
+
+      'mylabel: for x in 1..3 {
+          for y in 0..4 {
+              println!("{}{}", x, y);
+              break 'mylabel;
+          }
+      }
+
+   ::
+
+      10
+
 For
 ~~~
 
@@ -1619,3 +1644,4 @@ Bibliography
 67. "Rust Modules Tutorial." KoderHQ. Accessed November 13, 2023. https://www.koderhq.com/tutorial/rust/module/
 68. "Explaining Rust’s Modules." Better Programming. October 15, 2020. Accessed November 13, 2023. https://betterprogramming.pub/explaining-rusts-modules-420d38eed6c5
 69. "Rust Tuple Examples." Dot Net Perls. April 20, 2023. Accessed November 13, 2023. https://www.dotnetperls.com/tuple-rust
+70. "Rust Loop Labels." Electronics Reference. Accessed December 29, 2023. https://electronicsreference.com/rust/rust-control-flow/rust-loops/loop-labels/
