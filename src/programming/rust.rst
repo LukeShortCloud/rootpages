@@ -799,10 +799,10 @@ It is possible to label a loop to specify where exactly to ``break`` or ``contin
 
 -  Syntax:
 
-   .. code-block:: rust
+   ::
 
       '<LABEL_NAME>: <LOOP> {
-          <CONTROL_STATEMENT> '<LABEL_NAME>'
+          <CONTROL_STATEMENT> '<LABEL_NAME>;
       }
 
 -  Example:
