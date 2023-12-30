@@ -962,8 +962,8 @@ In Rust, ``if`` statement blocks all need to return the same data type. [26]
 
       This costs less than $3!
 
-While
-~~~~~
+While and Loop
+~~~~~~~~~~~~~~
 
 Unlike most other programming languages, Rust has the increment for a ``while`` loop inside and at the end of a block. [25]
 
@@ -997,13 +997,13 @@ Unlike most other programming languages, Rust has the increment for a ``while`` 
          3
          4
 
--  Create an infinite loop. Use ``break`` to end the loop at any time.
+-  Create an infinite loop using the ``loop`` keyword. It is recommended to use this instead of ``while true``.  Use ``break`` to end the loop at any time.
 
    -  Syntax:
 
       .. code-block:: rust
 
-         while true {
+         loop {
              // Add logic here.
          }
 
