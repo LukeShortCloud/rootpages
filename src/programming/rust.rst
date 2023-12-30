@@ -926,6 +926,74 @@ The ``for`` loop is used to iterate over an existing array or a dynamic range of
 
 [24]
 
+Iterations
+^^^^^^^^^^
+
+There are many different ways to iterate through a range of values in Rust. This is especially useful when using ``for`` loops.
+
+-  Using ``..`` to iterate between a range of numbers.
+
+   .. code-block:: rust
+
+      for n in 1..3 {
+          println!("{}", n);
+      }
+
+   ::
+
+      1
+      2
+
+   .. code-block:: rust
+
+      for n in 1..=3 {
+          println!("{}", n);
+      }
+
+   ::
+
+      1
+      2
+      3
+
+-  Use ``enumerate()`` to generate an index while iterating.
+
+   .. code-block:: rust
+
+      let odd_numbers: Vec<i8> = vec![3, 5, 7];
+      for (index, onum) in odd_numbers.iter().enumerate() {
+          println!("{}{}", index, onum);
+      }
+
+
+   ::
+
+      03
+      15
+      27
+
+-  Use ``char`` or ``bytes`` (converted to a ``char``) to get individual characters from a string.
+
+   .. code-block:: rust
+
+      let foo: String = "foo".to_string();
+      for c in foo.chars() {
+          println!("{}", c);
+      }
+
+   .. code-block:: rust
+
+      let foo: String = "foo".to_string();
+      for c in foo.bytes() {
+          println!("{}", c as char);
+      }
+
+   ::
+
+      f
+      o
+      o
+
 If
 ~~
 
