@@ -568,16 +568,23 @@ A ``struct`` can have default values set.
 
       // This implementation name must be "Default".
       impl Default for Car {
-          // This function name must be "default".
-          fn default () -> Car {
-              Car{manual_transmission: false, year: 2023, top_speed: 88}
+          fn default () -> Self {
+              Self{manual_transmission: false, year: 2023, top_speed: 88}
           }
       }
 
       fn main() {
+        // Call the function in the Struct that defines default values.
         let car_default_all = Car::default();
         let car_default_some = Car{manual_transmission: true, ..Default::default()};
+        println!("{:?}", car_default_all);
+        println!("{:?}", car_default_some);
       }
+
+   ::
+
+      Car { manual_transmission: false, year: 2023, top_speed: 88 }
+      Car { manual_transmission: true, year: 2023, top_speed: 88 }
 
 An ``Option`` is a special type of ``enum``. [61] It is a way to store value of ``None`` or any specific data type and check if a value exists while avoiding panics. [62]
 
