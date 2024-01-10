@@ -595,6 +595,129 @@ An ``Option`` is a special type of ``enum``. [61] It is a way to store value of 
           }
       }
 
+Ownership, References, and Borrowing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most fixed-size data types in Rust are primitive. These can be easily copied.
+
+.. code-block:: rust
+
+   fn main() {
+       let mut var1 = 66;
+       let mut var2 = var1;
+       var1 += 1;
+       var2 -= 1;
+       println!("{}", var1);
+       println!("{}", var2);
+   }
+
+::
+
+   67
+   65
+
+Vectors and, by extension, Strings are not primitive.
+
+Assigning one variable to the value of a non-primitive variable will actually result in a move. This also includes passing a non-primitive variable to a function. Rust does this to efficiency and safely manage dynamic memory allocation.
+
+.. code-block:: rust
+
+   fn string_pop(s: &mut String) {
+       s.pop();
+   }
+
+   fn main() {
+       let mut var1 = String::from("Hello");
+       println!("{}", var1);
+       string_pop(&mut var1);
+       println!("{}", var1);
+   }
+
+::
+
+   Hello
+   Hell
+
+Here are alternatives to moving:
+
+-  Clone the variable but this results in additional memory allocation.
+
+   .. code-block:: rust
+
+      fn main() {
+          let var1 = String::from("Hello");
+          // The line below would fail because the variable was moved from var1 to var2. var1 no longer exists.
+          //let var2 = var1;
+          let var2 = var1.clone();
+          println!("{}", var1);
+          println!("{}", var2);
+      }
+
+   ::
+
+      Hello
+      Hello
+
+-  Create a read-only reference to a pointer. Where possible, this is recommended.
+
+   .. code-block:: rust
+
+      fn main() {
+          let var1 = String::from("Hello");
+          let var2 = &var1;
+          println!("{}", var1);
+          println!("{}", var2);
+      }
+
+   ::
+
+      Hello
+      Hello
+
+-  Create a writable reference to a pointer.
+
+   .. code-block:: rust
+
+      fn main() {
+          let mut var1 = String::from("Hello");
+          let var2 = &mut var1;
+          var2.push_str(" world");
+          println!("{}", var2);
+          // Printing out var1 needs to happen last as the var2 borrow needs to complete all of its operations first.
+          // A variable can be borrowed once as mutable or many times as immutable.
+          // The println macro borrows the variable as immutable which does not work while it is being borrowed as mutable.
+          // https://users.rust-lang.org/t/why-is-this-println-s-treated-as-an-immutable-borrow/78870
+          println!("{}", var1);
+      }
+
+   ::
+
+     Hello world
+     Hello world
+
+-  Deference a variable to assign it a completely new value.
+
+   .. code-block:: rust
+
+      fn new_string(s: &mut String) {
+          // Just *s can be used but (*s) makes the dereference a higher priority and more likely to happen as expected.
+          (*s) = "Goodbye cruel world".to_string();
+      }
+
+      fn main() {
+          let mut var1 = "Hello world".to_string();
+          println!("{}", var1);
+          new_string(&mut var1);
+          println!("{}", var1);
+      }
+
+   ::
+
+      Hello world
+      Goodbye cruel world
+
+[71]
+
 Standard Input and Output
 -------------------------
 
@@ -1713,3 +1836,4 @@ Bibliography
 68. "Explaining Rust’s Modules." Better Programming. October 15, 2020. Accessed November 13, 2023. https://betterprogramming.pub/explaining-rusts-modules-420d38eed6c5
 69. "Rust Tuple Examples." Dot Net Perls. April 20, 2023. Accessed November 13, 2023. https://www.dotnetperls.com/tuple-rust
 70. "Rust Loop Labels." Electronics Reference. Accessed December 29, 2023. https://electronicsreference.com/rust/rust-control-flow/rust-loops/loop-labels/
+71. "Ownership and Borrowing in Rust: A Comprehensive Guide." Tech Savvy Scribe - Medium. June 15, 2023. Accessed January 9, 2024. https://medium.com/@TechSavvyScribe/ownership-and-borrowing-in-rust-a-comprehensive-guide-1400d2bae02a
