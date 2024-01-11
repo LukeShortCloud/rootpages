@@ -5,6 +5,24 @@ Operating Systems
 
 The Linux kernel is used in many different operating systems. These are commonly referred to as "distributions." Major distributions sometimes have "derivative" operating systems that are created using the major distribution as a base.
 
+Standard Software
+-----------------
+
+This is the standard set of software used in most modern Linux distributions:
+
+-  File system = `1. ext4 2. Btrfs <https://medium.com/@extio/a-comprehensive-guide-to-linux-file-system-types-fcb13cd7d3f3>`__
+-  Bootloader = `1. GRUB 2. systemd-boot <https://www.tecmint.com/best-linux-boot-loaders/>`__
+-  Desktop environment = `GNOME or KDE Plasma <https://www.debugpoint.com/kde-vs-gnome/>`__
+-  Display server = `1. Xorg 2. Wayland <https://www.phoronix.com/news/Wayland-2023-Successes>`__
+-  init server = `systemd <https://medium.com/geekculture/the-rise-of-linux-systemd-a-beginners-guide-8ca1e226103a>`__
+-  Back-end messaging server = `Dbus-Broker <https://www.phoronix.com/news/Arch-Linux-Dbus-Broker>`__
+-  Shell = `Bash <https://bigstep.com/blog/top-5-linux-shells-and-how-to-install-them>`__
+-  Networking = `NetworkManager <https://support.cs.wwu.edu/home/access/wwu_vpn/linux_bsd/wwu_nm.html>`__
+
+   -  Wi-Fi back-end = `IWD <https://www.phoronix.com/news/Intel-IWD-2.0-Released>`__
+
+-  Sound server = `PipeWire <https://www.zdnet.com/article/pipewire-1-0-linux-audio-comes-of-age/>`__
+
 Arch Linux
 ----------
 
