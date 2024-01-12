@@ -3,6 +3,50 @@ File Systems
 
 .. contents:: Table of Contents
 
+Partition Table
+---------------
+
+Every drive needs a partition tables before it can create partitions and format file systems onto them. There are two types of partition tables:
+
+.. csv-table::
+   :header: Partition Type, BIOS Type, Drive Size Limit, Number of Partitions, Beginning of Drive Space
+   :widths: 20, 20, 20, 20, 20
+
+   Master Boot Record (MBR), Legacy BIOS, 2\* TB, 4\*\*, 31\*\*\* KiB
+   GUID Partition Table (GPT), UEFI, 9.7 ZB, 128, 1 MiB [63]
+
+-  \*A larger drive can be used with MBR but only 2 TB will be usable.
+-  \*\*MBR can have an extended partition to store additional partition table information. That allows up to 26 partitions.
+-  \*\*\*It is recommended to have 1 MiB for MBR but most older partitioning tools defaulted to 31 KiB. [64]
+
+[61][62]
+
+In Linux, you may also see MBR commonly referred to as BIOS, DOS, or MSDOS.
+
+View the current partition table for a drive using ``parted``. It will display "msdos" for MBR, "gpt" for GPT, or "unknown" if there is no partition table.
+
+.. code-block:: sh
+
+   $ sudo parted /dev/<DEVICE> print | grep "Partition Table:"
+
+::
+
+   Partition Table: msdos
+
+::
+
+   Partition Table: gpt
+
+::
+
+   Partition Table: unknown
+
+Create a partition table as "msdos" or "gpt". This will wipe any existing partition table making existing data difficult to recovery:
+
+.. code-block:: sh
+
+   $ sudo parted /dev/<DEVICE> mklabel <PARTITION_TABLE_TYPE>
+
 Types
 -----
 
@@ -1613,3 +1657,7 @@ Bibliography
 58. "A simple (real world) ZFS compression speed an compression ratio benchmark." Reddit r/zfs. March 15, 2022. Accessed August 9, 2023. https://www.reddit.com/r/zfs/comments/svnycx/a_simple_real_world_zfs_compression_speed_an/
 59. "Reducing AWS Fargate Startup Times with zstd Compressed Container Images." AWS Blog. October 19, 2022. Accessed August 9, 2023. https://aws.amazon.com/blogs/containers/reducing-aws-fargate-startup-times-with-zstd-compressed-container-images/
 60. "What is ZIL and how does it affect Write Coalescing performance." Reddit r/qnap. July 12, 2022. Accessed August 9, 2023. https://www.reddit.com/r/qnap/comments/vww2fc/what_is_zil_and_how_does_it_affect_write/
+61. "MBR vs GPT: What's the Difference Between an MBR Partition and a GPT Partition? [Solved]." freeCodeCamp. October 12, 2020. Accessed January 11, 2024. https://www.freecodecamp.org/news/mbr-vs-gpt-whats-the-difference-between-an-mbr-partition-and-a-gpt-partition-solved/
+62. "What do MBR and GPT mean, and when do I use them?" StarTech.com. Accessed January 11, 2024. https://www.startech.com/en-us/faq/mbr-vs-gpt
+63. "Why does the partition start on sector 2048 instead of 63?" Super User. May 6, 2023. Accessed January 11, 2024. https://superuser.com/questions/352572/why-does-the-partition-start-on-sector-2048-instead-of-63
+64. "4.4 BIOS installation." GNU GRUB Manual. Accessed January 11, 2024. https://www.gnu.org/software/grub/manual/grub/html_node/BIOS-installation.html
