@@ -423,6 +423,27 @@ Most modern Linux installers will default to installing GRUB with UEFI support. 
 
 [8]
 
+Linux Boot Order
+~~~~~~~~~~~~~~~~
+
+The default order of the Linux kernels is different for each Linux distribution. It is usually managed in the ``/etc/grub.d/10_linux`` file. The ``sort`` command can have different arguments given to it to customize this.
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo sed -i s'/version_sort\ -r/sort/'g /etc/grub.d/10_linux
+      $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+-  Debian has no easy ``sort`` function to change.
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo sed -i s'/sort\ -Vr/sort/'g /etc/grub.d/10_linux
+      $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
 Troubleshooting
 ---------------
 
