@@ -1034,6 +1034,38 @@ Once the treefiles have been created, the rpm-ostree distribution can be built. 
 
 [17][18]
 
+Reset
+~~~~~
+
+rpm-ostree allows resetting the packages to the default installed ones.
+
+Remove layered packages:
+
+.. code-block:: sh
+
+   $ sudo rpm-ostree uninstall --all
+
+Remove overridden packages:
+
+.. code-block:: sh
+
+   $ sudo rpm-ostree override reset --all
+
+Reset all packages:
+
+.. code-block:: sh
+
+   $ sudo rpm-ostree reset
+
+[32][33]
+
+Reset the persistent configuration, database files, and users [34]:
+
+.. code-block:: sh
+
+   $ sudo rm -r -f /var/*
+   $ sudo rsync -rlv --delete --exclude fstab /usr/etc/ /etc/
+
 Upgrades
 ~~~~~~~~
 
@@ -1143,3 +1175,6 @@ Bibliography
 29. "Rocky Linux Is the Most Preferred Enterprise Linux Distribution." Linuxiac. October 5, 2023. Accessed October 16, 2023. https://linuxiac.com/rocky-linux-is-the-most-preferred-enterprise-linux-distribution/
 30. "Upgrading Fedora Using DNF System Plugin." Fedora Documentation. May 4, 2023. Accessed October 23, 2023. https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
 31. "rpm-ostree - Man Page." ManKier. Accessed November 28, 2023. https://www.mankier.com/1/rpm-ostree
+32. "Chapter 6. Managing Atomic Hosts." Red Hat Customer Portal. Accessed January 17, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_atomic_host/7/html/installation_and_configuration_guide/managing_atomic_hosts
+33. "Removing Layered Packages." Fedora Docs. January 17, 2024. Accessed January 17, 2024. https://docs.fedoraproject.org/en-US/iot/remove-layered/
+34. "Factory reset with OSTree #1793." GitHub ostreedev/ostree. April 27, 2023. Accessed January 17, 2024. https://github.com/ostreedev/ostree/issues/1793
