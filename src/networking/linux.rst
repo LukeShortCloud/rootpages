@@ -239,6 +239,101 @@ Syntax:
     $ sudo ovs-vsctl add-port <NEW_BRIDGE> <PHYSICAL_INTERFACE>
     $ sudo ovs-vsctl add-port <NEW_BRIDGE> <NEW_TAP_INTERFACE>
 
+ModemManager (Cellular Connectivity)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ModemManager is the primary service and tool to manage cellular connections. Optionally, NetworkManager can be used to make persistent configurations last with reboots.
+
+Installation:
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo pacman -S modemmanager modem-manager-gui networkmanager usb_modeswitch
+      $ sudo systemctl enable --now ModemManager NetworkManager
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dnf install NetworkManager ModemManager modem-manager-gui
+      $ sudo systemctl enable --now ModemManager NetworkManager
+
+Use ``mmcli`` for ModemManager and ``nmcli`` for NetworkManager.
+
+Manual connection [19][20]:
+
+-  Find the index of the modem as denoted by the last number.
+
+   .. code-block:: sh
+
+      $ sudo mmcli --list-modems
+
+-  Enable the modem.
+
+   .. code-block:: sh
+
+      $ sudo mmcli -m <MODEM_INDEX> --enable
+
+-  A new network device starting with the letters ``ww`` will appear.
+
+   -  Example:
+
+      .. code-block:: sh
+
+         $ ip link | grep ww
+         5: wwp0s20f0u2i4: <POINTOPOINT,MULTICAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+
+-  Connect the modem to an APN and enable both IPv4 and IPv6 support.
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ sudo mmcli -m <MODEM_INDEX> --simple-connect="apn=<APN>,ip-type=ipv4v6"
+
+   -  Example (T-Mobile):
+
+      .. code-block:: sh
+
+         $ sudo mmcli -m 0 --simple-connect="apn=fast.t-mobile.com,ip-type=ipv4v6"
+
+   -  Supported IP addressing types: ``ipv4``, ``ipv6``, or ``ipv4v6``. ``ipv4v6`` means that the network will use IPv4 and/or IPv6 based on what is available. [21]
+
+-  Use DHCP to get an IP address.
+
+   -  Arch Linux:
+
+      .. code-block:: sh
+
+         $ sudo pacman -S dhclient
+
+   -  Fedora = ``dhclient`` no longer works on Fedora and does not have a replacement. It is recommended to use another networking service such as NetworkManager or systemd-networkd to configure DHCP. [22]
+
+   .. code-block:: sh
+
+      $ sudo dhclient -4 ww<NETWORK_DEVICE>
+      $ sudo dhclient -6 ww<NETWORK_DEVICE>
+
+Automatic connection:
+
+-  Using NetworkManager [23]:
+
+   -  Syntax:
+
+      .. code-block:: sh
+
+         $ nmcli connection add type [cdma|gsm] ifname '*' con-name "<NEW_CONNECTION_NAME> apn '<APN>' connection.autoconnect yes
+
+   -  Example with a SIM PIN unlock:
+
+      .. code-block:: sh
+
+         $ nmcli connection add type gsm ifname '*' con-name 'tmobile' apn 'fast.tmobile.com' connection.autoconnect yes gsm.pin 0000
+
+Some mobile network providers do not provide IPv4 support on newer networks. For example, T-Mobile is IPv6-only for 4G and 5G connections. This can cause issues with services that require IPv4 such as Steam. [24]
+
 Operating System Specific
 -------------------------
 
@@ -695,3 +790,9 @@ Bibliography
 16. "Upgrade Your SSH Key to Ed25519." RISAN A journal of a passionate coder. January 9, 2018. Accessed January 12, 2021. https://medium.com/risan/upgrade-your-ssh-key-to-ed25519-c6e8d60d3c54
 17. "Bridging Network Connections." Debian Wiki. April 24, 2020. Accessed November 10, 2020. https://wiki.debian.org/BridgeNetworkConnections
 18. "sshd shuts down with “No supported key exchange algorithms” error." serverfault.com. August 8, 2019. Accessed November 14, 2020. https://serverfault.com/questions/158151/sshd-shuts-down-with-no-supported-key-exchange-algorithms-error
+19. "NetworkManager." ArchWiki. January 14, 2024. Accessed January 20, 2024. https://wiki.archlinux.org/title/NetworkManager
+20. "Mobile broadband modem." ArchWiki January 1, 2024. Accessed January 20, 2024. https://wiki.archlinux.org/title/Mobile_broadband_modem
+21. "IP connectivity setup in LTE modems." ModemManager. Accessed January 20, 2024. https://modemmanager.org/docs/modemmanager/ip-connectivity-setup-in-lte-modems/
+22. "Changes/dhclient deprecation." Fedora Project Wiki. November 27, 2023. Accessed January 20, 2024. https://fedoraproject.org/wiki/Changes/dhclient_deprecation
+23. "Using NetworkManager and ModemManager in Linux to automatically establish a connection and configure IP details." Techship. Accessed January 20, 2024. https://techship.com/faq/using-network-manager-and-modem-manager-in-linux-to-automatically-establish-a-connection-and-configure-ip-details/
+24. "I can't connect to Steam on my computer when using my phone as a hotspot." Google Fi Wireless Help. March 16, 2023. Accessed January 20, 2024. https://support.google.com/fi/thread/206216082/i-can-t-connect-to-steam-on-my-computer-when-using-my-phone-as-a-hotspot?hl=en
