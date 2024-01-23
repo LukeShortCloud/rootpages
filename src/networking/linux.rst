@@ -429,13 +429,10 @@ Example of ``eth0`` converted into a bridge ``br0`` with a static IP address:
 
 [17]
 
-RHEL
-~~~~~
+RHEL (network-scripts)
+~~~~~~~~~~~~~~~~~~~~~~
 
-Red Hat Enterprise Linux uses their own "network" service. Although
-Network Manager has started taking it's place, the network service is
-less intrusive and better supported by most programs that rely on
-managing network settings.
+As of Red Hat Enterprise Linux (RHEL) 8, the "network" service from the "network-scripts" package is deprecated. Use NetworkManager instead. [24]
 
 There are two udev modules that manage new device naming schemes:
 "net.ifnames" and "biosdevname." Only "net.ifnames" is installed by
@@ -796,3 +793,4 @@ Bibliography
 22. "Changes/dhclient deprecation." Fedora Project Wiki. November 27, 2023. Accessed January 20, 2024. https://fedoraproject.org/wiki/Changes/dhclient_deprecation
 23. "Using NetworkManager and ModemManager in Linux to automatically establish a connection and configure IP details." Techship. Accessed January 20, 2024. https://techship.com/faq/using-network-manager-and-modem-manager-in-linux-to-automatically-establish-a-connection-and-configure-ip-details/
 24. "I can't connect to Steam on my computer when using my phone as a hotspot." Google Fi Wireless Help. March 16, 2023. Accessed January 20, 2024. https://support.google.com/fi/thread/206216082/i-can-t-connect-to-steam-on-my-computer-when-using-my-phone-as-a-hotspot?hl=en
+25. "Chapter 9. Networking." Red Hat Customer Portal. Accessed January 23, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/considerations_in_adopting_rhel_8/networking_considerations-in-adopting-rhel-8
