@@ -32,7 +32,7 @@ Network Settings:
 
    -  DHCP = Use DHCP.
 
-      -  yes, no, ipv4, or ipv6
+      -  yes (IPv4 and IPv6), no, ipv4, or ipv6 [29]
 
    -  DHCPServer = Become a DHCP server.
 
@@ -332,7 +332,60 @@ Automatic connection:
 
          $ nmcli connection add type gsm ifname '*' con-name 'tmobile' apn 'fast.tmobile.com' connection.autoconnect yes gsm.pin 0000
 
-Some mobile network providers do not provide IPv4 support on newer networks. For example, T-Mobile is IPv6-only for 4G and 5G connections. This can cause issues with services that require IPv4 such as Steam. [24]
+Some mobile network providers do not provide IPv4 support on newer networks. For example, T-Mobile is IPv6-only for 4G and 5G connections. This can cause issues with services that require IPv4 such as Steam. [24][28]
+
+Disable IPv4 or IPv6
+~~~~~~~~~~~~~~~~~~~~
+
+By default, IPv6 networks are prioritized over IPv4. This can be changed to prioritize IPv4 over IPv6. This helps with services that are not fully compatible with IPv6 such as the Steam client. [24][28] Create a default configuration for getaddrinfo but lower the priority of IPv6 traffic by setting ``precedence ::ffff:0:0/96`` from a weight of 10 to 100. [29][30]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/gai.conf
+   label  ::1/128       0
+   label  ::/0          1
+   label  2002::/16     2
+   label ::/96          3
+   label ::ffff:0:0/96  4
+   precedence  ::1/128       50
+   precedence  ::/0          40
+   precedence  2002::/16     30
+   precedence ::/96          20
+   precedence ::ffff:0:0/96  100
+
+A specific IP type can be disabled various ways:
+
+-  Linux kernel [26]
+
+   -  IPv4 = The Linux kernel does not support disabling IPv4.
+   -  IPv6
+
+      .. code-block:: sh
+
+         $ sudo -E ${EDITOR} /etc/sysctl.d/50-disable-ipv6.conf
+         net.ipv6.conf.all.disable_ipv6 = 1
+         net.ipv6.conf.default.disable_ipv6 = 1
+         net.ipv6.conf.lo.disable_ipv6 = 1
+         $ sudo sysctl --system
+
+-  NetworkManager [27]
+
+   .. code-block:: sh
+
+      $ nmcli connection
+      $ nmcli connection modify "<CONNECTION_NAME>" ipv[4|6].method disabled
+      $ sudo systemctl restart NetworkManager
+
+-  systemd-networkd = Enable DHCP or static IP addressing only for the specified IP address type. [29]
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/systemd/network/<NETWORK_INTERFACE>.network
+      [Match]
+      Name=<NETWORK_INTERFACE>
+      [Network]
+      DHCP=ipv[4|6]
+      $ sudo systemctl restart systemd-networkd
 
 Operating System Specific
 -------------------------
@@ -794,3 +847,8 @@ Bibliography
 23. "Using NetworkManager and ModemManager in Linux to automatically establish a connection and configure IP details." Techship. Accessed January 20, 2024. https://techship.com/faq/using-network-manager-and-modem-manager-in-linux-to-automatically-establish-a-connection-and-configure-ip-details/
 24. "I can't connect to Steam on my computer when using my phone as a hotspot." Google Fi Wireless Help. March 16, 2023. Accessed January 20, 2024. https://support.google.com/fi/thread/206216082/i-can-t-connect-to-steam-on-my-computer-when-using-my-phone-as-a-hotspot?hl=en
 25. "Chapter 9. Networking." Red Hat Customer Portal. Accessed January 23, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/considerations_in_adopting_rhel_8/networking_considerations-in-adopting-rhel-8
+26. "How to disable IPv6 on Linux." TechRepublic. October 31, 2022. Accessed January 24, 2024. https://www.techrepublic.com/article/how-to-disable-ipv6-on-linux/
+27. "ipv4." NetworkManager Reference Manual. Accessed January 24, 2024. https://developer-old.gnome.org/NetworkManager/stable/settings-ipv4.html
+28. "Steam doesn't work on IPv6-only (NAT64/DNS64) networks #3372." GitHub ValveSoftware/steam-for-linux. November 16, 2023. Accessed January 23, 2024. https://github.com/ValveSoftware/steam-for-linux/issues/3372
+29. "IPv6." ArchWiki. January 7, 2024. Accessed January 23, 2024. https://wiki.archlinux.org/title/IPv6
+30. "Make Linux Prefer IPv4." lkiesow::weblog. March 11, 2022. Accessed January 23, 2024. https://weblog.lkiesow.de/20220311-make-linux-prefer-ipv4.html
