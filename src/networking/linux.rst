@@ -334,6 +334,101 @@ Automatic connection:
 
 Some mobile network providers do not provide IPv4 support on newer networks. For example, T-Mobile is IPv6-only for 4G and 5G connections. This can cause issues with services that require IPv4 such as Steam. [24][28]
 
+Change DNS Resolvers
+~~~~~~~~~~~~~~~~~~~~
+
+Linux:
+
+-  ``/etc/resolv.conf`` = This file handles DNS resolution on Linux. There will be a note in the file if it is managed by another service such as NetworkManager or systemd-resolved. If there is no note, it can be modified directly.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/resolv.conf
+      nameserver <DNS_RESOLVER_1_IP>
+      nameserver <DNS_RESOLVER_2_IP>
+
+-  systemd-resolved = Most modern Linux distributions use systemd-resolved for DNS resolution even if another network service such as NetworkManager is in-use. However, NetworkManager can also manage DNS resolvers.
+
+   -  View the list of current DNS resolvers.
+
+      .. code-block:: sh
+
+         $ systemd-resolve --status
+
+   -  Define the DNS resolvers to use.
+
+      -  For static IP addresses [31]:
+
+         .. code-block:: sh
+
+             $ sudo -E ${EDITOR} /etc/systemd/resolved.conf
+             [Resolve]
+             DNS=<DNS_RESOLVER_1_IP>
+             FallbackDNS=<DNS_RESOLVER_2_IP>
+             $ sudo systemctl restart systemd-resolved
+
+      -  For DHCP addresses when also using systemd-networkd [32]:
+
+         .. code-block:: sh
+
+            $ sudo -E ${EDITOR} /etc/systemd/network/<NETWORK_INTERFACE>.network
+            [Match]
+            Name=<NETWORK_INTERFACE>
+
+            [Network]
+            DHCP=yes
+
+            [DHCP]
+            UseDNS=false
+            $ sudo systemctl restart systemd-networkd
+
+      -  For DHCP addresses when also using NetworkManager [33]:
+
+         .. code-block:: sh
+
+            $ sudo -E ${EDITOR} /etc/NetworkManager/conf.d/dns-servers.conf
+            [global-dns-domain-*]
+            servers=<DNS_RESOLVER_1_IP>,<DNS_RESOLVER_2_IP>
+            $ sudo systemctl restart NetworkManager
+
+   -  Verify that the new DNS resolvers are in-use.
+
+      .. code-block:: sh
+
+         $ systemd-resolve --status
+
+macOS [34]:
+
+-  View the list of current DNS resolvers.
+
+   .. code-block:: sh
+
+      $ scutil --dns
+
+-  View the list of network connections.
+
+   .. code-block:: sh
+
+      $ networksetup -listallnetworkservices
+
+-  Remove all of the current DNS resolvers.
+
+   .. code-block:: sh
+
+      $ sudo networksetup -setdnsservers <NETWORK_CONNECTION> empty
+
+-  Set new DNS resolvers.
+
+   .. code-block:: sh
+
+      $ sudo networksetup -setdnsservers <NETWORK_CONNECTION> <DNS_RESOLVER_1_IP> <DNS_RESOLVER_2_IP>
+
+-  Verify that the new DNS resolvers are in-use.
+
+   .. code-block:: sh
+
+      $ scutil --dns
+
 Disable IPv4 or IPv6
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -852,3 +947,7 @@ Bibliography
 28. "Steam doesn't work on IPv6-only (NAT64/DNS64) networks #3372." GitHub ValveSoftware/steam-for-linux. November 16, 2023. Accessed January 23, 2024. https://github.com/ValveSoftware/steam-for-linux/issues/3372
 29. "IPv6." ArchWiki. January 7, 2024. Accessed January 23, 2024. https://wiki.archlinux.org/title/IPv6
 30. "Make Linux Prefer IPv4." lkiesow::weblog. March 11, 2022. Accessed January 23, 2024. https://weblog.lkiesow.de/20220311-make-linux-prefer-ipv4.html
+31. "Changing DNS with systemd-resolved." Enovision Notes. September 13, 2022. Accessed January 25, 2024. https://notes.enovision.net/linux/changing-dns-with-resolve
+32. "[SOLVED] systemd-resolved -- do not use DNS from DHCP." Arch Linux Forums. August 26, 2023. Accessed January 25, 2024. https://bbs.archlinux.org/viewtopic.php?id=258865
+33. "Setting up custom DNS in NetworkManager." Manjaro Linux Forum. April 21, 2021. Accessed January 25, 2024. https://forum.manjaro.org/t/setting-up-custom-dns-in-networkmanager/59249
+34. "Change Primary DNS server from CLI/terminal macos Monterey." Super User. November 24, 2023. Accessed January 25, 2024. https://superuser.com/questions/1749552/change-primary-dns-server-from-cli-terminal-macos-monterey
