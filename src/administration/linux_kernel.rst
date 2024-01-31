@@ -213,47 +213,43 @@ Schedulers
 Processor
 ~~~~~~~~~
 
-The Linux kernel can handling incoming requests differently depending on
-the scheduler method. By default, all processes use the Completely Fair
-Scheduler (CFS) that tries to handle all incoming tasks equally. It is
-only technically possible to change the default scheduler by modifying
-the Linux kernel's source code and then recompiling the kernel. [5]
-There are 5 different kernel scheduling policies that can be set to
-processes manually. These are set by using the ``chrt`` command.
+The Linux kernel handles incoming requests differently depending on the CPU scheduler. The CPU scheduler is determined at compile time for the kernel and cannot be changed later. [5][32] For compiling with different CPU schedulers, use `linux-tkg <https://github.com/Frogging-Family/linux-tkg>`__. [32] The current CPU scheduler is EEVDF [35] which provides lower latency than CFS. [36]
 
--  SCHED\_BATCH = Batch handles CPU-intensive tasks with real time
-   priority.
--  SCHED\_FIFO (first-in first-out) = Handles each task that is
-   requested, in order.
--  SCHED\_IDLE = Tasks will only be processed when the processor is
-   mostly idle.
--  SCHED\_OTHER (CFS) = All tasks are treated equally and are handled
-   with the same amount of priority.
--  SCHED\_RR (round robin) = This is similar to SCHED\_BATCH except that
-   tasks are handled for a short amount of time before moving onto a
-   different task to handle.
+.. csv-table::
+   :header: Scheduler, First Linux Kernel Release
+   :widths: 20, 20
 
-The relevant ``sysctl`` parameters can be adjusted for system-wide
-scheduling settings are:
+   EEVDF, 6.6
+   CFS, 2.6.23
+   O(1), 2.6.0
+   O(N), 2.4
+   Symmetric Multiprocessing (SMP), 2.2
+   Round-Robin Scheduler, 1.2
+
+[33][34]
+
+`Unofficial <https://github.com/Frogging-Family/linux-tkg/blob/843725ec7c3559e05b713f48f0a9a97a82b668e5/.github/workflows/build-release-kernels.yml#L47>`_ CPU schedulers [32]:
+
+-  bmq
+-  bore
+-  pds
+
+There are 6 different kernel scheduling classes/policies that can be set to processes manually. These are set by using the ``chrt`` command.
+
+Policies [38][39]:
+
+-  SCHED\_BATCH = Batch handles CPU-intensive tasks with real time priority.
+-  SCHED\_DEADLINE = Available since Linux 3.14. [37] Prioritize processes based on what needs to be completed first based on the values of deadline, period, and runtime.
+-  SCHED\_FIFO (first-in first-out) = Handles each task that is requested, in order.
+-  SCHED\_IDLE = Tasks will only be processed when the processor is mostly idle.
+-  SCHED\_OTHER (CFS) = All tasks are treated equally and are handled with the same amount of priority.
+-  SCHED\_RR (round robin) = This is similar to SCHED\_BATCH except that tasks are handled for a short amount of time before moving onto a different task to handle.
+
+The relevant ``sysctl`` parameters can be adjusted for system-wide scheduling settings can be found by running:
 
 .. code-block:: sh
 
     $ sudo sysctl -a | grep "sched_"
-    kernel.sched_autogroup_enabled = 0
-    kernel.sched_cfs_bandwidth_slice_us = 5000
-    kernel.sched_child_runs_first = 0
-    kernel.sched_latency_ns = 6000000
-    kernel.sched_migration_cost_ns = 500000
-    kernel.sched_min_granularity_ns = 10000000
-    kernel.sched_nr_migrate = 32
-    kernel.sched_rr_timeslice_ms = 100
-    kernel.sched_rt_period_us = 1000000
-    kernel.sched_rt_runtime_us = 950000
-    kernel.sched_schedstats = 0
-    kernel.sched_shares_window_ns = 10000000
-    kernel.sched_time_avg_ms = 1000
-    kernel.sched_tunable_scaling = 1
-    kernel.sched_wakeup_granularity_ns = 15000000
 
 [4]
 
@@ -700,3 +696,11 @@ Bibliography
 29. "Two new block I/O schedulers for 4.12." LWN.net April 24, 2017. Accessed August 13, 2023. https://lwn.net/Articles/720675/
 30. "Noop now named none." SUSE Communities. November 29, 2019. Accessed August 13, 2023. https://www.suse.com/c/noop-now-named-none/
 31. "IOSchedulers." Ubuntu Wiki. September 10, 2019. Accessed August 13, 2023. https://wiki.ubuntu.com/Kernel/Reference/IOSchedulers
+32. "How can I change the CPU scheduler?" Reddit r/archlinux. January 31, 2023. Accessed January 16, 2023. https://www.reddit.com/r/archlinux/comments/g2re6r/how_can_i_change_the_cpu_scheduler/
+33. "Inside the Linux 2.6 Completely Fair Scheduler." IBM Developer. September 19, 2018. Accessed January 30, 2024. https://developer.ibm.com/tutorials/l-completely-fair-scheduler/
+34. "A brief history of the Linux Kernel's process scheduler: The very first scheduler, v0.01." DEV Community Satoru Takeuchi. December 3, 2019. Accessed January 30, 2024. https://dev.to/satorutakeuchi/a-brief-history-of-the-linux-kernel-s-process-scheduler-the-very-first-scheduler-v0-01-9e4
+35. "EEVDF Scheduler Merged For Linux 6.6, Intel Hybrid Cluster Scheduling Re-Introduced." Phoronix. August 29, 2023. Accessed January 30, 2024. https://www.phoronix.com/news/Linux-6.6-EEVDF-Merged
+36. "Updated EEVDF Linux CPU Scheduler Patches Posted That Plan To Replace CFS." Phoronix. June 1, 2023. Accessed January 30, 2024. https://www.phoronix.com/news/EEVDF-Scheduler-Linux-EO-May
+37. "Deadline scheduler merged for 3.14." January 22, 2014. Accessed January 30, 2024. https://lwn.net/Articles/581491/
+38. "Chapter 5. Priorities and policies." Red Hat Customer Portal. Accessed January 30, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/8/html/reference_guide/chap-priorities_and_policies
+39. "chrt command in Linux with examples." GeeksforGeeks. May 15, 2019. Accessed January 30, 2024. https://www.geeksforgeeks.org/chrt-command-in-linux-with-examples/
