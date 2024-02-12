@@ -36,7 +36,7 @@ Here is how to install both the 32-bit and 64-bit libraries for Wine. This inclu
 
       .. code-block:: sh
 
-         $ sudo pacman -S alsa-lib alsa-plugins dosbox cups giflib gnutls gsm gst-plugins-base-libs gtk3 lib32-alsa-lib lib32-alsa-plugins lib32-giflib lib32-gnutls lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libldap lib32-libpng lib32-libva lib32-libxcomposite lib32-libxinerama lib32-libxslt lib32-mpg123 lib32-ncurses lib32-openal lib32-opencl-icd-loader lib32-sdl2 lib32-vkd3d lib32-vulkan-icd-loader libgphoto2 libjpeg-turbo libldap libpng libva libxcomposite libxinerama libxslt mpg123 ncurses openal opencl-icd-loader samba sane sdl2 v4l-utils lib32-v4l-utils vkd3d vulkan-icd-loader wine-gecko wine-mono winetricks
+         $ sudo pacman -S alsa-lib alsa-plugins dosbox cups giflib gnutls gsm gst-plugins-base-libs gtk3 lib32-alsa-lib lib32-alsa-plugins lib32-giflib lib32-gnutls lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libldap lib32-libpng lib32-libva lib32-libxcomposite lib32-libxinerama lib32-libxslt lib32-mpg123 lib32-ncurses lib32-openal lib32-opencl-icd-loader lib32-sdl2 lib32-vkd3d lib32-vulkan-icd-loader libgphoto2 libjpeg-turbo libldap libpng libva libxcomposite libxinerama libxslt mpg123 ncurses openal opencl-icd-loader pcsclite lib32-pcsclite samba sane sdl2 v4l-utils lib32-v4l-utils vkd3d vulkan-icd-loader wine-gecko wine-mono winetricks
 
 -  Debian
 
@@ -54,7 +54,7 @@ Here is how to install both the 32-bit and 64-bit libraries for Wine. This inclu
 
          $ sudo dpkg --add-architecture i386
          $ sudo apt update
-         $ sudo apt install --install-recommends wine wine32 wine64 fonts-wine libasound2-plugins:i386 libdbus-1-3:i386 libsdl2-2.0-0:i386 libsqlite3-0:i386 libwine libwine:i386
+         $ sudo apt install --install-recommends wine wine32 wine64 fonts-wine libasound2-plugins:i386 libdbus-1-3:i386 libpcsclite1 libpcsclite1:i386 libsdl2-2.0-0:i386 libsqlite3-0:i386 libwine libwine:i386
 
 -  Fedora
 
@@ -68,7 +68,7 @@ Here is how to install both the 32-bit and 64-bit libraries for Wine. This inclu
 
       .. code-block:: sh
 
-         $ sudo dnf install --setopt=install_weak_deps=True wine alsa-plugins-pulseaudio.i686 dosbox-staging.x86_64 flac-libs.i686 json-c.i686 libICE.i686 libSM.i686 libXtst.i686 libasyncns.i686 liberation-narrow-fonts.noarch libieee1284.i686 libogg.i686 libsndfile.i686 libuuid.i686 libva.i686 libvorbis.i686 libwayland-client.i686 libwayland-server.i686 llvm-libs.i686 mesa-dri-drivers.i686 mesa-filesystem.i686 mesa-libEGL.i686 mesa-libgbm.i686 nss-mdns.i686 ocl-icd.i686 pulseaudio-libs.i686 sane-backends-libs.i686 tcp_wrappers-libs.i686 unixODBC.i686 samba-common-tools.x86_64 samba-libs.x86_64 samba-winbind.x86_64 samba-winbind-clients.x86_64 samba-winbind-modules.x86_64
+         $ sudo dnf install --setopt=install_weak_deps=True wine alsa-plugins-pulseaudio.i686 dosbox-staging.x86_64 flac-libs.i686 json-c.i686 libICE.i686 libSM.i686 libXtst.i686 libasyncns.i686 liberation-narrow-fonts.noarch libieee1284.i686 libogg.i686 libsndfile.i686 libuuid.i686 libva.i686 libvorbis.i686 libwayland-client.i686 libwayland-server.i686 llvm-libs.i686 mesa-dri-drivers.i686 mesa-filesystem.i686 mesa-libEGL.i686 mesa-libgbm.i686 nss-mdns.i686 ocl-icd.i686 pcsc-lite-libs pcsc-lite-libs.i686 pulseaudio-libs.i686 sane-backends-libs.i686 tcp_wrappers-libs.i686 unixODBC.i686 samba-common-tools.x86_64 samba-libs.x86_64 samba-winbind.x86_64 samba-winbind-clients.x86_64 samba-winbind-modules.x86_64
 
 [30][31]
 
