@@ -36,7 +36,7 @@ Here is how to install both the 32-bit and 64-bit libraries for Wine. This inclu
 
       .. code-block:: sh
 
-         $ sudo pacman -S alsa-lib alsa-plugins dosbox cups giflib gnutls gsm gst-plugins-base-libs gtk3 lib32-alsa-lib lib32-alsa-plugins lib32-giflib lib32-gnutls lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libldap lib32-libpng lib32-libva lib32-libxcomposite lib32-libxinerama lib32-libxslt lib32-mpg123 lib32-ncurses lib32-openal lib32-opencl-icd-loader lib32-sdl2 lib32-vkd3d lib32-vulkan-icd-loader libgphoto2 libjpeg-turbo libldap libpng libva libxcomposite libxinerama libxslt mpg123 ncurses openal opencl-icd-loader pcsclite lib32-pcsclite samba sane sdl2 v4l-utils lib32-v4l-utils vkd3d vulkan-icd-loader wine-gecko wine-mono winetricks
+         $ sudo pacman -S wine alsa-lib alsa-plugins dosbox cups giflib gnutls gsm gst-plugins-base-libs gtk3 lib32-alsa-lib lib32-alsa-plugins lib32-giflib lib32-gnutls lib32-gst-plugins-base-libs lib32-gtk3 lib32-libjpeg-turbo lib32-libldap lib32-libpng lib32-libva lib32-libxcomposite lib32-libxinerama lib32-libxslt lib32-mpg123 lib32-ncurses lib32-openal lib32-opencl-icd-loader lib32-sdl2 lib32-vkd3d lib32-vulkan-icd-loader libgphoto2 libjpeg-turbo libldap libpng libva libxcomposite libxinerama libxslt mpg123 ncurses openal opencl-icd-loader pcsclite lib32-pcsclite samba sane sdl2 v4l-utils lib32-v4l-utils vkd3d vulkan-icd-loader wine-gecko wine-mono winetricks
 
 -  Debian
 
