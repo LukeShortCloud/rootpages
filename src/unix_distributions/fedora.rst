@@ -161,6 +161,30 @@ Workstation Upgrades
 
       $ sudo dnf system-upgrade reboot
 
+Rawhide
+-------
+
+Introduction
+~~~~~~~~~~~~
+
+Fedora Rawhide is a rolling release of Fedora, built daily, and designed for developers to test with. It uses packages that are built from git repositories, release candidates, etc. that are considered to be usable. [35]
+
+Switch to and from Rawhide
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to switch from Fedora Rawhide back to a stable release. [36][37]
+
+.. code-block:: sh
+
+   $ export FEDORA_RELEASE=39
+   $ sudo -E dnf distro-sync --releasever=${FEDORA_RELEASE} --refresh --disablerepo rawhide --enablerepo fedora --allowerasing --best
+
+Alternatively, upgrade from a stable release to Fedora Rawhide.
+
+.. code-block:: sh
+
+   $ sudo dnf distro-sync --releasever=rawhide --refresh --disablerepo fedora --allowerasing --best
+
 rpm-ostree (Fedora Silverblue)
 ------------------------------
 
@@ -1178,3 +1202,6 @@ Bibliography
 32. "Chapter 6. Managing Atomic Hosts." Red Hat Customer Portal. Accessed January 17, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_atomic_host/7/html/installation_and_configuration_guide/managing_atomic_hosts
 33. "Removing Layered Packages." Fedora Docs. January 17, 2024. Accessed January 17, 2024. https://docs.fedoraproject.org/en-US/iot/remove-layered/
 34. "Factory reset with OSTree #1793." GitHub ostreedev/ostree. April 27, 2023. Accessed January 17, 2024. https://github.com/ostreedev/ostree/issues/1793
+35. "Rawhide." Fedora Documentation. February 13, 2024. Accessed February 13, 2024. https://docs.fedoraproject.org/en-US/releases/rawhide/
+36. "From rawhide to stable." Fedora Discussion. August 20, 2023. Accessed February 13, 2024. https://discussion.fedoraproject.org/t/from-rawhide-to-stable/87694
+37. "Proper or correct way to upgrade Rawhide using dnf." FedoraForum.org. May 22, 2023. Accessed February 13, 2024. https://forums.fedoraforum.org/showthread.php?330535-Proper-or-correct-way-to-upgrade-Rawhide-using-dnf
