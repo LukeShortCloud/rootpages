@@ -138,6 +138,67 @@ The Arch Linux GPG keyring, used for verifying package integrity, constantly cha
 
 On an Arch Linux or Manjaro live installation environment, it takes a few minutes after boot to automatically update the keyring in the background.
 
+AUR
+---
+
+Package Managers
+~~~~~~~~~~~~~~~~
+
+The Arch Linux User (AUR) repository provides unofficial packages. Those packages only contain build instructions and do not contain binary builds. This avoids legal issues regarding the redistribution of proprietary software. As of the end of 2023, there are over 87,000 packages hosted on the AUR. Search for packages `here <https://aur.archlinux.org/>`__. [6]
+
+There are a few different AUR package managers. These all automate and  wrap around using ``makepkg`` to build the binary package and ``pacman`` to install the package.
+
+-  ``yay`` = The most popular AUR package manager.
+-  ``paru`` = The most feature rich AUR package manager.
+
+Installation:
+
+-  ``yay`` [7]
+
+   -  Using ``makepkg``:
+
+      .. code-block:: sh
+
+         $ sudo pacman -S base-devel git
+         $ git clone https://aur.archlinux.org/yay.git
+         $ cd yay
+         $ makepkg -s -i
+
+   -  Using ``yay``:
+
+      .. code-block:: sh
+
+         $ export YAY_VERSION=12.3.0
+         $ wget https://github.com/Jguer/yay/releases/download/v${YAY_VERSION}/yay_${YAY_VERSION}_x86_64.tar.gz
+         $ tar -x -v -f yay_${YAY_VERSION}_x86_64.tar.gz
+         $ sudo cp ./yay_${YAY_VERSION}_x86_64/yay /usr/local/bin/
+         $ yay -S yay-bin
+         $ sudo rm -f /usr/local/bin/yay
+
+-  ``paru`` [8]
+
+   -  Using ``makepkg``:
+
+      .. code-block:: sh
+
+         $ sudo pacman -S base-devel git
+         $ git clone https://aur.archlinux.org/paru.git
+         $ cd paru
+         $ makepkg -s -i
+
+   -  Using ``paru``:
+
+      .. code-block:: sh
+
+         $ export PARU_VERSION=2.0.1
+         $ mkdir paru
+         $ cd paru
+         $ wget https://github.com/Morganamilo/paru/releases/download/v${PARU_VERSION}/paru-v${PARU_VERSION}-x86_64.tar.zst
+         $ tar -x -v -f paru-v${PARU_VERSION}-x86_64.tar.zst
+         $ sudo mv ./paru /usr/local/bin/
+         $ paru -S paru-bin
+         $ sudo rm -f /usr/local/bin/paru
+
 Linux Kernels
 -------------
 
@@ -165,3 +226,6 @@ Bibliography
 3. "grow live rootfs ?" Arch Linux Forums. December 30, 2017. Accessed October 26, 2023. https://bbs.archlinux.org/viewtopic.php?id=210389
 4. "pacman/Package signing." ArchWiki. November 21, 2023. Accessed December 28, 2023. https://wiki.archlinux.org/title/Pacman/Package_signing
 5. "Pacman troubleshooting." Manjaro. October 9, 2023. Accessed December 28, 2023. https://wiki.manjaro.org/index.php/Pacman_troubleshooting
+6. "AUR Home." Arch Linux. Accessed February 19, 2024. https://aur.archlinux.org/
+7. "Jguer/yay." GitHub. January 25, 2024. Accessed February 19, 2024. https://github.com/Jguer/yay
+8. "Morganamilo/paru." GitHub. October 13, 2023. Accessed February 19, 2024. https://github.com/Morganamilo/paru
