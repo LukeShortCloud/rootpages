@@ -63,6 +63,49 @@ Understanding ANSI color codes:
    -  The last number ``1`` denotes the actual color.
    -  ``m`` denotes the end of the ANSI color code.
 
+Zsh
+---
+
+Differences with Bash
+~~~~~~~~~~~~~~~~~~~~~
+
+-  Arrays are used differently.
+
+   -  Bash:
+
+      .. code-block:: sh
+
+         CMD=(echo Hello world)
+         ${CMD[*]}
+
+   -  Zsh:
+
+      .. code-block:: sh
+
+         CMD=(echo Hello world)
+         $CMD
+
+-  If nothing is found with a wildcard ``*`` blob, then Zsh will fail and exit the script immediately. This is because Zsh itself tries to expand it instead of sending the wildcard to the application. Use ``setopt`` to make the behavior the same as Bash. [6]
+
+   .. code-block:: sh
+
+      setopt +o nomatch
+      ls /tmp/foobar*
+
+-  Zsh will always preserve newlines when outputting a variable. However, Bash will only preserve newlines when the variable is quoted. [7]
+
+   .. code-block:: sh
+
+      $ foobar=$(echo -e "foo\nbar")
+      $ echo ${foobar}
+      $ echo "${foobar}"
+
+   ::
+
+      foo bar
+      foo
+      bar
+
 History
 -------
 
@@ -76,3 +119,5 @@ Bibliography
 3. "The entire table of ANSI color codes working in C!" GitHub RabaDabaDoba/ANSI-color-codes.h. July 10, 2023. Accessed July 31, 2023. https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a
 4. "How to stop the effect of ANSI text color code or set text color back to default after certain characters?" Stack Overflow. April 21, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/43539956/how-to-stop-the-effect-of-ansi-text-color-code-or-set-text-color-back-to-default
 5. "How do I print colored text to the terminal in Rust?" Stack Overflow. January 24, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/69981449/how-do-i-print-colored-text-to-the-terminal-in-rust
+6. "Why zsh tries to expand * and bash does not?" Stack Overflow. May 7, 2022. Accessed February 20, 2024. https://stackoverflow.com/questions/20037364/why-zsh-tries-to-expand-and-bash-does-not
+7. "How to preserve line breaks when storing command output to a variable? [duplicate]." Stack Overflow. August 9, 2023. Accessed February 20, 2024. https://stackoverflow.com/questions/22101778/how-to-preserve-line-breaks-when-storing-command-output-to-a-variable
