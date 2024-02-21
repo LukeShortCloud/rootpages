@@ -138,13 +138,13 @@ The Arch Linux GPG keyring, used for verifying package integrity, constantly cha
 
 On an Arch Linux or Manjaro live installation environment, it takes a few minutes after boot to automatically update the keyring in the background.
 
-AUR
----
+Arch Linux User Repository (AUR)
+--------------------------------
 
 Package Managers
 ~~~~~~~~~~~~~~~~
 
-The Arch Linux User (AUR) repository provides unofficial packages. Those packages only contain build instructions and do not contain binary builds. This avoids legal issues regarding the redistribution of proprietary software. As of the end of 2023, there are over 87,000 packages hosted on the AUR. Search for packages `here <https://aur.archlinux.org/>`__. [6]
+The AUR repository provides unofficial packages. Those packages only contain build instructions and do not contain binary builds. This avoids legal issues regarding the redistribution of proprietary software. As of the end of 2023, there are over 87,000 packages hosted on the AUR. Search for packages `here <https://aur.archlinux.org/>`__. [6]
 
 There are a few different AUR package managers. These all automate and  wrap around using ``makepkg`` to build the binary package and ``pacman`` to install the package.
 
@@ -199,6 +199,36 @@ Installation:
          $ paru -S paru-bin
          $ sudo rm -f /usr/local/bin/paru
 
+Chaotic AUR Repository
+~~~~~~~~~~~~~~~~~~~~~~
+
+The Chaotic AUR repository provides binary packages for the most popular AUR packages. As of the end of 2023, there are over 7,000 packages available to install. Search for packages `here <https://builds.garudalinux.org/repos/chaotic-aur/x86_64/>`__. Requests for new packages can be submitted `here <https://github.com/chaotic-aur/packages/issues>`__.
+
+Installation [9]:
+
+.. code-block:: sh
+
+   sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+   sudo pacman-key --init
+   sudo pacman-key --lsign-key 3056513887B78AEB
+   sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+   sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+   echo "[chaotic-aur]
+   Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+   sudo pacman -S -y
+
+Usage:
+
+-  Install a package from the Chaotic AUR or force install it from source from the AUR.
+
+   .. code-block:: sh
+
+      $ pacman -S <AUR_PACKAGE>
+
+   .. code-block:: sh
+
+      $ yay -S aur/<AUR_PACKAGE>
+
 Linux Kernels
 -------------
 
@@ -229,3 +259,4 @@ Bibliography
 6. "AUR Home." Arch Linux. Accessed February 19, 2024. https://aur.archlinux.org/
 7. "Jguer/yay." GitHub. January 25, 2024. Accessed February 19, 2024. https://github.com/Jguer/yay
 8. "Morganamilo/paru." GitHub. October 13, 2023. Accessed February 19, 2024. https://github.com/Morganamilo/paru
+9. "Chaotic-AUR - an automated building repo for AUR packages." Chaotic-AUR. May 17, 2023. Accessed February 20, 2024. https://aur.chaotic.cx/
