@@ -536,10 +536,27 @@ Install build dependencies.
 
 -  Fedora:
 
-   .. code-block:: sh
+   -  Single CPU architecture:
 
-      $ sudo dnf install 'dnf-command(builddep)'
-      $ sudo dnf builddep <RPM_SPEC_FILE>
+      .. code-block:: sh
+
+         $ sudo dnf install 'dnf-command(builddep)'
+         $ sudo dnf builddep <RPM_SPEC_FILE>
+
+   -  Multi-arch applications such as Mesa and Wine that need both x86_64 and i686 packages:
+
+      -  Fedora >= 32: Starting with Fedora 31, a select few i686 packages are only provided in the x86_64 repository. It is recommended to use `Mock <#mock>`__ for those builds. [49]
+
+         .. code-block:: sh
+
+            $ sudo mock -r fedora-<FEDORA_MAJOR_VERSION>-i386 --rebuild <SOURCE_RPM>
+
+      -  Fedora < 31: Fedora 30 was the last release to have a i686 repository. Dependencies can be installed directly from the i686 repository. [48][50]
+
+         .. code-block:: sh
+
+            $ sudo dnf install 'dnf-command(builddep)'
+            $ sudo setarch i686 dnf builddep <RPM_SPEC_FILE>
 
 Optionally build the source RPM.
 
@@ -1191,3 +1208,6 @@ Bibliography
 45. "How to use Gnupg's passphrase-fd argument?" Stack Overflow. March 26, 2019. Accessed August 19, 2023. https://stackoverflow.com/questions/19895122/how-to-use-gnupgs-passphrase-fd-argument
 46. "Home." AUR. Accessed October 28, 2023. https://aur.archlinux.org/
 47. "KDE package guidelines." ArchWiki. October 26, 2023. Accessed October 28, 2023. https://wiki.archlinux.org/title/KDE_package_guidelines
+48. "In Fedora 31, 32-bit i686 is 86ed." October 4, 2019. Accessed February 29, 2024. https://fedoramagazine.org/in-fedora-31-32-bit-i686-is-86ed/
+49. "local / scratch builds with fedpkg." devel@list.fedoraproject.org. August 4, 2010. Accessed February 29, 2024. https://devel.fedoraproject.narkive.com/wdsL46mw/local-scratch-builds-with-fedpkg
+50. "Bug 1312633 - dnf builddep wont install 32bit versions when specified." Red Hat Bugzilla. July 25, 2022. Accessed February 29, 2024. https://bugzilla.redhat.com/show_bug.cgi?id=1312633
