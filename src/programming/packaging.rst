@@ -573,7 +573,13 @@ Build the binary RPM(s). The RPM(s) will be stored at ``~/rpmbuild/RPMS/<CPU_ARC
 Mock
 ^^^^
 
-Mock creates a chroot of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution. Mock does not work within a container. Instead, use the standard ``rpmbuild -bb <SPEC_FILE>`` command to build a binary RPM from within a container.
+Mock creates a container of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution.
+
+If using a container, it needs special and elevated permissions to be able to create containers inside of the container. Create a container with these additional privileges (or simply use ``--privileged`` for fully elevated privileges) [51][52]:
+
+.. code-block:: sh
+
+   $ podman run --cap-add=sys_admin,mknod --device=/dev/fuse --security-opt label=disable
 
 Install tools required to build RPMs.
 
@@ -1211,3 +1217,5 @@ Bibliography
 48. "In Fedora 31, 32-bit i686 is 86ed." October 4, 2019. Accessed February 29, 2024. https://fedoramagazine.org/in-fedora-31-32-bit-i686-is-86ed/
 49. "local / scratch builds with fedpkg." devel@list.fedoraproject.org. August 4, 2010. Accessed February 29, 2024. https://devel.fedoraproject.narkive.com/wdsL46mw/local-scratch-builds-with-fedpkg
 50. "Bug 1312633 - dnf builddep wont install 32bit versions when specified." Red Hat Bugzilla. July 25, 2022. Accessed February 29, 2024. https://bugzilla.redhat.com/show_bug.cgi?id=1312633
+51. "How to use Podman inside of a container." Enable Sysadmin. July 1, 2021. Accessed February 29, 2024. https://www.redhat.com/sysadmin/podman-inside-container
+52. "Running mock in a docker container." Fedora Discussion. May 31, 2023. Accessed February 29, 2024. https://discussion.fedoraproject.org/t/running-mock-in-a-docker-container/83500
