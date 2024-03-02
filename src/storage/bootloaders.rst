@@ -389,6 +389,16 @@ Linux can be installed onto a portable storage device that can boot on both lega
    2.  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    3.  Regenerate the GRUB configuration file.
 
+-  initramfs requirements to load all kernel modules:
+
+   -  Arch Linux = Remove "autodetect" from the ``HOOKS=()`` section in ``/etc/mkinitcpio.conf``. Then run ``sudo mkinitcpio -P``. [18]
+   -  Fedora = Install ``dracut-config-generic``. Then run ``sudo dracut --regenerate-all --force``. [19]
+
+-  Processor microcode updates for better supporting CPUs:
+
+   -  Arch Linux = Install ``amd-ucode intel-ucode``.
+   -  Fedora = Install ``amd-ucode-firmware microcode_ctl``.
+
 Example partition layout:
 
 ::
@@ -539,3 +549,5 @@ Bibliography
 15. "GRUB gfxpayload blacklist." Launchpad Ubuntu. Accessed February 16, 2023. https://launchpad.net/ubuntu/xenial/+package/grub-gfxpayload-lists
 16. "Use Linux efibootmgr Command to Manage UEFI Boot Menu." LinuxBabe. November 13, 2022. Accessed October 4, 2023. https://www.linuxbabe.com/command-line/how-to-use-linux-efibootmgr-examples
 17. "Kickstart overcoming UEFi or converting from MBR." Light At The End Of The Tunnel. May 10, 2021. Accessed October 4, 2023. https://pkje.net/meander/2016/09/01/kickstart-overcoming-uefi-or-converting-from-mbr/
+18. "mkinitcpio." Arch Wiki. February 16, 2024. Accessed February 21, 2024. https://wiki.archlinux.org/title/Mkinitcpio
+19. "CentOS 7 - Updates for x86_64: system environment/base: dracut-config-generic." Linux @ CERN. June 18, 2020. Accessed February 21, 2024. https://linuxsoft.cern.ch/cern/centos/7/updates/x86_64/repoview/dracut-config-generic.html
