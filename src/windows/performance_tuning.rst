@@ -47,6 +47,17 @@ Starting with Windows 10, it is also possible to use Ultimate Performance mode w
 
       Control Panel (Control Panel) > System and Security > Power Options > Selected plan: Ultimate Performance
 
+Fast Startup
+------------
+
+Starting with Windows 8, fast startup is enabled by default which makes Windows boot a few seconds faster. This hibernates part of the operating system leading to faster boot times. If it is not enabled, it can be enabled using the Control Panel. [11]
+
+::
+
+   Control Panel (Control Panel) > Hardware and Sound > Power Options > Change what the power buttons do > Change settings that are currently unavailable > (check "Turn on fast startup (recommended)") > Save changes
+
+When dual-booting with other operating systems, disable fast startup. Otherwise, other operating systems may not be able to boot because Windows locks access to storage devices, GPUs, wireless devies such as Bluetooth and Wi-Fi, and the mouse and keyboard. [12]
+
 Replace Microsoft Defender
 --------------------------
 
@@ -231,3 +242,5 @@ Bibliography
 8. "How to Disable Indexing in Windows 10 & 11." MajorGeeks. Accessed December 15, 2022. https://www.majorgeeks.com/content/page/disable_indexing_11.html
 9. "Manage Windows 10 Search Indexing." gHacks Technology News. October 26, 2021. Accessed December 15, 2022. https://www.ghacks.net/2017/08/10/manage-windows-10-search-indexing/
 10. "How to Disable Background Apps in Windows 11." MakeUsOf. September 22, 2022. Accessed February 16, 2023. https://www.makeuseof.com/windows-11-disable-background-apps/
+11. "How to Disable Fast Startup in Windows 11/10 (And Why You Should)." Help Desk Geek. October 20, 2022. Accessed March 2, 2024. https://helpdeskgeek.com/windows-11/how-to-disable-fast-startup-in-windows-11-10-and-why-you-should/
+12. "PSA: Disable Fast Startup and Hibernation in Windows." Reddit r/linuxmint. Apriil 27, 2022. Accessed March 2, 2024. https://www.reddit.com/r/linuxmint/comments/ucnjlj/psa_disable_fast_startup_and_hibernation_in/
