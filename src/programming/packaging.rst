@@ -305,7 +305,7 @@ can and will be referenced.
 
 -  %{topdir} = The directory that the RPM related files should be
    located. By default this is set to ``%{getenv:HOME}/rpmbuild``.
--  %{builddir} = The ``%{_topdir}/BUILD`` directory. This is where the
+-  %{\_builddir} = The ``%{_topdir}/BUILD`` directory. This is where the
    compilation of the program should take place.
 -  %{\_sourcedir} = The ``%{_topdir}/SOURCES`` directory. This is where
    patches, service files, and source code can be stored.
