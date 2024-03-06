@@ -158,6 +158,33 @@ When using Xorg, ``xrandr`` can rotate the screen. This needs to use a graphics 
 
       xrandr: output eDP1 cannot use rotation "right" reflection "none"
 
+For the TTY, configure the ``fbcon``. The Linux kernel must be compiled with ``CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y``. Verify that it is by running:
+
+.. code-block:: sh
+
+   $ zgrep CONFIG_FRAMEBUFFER_CONSOLE_ROTATION /proc/config.gz
+
+All of the available options are:
+
+-  ``0`` = Default orientation.
+-  ``1`` = Clockwise.
+-  ``2`` = Inverted.
+-  ``3`` = Counter-clockwise.
+
+Temporary change:
+
+.. code-block:: sh
+
+   $ echo <ROTATION_OPTION> | sudo tee /sys/class/graphics/fbcon/rotate_all
+
+Permanent change [12]:
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/default/grub
+   GRUB_CMDLINE_LINUX="fbcon=rotate:<ROTATION_OPTION>"
+   $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 Remote Access
 -------------
 
@@ -279,3 +306,4 @@ Bibliography
 9. "what is the deal with free vs paid." Reddit r/AnyDesk. March 24, 2020. Accessed October 4, 2023. https://www.reddit.com/r/AnyDesk/comments/fo51wn/what_is_the_deal_with_free_vs_paid/?rdt=50890
 10. "AnyDesk Free vs Paid - How They Compare." Splashtop. September 12, 2023. Accessed October 4, 2023. https://www.splashtop.com/blog/anydesk-free-vs-paid
 11. "Hosting on Linux." Reddit r/ParsecGaming. January 4, 2023. Accessed October 4, 2023. https://www.reddit.com/r/ParsecGaming/comments/102svaf/hosting_on_linux/
+12. "How do I rotate my display when not using an X Server?" Ask Ubuntu. June 6, 2014. Accessed March 5, 2024. https://askubuntu.com/questions/237963/how-do-i-rotate-my-display-when-not-using-an-x-server
