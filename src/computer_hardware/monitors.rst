@@ -169,6 +169,27 @@ With modern day technology, it is almost possible to reproduce the image quality
 
 -  240 Hz
 
+HDMI
+----
+
+High-Definition Multimedia Interfae (HDMI) is a popular and prorietary format for transmitting audio and video. [28] There is optional support for Ethernet. [29]
+
+HDMI 2.1 provides support for 8K at 60 Hz and 4K at 120 Hz. [30] Here is the support matrix for HDMI 2.1 support based on the graphics card driver:
+
+.. csv-table::
+   :header: OS, AMD, Intel, NVIDIA
+   :widths: 20, 20, 20, 20
+
+   LINUX OPEN SOURCE, No\*, Yes\*\*, Yes\*\*\*
+   LINUX PROPRIETARY, Yes, Yes, Yes
+   WINDOWS PROPRIETARY, Yes, Yes, Yes
+
+-  \*AMD created support for HDMI 2.1 but the HDMI Licensing Administration has denied their request to include it as it can be reverse engineered.
+-  \*\*Intel Arc dGPUs use a hardware chip to convert a DisplayPort signal to the HDMI 2.1 protocol. [32][33]
+-  \*\*\*NVIDIA's open source graphics driver uses proprietary firmware to get HDMI 2.1 support. [31]
+
+DisplayPort provides a free and open standard as an alternative to HDMI. [32]
+
 Movie Formats
 -------------
 
@@ -219,3 +240,9 @@ Bibliography
 25. "What does UHD mean? What is the difference between UHD and 4K?" DEXON Systems. November 22, 2022. Accessed September 2, 2023. https://dexonsystems.com/blog/what-is-uhd
 26. "What audio and video codecs are supported on Blu-ray Disc media?" Sony. May 25, 2022. Accessed September 2, 2023. https://www.sony.com/electronics/support/home-video-blu-ray-disc-players-recorders/ubp-x800/articles/00029663
 27. "4K UHD VS Blu ray VS DVD Comparison: Top Differences and Advantages." MacX DVD Ripper Pro. January 13, 2021. Accessed September 2, 2023. https://www.macxdvd.com/mac-dvd-video-converter-how-to/bluray-vs-dvd-vs-4k-uhd.htm
+28. "HDMI (High-Definition Multimedia Interface)." TechTarget. April, 2023. Accessed March 5, 2024. https://www.techtarget.com/whatis/definition/HDMI
+29. "WHAT IS HDMI WITH ETHERNET? HOW DOES IT WORK?" Custom Home Theater Solutions Australia. Accessed March 5, 2024. https://www.customht.com.au/blogs/ht-hifi/what-is-hdmi-with-ethernet-how-does-it-work
+30. "HDMI 2.1: what it is and why your next TV should have it." November 14, 2023. Accessed March 5, 2024. https://www.digitaltrends.com/home-theater/hdmi-explained-everything-you-need-to-know-news-specs/
+31. "Nouveau Supporting HDMI 2.1 Won't Hopefully Be Too Challenging Thanks To NVIDIA Firmware." Phoronix. March 4, 2024. Accessed March 5, 2024. https://www.phoronix.com/news/NVIDIA-Firmware-Blobs-HDMI-2.1
+32. "No Support for Linux." LMG Clips YouTube. March 5, 2024. Accessed March 5, 2024. https://www.youtube.com/watch?v=YJNcejhHtpo
+33. "Intel Arc GPUs don't natively support HDMI 2.1." PC Gamer. July 28, 2022. Accessed March 5, 2024. https://www.pcgamer.com/intel-arc-gpus-dont-natively-support-hdmi-21/
