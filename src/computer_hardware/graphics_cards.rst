@@ -166,7 +166,9 @@ These are the best graphics cards that are (1) low-profile and (2) do not requir
 
 -  Intel:
 
-   -  1. Intel Arc Pro A50 [26]
+   -  1. Intel Arc Pro A40 and A50 [26]
+
+      -  The A40 is a 1-slot 50 watts card. The A50 is a 2-slot 75 watts card. [41]
 
 -  NVIDIA:
 
@@ -226,3 +228,4 @@ Bibliography
 38. "Add Liverpool radeon chip support." GitHub fail0verflow/ps4-linux. January 3, 2016. Accessed August 29, 2023. https://github.com/fail0verflow/ps4-linux/commit/244902f4739e4b62791a20986a892f1e2bf415f9
 39. "AMD Radeon HD 7790 Review Feat. Sapphire: The First Desktop Sea Islands." AnandTech. March 22, 2013. Accessed August 29, 2023. https://www.anandtech.com/show/6837/amd-radeon-7790-review-feat-sapphire-the-first-desktop-sea-islands/2
 40. "Xbox One S GPU." System Requirements. Accessed August 29, 2023. https://gamesystemrequirements.com/gpu/xbox-one-s-gpu
+41. "Exclusive review: Intel Arc Pro A40 / A50." AEC Magazine. December 22, 2022. Accessed March 9, 2024. https://aecmag.com/workstations/exclusive-review-intel-arc-pro-a40-a50-gpus-graphics-cad-bim/
