@@ -385,9 +385,10 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GRUB requirements:
 
-   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-vram`` option to avoid modifying UEFI variables on the local motherboard. [20]
-   2.  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
-   3.  Regenerate the GRUB configuration file.
+   -  Configure GRUB to use partition UUIDs instead of Linux UUIDs. Partition UUIDs will not change between different UEFI motherboards. [21][22]
+   -  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-vram`` option to avoid modifying UEFI variables on the local motherboard. [20]
+   -  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
+   -  Regenerate the GRUB configuration file.
 
 -  initramfs requirements to load all kernel modules:
 
@@ -414,6 +415,8 @@ Arch Linux and Debian:
 .. code-block:: sh
 
    # UEFI
+   $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_UUID true
+   $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_PARTUUID false
    $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable --no-vram
    # BIOS
    $ sudo grub-install --target=i386-pc /dev/<DEVICE>
@@ -424,6 +427,8 @@ Fedora:
 .. code-block:: sh
 
    # UEFI
+   $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_UUID true
+   $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_PARTUUID false
    $ sudo grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable
    # BIOS
    $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
@@ -552,3 +557,5 @@ Bibliography
 18. "mkinitcpio." Arch Wiki. February 16, 2024. Accessed February 21, 2024. https://wiki.archlinux.org/title/Mkinitcpio
 19. "CentOS 7 - Updates for x86_64: system environment/base: dracut-config-generic." Linux @ CERN. June 18, 2020. Accessed February 21, 2024. https://linuxsoft.cern.ch/cern/centos/7/updates/x86_64/repoview/dracut-config-generic.html
 20. "What does "--no-nvram" do while installing grub?" Ask Ubuntu. October 7, 2019. Accessed March 28, 2024. https://askubuntu.com/questions/1170347/what-does-no-nvram-do-while-installing-grub
+21. "Arch Linux installed on a portable SSD doesn't boot on my other machine." Reddit r/archlinux. January 5, 2024. Accessed March 28, 2024. https://www.reddit.com/r/archlinux/comments/18z64sh/arch_linux_installed_on_a_portable_ssd_doesnt/
+22. "Why do I need GRUB_DISABLE_LINUX_UUID=true." Unix & Linux Stack Exchange. March 26, 2023. Accessed March 28, 2024. https://unix.stackexchange.com/questions/127658/why-do-i-need-grub-disable-linux-uuid-true
