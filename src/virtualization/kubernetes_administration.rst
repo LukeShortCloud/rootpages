@@ -268,7 +268,7 @@ Tanzu Community Edition (TCE) was the upstream and open source variant of Tanzu 
 
 -  Build and deploy:
 
-   -  Cartographer = Supply chain choreography.
+   -  Cartographer and Trivy = Supply chain choreography and container scanning. [119]
    -  Flux = Git monitoring.
    -  Harbor = Container registry.
    -  Knative = Serverless.
@@ -2963,3 +2963,4 @@ Bibliography
 116. "Kubernetes 1.25 - What’s new?" Sysdig. August 16, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-25-whats-new/
 117. "Kubernetes v1.26: Electrifying." Kubernetes Blog. December 9, 2022. Accessed December 6, 2023. https://kubernetes.io/blog/2022/11/18/upcoming-changes-in-kubernetes-1-26/
 118. "Kubernetes 1.26 - What’s new?" Sysdig. November 30, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-26-whats-new/
+119. "Install Trivy for Supply Chain Security Tools - Scan (alpha)." VMware Tanzu Application Platform Documentation. March 28, 2024. Accessed March 29, 2024. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.8/tap/scst-scan-install-trivy-integration.html
