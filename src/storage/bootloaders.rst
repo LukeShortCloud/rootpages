@@ -385,7 +385,7 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GRUB requirements:
 
-   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9]
+   1.  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-vram`` option to avoid modifying UEFI variables on the local motherboard. [20]
    2.  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    3.  Regenerate the GRUB configuration file.
 
@@ -414,7 +414,7 @@ Arch Linux and Debian:
 .. code-block:: sh
 
    # UEFI
-   $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable
+   $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable --no-vram
    # BIOS
    $ sudo grub-install --target=i386-pc /dev/<DEVICE>
    $ sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -551,3 +551,4 @@ Bibliography
 17. "Kickstart overcoming UEFi or converting from MBR." Light At The End Of The Tunnel. May 10, 2021. Accessed October 4, 2023. https://pkje.net/meander/2016/09/01/kickstart-overcoming-uefi-or-converting-from-mbr/
 18. "mkinitcpio." Arch Wiki. February 16, 2024. Accessed February 21, 2024. https://wiki.archlinux.org/title/Mkinitcpio
 19. "CentOS 7 - Updates for x86_64: system environment/base: dracut-config-generic." Linux @ CERN. June 18, 2020. Accessed February 21, 2024. https://linuxsoft.cern.ch/cern/centos/7/updates/x86_64/repoview/dracut-config-generic.html
+20. "What does "--no-nvram" do while installing grub?" Ask Ubuntu. October 7, 2019. Accessed March 28, 2024. https://askubuntu.com/questions/1170347/what-does-no-nvram-do-while-installing-grub
