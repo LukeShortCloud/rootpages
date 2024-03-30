@@ -386,7 +386,7 @@ Linux can be installed onto a portable storage device that can boot on both lega
 -  GRUB requirements:
 
    -  Configure GRUB to use partition UUIDs instead of Linux UUIDs. Partition UUIDs will not change between different UEFI motherboards. [21][22]
-   -  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-vram`` option to avoid modifying UEFI variables on the local motherboard. [20]
+   -  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-nvram`` option to avoid modifying UEFI variables on the local motherboard. [20]
    -  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    -  Regenerate the GRUB configuration file.
 
@@ -417,7 +417,7 @@ Arch Linux and Debian:
    # UEFI
    $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_UUID true
    $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_PARTUUID false
-   $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable --no-vram
+   $ sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable --no-nvram
    # BIOS
    $ sudo grub-install --target=i386-pc /dev/<DEVICE>
    $ sudo grub-mkconfig -o /boot/grub/grub.cfg
