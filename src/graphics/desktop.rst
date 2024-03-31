@@ -68,7 +68,7 @@ Set one of the sessions (use the name without the ``.desktop`` extension) to be 
    [User]
    Language=
    # Xorg
-   #Xsession=<XORG_SESSION>
+   #XSession=<XORG_SESSION>
    # Wayland
    Session=<WAYLAND_SESSION>
 
