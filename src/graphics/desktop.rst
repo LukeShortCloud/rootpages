@@ -49,6 +49,29 @@ Here is how to automatically login a user after a given timeout. A reboot is req
       autlogin-user = <USER>
       autologin-user-timeout = <SECONDS>
 
+Default Session
+~~~~~~~~~~~~~~~
+
+List available desktop environment sessions:
+
+.. code-block:: sh
+
+   # Xorg
+   $ ls -1 /usr/share/xsessions/
+   # Wayland
+   $ ls -1 /usr/share/wayland-sessions/
+
+Set one of the sessions (use the name without the ``.desktop`` extension) to be the default session for a specified user by creating the file ``/var/lib/AccountsService/users/${USER}``. [13][14]
+
+.. code-block:: ini
+
+   [User]
+   Language=
+   # Xorg
+   #Xsession=<XORG_SESSION>
+   # Wayland
+   Session=<WAYLAND_SESSION>
+
 Window Managers
 ---------------
 
@@ -307,3 +330,5 @@ Bibliography
 10. "AnyDesk Free vs Paid - How They Compare." Splashtop. September 12, 2023. Accessed October 4, 2023. https://www.splashtop.com/blog/anydesk-free-vs-paid
 11. "Hosting on Linux." Reddit r/ParsecGaming. January 4, 2023. Accessed October 4, 2023. https://www.reddit.com/r/ParsecGaming/comments/102svaf/hosting_on_linux/
 12. "How do I rotate my display when not using an X Server?" Ask Ubuntu. June 6, 2014. Accessed March 5, 2024. https://askubuntu.com/questions/237963/how-do-i-rotate-my-display-when-not-using-an-x-server
+13. "Configure a user default session." GNOME Library. Accessed March 30, 2024. https://help.gnome.org/admin/system-admin-guide/stable/session-user.html.en
+14. "Chapter 8. Setting a default desktop session for all users." Red Hat Customer Portal. Accessed March 30, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/administering_the_system_using_the_gnome_desktop_environment/proc_setting-a-default-desktop-session-for-all-users_administering-the-system-using-the-gnome-desktop-environment
