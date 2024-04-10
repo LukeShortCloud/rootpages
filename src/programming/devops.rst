@@ -674,7 +674,7 @@ Principles:
 9. Disposability = The application can start and shutdown both quickly and gracefully.
 10. Dev/prod parity = The development, staging, and production environments that the application runs in must be identical. Variations can lead to issues missed during testing.
 11. Logs = Do not log to a file. Logs are sent to stdout/stderr to eventually be streamed to a dedicated logging service. This helps parse the information at scale.
-12. Admin proces = Separate code for administrative tasks from the application itself. This new related code scan reside in the same SCM as the application itself.
+12. Admin process = Separate code for administrative tasks from the application itself. This new related code scan reside in the same SCM as the application itself.
 
 [21]
 
