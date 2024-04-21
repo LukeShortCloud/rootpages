@@ -851,6 +851,18 @@ Common events:
       -  cron (string) = A crontab string to use for the schedule.
 
    -  workflow_call (map) = Set as an empty map to allow this workflow to be called from other workflows.
+   -  workflow_dispatch (map) [51][52] = Allow a workflow to be run manually using the GitHub Actions webpage or the ``gh`` CLI.
+
+      -  inputs (map) = A list of inputs that can be provided to the workflow before it is ran.
+
+         -  ``<INPUT_NAME>`` (map) = Configuration of what is expected for the input.
+
+            -  default (string) = The default value for the variable.
+            -  description (string) = An optional description.
+            -  options (list of strings) = Values to provide in a drop-down list. Only one can be selected by the user. Available when ``on.workflow_dispatch.inputs.<INPUT_NAME>.type`` is set to ``choice``.
+            -  required (boolean) = If this variable is required to be set.
+            -  type (string) = ``boolean``, ``choice``, ``enviornment``, or ``string``.
+
    -  workflow_run (map) = Workflows to monitor. Using ``on.workflow_run`` only works on the default branch. [42] For testing, it is possible to temporarily change the default branch in the GitHub settings of the repository. Instead of using this, it is recommended to use ``jobs.<JOB>.uses`` to run workflows from another file. [43]
 
       -  workflows (list of strings) = The workflow ``name`` to use.
@@ -1074,6 +1086,14 @@ A job that only runs if a specific folder (or sub-folder) was modified.
      push:
        paths:
          - 'foobar/**'
+
+A job that can be manually triggered. Using the GitHub repository website, navigate to: Actions > (select the workflow on the left) > Run workflow > Run workflow. [53]
+
+.. code-block:: yaml
+
+   ---
+   on:
+     workflow_dispatch:
 
 Travis CI
 ^^^^^^^^^
@@ -1458,3 +1478,6 @@ Bibliography
 48. "Github - unexpected disconnect while reading sideband packet." Stack Overflow. July 19, 2023. Accessed July 19, 2023. https://stackoverflow.com/questions/66366582/github-unexpected-disconnect-while-reading-sideband-packet
 49. "Configuring issue templates for your repository." GitHub Docs. Accessed August 12, 2023. https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
 50. "GitHub Actions: how to target all branches EXCEPT master?" Stack Overflow. December 18, 2023. Accessed December 29, 2023. https://stackoverflow.com/questions/57699839/github-actions-how-to-target-all-branches-except-master
+51. "Events that trigger workflows." GitHub Docs. Accessed April 21, 2024. https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+52. "Manually Trigger a GitHub Action with workflow_dispatch." DEV Community This is Learning. January 10, 2023. Accessed April 21, 2024. https://dev.to/this-is-learning/manually-trigger-a-github-action-with-workflowdispatch-3mga
+53. "Manually running a workflow." GitHub Docs. Accessed April 21, 2024. https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow
