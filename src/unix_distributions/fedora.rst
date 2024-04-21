@@ -217,6 +217,32 @@ RPM GPG Keys
 
 On Fedora Workstation, GPG keys used for signing RPMs and repositories need to be manually added to the trusted RPM database by running the command ``rpm --import <GPG_KEY>``. That command does not work on rpm-ostree distributions due to that database being in the read-only file system. Instead, all of the ``/etc/pki/rpm-gpg/RPM-GPG-KEY-*`` keys are automatically trusted. [31]
 
+Writable File System
+~~~~~~~~~~~~~~~~~~~~
+
+Most directories in a Fedora Atomic Desktop are read-only. Some are writable to help store persistent data for user files, configuration files, and locally installed programs. Here are all of the writable paths. [38][39]
+
+.. csv-table::
+   :header: Symlink, Writable Path
+   :widths: 20, 20
+
+   /home, /var/home
+   /mnt, /var/mnt
+   /opt, /var/opt
+   /root, /var/roothome
+   /srv, /var/srv
+   /tmp, /var/tmp
+   /usr/local, /var/usrlocal
+
+.. csv-table::
+   :header: Persistent Mount
+   :widths: 20
+
+   /boot
+   /boot/efi
+   /etc
+   /var
+
 Build
 ~~~~~
 
@@ -1205,3 +1231,5 @@ Bibliography
 35. "Rawhide." Fedora Documentation. February 13, 2024. Accessed February 13, 2024. https://docs.fedoraproject.org/en-US/releases/rawhide/
 36. "From rawhide to stable." Fedora Discussion. August 20, 2023. Accessed February 13, 2024. https://discussion.fedoraproject.org/t/from-rawhide-to-stable/87694
 37. "Proper or correct way to upgrade Rawhide using dnf." FedoraForum.org. May 22, 2023. Accessed February 13, 2024. https://forums.fedoraforum.org/showthread.php?330535-Proper-or-correct-way-to-upgrade-Rawhide-using-dnf
+38. "Technical Information." Fedora Docs. April 21, 2024. Accessed April 21, 2024. https://docs.fedoraproject.org/en-US/fedora-silverblue/technical-information/
+39. "The pieces of Fedora Silverblue." Fedora Magazine. May 15, 2020. Accessed April 21, 2024. https://fedoramagazine.org/pieces-of-fedora-silverblue/
