@@ -459,6 +459,100 @@ The default order of the Linux kernels is different for each Linux distribution.
       $ sudo sed -i s'/sort\ -Vr/sort/'g /etc/grub.d/10_linux
       $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
+Secure Boot
+-----------
+
+Secure Boot is an optional feature of Unified Extensible Firmware Interface (UEFI). It is not compatible with legacy BIOS. Most modern computers have this enabled by default and use Microsoft keys to verify the signature of components used for boot. On some Linux distributions such as Debian and Fedora, at least the GRUB bootloader and the Linux kernel are signed. [23]
+
+Self Signing
+~~~~~~~~~~~~
+
+It costs thousands of dollars and takes a long time to get into the Microsoft Hardware Partner program which provides a certificate for signing boot components. Instead, users can create and use a Machine Owner Key (MOK) for self signing. [23][24]
+
+Install the ``mokutil``, ``openssl``, and ``sbsigntools`` packages on Arch Linux, Debian, or Fedora.
+
+Generate the public (der) and private (priv) keys.
+
+.. code-block:: sh
+
+   $ sudo mkdir -p /var/lib/shim-signed/mok/
+   $ cd /var/lib/shim-signed/mok/
+   $ sudo openssl req -nodes -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -days 36500 -subj "/CN=<NAME>/"
+
+Create a copy of the public key in the PEM format. ``mokutil`` only works with the DER format and ``sbsign`` only works with the PEM format.
+
+.. code-block:: sh
+
+   $ sudo openssl x509 -inform der -in MOK.der -out MOK.pem
+
+Verify that Secure Boot is enabled.
+
+.. code-block:: sh
+
+   $ sudo mokutil --sb-state
+   SecureBoot enabled
+
+Import the public key into UEFI. This requires setting a password. On some hardware, this can take longer than the default of 10 seconds so disable the timeout first. [25]
+
+.. code-block:: sh
+
+   $ sudo mokutil --timeout -1
+   $ sudo mokutil --import /var/lib/shim-signed/mok/MOK.der
+   input password:
+   input password again:
+
+Reboot and the system will automatically boot into the "Perform MOK management" tool. Enroll the key.
+
+-  Enroll MOK > Continue > Yes > Password: (enter the password) > Reboot
+
+Verify that the key was loaded by UEFI.
+
+.. code-block:: sh
+
+   $ sudo mokutil --test-key /var/lib/shim-signed/mok/MOK.der
+   /var/lib/shim-signed/mok/MOK.der is already enrolled
+
+Sign the Linux kernel.
+
+.. code-block:: sh
+
+   $ export KERNEL_VERSION="$(uname -r)"
+   $ sudo -E sbsign --key /var/lib/shim-signed/mok/MOK.priv --cert /var/lib/shim-signed/mok/MOK.pem "/boot/vmlinuz-${KERNEL_VERSION}" --output "/boot/vmlinuz-${KERNEL_VERSION}.signed"
+   $ sudo -E mv "/boot/vmlinuz-${KERNEL_VERSION}" "/boot/vmlinuz-${KERNEL_VERSION}.unsigned"
+   $ sudo -E mv "/boot/vmlinuz-${KERNEL_VERSION}.signed" "/boot/vmlinuz-${KERNEL_VERSION}"
+
+If using third-party drivers such as ``nvidia.ko`` or ``vboxdrv.ko``, those need to also be signed. These are normally located in one of these locations:
+
+-  ``/usr/lib/modules/${KERNEL_VERSION}/misc/``
+-  ``/usr/lib/modules/${KERNEL_VERSION}/updates/``
+
+If any third-party drivers were signed, the initramfs needs to be re-generated.
+
+-  Arch Linux:
+
+   .. code-block:: sh
+
+      $ sudo mkinitcpio -P
+
+-  Debian:
+
+   .. code-block:: sh
+
+      $ sudo update-initramfs -k all -u
+
+-  Fedora:
+
+   .. code-block:: sh
+
+      $ sudo dracut --regenerate-all --force
+
+Reboot and verify that the signed kernel boots. If not, it will display this message.
+
+::
+
+   error: ../../grub-core/kern/efi/sb.c:182:bad shim signature.
+   error: ../../grub-core/loader/i386/efi/linux.c:258:you need to load the kernel first.
+
 Troubleshooting
 ---------------
 
@@ -559,3 +653,6 @@ Bibliography
 20. "What does "--no-nvram" do while installing grub?" Ask Ubuntu. October 7, 2019. Accessed March 28, 2024. https://askubuntu.com/questions/1170347/what-does-no-nvram-do-while-installing-grub
 21. "Arch Linux installed on a portable SSD doesn't boot on my other machine." Reddit r/archlinux. January 5, 2024. Accessed March 28, 2024. https://www.reddit.com/r/archlinux/comments/18z64sh/arch_linux_installed_on_a_portable_ssd_doesnt/
 22. "Why do I need GRUB_DISABLE_LINUX_UUID=true." Unix & Linux Stack Exchange. March 26, 2023. Accessed March 28, 2024. https://unix.stackexchange.com/questions/127658/why-do-i-need-grub-disable-linux-uuid-true
+23. "SecureBoot." Debian Wiki. January 21, 2024. Accessed April 21, 2024. https://wiki.debian.org/SecureBoot
+24. "Signing a Linux Kernel for Secure Boot." Ubuntu for Azure Developers. Accessed April 21, 2024. https://gloveboxes.github.io/Ubuntu-for-Azure-Developers/docs/signing-kernel-for-secure-boot.html
+25. "How to change the 10 seconds timeout allotted to enter the "Shim UEFI key management" utility." Red Hat Customer Portal. September 14, 2023. Accessed April 21, 2024. https://access.redhat.com/solutions/6722091
