@@ -54,6 +54,7 @@ Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD
 
 - Life Cycle:
    - Debian: `5 Years <https://www.debian.org/releases/>`__
+   - Ubuntu LTS (>= 14.04 with Ubuntu Pro subscription): `12 Years <https://ubuntu.com//blog/canonical-expands-long-term-support-to-12-years-starting-with-ubuntu-14-04-lts>`__
    - Ubuntu LTS (>= 18.04): `10 Years <https://wiki.ubuntu.com/Releases>`__
    - Ubuntu LTS (<= 16.04): `5 Years <https://wiki.ubuntu.com/LTS>`__
 
@@ -79,12 +80,12 @@ Debian was designed to be a free operating. It is built to use the Hurd, FreeBSD
 Fedora
 ------
 
-Fedora is a upstream community operating system that is sponsored by Red Hat, Inc. that is designed to test the latest technologies. After years of testing, Fedora is eventually used as a base to create a new Red Hat Enterprise Linux (RHEL) operating system that is known for it's enterprise support and long life cycle. [4] The Community Enterprise Operating System (CentOS) is a rebuild of RHEL without the Red Hat, Inc. branding. [5]
+Fedora is a upstream community operating system that is sponsored by Red Hat, Inc. that is designed to test the latest technologies. After years of testing, Fedora is eventually used as a base to create a new Red Hat Enterprise Linux (RHEL) operating system that is known for it's enterprise support and long life cycle. [4] AlmaLinux OS and Rocky Linux are rebuilds of RHEL without the Red Hat, Inc. branding.
 
 - Life Cycle:
    - Fedora: `13 months <https://fedoraproject.org/wiki/Fedora_Release_Life_Cycle>`__
-   - CentOS: `10 Years <https://www.centosblog.com/centos-eol-dates/>`__
-   - RHEL: `> 10 Years <https://access.redhat.com/support/policy/updates/errata>`__
+   - `AlmaLinux OS <https://wiki.almalinux.org/FAQ.html>`__ and `Rocky Linux <https://rockylinux.org/>`__: 10 Years
+   - RHEL: `14 Years <https://www.redhat.com/en/blog/announcing-4-years-extended-life-cycle-support-els-red-hat-enterprise-linux-7>`__
 
 - Package Format:
     - rpm
@@ -100,7 +101,7 @@ Fedora is a upstream community operating system that is sponsored by Red Hat, In
    - rawhide = For developers only. An unstable rolling release of the latest package versions.
 
 - Popular derivatives [2]:
-    - Community Enterprise Linux (CentOS)
+    - Community Enterprise Linux (CentOS) Stream
     - Red Hat Enterprise Linux (RHEL), AlmaLinux OS, and Rocky Linux
     - Yellow Dog Linux (YDL)
 
@@ -237,9 +238,9 @@ This is an extremely biased list of the best distribution for each use case.
    -  Legacy hardware = 1. Slax 2. antiX Linux 3. Debian
 
 -  Lightweight = 1. Tiny Core Linux 2. Slax 3. antiX Linux 4. Linux Lite
--  Longest support = 1. RHEL 2. Ubuntu LTS (commercial) 3. AlmaLinux OS 4. Ubuntu LTS (free) 5. Debian
+-  Longest support = 1. RHEL 2. Ubuntu LTS (Ubuntu Pro) 3. AlmaLinux OS 4. Ubuntu LTS (free) 5. Debian
 -  Old computer = 1. Slax 2. Puppy Linux (Ubuntu) 3. antiX Linux 4. Zorion OS Lite 5. Linux Lite
--  Oldest Linux distribution = 1. Slackware 2. openSUSE 3. Debian 4. Fedora 5. Gentoo 6. Arch Linux [19]
+-  Oldest Linux distribution = 1. Slackware 2. openSUSE 3. Debian 4. Fedora 5. Gentoo 6. Arch Linux [5]
 -  Operating system of the future = 1. Fedora Silverblue 2. SteamOS 3 3. Clear Linux 4. ChimeraOS
 -  Packages available = 1. Arch Linux 2. Manjaro 3. Ubuntu 4. Debian
 -  Privacy = Tails
@@ -269,7 +270,7 @@ Bibliography
 2. "DistroWatch." DistroWatch. Accessed April 27, 2020. https://distrowatch.com/
 3. "Chapter 8 - The Debian package management tools." The Debian GNU/Linux FAQ. Accessed January 2, 2018. https://www.debian.org/doc/manuals/debian-faq/ch-pkgtools.en.html
 4. "What is the relationship between Fedora and Red Hat Enterprise Linux?" Red Hat. Accessed January 2, 2018. https://www.redhat.com/en/technologies/linux-platforms/articles/relationship-between-fedora-and-rhel
-5. "About CentOS." CentOS. Accessed January 2, 2018. https://www.centos.org/about/
+5. "The History of Various Linux Distros." Make Tech Easier. July 25, 2021. Accessed May 10, 2022. https://www.maketecheasier.com/history-of-linux-distros/"
 6. "Binary package guide." Gentoo Linux Wiki. November 13, 2017. Accessed January 2, 2018. https://wiki.gentoo.org/wiki/Binary_package_guide
 7. "Chromium OS SDK Creation." The Chromium Projects. Accessed January 1, 2018. https://www.chromium.org/chromium-os/build/sdk-creation
 8. "Mandriva Linux is dead, but these 3 forked distros carry on its legacy." PCWorld. June 4, 2015. Accessed January 1, 2018. https://www.pcworld.com/article/2930369/mandriva-linux-is-dead-but-these-3-forked-distros-carry-on-its-legacy.html
@@ -283,4 +284,3 @@ Bibliography
 16. "Repositories." Fedora Docs Site. October 11, 2020. Accessed October 11, 2020. https://docs.fedoraproject.org/en-US/quick-docs/repositories/
 17. "Stable request." Gentoo Wiki. April 13, 2020. Accessed October 11, 2020. https://wiki.gentoo.org/wiki/Stable_request
 18. "openSUSE:Factory development model." openSUSE Wiki. October 25, 2019. Accessed October 11, 2020. https://en.opensuse.org/openSUSE:Factory_development_model
-19. "The History of Various Linux Distros." Make Tech Easier. July 25, 2021. Accessed May 10, 2022. https://www.maketecheasier.com/history-of-linux-distros/"
