@@ -94,6 +94,7 @@ Compiling Wine from source code allows testing out new versions and features soo
              dbus-devel \
              dbus-libs \
              desktop-file-utils \
+             egl-wayland-devel \
              flex \
              fontconfig-devel \
              fontforge \
@@ -124,6 +125,7 @@ Compiling Wine from source code allows testing out new versions and features soo
              libusbx-devel \
              libv4l-devel \
              libva-devel \
+             libxkbcommon-devel \
              libX11-devel \
              libXcomposite-devel \
              libXcursor-devel \
@@ -173,7 +175,8 @@ Compiling Wine from source code allows testing out new versions and features soo
              systemd-devel \
              unixODBC-devel \
              vulkan-devel \
-             vulkan-headers
+             vulkan-headers \
+             wayland-devel
 
 -  Install 32-bit build dependencies.
 
@@ -330,8 +333,11 @@ Example builds:
          $ file ./loader/wine
          loader/wine: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=6f687b3c6288a675b9fb777dccf1c585caed7acb, for GNU/Linux 3.2.0, with debug_info, not stripped
 
+Configuration
+-------------
+
 Environment Variables
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Environment variables can be set by using the "export" Linux shell
 command or specifying the variables before a Wine command.
@@ -431,6 +437,26 @@ The override can set to only run native, native then builtin, or builtin
 then native DLLs.
 
 [5]
+
+Wayland Support
+~~~~~~~~~~~~~~~
+
+Wine 9.0 was the first stable release to include partial support for Wayland compositors.
+
+Enable Wayland support:
+
+.. code-block:: sh
+
+   $ echo 'Windows Registry Editor Version 5.00
+   [HKEY_CURRENT_USER\Software\Wine\Drivers]
+   "Graphics"="x11,wayland"' > /tmp/wayland.reg
+   $ wine regedit /tmp/wayland.reg
+
+Verify that Wine works with Wayland by unsetting the ``DISPLAY`` environment variable [34]:
+
+.. code-block:: sh
+
+   $ DISPLAY= wine notepad
 
 Graphics Translations
 ---------------------
@@ -824,3 +850,4 @@ Bibliography
 31. "How to get out of Wine Dependency hell." GloriousEggroll's Blog. October 20, 2017. Accessed December 12, 2023. https://www.gloriouseggroll.tv/how-to-get-out-of-wine-dependency-hell/
 32. "Which kind of dependencies (suggested, recommended…) does DNF install?" Fedora Project. June 12, 2019. Accessed December 12, 2023. https://discussion.fedoraproject.org/t/which-kind-of-dependencies-suggested-recommended-does-dnf-install/74111
 33. "adapter_gl.c." GitLab wine/wine. December 19, 2022. Accessed December 12, 2023. https://gitlab.winehq.org/wine/wine/-/blob/wine-8.0/dlls/wined3d/adapter_gl.c#L5289-L5294
+34. "Wine." ArchWiki. March 14, 2024. Accessed May 2, 2024. https://wiki.archlinux.org/title/wine
