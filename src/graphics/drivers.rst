@@ -82,6 +82,23 @@ NVIDIA
 Installation
 ~~~~~~~~~~~~
 
+Open Source
+^^^^^^^^^^^
+
+Block Proprietary Drivers
+'''''''''''''''''''''''''
+
+By blocking the proprietary NVIDIA graphics drivers, the open source Linux kernel modules should be loaded instead. [24]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/modprobe.d/nvidia-blacklist.conf
+   blacklist nvidia
+   blacklist nvidiafb
+   blacklist nvidia_drm
+   # NVIDIA USB-C driver.
+   blacklist i2c_nvidia_gpu
+
 Proprietary
 ^^^^^^^^^^^
 
@@ -119,7 +136,7 @@ The proprietary drivers provide the best performance. It is possible for the ope
 
 .. code-block:: sh
 
-   $ sudo vim /etc/modprobe.d/nouveau-blacklist.conf
+   $ sudo -E ${EDITOR} /etc/modprobe.d/nouveau-blacklist.conf
    blacklist nouveau
    blacklist rivafb
    blacklist nvidiafb
@@ -216,3 +233,4 @@ Bibliography
 21. "NVIDIA Cleans Up GSP Firmware Binary License." Phoronix. May 31, 2023. Accessed July 31, 2023. https://www.phoronix.com/news/NVIDIA-GSP-Firmware-License
 22. "License For Customer Use of NVIDIA Software." NVIDIA. Accessed July 31, 2023. https://www.nvidia.com/content/DriverDownloads/licence.php?lang=us
 23. "NVK update: Enabling new extensions, conformance status & more." Collabora. June 26, 2023. Accessed July 31, 2023. https://www.collabora.com/news-and-blog/news-and-events/nvk-update-enabling-new-extensions-conformance-status-more.html
+24. "Problem with GPU Passthrough." Proxmox Support Forum. January 29, 2023. Accessed May 2, 2024. https://forum.proxmox.com/threads/problem-with-gpu-passthrough.55918/page-4
