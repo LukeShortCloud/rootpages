@@ -1136,6 +1136,12 @@ Unlike Fedora Workstation [19], rpm-ostree distributions do not officially suppo
 
       $ sudo rpm-ostree rebase fedora:fedora/<FEDORA_MAJOR_VERSION>/x86_64/silverblue
 
+After an upgrade, clear the local cache. [40]
+
+.. code-block:: sh
+
+   $ sudo rpm-ostree cleanup --base --repomd
+
 rpm-ostree distributions have issues upgrading when there are third-party RPMs installed that are versioned for a specific version of Fedora. This can be worked around by doing an update that will also uninstall the old package and then re-install the new package.
 
 -  Minor update of Fedora [21][22]:
@@ -1233,3 +1239,4 @@ Bibliography
 37. "Proper or correct way to upgrade Rawhide using dnf." FedoraForum.org. May 22, 2023. Accessed February 13, 2024. https://forums.fedoraforum.org/showthread.php?330535-Proper-or-correct-way-to-upgrade-Rawhide-using-dnf
 38. "Technical Information." Fedora Docs. April 21, 2024. Accessed April 21, 2024. https://docs.fedoraproject.org/en-US/fedora-silverblue/technical-information/
 39. "The pieces of Fedora Silverblue." Fedora Magazine. May 15, 2020. Accessed April 21, 2024. https://fedoramagazine.org/pieces-of-fedora-silverblue/
+40. "Fedora Silverblue 40 rebase fails due to rpm GPG signature error in qt5-qtquickcontrols?" Fedora Discussion. April 30, 2024. Accessed May 2, 2024. https://discussion.fedoraproject.org/t/fedora-silverblue-40-rebase-fails-due-to-rpm-gpg-signature-error-in-qt5-qtquickcontrols/114832
