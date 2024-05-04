@@ -48,31 +48,31 @@ Hardware virtualization speeds up and further isolates virtualized environments.
 Intel has three subtypes of virtualization:
 
 -  VT-x = Basic hardware virtualization and host separation support.
--  VT-d = I/O pass-through support.
--  VT-c = Improved network I/O pass-through support.
+-  VT-d = I/O passthrough support.
+-  VT-c = Improved network I/O passthrough support.
 
 [3]
 
 AMD has two subtypes of virtualization:
 
 -  AMD-V = Basic hardware virtualization and host separation support.
--  AMD-Vi = I/O pass-through support.
+-  AMD-Vi = I/O passthrough support.
 
 Check for Intel or AMD virtualization support. If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.
 
 .. code-block:: sh
 
-    $ grep -m 1 --color vmx /proc/cpuinfo # Intel
+    $ grep -m 1 --color svm /proc/cpuinfo # AMD
 
 .. code-block:: sh
 
-    $ grep -m 1 --color svm /proc/cpuinfo # AMD
+    $ grep -m 1 --color vmx /proc/cpuinfo # Intel
 
 Verify the exact subtype of virtualization:
 
 .. code-block:: sh
 
-    $ lscpu | grep ^Virtualization # Intel or AMD
+    $ lscpu | grep ^Virtualization # AMD or Intel
 
 KVM
 ~~~
@@ -418,7 +418,7 @@ If using a file system with copy-on-write capabilities, either (1) disable copy-
 PCI
 '''
 
-If possible, PCI pass-through provides the best performance as there is no virtualization overhead. The "GPU Pass-through" section expands upon this. The PCI device address should be in the format of ``XXXX:YY:ZZ``.
+If possible, PCI passthrough provides the best performance as there is no virtualization overhead. The `GPU Passthrough <#gpu-passthrough>`__ section expands upon this. The PCI device address should be in the format of ``XXXX:YY:ZZ``.
 
 QEMU:
 
@@ -462,17 +462,17 @@ is disabled by default.
 
 Verify that the computers' processor supports nested hardware virtualization. [11] If a result is found, then virtualization is supported by the processor but may still need to be enabled via the motherboard BIOS.
 
--  Intel:
-
-   .. code-block:: sh
-
-       $ grep -m 1 --color vmx /proc/cpuinfo
-
--  AMD:
+-  AMD CPU:
 
    .. code-block:: sh
 
        $ grep -m 1 --color svm /proc/cpuinfo
+
+-  Intel CPU:
+
+   .. code-block:: sh
+
+       $ grep -m 1 --color vmx /proc/cpuinfo
 
 Newer processors support APICv which allow direct hardware calls to go straight to the motherboard's APIC. This can provide up to a 10% increase in performance for the processor and storage. [18] Verify if this is supported on the processor before trying to enable it in the relevant kernel driver. [19]
 
@@ -482,20 +482,6 @@ Newer processors support APICv which allow direct hardware calls to go straight 
     [    0.062174] x2apic enabled
 
 Option #1 - Modprobe
-
--  Intel
-
-File: /etc/modprobe.d/nested_virtualization.conf
-
-   ::
-
-       options kvm-intel nested=1
-       options kvm-intel enable_apicv=1
-
-   .. code-block:: sh
-
-       $ sudo modprobe -r kvm-intel
-       $ sudo modprobe kvm-intel
 
 -  AMD
 
@@ -511,18 +497,24 @@ File: /etc/modprobe.d/nested_virtualization.conf
        $ sudo modprobe -r kvm-amd
        $ sudo modprobe kvm-amd
 
+-  Intel
+
+File: /etc/modprobe.d/nested_virtualization.conf
+
+   ::
+
+       options kvm-intel nested=1
+       options kvm-intel enable_apicv=1
+
+   .. code-block:: sh
+
+       $ sudo modprobe -r kvm-intel
+       $ sudo modprobe kvm-intel
+
 Option #2 - GRUB2
 
 Append this option to the already existing "GRUB\_CMDLINE\_LINUX"
 options.
-
--  Intel
-
-File: /etc/default/grub
-
-   ::
-
-       GRUB_CMDLINE_LINUX="kvm-intel.nested=1"
 
 -  AMD
 
@@ -531,6 +523,14 @@ File: /etc/default/grub
    ::
 
        GRUB_CMDLINE_LINUX="kvm-amd.nested=1"
+
+-  Intel
+
+File: /etc/default/grub
+
+   ::
+
+       GRUB_CMDLINE_LINUX="kvm-intel.nested=1"
 
 -  Then rebuild the GRUB 2 configuration.
 
@@ -575,13 +575,6 @@ virtualization support.
 
 OR
 
--  Intel:
-
-   .. code-block:: sh
-
-       $ cat /sys/module/kvm_intel/parameters/nested
-       Y
-
 -  AMD:
 
    .. code-block:: sh
@@ -589,26 +582,49 @@ OR
        $ cat /sys/module/kvm_amd/parameters/nested
        Y
 
+-  Intel:
+
+   .. code-block:: sh
+
+       $ cat /sys/module/kvm_intel/parameters/nested
+       Y
+
 [11]
 
-GPU Pass-through
-^^^^^^^^^^^^^^^^
+GPU Passthrough
+^^^^^^^^^^^^^^^
 
-GPU pass-through provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU pass-through to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it's own IOMMU group. The QEMU settings for the guest should be configured to use "SeaBIOS" for older cards or "OVMF" for newer cards that support UEFI. [36]
+IOMMU Groups
+''''''''''''
+
+For PCI passthrough of any device, it needs to be isolated into its own IOMMU group. Use a script such as `this <https://gist.github.com/flungo/428c374c040de1d0a30fd4a593d39040>`__ to view which PCI devices are in each IOMMU group. Lower end motherboards usually group more than one PCI lane into a group. For those motherboards, a special Linux kernel kernel with a PCIe ACS override patch can be used to workaround this. Due to security concerns, this patch is not in the upstream Linux kernel. [88]
+
+Custom Linux kernels with the PCIe ACS override patch:
+
+-  `linux-vfio <https://wiki.archlinux.org/title/Kernel>`__ (Arch Linux)
+-  `linux-fsync <https://copr.fedorainfracloud.org/coprs/sentry/kernel-fsync/>`__ (Fedora)
+-  `pve-kernel <https://pve.proxmox.com/wiki/Proxmox_VE_Kernel>`__ (Debian)
+
+Enable the PCIe ACS override by using the following boot argument: ``pcie_acs_override=downstream,multifunction``. [91]
+
+Configuration
+'''''''''''''
+
+GPU passthrough provides a virtual machine guest with full access to a graphics card. It is required to have two video cards, one for host/hypervisor and one for the guest. [12] Hardware virtualization via VT-d (Intel) or SVM (AMD) is also required along with input-output memory management unit (IOMMU) support. Those settings can be enabled in the BIOS/UEFI on supported motherboards. Components of a motherboard are separated into different IOMMU groups. For GPU passthrough to work, every device in the IOMMU group has to be disabled on the host with a stub kernel driver and passed through to the guest. For the best results, it is recommended to use a motherboard that isolates each connector for the graphics card, usually a PCI slot, into it's own IOMMU group. The QEMU settings for the guest should be configured to use "SeaBIOS" for older cards or "OVMF" for newer cards that support UEFI. [36]
 
 -  Enable IOMMU on the hypervisor via the bootloader's kernel options. This will provide a static ID to each hardware device. The "vfio-pci" kernel module also needs to start on boot.
 
-   -  AMD:
+   -  AMD CPU:
 
       ::
 
-         amd_iommu=on
+         amd_iommu=on iommu=pt
 
-   -  Intel:
+   -  Intel CPU:
 
       ::
 
-         intel_iommu=on
+         intel_iommu=on iommu=pt
 
 -  For the GRUB bootloader, rebuild the configuration.
 
@@ -636,16 +652,44 @@ GPU pass-through provides a virtual machine guest with full access to a graphics
 
    .. code-block:: sh
 
-      $ sudo lspci -k -nn -v | grep -i -P "amd|nvidia"
+      $ sudo lspci -k -nn -v | grep -i -P "amd|intel|nvidia"
       $ sudo vim /etc/modprobe.d/vfio.conf
       options vfio-pci ids=XXXX:XXXX,YYYY:YYYY,ZZZZ:ZZZZ disable_vga=1
 
--  Allow VFIO to handle IOMMU interrupt remapping. This prevents issues when a virtual machine with PCI pass-through is shutdown.
+-  Allow VFIO to handle IOMMU interrupt remapping. This prevents issues when a virtual machine with PCI passthrough is shutdown.
 
    .. code-block:: sh
 
-      echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" | sudo tee /etc/modprobe.d/iommu_unsafe_interrupts.conf
-      echo "options kvm ignore_msrs=1" | sudo tee /etc/modprobe.d/kvm.conf
+      $ echo "options vfio_iommu_type1 allow_unsafe_interrupts=1" | sudo tee /etc/modprobe.d/iommu_unsafe_interrupts.conf
+      $ echo "options kvm ignore_msrs=1 report_ignored_msrs=0" | sudo tee /etc/modprobe.d/kvm.conf
+
+-  If using a discrete GPU from AMD that is based on RDNA 1 or older, then the `Vendor Reset <https://github.com/gnif/vendor-reset>`__ kernel module is required. It fixes a PCIe crash on the host when a virtual machine with GPU passthrough turns off. This was fixed in RDNA 2 hardware. [82][83]
+
+   -  Arch Linux [84]:
+
+      .. code-block:: sh
+
+         $ yay -S vendor-reset-dkms-git
+         $ echo "vendor-reset" | sudo tee /etc/modules-load.d/vendor-reset.conf
+
+   -  Debian:
+
+      .. code-block:: sh
+
+         $ sudo apt update
+         $ sudo apt install dkms build-essential git pve-headers-$(uname -r)
+         $ git clone https://github.com/gnif/vendor-reset.git
+         $ cd vendor-reset
+         $ sudo dkms install .
+         $ echo "vendor-reset" | sudo tee -a /etc/modules
+
+   -  Fedora [85]:
+
+      .. code-block:: sh
+
+         $ sudo dnf copr enable kylegospo/vendor-reset-dkms
+         $ sudo dnf install vendor-reset-dkms
+         $ echo "vendor-reset" | sudo tee /etc/modules-load.d/vendor-reset.conf
 
 -  Rebuild the initramfs to include the VFIO related drivers.
 
@@ -664,23 +708,25 @@ GPU pass-through provides a virtual machine guest with full access to a graphics
          vfio_iommu_type1
          vfio_pci
          vfio_virqfd" | sudo tee -a /etc/modules
-         $ sudo update-initramfs -u
+         $ sudo update-initramfs -k all -u
 
    -  Fedora:
 
       .. code-block:: sh
 
-         $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci vfio_virqfd"' > /etc/dracut.conf.d/vfio.conf
-         $ sudo dracut --force
+         $ echo 'add_drivers+="vfio vfio_iommu_type1 vfio_pci vfio_virqfd"' | sudo tee /etc/dracut.conf.d/vfio.conf
+         $ sudo dracut --regenerate-all --force
 
 -  Reboot the hypervisor operating system.
 
-[34][35]
+[34][35][81]
+
+Is is also recommended to `hide virtualization <#hide-virtualization>`__ for better compatibility with graphics cards and video games.
 
 Hide Virtualization
 '''''''''''''''''''
 
-Nvidia cards initialized in the guest with a driver version >= 337.88 can detect if the operating system is being virtualized. This can lead to a "Code: 43" error being returned by the driver and the graphics card not working. A work-a-round for this is to set a random "vendor\_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards.
+NVIDIA graphics cards initialized in the guest with a driver version >= 337.88 can detect if the operating system is being virtualized. This can lead to a "Code: 43" error being returned by the driver and the graphics card not working. A workaround for this is to set a random "vendor\_id" to a alphanumeric 12 character value and forcing KVM's emulation to be hidden. This does not affect ATI/AMD graphics cards.
 
 Libvirt [13]:
 
@@ -729,10 +775,25 @@ Proxmox (add the ``-hypervisor`` CPU arguments list) [67]:
    cpu: host,hidden=1,flags=+pcid
    args: -cpu 'host,+kvm_pv_unhalt,+kvm_pv_eoi,hv_vendor_id=NV43FIX,kvm=off,-hypervisor'
 
+NVIDIA error code 43 can also happen on newer versions of the virtual q35 motherboard. Use 6.2 instead.
+
+Libvirt [90]:
+
+.. code-block:: xml
+
+   <type arch='i686' machine='pc-q35-6.2'>hvm</type>
+
+Proxmox [89]:
+
+.. code-block:: sh
+
+   $ sudo vim /etc/pve/qemu-server/<VIRTUAL_MACHINE_ID>.conf
+    machine: pc-q35-6.2
+
 Troubleshooting
 '''''''''''''''
 
-Issue: a black screen is shown on the monitor connected to the GPU that is pass-through.
+Issue: a black screen is shown on the monitor connected to the GPU that is passthrough.
 
 Solutions:
 
@@ -813,6 +874,29 @@ Solution:
    .. code-block:: sh
 
        $ echo "options kvm ignore_msrs=1 report_ignored_msrs=0" | sudo tee -a /etc/modprobe.d/kvm.conf
+
+----
+
+GPU passthrough is not working and the following error appears:
+
+::
+
+   $ sudo dmesg
+   BAR 0: can't reserve [mem 0xd0000000-0xdfffffff 64bit pref]
+
+Solution:
+
+-  Enable all of the following BIOS settings [86]:
+
+   -  IOMMU
+   -  Above 4G Decoding
+   -  Resizable Bar
+
+-  Boot with the ``nofb nomodeset initcall_blacklist=sysfb_init`` argument. [87]
+
+    -  On older Linux kernels, use ``nofb nomodeset video=vesafb:off,efifb:off``. [89]
+
+-  Some motherboards do not support IOMMU groups for all PCIe slots. With a custom kernel, it is possible to boot with the ``pcie_acs_override=downstream,multifunction`` argument to get this functionality. This is a security concern as it can leak memory from the host into the virtual machine which can be used for attacks. [88]
 
 Xen
 ~~~
@@ -1988,22 +2072,22 @@ If the hypervisor has a NVIDIA graphics card that is not used by a virtual machi
 
    .. code-block:: sh
 
-      $ apt install pve-headers-$(uname -r)
+      $ sudo apt install pve-headers-$(uname -r)
 
 -  Enable additional Debian repositories that contain the NVIDIA graphics driver:
 
    .. code-block:: sh
 
-      $ apt-get install software-properties-common
-      $ apt-add-repository contrib
-      $ apt-add-repository non-free
-      $ apt-get update
+      $ sudo apt-get install software-properties-common
+      $ sudo apt-add-repository contrib
+      $ sudo apt-add-repository non-free
+      $ sudo apt-get update
 
 -  Install the NVIDIA graphics driver [58]:
 
    .. code-block:: sh
 
-      $ apt-get install nvidia-driver
+      $ sudo apt-get install nvidia-driver
 
 UEFI Virtual Machines
 ^^^^^^^^^^^^^^^^^^^^^
@@ -2021,8 +2105,8 @@ This can be fixed by deleting and recreating the UEFI keys with pre-enrollment d
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Remove > Yes
     Datacenter > (select the server) > (select the virtual machine) > Hardware > EFI Disk > Add > EFI Disk > Pre-Enroll keys: No
 
-Drive Pass-through
-^^^^^^^^^^^^^^^^^^
+Drive Passthrough
+^^^^^^^^^^^^^^^^^
 
 The Proxmox GUI does not support adding bare metal drives. Instead, use the CLI.
 
@@ -2220,6 +2304,8 @@ Errors
 
 **"Error starting domain: Requested operation is not valid: network '<LIBVIRT_NETWORK>' is not active"** when starting a libvirt virtual machine.
 
+Solution:
+
 -  View the status of all libvirt networks: ``sudo virsh net-list --all``.
 -  Start the network: ``sudo virsh net-start <LIBVIRT_NETWORK>``
 -  Optionally, enable the network to start automatically when the ``libvirtd`` service starts: ``sudo virsh net-autostart <LIBVIRT_NETWORK>``
@@ -2315,3 +2401,14 @@ Bibliography
 78. "Disable Secure-Boot from Virt-Install Command Line." SmoothNet. May 19, 2022. Accessed AUgust 15, 2023. https://www.smoothnet.org/disable-secure-boot-from-virt-install/
 79. "RHEL: Booting a virtual machine with UEFI but without secure boot." Andreas Karis Blog. June 25, 2021. Accessed August 15, 2023. https://andreaskaris.github.io/blog/linux/libvirt-uefi-without-secureboot/
 80. "Logging all the commands executed during a kickstart installation to file and screen." Server Fault. April 6, 2011. Accessed September 28, 2023. https://serverfault.com/questions/256305/logging-all-the-commands-executed-during-a-kickstart-installation-to-file-and-sc
+81. "[TUTORIAL] PCI/GPU Passthrough on Proxmox VE 8 : Installation and configuration." Proxmox Support Forum. September 29, 2023. Accessed April 24, 2024. https://forum.proxmox.com/threads/pci-gpu-passthrough-on-proxmox-ve-8-installation-and-configuration.130218/
+82. "Radeon 6800 (XT): Are they the best Linux Gaming Cards (that you can't buy)?" YouTube Leve1Linux. November 18, 2020. Accessed April 24, 2024. https://www.youtube.com/watch?v=ykiU49gTNak
+83. "Does the AMD reset bug still exist in 2023?" Reddit r/VFIO. October 22, 2023. Accessed April 24, 2024. https://www.reddit.com/r/VFIO/comments/15sn7k3/does_the_amd_reset_bug_still_exist_in_2023/
+84. "Is there an idiot-proof guide on how to setup the vendor reset fix?" Reddit r/VFIO. December 21, 2020. Accessed April 24, 2024. https://www.reddit.com/r/VFIO/comments/khacye/is_there_an_idiotproof_guide_on_how_to_setup_the/
+85. "kylegospo/vendor-reset-dkms." Fedora Copr. Accessed April 24, 2024. https://copr.fedorainfracloud.org/coprs/kylegospo/vendor-reset-dkms/
+86. "After Motherboard exchange no Video output from Guest GPU." Level1Techs Forums. May 10, 2021. Accessed April 26, 2024. https://forum.level1techs.com/t/after-motherboard-exchange-no-video-output-from-guest-gpu/166537
+87. "Proxmox GPU Passthrough." docs.erlipan.dev. Accessed April 26, 2024. https://docs.erlipan.dev/books/mywiki/page/proxmox-gpu-passthrough
+88. "Is ACS override really that unsafe?" Reddit r/VFIO. October 24, 2022. Accessed April 26, 2024. https://www.reddit.com/r/VFIO/comments/ybda5c/is_acs_override_really_that_unsafe/
+89. "GPU passthrough win10 code 43." Promox Support Forum. April 25, 2024. Accessed April 27, 2024. https://forum.proxmox.com/threads/gpu-passthrough-win10-code-43.125401/
+90. "How can I change Qemu KVM machine architecture from 440fx to q35 with virsh edit or virt-manager." Server Fault. December 7, 2020. Accessed April 27, 2024. https://serverfault.com/questions/637917/how-can-i-change-qemu-kvm-machine-architecture-from-440fx-to-q35-with-virsh-edit
+91. "Using ACS to passthrough devices without whole IOMMU group." Level1Techs Forums. October 16, 2023. Accessed May 4, 2024. https://forum.level1techs.com/t/using-acs-to-passthrough-devices-without-whole-iommu-group/122913
