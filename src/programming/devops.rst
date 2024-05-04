@@ -1371,7 +1371,8 @@ These are the most important concepts to learn when studying a new language, lis
 -  Function definitions
 -  Relational, arithmetic, assignment, unary, and bitwise operators
 -  Loops and conditionals
--  Find and use a standardized code styling practice for the language
+-  Find and use a standardized code styling along with best practices for the language
+-  Figure out common design patterns for the language
 -  Exception/error handling
 -  Testing via fake and real unit and functional tests
 -  Common libraries:
@@ -1389,6 +1390,8 @@ These are the most important concepts to learn when studying a new language, lis
    -  Most programming languages support a package manager for dependencies such as dep (Go), mvn/Maven (Java), npm (Node.js), pip/PyPI (Python), etc.
 
 -  Graphical user interface (GUI) framework
+
+After learning the basics, `Exercism <https://exercism.org/>`__ provides hands-on tutorials with human feedback.
 
 Troubleshooting
 ---------------
