@@ -64,6 +64,15 @@ The automatic process for uninstalling Asahi Linux is more likely to corrupt the
 
    $ curl -L https://alx.sh/wipe-linux | sudo sh
 
+Boot
+----
+
+On macOS, to get to the boot menu [4]:
+
+-  Hold the power button. It will say "Continue holding for startup options...".
+-  Release the power button when it says "Loading startup options...".
+-  Select either "Macintosh HD", "Asahi Linux", or "Fedora Linux".
+
 History
 -------
 
@@ -75,3 +84,4 @@ Bibliography
 1. "The first Asahi Linux Alpha Release is here!" Ashai Linux. March 18, 2022. Accessed June 17, 2023. https://asahilinux.org/2022/03/asahi-linux-alpha-release/
 2. "How to Uninstall Asahi Linux on M1 Mac - Remove all Partitions & Volumes." YouTube Mr. Macintosh. March 24, 2022. Accessed August 2, 2023. https://www.youtube.com/watch?v=nMnWTq2H-N0
 3. "How to uninstall?" Reddit r/AsahiLinux. July 23, 2023. Accessed August 2, 2023. https://www.reddit.com/r/AsahiLinux/comments/vs4qp1/how_to_uninstall/
+4. "Installing the Asahi Linux Alpha on my M1 Mac mini." Jeff Geerling. March 25, 2022. Accessed May 3, 2024. https://www.jeffgeerling.com/blog/2022/installing-asahi-linux-alpha-on-my-m1-mac-mini
