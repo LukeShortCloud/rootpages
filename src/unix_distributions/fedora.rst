@@ -1130,6 +1130,12 @@ Unlike Fedora Workstation [19], rpm-ostree distributions do not officially suppo
 
       $ sudo rpm-ostree update
 
+-  Minor update with packages in testing [41]:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree rebase fedora:fedora/<FEDORA_MAJOR_VERSION>/x86_64/testing/silverblue
+
 -  Major upgrade of Fedora Silverblue [20]:
 
    .. code-block:: sh
@@ -1240,3 +1246,4 @@ Bibliography
 38. "Technical Information." Fedora Docs. April 21, 2024. Accessed April 21, 2024. https://docs.fedoraproject.org/en-US/fedora-silverblue/technical-information/
 39. "The pieces of Fedora Silverblue." Fedora Magazine. May 15, 2020. Accessed April 21, 2024. https://fedoramagazine.org/pieces-of-fedora-silverblue/
 40. "Fedora Silverblue 40 rebase fails due to rpm GPG signature error in qt5-qtquickcontrols?" Fedora Discussion. April 30, 2024. Accessed May 2, 2024. https://discussion.fedoraproject.org/t/fedora-silverblue-40-rebase-fails-due-to-rpm-gpg-signature-error-in-qt5-qtquickcontrols/114832
+41. "Trying out the pre-relese of Fedora 38 a bit early, with Silverblue." Fedora Discussion. March 5, 2023. Accessed May 4, 2024. https://discussion.fedoraproject.org/t/trying-out-the-pre-relese-of-fedora-38-a-bit-early-with-silverblue/47277/1
