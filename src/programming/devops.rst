@@ -616,7 +616,7 @@ After some development time, a new software version is released and the major, m
 Calendar Versioning (CalVer)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  Syntax: ``YYYY.0M.0D``, ``YYYY-0M-0D``, ``YYYY.<RELEASE>``, etc.
+-  Syntax: ``YYYY.0M.0D``, ``YYYY-0M-0D``, ``YYYY.<RELEASE>``, ``YYYYMMDD.<COMMIT>``, etc.
 -  Example: ``2018.11.29``
 
 Large projects or projects with rolling releases can signify the date of release by using CalVer. Normally this is the ISO date of actual published release date. It can be expressed in many different ways with the most common showing the year, month, and day. [10]
