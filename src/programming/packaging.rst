@@ -896,8 +896,8 @@ Required variables:
 
 -  ``pkgname`` = String. Name of the software.
 -  ``pkgver`` = String. Version of the software.
--  ``pkgrel`` = String. Version of the package (only increase if the PKGBUILD file has been modified and not the software).
--  ``arch`` = Array. The architecture the software is built for. Any architecture that applies should be defined. Valid options: ``x86_64``, ``i686``, ``arm`` (armv5), ``armv6h``, ``armv7h``, ``aarch64`` (armv8 64-bit), or ``any``.
+-  ``pkgrel`` = String. Version of the package. Start with ``1``. Only increase if the PKGBUILD file has been modified and not the software.
+-  ``arch`` = Array or strings. The architecture the software is built for. Any architecture that applies should be defined. Valid options: ``x86_64``, ``i686``, ``arm`` (armv5), ``armv6h``, ``armv7h``, ``aarch64`` (armv8 64-bit), or ``any``.
 
 Optional variables:
 
