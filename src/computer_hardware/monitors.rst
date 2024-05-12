@@ -120,6 +120,8 @@ There are different certification standards for HDR. The color bit depth determi
    HDR10+, Open and royalty-free, Low, 10, Dynamic, 1000 nits, 4000 nits
    Dolby Vision, Proprietary, Medium, 12, Dynamic, 4000 nits, 10000 nits
 
+Dolby Vision and HDR10+ require HDR10 information as a base. That means that even if a TV does not support Dolby Vision and/or HDR10+, it can at least play HDR10. [34][35]
+
 Computer operating systems have partial support for HDR. Most applications do not natively support it. Windows 10 and Netflix require buying Microsoft's HEVC Video Extension for video playback streaming to work. [11]
 
 Color Depth
@@ -246,3 +248,5 @@ Bibliography
 31. "Nouveau Supporting HDMI 2.1 Won't Hopefully Be Too Challenging Thanks To NVIDIA Firmware." Phoronix. March 4, 2024. Accessed March 5, 2024. https://www.phoronix.com/news/NVIDIA-Firmware-Blobs-HDMI-2.1
 32. "No Support for Linux." LMG Clips YouTube. March 5, 2024. Accessed March 5, 2024. https://www.youtube.com/watch?v=YJNcejhHtpo
 33. "Intel Arc GPUs don't natively support HDMI 2.1." PC Gamer. July 28, 2022. Accessed March 5, 2024. https://www.pcgamer.com/intel-arc-gpus-dont-natively-support-hdmi-21/
+34. "Dolby Vision HDR: Everything You Need To Know." The Install Spot. Accessed May 12, 2024. https://theinstallspot.com/dolby-vision-hdr-everything-you-need-to-know/
+35. "Do all Dolby Vision discs have regular HDR as well?" Reddit r/4kbluray. Apriil 7, 2022. Accessed May 12, 2024. https://www.reddit.com/r/4kbluray/comments/tx3r3t/do_all_dolby_vision_discs_have_regular_hdr_as_well/
