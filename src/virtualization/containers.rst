@@ -565,6 +565,9 @@ The ``docker buildx build`` command can be used as a replacement for ``docker bu
 Container Tools (buildah, podman, and skopeo)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 The `Container Tools project <https://github.com/containers>`__ bundles a set of fully-featured programs to replicate the functionality of the ``docker`` command using the OCI standard. [19] No daemon or CRI is used and instead the tools communicate directly with crun or runC. The `podman codebase <https://github.com/containers/podman>`__ (previously known as libpod) is shared between the Container Tools and CRI-O projects. However, the two projects are not able to manage containers created from the other.
 
 Container Tools:
@@ -572,6 +575,25 @@ Container Tools:
 -  ``buildah`` = Build container images.
 -  ``podman`` = Run containers. Designed as a drop-in CLI replacement for ``docker``. It has a focus on adding additional functional to replicate the Pod API from Kubernetes. Containers will run as a non-privileged user by default.
 -  ``skopeo`` = Manage container image registries.
+
+
+Podman
+^^^^^^
+
+Reset
+'''''
+
+Reset all Podman configurations and delete all containers.
+
+.. code-block:: sh
+
+   $ podman system reset
+
+If that command fails, manually delete everything. [33]
+
+.. code-block:: sh
+
+   $ sudo rm -r -f  ~/.local/share/containers/ ~/.config/containers/
 
 LXC
 ~~~
@@ -867,3 +889,4 @@ Bibliography
 30. "Useful tips." GitHub 89luca89/distrobox. June 15, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md
 31. "Multi-arch build and images, the simple way." Docker Blog. April 30, 2020. Accessed September 25, 2023. https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
 32. "Install Podman in a static manner." GitHub 89luca89/distrobox. September 20, 2023. Accessed October 26, 2023. https://github.com/89luca89/distrobox/blob/main/docs/posts/install_podman_static.md
+33. "How to reset podman and buildah after experimenting as a non-root user?" Stack Overflow. October 19, 2021. Accessed May 16, 2024. https://stackoverflow.com/questions/56542220/how-to-reset-podman-and-buildah-after-experimenting-as-a-non-root-user
