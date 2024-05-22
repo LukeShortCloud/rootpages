@@ -185,8 +185,21 @@ Alternatively, upgrade from a stable release to Fedora Rawhide.
 
    $ sudo dnf distro-sync --releasever=rawhide --refresh --disablerepo fedora --allowerasing --best
 
-rpm-ostree (Fedora Silverblue)
-------------------------------
+rpm-ostree (Fedora CoreOS and Fedora Atomic Desktops)
+-----------------------------------------------------
+
+Fedora CoreOS
+~~~~~~~~~~~~~
+
+Fedora CoreOS (FCOS) is a minimal operating system designed to run on servers. It is commonly used to run Kubernetes clusters such as OpenShift. It is a rolling release distribution and provides automatic updates. [42]
+
+
+There are 3 update streams. Here they are in order of least frequently to most frequently updated [43]:
+
+1. stable
+2. testing = This provides the exact same package versions as Fedora Atomic Desktops and Fedora Workstations.
+3. next
+4. rawhide
 
 Spins
 ~~~~~
@@ -1247,3 +1260,5 @@ Bibliography
 39. "The pieces of Fedora Silverblue." Fedora Magazine. May 15, 2020. Accessed April 21, 2024. https://fedoramagazine.org/pieces-of-fedora-silverblue/
 40. "Fedora Silverblue 40 rebase fails due to rpm GPG signature error in qt5-qtquickcontrols?" Fedora Discussion. April 30, 2024. Accessed May 2, 2024. https://discussion.fedoraproject.org/t/fedora-silverblue-40-rebase-fails-due-to-rpm-gpg-signature-error-in-qt5-qtquickcontrols/114832
 41. "Trying out the pre-relese of Fedora 38 a bit early, with Silverblue." Fedora Discussion. March 5, 2023. Accessed May 4, 2024. https://discussion.fedoraproject.org/t/trying-out-the-pre-relese-of-fedora-38-a-bit-early-with-silverblue/47277/1
+42. "Fedora CoreOS (FCOS)." OKD 4. Accessed May 22, 2024. https://docs.okd.io/latest/architecture/architecture-rhcos.html
+43. "Major Changes in Fedora CoreOS." Fedora Docs. May 22, 2024. Accessed May 22, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/major-changes/
