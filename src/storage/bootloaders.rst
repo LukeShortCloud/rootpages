@@ -168,19 +168,13 @@ Common options:
     menuentry 'CentOS Linux (3.10.0-327.18.2.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.18.2.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
     menuentry 'CentOS Linux (3.10.0-327.13.1.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-327.13.1.el7.x86_64-advanced-d2e5b723-0055-4157-9197-e7d715937e8b' {
 
--  GRUB\_TIMEOUT = Set the timeout (in seconds) before booting into the
-   default menu entry.
--  GRUB\_CMDLINE\_LINUX = Append kernel options to the end of the
-   "linux" line. These can later be seen in the operating system in
-   /proc/cmdline. This applies to both the normal and recovery mode
+-  GRUB\_TIMEOUT = Set the timeout (in seconds) before booting into the default menu entry.
+-  GRUB\_CMDLINE\_LINUX = Append kernel options to the end of the "linux" line. These can later be seen in the operating system in /proc/cmdline. This applies to both the normal and recovery mode
    options.
--  GRUB\_CMDLINE\_LINUX\_DEFAULT = The same as the above setting except
-   this option does not affect the recovery kernel options.
--  GRUB\_DISABLE\_LINUX\_UUID = If set to "true", devices from /dev/
-   will be used for specifying the root instead of the UUID. The default
-   is "false" which will use UUIDs.
--  GRUB\_BACKGROUND = Specify the full path to a custom image for GRUB's
-   menu background.
+-  GRUB\_CMDLINE\_LINUX\_DEFAULT = The same as the above setting except this option does not affect the recovery kernel options.
+-  GRUB\_DISABLE\_LINUX\_UUID = If set to "true", devices from /dev/ will be used for specifying the root instead of the UUID. The default is "false" which will use UUIDs.
+-  GRUB\_DISABLE\_LINUX\_PARTUUID = If set to "false", GPT partition UUIDs will be used instead of Linux partition UUIDs.
+-  GRUB\_BACKGROUND = Specify the full path to a custom image for GRUB's menu background.
 
 [5]
 
@@ -385,7 +379,7 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GRUB requirements:
 
-   -  Configure GRUB to use partition UUIDs instead of Linux UUIDs. Partition UUIDs will not change between different UEFI motherboards. [21][22]
+   -  Configure GRUB to use GPT partition UUIDs instead of Linux partition UUIDs. GPT partition UUIDs will not change between different UEFI motherboards. [21][22]
    -  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-nvram`` option to avoid modifying UEFI variables on the local motherboard. [20]
    -  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    -  Regenerate the GRUB configuration file.
