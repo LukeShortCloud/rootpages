@@ -472,12 +472,14 @@ By default, only the "root" user has access to manage docker containers. Users a
     $ sudo usermod -a -G docker <USER>
     $ sudo systemctl restart docker
 
-Dockerfile
-^^^^^^^^^^
+Dockerfile (Containerfile)
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it's started.
+docker containers are built by using a template called ``Dockerfile``. This file contains a set of instructions on how to build and handle the container when it is started.
 
-**Dockerfile Instructions**
+Podman is a drop-in replacement for docker and can use a ``Dockerfile`` but prefers the generic ``Containerfile`` name instead. However, docker does not support ``Containerfile`` by default. Use the command ``docker bulid -f Containerfile .`` to specify a different container file name.
+
+**Containerfile Instructions**
 
 -  **FROM** <IMAGE>:<TAG> = The original container image to copy and use as a base for this new container.
 -  ADD <SOURCE> <DESTINATION> = Similar in functionality to ``COPY``. This should only be used to download URLs or extract archives.
@@ -502,7 +504,7 @@ docker containers are built by using a template called ``Dockerfile``. This file
 
 **OpenShift Instructions**
 
-Some instructions in the Dockerfile have special uses in regards to OpenShift.
+Some instructions in the Containerfile have special uses in regards to OpenShift.
 
 -  LABEL
 
@@ -514,7 +516,7 @@ Some instructions in the Dockerfile have special uses in regards to OpenShift.
 
 **Storage Space**
 
-Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Dockerfile operation creates a writable/container layer ontop of the previous layer. Each layer created with ``ADD``, ``COPY``, and ``RUN`` takes up more space.
+Containers should be ephemeral where the persistent data is stored in an external location (volume) and/or a database. Almost every Containerfile operation creates a writable/container layer ontop of the previous layer. Each layer created with ``ADD``, ``COPY``, and ``RUN`` takes up more space.
 
 Lower space usage by [10]:
 
@@ -527,7 +529,7 @@ Lower space usage by [10]:
 
 -  Using the `docker image build --squash <https://docs.docker.com/engine/reference/commandline/image_build/>`__  or `buildah bud --squash <https://github.com/containers/buildah/blob/master/docs/buildah-bud.md>`__ command to consolidate all additional layers when creating a new image. Use `docker-squash <https://github.com/goldmann/docker-squash>`__ to consolidate an existing image.
 
-A Dockerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <PATH_TO_DOCKERFILE>`` to use a Dockerfile from a different directory and also use the current working directory for copying files from. [11]
+A Containerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <CONTAINERFILE>`` to use a Containerfile from a different directory and also use the current working directory for copying files from. [11]
 
 Networking
 ^^^^^^^^^^
@@ -606,7 +608,7 @@ Example Java <=9 usage in a docker compose file that utilizes an environment var
 Multi-Architecture Support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``docker buildx build`` command can be used as a replacement for ``docker build`` to create a container image based on the CPU architecture of the running host. In the ``Dockerfile``, the ``ARCH`` argument needs to be set to an empty value. [31]
+The ``docker buildx build`` command can be used as a replacement for ``docker build`` to create a container image based on the CPU architecture of the running host. In the ``Containerfile``, the ``ARCH`` argument needs to be set to an empty value. [31]
 
 ::
 
@@ -894,7 +896,7 @@ Solution:
 
 Solutions:
 
--  ``RUN apt-get update`` in the Dockerfile before installing packages.
+-  ``RUN apt-get update`` in the Containerfile before installing packages.
 -  Use ``docker build --no-cache`` to not re-use old package repository cache.
 
 History
