@@ -19,6 +19,7 @@ Comparison:
    Price, Free up to 16 servers [3], Free, Free, Free
    Optional paid support, Yes, Yes, Yes, Yes
    Btrfs support, No, Yes [4], No, No
+   Old hardware support, No, No, Yes [44], No
 
 Most popular EL distributions [29]:
 
@@ -1262,3 +1263,4 @@ Bibliography
 41. "Trying out the pre-relese of Fedora 38 a bit early, with Silverblue." Fedora Discussion. March 5, 2023. Accessed May 4, 2024. https://discussion.fedoraproject.org/t/trying-out-the-pre-relese-of-fedora-38-a-bit-early-with-silverblue/47277/1
 42. "Fedora CoreOS (FCOS)." OKD 4. Accessed May 22, 2024. https://docs.okd.io/latest/architecture/architecture-rhcos.html
 43. "Major Changes in Fedora CoreOS." Fedora Docs. May 22, 2024. Accessed May 22, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/major-changes/
+44. "General Availability of AlmaLinux 9.4 Stable!" AlmaLinux OS. May 6, 2024. Accessed June 3, 2024. https://almalinux.org/blog/2024-05-06-announcing-94-stable/
