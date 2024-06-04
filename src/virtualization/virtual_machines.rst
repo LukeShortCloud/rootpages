@@ -1005,7 +1005,7 @@ Common commands:
 -  **lang** = The primary language to use.
 -  mount = Manually specify a partition to mount.
 -  network = Configure the network settings.
--  **ostreesetup** = Required for Fedora Silverblue to install the file system. A ``reboot`` is required after this step. The Kickstart installation will continue where it left off.
+-  **ostreesetup** = Required for Fedora Atomic Desktop to install the file system from an OSTree repository. A ``reboot`` is required after this step. The Kickstart installation will continue where it left off.
 
    -  --osname = Default: "fedora".
    -  --remote = Default: "fedora".
@@ -1015,6 +1015,14 @@ Common commands:
       -  Both the ``--url`` and ``ref`` are combined to make this URL: ``https://kojipkgs.fedoraproject.org/compose/ostree/repo/refs/heads/fedora/<MAJOR_VERSION>/<CPU_ARCHITECTURE>/<OPERATING_SYSTEM>``.
 
    -  --nogpg = Do not verify the GPG signature of the OCI image.
+
+- **ostreecontainer** = Use an OSTree container instead of an OSTree repository for the install. A ``reboot`` is required after this step. The Kickstart installation will continue where it left off. [92][93]
+
+   -  --no-signature-verification = Do not verify the GPG signature of the container image.
+   -  --remote = The OSTree remote name.
+   -  --stateroot = Default: "default". The operating system name.
+   -  --transport = Default: "registry". How to obtain the image. Valid options are: oci, oci-archive, or registry.
+   -  --url = Specify the ``<CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_IMAGE`` to use.
 
 -  %packages = A list of packages, separated by a newline, to be installed. End the list of packages by using ``%end``.
 -  part or partition = Manually create partitions.
@@ -2412,3 +2420,5 @@ Bibliography
 89. "GPU passthrough win10 code 43." Promox Support Forum. April 25, 2024. Accessed April 27, 2024. https://forum.proxmox.com/threads/gpu-passthrough-win10-code-43.125401/
 90. "How can I change Qemu KVM machine architecture from 440fx to q35 with virsh edit or virt-manager." Server Fault. December 7, 2020. Accessed April 27, 2024. https://serverfault.com/questions/637917/how-can-i-change-qemu-kvm-machine-architecture-from-440fx-to-q35-with-virsh-edit
 91. "Using ACS to passthrough devices without whole IOMMU group." Level1Techs Forums. October 16, 2023. Accessed May 4, 2024. https://forum.level1techs.com/t/using-acs-to-passthrough-devices-without-whole-iommu-group/122913
+92. "rpm-ostree-container-silverblue.ks.in." GitHub rhinstaller/kickstart-tests. February 7, 2024. Accessed June 4, 2024. https://github.com/rhinstaller/kickstart-tests/blob/master/rpm-ostree-container-silverblue.ks.in
+93. "Pykickstart Documentation Release 3.55." Pykickstart Documentation. May 14, 2024. Accessed June 4, 2024. https://pykickstart.readthedocs.io/_/downloads/en/latest/pdf/
