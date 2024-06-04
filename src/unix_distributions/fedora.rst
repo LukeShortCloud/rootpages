@@ -1057,7 +1057,7 @@ Examples:
       systemctl enable fedora-silverblue-readonly-sysroot.service
 
 rpm-ostree compose
-^^^^^^^^^^^^^^^^^^
+''''''''''''''''''
 
 Once the treefiles have been created, the rpm-ostree distribution can be built. It is recommended to use either Fedora Silverblue or Fedora Workstation as the host operating system for the build since they provide the required dependencies. The ``rpm-ostree`` command has to be ran with elevated privileges or else it will not work properly.
 
@@ -1097,6 +1097,101 @@ Once the treefiles have been created, the rpm-ostree distribution can be built. 
       $ sudo rpm-ostree rebase <NEW_REMOTE_NAME>:fedora/38/x86_64/silverblue
 
 [17][18]
+
+Container
+^^^^^^^^^
+
+A Containerfile can be used to create an Open Container Initiative (OCI) image for use as the root file system.
+
+::
+
+   FROM <CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_TAG>
+
+The base container image to start with needs to have ``rpm-ostree`` installed and configured. Either use an existing image or use a Treefile to build a new base image.
+
+**Existing Images**
+
+Minimal images [45]:
+
+-  CentOS Stream = quay.io/centos-bootc/centos-bootc:stream9
+-  Fedora = quay.io/fedora/fedora-bootc:40
+-  Fedora CoreOS (following the latest stable Fedora Atomic Desktop version) = quay.io/fedora/fedora-coreos:testing
+
+Images with desktop enviornments:
+
+-  Fedora Atomic Desktop with GNOME = quay.io/fedora/fedora-silverblue
+-  Fedora Atomic Desktop with KDE Plasma = quay.io/fedora/fedora-kinoite
+
+In the Containerfile, set one of those images to be the ``FROM`` value. It is recommended to end each ``RUN`` command with ``&& ostree container commit``. DNF and RPM commands can be re-enabled by using ``RUN rpm-ostree cliwrap install-to-root /`` which will translate those to rpm-ostree commands. Real-world examples of how to customize these containers with rpm-ostree can be found `here <https://github.com/coreos/layering-examples>`__.
+
+**Treefile**
+
+Treefiles for Fedora-based distributions are available in these locations:
+
+-  bootc images:
+
+   -  CentOS Stream = https://gitlab.com/redhat/centos-stream/containers/bootc
+   -  Fedora = https://gitlab.com/fedora/bootc/base-images
+
+-  Fedora Atomic Desktop images = https://pagure.io/workstation-ostree-config
+-  Fedora CoreOS images = https://github.com/coreos/fedora-coreos-config/tree/testing-devel/manifests
+
+Build a container image archive.
+
+-  First build:
+
+   .. code-block:: sh
+
+      $ rpm-ostree compose image --initialize --format=ociarchive <TREEFILE>.yaml <CONTAINER_NAME>.ociarchive
+
+-  Next builds:
+
+   .. code-block:: sh
+
+      $ rpm-ostree compose image --initialize-mode=if-not-exists --format=ociarchive <TREEFILE>.yaml <CONTAINER_NAME>.ociarchive
+
+Build a container image and then push it to a container registry. [46]
+
+-  First build:
+
+   .. code-block:: sh
+
+      $ rpm-ostree compose image --initialize --format=registry <TREEFILE>.yaml <CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_TAG>
+
+-  Next builds:
+
+   .. code-block:: sh
+
+      $ rpm-ostree compose image --initialize-mode=if-not-exists --format=registry <TREEFILE>.yaml <CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_TAG>
+
+It is possible to convert an ostree repository to a container image [46] but not the other way around. [47]
+
+.. code-block:: sh
+
+   $ ostree container encapsulate --repo=<OSTREE_REPOSITORY_PATH> <OSTREE_REFERENCE> docker://<CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_IMAGE>
+
+**Authentication**
+
+Two files are supported by rpm-ostree for authentication to a private container registry [46]:
+
+-  /etc/ostree/auth.json
+-  /run/ostree/auth.json
+
+Create this file by running:
+
+.. code-block:: sh
+
+   $ sudo podman login --authfile /run/ostree/auth.json <CONTAINER_REGISTRY>
+
+**Kickstart**
+
+With a container image, it can be used with Kickstart to automatically install the operating system.
+
+::
+
+   ostreecontainer --no-signature-verification --url <CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_IMAGE>
+
+For authenticating to a private repository, create the ``auth.json`` file as a ``%pre`` step. Use ``/etc/ostree/auth.json`` to permanently store the login credentials or ``/run/ostree/auth.json`` to temporarily store the login credentials during the installation.
 
 Reset
 ~~~~~
@@ -1238,6 +1333,38 @@ Install the ``rpm-ostree`` and ``rpm-ostree-libs`` RPMs.
 
       $ sudo rpm-ostree override replace ./x86_64/rpm-ostree-<VERSION>.rpm ./x86_64/rpm-ostree-libs-<VERSION>.rpm
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error when trying to install a package with ``rpm-ostree``.
+
+-  Syntax:
+
+   ::
+
+      - cannot install both <NEW_PACKAGE> from <RPM_REPOSITORY> and <OLD_PACKAGE> from @System
+
+-  Example:
+
+   ::
+
+      - cannot install both mesa-filesystem-24.0.9-1.fc40.i686 from updates and mesa-filesystem-24.0.5-1.fc40.i686 from @System
+
+Solution:
+
+-  Upgrade the package. This returns a non-zero exit code so in a Containerfile it needs to be set to always return true.
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree override replace --experimental --from repo=<RPM_REPOSITORY> <PACKAGE>
+
+   ::
+
+      RUN rpm-ostree override replace --experimental --from repo=<RPM_REPOSITORY> <PACKAGE> || true
+
 History
 -------
 
@@ -1291,3 +1418,6 @@ Bibliography
 42. "Fedora CoreOS (FCOS)." OKD 4. Accessed May 22, 2024. https://docs.okd.io/latest/architecture/architecture-rhcos.html
 43. "Major Changes in Fedora CoreOS." Fedora Docs. May 22, 2024. Accessed May 22, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/major-changes/
 44. "General Availability of AlmaLinux 9.4 Stable!" AlmaLinux OS. May 6, 2024. Accessed June 3, 2024. https://almalinux.org/blog/2024-05-06-announcing-94-stable/
+45. "Getting Started with Fedora/CentOS bootc." Fedora Docs. June 3, 2024. Accessed June 3, 2024. https://docs.fedoraproject.org/en-US/bootc/getting-started/
+46. "ostree native containers." rpm-ostree. Accessed June 3, 2024. https://coreos.github.io/rpm-ostree/container/
+47. "containers: support converting existing base images? #11." GitHub ostreedev/ostree-rs-ext. May 21, 2024. Accessed June 3, 2024. https://github.com/ostreedev/ostree-rs-ext/issues/11
