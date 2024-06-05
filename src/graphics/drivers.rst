@@ -20,7 +20,7 @@ Mesa is a library that provides a unified collection of open source graphics dri
    AMD, radv, GCN, 1.3, No
    Intel, anv, Gen 7, 1.3, Yes
    NVIDIA [19], nvk, Turing, Partial 1.0, No
-   Apple [20], agxv, M1, Partial 1.0, No
+   Apple [20], honeykrisp, M1, 1.3, No
    Broadcom, v3dv, VC5, 1.2, Yes
    Mali, panvk, Valhall [16], Partial 1.0 [17], No
    Qualcomm, tu (Turnip), Adreno 6XX\*, 1.3, No
@@ -229,7 +229,7 @@ Bibliography
 17. "panvk: Stop advertising Vulkan 1.1." freedesktop.org git repository browser. March 14, 2022. Accessed March 14, 2023. https://cgit.freedesktop.org/mesa/mesa/commit/?id=a35e721162bb7dad087e75fd07fec08bc635dc96
 18. "Apple GPU drivers now in Asahi Linux." Alyssa Rosenzweig. December 7, 2022. Accessed March 14, 2023. https://rosenzweig.io/blog/asahi-gpu-part-7.html
 19. "Introducing NVK." Collabora News & Blog. October 4, 2022. Accessed March 29, 2023. https://www.collabora.com/news-and-blog/news-and-events/introducing-nvk.html
-20. "Tales of the M1 GPU." Asahi Linux. November, 2022. Accessed March 29, 2023. https://asahilinux.org/2022/11/tales-of-the-m1-gpu/
+20. "Vulkan 1.3 on the M1 in 1 month." Rosenzweig. June 5, 2024. Accessed June 5, 2024. https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html
 21. "NVIDIA Cleans Up GSP Firmware Binary License." Phoronix. May 31, 2023. Accessed July 31, 2023. https://www.phoronix.com/news/NVIDIA-GSP-Firmware-License
 22. "License For Customer Use of NVIDIA Software." NVIDIA. Accessed July 31, 2023. https://www.nvidia.com/content/DriverDownloads/licence.php?lang=us
 23. "NVK update: Enabling new extensions, conformance status & more." Collabora. June 26, 2023. Accessed July 31, 2023. https://www.collabora.com/news-and-blog/news-and-events/nvk-update-enabling-new-extensions-conformance-status-more.html
