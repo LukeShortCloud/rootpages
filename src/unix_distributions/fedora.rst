@@ -1211,6 +1211,33 @@ A custom remote server can be added by either using the CLI or manually adding a
       url=<REMOTE_REPO_URL>
       gpg-verify=false
 
+rpm-ostree Developer
+~~~~~~~~~~~~~~~~~~~~
+
+Build the latest ``rpm-ostree`` RPMs for testing purposes.
+
+.. code-block:: sh
+
+   $ git clone https://github.com/coreos/rpm-ostree.git
+   $ cd ./rpm-ostree/packaging/
+   $ sudo dnf install dnf-plugins-core rpm-build
+   $ sudo dnf builddep rpm-ostree.spec
+   $ make -f Makefile.dist-packaging rpm
+
+Install the ``rpm-ostree`` and ``rpm-ostree-libs`` RPMs.
+
+-  Fedora Workstation:
+
+   .. code-block:: sh
+
+      $ sudo dnf install ./x86_64/rpm-ostree-<VERSION>.rpm ./x86_64/rpm-ostree-libs-<VERSION>.rpm
+
+-  Fedora Atomic Desktop:
+
+   .. code-block:: sh
+
+      $ sudo rpm-ostree override replace ./x86_64/rpm-ostree-<VERSION>.rpm ./x86_64/rpm-ostree-libs-<VERSION>.rpm
+
 History
 -------
 
