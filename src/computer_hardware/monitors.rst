@@ -157,6 +157,34 @@ Variable refresh rate (VRR) is when the monitor dynamically changes it's refresh
 
 The human eye can identify objects at 220 Hz. Above that frequency, a human can at least notice flickers. [18] Theoretically, a human can perceive beyond 1000 Hz. [19]
 
+Projectors
+----------
+
+ANSI Lumens
+~~~~~~~~~~~
+
+Projectors will have at least one of these different brightness specifications detailed [36][37]:
+
+-  ANSI lumens = This is the industry standard. This provides the smallest number so most companies do not use it in their marketing material.
+-  LED lumens = Not an industry standard. However, divide this number by 2.4 to convert it to ANSI lumens.
+-  Light source lumens = The actual light source. This is very inaccurate as the light needs to travel through a lens and to a screen. A lot of that original light is lost.
+-  Lux = This number is used to help calculate the ANSI lumens number but does not tell much by itself.
+
+Here is the minimum amount of ANSI lumens the projector needs to have for an acceptable image.
+
+.. csv-table::
+   :header: Scenario, Minimum ANSI Lumens
+   :widths: 20, 20
+
+   Inside dark, 300
+   Inside medium, 600
+   Inside bright, 2500
+   Outside dark, 200
+   Outside medium, 1000
+   Outside bright, 3500
+
+As the screen size gets larger, more light is lost. It is recommended to get a very bright projector for large screen usage. [37][38]
+
 Human Vision
 ------------
 
@@ -250,3 +278,6 @@ Bibliography
 33. "Intel Arc GPUs don't natively support HDMI 2.1." PC Gamer. July 28, 2022. Accessed March 5, 2024. https://www.pcgamer.com/intel-arc-gpus-dont-natively-support-hdmi-21/
 34. "Dolby Vision HDR: Everything You Need To Know." The Install Spot. Accessed May 12, 2024. https://theinstallspot.com/dolby-vision-hdr-everything-you-need-to-know/
 35. "Do all Dolby Vision discs have regular HDR as well?" Reddit r/4kbluray. Apriil 7, 2022. Accessed May 12, 2024. https://www.reddit.com/r/4kbluray/comments/tx3r3t/do_all_dolby_vision_discs_have_regular_hdr_as_well/
+36. "Brightness Standards Matter." Projector Reviews. Accessed June 9, 2024. https://www.projectorreviews.com/brightness-standards-matter/
+37. "Avoid these 7 common PROJECTOR buying mistakes." YouTube The Hook Up. June 3, 2022. Accessed June 9, 2024. https://www.youtube.com/watch?v=Ac8kW226oCM
+38. "Lumens And ANSI Lumens In Projector." XGIMI. January, 2022. Accessed June 9, 2024. https://us.xgimi.com/blogs/projectors-101/lumens-ansi-lumens-in-projector
