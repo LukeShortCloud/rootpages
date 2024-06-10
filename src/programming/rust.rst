@@ -384,6 +384,12 @@ Introduction
 
          [1, 2, 3]
 
+   -  Convert an array to a vector.
+
+      .. code-block:: rust
+
+         let mut example_array_to_vector = [0, 1, 2].to_vec();
+
    -  Access a vector. It is the same usage as an array (but not a tuple). [69]
 
       .. code-block:: rust
