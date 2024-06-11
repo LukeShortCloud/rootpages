@@ -1630,6 +1630,8 @@ Serde provides a standardized library to serialize and deserialize common format
 Serde YAML
 ^^^^^^^^^^
 
+**As of version 0.9.34 released on March 24th, 2024, the Serde YAML project is no longer maintained.** [72]
+
 -  Add Serde YAML as a dependency in the ``Cargo.toml`` file of the project.
 
    .. code-block:: ini
@@ -1850,3 +1852,4 @@ Bibliography
 69. "Rust Tuple Examples." Dot Net Perls. April 20, 2023. Accessed November 13, 2023. https://www.dotnetperls.com/tuple-rust
 70. "Rust Loop Labels." Electronics Reference. Accessed December 29, 2023. https://electronicsreference.com/rust/rust-control-flow/rust-loops/loop-labels/
 71. "Ownership and Borrowing in Rust: A Comprehensive Guide." Tech Savvy Scribe - Medium. June 15, 2023. Accessed January 9, 2024. https://medium.com/@TechSavvyScribe/ownership-and-borrowing-in-rust-a-comprehensive-guide-1400d2bae02a
+72. "Releases." GitHub dtolnay/serde-yaml. March 24, 2024. Accessed June 10, 2024. https://github.com/dtolnay/serde-yaml/releases
