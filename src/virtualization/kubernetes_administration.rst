@@ -600,6 +600,14 @@ Release highlights:
    -  Windows containers now support running in a privileged mode.
    -  Cinder (OpenStack) and GlusterFS storage volume driver has been removed.
 
+-  `1.27 <https://kubernetes.io/blog/2023/04/11/kubernetes-v1-27-release/>`__ [120]
+
+   -  Container images from the Kubernetes project are now hosted on ``registry.k8s.io`` (instead of ``k8s.gcr.io``).
+   -  Services can now use more than one CIDR for internal IP addresses.
+   -  DownwardAPIHugePages API is now stable for managing dedicated RAM allocation size.
+   -  SeccompDefault API is now stable for managing default Linux kernel security capabilities for processes.a
+   -  storage.k8s.io/v1beta1 from CSIStorageCapacity has been removed in favor of storage.k8s.io/v1.
+
 OpenShift
 ~~~~~~~~~
 
@@ -2964,3 +2972,4 @@ Bibliography
 117. "Kubernetes v1.26: Electrifying." Kubernetes Blog. December 9, 2022. Accessed December 6, 2023. https://kubernetes.io/blog/2022/11/18/upcoming-changes-in-kubernetes-1-26/
 118. "Kubernetes 1.26 - What’s new?" Sysdig. November 30, 2022. Accessed December 6, 2023. https://sysdig.com/blog/kubernetes-1-26-whats-new/
 119. "Install Trivy for Supply Chain Security Tools - Scan (alpha)." VMware Tanzu Application Platform Documentation. March 28, 2024. Accessed March 29, 2024. https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.8/tap/scst-scan-install-trivy-integration.html
+120. "Kubernetes 1.27 - What's new?" sysdig. April 4, 2023. Accessed June 18, 2024. https://sysdig.com/blog/kubernetes-1-27-whats-new/
