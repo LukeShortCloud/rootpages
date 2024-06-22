@@ -531,6 +531,31 @@ Lower space usage by [10]:
 
 A Containerfile cannot ``ADD`` or ``COPY`` directories above where the ``docker build`` command is being run from. Only that directory and sub-directories can be used. Use ``docker build -f <CONTAINERFILE>`` to use a Containerfile from a different directory and also use the current working directory for copying files from. [11]
 
+File Creation
+'''''''''''''
+
+Use the ``RUN`` instruction with ``echo`` to create a  file.
+
+::
+
+   RUN echo -e "[gh-cli]\n\
+   name=packages for the GitHub CLI\n\
+   baseurl=https://cli.github.com/packages/rpm\n\
+   enabled=1\n\
+   gpgkey=https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x23F3D4EA75716059" > /etc/yum.repos.d/gh-cli.repo
+
+Use the ``COPY`` instruction to copy one or more files from the same directory that the ``Containerfile`` is in to a directory inside of the container.
+
+::
+
+   COPY foobar1.conf foobar2.conf /etc/foobar/
+
+Use ``COPY`` to copy all of the files in a directory into a container.
+
+::
+
+  COPY rootfs/var/lib/foobar/ /var/lib/foobar/
+
 Networking
 ^^^^^^^^^^
 
