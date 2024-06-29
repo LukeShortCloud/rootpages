@@ -461,6 +461,22 @@ Upstream
          $ cd ./linux/
          $ make defconfig
 
+   -  Or use a configuration as a base and then accept the defaults:
+
+      .. code-block:: sh
+
+         $ cd ./linux/
+         $ cp arch/<CPU_ARCHITECTURE>/configs/<CONFIG>.config .config
+         $ make olddefconfig
+
+   -  Or merge two configurations together:
+
+      .. code-block:: sh
+
+         $ cd ./linux/
+         $ ./scripts/kconfig/merge_config.sh <CONFIG_1> <CONFIG_2>
+         $ make olddefconfig
+
 -  Build the Linux kernel:
 
    -  Generic:
