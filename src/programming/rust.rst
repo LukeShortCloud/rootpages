@@ -1629,6 +1629,28 @@ Module files can be created next to the ``main.rs`` file.
 
 [67][68]
 
+std (Standard Library)
+~~~~~~~~~~~~~~~~~~~~~~
+
+std::time
+^^^^^^^^^
+
+Create a sleep thread and wait for a specified amount of millliseconds before continuing. [73]
+
+.. code-block:: rust
+
+   use std::thread;
+   use std::time::Duration;
+
+   fn main() {
+       println!("Start");
+       thread::sleep(Duration::from_millis(1000));
+       println!("1 second later...");
+       thread::sleep(Duration::from_millis(1500));
+       println!("2.5 seconds later...");
+       println!("Done");
+   }
+
 Serde
 ~~~~~
 
@@ -1860,3 +1882,4 @@ Bibliography
 70. "Rust Loop Labels." Electronics Reference. Accessed December 29, 2023. https://electronicsreference.com/rust/rust-control-flow/rust-loops/loop-labels/
 71. "Ownership and Borrowing in Rust: A Comprehensive Guide." Tech Savvy Scribe - Medium. June 15, 2023. Accessed January 9, 2024. https://medium.com/@TechSavvyScribe/ownership-and-borrowing-in-rust-a-comprehensive-guide-1400d2bae02a
 72. "Releases." GitHub dtolnay/serde-yaml. March 24, 2024. Accessed June 10, 2024. https://github.com/dtolnay/serde-yaml/releases
+73. "How can I put the current thread to sleep?" Stack Overflow. September 14, 2021. Accessed June 30, 2024. https://stackoverflow.com/questions/28952938/how-can-i-put-the-current-thread-to-sleep
