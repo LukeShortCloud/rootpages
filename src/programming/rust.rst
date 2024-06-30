@@ -437,13 +437,20 @@ Rust will automatically create a string as a pointer location to a collection of
       good
       oo
 
--  Add two strings together. The first string needs to be converted to a string object and the second string needs to be a pointer.
+-  Add two strings together. The first string needs to be converted to a string object and the second string needs to be a pointer. Alternatively, use the ``format!()`` macro which operates the same way as the ``print!()`` macro.
 
    .. code-block:: rust
 
       let foo: &str = "Foo";
       let bar: &str = "Bar";
       let foobar = foo.to_string() + &bar;
+      println!("{}", &foobar);
+
+   .. code-block:: rust
+
+      let foo: &str = "Foo";
+      let bar: &str = "Bar";
+      let foobar = format!("{}{}", foo, bar);
       println!("{}", &foobar);
 
    ::
