@@ -384,14 +384,128 @@ Linux can be installed onto a portable storage device that can boot on both lega
    -  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    -  Regenerate the GRUB configuration file.
 
+-  Firmware requirements:
+
+   -  Install all available ``linux-firmware`` related packages.
+
+      -  Arch Linux:
+
+         .. code-block:: sh
+
+            $ sudo pacman -S \
+                linux-firmware \
+                linux-firmware-bnx2x \
+                linux-firmware-liquidio \
+                linux-firmware-marvell \
+                linux-firmware-mellanox \
+                linux-firmware-nfp \
+                linux-firmware-qcom \
+                linux-firmware-qlogic \
+                linux-firmware-whence \
+                alsa-firmware \
+                sof-firmware
+            $ yay -S \
+                mkinitcpio-firmware \
+                linux-firmware-asus \
+                linux-firmware-valve
+
+      -  Debian (requires the non-free-firmware repository to be enabled):
+
+         .. code-block:: sh
+
+            $ sudo apt-get install \
+                alsa-firmware-loaders \
+                bladerf-firmware-fx3 \
+                dahdi-firmware-nonfree \
+                firmware-amd-graphics \
+                firmware-ath9k-htc \
+                firmware-atheros \
+                firmware-b43-installer \
+                firmware-bnx2 \
+                firmware-bnx2x \
+                firmware-brcm80211 \
+                firmware-cavium \
+                firmware-intel-sound \
+                firmware-ipw2x00 \
+                firmware-ivtv \
+                firmware-iwlwifi \
+                firmware-libertas \
+                firmware-linux \
+                firmware-linux-free \
+                firmware-linux-nonfree \
+                firmware-misc-nonfree \
+                firmware-myricom \
+                firmware-netronome \
+                firmware-netxen \
+                firmware-qcom-media \
+                firmware-qcom-soc \
+                firmware-qlogic \
+                firmware-realtek \
+                firmware-samsung \
+                firmware-siano \
+                firmware-sof-signed \
+                firmware-ti-connectivity \
+                firmware-tomu \
+                firmware-zd1211 \
+                sigrok-firmware-fx2lafw
+
+      -  Fedora:
+
+         .. code-block:: sh
+
+            $ sudo dnf install \
+                alsa-firmware \
+                alsa-sof-firmware \
+                alsa-sof-firmware-debug \
+                amd-gpu-firmware \
+                arm-trusted-firmware-armv8 \
+                atheros-firmware \
+                atmel-firmware \
+                brcmfmac-firmware \
+                cirrus-audio-firmware \
+                crystalhd-firmware \
+                dvb-firmware \
+                hackrf-firmware \
+                intel-audio-firmware \
+                intel-gpu-firmware \
+                intel-vsc-firmware \
+                iscan-firmware \
+                ivtv-firmware \
+                iwlegacy-firmware \
+                iwlwifi-dvm-firmware \
+                iwlwifi-mvm-firmware \
+                libertas-firmware \
+                linux-firmware \
+                linux-firmware-vendor \
+                linux-firmware-whence \
+                liquidio-firmware \
+                midisport-firmware \
+                mlxsw_spectrum-firmware \
+                mrvlprestera-firmware \
+                mt7xxx-firmware \
+                netronome-firmware \
+                nvidia-gpu-firmware \
+                nxpwireless-firmware \
+                qcom-firmware \
+                qed-firmware \
+                realtek-firmware \
+                sigrok-firmware-filesystem \
+                sigrok-firmware-fx2lafw \
+                sigrok-firmware-nonfree \
+                tiwilink-firmware \
+                uhd-firmware \
+                zd1211-firmware
+
 -  initramfs requirements to load all kernel modules:
 
    -  Arch Linux = Remove "autodetect" from the ``HOOKS=()`` section in ``/etc/mkinitcpio.conf``. Then run ``sudo mkinitcpio -P``. [18]
+   -  Debian = Set ``MODULES=most`` in ``/etc/initramfs-tools/initramfs.conf``.
    -  Fedora = Install ``dracut-config-generic``. Then run ``sudo dracut --regenerate-all --force``. [19]
 
 -  Processor microcode updates for better supporting CPUs:
 
    -  Arch Linux = Install ``amd-ucode intel-ucode``.
+   -  Debian = Install ``amd64-microcode intel-microcode``.
    -  Fedora = Install ``amd-ucode-firmware microcode_ctl``.
 
 Example partition layout:
@@ -423,10 +537,10 @@ Fedora:
    # UEFI
    $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_UUID true
    $ sudo crudini --ini-options=nospace --set /etc/default/grub "" GRUB_DISABLE_LINUX_PARTUUID false
-   $ sudo grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable
+   $ sudo grub2-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=<OPERATING_SYSTEM_NAME> --removable --no-nvram
    # BIOS
-   $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
    $ sudo grub2-install --target=i386-pc /dev/<DEVICE>
+   $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 Most modern Linux installers will default to installing GRUB with UEFI support. After installation, ensure to run the necessary commands to setup legacy BIOS boot.
 
