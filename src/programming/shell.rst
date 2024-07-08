@@ -3,6 +3,60 @@ Shell
 
 .. contents:: Table of Contents
 
+Environment Variables
+---------------------
+
+Environment variables are commonly used to configure settings for programs.
+
+-  View the current environment variables.
+
+   .. code-block:: sh
+
+      $ env
+
+-  View the value of a specific environment variable.
+
+   .. code-block:: sh
+
+      $ echo $<ENVIRONMENT_VARIABLE_KEY>
+
+-  Temporarily set an environment variable.
+
+   .. code-block:: sh
+
+      $ export <KEY>=<VALUE>
+
+-  Temporarily delete an environment variable.
+
+   .. code-block:: sh
+
+      $ unset <KEY>
+
+-  Launch a program using an environment variable.
+
+   .. code-block:: sh
+
+      $ <KEY>=<VALUE> <PROGRAM>
+
+   .. code-block:: sh
+
+      $ env <KEY>=<VALUE> <PROGRAM>
+
+-  Permanently set an environment variable globally.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/environment
+      <KEY>=<VALUE>
+
+-  Permanently set an environment variable for the local user.
+
+   .. code-block:: sh
+
+      $ mkdir -p "${HOME}/.config/environment.d/"
+      $ ${EDITOR} "${HOME}/.config/environment.d/<FILE_NAME>.conf"
+      <KEY>=<VALUE>
+
 ANSI Colors
 -----------
 
