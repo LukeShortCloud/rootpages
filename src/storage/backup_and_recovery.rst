@@ -46,6 +46,42 @@ Now, whenever the GRUB configuration is re-generated, the Btrfs snapshots will b
 
    $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
+dd
+--
+
+Compressed Backup
+~~~~~~~~~~~~~~~~~
+
+It is possible to create a backup of a storage device while compressing the live streamed data.
+
+-  XZ for maximum compression. [8]
+
+   -  Create a backup using XZ compression.
+
+      .. code-block:: sh
+
+         $ sudo dd if=/dev/<DEVICE> status=progress | xz --stdout > <BACKUP_FILE>.img.xz"
+
+   -  Restore a backup using XZ decompression.
+
+      .. code-block:: sh
+
+         $ xz --decompress --stdout <BACKUP_FILE>.img.xz | sudo dd of=/dev/<DEVICE> status=progress"
+
+-  Zstandard for a balance of compression and speed. [9]
+
+   -  Create a backup using Zstandard compression.
+
+      .. code-block:: sh
+
+         $ sudo dd if=/dev/<DEVICE> status=progress | zstd > <BACKUP_FILE>.img.zst
+
+   -  Restore a backup using XZ decompression.
+
+      .. code-block:: sh
+
+         $ zstdcat <BACKUP_FILE>.img.zst | sudo dd of=/dev/<DEVICE> status=progress
+
 Clonezilla
 ----------
 
@@ -94,3 +130,5 @@ Bibliography
 5. "[Solved] Clonzilla Does Not See New SSD." Linux Mint Forums. June 26, 2021. Accessed July 30, 2023. https://forums.linuxmint.com/viewtopic.php?t=351705
 6. "How to clone a Windows 10 installation to new drive using Clonezilla." Pureinfotech. June 29, 2023. Accessed July 30, 2023. https://pureinfotech.com/clone-windows-10-drive-clonezilla/
 7. "DRBL/Clonezilla FAQ/Q&A." DRBL. July 1, 2023. Accessed July 30, 2023. https://drbl.org/fine-print.php?path=./faq/2_System/25_restore_larger_disk_to_smaller_one.faq#25_restore_larger_disk_to_smaller_one.faq
+8. "Backup to and Restore from a Disk Image in Linux." COMFILE Technology's Documentation Library. March 6, 2024. Accessed July 19, 2024. http://comfilewiki.co.kr/en/doku.php?id=cupc:backup_restore:index
+9. "compressing and decompressing dd image - zstd instead of gzip." Unix & Linux Stack Exchange. September 10, 2022. Accessed July 19, 2024. https://unix.stackexchange.com/questions/492773/compressing-and-decompressing-dd-image-zstd-instead-of-gzip
