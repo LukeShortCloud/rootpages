@@ -1109,6 +1109,8 @@ A Containerfile can be used to create an Open Container Initiative (OCI) image f
 
 The base container image to start with needs to have ``rpm-ostree`` installed and configured. Either use an existing image or use a Treefile to build a new base image.
 
+bootc images should only be used when using `bootc <https://github.com/containers/bootc>`__ for deployment instead of traditional OSTree deployments. Otherwise, there are slight differences that can cause issues. bootc mounts the root file system as ``rw`` (not ``ro``). [48] The root file system ``/`` is also shown as being an OverlayFS mount (instead of the root partition) with a small amount of storage space. That leads to incorrect reporting of available free space.
+
 **Existing Images**
 
 Minimal images [45]:
@@ -1421,3 +1423,4 @@ Bibliography
 45. "Getting Started with Fedora/CentOS bootc." Fedora Docs. June 3, 2024. Accessed June 3, 2024. https://docs.fedoraproject.org/en-US/bootc/getting-started/
 46. "ostree native containers." rpm-ostree. Accessed June 3, 2024. https://coreos.github.io/rpm-ostree/container/
 47. "containers: support converting existing base images? #11." GitHub ostreedev/ostree-rs-ext. May 21, 2024. Accessed June 3, 2024. https://github.com/ostreedev/ostree-rs-ext/issues/11
+48. "check composefs compat when rebasing #632." GitHub containers/bootc. June 25, 2024. https://github.com/containers/bootc/issues/632
