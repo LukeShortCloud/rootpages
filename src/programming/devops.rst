@@ -403,6 +403,12 @@ Common git procedures:
 
 [14]
 
+-  Find what tags a commit is in.
+
+   .. code-block:: sh
+
+      $  git tag --contains <COMMIT_HASH>
+
 Messages
 ^^^^^^^^
 
