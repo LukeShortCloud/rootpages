@@ -1126,6 +1126,8 @@ Images with desktop enviornments:
 
 In the Containerfile, set one of those images to be the ``FROM`` value. It is recommended to end each ``RUN`` command with ``&& ostree container commit``. DNF and RPM commands can be re-enabled by using ``RUN rpm-ostree cliwrap install-to-root /`` which will translate those to rpm-ostree commands. Real-world examples of how to customize these containers with rpm-ostree can be found `here <https://github.com/coreos/layering-examples>`__.
 
+Some ``rpm-ostree`` arguments such as ``kargs`` do not work in a Containerfile. For that instance, it is recommended to use a `Kickstart file <../virtualization/virtual_machines.html#kickstart-file>`__ to provide defaults kernel boot arguments by using ``bootloader --location=mbr --boot-drive=vda --append="<KEY>=<VALUE>"``. [49]
+
 **Treefile**
 
 Treefiles for Fedora-based distributions are available in these locations:
@@ -1423,4 +1425,5 @@ Bibliography
 45. "Getting Started with Fedora/CentOS bootc." Fedora Docs. June 3, 2024. Accessed June 3, 2024. https://docs.fedoraproject.org/en-US/bootc/getting-started/
 46. "ostree native containers." rpm-ostree. Accessed June 3, 2024. https://coreos.github.io/rpm-ostree/container/
 47. "containers: support converting existing base images? #11." GitHub ostreedev/ostree-rs-ext. May 21, 2024. Accessed June 3, 2024. https://github.com/ostreedev/ostree-rs-ext/issues/11
-48. "check composefs compat when rebasing #632." GitHub containers/bootc. June 25, 2024. https://github.com/containers/bootc/issues/632
+48. "check composefs compat when rebasing #632." GitHub containers/bootc. June 25, 2024. Accessed July 24, 2024. https://github.com/containers/bootc/issues/632
+49. "Support default kernel arguments #479." GitHub ostreedev/ostree. June 11, 2021. Accessed July 24, 2024. https://github.com/ostreedev/ostree/issues/479
