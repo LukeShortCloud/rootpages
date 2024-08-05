@@ -1197,6 +1197,50 @@ With a container image, it can be used with Kickstart to automatically install t
 
 For authenticating to a private repository, create the ``auth.json`` file as a ``%pre`` step. Use ``/etc/ostree/auth.json`` to permanently store the login credentials or ``/run/ostree/auth.json`` to temporarily store the login credentials during the installation.
 
+User Management
+~~~~~~~~~~~~~~~
+
+Fedora Atomic Desktop uses ``nss-altfiles`` to manage users and groups. Configurations are specified in ``/usr/lib/`` instead of ``/etc/``. Traditional commands such as ``useradd`` and ``groupadd`` do not work.
+
+Two files are managed by ``nss-altfiles``:
+
+-  ``/etc/passwd``
+
+   -  ``/usr/lib/passwd``
+
+-  ``/etc/group``
+
+   -  ``/usr/lib/group``
+
+Sometimes these files can drift from each other. If a new package was installed that adds a user and/or group, they need to be manually added to the relevant ``/etc/[group|passwd]`` configuration file. [50][51][52]
+
+.. code-block:: sh
+
+   $ grep <USER> /usr/lib/passwd | sudo tee -a /etc/passwd
+
+.. code-block:: sh
+
+   $ grep <GROUP> /usr/lib/group | sudo tee -a /etc/group
+
+The full list of UIDs and GIDs used by Fedora can be found `here <https://pagure.io/setup/blob/master/f/uidgid>`__. Avoid creating any new users or groups with these IDs.
+
+When using ``rpm-ostree compose``, this is the default configuration used by Fedora to manage users and groups:
+
+.. code-block:: yaml
+
+   ignore-removed-users:
+     - root
+   ignore-removed-groups:
+     - root
+   check-passwd:
+     type: file
+     filename: passwd
+   check-groups:
+     type: file
+     filename: group
+
+It requires a ``passwd`` and ``group`` file to be fully configured and then it will copy them to ``/usr/lib/``.
+
 Reset
 ~~~~~
 
@@ -1427,3 +1471,6 @@ Bibliography
 47. "containers: support converting existing base images? #11." GitHub ostreedev/ostree-rs-ext. May 21, 2024. Accessed June 3, 2024. https://github.com/ostreedev/ostree-rs-ext/issues/11
 48. "check composefs compat when rebasing #632." GitHub containers/bootc. June 25, 2024. Accessed July 24, 2024. https://github.com/containers/bootc/issues/632
 49. "Support default kernel arguments #479." GitHub ostreedev/ostree. June 11, 2021. Accessed July 24, 2024. https://github.com/ostreedev/ostree/issues/479
+50. "Drop requirement on nss-altfiles, use systemd sysusers #49." GitHub coreos/rpm-ostree. March 6, 2024. Accessed August 5, 2024. https://github.com/coreos/rpm-ostree/issues/49
+51. "How does /etc/{passwd,group} relate to /usr/lib/{passwd,group} in Silverblue?" Fedora Discussion. May 19, 2022. Accessed August 5, 2024. https://discussion.fedoraproject.org/t/how-does-etc-passwd-group-relate-to-usr-lib-passwd-group-in-silverblue/78301
+52. "NSS altfiles module." GitHub aperezdc/nss-altfiles. May 10, 2024. Accessed August 5, 2024. https://github.com/aperezdc/nss-altfiles
