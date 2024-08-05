@@ -3,11 +3,23 @@ Containers
 
 .. contents:: Table of Contents
 
+Introduction
+------------
+
 Containers are a type of software virtualization. Using a directory
-structure that contains an entire operating system (typically referred
-to as a chroot), containers can easily spin up and utilize system
+structure that contains an entire operating system (similar to a
+chroot), containers can easily spin up and utilize system
 resources without the overhead of full hardware allocation. It is not
 possible to use separate kernels with this approach.
+
+Configuration
+-------------
+
+Podman has 3 configuration file locations [36]:
+
+-  ``/usr/share/containers/containers.conf`` = Linux distribution default settings.
+-  ``/etc/containers/containers.conf`` = System administrator overrides.
+-  ``"${HOME}/.config/containers/containers.conf"`` = User overrides.
 
 Images
 ------
@@ -219,10 +231,19 @@ On macOS, local certificates will be synced to from ``~/.docker/certs.d/`` to ``
 
 If a certificate has a common name of something other than the domain or IP address of the container registry then it will not work. In this case, the certificate should be ignored entirely by being listed as an insecure registry. This can also be used as an alternative to providing a certificate authority.
 
-Edit the docker daemon configuration file and add a list of registries to ignore invalid or self-signed certificates.
+Edit the container engine configuration file and add a list of registries to ignore invalid or self-signed certificates.
 
--  Linux: ``/etc/docker/daemon.json``
--  macOS: ``~/.docker/daemon.json`` or navigate to Docker Desktop > Preferences > Docker Engine.
+-  Linux:
+
+   -  docker = ``/etc/docker/daemon.json``
+   -  podman = ``/etc/containers/containers.conf`` or ``"${HOME}/.config/containers/containers.conf"``
+
+-  macOS
+
+   -  docker = ``~/.docker/daemon.json`` or navigate to Docker Desktop > Preferences > Docker Engine.
+   -  podman = ``"${HOME}/.config/containers/containers.conf"``
+
+docker configuration:
 
 .. code-block:: json
 
@@ -233,7 +254,18 @@ Edit the docker daemon configuration file and add a list of registries to ignore
      ]
    }
 
-Restart the docker daemon:
+podman configuration:
+
+::
+
+   [[<REGISTRY_1_NICKNAME>]]
+   location = "<REGISTRY_1_DOMAIN_OR_IP:<REGISTRY_1_PORT>"
+   insecure = true
+   [[<REGISTRY_2_NICKNAME>]]
+   location = "<REGISTRY_2_DOMAIN_OR_IP:<REGISTRY_2_PORT>"
+   insecure = true
+
+Restart the docker daemon (podman is not a daemon so it does not require a restart):
 
 -  Linux:
 
@@ -247,6 +279,50 @@ Restart the docker daemon:
 
       $ osascript -e 'quit app Docker'
       $ open -a Docker
+
+Local Registry
+~~~~~~~~~~~~~~
+
+The Docker community maintains a generic ``registry`` container. It provides a simple container registry. [37]
+
+.. code-block:: sh
+
+   $ mkdir -p "${HOME}/registry"
+   $ podman run --detach --restart=always -p 5000:5000 --volume "${HOME}/registry":/var/lib/registry --name registry registry:2
+
+With Podman, the registry can be used immediately by using the ``--tls-verify=false`` flag. Verify the registry is working by pushing an example image to it. [38]
+
+.. code-block:: sh
+
+   $ podman pull fedora:40
+   $ podman tag fedora:40 127.0.0.1:5000/fedora:40
+   $ podman push --tls-verify=false 127.0.0.1:5000/fedora:40
+
+Otherwise, modify the container engine configuration to add this `insecure registry <#insecure>`__.
+
+.. code-block:: sh
+
+   mkdir -p "${HOME}/.config/containers/"
+   ${EDITOR} "${HOME}/.config/containers/containers.conf"
+
+-  podman:
+
+   ::
+
+      [[localregistry]]
+      location = "127.0.0.1:5000"
+      insecure = true
+
+-  docker:
+
+   .. code-block:: json
+
+      {
+        "insecure-registries": [
+          "127.0.0.1:5000"
+        ]
+      }
+
 
 Container Runtimes
 ------------------
@@ -971,3 +1047,6 @@ Bibliography
 33. "How to reset podman and buildah after experimenting as a non-root user?" Stack Overflow. October 19, 2021. Accessed May 16, 2024. https://stackoverflow.com/questions/56542220/how-to-reset-podman-and-buildah-after-experimenting-as-a-non-root-user
 34. "docker image save." Docker Docs. Accessed May 22, 2024. https://docs.docker.com/reference/cli/docker/image/save/
 35. "mkiso thread." Answer Overflow. October, 2023. Accessed May 22, 2024. https://www.answeroverflow.com/m/1156701086443393175
+36. "podman." Podman documentation. December, 2016. Accessed August 5, 2024. https://docs.podman.io/en/latest/markdown/podman.1.html
+37. "Tutorial: Host a Local Podman Image Registry." The New Stack. January 2, 2021. Accessed August 5, 2024. https://thenewstack.io/tutorial-host-a-local-podman-image-registry/
+38. "Podman - Local Container Registry." blog.while-true-do.io. July 6, 2022. Accessed August 5, 2024. https://blog.while-true-do.io/podman-local-container-registry/
