@@ -16,22 +16,23 @@ Images
 
 -  Arch Linux
 
-   -  archlinux
+   -  archlinux:latest
 
 -  Fedora
 
-   -  centos:8
-   -  fedora:31
+   -  almalinux:9
+   -  centos:stream9
+   -  fedora:40
 
 -  Debian
 
-   -  debian:10
-   -  ubuntu:20.04
+   -  debian:12
+   -  ubuntu:24.04
 
 -  openSUSE
 
-   -  opensuse/leap:15.2
-   -  opensuse/tumbleweed
+   -  opensuse/leap:15.6
+   -  opensuse/tumbleweed:latest
 
 More containers can be found `here <https://hub.docker.com/explore/>`__.
 
