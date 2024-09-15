@@ -1187,6 +1187,20 @@ Enable persistent debug logging for the post-installation tasks [80]:
    %post --logfile=/root/ks-post.log --erroronfail
    set -x
 
+Troubleshooting Anaconda
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The virtual machine launches a ``tmux`` session with the following windows:
+
+-  main
+-  shell
+-  log
+-  storage-log
+-  program-log
+-  packaging-log
+
+Use ``CTRL``, ``b``, and ``n`` to cycle through those different windows.
+
 Terraform
 ~~~~~~~~~
 
