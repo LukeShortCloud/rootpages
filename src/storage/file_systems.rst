@@ -102,6 +102,46 @@ Common mount options:
    turn on TRIM support.
 -  discard = Enables TRIM support. [5]
 
+Snapper
+^^^^^^^
+
+Snapper provides automatic Btrfs snapshots. It is configured individually on a subvolume basis.
+
+-  Arch Linux
+
+   .. code-block:: sh
+
+      $ sudo pacman -S snapper
+
+-  Fedora
+
+   .. code-block:: sh
+
+      $ sudo dnf install snapper
+
+Enable the cleanup and timeline snapshot services [65]:
+
+.. code-block:: sh
+
+   $ sudo systemctl enable --now snapper-cleanup.timer snapper-timeline.timer
+
+Package Manager Snapshots
+'''''''''''''''''''''''''
+
+Snapshots can be created automatically whenever the package manager is used to install or remove packages.
+
+-  Arch Linux [66]
+
+   .. code-block:: sh
+
+      $ sudo pacman -S snap-pac
+
+-  Fedora [67]
+
+   .. code-block:: sh
+
+      $ sudo dnf install python3-dnf-plugin-snapper
+
 RAIDs
 ^^^^^
 
@@ -1661,3 +1701,6 @@ Bibliography
 62. "What do MBR and GPT mean, and when do I use them?" StarTech.com. Accessed January 11, 2024. https://www.startech.com/en-us/faq/mbr-vs-gpt
 63. "Why does the partition start on sector 2048 instead of 63?" Super User. May 6, 2023. Accessed January 11, 2024. https://superuser.com/questions/352572/why-does-the-partition-start-on-sector-2048-instead-of-63
 64. "4.4 BIOS installation." GNU GRUB Manual. Accessed January 11, 2024. https://www.gnu.org/software/grub/manual/grub/html_node/BIOS-installation.html
+65. "Snapper not deleting old snapshots?" Reddit r/archlinux. November 25, 2022. Accessed September 15, 2024. https://www.reddit.com/r/archlinux/comments/z4r4u4/snapper_not_deleting_old_snapshots/
+66. "Snapper." ArchWiki. September 11, 2024. Accessed September 15, 2024. https://wiki.archlinux.org/title/Snapper
+67. "How to Install Fedora 36 with Snapper and Grub-Btrfs." SysGuides. October 16, 2023. Accessed September 15, 2024. https://sysguides.com/install-fedora-36-with-snapper-and-grub-btrfs
