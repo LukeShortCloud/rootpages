@@ -230,7 +230,7 @@ This is an extremely biased list of the best distribution for each use case.
 
 -  Easiest = 1. Zorion OS Core 2. Pop!_OS
 -  Free and open source software (FOSS) = 1. Fedora 2. Debian
--  Gaming = 1. SteamOS 3 2. ChimeraOS 3. Pop!_OS 4. Manjaro
+-  Gaming = 1. Arch Linux 2. Ubuntu 3. Fedora [19]
 -  Hardest = 1. Linux From Scratch 2. Slackware 3. Gentoo
 -  Hardware support
 
@@ -284,3 +284,4 @@ Bibliography
 16. "Repositories." Fedora Docs Site. October 11, 2020. Accessed October 11, 2020. https://docs.fedoraproject.org/en-US/quick-docs/repositories/
 17. "Stable request." Gentoo Wiki. April 13, 2020. Accessed October 11, 2020. https://wiki.gentoo.org/wiki/Stable_request
 18. "openSUSE:Factory development model." openSUSE Wiki. October 25, 2019. Accessed October 11, 2020. https://en.opensuse.org/openSUSE:Factory_development_model
+19. "Distros Used for Gaming: Ubuntu Recovers a Little, Fedora Rises, and Pop!_OS Sinks Further Down." Boiling Steam. May 23, 2024. Accessed September 12, 2024. https://boilingsteam.com/distros-used-for-gaming-ubuntu-recovers-a-little-pop-os-sinks-further-down/
