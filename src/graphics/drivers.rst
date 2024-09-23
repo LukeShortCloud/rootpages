@@ -107,6 +107,26 @@ Redistribution
 
 As of NVIDIA proprietary driver version 535.43.02, both the Linux kernel driver and the GSP firmware binary are allowed to be redistributed by anyone. Before this, operating system maintainers required explicit written permission from NVIDIA to distribute these files. [21][22] The GSP firmware will also allow the open source drivers to perform better. They will have the ability to support newer hardware and run them at higher clock speeds while gaming or lower clock speeds while idle. [23]
 
+Install NVIDIA GPU firmware:
+
+-  Arch Linux
+
+   .. code-block:: sh
+
+      $ sudo pacman -S linux-firmware
+
+-  Debian (requires the non-free-firmware repository to be enabled) [26]
+
+   .. code-block:: sh
+
+      $ sudo apt-get install firmware-misc-nonfree
+
+-  Fedora [27]
+
+   .. code-block:: sh
+
+      $ sudo dnf install nvidia-gpu-firmware
+
 Services
 ''''''''
 
@@ -245,3 +265,5 @@ Bibliography
 23. "NVK update: Enabling new extensions, conformance status & more." Collabora. June 26, 2023. Accessed July 31, 2023. https://www.collabora.com/news-and-blog/news-and-events/nvk-update-enabling-new-extensions-conformance-status-more.html
 24. "Problem with GPU Passthrough." Proxmox Support Forum. January 29, 2023. Accessed May 2, 2024. https://forum.proxmox.com/threads/problem-with-gpu-passthrough.55918/page-4
 25. "You may want to avoid NVIDIA driver 550 if you're on a laptop." GamingOnLinux. June 11, 2024. Accessed September 23, 2024. https://www.gamingonlinux.com/2024/06/you-may-want-to-avoid-nvidia-driver-550-if-youre-on-a-laptop/page=1/#r264670
+26. "NVIDIA Proprietary Driver." Debian Wiki. September 19, 2024. Accessed September 23, 2024. https://wiki.debian.org/NvidiaGraphicsDrivers
+27. "How to Install nVidia drivers in Fedora." Linux.org. February 12, 2024. Accessed September 23, 2024. https://www.linux.org/threads/how-to-install-nvidia-drivers-in-fedora.48635/
