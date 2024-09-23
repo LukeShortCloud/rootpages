@@ -137,6 +137,7 @@ The proprietary drivers provide the best performance. It is possible for the ope
 .. code-block:: sh
 
    $ sudo -E ${EDITOR} /etc/modprobe.d/nouveau-blacklist.conf
+   blacklist nova
    blacklist nouveau
    blacklist rivafb
    blacklist nvidiafb
