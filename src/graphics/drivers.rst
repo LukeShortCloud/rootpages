@@ -107,6 +107,15 @@ Redistribution
 
 As of NVIDIA proprietary driver version 535.43.02, both the Linux kernel driver and the GSP firmware binary are allowed to be redistributed by anyone. Before this, operating system maintainers required explicit written permission from NVIDIA to distribute these files. [21][22] The GSP firmware will also allow the open source drivers to perform better. They will have the ability to support newer hardware and run them at higher clock speeds while gaming or lower clock speeds while idle. [23]
 
+Services
+''''''''
+
+As of NVIDIA driver version 550, these services need to be enabled to prevent crashes on a laptop. [25]
+
+.. code-block:: sh
+
+   sudo systemctl enable nvidia-hibernate nvidia-persistenced nvidia-powerd nvidia-resume nvidia-suspend
+
 Fedora
 ''''''
 
@@ -235,3 +244,4 @@ Bibliography
 22. "License For Customer Use of NVIDIA Software." NVIDIA. Accessed July 31, 2023. https://www.nvidia.com/content/DriverDownloads/licence.php?lang=us
 23. "NVK update: Enabling new extensions, conformance status & more." Collabora. June 26, 2023. Accessed July 31, 2023. https://www.collabora.com/news-and-blog/news-and-events/nvk-update-enabling-new-extensions-conformance-status-more.html
 24. "Problem with GPU Passthrough." Proxmox Support Forum. January 29, 2023. Accessed May 2, 2024. https://forum.proxmox.com/threads/problem-with-gpu-passthrough.55918/page-4
+25. "You may want to avoid NVIDIA driver 550 if you're on a laptop." GamingOnLinux. June 11, 2024. Accessed September 23, 2024. https://www.gamingonlinux.com/2024/06/you-may-want-to-avoid-nvidia-driver-550-if-youre-on-a-laptop/page=1/#r264670
