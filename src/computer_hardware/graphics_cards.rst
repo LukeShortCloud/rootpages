@@ -93,16 +93,26 @@ Integrated GPUs (iGPUs) can use up to half of the available system RAM. [6] Sinc
 Best Graphics Cards
 -------------------
 
-Legacy 32-bit
-~~~~~~~~~~~~~
+Legacy Operating Systems
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-32-bit operating systems, such as Windows XP, only support graphics cards with 3 GB of VRAM. There are sometimes driver limitations, too. [8]
+32-bit operating systems, such as Windows XP, only support graphics cards with 3 GB of VRAM. There are sometimes other driver limitations, too. [8]
 
-Windows XP:
+Windows XP (32-bit):
 
-- Best performance = NVIDIA GTX 780 Ti [9]
-- Best NVIDIA card for the era = NVIDIA 8800 GT [9]
-- Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
+-  Best performance
+
+   - Official driver = NVIDIA GTX 780 Ti [9]
+   - Modified driver = NVIDIA GTX 980 Ti [42]
+
+-  Best NVIDIA card for the era = NVIDIA 8800 GT [9]
+-  Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
+
+Windows 7 (64-bit):
+
+-  Best performance = 3090 Ti [42]
+
+Starting with the NVIDIA RTX 40 series (Ada Lovelace), only Windows 11 and newer is supported. [43]
 
 Ray Tracing
 ~~~~~~~~~~~
@@ -229,3 +239,5 @@ Bibliography
 39. "AMD Radeon HD 7790 Review Feat. Sapphire: The First Desktop Sea Islands." AnandTech. March 22, 2013. Accessed August 29, 2023. https://www.anandtech.com/show/6837/amd-radeon-7790-review-feat-sapphire-the-first-desktop-sea-islands/2
 40. "Xbox One S GPU." System Requirements. Accessed August 29, 2023. https://gamesystemrequirements.com/gpu/xbox-one-s-gpu
 41. "Exclusive review: Intel Arc Pro A40 / A50." AEC Magazine. December 22, 2022. Accessed March 9, 2024. https://aecmag.com/workstations/exclusive-review-intel-arc-pro-a40-a50-gpus-graphics-cad-bim/
+42. "Has Anyone Made Any Modded Drivers to Get RTX Card Working on XP?" Reddit r/windowsxp. December 11, 2021. Accessed September 30, 2024. https://www.reddit.com/r/windowsxp/comments/ram8xo/has_anyone_made_any_modded_drivers_to_get_rtx/
+43. "RTX 4090 / RX 7900XTX on Windows 7." Reddit r/windows7. June 27, 2023. Accessed September 30, 2024. https://www.reddit.com/r/windows7/comments/12v8aox/rtx_4090_rx_7900xtx_on_windows_7/
