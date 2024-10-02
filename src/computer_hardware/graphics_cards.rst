@@ -102,17 +102,33 @@ Windows XP (32-bit):
 
 -  Best performance
 
-   - Official driver = NVIDIA GTX 780 Ti [9]
-   - Modified driver = NVIDIA GTX 980 Ti [42]
+   - Official driver = NVIDIA GeForce GTX 780 Ti [9]
+   - Modified driver = NVIDIA GeForce GTX 980 Ti [42]
 
--  Best NVIDIA card for the era = NVIDIA 8800 GT [9]
--  Best AMD cards = AMD Radeon 7970 [10][11] and AMD Radeon R9 280X [12]
+-  Best NVIDIA card for the era = NVIDIA GeForce 8800 GT [9]
+-  Best AMD cards = AMD Radeon HD 7970 [10][11] and AMD Radeon R9 280X [12]
+-  Best low-profile
+
+   -  AMD = AMD Radeon HD 7750
+   -  NVIDIA = NVIDIA GeForce GTX 750 Ti
+
+-  Best value low-profile [44]
+
+   -  AMD = AMD Radeon HD 7570 GDDR5
+   -  NVIDIA = NVIDIA GeForce GT 730 GDDR5
 
 Windows 7 (64-bit):
 
 -  Best performance = 3090 Ti [42]
 
+For Windows XP graphics drivers, it is preferred to use AMD over NVIDIA because of the following features [44]:
+
+-  GPU scaling to render at a lower resolution and then stretch to the monitor resolution
+-  HDMI colorspace options for both limited and full RGB
+-  Custom resolutions can be set
+
 Starting with the NVIDIA RTX 40 series (Ada Lovelace), only Windows 11 and newer is supported. [43]
+
 
 Ray Tracing
 ~~~~~~~~~~~
@@ -241,3 +257,4 @@ Bibliography
 41. "Exclusive review: Intel Arc Pro A40 / A50." AEC Magazine. December 22, 2022. Accessed March 9, 2024. https://aecmag.com/workstations/exclusive-review-intel-arc-pro-a40-a50-gpus-graphics-cad-bim/
 42. "Has Anyone Made Any Modded Drivers to Get RTX Card Working on XP?" Reddit r/windowsxp. December 11, 2021. Accessed September 30, 2024. https://www.reddit.com/r/windowsxp/comments/ram8xo/has_anyone_made_any_modded_drivers_to_get_rtx/
 43. "RTX 4090 / RX 7900XTX on Windows 7." Reddit r/windows7. June 27, 2023. Accessed September 30, 2024. https://www.reddit.com/r/windows7/comments/12v8aox/rtx_4090_rx_7900xtx_on_windows_7/
+44. "Low Profile Graphics Cards comparison for Windows XP Retro Gaming on Small Form Factor Pre Built PCs." YouTube - PhilsComputerLab. June 6, 2018. Accessed October 1, 2024. https://www.youtube.com/watch?v=C5QjZJvook8
