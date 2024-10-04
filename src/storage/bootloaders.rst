@@ -265,7 +265,7 @@ When using the UEFI boot menu provided by the BIOS of a motherboard, each operat
    .. code-block:: sh
 
       $ sudo efibootmgr --create --disk /dev/<DEVICE> --part <EFI_PARTITION_NUMBER> --label "Fedora Custom Boot Name" --loader \\EFI\\fedora\\shimx64.efi
-      $ sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+      $ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 Recovery
 ~~~~~~~~
