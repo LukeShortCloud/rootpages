@@ -615,6 +615,9 @@ Performance Tuning
 Swap
 ~~~~
 
+Introduction
+^^^^^^^^^^^^
+
 Swap is a special file system that cannot be mounted. It is used by the operating system to temporarily read and write files to when the RAM is full. It prevents out-of-memory (oom) errors but it leads to a huge performance penalty because device storage is typically a lot slower than RAM. It is recommended to allocate more RAM instead of relying on swap wherever possible. According to `this poll <https://opensource.com/article/19/2/swap-space-poll>`__, most users prefer to allocate this amount of swap based on the available system RAM:
 
 -  ``<RAM>`` = ``<SWAP>``
@@ -622,7 +625,115 @@ Swap is a special file system that cannot be mounted. It is used by the operatin
 -  2-8GB = RAM
 -  > 8GB = 8GB
 
-`Tests <../unix_distributions/steamos.html#increase-swap-size-and-vram>`__ on the Steam Deck show that a total of 32 GB of tmpfs (RAM and swap) provide the best gaming performance for APUs. Anything beyond that provides no performance benefits. This assumes that the iGPU from the APU will use 8 GB as VRAM. That means that systems with dGPUs can use 24 GB of tmpfs instead. For the best results, add swap to a fast drive such as a NVMe drive.
+`Tests <../unix_distributions/steamos.html#increase-swap-size-and-vram>`__ on the Steam Deck show that a total of 32 GB of tmpfs (RAM and swap) provide the best gaming performance for APUs. Anything beyond that provides no performance benefits. This assumes that the iGPU from the APU will use 8 GB as VRAM. That means that systems with dGPUs can use 24 GB of tmpfs instead. For the best results, use zram or add swap to a fast drive such as a NVMe drive.
+
+zram
+^^^^
+
+zram compresses RAM as a faster alternative to a swap file. [68] It should not be used with a swap file. [72] As of Linux 6.1.0, this feature is now stable. [69] The zram size needs 0.1% of additional reserved RAM space for mapping compressed memory. [70] Either a ratio and/or maximum zram size needs to be configured. For example, a zram compression ratio of 1.5:1 with 4 GiB of RAM will result in a total tmpfs of 10 GiB.
+
+Default settings for operating systems [71][76]:
+
+.. csv-table::
+   :header: Operating System, Compression Algorithm, Compression Ratio, Maximum Size
+   :widths: 20, 20, 20, 20
+
+   Fedora, zstd, 0.5, 8 GiB
+   GalliumOS, zstd, 1.5, None
+   winesapOS, lz4, 2.0, None
+
+zram supports the following algorithms [70]:
+
+-  lzo
+-  lzo-rle
+-  lz4
+-  lz4hc
+-  zstd
+
+Benchmarks show that zstd can reliably handle up to a 3:1 compression ratio. However, zstd is also 3x slower at decompression and 2x slower at compression compared to lz4 which can reliably handle up to a 2:1 compression ratio.
+
+Bare-metal benchmarks:
+
+.. csv-table::
+   :header: Compression Algorithm, Compression Ratio, Decompression (GiB/s)
+   :widths: 20, 20, 20
+
+   lz4, 3.00, 12.4
+   lzo, 3.25, 9.31
+   lzo-rle, 3.25, 9.78
+   zstd, 4.43, 3.91
+
+Virtual machine benchmarks [72]:
+
+.. csv-table::
+   :header: Compression Algorithm, Compression Ratio, Decompression (GiB/s)
+   :widths: 20, 20, 20
+
+   lz4, 2.63, 9.62
+   lzo, 2.74,  6.66
+   lzo-rle, 2.77, 7.27
+   zstd, 3.37, 2.61
+
+Additional virtual machine benchmarks [73]:
+
+.. csv-table::
+   :header: Compression Algorithm, Compression Ratio, Compression Time (Seconds)
+   :widths: 20, 20, 20
+
+   lz4, 2.7, 4.467
+   lzo, 2.8, 4.571
+   lzo-rle, 2.8, 4.471
+   zstd, 3.8, 7.897
+
+Install zram-generator for configuring zram.
+
+-  Arch Linux:
+
+     .. code-block:: sh
+
+        $ sudo pacman -S zram-generator
+
+-  Debian [74]:
+
+     .. code-block:: sh
+
+        $ sudo apt-get install systemd-zram-generator
+
+-  Fedora:
+
+     .. code-block:: sh
+
+        $ sudo dnf install zram-generator
+
+Configure lz4 for a faster but smaller zram. Set ``vm.page-cluster=1`` to enable a short readahead as this provides the best performance with lz4. Additionally use other ``vm.watermark_*`` optimizations found by Pop!_OS to improve gaming performance. [75]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/sysctl.d/99-zram.conf
+   vm.swappiness = 180
+   vm.watermark_boost_factor = 0
+   vm.watermark_scale_factor = 125
+   vm.page-cluster = 1
+   $ sudo -E ${EDITOR} /etc/systemd/zram-generator.conf
+   [zram0]
+   compression-algorithm = lz4
+   zram-size = ram * 2
+   $ sudo systemctl enable systemd-zram-setup@zram0.service
+
+Alternatively, configure zstd for a larger but slower zram. Set ``vm.page-cluster=0`` to disable readahead as it only hurts performance with zstd.
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/sysctl.d/99-zram.conf
+   vm.swappiness = 180
+   vm.watermark_boost_factor = 0
+   vm.watermark_scale_factor = 125
+   vm.page-cluster = 0
+   $ sudo -E ${EDITOR} /etc/systemd/zram-generator.conf
+   [zram0]
+   compression-algorithm = zstd
+   zram-size = ram * 3
+   $ sudo systemctl enable systemd-zram-setup@zram0.service
 
 RAIDs
 -----
@@ -1704,3 +1815,12 @@ Bibliography
 65. "Snapper not deleting old snapshots?" Reddit r/archlinux. November 25, 2022. Accessed September 15, 2024. https://www.reddit.com/r/archlinux/comments/z4r4u4/snapper_not_deleting_old_snapshots/
 66. "Snapper." ArchWiki. September 11, 2024. Accessed September 15, 2024. https://wiki.archlinux.org/title/Snapper
 67. "How to Install Fedora 36 with Snapper and Grub-Btrfs." SysGuides. October 16, 2023. Accessed September 15, 2024. https://sysguides.com/install-fedora-36-with-snapper-and-grub-btrfs
+68. "Changes/SwapOnZRAM." Fedora Project Wiki. October 13, 2020. Accessed October 14, 2024. https://www.fedoraproject.org/wiki/Changes/SwapOnZRAM
+69. "Disabling zswap? #156." GitHub systemd/zram-generator. Feburary 10, 2024. Accessed October 14, 2024. https://github.com/systemd/zram-generator/issues/156#issuecomment-1314177603
+70. "zram: Compressed RAM based block devices." The Linux kernel user's and administartor's guide. Accessed October 14, 2024. https://docs.kernel.org/admin-guide/blockdev/zram.html
+71. "zRAM size." Reddit r/linux4noobs. April 18, 2023. Accessed October 14, 2024. https://www.reddit.com/r/linux4noobs/comments/12owyt2/zram_size/
+72. "New zram tuning benchmarks." Reddit r/Fedora. September 7, 2023. Accessed October 14, 2024. https://www.reddit.com/r/Fedora/comments/mzun99/new_zram_tuning_benchmarks/
+73. "Zram." LinuxReviews. March 10, 2021. Accessed October 14, 2024. https://linuxreviews.org/Zram
+74. "ZRam." Debian Wiki. June 28, 20223. Accessed October 14, 2024. https://wiki.debian.org/ZRam
+75. "Auto-configure zram with optimal settings #163." GitHub pop-os/default-settings. September 3, 2024. Accessed October 14, 2024. https://github.com/pop-os/default-settings/pull/163
+76. "[setup] Increase zram size." GitHub winesapOS/winesapOS. October 14, 2024. Accessed October 14, 2024. https://github.com/winesapOS/winesapOS/commit/27febeea36f958e3280e62540c4978a19a60ae25
