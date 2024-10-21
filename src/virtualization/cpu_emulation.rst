@@ -64,10 +64,23 @@ Configure build options.
 
       $ export BOX64_BUILD_OPTS="-D M1=1 -D ARM_DYNAREC=ON"
 
+-  Qualcomm Snapdragon X Elite:
+
+   -  GCC 14 and newer:
+
+      .. code-block:: sh
+
+         $ export BOX64_BUILD_OPTS="-D SDORYON1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
+
+   -  GCC 13 and older:
+
+      .. code-block:: sh
+
+         $ export BOX64_BUILD_OPTS="-D SD8G2 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
+
 -  Raspberry Pi 5:
 
    .. code-block:: sh
-
 
       $ export BOX64_BUILD_OPTS="-D RPI5ARM64=1 -D ARM_DYNAREC=ON"
 
@@ -76,6 +89,12 @@ Configure build options.
    .. code-block:: sh
 
       $ export BOX64_BUILD_OPTS="-D ARM64=1 -D CMAKE_C_COMPILER=gcc -D BAD_SIGNAL=ON -D ARM_DYNAREC=ON"
+
+-  Windows Subsystem for Linux (WSL) 2:
+
+   .. code-block:: sh
+
+      $ export BOX64_BUILD_OPTS="-D ARM64=1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
 
 Build Box64 with Box32 support.
 
