@@ -3,6 +3,7 @@
    :caption: Virtualization
 
    containers
+   cpu_emulation
    kubernetes_administration
    kubernetes_development
    kubernetes_security
