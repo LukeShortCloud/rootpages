@@ -32,7 +32,11 @@ Dynamic recompliation (dynarec), a just-in-time (JIT) compiler, provides a large
 1.  Arm
 2.  RISC-V
 3.  LoongArch
-4.  x86 = There is no dynarec support.
+
+These platforms do not have dynarec support:
+
+-  x86
+-  PowerPC
 
 Installation
 ~~~~~~~~~~~~
