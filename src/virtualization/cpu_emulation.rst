@@ -38,6 +38,17 @@ These platforms do not have dynarec support:
 -  x86
 -  PowerPC
 
+Box64 and Box86 will attempt to load libraries in the following order:
+
+1.  Wrapped library = Box has some built-in libraries that are wrapped either for accuracy and/or performance reasons. This is also referred to as "advanced wrapping" because Box has built-in logic for handling these libraries. Here are a list of wrapped libraries for each project:
+
+   -  `Box64 <https://github.com/ptitSeb/box64/blob/main/src/library_list.h>`__
+   -  `Box32 <https://github.com/ptitSeb/box64/blob/main/src/library_list_32.h>`__ = There are less libraries wrapped for Box32 because it is newer and more complex to do wrapping.
+   -  `Box86 <https://github.com/ptitSeb/box86/blob/master/src/library_list.h>`__
+
+2.  Native library = Box will attempt to use the native version. This is also referred to as "simple wrapping" because Box has no built-in logic for handling these libraries. [5]
+3.  Emulated library = As a last resort, Box will attempt to use the non-native library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
+
 Installation
 ~~~~~~~~~~~~
 
@@ -137,16 +148,36 @@ Error:
 
 Solutions:
 
--  Box64 is missing a required library file. It tries to find the library file in the following order:
+-  Box does not wrap the library and it is missing a required library file.
 
-   1.  Native/wrapped library = If Box64 has the code to wrap a specific library, it will use the native version and wrap around it. Use a package manager to see what package needs to be installed.
+   1.  Use a package manager to see what package needs to be installed if a library is missing.
 
-      .. code-block:: sh
+      -  Arch Linux
 
-         $ sudo dnf5 provides <LIBRARY_FILE>
-         $ sudo dnf5 install <LIBRARY_PACKAGE>
+         .. code-block:: sh
 
-   2.  Emulated library = If Box64 has no wrapping, it will attempt to use the non-native library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
+            $ sudo pacman -F -y
+            $ sudo pacman -F <LIBRARY_FILE>
+            $ sudo pacman -S -y
+            $ sudo pacman -S <LIBRARY_PACKAGE>
+
+      -  Debian
+
+         .. code-block:: sh
+
+            $ sudo apt-file update
+            $ sudo apt-file search <LIBRARY_FILE>
+            $ sudo apt-get update
+            $ sudo apt-get install <LIBRARY_PACKAGE>
+
+      -  Fedora
+
+         .. code-block:: sh
+
+            $ sudo dnf provides <LIBRARY_FILE>
+            $ sudo dnf install <LIBRARY_PACKAGE>
+
+   2.  Use non-native library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files.
 
 Bibliography
 ------------
@@ -155,3 +186,4 @@ Bibliography
 2. "Compiling/Installing." GitHub pitSeb/box64. August 26, 2024. Accessed October 16, 2024. https://github.com/ptitSeb/box64/blob/main/docs/COMPILE.md
 3. "box64-git.git." AUR Package Repositories. January 8, 2024. Accessed October 16, 2024. https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=box64-git
 4. "Running Bash with Box86 & Box64." Box86 / Box64. September 13, 2022. Accessed October 17, 2024. https://box86.org/2022/09/running-bash-with-box86-box64/
+5. "A deep dive into library wrapping." Box86 / Box64. August 22, 2021. Accessed October 21, 2024. https://box86.org/2021/08/a-deep-dive-into-library-wrapping/
