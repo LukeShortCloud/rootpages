@@ -149,6 +149,18 @@ For new builds, uninstall and delete the old build first.
    $ cd ..
    $ rm -r -f build
 
+If FEX is installed, it will conflict with Box64 and Box86 for running x86_64 and x86_32 applications. Remove those entries.
+
+.. code-block:: sh
+
+   $ sudo mkdir /root/usr-lib-binfmt.d/
+   $ sudo mkdir /root/usr-share-binfmts/
+   $ sudo mkdir /root/var-lib-binfmts/
+   $ sudo mv /usr/lib/binfmt.d/FEX* /root/usr-lib-binfmt.d/
+   $ sudo mv /usr/share/binfmts/FEX* /root/usr-share-binfmts/
+   $ sudo mv /var/lib/binfmts/FEX* /root/var-lib-binfmts/
+   $ sudo systemctl restart systemd-binfmt
+
 Usage
 ~~~~~
 
@@ -250,6 +262,80 @@ Solution:
 
 -  Open a `GitHub Issue <https://github.com/ptitSeb/box64/issues/new>`__ with Box64 to wrap the x86_32 function for Box32.
 
+FEX
+---
+
+Introduction
+~~~~~~~~~~~~
+
+Supported hardware:
+
+-  Arm 64-bit
+
+FEX emulates both x86_64 and x86_32. Arm 32-bit systems are not supported. [1]
+
+Installation
+~~~~~~~~~~~~
+
+-  Arch Linux
+
+   .. code-block:: sh
+
+      $ yay -S fex-emu
+
+-  Ubuntu >= 22.04
+
+   .. code-block:: sh
+
+      $ sudo apt install curl squashfs-tools
+      $ curl --silent https://raw.githubusercontent.com/FEX-Emu/FEX/main/Scripts/InstallFEX.py --output /tmp/InstallFEX.py && python3 /tmp/InstallFEX.py && rm /tmp/InstallFEX.py
+
+Run FEX-Emu at least once to download a required x86_64 root file system. It is about 1 GiB in size and will be installed to ``${HOME}/.fex-emu/RootFS/<OS_NAME>_<OS_VERSION>.sqsh``. Select the operating system that is most similar to one being used. When asked to extract it or to use the SquashFS image as-is, select to extract as it is more likely to work. [7]
+
+.. code-block:: sh
+
+   $ FEXInterpreter /usr/bin/uname -a
+
+::
+
+   RootFS not found. Running FEXRootFSFetcher to get rootfs
+   RootFS not found. Do you want to try and download one?
+   Response {y,yes,1} or {n,no,0}
+   y
+   RootFS list selection
+   Options:
+   	0: Cancel
+   	1: Fedora 40 (SquashFS)
+   	2: Fedora 38 (SquashFS)
+   	3: ArchLinux (SquashFS)
+   	4: Ubuntu 24.04 (SquashFS)
+   	5: Ubuntu 23.10 (SquashFS)
+   	6: Ubuntu 23.04 (SquashFS)
+   	7: Ubuntu 22.10 (SquashFS)
+   	8: Ubuntu 22.04 (SquashFS)
+   	9: Ubuntu 20.04 (SquashFS)
+   	
+     Response {1-9} or 0 to cancel
+
+::
+
+   Do you wish to extract the squashfs file or use it as-is?
+   Options:
+   	0: Cancel
+   	1: Extract
+   	2: As-Is
+   
+   Response {1-2} or 0 to cancel
+   1
+
+If Box64 and/or Box86 is installed, it will conflict with FEX for running x86_64 and x86_32 applications. Remove those entries. [7]
+
+.. code-block:: sh
+
+   $ sudo mkdir /root/etc-binfmt.d/
+   $ sudo mv /etc/binfmt.d/box* /root/etc-binfmt.d/
+   $ sudo systemctl restart systemd-binfmt
+
 Bibliography
 ------------
 
@@ -258,3 +344,5 @@ Bibliography
 3. "box64-git.git." AUR Package Repositories. January 8, 2024. Accessed October 16, 2024. https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=box64-git
 4. "Running Bash with Box86 & Box64." Box86 / Box64. September 13, 2022. Accessed October 17, 2024. https://box86.org/2022/09/running-bash-with-box86-box64/
 5. "A deep dive into library wrapping." Box86 / Box64. August 22, 2021. Accessed October 21, 2024. https://box86.org/2021/08/a-deep-dive-into-library-wrapping/
+6. "FEX - Fast x86 emulation frontend." GitHub FEX-Emu/FEX. October 29, 2024. Accessed October 29, 2024. https://github.com/FEX-Emu/FEX
+7. "Steam in FEX." postmarketOS Wiki. October 25, 2024. Accessed October 29, 2024. https://wiki.postmarketos.org/wiki/Steam_in_FEX
