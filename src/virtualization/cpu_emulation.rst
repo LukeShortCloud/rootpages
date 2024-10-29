@@ -184,6 +184,25 @@ Configure a custom path for looking up binaries.
 
    $ export BOX64_PATH="/usr/local/bin-x86_64"
 
+Steam
+~~~~~
+
+Steam is a hybrid application that uses both x86_64 and x86_32 libraries on Linux. Most legacy games are also only 32-bit. Both Box64 and Box86 need to be installed for Steam to work. It currently does not work with Box32.
+
+Install Steam using the script that Box86 provides. This is similar to the manual steps that FEX recommends.
+
+.. code-block:: sh
+
+   $ git clone https://github.com/ptitSeb/box86
+   $ cd box86
+   $ ./install_steam.sh
+
+Verify that Steam works with Box. [8]
+
+.. code-block:: sh
+
+   $ steam
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
@@ -336,6 +355,63 @@ If Box64 and/or Box86 is installed, it will conflict with FEX for running x86_64
    $ sudo mv /etc/binfmt.d/box* /root/etc-binfmt.d/
    $ sudo systemctl restart systemd-binfmt
 
+Steam
+~~~~~
+
+Disable mandatory access control on Linux first. Otherwise, Steam will run into a permission issue when starting bubblewrap which is required for it to work.
+
+   ::
+
+      bwrap: setting up uid map: Permission denied
+
+   -  Debian = turn off AppArmor. Stopping the service is not enough.
+
+      .. code-block:: sh
+
+         $ sudo -E ${EDITOR} /etc/default/grub
+         GRUB_CMDLINE_LINUX_DEFAULT="quiet splash apparmor=0"
+         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+   -  Fedora = set SELinux to permissive mode.
+
+      .. code-block:: sh
+
+         $ sudo setenforce 0
+
+Download and extract the official DEB package used for Steam. All other packages are simply repackaged variants of this.
+
+.. code-block:: sh
+
+   $ mkdir "${HOME}/steam-x86"
+   $ cd "${HOME}/steam-x86"
+   $ wget https://cdn.fastly.steamstatic.com/client/installer/steam.deb
+   $ ar x steam.deb
+   $ tar --verbose --extract --file data.tar.*
+
+Steam uses a Bash script as a wrapper for launching Steam. Configure the environment variables to avoid broken checks in the script so it can be used to launch Steam successfully. [8]
+
+.. code-block:: sh
+
+   $ export STEAMOS=1
+   $ export STEAM_RUNTIME=1
+   $ export DBUS_FATAL_WARNINGS=0
+
+Verify that Steam works with FEX.
+
+.. code-block:: sh
+
+   $ FEXBash ./usr/bin/steam
+
+It is common for ``steamwebhelper`` to crash. If this happens, remove these libraries from the Steam runtime. [9]
+
+.. code-block:: sh
+
+   $ rm -f \
+     ~/.local/share/Steam/ubuntu12_32/steam-runtime/lib/x86_64-linux-gnu/libz.so* \
+     ~/.local/share/Steam/ubuntu12_32/steam-runtime/lib/x86_64-linux-gnu/libfreetype.so.6* \
+     ~/.local/share/Steam/ubuntu12_32/steam-runtime/lib/x86_64-linux-gnu/libfontconfig.so.1* \
+     ~/.local/share/Steam/ubuntu12_32/steam-runtime/lib/x86_64-linux-gnu/libdbus-1.so*
+
 Bibliography
 ------------
 
@@ -346,3 +422,5 @@ Bibliography
 5. "A deep dive into library wrapping." Box86 / Box64. August 22, 2021. Accessed October 21, 2024. https://box86.org/2021/08/a-deep-dive-into-library-wrapping/
 6. "FEX - Fast x86 emulation frontend." GitHub FEX-Emu/FEX. October 29, 2024. Accessed October 29, 2024. https://github.com/FEX-Emu/FEX
 7. "Steam in FEX." postmarketOS Wiki. October 25, 2024. Accessed October 29, 2024. https://wiki.postmarketos.org/wiki/Steam_in_FEX
+8. "box86." GitHub ptitSeb/box86. October 29, 2024. Accessed October 29, 2024. https://github.com/ptitSeb/box86
+9. "Steam." FEX-Emu Wiki. July 7, 2023. Accessed October 29, 2024. https://wiki.fex-emu.com/index.php/Steam
