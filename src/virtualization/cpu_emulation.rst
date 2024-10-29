@@ -126,7 +126,7 @@ Build Box64 with Box32 support.
 
 .. code-block:: sh
 
-   $ cmake .. ${BOX64_BUILD_OPTS[*]} -D BOX32=1 -D CMAKE_BUILD_TYPE=RelWithDebInfo
+   $ cmake .. ${BOX64_BUILD_OPTS[*]} -D BOX32=1 -D BOX32_BINFMT=1 -D CMAKE_BUILD_TYPE=RelWithDebInfo
    $ make -j $(nproc)
 
 Install Box64. [2]
