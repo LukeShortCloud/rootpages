@@ -122,7 +122,12 @@ Configure build options.
 
       $ export BOX64_BUILD_OPTS="-D ARM64=1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
 
-Build Box64 with Box32 support.
+Build Box64. Optionally build it with Box32 support.
+
+.. code-block:: sh
+
+   $ cmake .. ${BOX64_BUILD_OPTS[*]} -D CMAKE_BUILD_TYPE=RelWithDebInfo
+   $ make -j $(nproc)
 
 .. code-block:: sh
 
