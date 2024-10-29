@@ -205,6 +205,38 @@ Solutions:
 
    2.  Use non-native library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files.
 
+----
+
+Error:
+
+::
+
+   Error: PltResolver: Symbol  <FUNCTION>(ver 1: <FUNCTION>) not found, cannot apply R_X86_64_JUMP_SLOT <HEXADECIMAL> (<HEXADECIMAL>) in <LIBRARY_FILE>
+
+::
+
+   Error: PltResolver: Symbol  gtk_key_snooper_install(ver 1: gtk_key_snooper_install) not found, cannot apply R_X86_64_JUMP_SLOT 0x84e088 (0x414116) in /usr/share/wattconfig-eco/wattconfigecolaz (local_maplib=(nil), global maplib=0x5c8511c0, deepbind=0)
+
+Solution:
+
+-  Open a `GitHub Issue <https://github.com/ptitSeb/box64/issues/new>`__ with Box64 to wrap the x86_64 function.
+
+----
+
+Error:
+
+::
+
+   Error: PltResolver32: Symbol  <FUNCTION>(ver 1: <FUNCTION>) not found, cannot apply R_386_JUMP_SLOT <HEXADECIMAL> (<HEXADECIMAL>) in <LIBRARY_FILE>
+
+::
+
+   Error: PltResolver32: Symbol  SDL_LoadObject(ver 0: SDL_LoadObject) not found, cannot apply R_386_JUMP_SLOT 0x40016090 (0x40001866) in /home/user/GOG Games/PixelJunk Shooter/game/l32bin/libSDL2_image-2.0.so.0
+
+Solution:
+
+-  Open a `GitHub Issue <https://github.com/ptitSeb/box64/issues/new>`__ with Box64 to wrap the x86_32 function for Box32.
+
 Bibliography
 ------------
 
