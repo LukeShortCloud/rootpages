@@ -62,7 +62,7 @@ Box64 and Box86 will attempt to load libraries in the following order:
    -  `Box32 <https://github.com/ptitSeb/box64/blob/main/src/library_list_32.h>`__ = There are less libraries wrapped for Box32 because it is newer and more complex to do wrapping.
    -  `Box86 <https://github.com/ptitSeb/box86/blob/master/src/library_list.h>`__
 
-2.  **Emulated library** = If a library is not wrapped, Box will attempt to use the non-native library files. Box64 requires x86_64 library files. Box32 and Box86 require x86_32 library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
+2.  **Emulated library** = If a library is not wrapped, Box will attempt to use the non-native library files. Box64 requires x86_64 library files. Box32 and Box86 require x86_32 library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` (recommended) or ``LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
 
 Installation
 ~~~~~~~~~~~~
@@ -146,7 +146,18 @@ Bash is installed by default but another binary can be specified. [4]
 .. code-block:: sh
 
    $ export BOX64_BASH=/usr/local/bin/bash-x86_64
-   $ echo "export BOX64_BASH=/usr/local/bin/bash-x86_64" >> ~/.bashrc
+
+Configure custom library paths to use non-native libraries that will be emulated.
+
+.. code-block:: sh
+
+   $ export BOX64_LD_LIBRARY_PATH="/usr/local/lib-x86_64:/usr/local/lib-x86_32"
+
+Configure a custom path for looking up binaries.
+
+.. code-block:: sh
+
+   $ export BOX64_PATH="/usr/local/bin-x86_64"
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
