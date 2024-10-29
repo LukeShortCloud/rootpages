@@ -56,14 +56,13 @@ These platforms do not have dynarec support yet:
 
 Box64 and Box86 will attempt to load libraries in the following order:
 
-1.  Wrapped library = Box has some built-in libraries that are wrapped either for accuracy and/or performance reasons. This is also referred to as "advanced wrapping" because Box has built-in logic for handling these libraries. Here are a list of wrapped libraries for each project:
+1.  **Native or wrapped library** = Box has some built-in libraries that are wrapped either for accuracy, compatibility, and/or performance reasons. Most functions use a simple wrapping. Other functions that have callbacks or other unique requirements need more code to do advanced wrapping. [5] Here are a list of wrapped libraries for each project:
 
    -  `Box64 <https://github.com/ptitSeb/box64/blob/main/src/library_list.h>`__
    -  `Box32 <https://github.com/ptitSeb/box64/blob/main/src/library_list_32.h>`__ = There are less libraries wrapped for Box32 because it is newer and more complex to do wrapping.
    -  `Box86 <https://github.com/ptitSeb/box86/blob/master/src/library_list.h>`__
 
-2.  Native library = Box will attempt to use the native version. This is also referred to as "simple wrapping" because Box has no built-in logic for handling these libraries. [5]
-3.  Emulated library = As a last resort, Box will attempt to use the non-native library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
+2.  **Emulated library** = If a library is not wrapped, Box will attempt to use the non-native library files. Box64 requires x86_64 library files. Box32 and Box86 require x86_32 library files. Use the environment variable ``BOX64_LD_LIBRARY_PATH`` to configure the path to those files. Box64 provides a few of these libraries by default from Debian.
 
 Installation
 ~~~~~~~~~~~~
