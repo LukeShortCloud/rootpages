@@ -11,11 +11,19 @@ Introduction
 
 Supported hardware [1]:
 
--  x86 (AMD/Intel) = For debugging purposes.
--  Arm
--  LoongArch
--  PowerPC
--  RISC-V
+-  Box64
+
+   -  x86 (AMD/Intel) = For debugging purposes.
+   -  Arm
+   -  LoongArch
+   -  PowerPC
+   -  RISC-V
+
+-  Box86
+
+   -  x86
+   -  Arm
+   -  PowerPC
 
 Projects:
 
@@ -29,14 +37,22 @@ For running applications that require both 32-bit and 64-bit support, such as St
 
 Dynamic recompliation (dynarec), a just-in-time (JIT) compiler, provides a large speed advantage. There is a common backend but some architectures have more optimizations than others. Here are the top optimized platforms:
 
-1.  Arm
-2.  RISC-V
-3.  LoongArch
+-  Box64
 
-These platforms do not have dynarec support:
+   1.  Arm
+   2.  RISC-V
+   3.  LoongArch
 
--  x86
--  PowerPC
+-  Box86
+
+  1.  Arm
+
+These platforms do not have dynarec support yet:
+
+-  Box64 and Box86
+
+   -  x86
+   -  PowerPC
 
 Box64 and Box86 will attempt to load libraries in the following order:
 
