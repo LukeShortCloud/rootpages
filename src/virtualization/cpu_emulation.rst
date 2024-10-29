@@ -96,13 +96,13 @@ Configure build options.
 
       .. code-block:: sh
 
-         $ export BOX64_BUILD_OPTS="-D SDORYON1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
+         $ export BOX64_BUILD_OPTS="-D SDORYON1=1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
 
    -  GCC 13 and older:
 
       .. code-block:: sh
 
-         $ export BOX64_BUILD_OPTS="-D SD8G2 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
+         $ export BOX64_BUILD_OPTS="-D SD8G2=1 -D CMAKE_C_COMPILER=gcc -D ARM_DYNAREC=ON"
 
 -  Raspberry Pi 5:
 
