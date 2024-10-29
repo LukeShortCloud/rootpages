@@ -136,6 +136,14 @@ Install Box64. [2]
    $ sudo make install
    $ sudo systemctl restart systemd-binfmt
 
+For new builds, uninstall and delete the old build first.
+
+.. code-block:: sh
+
+   $ sudo make uninstall
+   $ cd ..
+   $ rm -r -f build
+
 Usage
 ~~~~~
 
