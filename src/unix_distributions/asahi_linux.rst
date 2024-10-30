@@ -73,6 +73,21 @@ On macOS, to get to the boot menu [4]:
 -  Release the power button when it says "Loading startup options...".
 -  Select either "Macintosh HD", "Asahi Linux", or "Fedora Linux".
 
+Google Chrome
+-------------
+
+There is no Arm build of Google Chrome for Linux despite there being one for ChromeOS, macOS, and Windows. [5] However, it is possible to install the open source Chromium project and provide an API key to access Google services including account sign-in. [6]
+
+.. code-block:: sh
+
+   $ flatpak install org.chromium.Chromium
+   $ flatpak \
+       override \
+       --user \
+       --env=GOOGLE_DEFAULT_CLIENT_ID=77185425430.apps.googleusercontent.com \
+       --env=GOOGLE_DEFAULT_CLIENT_SECRET=OTJgUOQcT7lO7GsGZq2G4IlT \
+       org.chromium.Chromium
+
 History
 -------
 
@@ -85,3 +100,5 @@ Bibliography
 2. "How to Uninstall Asahi Linux on M1 Mac - Remove all Partitions & Volumes." YouTube Mr. Macintosh. March 24, 2022. Accessed August 2, 2023. https://www.youtube.com/watch?v=nMnWTq2H-N0
 3. "How to uninstall?" Reddit r/AsahiLinux. July 23, 2023. Accessed August 2, 2023. https://www.reddit.com/r/AsahiLinux/comments/vs4qp1/how_to_uninstall/
 4. "Installing the Asahi Linux Alpha on my M1 Mac mini." Jeff Geerling. March 25, 2022. Accessed May 3, 2024. https://www.jeffgeerling.com/blog/2022/installing-asahi-linux-alpha-on-my-m1-mac-mini
+5. "A native version of Chrome arrives for Arm-based Windows PCs." The Verge. March 26, 2024. Accessed October 30, 2024. https://www.theverge.com/2024/3/26/24112273/chrome-native-windows-on-arm-qualcomm-snapdragon
+6. "Enabling Chromium to sync with Google Account." Stack Overflow. July 21, 2024. Accessed October 30, 2024. https://stackoverflow.com/questions/67459316/enabling-chromium-to-sync-with-google-account
