@@ -551,6 +551,7 @@ Fedora
       $ sudo dnf builddep kernel.spec
       $ fedpkg sources
 
+-  If the ``sources`` file does not exist, use ``rpmbuild -bs kernel.spec`` to see what source files are missing. Then manually search for and download them from ``https://src.fedoraproject.org/repo/pkgs/rpms/kernel/``. Copy them to ``~/rpmbuild/SOURCES/``.
 -  Fix the PKI signing keys permissions which are required for the Linux kernel.
 
    .. code-block:: sh
