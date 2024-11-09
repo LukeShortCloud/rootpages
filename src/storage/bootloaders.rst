@@ -356,7 +356,7 @@ Linux can be installed onto a portable storage device that can boot on both lega
 
 -  GPT partitions:
 
-   1.  BIOS GRUB boot partition. This extra space provides more room for GRUB to store its boot and partition table data.
+   1.  BIOS GRUB boot partition. This extra space provides more room to store a small ``core.img`` file. That file contains GRUB boot and partition table data. This partition is only needed when using a smaller GPT partition table. MBR allocates additional space in the boot sector. [26]
 
       -  Size: 1 MiB.
       -  File system: none.
@@ -764,3 +764,4 @@ Bibliography
 23. "SecureBoot." Debian Wiki. January 21, 2024. Accessed April 21, 2024. https://wiki.debian.org/SecureBoot
 24. "Signing a Linux Kernel for Secure Boot." Ubuntu for Azure Developers. Accessed April 21, 2024. https://gloveboxes.github.io/Ubuntu-for-Azure-Developers/docs/signing-kernel-for-secure-boot.html
 25. "How to change the 10 seconds timeout allotted to enter the "Shim UEFI key management" utility." Red Hat Customer Portal. September 14, 2023. Accessed April 21, 2024. https://access.redhat.com/solutions/6722091
+26. "GRUB." ArchWiki. October 23, 2024. Accessed November 9, 2024. https://wiki.archlinux.org/title/GRUB
