@@ -627,6 +627,47 @@ Swap is a special file system that cannot be mounted. It is used by the operatin
 
 `Tests <../unix_distributions/steamos.html#increase-swap-size-and-vram>`__ on the Steam Deck show that a total of 32 GB of tmpfs (RAM and swap) provide the best gaming performance for APUs. Anything beyond that provides no performance benefits. This assumes that the iGPU from the APU will use 8 GB as VRAM. That means that systems with dGPUs can use 24 GB of tmpfs instead. For the best results, use zram or add swap to a fast drive such as a NVMe drive.
 
+Swap File
+^^^^^^^^^
+
+A swap file provides hibernation support in addition to more temporary memory. However, `zram <#zram>`__ provides better performance. It is recommended to create a swap file the same size or, at most, double the amount of RAM. [77] Fedora recommends using 1.5x the amount of RAM for swap when a system has a modern RAM size of 4 GB or more. [78]
+
+Notes about swap files:
+
+-  ``fallocate`` cannot be used to create swap files on most file systems. Prefer ``dd`` instead. [79]
+-  Copy-on-write is not supported and can lead to unnecessary wear. Disable it for the swap file by using ``chattr +C``.
+
+Examples of creating 12 GB of swap for a system that has 8 GB of RAM:
+
+-  Btrfs
+
+   .. code-block:: sh
+
+      $ sudo btrfs subvolume create /swap
+      $ sudo touch /swap/swapfile
+      $ sudo chattr +C /swap/swapfile
+      $ sudo dd if=/dev/zero of=/swap/swapfile bs=1M count=12000
+      $ sudo chmod 600 /swap/swapfile
+      $ sudo mkswap /swap/swapfile
+      $ sudo swapon /swap/swapfile
+
+-  ext4
+
+  .. code-block:: sh
+
+      $ sudo touch /swapfile
+      $ sudo dd if=/dev/zero of=/swapfile bs=1M count=12000
+      $ sudo chmod 600 /swapfile
+      $ sudo mkswap /swapfile
+      $ sudo swapon /swapfile
+
+On Fedora, there is no SELinux policy for hibernation. Set SELinux to permissive mode, hibernate, turn the computer on, and then automatically create a SELinux policy for hibernation. [78]
+
+.. code-block:: sh
+
+   $ sudo audit2allow -b -M systemd_sleep
+   $ sudo semodule -i systemd_sleep.pp
+
 zram
 ^^^^
 
@@ -1824,3 +1865,6 @@ Bibliography
 74. "ZRam." Debian Wiki. June 28, 20223. Accessed October 14, 2024. https://wiki.debian.org/ZRam
 75. "Auto-configure zram with optimal settings #163." GitHub pop-os/default-settings. September 3, 2024. Accessed October 14, 2024. https://github.com/pop-os/default-settings/pull/163
 76. "[setup] Increase zram size." GitHub winesapOS/winesapOS. October 14, 2024. Accessed October 14, 2024. https://github.com/winesapOS/winesapOS/commit/27febeea36f958e3280e62540c4978a19a60ae25
+77. "Swap Space in Linux: What It Is & How It Works." phoenixNAP. August 31, 2023. Accessed November 13, 2024. https://phoenixnap.com/kb/swap-space
+78. "What's the right amount of swap space for a modern Linux system?" opensource.com. February 11, 2019. Accessed November 13, 2024. https://opensource.com/article/19/2/swap-space-poll
+79. "swapon(8)." Linux manual page. August 25, 2023. Accessed November 13, 2024. https://www.man7.org/linux/man-pages/man8/swapon.8.html
