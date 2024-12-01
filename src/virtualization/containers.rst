@@ -854,12 +854,13 @@ Installation:
          $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/uninstall | sh -s -- --prefix ~/.local
          $ rm ~/.local/bin/podman
 
-Ensure that the local user can control the Xorg server:
+For advanced GUI application support, ensure that the local user on the host can control the Xorg server. This is required for desktop environments, GUI Flatpaks, and Gamescope. [39]
 
 .. code-block:: sh
 
    $ xhost +si:localuser:$USER
    $ echo "xhost +si:localuser:$USER" >> ~/.xinitrc
+   $ distrobox create --init-hooks "install -o 1000 -g 1000 -d /tmp/.X11-unix-new && mount --bind /tmp/.X11-unix-new /tmp/.X11-unix"
 
 Create a new container with a container image:
 
@@ -1050,3 +1051,4 @@ Bibliography
 36. "podman." Podman documentation. December, 2016. Accessed August 5, 2024. https://docs.podman.io/en/latest/markdown/podman.1.html
 37. "Tutorial: Host a Local Podman Image Registry." The New Stack. January 2, 2021. Accessed August 5, 2024. https://thenewstack.io/tutorial-host-a-local-podman-image-registry/
 38. "Podman - Local Container Registry." blog.while-true-do.io. July 6, 2022. Accessed August 5, 2024. https://blog.while-true-do.io/podman-local-container-registry/
+39. "[Suggestion] Apply an overlayfs to /tmp/.X11-unix #451." GitHub 89luca89/distrobox. July 22, 2024. Accessed November 15, 2024. https://github.com/89luca89/distrobox/issues/451
