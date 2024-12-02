@@ -220,9 +220,10 @@ This is an extremely biased list of the best distribution for each use case.
 -  Desktop environments:
 
    -  Cinnamon = Linux Mint
+   -  COSMIC = Pop!_OS
    -  Deepin = Deepin
    -  Enlightenment = Bodhi Linux
-   -  GNOME = Fedora
+   -  GNOME = Fedora Workstation
    -  KDE = KDE neon
    -  LXDE/LXQt = Mageia
    -  MATE = Solus MATE
