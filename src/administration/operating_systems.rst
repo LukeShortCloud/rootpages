@@ -21,6 +21,7 @@ This is the standard set of software used in most modern Linux distributions:
 
    -  Wi-Fi back-end = `IWD <https://www.phoronix.com/news/Intel-IWD-2.0-Released>`__
 
+-  Bluetooth = `BlueZ <https://www.bluez.org/>`__
 -  Sound server = `PipeWire <https://www.zdnet.com/article/pipewire-1-0-linux-audio-comes-of-age/>`__
 
 Arch Linux
