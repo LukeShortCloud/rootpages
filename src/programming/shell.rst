@@ -57,6 +57,44 @@ Environment variables are commonly used to configure settings for programs.
       $ ${EDITOR} "${HOME}/.config/environment.d/<FILE_NAME>.conf"
       <KEY>=<VALUE>
 
+Locale
+------
+
+A locale affects the language, calendar, currency, and other values used by the system.
+
+View all locales.
+
+.. code-block:: sh
+
+   $ locale --all-locales
+
+View all top-level keyboard configurations.
+
+.. code-block:: sh
+
+   $ localectl list-x11-keymap-layouts
+
+Optionally view keyboard configuration variants.
+
+.. code-block:: sh
+
+   $ localectl list-x11-keymap-variants <KEYMAP>
+
+Example of setting U.S.A. default values. [8][9]
+
+.. code-block:: sh
+
+   $ localectl set-locale LANG=en_US.utf8
+   $ localectl set-locale LC_MESSAGES=C
+   $ localectl set-keymap us
+
+The keymap can also be set manually. [10]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/vconsole.conf
+   KEYMAP=us
+
 ANSI Colors
 -----------
 
@@ -186,3 +224,6 @@ Bibliography
 5. "How do I print colored text to the terminal in Rust?" Stack Overflow. January 24, 2023. Accessed July 31, 2023. https://stackoverflow.com/questions/69981449/how-do-i-print-colored-text-to-the-terminal-in-rust
 6. "Why zsh tries to expand * and bash does not?" Stack Overflow. May 7, 2022. Accessed February 20, 2024. https://stackoverflow.com/questions/20037364/why-zsh-tries-to-expand-and-bash-does-not
 7. "How to preserve line breaks when storing command output to a variable? [duplicate]." Stack Overflow. August 9, 2023. Accessed February 20, 2024. https://stackoverflow.com/questions/22101778/how-to-preserve-line-breaks-when-storing-command-output-to-a-variable
+8. "System Locale and Keyboard Configuration." Fedora User Docs. December 9, 2024. Accessed December 10, 2024. https://docs.fedoraproject.org/en-US/fedora/f40/system-administrators-guide/basic-system-configuration/System_Locale_and_Keyboard_Configuration/
+9. "Locale." ArchWiki. December 1, 2024. Accessed December 10, 2024. https://wiki.archlinux.org/title/Locale
+10. "Setting Keyboard Layout." Fedora CoreOS. February 7, 2024. Accessed December 10, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/sysconfig-setting-keymap/
