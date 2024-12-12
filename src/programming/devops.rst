@@ -1315,7 +1315,7 @@ Installation [58]:
 
 Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. The download size of a model is usually also the minimum size of VRAM needed to run the model. [55]
 
-For PCs, use Ollama 8B. It is a 5 GB download. [56]
+For PCs, use Ollama 8B for ChatGPT 3.5 quality. It is a 5 GB download. [56]
 
 .. code-block:: sh
 
@@ -1332,6 +1332,12 @@ For PCs wanting to have image recognition as part of the LLM, use Ollama 11B. It
 .. code-block:: sh
 
    $ ollama run llama3.2-vision
+
+For high-end PCs and ChatGPT 4 quality, use at least Ollama 70B. [60] The community has created smaller bit models (1-bit, 2-bit, and 4-bit). The 1-bit IQ1_M model is not very good. The 4-bit Q4_K_M model is too big for consumer PCs. The 2-bit IQ2_XS model is the best balance of size and reliability. It is a 21 GB download. [61][62]
+
+.. code-block:: sh
+
+   $ ollama run hf.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF:IQ2_XS
 
 Exit the LLM instance by typing ``/bye``.
 
@@ -1567,3 +1573,6 @@ Bibliography
 57. "LLaMA 3.2 vs. LLaMA 3.1 vs. Gemma 2: Finding the Best Open-Source LLM for Content Creation." Medium - RayRay. October 2, 2024. Accessed December 4, 2024. https://byrayray.medium.com/llama-3-2-vs-llama-3-1-vs-gemma-2-finding-the-best-open-source-llm-for-content-creation-1f6085c9f87a
 58. "FAQ." GitHub ollama/ollama. December 3, 2024. Accessed December 4, 2024. https://github.com/ollama/ollama/blob/main/docs/faq.md
 59. "Llama 3.2 Vision." Ollama. November 6, 2024. Accessed December 4, 2024. https://ollama.com/blog/llama3.2-vision
+60. "I can now run a GPT-4 class model on my laptop." Simon Willison's Weblog. December 9, 2024. Accessed December 12, 2024. https://simonwillison.net/2024/Dec/9/llama-33-70b/
+61. "Running Llama-3-70B gguf on 24gig VRAM." Reddit r/LocalLLaMA. April 24, 2024. Accessed December 12, 2024. https://www.reddit.com/r/LocalLLaMA/comments/1c7owci/running_llama370b_gguf_on_24gig_vram/
+62. "lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF." Hugging Face. Accessed December 12, 2024. https://huggingface.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF
