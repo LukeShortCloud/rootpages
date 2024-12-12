@@ -1339,6 +1339,8 @@ For high-end PCs and ChatGPT 4 quality, use at least Ollama 70B. [60] The commun
 
    $ ollama run hf.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF:IQ2_XS
 
+Save a conversation to revisit later by using ``/save <SAVE_NAME>``. It will be stored as a new model which can be viewed with ``/list`` or the CLI command ``ollama list``. Load the conversation by using ``/load <SAVE_NAME>``.
+
 Exit the LLM instance by typing ``/bye``.
 
 List installed models.
