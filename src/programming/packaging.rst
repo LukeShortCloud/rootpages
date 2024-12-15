@@ -502,6 +502,12 @@ Examples
       %attr(0755, root, root) /usr/bin/foobar
       %attr(0640, , ) /var/lib/foobar/database.db
 
+-  Build a RPM that requires a specific version of a library. In this example, any 0.2.Y version can be installed. Using ``= 0.2`` will not work. [53]
+
+   ::
+
+      Requires: wireplumber >= 0.2.0, wireplumber < 0.3.0
+
 Building a RPM
 ~~~~~~~~~~~~~~
 
@@ -1219,3 +1225,4 @@ Bibliography
 50. "Bug 1312633 - dnf builddep wont install 32bit versions when specified." Red Hat Bugzilla. July 25, 2022. Accessed February 29, 2024. https://bugzilla.redhat.com/show_bug.cgi?id=1312633
 51. "How to use Podman inside of a container." Enable Sysadmin. July 1, 2021. Accessed February 29, 2024. https://www.redhat.com/sysadmin/podman-inside-container
 52. "Running mock in a docker container." Fedora Discussion. May 31, 2023. Accessed February 29, 2024. https://discussion.fedoraproject.org/t/running-mock-in-a-docker-container/83500
+53. "RPM: Set Required: somepackage >= 0.5.0 AND somepackage < 0.6.0." Server Fault. August 12, 2024. Accessed December 15, 2024. https://serverfault.com/questions/411444/rpm-set-required-somepackage-0-5-0-and-somepackage-0-6-0
