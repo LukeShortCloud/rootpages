@@ -1176,12 +1176,18 @@ It is possible to convert an ostree repository to a container image [46] but not
 
 **Authentication**
 
-Two files are supported by rpm-ostree for authentication to a private container registry [46]:
+Three files are supported by rpm-ostree for authentication to a private container registry [46][53]:
 
--  /etc/ostree/auth.json
--  /run/ostree/auth.json
+-  Temporary
 
-Create this file by running:
+   -  /run/ostree/auth.json
+
+-  Permanent
+
+   -  /etc/ostree/auth.json
+   -  /usr/lib/ostree/auth.json
+
+Create this file manually by running:
 
 .. code-block:: sh
 
@@ -1474,3 +1480,4 @@ Bibliography
 50. "Drop requirement on nss-altfiles, use systemd sysusers #49." GitHub coreos/rpm-ostree. March 6, 2024. Accessed August 5, 2024. https://github.com/coreos/rpm-ostree/issues/49
 51. "How does /etc/{passwd,group} relate to /usr/lib/{passwd,group} in Silverblue?" Fedora Discussion. May 19, 2022. Accessed August 5, 2024. https://discussion.fedoraproject.org/t/how-does-etc-passwd-group-relate-to-usr-lib-passwd-group-in-silverblue/78301
 52. "NSS altfiles module." GitHub aperezdc/nss-altfiles. May 10, 2024. Accessed August 5, 2024. https://github.com/aperezdc/nss-altfiles
+53. "Secrets (e.g. container pull secrets)." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/building/secrets.html
