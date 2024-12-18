@@ -1393,7 +1393,7 @@ bootc
 Introduction
 ~~~~~~~~~~~~
 
-bootc is the successor to rpm-ostree and uses many of the same technologies and codebase. The biggest change is that package management is now handled by the native package manager for the Linux distribution. It is recommended to use a Containerfile to customize the operating system.
+bootc is the successor to rpm-ostree and uses many of the same technologies and codebase. The biggest change is that package management is now handled by the native package manager for the Linux distribution. It is recommended to use a Containerfile to customize the operating system. A list of operating systems using bootc can be found `here <https://github.com/containers/bootc/blob/main/ADOPTERS.md>`__.
 
 .. csv-table::
    :header: COMPARISON, bootc, rpm-ostree
