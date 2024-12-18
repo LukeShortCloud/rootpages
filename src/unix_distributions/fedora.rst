@@ -1387,6 +1387,55 @@ Install the ``rpm-ostree`` and ``rpm-ostree-libs`` RPMs.
 
       $ sudo rpm-ostree override replace ./x86_64/rpm-ostree-<VERSION>.rpm ./x86_64/rpm-ostree-libs-<VERSION>.rpm
 
+bootc
+-----
+
+Introduction
+~~~~~~~~~~~~
+
+bootc is the successor to rpm-ostree and uses many of the same technologies and codebase. The biggest change is that package management is now handled by the native package manager for the Linux distribution. It is recommended to use a Containerfile to customize the operating system.
+
+.. csv-table::
+   :header: COMPARISON, bootc, rpm-ostree
+   :widths: 20, 20, 20
+
+   Distro-agnostic, Yes\*, No
+   Base image type, OCI container image, OSTree
+   OSTree extensions, Internal (merged), External
+   Read-only root, Yes (composefs forces read-only on boot), Partial (``ostree admin unlock --hotfix`` allows persistent changes)
+   Temporary writable root (``bootc usroverlay``), Yes, Yes (``ostree admin unlock``)
+   Persistent mounts, ``/etc`` and ``/var``, ``/etc`` and ``/var``
+   Rollback, Yes (``bootc rollback``), Yes (``rpm-ostree rollback``)
+   Kernel boot arguments, ``bootc install --karg``, ``rpm-ostree kargs``
+   User management, nss-altfiles, nss-altfiles
+   Package layering, Containerfile, ``rpm-ostree install``
+   Efficient updates, No (requires `zstd:chunked <https://github.com/containers/bootc/issues/509>`__ support), Yes
+
+\*bootc will eventually support more Linux distributions besides the Fedora family. It currently has dependencies on the following that will eventually be dropped so that any Linux distribution can be used:
+
+-  bootupd (GRUB and RPM)
+-  OCI container image built using OSTreefiles
+
+    -  No longer required as of `bootc 1.1.3 <https://github.com/containers/bootc/releases/tag/v1.1.3>`__.
+
+Verify if a system is using ``bootc``. The output should be similar to this [54]:
+
+.. code-block:: sh
+
+    $ sudo bootc status --format=json | jq -r .spec.image
+    {
+      "image": "<IMAGE>",
+      "transport": "registry",
+      "signature": "containerPolicy"
+    }
+
+Otherwise, non-bootc systems will show:
+
+.. code-block:: sh
+
+   $ sudo bootc status
+   System is not deployed via bootc.
+
 Troubleshooting
 ---------------
 
@@ -1481,3 +1530,4 @@ Bibliography
 51. "How does /etc/{passwd,group} relate to /usr/lib/{passwd,group} in Silverblue?" Fedora Discussion. May 19, 2022. Accessed August 5, 2024. https://discussion.fedoraproject.org/t/how-does-etc-passwd-group-relate-to-usr-lib-passwd-group-in-silverblue/78301
 52. "NSS altfiles module." GitHub aperezdc/nss-altfiles. May 10, 2024. Accessed August 5, 2024. https://github.com/aperezdc/nss-altfiles
 53. "Secrets (e.g. container pull secrets)." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/building/secrets.html
+54. "Package manager integration." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/package-managers.html
