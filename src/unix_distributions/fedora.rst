@@ -1436,6 +1436,45 @@ Otherwise, non-bootc systems will show:
    $ sudo bootc status
    System is not deployed via bootc.
 
+Package Layering
+~~~~~~~~~~~~~~~~~
+
+bootc requires a Containerfile to make customizations such as installing new packages. It only manages container updates via an OCI container image and does not have any deep package manager integration. In the future, the DNF 5 client will be updated to support package layering with bootc. A prototype implementation can be found `here <https://github.com/ericcurtin/dnf-bootc>`__. It creates a Containerfile and appends package management operations to it. [55][56]
+
+``rpm-ostree install`` technically works with ``bootc`` but it actually prevents system upgrades from working. It is recommended to use a Containerfile instead. [57]
+
+Copy the container image used by bootc for the deployment into the local Podman container images. Then it can be used to create a custom local image. [58]
+
+.. code-block:: sh
+
+   $ sudo bootc image copy-to-storage
+
+Verify that the image was copied.
+
+.. code-block:: sh
+
+   $ sudo podman images | grep "localhost/bootc"
+
+Create a ``Containerfile``. Use the new ``localhost/bootc`` image to make customizations. It is best practice to clean cached files from the package manager if it is used. Finally, verify that the container is ``bootc`` compatible by running a lint check. [59]
+
+::
+
+   FROM localhost/bootc
+   RUN dnf -y install <PACKAGE> && dnf clean all
+   RUN bootc container lint
+
+Build the container image and provide it any tag name.
+
+.. code-block:: sh
+
+   $ sudo podman build --tag <TAG> .
+
+Update the file system using the local Podman image. Then reboot for the changes to take affect. [58]
+
+.. code-block:: sh
+
+   $ sudo bootc switch --transport containers-storage localhost/<TAG>
+
 Troubleshooting
 ---------------
 
@@ -1531,3 +1570,8 @@ Bibliography
 52. "NSS altfiles module." GitHub aperezdc/nss-altfiles. May 10, 2024. Accessed August 5, 2024. https://github.com/aperezdc/nss-altfiles
 53. "Secrets (e.g. container pull secrets)." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/building/secrets.html
 54. "Package manager integration." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/package-managers.html
+55. "Questions about bootc and rpm-ostree." Fedora Discussion. November 6, 2024. Accessed December 18, 2024. https://discussion.fedoraproject.org/t/questions-about-bootc-and-rpm-ostree/132021/12
+56. "Local package layering story with bootc & dnf5." GitLab fedora/bootc. September 24, 2024. Accessed December 18, 2024. https://gitlab.com/fedora/bootc/tracker/-/issues/4
+57. "Relationship with other projects." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/relationships.html
+58. "bootc image." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/experimental-bootc-image.html
+59. "man bootc-container-lint." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/man/bootc-container-lint.html
