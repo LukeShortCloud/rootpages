@@ -1475,6 +1475,74 @@ Update the file system using the local Podman image. Then reboot for the changes
 
    $ sudo bootc switch --transport containers-storage localhost/<TAG>
 
+bootc Image Creation
+~~~~~~~~~~~~~~~~~~~~
+
+bootc Image Build
+^^^^^^^^^^^^^^^^^
+
+Support operating systems for ``bootc-image-builder`` can be found `here <https://github.com/osbuild/bootc-image-builder/tree/main/bib/data/defs>`__.
+
+Install and configure ``podman-machine`` first.
+
+.. code-block:: sh
+
+   $ sudo dnf install podman-machine
+   $ podman machine init --rootful --now
+   $ podman machine start
+
+Create the required output directory.
+
+.. code-block:: sh
+
+   $ mkdir output
+
+Create the configuration. At a minimum, a user should be configured.
+
+.. code-block:: sh
+
+   $ ${EDITOR} config.toml
+   [[customizations.user]]
+   name = "<USER_NAME>"
+   password = "<<USER_PASSWORD>"
+   key = "<SSH_KEY_PUBLIC>"
+   groups = ["wheel"]
+
+Build the image. If no ``--type`` is provided, then ``qcow2`` is used by default. [60]
+
+.. code-block:: sh
+
+   $ export BOOTC_IMAGE=quay.io/fedora/fedora-silverblue:41
+   $ sudo -E podman pull ${BOOTC_IMAGE}
+   $ sudo podman run \
+       --rm \
+       -it \
+       --privileged \
+       --pull=newer \
+       --security-opt label=type:unconfined_t \
+       -v ./config.toml:/config.toml:ro \
+       -v ./output:/output \
+       -v /var/lib/containers/storage:/var/lib/containers/storage \
+       quay.io/centos-bootc/bootc-image-builder:latest \
+       --type raw \
+       --local \
+       ${BOOTC_IMAGE}
+
+Detailed information about the build is be saved to ``output/manifest-raw.json``.
+
+The image file will be stored in one of these locations based on the ``--type`` used to build it.
+
+.. csv-table::
+   :header: Path, Type
+   :widths: 20, 20
+
+   output/bootiso/disk.iso, ``anaconda-iso``
+   output/gce/image.tar.gz, ``gce``
+   output/image/disk.raw, ``ami`` or ``raw``
+   output/qcow2/disk.qcow2, ``qcow2``
+   output/vmdk/disk.vmdk, ``vmdk``
+   output/vpc/disk.vhd, ``vhd``
+
 Troubleshooting
 ---------------
 
@@ -1575,3 +1643,4 @@ Bibliography
 57. "Relationship with other projects." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/relationships.html
 58. "bootc image." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/experimental-bootc-image.html
 59. "man bootc-container-lint." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/man/bootc-container-lint.html
+60. "osbuild/bootc-image-builder." GitHub. December 10, 2024. Accessed December 30, 2024. https://github.com/osbuild/bootc-image-builder
