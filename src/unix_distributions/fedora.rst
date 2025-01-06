@@ -1413,7 +1413,12 @@ bootc is the successor to rpm-ostree and uses many of the same technologies and 
 
 \*bootc will eventually support more Linux distributions besides the Fedora family. It currently has dependencies on the following that will eventually be dropped so that any Linux distribution can be used:
 
--  bootupd (GRUB and RPM)
+-  bootupd
+
+   -  Dracut
+   -  GRUB
+   -  RPM
+
 -  OCI container image built using OSTreefiles
 
     -  No longer required as of `bootc 1.1.3 <https://github.com/containers/bootc/releases/tag/v1.1.3>`__.
