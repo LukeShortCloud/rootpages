@@ -14,16 +14,16 @@ Mesa is a library that provides a unified collection of open source graphics dri
 **Vulkan**
 
 .. csv-table::
-   :header: Vendor, Driver, Minimum Hardware, Vulkan Version, Official
-   :widths: 20, 20, 20, 20, 20
+   :header: Vendor, Driver, Minimum Hardware, Vulkan Version, Android Support, Official
+   :widths: 20, 20, 20, 20, 20, 20
 
-   AMD, radv, GCN, 1.3, No
-   Intel, anv, Gen 7, 1.3, Yes
-   NVIDIA [19], nvk, Turing, Partial 1.0, No
-   Apple [20], honeykrisp, M1, 1.3, No
-   Broadcom, v3dv, VC5, 1.2, Yes
-   Mali, panvk, Valhall [16], Partial 1.0 [17], No
-   Qualcomm, tu (Turnip), Adreno 6XX\*, 1.3, No
+   AMD, radv, GCN, 1.4, No, No
+   Intel, anv, Gen 7, 1.4, No, Yes
+   NVIDIA [19], nvk, Turing, 1.4, No, No
+   Apple [20], honeykrisp, M1, 1.4, No, No
+   Broadcom, v3dv, VC5, 1.3 [28], No, Yes
+   Mali, panvk, Valhall [16], Partial 1.0 [17], No [29], No
+   Qualcomm, tu (Turnip), Adreno 6XX\*, 1.4, Yes, No
 
 \* Adreno 650 and newer GPUs provide the best Vulkan support. The Turnip driver will run on older Adreno 6XX series hardware but their support is incomplete. [14][15]
 
@@ -252,7 +252,7 @@ Bibliography
 10. “nvidia-xrun.” Arch Linux Wiki. Accessed November 4, 2018. September 11, 2018. https://wiki.archlinux.org/index.php/nvidia-xrun
 11. "Home." The Mesa 3D Graphics Library. Accessed March 14, 2023. https://www.mesa3d.org/
 12. "Platforms and Drivers." The Mesa 3D Graphics Library latest documentation. Accessed March 14, 2023. https://docs.mesa3d.org/systems.html
-13. "Mesamatrix." The Mesa drivers matrix. February 6, 2023. Accessed March 14, 2023. https://mesamatrix.net/
+13. "Mesamatrix." The Mesa drivers matrix. January 2, 2025. Accessed January 5, 2025. https://mesamatrix.net/
 14. "How To Guide Getting Freedreno Turnip (Mesa Vulkan Driver) on a Poco F3." XDA Forums. February 15, 2022. Accessed March 14, 2023. https://forum.xda-developers.com/t/getting-freedreno-turnip-mesa-vulkan-driver-on-a-poco-f3.4323871/page-3#post-86420275
 15. "Mesa's Turnip Now Advertises Vulkan 1.3 Support." Phoronix Forums. September 22, 2022. Accessed March 14, 2023. https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/vulkan/1347399-mesa-s-turnip-now-advertises-vulkan-1-3-support?p=1347507#post1347507
 16. "panvk: Drop support for Midgard." GitLab Mesa/mesa. February 20, 2023. Accessed March 14, 2023. https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16915
@@ -267,3 +267,5 @@ Bibliography
 25. "You may want to avoid NVIDIA driver 550 if you're on a laptop." GamingOnLinux. June 11, 2024. Accessed September 23, 2024. https://www.gamingonlinux.com/2024/06/you-may-want-to-avoid-nvidia-driver-550-if-youre-on-a-laptop/page=1/#r264670
 26. "NVIDIA Proprietary Driver." Debian Wiki. September 19, 2024. Accessed September 23, 2024. https://wiki.debian.org/NvidiaGraphicsDrivers
 27. "How to Install nVidia drivers in Fedora." Linux.org. February 12, 2024. Accessed September 23, 2024. https://www.linux.org/threads/how-to-install-nvidia-drivers-in-fedora.48635/
+28. "v3dv: expose Vulkan 1.3." GitLab Mesa/mesa. August 13, 2024. Accessed January 5, 2025. https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29476
+29. "panvk: Make support of Android Surfaceflinger Backend." GitLab Mesa/mesa. January 2, 2025. Accessed January 5, 2025. https://gitlab.freedesktop.org/mesa/mesa/-/issues/12350
