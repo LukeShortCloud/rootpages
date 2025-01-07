@@ -1548,6 +1548,41 @@ The image file will be stored in one of these locations based on the ``--type`` 
    output/vmdk/disk.vmdk, ``vmdk``
    output/vpc/disk.vhd, ``vhd``
 
+bootc Virtual Machine Testing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The `podman-bootc <https://github.com/containers/podman-bootc>`__ tool was created to help automatically create a virtual machine using a container image. It also establishes a headless SSH connection into it for testing purposes.
+
+Install and configure ``podman-machine`` first.
+
+.. code-block:: sh
+
+   $ sudo dnf install podman-machine
+   $ podman machine init --rootful --now
+   $ podman machine start
+
+Install ``podman-bootc``.
+
+.. code-block:: sh
+
+   $ sudo dnf copr enable gmaglione/podman-bootc
+   $ sudo dnf install podman-bootc
+
+Create a virtual machine using a container image. After creation, a SSH connection into the container will automatically be established.
+
+.. code-block:: sh
+
+   $ podman-bootc run --filesystem btrfs <CONTAINER_REGISTRY>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_NAME>:<CONTAINER_TAG>
+
+After exiting, it is possible to SSH into the virtual machine again later.
+
+.. code-block:: sh
+
+   $ podman-bootc list
+   $ podman-bootc ssh <PODMAN_BOOTC_ID>
+
+[61]
+
 Troubleshooting
 ---------------
 
@@ -1649,3 +1684,4 @@ Bibliography
 58. "bootc image." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/experimental-bootc-image.html
 59. "man bootc-container-lint." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/man/bootc-container-lint.html
 60. "osbuild/bootc-image-builder." GitHub. December 10, 2024. Accessed December 30, 2024. https://github.com/osbuild/bootc-image-builder
+61. "Streamlining podman + bootc interactions." GitHub containeres/podman-bootc. November 8, 2024. Accessed January 6, 2025. https://github.com/containers/podman-bootc
