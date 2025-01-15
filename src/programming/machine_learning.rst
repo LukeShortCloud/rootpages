@@ -67,9 +67,9 @@ AI Prompt Engineering
 Ollama
 ~~~~~~
 
-Ollama is a large language model (LLM) that is the best free and open source alternative to ChatGPT. [54]
+Ollama is a large language model (LLM) that is the best free and open source alternative to ChatGPT. [8]
 
-Installation [58]:
+Installation [9]:
 
 -  Linux
 
@@ -81,33 +81,33 @@ Installation [58]:
 
    -  Download the latest version `here <https://ollama.com/download/Ollama-darwin.zip>`__.
 
-Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. The download size of a model is usually also the minimum size of VRAM needed to run the model. [55]
+Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. The download size of a model is usually also the minimum size of VRAM needed to run the model. [10]
 
-For PCs, use Ollama 8B for ChatGPT 3.5 quality. It is a 5 GB download. [56]
+For PCs, use Ollama 8B for ChatGPT 3.5 quality. It is a 5 GB download. [11]
 
 .. code-block:: sh
 
    $ ollama run llama3.1
 
-For phones and low-end hardware, use Ollama 3B which is more efficient while being similar to Ollama 8B. It is a 2 GB download. [57]
+For phones and low-end hardware, use Ollama 3B which is more efficient while being similar to Ollama 8B. It is a 2 GB download. [12]
 
 .. code-block:: sh
 
    $ ollama run llama3.2
 
-For PCs wanting to have image recognition as part of the LLM, use Ollama 11B. It is a 8 GB download. Provide the full path to the image file when chatting with Ollama. [59]
+For PCs wanting to have image recognition as part of the LLM, use Ollama 11B. It is a 8 GB download. Provide the full path to the image file when chatting with Ollama. [13]
 
 .. code-block:: sh
 
    $ ollama run llama3.2-vision
 
-For high-end PCs and ChatGPT 4 quality, use at least Ollama 70B. [60] The community has created smaller bit models (1-bit, 2-bit, and 4-bit). The 1-bit IQ1_M model is not very good. The 4-bit Q4_K_M model is too big for consumer PCs. The 2-bit IQ2_XS model is the best balance of size and reliability. It is a 21 GB download. [61][62]
+For high-end PCs and ChatGPT 4 quality, use at least Ollama 70B. [14] The community has created smaller bit models (1-bit, 2-bit, and 4-bit). The 1-bit IQ1_M model is not very good. The 4-bit Q4_K_M model is too big for consumer PCs. The 2-bit IQ2_XS model is the best balance of size and reliability. It is a 21 GB download. [15][16]
 
 .. code-block:: sh
 
    $ ollama run hf.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF:IQ2_XS
 
-For code programming, the DeepSeek-Coder model is recommended. This is a 9 GB download. [63]
+For code programming, the DeepSeek-Coder model is recommended. This is a 9 GB download. [17]
 
 .. code-block:: sh
 
@@ -161,3 +161,13 @@ Bibliography
 5. "7 Top Machine Learning Programming Languages." Codeacademy. October 20, 2021. Accessed November 7, 2022. https://www.codecademy.com/resources/blog/machine-learning-programming-languages/
 6. "How to Pick the Best Graphics Card for Machine Learning." Towards Data Science. September 19, 2022. Accessed November 7, 2022. https://towardsdatascience.com/how-to-pick-the-best-graphics-card-for-machine-learning-32ce9679e23b
 7. "Does TensorFlow Support OpenCL?" IndianTechWarrior. Accessed November 7, 2022. https://indiantechwarrior.com/does-tensorflow-support-opencl/
+8. "Chatbot Arena LLM Leaderboard: Community-driven Evaluation for Best LLM and AI chatbots." Chatobt Arena. Accessed December 4, 2024. https://lmarena.ai/
+9. "FAQ." GitHub ollama/ollama. December 3, 2024. Accessed December 4, 2024. https://github.com/ollama/ollama/blob/main/docs/faq.md
+10. "What does 7b, 8b and all the b’s mean on the models and how are each models different from one another?" Reddit r/LocalLLaMA. May 23, 2024. Accessed December 4, 2024. https://www.reddit.com/r/LocalLLaMA/comments/1cylwmd/what_does_7b_8b_and_all_the_bs_mean_on_the_models/
+11. "Running Llama 3.1 Locally with Ollama: A Step-by-Step Guide." Medium - Paulo Batista. July 25, 2024. Accessed December 4, 2024. https://medium.com/@paulocsb/running-llama-3-1-locally-with-ollama-a-step-by-step-guide-44c2bb6c1294
+12. "LLaMA 3.2 vs. LLaMA 3.1 vs. Gemma 2: Finding the Best Open-Source LLM for Content Creation." Medium - RayRay. October 2, 2024. Accessed December 4, 2024. https://byrayray.medium.com/llama-3-2-vs-llama-3-1-vs-gemma-2-finding-the-best-open-source-llm-for-content-creation-1f6085c9f87a
+13. "Llama 3.2 Vision." Ollama. November 6, 2024. Accessed December 4, 2024. https://ollama.com/blog/llama3.2-vision
+14. "I can now run a GPT-4 class model on my laptop." Simon Willison's Weblog. December 9, 2024. Accessed December 12, 2024. https://simonwillison.net/2024/Dec/9/llama-33-70b/
+15. "Running Llama-3-70B gguf on 24gig VRAM." Reddit r/LocalLLaMA. April 24, 2024. Accessed December 12, 2024. https://www.reddit.com/r/LocalLLaMA/comments/1c7owci/running_llama370b_gguf_on_24gig_vram/
+16. "lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF." Hugging Face. Accessed December 12, 2024. https://huggingface.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF
+17. "deepseek-coder-v2." Ollama. September, 2024. Accessed December 13, 2024. https://ollama.com/library/deepseek-coder-v2
