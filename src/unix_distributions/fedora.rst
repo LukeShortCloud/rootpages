@@ -1247,6 +1247,8 @@ When using ``rpm-ostree compose``, this is the default configuration used by Fed
 
 It requires a ``passwd`` and ``group`` file to be fully configured and then it will copy them to ``/usr/lib/``.
 
+Other ways to manage users can be found `here <https://containers.github.io/bootc/building/users-and-groups.html>`__.
+
 Reset
 ~~~~~
 
