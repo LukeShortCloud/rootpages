@@ -508,6 +508,17 @@ Examples
 
       Requires: wireplumber >= 0.2.0, wireplumber < 0.3.0
 
+-  Build a RPM with more than one dependency. [25]
+
+   ::
+
+      Requires: abc foobar
+
+   ::
+
+      Requires: abc
+      Requires: foobar
+
 Building a RPM
 ~~~~~~~~~~~~~~
 
@@ -1197,7 +1208,7 @@ Bibliography
 22. "Copr command line interface." Fedora Developer Portal. Accessed May 5, 2023. https://developer.fedoraproject.org/deployment/copr/copr-cli.html
 23. "Using the DNF software package manager." Fedora Documentation. October 15, 2022. Accessed May 5, 2023. https://docs.fedoraproject.org/en-US/quick-docs/dnf/
 24. "systemd.preset." systemd. Accessed May 16, 2023. https://www.freedesktop.org/software/systemd/man/systemd.preset.html
-25. "RPM Packaging Guide." RPM Packaging Guide. February 20, 2023. Accessed May 16, 2023. https://rpm-packaging-guide.github.io/
+25. "RPM Packaging Guide." RPM Packaging Guide. February 20, 2023. Accessed January 17, 2025. https://rpm-packaging-guide.github.io/
 26. "Packaging:Systemd." Fedora Project Wiki. January 25, 2018. Accssed May 16, 2023. https://fedoraproject.org/wiki/Packaging:Systemd
 27. "SourcesList." Debian Wiki. March 22, 2017. Accessed March 28, 2017. https://wiki.debian.org/SourcesList
 28. "createrepo/rpm metadata." createrepo. Accessed June 28 2016. http://createrepo.baseurl.org/
