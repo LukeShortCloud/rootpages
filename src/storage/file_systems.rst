@@ -531,7 +531,7 @@ ZFS settings are configured in one of two ways:
 
          .. code-block:: sh
 
-            $ sudo dracut --regenerate-all
+            $ sudo dracut --regenerate-all --force
 
 **Properties [53]:**
 
@@ -667,6 +667,49 @@ On Fedora, there is no SELinux policy for hibernation. Set SELinux to permissive
 
    $ sudo audit2allow -b -M systemd_sleep
    $ sudo semodule -i systemd_sleep.pp
+
+Hibernation
+'''''''''''
+
+Once a swap file has been configured, hibernation can then also be configured.
+
+If a NVIDIA graphics card with either the proprietary or open kernel module drivers is used, it needs additional configuration first for hibernation to work.
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/modprobe.d/nvidia-hibernation-support.conf
+   options nvidia NVreg_PreserveVideoMemoryAllocations=1
+
+
+On immutable bootc systems such as Fedora Atomic Desktops, NVIDIA needs to use the full path to a persistent temporary directory. A symlink location will not work. [82]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/modprobe.d/nvidia-hibernation-support.conf
+   options nvidia NVreg_PreserveVideoMemoryAllocations=1
+   options nvidia NVreg_TemporaryFilePath=/var/tmp
+
+On Arch Linux, mkinitcpio needs to be configured with the "resume" hook. It must be in-between the "filesystems" and "fsck" hooks. For example [80]:
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/mkinitcpio.conf
+   HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems resume fsck)
+   $ sudo mkinitcpio -P
+
+On Fedora, dracut needs to be configured with the "resume" hook. [81]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/dracut.conf.d/resume.conf
+   add_dracutmodules+=" resume "
+   $ sudo dracut --regenerate-all --force
+
+Enable related services. [82]
+
+.. code-block:: sh
+
+   $ sudo systemctl enable nvidia-hibernate nvidia-resume nvidia-suspend
 
 zram
 ^^^^
@@ -1868,3 +1911,6 @@ Bibliography
 77. "Swap Space in Linux: What It Is & How It Works." phoenixNAP. August 31, 2023. Accessed November 13, 2024. https://phoenixnap.com/kb/swap-space
 78. "What's the right amount of swap space for a modern Linux system?" opensource.com. February 11, 2019. Accessed November 13, 2024. https://opensource.com/article/19/2/swap-space-poll
 79. "swapon(8)." Linux manual page. August 25, 2023. Accessed November 13, 2024. https://www.man7.org/linux/man-pages/man8/swapon.8.html
+80. "Power management/Suspend and hibernate." ArchWiki. January 15, 2025. Accessed January 20, 2025. https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
+81. "Hibernation in Fedora Workstation." Fedora Magazine. August 10, 2022. Accessed January 20, 2025. https://fedoramagazine.org/hibernation-in-fedora-36-workstation/
+82. "Howto/NVIDIA." RPM Fusion. January 14, 2025. Accessed January 20, 2025. https://rpmfusion.org/Howto/NVIDIA
