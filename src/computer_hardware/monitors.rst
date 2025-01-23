@@ -202,6 +202,9 @@ With modern day technology, it is almost possible to reproduce the image quality
 HDMI
 ----
 
+Versions
+~~~~~~~~
+
 High-Definition Multimedia Interfae (HDMI) is a popular and prorietary format for transmitting audio and video. [28] There is optional support for Ethernet. [29]
 
 HDMI 2.1 provides support for 8K at 60 Hz and 4K at 120 Hz. [30] Here is the support matrix for HDMI 2.1 support based on the graphics card driver:
@@ -219,6 +222,53 @@ HDMI 2.1 provides support for 8K at 60 Hz and 4K at 120 Hz. [30] Here is the sup
 -  \*\*\*NVIDIA's open source graphics driver uses proprietary firmware to get HDMI 2.1 support. [31]
 
 DisplayPort provides a free and open standard as an alternative to HDMI. [32]
+
+CEC
+~~~
+
+Consumer Electronics Control (CEC) is an optional HDMI feature that allows managing a monitor or audio receiver via a connected device. Most PC motherboards and GPUs do not support this feature but USB adapters exist for providing that functionality. [39] The only mandatory feature of CEC is to control turning a monitor on or off. Depending on the vendor, other optional features may be supported. Compatibility for some vendors are listed `here <https://libcec.pulse-eight.com/vendor/support>`__.
+
+`cec-ctl <https://github.com/cz172638/v4l-utils/blob/master/utils/cec-ctl/cec-ctl.cpp>`__ from the v4l-utils project is the most popular and easiest way to manage CEC on Linux. When connected, a CEC device will appear at ``/dev/cec<NUMBER>`` started wtih ``/dev/cec0``.
+
+Configure the connected device as a TV first. [40]
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --tv -S
+
+The device can now be referenced with ``cec-ctl --to TV`` or ``cec-ctl --to <NUMBER>``.
+
+Turn the TV on or off. [41]
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --user-control-pressed ui-cmd=power-on-function
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --stand-by
+
+Turn the volume up or down. [42]
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --user-control-pressed ui-cmd=0x41
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --user-control-pressed ui-cmd=0x42
+
+View the current volume level.
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --give-audio-status
+
+Mute the TV. [43]
+
+.. code-block:: sh
+
+   $ sudo cec-ctl --to 0 --user-control-pressed ui-cmd=mute
 
 Movie Formats
 -------------
@@ -281,3 +331,8 @@ Bibliography
 36. "Brightness Standards Matter." Projector Reviews. Accessed June 9, 2024. https://www.projectorreviews.com/brightness-standards-matter/
 37. "Avoid these 7 common PROJECTOR buying mistakes." YouTube The Hook Up. June 3, 2022. Accessed June 9, 2024. https://www.youtube.com/watch?v=Ac8kW226oCM
 38. "Lumens And ANSI Lumens In Projector." XGIMI. January, 2022. Accessed June 9, 2024. https://us.xgimi.com/blogs/projectors-101/lumens-ansi-lumens-in-projector
+39. "What HTPCs have built in HDMI-CEC support?" Reddit r/htpc. December 6, 2023. Accessed January 23, 2025. https://www.reddit.com/r/htpc/comments/12aqeqt/what_htpcs_have_built_in_hdmicec_support/
+40. "[SOLVED] CEC support on RPi4 fails." LinuxQuestions.org. March 22, 2023. Accessed January 23, 2025. https://www.linuxquestions.org/questions/slackware-arm-108/cec-support-on-rpi4-fails-4175723276/
+41. "Using CEC to turn on and off TV." Super User. May 3, 2024. Accessed January 23, 2025. https://superuser.com/questions/566076/using-cec-to-turn-on-and-off-tv
+42. "CEC volume control of TV and AVR." LibreELEC Forum. June 21, 2024. Accessed January 23, 2025. https://forum.libreelec.tv/thread/28710-cec-volume-control-of-tv-and-avr/
+43. "A Comprehensive Review of HDMI-CEC and the cec-ctl Command." Understanding the Dream. May 13, 2024. Accessed January 23, 2025. https://utdream.org/a-comprehensive-review-of-hdmi-cec-and-the-cec-ctl-command/
