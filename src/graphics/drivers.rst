@@ -22,10 +22,11 @@ Mesa is a library that provides a unified collection of open source graphics dri
    NVIDIA [19], nvk, Turing, 1.4, No, No
    Apple [20], honeykrisp, M1, 1.4, No, No
    Broadcom, v3dv, VC5, 1.3 [28], No, Yes
-   Mali, panvk, Valhall [16], Partial 1.0 [17], No [29], No
+   Mali, panvk, Valhall [16], 1.1\*\* [30], No [29], No
    Qualcomm, tu (Turnip), Adreno 6XX\*, 1.4, Yes, No
 
-\* Adreno 650 and newer GPUs provide the best Vulkan support. The Turnip driver will run on older Adreno 6XX series hardware but their support is incomplete. [14][15]
+-  \* Adreno 650 and newer GPUs provide the best Vulkan support. The Turnip driver will run on older Adreno 6XX series hardware but their support is incomplete. [14][15]
+-  \*\*Mali Valhall v10 and newer is required for Vulkan 1.1 support. Partial Vulkan 1.0 support is provided for older GPUs. [17]
 
 **OpenGL**
 
@@ -269,3 +270,4 @@ Bibliography
 27. "How to Install nVidia drivers in Fedora." Linux.org. February 12, 2024. Accessed September 23, 2024. https://www.linux.org/threads/how-to-install-nvidia-drivers-in-fedora.48635/
 28. "v3dv: expose Vulkan 1.3." GitLab Mesa/mesa. August 13, 2024. Accessed January 5, 2025. https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/29476
 29. "panvk: Make support of Android Surfaceflinger Backend." GitLab Mesa/mesa. January 2, 2025. Accessed January 5, 2025. https://gitlab.freedesktop.org/mesa/mesa/-/issues/12350
+30. "panvk: expose vk1.1 on v10 hardware." GitLab Mesa/mesa. January 22, 2025. Accessed January 27, 2025. https://gitlab.freedesktop.org/mesa/mesa/-/commit/1a81bff6aa431b3fc6a2900bde96ea3e74543433
