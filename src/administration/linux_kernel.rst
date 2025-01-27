@@ -527,7 +527,7 @@ Fedora
 
    .. code-block:: sh
 
-      $ sudo dnf install fedora-packager fedpkg grubby ncurses-devel pesign rpmdevtools
+      $ sudo dnf install fedora-packager fedpkg git grubby ncurses-devel pesign rpmdevtools
 
 -  Download the Fedora package for the Linux kernel. This first requires increasing the git buffer size or else the download of the large git repository will fail.
 
