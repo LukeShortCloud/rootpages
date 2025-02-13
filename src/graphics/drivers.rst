@@ -37,7 +37,7 @@ Mesa is a library that provides a unified collection of open source graphics dri
    AMD, radeonsi, Southern Island, 4.6, 3.2, Yes
    Intel, i965, Gen 8, 4.6, 3.2, Yes
    NVIDIA, nouveau/nv<NUMBER>, Riva TNT, 4.5, 3.1, No
-   Apple, agx, M1, Partial 2.1 [18], Partial 2.0 [18], No
+   Apple, agx, M1, 4.6, 3.2 [18], No
    Broadcom, v3d, VC5, (None), 3.1, Yes
    Mali, panfrost, Midgard v4, 3.1, 3.1, No
    Qualcomm, freedreno, Adreno A2XX, 4.5, 3.2, No
@@ -258,7 +258,7 @@ Bibliography
 15. "Mesa's Turnip Now Advertises Vulkan 1.3 Support." Phoronix Forums. September 22, 2022. Accessed March 14, 2023. https://www.phoronix.com/forums/forum/linux-graphics-x-org-drivers/vulkan/1347399-mesa-s-turnip-now-advertises-vulkan-1-3-support?p=1347507#post1347507
 16. "panvk: Drop support for Midgard." GitLab Mesa/mesa. February 20, 2023. Accessed March 14, 2023. https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/16915
 17. "panvk: Stop advertising Vulkan 1.1." freedesktop.org git repository browser. March 14, 2022. Accessed March 14, 2023. https://cgit.freedesktop.org/mesa/mesa/commit/?id=a35e721162bb7dad087e75fd07fec08bc635dc96
-18. "Apple GPU drivers now in Asahi Linux." Alyssa Rosenzweig. December 7, 2022. Accessed March 14, 2023. https://rosenzweig.io/blog/asahi-gpu-part-7.html
+18. "Conformant OpenGL 4.6 on the M1." Rosenzweig. February 14, 2024. Accessed February 12, 2025. https://rosenzweig.io/blog/conformant-gl46-on-the-m1.html
 19. "Introducing NVK." Collabora News & Blog. October 4, 2022. Accessed March 29, 2023. https://www.collabora.com/news-and-blog/news-and-events/introducing-nvk.html
 20. "Vulkan 1.3 on the M1 in 1 month." Rosenzweig. June 5, 2024. Accessed June 5, 2024. https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html
 21. "NVIDIA Cleans Up GSP Firmware Binary License." Phoronix. May 31, 2023. Accessed July 31, 2023. https://www.phoronix.com/news/NVIDIA-GSP-Firmware-License
