@@ -380,6 +380,9 @@ Linux can be installed onto a portable storage device that can boot on both lega
 -  GRUB requirements:
 
    -  Configure GRUB to use GPT partition UUIDs instead of Linux partition UUIDs. GPT partition UUIDs will not change between different UEFI motherboards. [21][22]
+
+      -  Labels are even more portable but GRUB does not natively support them. Hints on how to hack that support in can be found `here <https://forums.linuxmint.com/viewtopic.php?p=296417#p296417>`__.  systemd-boot natively supports labels but it does not support legacy BIOS boot.
+
    -  Install GRUB to the UEFI partition mount. Use the ``--removable`` option to set a default UEFI firmware at ``/boot/efi/EFI/BOOT/BOOTX64.efi``. This assumes that only one operating system will be installed on the storage device. [9] Also use the ``--no-nvram`` option to avoid modifying UEFI variables on the local motherboard. [20]
    -  Install GRUB to the block device (not a partition) that will be used for legacy BIOS boot.
    -  Regenerate the GRUB configuration file.
