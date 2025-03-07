@@ -20,19 +20,19 @@ Sphinx is a Python package that is required to compile Root Pages into different
 Arch Linux:
 
 ```
-$ sudo pacman -S python-sphinx python-sphinx_rtd_theme
+$ sudo pacman -S make python-sphinx python-sphinx_rtd_theme
 ```
 
 Debian:
 
 ```
-$ sudo apt-get install python3-sphinx python3-sphinx-rtd-theme
+$ sudo apt-get install make python3-sphinx python3-sphinx-rtd-theme
 ```
 
 Fedora:
 
 ```
-$ sudo dnf install python3-sphinx python3-sphinx_rtd_theme
+$ sudo dnf install make python3-sphinx python3-sphinx_rtd_theme
 ```
 
 macOS:
