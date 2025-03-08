@@ -67,6 +67,9 @@ AI Prompt Engineering
 Ollama
 ~~~~~~
 
+Usage
+^^^^^
+
 Ollama is a large language model (LLM) that is the best free and open source alternative to ChatGPT. [8]
 
 Installation [9]:
@@ -150,6 +153,91 @@ Delete all models.
 
       $ rm -r -f ~/.ollama/models/*
 
+Distrobox
+^^^^^^^^^
+
+Introduction
+''''''''''''
+
+`distrobox <https://distrobox.it/>`__ can be used to run Ollama on immutable operating systems such as Fedora Atomic Desktop and openSUSE MicroOS. This guide focuses on systems using an AMD graphics device. For NVIDIA support, either (1) use the ``--nvidia`` argument with ``distrobox create`` or (2) use the option ``nvidia=true`` with ``distrobox-assemble create``.
+
+Fedora Atomic Desktop
+'''''''''''''''''''''
+
+Create and enter a distrobox container for Fedora.
+
+.. code-block:: sh
+
+   $ distrobox create --volume /dev/dri:/dev/dri --volume /dev/kfd:/dev/kfd --additional-packages "pciutils" --init --image quay.io/fedora/fedora:latest --name ollama-fedora
+   $ distrobox enter ollama-fedora
+
+openSUSE MicroOS
+''''''''''''''''
+
+Allow ROCm to be used by non-root users.
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/udev/rules.d/90-rocm.rules
+   KERNEL=="kfd", GROUP=="video", MODE="0660"
+   SUBSYSTEM=="kfd", KERNEL=="kfd", TAG+="uaccess", GROUP="video"
+   $ sudo udevadm control --reload-rules
+   $ sudo udevadm trigger
+
+Find the existing UID and GID mappings. If none exist, create one using the same name for both the user and group.
+
+.. code-block:: sh
+
+   $ cat /etc/subuid
+   $ cat /etc/subgid
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/subuid
+   <NAME>:100000:65536
+   $ sudo -E ${EDITOR} /etc/subgid
+   <NAME>:100000:65536
+
+Find the GID for the ``render`` and ``video`` group.
+
+.. code-block:: sh
+
+   $ grep render /etc/group
+   $ grep video /etc/group
+
+Create a Distrobox build configuration file. Replace the ``subuid``, ``subgid``, and ``nogroup`` values with the related starting value. Also replace the GIDs for the ``render`` and ``video`` group.
+
+.. code-block:: sh
+
+   $ ${EDITOR} distrobox-ollama-ubuntu.ini
+
+.. code-block:: ini
+
+   [ollama-ubuntu]
+   image=docker.io/rocm/dev-ubuntu-24.04:latest
+   init=true
+   additional_packages = "pciutils"
+   additional_flags="--device=/dev/kfd --device=/dev/dri"
+   subuid=100000
+   subgid=100000
+   init_hooks="export ROCM_PATH=/opt/rocm;"
+   init_hooks="addgroup --gid 486 render"
+   init_hooks="addgroup --gid 483 video"
+   init_hooks="addgroup --gid 100000 nogroup"
+   init_hooks="usermod -aG render,video,nogroup $LOGNAME;"
+   nvidia=false
+   pull=false
+   root=false
+   replace=true
+   start_now=false
+
+Create and enter the Distrobox container. [19]
+
+.. code-block:: sh
+
+   $ distrobox-assemble create --file distrobox-ollama-ubuntu.ini
+   $ distrobox enter ollama-ubuntu
+
 History
 -------
 
@@ -176,3 +264,4 @@ Bibliography
 16. "lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF." Hugging Face. Accessed December 12, 2024. https://huggingface.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF
 17. "deepseek-coder-v2." Ollama. September, 2024. Accessed December 13, 2024. https://ollama.com/library/deepseek-coder-v2
 18. "Best LLM Model for coding." Reddit r/LocalLLaMA. November 6, 2024. Accessed February 4, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1gkewyp/best_llm_model_for_coding/
+19. "OpenSUSE MicroOS Howto with AMDGPU / ROCm - To run CUDA AI Apps like Ollama." GitHub Gist torsten-online. February 10, 2025. Accessed March 7, 2025. https://gist.github.com/torsten-online/22dd2746ddad13ebbc156498d7bc3a80
