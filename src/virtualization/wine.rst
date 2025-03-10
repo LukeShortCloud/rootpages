@@ -530,6 +530,10 @@ Releases
 
 Release highlights:
 
+-  `2.5 <https://github.com/doitsujin/dxvk/releases/tag/v2.5>`__
+    - Major memory optimizations were added to lower VRAM requirements.
+-  `2.4 <https://github.com/doitsujin/dxvk/releases/tag/v2.4>`__
+    - Translates DirectX 8 to Vulkan through the use of the merged-in `D8VK <https://github.com/AlpyneDreams/d8vk>`__ project
 -  `2.1 <https://github.com/doitsujin/dxvk/releases/tag/v2.1>`__
     - Supports HDR10.
 -  `2.0 <https://github.com/doitsujin/dxvk/releases/tag/v2.0>`__
