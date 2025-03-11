@@ -130,6 +130,40 @@ DirectX End-User Runtime
 
 The DirectX 9 end-user runtime is not installed by default on Windows LTSC editions. This includes many gaming libraries required by older games such as the older DirectX SDK, Managed DirectX, XACT, XAudio, and XInput. Download and install "DirectX End-User Runtimes (June 2010)" from `here <https://www.microsoft.com/en-us/download/details.aspx?id=8109>`__.
 
+Gaming Features
+---------------
+
+Here are all of the changes to gaming features in Windows.
+
+-  Windows 11
+
+   -  No 32-bit edition of Windows 11. Only 32-bit editions of Windows had support for 16-bit DOS applications via NTVDM. [19]
+
+-  Windows 10
+
+   -  DirectX has been updated to major version 12.
+
+-  Windows 8
+
+   -  Removed 16-bit color screen mode. [20]
+   -  DirectDraw, which is available in DirectX 10 and older, now uses software emulation and is slow. [21]
+
+-  Windows 7
+
+   -  DirectX has been updated to major version 11.
+
+-  Windows Vista
+
+   -  DirectSound is now software emulated which causes various issues because the library is sensitive to latency. [22]
+   -  16-bit DOS applications via NTVDM are limited to only 32 MB of RAM. [23]
+   -  First operating system that launched with a 64-bit edition.
+   -  DirectX has been updated to major version 10.
+
+-  Windows XP
+
+   -  This is the first release of Windows to not be based on MS-DOS. 16-bit DOS applications cannot be run natively and now use NTVDM instead. [24]
+   -  DirectX has been updated to major version 9. [25]
+
 Downloads
 ---------
 
@@ -164,3 +198,10 @@ Bibliography
 16. "Windows 10 Home and Pro - Microsoft Lifecycle." Microsoft Learn. Accessed January 11, 2023. https://learn.microsoft.com/en-us/lifecycle/products/windows-10-home-and-pro
 17. "How to Stop Windows 11 Automatic Updates – 5 Ways." MiniTool Software. May 18, 2023. Accessed October 24, 2023. https://www.minitool.com/data-recovery/how-to-stop-windows-11-update.html
 18. "Specify Target Feature Update Version in Windows 11." Windows 11 Forum. January 31, 2022. Accessed October 24, 2023. https://www.elevenforum.com/t/specify-target-feature-update-version-in-windows-11.3811/
+19. "Is Windows 11 All it’s Cracked up to be?" Steeves and Associates. October 18, 2021. Accessed March 10, 2025. https://www.steeves.net/news/is-windows-11-all-its-cracked-up-to-be/
+20. "WineD3D For Windows." Federico Dossena. 2025. Accessed March 10, 2025. https://fdossena.com/?p=wined3d/index.frag
+21. "DirectDraw Emulation Is Broken In Windows 8/8.1." Microsoft Community. May 29, 2014. Accessed March 10, 2025. https://answers.microsoft.com/en-us/windows/forum/windows_8-gaming/directdraw-emulation-is-broken-in-windows-881/4edfc685-72b2-4688-95ed-c745ddd38825
+22. "DirectSound." Microsoft Wiki Fandom. Accessed March 10, 2025. https://microsoft.fandom.com/wiki/DirectSound
+23. "Windows Vista restricts non-Win32 apps to 32 MB of memory." Thomas R. Nicely. February 26, 2008. Accessed March 10, 2025. https://web.archive.org/web/20080228231933/http://www.trnicely.net/misc/vista.html
+24. "Does Windows still rely on MS-DOS?" Super User. December 4, 2021. Accessed March 10, 2025. https://superuser.com/questions/319056/does-windows-still-rely-on-ms-dos
+25. "DirectX." Microsoft Wiki Fandom. Accessed March 10, 2025. https://microsoft.fandom.com/wiki/DirectX
