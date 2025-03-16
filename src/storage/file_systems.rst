@@ -724,6 +724,7 @@ Default settings for operating systems [71][76]:
 
    Fedora, zstd, 0.5, 8 GiB
    GalliumOS, zstd, 1.5, None
+   SteamOS, zstd, 0.5, None
    winesapOS, lz4, 2.0, None
 
 zram supports the following algorithms [70]:
