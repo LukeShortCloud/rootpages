@@ -483,10 +483,13 @@ Disable network PXE boot:
 
 -  Exit > Exit Saving Changes > Yes
 
-Increase Swap Size and VRAM
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Increase Swap Size
+~~~~~~~~~~~~~~~~~~
 
-By default, SteamOS uses a 1 GiB swapfile at ``/home/swapfile``. Combined with the Steam Deck's 16 GB of RAM, it provides a total of 17 GB of temporary storage that is shared between the CPU and iGPU. The swappiness is set to 100% so Linux will always be writing as much temporary storage to the swap file as possible.
+SteamOS 3.5 and Older
+^^^^^^^^^^^^^^^^^^^^^
+
+By default, SteamOS 3.5 and older used a 1 GiB swap file at ``/home/swapfile``. Combined with the Steam Deck's 16 GB of RAM, it provides a total of 17 GB of temporary storage that is shared between the CPU and iGPU. The swappiness is set to 100 (50%) so Linux will always be writing as much temporary storage to the swap file often.
 
 .. code-block:: sh
 
@@ -532,7 +535,96 @@ Verify that the changes have been made.
    $ sysctl --values vm.swappiness
    1
 
-VRAM is the amount of system RAM that is used for the iGPU instead of the CPU. The Steam Deck can use up to 8 GB of RAM as VRAM. In the BIOS, it is possible to set the minimum amount of VRAM the iGPU can use to 4 GB (up from 1 GB).
+The swap file can be reduced back to its original size with the following commands.
+
+.. code-block:: sh
+
+   $ sudo swapoff /home/swapfile
+   $ sudo rm /home/swapfile
+   $ sudo dd if=/dev/zero of=/home/swapfile bs=1G count=1 status=progress
+   $ sudo swapon --all
+
+[2][3]
+
+SteamOS 3.6 and Newer
+^^^^^^^^^^^^^^^^^^^^^
+
+By default, as of SteamOS 3.6, zram is used instead of a swap file. It is configured to provide about 8 GiB of swap space with a sytem that has 16 GiB of RAM.
+
+These are the default settings.
+
+.. code-block:: sh
+
+   $ cat /proc/swaps
+   Filename				Type		Size		Used		Priority
+   /dev/zram0                              partition	7583740		0		100
+   $ sysctl --values vm.swappiness
+   60
+   $ zramctl
+   NAME       ALGORITHM DISKSIZE DATA COMPR TOTAL STREAMS MOUNTPOINT
+   /dev/zram0 zstd          7.2G  52K  3.7K  124K       8 [SWAP]
+   $ cat /usr/lib/systemd/zram-generator.conf
+   # -*- mode: sh; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+   # vim: et sts=2 sw=2
+   
+   #  SPDX-License-Identifier: LGPL-2.1+
+   #
+   #  Copyright © 2023 Valve Corporation.
+   #
+   #  This file is part of holo.
+   
+   [zram0]
+   # size at 50% of physical RAM (after discounting memory used by the kernel)
+   zram-size = ram/2
+   compression-algorithm = zstd
+   swap-priority = 100
+   fs-type = swap
+
+If the swap file was ever increased from the default size of 1 GiB, disable the swap file first. [29] There is a performance impact to using both a swap file and zram.
+
+.. code-block:: sh
+
+   $ sudo swapoff /home/swapfile
+   $ sudo rm /home/swapfile
+   $ sudo touch /home/swapfile
+   $ sudo swapon --all
+
+Configure `optimal zram settings <../storage/file_systems.html#zram>`__.
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/sysctl.d/99-zram.conf
+   vm.swappiness = 180
+   vm.watermark_boost_factor = 0
+   vm.watermark_scale_factor = 125
+   vm.page-cluster = 1
+   $ sudo -E ${EDITOR} /etc/systemd/zram-generator.conf
+   [zram0]
+   compression-algorithm = lz4
+   zram-size = ram * 2
+   $ sudo -E ${EDITOR} /etc/atomic-update.conf.d/zram.conf
+   /etc/sysctl.d/99-zram.conf
+   /etc/systemd/zram-generator.conf
+
+Reboot to apply the changes.
+
+Verify that the changes have been made.
+
+.. code-block:: sh
+
+   $ cat /proc/swaps
+   Filename				Type		Size		Used		Priority
+   /dev/zram0                              partition	30334972	0		100
+   $ sysctl --values vm.swappiness
+   180
+   $ zramctl
+   NAME       ALGORITHM DISKSIZE DATA COMPR TOTAL STREAMS MOUNTPOINT
+   /dev/zram0 lz4          28.9G   4K   69B   20K       8 [SWAP]
+
+Increase VRAM Size
+~~~~~~~~~~~~~~~~~~
+
+VRAM is the amount of system RAM that is used for the iGPU instead of the CPU. The Steam Deck can use up to 8 GB of RAM as VRAM. In the BIOS, it is possible to set the minimum amount of VRAM the iGPU can use to 4 GB (up from 1 GB). It is recommended to first increase the swap size.
 
 - Press the "volume up" and "power" buttons to enter the BIOS > Setup Utility > Advanced > UMA Frame buffer Size: 4G > Exit > Exit Saving Changes
 
@@ -595,3 +687,4 @@ Bibliography
 26. "These are all the Steam Deck shortcuts." XDA Portal & Forums. May 11, 2023. Accessed November 6, 2023. https://www.xda-developers.com/steam-deck-shortcuts/
 27. "Steam Deck shortcuts you need to know." AllGamers. February 13, 2023. Accessed November 6, 2023. https://ag.hyperxgaming.com/article/13255/steam-deck-shortcuts-you-need-to-know
 28. "Keeping your system-wide configuration files intact after updating SteamOS." Alberto Garcia's blog. Accessed March 16, 2025. https://blogs.igalia.com/berto/2025/02/05/keeping-your-system-wide-configuration-files-intact-after-updating-steamos/
+29. "How to disable swap file?" Steam Deck General Discussions. January 14, 2024. Accessed March 16, 2025. https://steamcommunity.com/app/1675200/discussions/0/3812910207848149333/
