@@ -436,6 +436,19 @@ Pacman can be used to install additional operating system packages. Installed pa
       $ sudo systemd-sysext merge
       $ sudo steamos-readonly enable
 
+Persistent Configuration Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, as of SteamOS 3.6, operating system updates will move all user created configuration files in ``/etc/`` to ``/etc/previous/``. 5 additional backups from older uppdates are stored in ``/var/lib/steamos-atomupd/etc_backup/``.
+
+Users can create ``*.conf`` files in the ``/etc/atomic-update.conf.d/`` directory to define what files should be kept. Individual files and wildcards can be used. [28]
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/atomic-update.conf.d/foobar.conf
+   /etc/foobar/settings.conf
+   /etc/foobar/settings.conf.d/**
+
 Steam Deck BIOS
 ---------------
 
@@ -581,3 +594,4 @@ Bibliography
 25. "Controller shortcut for the ... button?" Reddit r/SteamDeck. September 28, 2022. Accessed November 6, 2023. https://www.reddit.com/r/SteamDeck/comments/xq8gnw/controller_shortcut_for_the_button/
 26. "These are all the Steam Deck shortcuts." XDA Portal & Forums. May 11, 2023. Accessed November 6, 2023. https://www.xda-developers.com/steam-deck-shortcuts/
 27. "Steam Deck shortcuts you need to know." AllGamers. February 13, 2023. Accessed November 6, 2023. https://ag.hyperxgaming.com/article/13255/steam-deck-shortcuts-you-need-to-know
+28. "Keeping your system-wide configuration files intact after updating SteamOS." Alberto Garcia's blog. Accessed March 16, 2025. https://blogs.igalia.com/berto/2025/02/05/keeping-your-system-wide-configuration-files-intact-after-updating-steamos/
