@@ -335,6 +335,63 @@ Give a running process the lowest I/O priority:
 
 [25][26]
 
+Memory
+------
+
+Memory Caching
+~~~~~~~~~~~~~~
+
+Use a configuration file at ``/etc/sysctl.d/*.conf`` for permanent settings or run ``sysctl -w <KEY>=<VALUE>`` for temporary settings.
+
+Default values relating to memory caching [40]:
+
+.. code-block:: ini
+
+   # The minimum percentage of RAM used for caching writes before they should be written to the storage device.
+   vm.dirty_background_ratio = 10
+   # The percentage of RAM to use for caching writes.
+   vm.dirty_ratio = 20
+   # The maximum time before writing a file to the storage device.
+   vm.dirty_expire_centisecs = 3000
+   # The minimum time before writing a file to the storage device.
+   vm.dirty_writeback_centisecs = 500
+   # Determines how quickly vm.dirty_background_ratio writes need to be written back to the storage device.
+   vm.vfs_cache_pressure = 100
+
+``vm.dirty_background_ratio`` should be anywhere from 1/4 to 1/2 of ``vm.dirty_ratio`` for optimal performance.
+
+Decrease the amount of memory caching / increase the amount of file writes. [41]
+
+.. code-block:: ini
+
+   vm.dirty_background_ratio = 5
+   vm.dirty_ratio = 10
+
+Increase the amount of memory caching / decrease the amount of file writes. [42]
+
+.. code-block:: ini
+
+   vm.dirty_background_ratio = 40
+   vm.dirty_ratio = 80
+
+For slow drives only, 50 is the recommended cache pressure to delay writes until the RAM starts to get more full. [43][44]
+
+.. code-block:: ini
+
+   vm.vfs_cache_pressure = 50
+
+Delay writes to the drive by 1 hour or forever. Writes will get flushed to the disk when a ``sync`` or ``shutdown`` command is received. This is not recommended because a power outage will result in lost data. [45][46]
+
+.. code-block:: ini
+
+   vm.dirty_expire_centisecs = 360000
+   vm.dirty_writeback_centisecs = 360000
+
+.. code-block:: ini
+
+   vm.dirty_expire_centisecs = 0
+   vm.dirty_writeback_centisecs = 0
+
 Initial RAM File System
 -----------------------
 
@@ -721,3 +778,10 @@ Bibliography
 37. "Deadline scheduler merged for 3.14." January 22, 2014. Accessed January 30, 2024. https://lwn.net/Articles/581491/
 38. "Chapter 5. Priorities and policies." Red Hat Customer Portal. Accessed January 30, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/8/html/reference_guide/chap-priorities_and_policies
 39. "chrt command in Linux with examples." GeeksforGeeks. May 15, 2019. Accessed January 30, 2024. https://www.geeksforgeeks.org/chrt-command-in-linux-with-examples/
+40. "Documentation for /proc/sys/vm/* kernel version 2.6.29." Linux Kernel Documentation. 2008. Accessed May 3, 2025.  https://www.kernel.org/doc/Documentation/sysctl/vm.txt
+41. "Low write performance on Linux servers with large RAM." SUSE Support. April 20, 2023. Accessed May 3, 2025. https://www.suse.com/support/kb/doc/?id=000017857
+42. "Better Linux Disk Caching & Performance with vm.dirty_ratio & vm.dirty_background_ratio." The Lone Sysadmin. December 22, 2013. Accessed May 3, 2025. https://lonesysadmin.net/2013/12/22/better-linux-disk-caching-performance-vm-dirty_ratio/
+43. "Speed up your Mint!" easylinuxtipsproject. March 21, 2015. Accessed May 3, 2025. https://web.archive.org/web/20150321012336/https://sites.google.com/site/easylinuxtipsproject/3
+44. "Linux simple performance tweaks." GitHub Nihhaar/linux_performance.md. September 18, 2017. Accessed May 3, 2025. https://gist.github.com/Nihhaar/ca550c221f3c87459ab383408a9c3928
+45. "Using RAM Cache to Speed Up Linux Disk Performance." Medium Andre Rocha. April 5, 2022. Accessed May 3, 2025. https://andrerochaos.medium.com/using-ram-cache-to-speed-up-linux-disk-performance-e6d568d486c4
+46. "Optimizing Ubuntu to run from a USB key or SD card." Steve Hanov's Blog. 2009. Accessed May 3, 2025. https://stevehanov.ca/blog/?id=48
