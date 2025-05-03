@@ -167,6 +167,30 @@ Save a container image as a tarball.
 
          $ skopeo copy docker://<CONTAINER_REGISTRY_DOMAIN>/<CONTAINER_REGISTRY_PROJECT>/<CONTAINER_IMAGE>:<CONTAINER_TAG> oci-archive:<FILE>.tar
 
+Build with Different CPU Architectures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Regardless of the CPU architecture of the host, container images for a different CPU architecture can be built and run. There is a performance hit because emulation is used for accuracy.
+
+-  Build for both x86 and Arm (64-bit). [40]
+
+   .. code-block:: sh
+
+      $ [docker|podman] build --platform linux/amd64,linux/arm64
+
+-  Run for a specified architecture. [41]
+
+   .. code-block:: sh
+
+      $ [docker|podman] run --platform linux/[amd64|arm64]
+
+-  In a Containerfile, use ``RUN`` for certain steps for a specific CPU arcchitecture. [42]
+
+   ::
+
+      ARG TARGETPLATFORM
+      RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+
 Registries
 ----------
 
@@ -1052,3 +1076,6 @@ Bibliography
 37. "Tutorial: Host a Local Podman Image Registry." The New Stack. January 2, 2021. Accessed August 5, 2024. https://thenewstack.io/tutorial-host-a-local-podman-image-registry/
 38. "Podman - Local Container Registry." blog.while-true-do.io. July 6, 2022. Accessed August 5, 2024. https://blog.while-true-do.io/podman-local-container-registry/
 39. "[Suggestion] Apply an overlayfs to /tmp/.X11-unix #451." GitHub 89luca89/distrobox. July 22, 2024. Accessed November 15, 2024. https://github.com/89luca89/distrobox/issues/451
+40. "How to build multi-architecture container images." Red Hat Developer. November 3, 2023. Accessed May 3, 2025. https://developers.redhat.com/articles/2023/11/03/how-build-multi-architecture-container-images
+41. "Run x86 (Intel) and ARM based images on Apple Silicon (M1) Macs?" Docker Community Forums. January 2, 2024. Accessed May 3, 2025. https://forums.docker.com/t/run-x86-intel-and-arm-based-images-on-apple-silicon-m1-macs/117123/14
+42. "Dockerfile reference." Docker Docs. Accessed May 3, 2025. https://docs.docker.com/reference/dockerfile/
