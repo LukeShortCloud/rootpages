@@ -184,7 +184,7 @@ Regardless of the CPU architecture of the host, container images for a different
 
       $ [docker|podman] run --platform linux/[amd64|arm64]
 
--  In a Containerfile, use ``RUN`` for certain steps for a specific CPU arcchitecture. [42]
+-  In a Containerfile, use ``RUN`` for certain steps for a specific CPU arcchitecture. [31]
 
    ::
 
@@ -731,16 +731,6 @@ Example Java <=9 usage in a docker compose file that utilizes an environment var
 
    CMD java -XX:+PrintFlagsFinal $JAVA_OPTS -jar app.jar
 
-Multi-Architecture Support
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The ``docker buildx build`` command can be used as a replacement for ``docker build`` to create a container image based on the CPU architecture of the running host. In the ``Containerfile``, the ``ARCH`` argument needs to be set to an empty value. [31]
-
-::
-
-   ARG ARCH=
-   FROM ${ARCH}ubuntu:latest
-
 Container Tools (buildah, podman, and skopeo)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1067,7 +1057,7 @@ Bibliography
 28. "Distrobox." Arch Wiki. June 18, 2023. Accessed June 27, 2023. https://wiki.archlinux.org/title/Distrobox
 29. "Distrobox." GitHub 89luca89/distrobox. June 25, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox
 30. "Useful tips." GitHub 89luca89/distrobox. June 15, 2023. Accessed June 27, 2023. https://github.com/89luca89/distrobox/blob/main/docs/useful_tips.md
-31. "Multi-arch build and images, the simple way." Docker Blog. April 30, 2020. Accessed September 25, 2023. https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+31. "Dockerfile reference." Docker Docs. Accessed May 3, 2025. https://docs.docker.com/reference/dockerfile/
 32. "Install Podman in a static manner." GitHub 89luca89/distrobox. September 20, 2023. Accessed October 26, 2023. https://github.com/89luca89/distrobox/blob/main/docs/posts/install_podman_static.md
 33. "How to reset podman and buildah after experimenting as a non-root user?" Stack Overflow. October 19, 2021. Accessed May 16, 2024. https://stackoverflow.com/questions/56542220/how-to-reset-podman-and-buildah-after-experimenting-as-a-non-root-user
 34. "docker image save." Docker Docs. Accessed May 22, 2024. https://docs.docker.com/reference/cli/docker/image/save/
@@ -1078,4 +1068,3 @@ Bibliography
 39. "[Suggestion] Apply an overlayfs to /tmp/.X11-unix #451." GitHub 89luca89/distrobox. July 22, 2024. Accessed November 15, 2024. https://github.com/89luca89/distrobox/issues/451
 40. "How to build multi-architecture container images." Red Hat Developer. November 3, 2023. Accessed May 3, 2025. https://developers.redhat.com/articles/2023/11/03/how-build-multi-architecture-container-images
 41. "Run x86 (Intel) and ARM based images on Apple Silicon (M1) Macs?" Docker Community Forums. January 2, 2024. Accessed May 3, 2025. https://forums.docker.com/t/run-x86-intel-and-arm-based-images-on-apple-silicon-m1-macs/117123/14
-42. "Dockerfile reference." Docker Docs. Accessed May 3, 2025. https://docs.docker.com/reference/dockerfile/
