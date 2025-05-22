@@ -60,13 +60,13 @@ It is possible to create a backup of a storage device while compressing the live
 
       .. code-block:: sh
 
-         $ sudo dd if=/dev/<DEVICE> status=progress | xz --stdout > <BACKUP_FILE>.img.xz"
+         $ sudo dd if=/dev/<DEVICE> status=progress | xz --stdout > <BACKUP_FILE>.img.xz
 
    -  Restore a backup using XZ decompression.
 
       .. code-block:: sh
 
-         $ xz --decompress --stdout <BACKUP_FILE>.img.xz | sudo dd of=/dev/<DEVICE> status=progress"
+         $ xz --decompress --stdout <BACKUP_FILE>.img.xz | sudo dd of=/dev/<DEVICE> status=progress
 
 -  Zstandard for a balance of compression and speed. [9]
 
