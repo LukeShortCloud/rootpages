@@ -238,6 +238,41 @@ Create and enter the Distrobox container. [19]
    $ distrobox-assemble create --file distrobox-ollama-ubuntu.ini
    $ distrobox enter ollama-ubuntu
 
+LLM Tuning
+^^^^^^^^^^
+
+Quantization
+''''''''''''
+
+Most LLMs use a float 16 value. It is possible to use quantization to lower the memory usage. This allows for running larger models and/or increasing the context size.
+
+Common and recommended values [20]:
+
+-  ``f32`` = Lossless.
+-  ``f16`` = Half the size of ``f32``. Default for most models. Performs the same as ``f32`` in most cases.
+-  ``q5_k_m`` = About 6x smaller compared to ``f32`` with only a minor loss in quality.
+-  ``q4_k_m`` = About 7x smaller compared to ``f32`` but a moderate quality loss.
+
+Configure a quantization value.
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/systemd/system/ollama.service
+      [Service]
+      Environment="OLLAMA_KV_CACHE_TYPE=<QUANTIZATION_VALUE>"
+      Environment="OLLAMA_FLASH_ATTENTION=1"
+      $ sudo systemctl daemon-reload
+      $ sudo systemctl restart ollama
+
+-  macOS [9][21]:
+
+   .. code-block:: sh
+
+      $ launchctl setenv OLLAMA_KV_CACHE_TYPE <QUANTIZATION_VALUE>
+      $ launchctl setenv OLLAMA_FLASH_ATTENTION 1
+
 History
 -------
 
@@ -254,7 +289,7 @@ Bibliography
 6. "How to Pick the Best Graphics Card for Machine Learning." Towards Data Science. September 19, 2022. Accessed November 7, 2022. https://towardsdatascience.com/how-to-pick-the-best-graphics-card-for-machine-learning-32ce9679e23b
 7. "Does TensorFlow Support OpenCL?" IndianTechWarrior. Accessed November 7, 2022. https://indiantechwarrior.com/does-tensorflow-support-opencl/
 8. "Chatbot Arena LLM Leaderboard: Community-driven Evaluation for Best LLM and AI chatbots." Chatobt Arena. Accessed December 4, 2024. https://lmarena.ai/
-9. "FAQ." GitHub ollama/ollama. December 3, 2024. Accessed December 4, 2024. https://github.com/ollama/ollama/blob/main/docs/faq.md
+9. "FAQ." GitHub ollama/ollama. April 28, 2025. Accessed May 27, 2025. https://github.com/ollama/ollama/blob/main/docs/faq.md
 10. "What does 7b, 8b and all the b’s mean on the models and how are each models different from one another?" Reddit r/LocalLLaMA. May 23, 2024. Accessed December 4, 2024. https://www.reddit.com/r/LocalLLaMA/comments/1cylwmd/what_does_7b_8b_and_all_the_bs_mean_on_the_models/
 11. "Running Llama 3.1 Locally with Ollama: A Step-by-Step Guide." Medium - Paulo Batista. July 25, 2024. Accessed December 4, 2024. https://medium.com/@paulocsb/running-llama-3-1-locally-with-ollama-a-step-by-step-guide-44c2bb6c1294
 12. "LLaMA 3.2 vs. LLaMA 3.1 vs. Gemma 2: Finding the Best Open-Source LLM for Content Creation." Medium - RayRay. October 2, 2024. Accessed December 4, 2024. https://byrayray.medium.com/llama-3-2-vs-llama-3-1-vs-gemma-2-finding-the-best-open-source-llm-for-content-creation-1f6085c9f87a
@@ -265,3 +300,5 @@ Bibliography
 17. "deepseek-coder-v2." Ollama. September, 2024. Accessed December 13, 2024. https://ollama.com/library/deepseek-coder-v2
 18. "Best LLM Model for coding." Reddit r/LocalLLaMA. November 6, 2024. Accessed February 4, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1gkewyp/best_llm_model_for_coding/
 19. "OpenSUSE MicroOS Howto with AMDGPU / ROCm - To run CUDA AI Apps like Ollama." GitHub Gist torsten-online. February 10, 2025. Accessed March 7, 2025. https://gist.github.com/torsten-online/22dd2746ddad13ebbc156498d7bc3a80
+20. "Difference in different quantization methods #2094." GitHub ggml-org/llama.cpp. October 27, 2024. Accessed May 27, 2025. https://github.com/ggml-org/llama.cpp/discussions/2094
+21. "Configuring Your Ollama Server." ShinChven's Blog. January 15, 2025. Accessed May 27, 2025. https://atlassc.net/2025/01/15/configuring-your-ollama-server
