@@ -592,7 +592,7 @@ Mock
 
 Mock creates a container of a RPM-based Linux distribution. This allows for isolating build dependencies away from the host and building a RPM for more than one Linux distribution.
 
-If using a container, it needs special and elevated permissions to be able to create containers inside of the container. Create a container with these additional privileges (or simply use ``--privileged`` for fully elevated privileges) [51][52]:
+If using a container, use ``mock --isolation=simple`` to use the legacy chroot build system. [54] Otherwise, for nested container support, the host container needs special and elevated permissions to be able to create containers inside of the container. Create a container with these additional privileges (or simply use ``podman run --privileged`` for fully elevated privileges) [51][52]:
 
 .. code-block:: sh
 
@@ -1237,3 +1237,4 @@ Bibliography
 51. "How to use Podman inside of a container." Enable Sysadmin. July 1, 2021. Accessed February 29, 2024. https://www.redhat.com/sysadmin/podman-inside-container
 52. "Running mock in a docker container." Fedora Discussion. May 31, 2023. Accessed February 29, 2024. https://discussion.fedoraproject.org/t/running-mock-in-a-docker-container/83500
 53. "RPM: Set Required: somepackage >= 0.5.0 AND somepackage < 0.6.0." Server Fault. August 12, 2024. Accessed December 15, 2024. https://serverfault.com/questions/411444/rpm-set-required-somepackage-0-5-0-and-somepackage-0-6-0
+54. "Mock." Mock. June 6, 2025. Accessed June 16, 2025. https://rpm-software-management.github.io/mock/
