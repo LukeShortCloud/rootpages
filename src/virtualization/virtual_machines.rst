@@ -415,6 +415,28 @@ If using a file system with copy-on-write capabilities, either (1) disable copy-
 
       $ chattr +C <FILE_OR_DIRECTORY>
 
+Create a snapshot and use it.
+
+1.  Rename the existing image.
+
+   .. code-block:: sh
+
+      $ mv <IMAGE>.qcow2 <IMAGE>-original.qcow2
+
+2.  Create a snapshot to be the new image (do not use the original image, it is now the "backing file" / backup).
+
+   .. code-block:: sh
+
+      $ qemu-img create -f qcow2 -b <IMAGE>-original.qcow2 -F qcow2 <IMAGE>.qcow2
+
+3.  View details about the backing file. [94]
+
+   .. code-block:: sh
+
+      $ qemu-img info <IMAGE>.qcow2  | grep backing
+      backing file: <IMAGE>-original.qcow2
+      backing file format: qcow2
+
 PCI
 '''
 
@@ -2436,3 +2458,4 @@ Bibliography
 91. "Using ACS to passthrough devices without whole IOMMU group." Level1Techs Forums. October 16, 2023. Accessed May 4, 2024. https://forum.level1techs.com/t/using-acs-to-passthrough-devices-without-whole-iommu-group/122913
 92. "rpm-ostree-container-silverblue.ks.in." GitHub rhinstaller/kickstart-tests. February 7, 2024. Accessed June 4, 2024. https://github.com/rhinstaller/kickstart-tests/blob/master/rpm-ostree-container-silverblue.ks.in
 93. "Pykickstart Documentation Release 3.55." Pykickstart Documentation. May 14, 2024. Accessed June 4, 2024. https://pykickstart.readthedocs.io/_/downloads/en/latest/pdf/
+94. "Documentation/CreateSnapshot." QEMU. April 1, 2023. Accessed June 16, 2025. https://wiki.qemu.org/Documentation/CreateSnapshot
