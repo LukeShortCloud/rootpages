@@ -610,7 +610,7 @@ Allow a non-root user to user Mock.
 
    $ sudo usermod -a -G mock <USER>
 
-Initialize Mock for the same operating system release as the host or a specified one. Valid releases can be found at ``/etc/mock/<RELEASE>.cfg``.
+Initialize Mock for the same operating system release as the host or a specified one. Valid releases can be found at ``/etc/mock/<RELEASE>.cfg`` and ``/etc/mock/eol/<RELEASE>.cfg``.
 
 .. code-block:: sh
 
@@ -619,7 +619,7 @@ Initialize Mock for the same operating system release as the host or a specified
 .. code-block:: sh
 
    $ ls -1 /etc/mock/
-   $ mock -r <RELEASE> --init
+   $ mock -r <RELEASE_NAME_OR_FULL_PATH> --init
 
 Download the required external source code using the ``spectool`` command. These will be saved to ``~/rpmbuild/SOURCES/``. The ``rpmbuild`` command cannot download source code. [17]
 
