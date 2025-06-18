@@ -454,6 +454,47 @@ File: /etc/dracut.conf
 Build
 -----
 
+Configure Features
+~~~~~~~~~~~~~~~~~~
+
+Enable any of the following features using the following ``.config`` options.
+
+The two must common Mandatory Access Control (MAC) systems for Linux are AppArmor and SELinux. Using both is not supported.
+
+   -  AppArmor [47]:
+
+      ::
+
+         CONFIG_SECURITY_APPARMOR=y
+         CONFIG_DEFAULT_SECURITY="apparmor"
+         CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
+         # CONFIG_SECURITY_APPARMOR_DEBUG is not set
+         CONFIG_SECURITY_APPARMOR_INTROSPECT_POLICY=y
+         CONFIG_SECURITY_APPARMOR_HASH=y
+         CONFIG_SECURITY_APPARMOR_HASH_DEFAULT=y
+         CONFIG_SECURITY_APPARMOR_EXPORT_BINARY=y
+         CONFIG_SECURITY_APPARMOR_PARANOID_LOAD=y
+         # CONFIG_SECURITY_APPARMOR_KUNIT_TEST is not set
+         CONFIG_DEFAULT_SECURITY_APPARMOR=y
+         CONFIG_LSM="lockdown,yama,integrity,apparmor,bpf,landlock"
+
+   -  SELinux [48]:
+
+      ::
+
+         # CONFIG_SECURITY_APPARMOR is not set
+         CONFIG_DEFAULT_SECURITY_SELINUX=y
+         CONFIG_LSM="landlock,lockdown,yama,integrity,selinux,bpf"
+         CONFIG_SECURITY_SELINUX_AVC_STATS=y
+         CONFIG_SECURITY_SELINUX_BOOTPARAM=y
+         CONFIG_SECURITY_SELINUX_CHECKREQPROT_VALUE=0
+         # CONFIG_SECURITY_SELINUX_DEBUG is not set
+         CONFIG_SECURITY_SELINUX_DEVELOP=y
+         # CONFIG_SECURITY_SELINUX_DISABLE is not set
+         CONFIG_SECURITY_SELINUX_SID2STR_CACHE_SIZE=256
+         CONFIG_SECURITY_SELINUX_SIDTAB_HASH_BITS=9
+         CONFIG_SECURITY_SELINUX=y
+
 Upstream
 ~~~~~~~~
 
@@ -785,3 +826,5 @@ Bibliography
 44. "Linux simple performance tweaks." GitHub Nihhaar/linux_performance.md. September 18, 2017. Accessed May 3, 2025. https://gist.github.com/Nihhaar/ca550c221f3c87459ab383408a9c3928
 45. "Using RAM Cache to Speed Up Linux Disk Performance." Medium Andre Rocha. April 5, 2022. Accessed May 3, 2025. https://andrerochaos.medium.com/using-ram-cache-to-speed-up-linux-disk-performance-e6d568d486c4
 46. "Optimizing Ubuntu to run from a USB key or SD card." Steve Hanov's Blog. 2009. Accessed May 3, 2025. https://stevehanov.ca/blog/?id=48
+47. "Files b27d68a rpm-sources/baseos/kernel/6.14/config." GitHub Nobara-Project/rpm-sources. May 18, 2025. Accessed June 18, 2025. https://github.com/Nobara-Project/rpm-sources/blob/b27d68abdd1864a712d5401b67dc9fee18ed3344/baseos/kernel/6.14/config
+48. "Files f42/kernel-x86_64.config." Fedora Package Sources rpm/kernel. May 18, 2025. Accessed June 16, 2025. https://src.fedoraproject.org/rpms/kernel/blob/f42/f/kernel-x86_64-fedora.config
