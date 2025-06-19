@@ -1608,6 +1608,20 @@ Use a key file to open an encrypted partition:
 Mounting
 --------
 
+Mount Options
+~~~~~~~~~~~~~
+
+Mount options can be specified with the ``mount -o`` command or in the fourth column of the ``/etc/fstab`` file.
+
+-  ``commit=<COMMIT_TIME>`` = The time before the file system runs ``sync`` to flush writes in RAM to the storage device. There may be noticeable lag or a system hang if the interval is too long or if the drive is too slow. Default values:
+
+   -  Btrfs = 30 seconds [83]
+   -  ext4 (Linux) = 5 seconds
+   -  ext4 (ChromeOS) = 600 seconds [84]
+   -  ZFS (zfs_txg_timeout) = 5 seconds [85]
+
+      -  Create a configuration file ``/etc/modprobe.d/zfs-txg-timeout.conf`` with ``options zfs zfs_txg_timeout=<COMMIT_TIME>``.
+
 Image Files
 ~~~~~~~~~~~
 
@@ -1915,3 +1929,6 @@ Bibliography
 80. "Power management/Suspend and hibernate." ArchWiki. January 15, 2025. Accessed January 20, 2025. https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate
 81. "Hibernation in Fedora Workstation." Fedora Magazine. August 10, 2022. Accessed January 20, 2025. https://fedoramagazine.org/hibernation-in-fedora-36-workstation/
 82. "Howto/NVIDIA." RPM Fusion. January 14, 2025. Accessed January 20, 2025. https://rpmfusion.org/Howto/NVIDIA
+83. "Btrfs/Mount Options." Forza's Ramblings. June 5, 2025. Accessed June 19, 2025. https://wiki.tnonline.net/w/Btrfs/Mount_Options
+84. "ext4 commit= mount option and dirty_writeback_centisecs." Stack Overflow. July 13, 2021. Accessed June 19, 2025. https://stackoverflow.com/questions/32393458/ext4-commit-mount-option-and-dirty-writeback-centisecs
+85. "Module Parameters." OpenZFS documentation. September 24, 2024. Accessed June 19, 2025. https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Module%20Parameters.html
