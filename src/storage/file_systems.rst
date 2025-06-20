@@ -820,6 +820,20 @@ Alternatively, configure zstd for a larger but slower zram. Set ``vm.page-cluste
    zram-size = ram * 3
    $ sudo systemctl enable systemd-zram-setup@zram0.service
 
+ramfs and tmpfs
+^^^^^^^^^^^^^^^
+
+``ramfs`` is a RAM-only file system. ``tmpfs`` uses a combination of RAM and swap. The contents of these file systems are lost after a shutdown.
+
+Reduce writes by configuring temporary and log directories to use ``tmpfs`` (if using zram) or ``ramfs`` (if using a swap file). [86]
+
+.. code-block:: sh
+
+    $ sudo -E ${EDITOR} /etc/fstab
+    tmpfs    /tmp        tmpfs    defaults,rw,nosuid,nodev,inode64,mode=1777    0 0
+    tmpfs    /var/log    tmpfs    defaults,rw,nosuid,nodev,inode64              0 0
+    tmpfs    /var/tmp    tmpfs    defaults,rw,nosuid,nodev,inode64,mode=1777    0 0
+
 RAIDs
 -----
 
@@ -1934,3 +1948,4 @@ Bibliography
 83. "Btrfs/Mount Options." Forza's Ramblings. June 5, 2025. Accessed June 19, 2025. https://wiki.tnonline.net/w/Btrfs/Mount_Options
 84. "ext4 commit= mount option and dirty_writeback_centisecs." Stack Overflow. July 13, 2021. Accessed June 19, 2025. https://stackoverflow.com/questions/32393458/ext4-commit-mount-option-and-dirty-writeback-centisecs
 85. "Module Parameters." OpenZFS documentation. September 24, 2024. Accessed June 19, 2025. https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Module%20Parameters.html
+86. "Best way to mount /tmp in fstab?" Ask Ubuntu. February 20, 2022. Accessed June 20, 2025. https://askubuntu.com/questions/550589/best-way-to-mount-tmp-in-fstab
