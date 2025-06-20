@@ -189,6 +189,43 @@ Enable a user service to start when the login. [10]
 
       $ ln -s ~/.config/systemd/user/<UNIT>.service ~/.config/systemd/user/default.target.wants/<UNIT>.service
 
+journald
+~~~~~~~~
+
+Introduction
+^^^^^^^^^^^^
+
+journald is a modern replacement to syslog for gathering and storing all system logs. [11]
+
+View all logs:
+
+.. code-block:: sh
+
+   $ sudo journalctl --all
+
+View logs for a specific system service:
+
+.. code-block:: sh
+
+   $ sudo journalctl --unit <SERVICE>
+
+View logs for a specific user service [12]:
+
+.. code-block:: sh
+
+   $ journalctl --user --user-unit <SERVICE>
+
+Configuration
+^^^^^^^^^^^^^
+
+Use empheral logs in RAM to minimize writes (these will be lost on shutdown) [13]:
+
+.. code-block:: sh
+
+   $ sudo -E ${EDITOR} /etc/systemd/journald.conf
+   [Journal]
+   Storage=volatile
+
 History
 -------
 
@@ -207,3 +244,6 @@ Bibliography
 8. "Using environment variables in systemd units." Flatcar Container Linux. Accessed August 29, 2023. https://www.flatcar.org/docs/latest/setup/systemd/environment-variables/
 9. "Use systemd to Start a Linux Service at Boot." Linode Docs. March 9, 2023. Accessed September 8, 2023. https://www.linode.com/docs/guides/start-service-at-boot/
 10. "Start a systemd user service at boot." Super User. August 14, 2023. Accessed September 8, 2023. https://superuser.com/questions/1025091/start-a-systemd-user-service-at-boot
+11. "Why Journald?" SolarWinds Loggly. January 6, 2016. Accessed June 20, 2025. https://www.loggly.com/blog/why-journald/
+12. "[systemd-devel] How to allow a user to use journalctl to see user-specific systemd service logs?" Narkive Mailing List Archive. October 15, 2016. Accessed June 20, 2025. https://systemd-devel.freedesktop.narkive.com/iwp5tMZD/how-to-allow-a-user-to-use-journalctl-to-see-user-specific-systemd-service-logs
+13. "journald.conf." systemd.index. Accessed June 20, 2025. https://www.freedesktop.org/software/systemd/man/latest/journald.conf.html
