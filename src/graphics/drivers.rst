@@ -103,6 +103,17 @@ By blocking the proprietary NVIDIA graphics drivers, the open source Linux kerne
 Proprietary
 ^^^^^^^^^^^
 
+Introduction
+''''''''''''
+
+These are all of the kernel modules provided by the NVIDIA proprietary driver:
+
+-  /lib/modules/<LINUX_KERNEL_VERSION>/extra/nvidia{,-open}/nvidia-drm.ko
+-  /lib/modules/<LINUX_KERNEL_VERSION>/extra/nvidia{,-open}/nvidia-modeset.ko
+-  /lib/modules/<LINUX_KERNEL_VERSION>/extra/nvidia{,-open}/nvidia-peermem.ko
+-  /lib/modules/<LINUX_KERNEL_VERSION>/extra/nvidia{,-open}/nvidia-uvm.ko
+-  /lib/modules/<LINUX_KERNEL_VERSION>/extra/nvidia{,-open}/nvidia.ko
+
 Redistribution
 ''''''''''''''
 
