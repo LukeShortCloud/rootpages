@@ -1622,6 +1622,8 @@ Mount options can be specified with the ``mount -o`` command or in the fourth co
 
       -  Create a configuration file ``/etc/modprobe.d/zfs-txg-timeout.conf`` with ``options zfs zfs_txg_timeout=<COMMIT_TIME>``.
 
+-  ``noatime,nodiratime`` = Do not write the access time for files or directories (as seen by ``stat <FILE_OR_DIRECTORY>``) when a file is viewed. This reduces writes but also reduces the amount of security logs. Modify and change times are still logged.
+
 Image Files
 ~~~~~~~~~~~
 
