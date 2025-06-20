@@ -75,6 +75,81 @@ For users who often need to use the Administrator account, it may be desired to 
 
    -  Control Panel (Control Panel) > User Accounts > User Accounts > Change User Account Control settings > Never notify
 
+Process Monitor
+---------------
+
+Usage
+~~~~~
+
+Process Monitor is an official tool from Microsoft. It is useful to see what a process is doing for security or troubleshooting purposes. Newer versions also support Linux.
+
+-  Download and extract `Process Monitor <https://learn.microsoft.com/en-us/sysinternals/downloads/procmon>`__.
+-  Run ``Procmon64.exe``.
+-  By default, it captures all events immediately. Clear this before managing filters.
+
+    -  File > Capture Events
+    -  Edit > Clear Display
+
+-  Add one or more filters using the `example filters <#example-filters>`__ as a starting point.
+-  Press the Capture button (an arrow facing right). Inside the icon, a sub-icon will change from a pause icon (two bars) to a recording icon (red dot).
+-  When done, press the Capture button again to pause the montioring.
+-  Save the output in a common text file format for easier parsing.
+
+   -  File > Save... > Format: Comma-Separated Values (CSV)  > OK
+
+Example Filters
+~~~~~~~~~~~~~~~
+
+Add filter for certain registry file changes (if you know what to look for).
+
+-  Filter > Filter...
+
+    -  Path, Contains, (enter text to look for), then: Include > Add
+    -  Apply
+
+Add a filter for all registry writes. Ignore common Windows services that access the registry.
+
+-  Filter > Filter...
+
+    -  Operation, is, RegCreateKey, then: Include > Add
+    -  Operation, is, RegSetValue, then: Include > Add
+    -  Process Name, is, FMService64.exe > then > Exclude
+    -  Process Name, is, svchost.exe > then > Exclude
+    -  Process Name, is, wermgr.exe > then > Exclude
+    -  Process Name, is, Widgets.exe > then > Exclude
+    -  Apply
+
+Add a filter for all registry access.
+
+-  Filter > Filter...
+
+    -  Operation, begins with, Reg, then: Include > Add
+    -  Apply
+
+Add a filter for all file writes.
+
+-  Filter > Filter...
+
+    -  Operation, is, CreateFile, then: Include > Add
+    -  Operation, is, WriteFile, then: Include > Add
+    -  Apply
+
+Add a filter to see everything a process is doing.
+
+    -  Filter > Filter...
+
+        -  Process Name, is, (the EXE name), then: Include > Add
+        -  Apply
+
+    -  Options > Select Columns... > Event Details > (check "Sequence Number") > OK
+
+Add a filter to see everything a MSI installer is doing.
+
+-  Filter > Filter...
+
+    -  Process Name, is, msiexec.exe, then: Include > Add
+    -  Apply
+
 History
 -------
 
