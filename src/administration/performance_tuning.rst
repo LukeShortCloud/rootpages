@@ -12,6 +12,66 @@ Linux Kernel Version
 
 -  Use at least Linux kernel 6.6 [3] to get the low latency benefits of the new EEVDF CPU scheduler. [4]
 
+Minimize Writes
+---------------
+
+Introduction
+~~~~~~~~~~~~
+
+By moving more writes into RAM, both (1) the lifespan of a storage device and (2) the speed of a computer will be faster.
+
+Swap
+~~~~
+
+-  Do not use a swap file. Instead, configure zram with lz4 compression and other optimized setings. Refer to `zram <../storage/file_systems.html#zram>`__.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/sysctl.d/99-zram.conf
+      vm.swappiness = 180
+      vm.watermark_boost_factor = 0
+      vm.watermark_scale_factor = 125
+      vm.page-cluster = 1
+      $ sudo -E ${EDITOR} /etc/systemd/zram-generator.conf
+      [zram0]
+      compression-algorithm = lz4
+      zram-size = ram * 2
+      $ sudo systemctl enable systemd-zram-setup@zram0.service
+
+Ephemeral Logs
+~~~~~~~~~~~~~~
+
+Thes changes generally reduce the amount of logs for security and troubleshooting purposes. In exchange, a storage device will have a longer lifespan.
+
+
+-  Use ``tmpfs`` as the file system for ``/tmp``, ``/var/log``, and ``/var/tmp`` mounts in ``/etc/fstab``. Refer to `ramfs and tmpfs <../storage/file_systems.html#ramfs-and-tmpfs>`__.
+
+-  Store journald logs in memory. Refer to `journald configuration <init.html#configuration>`__.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/systemd/journald.conf
+      [Journal]
+      Storage=volatile
+
+-  Use the mount options ``noatime,nodiratime`` in ``/etc/fstab``. Refer to `Mount Options <../storage/file_systems.html#mount-options>`__.
+
+Delay Writes
+~~~~~~~~~~~~
+
+Delay storage writes to reduce the wear on the storage device's lifespan. These changes can lead to data loss if there is a power outage.
+
+-  Keep writes in RAM for much longer. Refer to `Memory Caching <linux_kernel.html#memory-caching>`__.
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/sysctl.d/50-ram-write-cache.conf
+      vm.dirty_background_ratio = 40
+      vm.dirty_ratio = 80
+      vm.vfs_cache_pressure = 50
+
+-  Increase the commit time (the interval before syncing writes to the storage device) to 5 minutes by using the mount option ``commit=600`` in ``/etc/fstab``. There may be noticeable lag or a system hang if the interval is too long or if the drive is too slow. Refer to `Mount Options <../storage/file_systems.html#mount-options>`__.
+
 History
 -------
 
