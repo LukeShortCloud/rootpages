@@ -41,6 +41,18 @@ Profiles
 
       $ sudo aa-status
 
+-  List other example profiles (included with the ``apparmor-profiles`` package):
+
+   .. code-block:: sh
+
+      $ ls /usr/share/apparmor/extra-profiles/
+
+-  Copy an example profile. All profiles that will be enabled have to be in the ``/etc/apparmor.d/`` directory [4]:
+
+   .. code-block:: sh
+
+      $ sudo cp /usr/share/apparmor/extra-profiles/<PROFILE> /etc/apparmor.d/
+
 -  Add a new profile:
 
    .. code-block:: sh
@@ -109,3 +121,4 @@ Bibliography
 1. "AppArmor." Arch Wiki. September 15, 2021. Accessed October 3, 2021. https://wiki.archlinux.org/title/AppArmor
 2. "AppArmor." Ubuntu Community Help Wiki. July 5, 2020. https://help.ubuntu.com/community/AppArmor
 3. "Building Profiles from the Command Line." openSUSE Security Guide. 2018. Accessed October 3, 2021. https://doc.opensuse.org/documentation/leap/archive/42.3/security/html/book.security/cha.apparmor.commandline.html
+4. "AppArmor HowToUse." Debian Wiki. February 28, 2025. Accessed June 23, 2025. https://wiki.debian.org/AppArmor/HowToUse
