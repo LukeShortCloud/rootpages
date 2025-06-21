@@ -70,7 +70,7 @@ Delay storage writes to reduce the wear on the storage device's lifespan. These 
       vm.dirty_ratio = 80
       vm.vfs_cache_pressure = 50
 
--  Increase the commit time (the interval before syncing writes to the storage device) to 5 minutes by using the mount option ``commit=600`` in ``/etc/fstab``. There may be noticeable lag or a system hang if the interval is too long or if the drive is too slow. Refer to `Mount Options <../storage/file_systems.html#mount-options>`__.
+-  Increase the commit time (the interval before syncing writes to the storage device) to 5 minutes by using the mount option ``commit=300`` in ``/etc/fstab``. There may be noticeable lag or a system hang if the interval is too long or if the drive is too slow. Refer to `Mount Options <../storage/file_systems.html#mount-options>`__.
 
 History
 -------
