@@ -273,6 +273,97 @@ Configure a quantization value.
       $ launchctl setenv OLLAMA_KV_CACHE_TYPE <QUANTIZATION_VALUE>
       $ launchctl setenv OLLAMA_FLASH_ATTENTION 1
 
+Open WebUI
+^^^^^^^^^^
+
+Installation
+''''''''''''
+
+Open WebUI provides a simple web interface to interact with LLMs similar to ChatGPT. It supports using offline Ollama models, doing web searches, user accounts, and more.
+
+Run it with default settings (it will be accessible at ``http://127.0.0.1:3000`` after the container finishes starting):
+
+.. code-block:: sh
+
+   $ podman run --detach --publish 3000:8080 --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+Run it with Ollama as an integrated service:
+
+.. code-block:: sh
+
+   $ podman run --detach --publish 3000:8080 --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:ollama
+
+Run it with Ollama as an integrated service and with access to NVIDIA GPUs (only AMD and Intel GPUs are accessible by default):
+
+.. code-block:: sh
+
+   $ podman run --detach --publish 3000:8080 --gpus all --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:cuda
+
+Run it with access to a local Ollama service:
+
+.. code-block:: sh
+
+   $ podman run --detach --network=host --env PORT=3000 --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+Run it with access to a remote Ollama service [22]:
+
+.. code-block:: sh
+
+   $ podman run --detach --publish 3000:8080 --env OLLAMA_BASE_URL=<OLLAMA_BASE_URL> --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+Run it with authentication disabled (autologin enabled):
+
+.. code-block:: sh
+
+   $ podman run --detach --publish 3000:8080 --env WEBUI_AUTH=False --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+Run it with search engine support. [23][24]
+
+-  `Brave has a free service <https://brave.com/search/api/>`__ that allows for 1 query a second and 2000 queries a month. It requires an account with a credit card on file.
+
+   .. code-block:: sh
+
+      $ podman run --detach --publish 3000:8080 --env ENABLE_WEB_SEARCH=true --env WEB_SEARCH_CONCURRENT_REQUESTS=1 --env ENABLE_SEARCH_QUERY_GENERATION=False --env WEB_SEARCH_ENGINE=brave --env BRAVE_SEARCH_API_KEY=<BRAVE_SEARCH_API_KEY> --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+-  DuckDuckGo is the easiest to configure since it does not require an API key. However, search results are normally rate limited. [25]
+
+   .. code-block:: sh
+
+      $ podman run --detach --publish 3000:8080 --env ENABLE_WEB_SEARCH=true --env WEB_SEARCH_CONCURRENT_REQUESTS=1 --env ENABLE_SEARCH_QUERY_GENERATION=False --env WEB_SEARCH_ENGINE=duckduckgo --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+-  `Google Programmable Search Engine (PSE) has a free service <https://developers.google.com/custom-search/v1/overview>`__ that allows for 100 queries every day. It requires an account with a credit card on file.
+
+   .. code-block:: sh
+
+      $ podman run --detach --publish 3000:8080 --env ENABLE_WEB_SEARCH=true --env WEB_SEARCH_ENGINE=google_pse --env GOOGLE_PSE_API_KEY=<GOOGLE_PSE_API_KEY> --env GOOGLE_PSE_ENGINE_ID=<GOOGLE_PSE_ENGINE_ID> --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+-  `Tavily offers has a free service <https://www.tavily.com/#pricing>`__ that allows for 1000 queries every month. No credit card required.
+
+   .. code-block:: sh
+
+      $ podman run --detach --publish 3000:8080 --env ENABLE_WEB_SEARCH=true --env WEB_SEARCH_ENGINE=tavily --env TAVILY_API_KEY=<TAVILY_API_KEY> --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
+
+Verify if a search engine rate limit is being reached:
+
+.. code-block:: sh
+
+   $ podman logs open-webui | grep -i ratelimit
+
+Configuration
+'''''''''''''
+
+Change the Ollama URL:
+
+-  User > Admin Panel > Settings > Connections > Manage Ollama API Connections
+
+Change the search engine settings:
+
+-  User > Admin Panel > Settings > Web Search
+
+Disable query generation to prevent rate limiting of most search engines with free tiers of access. Search engine results may become less useful. [26]
+
+-  User > Admin Panel > Settings > Interface > Web Search Query Generation: Off > Save
+
 History
 -------
 
@@ -302,3 +393,8 @@ Bibliography
 19. "OpenSUSE MicroOS Howto with AMDGPU / ROCm - To run CUDA AI Apps like Ollama." GitHub Gist torsten-online. February 10, 2025. Accessed March 7, 2025. https://gist.github.com/torsten-online/22dd2746ddad13ebbc156498d7bc3a80
 20. "Difference in different quantization methods #2094." GitHub ggml-org/llama.cpp. October 27, 2024. Accessed May 27, 2025. https://github.com/ggml-org/llama.cpp/discussions/2094
 21. "Configuring Your Ollama Server." ShinChven's Blog. January 15, 2025. Accessed May 27, 2025. https://atlassc.net/2025/01/15/configuring-your-ollama-server
+22. "Open WebUI." GitHub open-webui/open-webui. June 10, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui
+23. "Web Search." Open WebUI. Accessed June 23, 2025. https://docs.openwebui.com/category/-web-search/
+24. "Environment Variable Configuration." Open WebUI. June 22, 2025. Accessed June 23, 2025. https://docs.openwebui.com/getting-started/env-configuration
+25. "duckduckgo_search.exceptions.RatelimitException: 202 Ratelimit #6624." GitHub open-webui/open-webui. June 6, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/6624
+26. "issue: Too Many Requests #14244." GitHub open-webui/open-webui. June 14, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/14244
