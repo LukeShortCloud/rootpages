@@ -153,6 +153,57 @@ Delete all models.
 
       $ rm -r -f ~/.ollama/models/*
 
+Models
+^^^^^^
+
+10B models and lower can run on CPUs but are slow. 11B through 32B models are too slow to be usable. Anything larger will not run. It is always recommended to use a GPU for the best performance. [27]
+
+Top local LLMs for literature as of 2025 [28]:
+
+-  32B or less:
+
+   1.  QwQ 32B (Q4_K_M) [36]
+
+      -  ``ollama run qwq:32b``
+
+   2.  Mistral Nemo 2407 Instruct 12B
+
+      -  ``ollama run mistral-nemo:12b-instruct-2407-fp16``
+
+   3.  Llama 3.1 8B
+
+      - ``ollama run llama3.1``
+
+Top local LLms for programming that are 32B or smaller as of 2025:
+
+-  32B or less:
+
+   1.  Qwen Coder 32B (Q8_0) [29][30]
+
+      -  ``ollama run qwen2.5-coder:32b-instruct-q8_0``
+
+   2.  DeepSeek Coder v2 Lite 16B
+
+      -  ``ollama run deepseek-coder-v2:16b``
+
+   3.  Codestral 22B [31][32]
+
+      -  ``ollama run codestral:22b``
+
+-  10B or less:
+
+   1.  Ministral Instruct 8B
+
+      -  ``ollama run cas/ministral-8b-instruct-2410_q4km``
+
+   2.  Qwen2.5 Coder Instruct 7B [32][33]
+
+      -  ``ollama run qwen2.5-coder:7b-instruct``
+
+   3.  DeepSeek Coder Base 7B [34][35]
+
+      -  ``ollama run deepseek-coder:6.7b``
+
 Distrobox
 ^^^^^^^^^
 
@@ -398,3 +449,13 @@ Bibliography
 24. "Environment Variable Configuration." Open WebUI. June 22, 2025. Accessed June 23, 2025. https://docs.openwebui.com/getting-started/env-configuration
 25. "duckduckgo_search.exceptions.RatelimitException: 202 Ratelimit #6624." GitHub open-webui/open-webui. June 6, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/6624
 26. "issue: Too Many Requests #14244." GitHub open-webui/open-webui. June 14, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/14244
+27. "Everything I've learned so far about running local LLMs." null program. November 10, 2024. Accessed June 24, 2025. https://nullprogram.com/blog/2024/11/10/
+28. "Creative Writing v3." EQ-Bench Creative Writing v3 Leaderboard. Accessed June 24, 2025. https://eqbench.com/creative_writing.html
+29. "Qwen-2.5-Coder 32B – The AI That's Revolutionizing Coding! - Real God in a Box?" Reddit r/LocalLLaMA. March 14, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1gp84in/qwen25coder_32b_the_ai_thats_revolutionizing/
+30. "So what is now the best local AI for coding?" Reddit r/LocalLLaMA. February 25, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1ia0j9o/so_what_is_now_the_best_local_ai_for_coding/
+31. "Codestral 22B, Owen 2.5 Coder B, and DeepSeek V2 Coder: Which AI Coder Should You Choose?" Deepgram. October 10, 2024. Accessed June 24, 2025. https://deepgram.com/learn/best-local-coding-llm
+32. "In Feb 2025, what’s your LLM stack for productivity?" Reddit r/LocalLLaMA. February 8, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1ik6fy3/in_feb_2025_whats_your_llm_stack_for_productivity/
+33. https://symflower.com/en/company/blog/2025/dev-quality-eval-v1.0-anthropic-s-claude-3.7-sonnet-is-the-king-with-help-and-deepseek-r1-disappoints/
+34. "Stable Code 3B: Coding on the Edge." Hacker News. January 20, 2025. Accessed June 24, 2025. https://news.ycombinator.com/item?id=39019532
+35. "DeepSeek Coder". GitHub deepseek-ai/DeepSeek-Coder. March 6, 2024. Accessed June 24, 2025. https://github.com/deepseek-ai/deepseek-coder
+36. "Comparing quants of QwQ Preview in Ollama." December 17, 2024. Accessed June 24, 2025. leikareipa.github.io. https://leikareipa.github.io/blog/comparing-quants-of-qwq-preview-in-ollama/
