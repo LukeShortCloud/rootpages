@@ -82,7 +82,11 @@ Installation [9]:
 
 -  macOS
 
-   -  Download the latest version `here <https://ollama.com/download/Ollama-darwin.zip>`__.
+   -  `Download the latest macOS version <https://ollama.com/download/Ollama-darwin.zip>`__.
+
+-  Windows
+
+   -  `Download the latest Windows version <https://ollama.com/download/OllamaSetup.exe>`__.
 
 Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. [10] Refer to the `models section <#models>`__ for the top models. Refer to the `quantization section <#quantization>`__ for more information about the size and accuracy of models.
 
