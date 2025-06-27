@@ -86,39 +86,25 @@ Installation [9]:
 
 Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. [10] Refer to the `models section <#models>`__ for the top models. Refer to the `quantization section <#quantization>`__ for more information about the size and accuracy of models.
 
-For PCs, use Ollama 8B for ChatGPT 3.5 quality. It is a 5 GB download. [11]
+Starter models to try:
 
-.. code-block:: sh
+-  For desktops, use Ollama 8B [11]:
 
-   $ ollama run llama3.1
+   .. code-block:: sh
 
-For phones and low-end hardware, use Ollama 3B which is more efficient while being similar to Ollama 8B. It is a 2 GB download. [12]
+      $ ollama run llama3.1
 
-.. code-block:: sh
+-  For phones and low-end hardware, use Ollama 3B [12]:
 
-   $ ollama run llama3.2
+   .. code-block:: sh
 
-For PCs wanting to have image recognition as part of the LLM, use Ollama 11B. It is a 8 GB download. Provide the full path to the image file when chatting with Ollama. [13]
+      $ ollama run llama3.2
 
-.. code-block:: sh
+-  For image recognition on desktops, use Ollama 11B with vision. Provide the full path to the image file when chatting with Ollama. [13]
 
-   $ ollama run llama3.2-vision
+   .. code-block:: sh
 
-For high-end PCs and ChatGPT 4 quality, use at least Ollama 70B. [14] The community has created smaller bit models (1-bit, 2-bit, and 4-bit). The 1-bit IQ1_M model is not very good. The 4-bit Q4_K_M model is too big for consumer PCs. The 2-bit IQ2_XS model is the best balance of size and reliability. It is a 21 GB download. [15][16]
-
-.. code-block:: sh
-
-   $ ollama run hf.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF:IQ2_XS
-
-For code programming, the Qwen Coder or DeepSeek Coder model is recommended. Both are a 9 GB download. [17][18]
-
-.. code-block:: sh
-
-   $ ollama run qwen2.5-coder:14b
-
-.. code-block:: sh
-
-   $ ollama run deepseek-coder-v2:16b
+      $ ollama run llama3.2-vision
 
 Save a conversation to revisit later by using ``/save <SAVE_NAME>``. It will be stored as a new model which can be viewed with ``/list`` or the CLI command ``ollama list``. Load the conversation by using ``/load <SAVE_NAME>``.
 
@@ -176,11 +162,11 @@ Top local LLms for programming that are 32B or smaller as of 2025:
 
 -  32B or less:
 
-   1.  Qwen Coder 32B (Q8_0) [29][30]
+   1.  Qwen Coder 32B (Q8_0) [18][29][30]
 
       -  ``ollama run qwen2.5-coder:32b-instruct-q8_0``
 
-   2.  DeepSeek Coder v2 Lite 16B
+   2.  DeepSeek Coder v2 Lite 16B [17]
 
       -  ``ollama run deepseek-coder-v2:16b``
 
@@ -202,7 +188,7 @@ Top local LLms for programming that are 32B or smaller as of 2025:
 
       -  ``ollama run deepseek-coder:6.7b``
 
-Top local multimodal LLMs for examining images as of 2024. [41] Ollama added support for multimodal LLMs in version 0.7.0 in 2025. [40]
+Top local multimodal LLMs for examining images as of 2024. [16] Ollama added support for multimodal LLMs in version 0.7.0 in 2025. [15]
 
 1.  Qwen-VL-Max
 2.  InternLM-XComposer2-VL (based on InternLM2-7B)
@@ -455,8 +441,8 @@ Bibliography
 12. "LLaMA 3.2 vs. LLaMA 3.1 vs. Gemma 2: Finding the Best Open-Source LLM for Content Creation." Medium - RayRay. October 2, 2024. Accessed December 4, 2024. https://byrayray.medium.com/llama-3-2-vs-llama-3-1-vs-gemma-2-finding-the-best-open-source-llm-for-content-creation-1f6085c9f87a
 13. "Llama 3.2 Vision." Ollama. November 6, 2024. Accessed December 4, 2024. https://ollama.com/blog/llama3.2-vision
 14. "I can now run a GPT-4 class model on my laptop." Simon Willison's Weblog. December 9, 2024. Accessed December 12, 2024. https://simonwillison.net/2024/Dec/9/llama-33-70b/
-15. "Running Llama-3-70B gguf on 24gig VRAM." Reddit r/LocalLLaMA. April 24, 2024. Accessed December 12, 2024. https://www.reddit.com/r/LocalLLaMA/comments/1c7owci/running_llama370b_gguf_on_24gig_vram/
-16. "lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF." Hugging Face. Accessed December 12, 2024. https://huggingface.co/lmstudio-community/Meta-Llama-3-70B-Instruct-GGUF
+15. "v0.7.0." GitHub ollama/ollama. May 12, 2025. Accessed  June 26, 2025. https://github.com/ollama/ollama/releases/tag/v0.7.0
+16. "MME: A Comprehensive Evaluation Benchmark for Multimodal Large Language Models." GitHub BradyFU/Awesome-Multimodal-Large-Language-Models. November 26, 2024. Accessed June 26, 2025. https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation?tab=readme-ov-file
 17. "deepseek-coder-v2." Ollama. September, 2024. Accessed December 13, 2024. https://ollama.com/library/deepseek-coder-v2
 18. "Best LLM Model for coding." Reddit r/LocalLLaMA. November 6, 2024. Accessed February 4, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1gkewyp/best_llm_model_for_coding/
 19. "OpenSUSE MicroOS Howto with AMDGPU / ROCm - To run CUDA AI Apps like Ollama." GitHub Gist torsten-online. February 10, 2025. Accessed March 7, 2025. https://gist.github.com/torsten-online/22dd2746ddad13ebbc156498d7bc3a80
@@ -480,5 +466,3 @@ Bibliography
 37. "Question on model sizes vs. GPU." Reddit r/ollama. September 4, 2024. Accessed June 26, 2025. https://www.reddit.com/r/ollama/comments/1d4ofem/question_on_model_sizes_vs_gpu/
 38. "How much VRAM do I need for LLM model fine-tuning?" Modal Blog. September 1, 2024. Accessed June 26, 2025. https://modal.com/blog/how-much-vram-need-fine-tuning
 39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
-40. "v0.7.0." GitHub ollama/ollama. May 12, 2025. Accessed  June 26, 2025. https://github.com/ollama/ollama/releases/tag/v0.7.0
-41. "MME: A Comprehensive Evaluation Benchmark for Multimodal Large Language Models." GitHub BradyFU/Awesome-Multimodal-Large-Language-Models. November 26, 2024. Accessed June 26, 2025. https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation?tab=readme-ov-file
