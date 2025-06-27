@@ -154,11 +154,23 @@ Top local LLMs for literature as of 2025 [28]:
 
       -  ``ollama run qwq:32b``
 
-   2.  Mistral Nemo 2407 Instruct 12B
+   2.  Gemma 3 12B
+
+      -  ``ollama run gemma3:12b-it-qat``
+
+   3.  Gemma 3 4B
+
+      -  ``ollama run gemma3:4b-it-qat``
+
+   4.  Mistral Nemo 2407 Instruct 12B
 
       -  ``ollama run mistral-nemo:12b-instruct-2407-fp16``
 
-   3.  Llama 3.1 8B
+   5.  Gemma 2 9B
+
+      -  ``ollama run gemma2:9b``
+
+   6.  Llama 3.1 8B
 
       - ``ollama run llama3.1``
 
