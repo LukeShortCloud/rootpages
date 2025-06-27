@@ -53,11 +53,17 @@ Profiles
 
       $ sudo cp /usr/share/apparmor/extra-profiles/<PROFILE> /etc/apparmor.d/
 
+-  Check for issues with the profile:
+
+   .. code-block:: sh
+
+      $ sudo apparmor_parser --preprocess /etc/apparmor.d/<PROFILE>
+
 -  Add a new profile:
 
    .. code-block:: sh
 
-      $ sudo apparmor_enforce -r /etc/apparmor.d/<PROFILE>
+      $ sudo apparmor_parser --replace /etc/apparmor.d/<PROFILE>
 
 -  Find the actual name of a profile (it is not always the file name):
 
@@ -82,7 +88,7 @@ Profiles
    .. code-block:: sh
 
       $ sudo ln -s /etc/apparmor.d/<PROFILE> /etc/apparmor.d/disable/
-      $ sudo apparmor_parser -R /etc/apparmor.d/<PROFILE>
+      $ sudo apparmor_parser --remove /etc/apparmor.d/<PROFILE>
 
 [2]
 
