@@ -202,6 +202,21 @@ Top local LLms for programming that are 32B or smaller as of 2025:
 
       -  ``ollama run deepseek-coder:6.7b``
 
+Top local multimodal LLMs for examining images as of 2024. [41] Ollama added support for multimodal LLMs in version 0.7.0 in 2025. [40]
+
+1.  Qwen-VL-Max
+2.  InternLM-XComposer2-VL (based on InternLM2-7B)
+3.  MiniCPM-V 2.6 (based on Qwen2-8B)
+4.  Qwen-VL-Plus
+5.  InfMLLM (based on Vicuna-13B)
+6.  ChatTruth-7B (based on Qwen-7B)
+7.  InternVL-Chat-V1.5 (based on InternLM2-20B)
+8.  WeMM (based on InternLM-7B)
+9.  PureMM (based on Vicuna-13B)
+10.  InternVL-Chat-V1.1 (based on LLaMA2-13B)
+11.  LLaVA-1.6 (based on Vicuna-34B)
+12.  MiniCPM-Llama3-V 2.5 (based on LLaMA3-8B)
+
 Distrobox
 ^^^^^^^^^
 
@@ -465,3 +480,5 @@ Bibliography
 37. "Question on model sizes vs. GPU." Reddit r/ollama. September 4, 2024. Accessed June 26, 2025. https://www.reddit.com/r/ollama/comments/1d4ofem/question_on_model_sizes_vs_gpu/
 38. "How much VRAM do I need for LLM model fine-tuning?" Modal Blog. September 1, 2024. Accessed June 26, 2025. https://modal.com/blog/how-much-vram-need-fine-tuning
 39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
+40. "v0.7.0." GitHub ollama/ollama. May 12, 2025. Accessed  June 26, 2025. https://github.com/ollama/ollama/releases/tag/v0.7.0
+41. "MME: A Comprehensive Evaluation Benchmark for Multimodal Large Language Models." GitHub BradyFU/Awesome-Multimodal-Large-Language-Models. November 26, 2024. Accessed June 26, 2025. https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation?tab=readme-ov-file
