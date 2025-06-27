@@ -435,6 +435,24 @@ Disable query generation to prevent rate limiting of most search engines with fr
 
 -  User > Admin Panel > Settings > Interface > Web Search Query Generation: Off > Save
 
+Training
+^^^^^^^^
+
+There are two types of quantization training strategies to lower the memory usage of a LLM [40]:
+
+-  Post-training quantization (PTQ) = Easier but less accurate. Any existing LLM can be quantized and cached. Refer to the `quantization section <#quantization>`__.
+-  Quantization-aware training (QAT) = Harder but more accurate. The LLM must be specifically trained knowing that the data is quantized. For example, Gemma 3 models have QAT variants. [41]
+
+The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model.
+
+.. code-block:: sh
+
+   $ ollama run <MODEL>
+   /save <NEW_MODEL>
+   /bye
+   $ ollama list
+   $ ollama run <NEW_MODEL>
+
 History
 -------
 
@@ -482,3 +500,5 @@ Bibliography
 37. "Question on model sizes vs. GPU." Reddit r/ollama. September 4, 2024. Accessed June 26, 2025. https://www.reddit.com/r/ollama/comments/1d4ofem/question_on_model_sizes_vs_gpu/
 38. "How much VRAM do I need for LLM model fine-tuning?" Modal Blog. September 1, 2024. Accessed June 26, 2025. https://modal.com/blog/how-much-vram-need-fine-tuning
 39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
+40. "A Guide to Quantization in LLMs." Symbl.ai. February 21, 2025. Accessed June 27, 2025. https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/
+41. "gemma3:27b." Ollama. April 18, 2025. Accessed June 27, 2025. `https://ollama.com/library/gemma3:27b <https://ollama.com/library/gemma3:27b>`__
