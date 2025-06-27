@@ -84,7 +84,7 @@ Installation [9]:
 
    -  Download the latest version `here <https://ollama.com/download/Ollama-darwin.zip>`__.
 
-Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. The download size of a model is usually also the minimum size of VRAM needed to run the model. [10]
+Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. [10] Refer to the `models section <#models>`__ for the top models. Refer to the `quantization section <#quantization>`__ for more information about the size and accuracy of models.
 
 For PCs, use Ollama 8B for ChatGPT 3.5 quality. It is a 5 GB download. [11]
 
@@ -155,8 +155,6 @@ Delete all models.
 
 Models
 ^^^^^^
-
-10B models and lower can run on CPUs but are slow. 11B through 32B models are too slow to be usable. Anything larger will not run. It is always recommended to use a GPU for the best performance. [27]
 
 Top local LLMs for literature as of 2025 [28]:
 
@@ -295,14 +293,19 @@ LLM Tuning
 Quantization
 ''''''''''''
 
-Most LLMs use a float 16 value. It is possible to use quantization to lower the memory usage. This allows for running larger models and/or increasing the context size.
+Most LLMs use a floating-point value of 16. It is possible to use quantization to lower the memory usage. This allows for running larger models and/or increasing the context size. Some models have downloads that already include it being quantized. Other models require configuring your LLM service to quantize it.
 
-Common and recommended values [20]:
+.. csv-table::
+   :header: Quantization, GB Size Per Billion Parameters [37][38], Notes
+   :widths: 20, 20, 20
 
--  ``f32`` = Lossless.
--  ``f16`` = Half the size of ``f32``. Default for most models. Performs the same as ``f32`` in most cases.
--  ``q5_k_m`` = About 6x smaller compared to ``f32`` with only a minor loss in quality.
--  ``q4_k_m`` = About 7x smaller compared to ``f32`` but a moderate quality loss.
+   FP32, 4, Lossless.
+   FP16, 2, Identicial to FP32. Most models are published at this size.
+   INT8 (Q8_0), 1, "'Extremely low quality loss.'"
+   INT5 (Q5_K/Q5_K_M), 0.6, "'Very low quality loss.'"
+   INT4 (Q4_K/Q4_K_M), 0.5, "'Balanced quality. [20][27]'"
+
+Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be up to 100x slower. [39]
 
 Configure a quantization value.
 
@@ -449,7 +452,7 @@ Bibliography
 24. "Environment Variable Configuration." Open WebUI. June 22, 2025. Accessed June 23, 2025. https://docs.openwebui.com/getting-started/env-configuration
 25. "duckduckgo_search.exceptions.RatelimitException: 202 Ratelimit #6624." GitHub open-webui/open-webui. June 6, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/6624
 26. "issue: Too Many Requests #14244." GitHub open-webui/open-webui. June 14, 2025. Accessed June 23, 2025. https://github.com/open-webui/open-webui/discussions/14244
-27. "Everything I've learned so far about running local LLMs." null program. November 10, 2024. Accessed June 24, 2025. https://nullprogram.com/blog/2024/11/10/
+27. "A Visual Guide to Quantization." Exploring Language Models. July 22, 2024. Accessed June 26, 2025. https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-quantization
 28. "Creative Writing v3." EQ-Bench Creative Writing v3 Leaderboard. Accessed June 24, 2025. https://eqbench.com/creative_writing.html
 29. "Qwen-2.5-Coder 32B – The AI That's Revolutionizing Coding! - Real God in a Box?" Reddit r/LocalLLaMA. March 14, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1gp84in/qwen25coder_32b_the_ai_thats_revolutionizing/
 30. "So what is now the best local AI for coding?" Reddit r/LocalLLaMA. February 25, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1ia0j9o/so_what_is_now_the_best_local_ai_for_coding/
@@ -459,3 +462,6 @@ Bibliography
 34. "Stable Code 3B: Coding on the Edge." Hacker News. January 20, 2025. Accessed June 24, 2025. https://news.ycombinator.com/item?id=39019532
 35. "DeepSeek Coder". GitHub deepseek-ai/DeepSeek-Coder. March 6, 2024. Accessed June 24, 2025. https://github.com/deepseek-ai/deepseek-coder
 36. "Comparing quants of QwQ Preview in Ollama." December 17, 2024. Accessed June 24, 2025. leikareipa.github.io. https://leikareipa.github.io/blog/comparing-quants-of-qwq-preview-in-ollama/
+37. "Question on model sizes vs. GPU." Reddit r/ollama. September 4, 2024. Accessed June 26, 2025. https://www.reddit.com/r/ollama/comments/1d4ofem/question_on_model_sizes_vs_gpu/
+38. "How much VRAM do I need for LLM model fine-tuning?" Modal Blog. September 1, 2024. Accessed June 26, 2025. https://modal.com/blog/how-much-vram-need-fine-tuning
+39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
