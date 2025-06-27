@@ -160,7 +160,7 @@ Top local LLMs for literature as of 2025 [28]:
 
 -  32B or less:
 
-   1.  QwQ 32B (Q4_K_M) [36]
+   1.  QwQ 32B (Q4_K_M) = Although quantized models normally perform worse the more they are shrunk, this performs better at INT4 than it does with INT5, INT8, or even FP16. [36]
 
       -  ``ollama run qwq:32b``
 
