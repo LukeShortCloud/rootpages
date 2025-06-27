@@ -310,7 +310,7 @@ LLM Tuning
 Quantization
 ''''''''''''
 
-Most LLMs use a floating-point value of 16. It is possible to use quantization to lower the memory usage. This allows for running larger models and/or increasing the context size. Some models have downloads that already include it being quantized. Other models require configuring your LLM service to quantize it.
+Most LLMs available to download use, at most, a floating-point value of 16. It is possible to use quantization to lower the memory usage. This allows for running larger models and/or increasing the context size. Some models have downloads that already include it being quantized which also lowers the download size. Other models require configuring your LLM service to quantize it.
 
 .. csv-table::
    :header: Quantization, GB Size Per Billion Parameters [37][38], Notes
@@ -320,7 +320,7 @@ Most LLMs use a floating-point value of 16. It is possible to use quantization t
    FP16, 2, Identicial to FP32. Most models are published at this size.
    INT8 (Q8_0), 1, "'Extremely low quality loss.'"
    INT5 (Q5_K/Q5_K_M), 0.6, "'Very low quality loss.'"
-   INT4 (Q4_K/Q4_K_M), 0.5, "'Balanced quality. [20][27]'"
+   INT4 (Q4_K/Q4_K_M), 0.5, "'Balanced quality.' [20][27]"
 
 Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be up to 100x slower. [39]
 
