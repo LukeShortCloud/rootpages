@@ -396,7 +396,7 @@ Run it with search engine support. [23][24]
 
       $ podman run --detach --publish 3000:8080 --env ENABLE_WEB_SEARCH=true --env WEB_SEARCH_CONCURRENT_REQUESTS=1 --env ENABLE_SEARCH_QUERY_GENERATION=False --env WEB_SEARCH_ENGINE=brave --env BRAVE_SEARCH_API_KEY=<BRAVE_SEARCH_API_KEY> --volume open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
 
--  DuckDuckGo is the easiest to configure since it does not require an API key. However, search results are normally rate limited. [25]
+-  DuckDuckGo is the easiest to configure since it does not require an API key. However, search results are normally rate limited unless Open WebUI is configured to do less searches at a time. [25][26]
 
    .. code-block:: sh
 
