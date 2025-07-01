@@ -61,8 +61,8 @@ Mathematics [2][3]:
 
    -  `Khan Academy Math <https://www.khanacademy.org/math>`__
 
-AI Prompt Engineering
----------------------
+Large Language Models (LLMs)
+----------------------------
 
 Ollama
 ~~~~~~
@@ -70,7 +70,7 @@ Ollama
 Usage
 ^^^^^
 
-Ollama is a large language model (LLM) that is the best free and open source alternative to ChatGPT. [8]
+Ollama is a service that allows interacting with locally downloaded large language model (LLM). It is the best free and open source alternative to ChatGPT for the CLI. [8]
 
 Installation [9]:
 
@@ -453,6 +453,57 @@ The easiest way to train an existing LLM is to run it with Ollama, provide it wi
    $ ollama list
    $ ollama run <NEW_MODEL>
 
+Prompt Engineering
+~~~~~~~~~~~~~~~~~~
+
+Prompt engineering is a focus on getting the best answers from LLMs. [42]
+
+A good prompt will usually have the following [43]:
+
+-  Instruction = Explain in detail exactly what task you want to happen.
+-  Context = Provide examples.
+-  Input data = Information unique to instruction.
+-  Output indicator
+
+   -  Provide the education level that the answer should be in. For example, pre-school, middle school, college undergraduate, or PHD.
+   -  Provide the tone. For example, academic, lighthearted, serious, etc.
+   -  Provide the format of the output. For example, how many sentences, JSON or YAML, C or Rust code, etc.
+
+The more instruction, context, input data, and output indicator, the higher chance of the answer being what is expected. Avoid being vague.
+
+Shot-based prompts usually follow a simple question and answer format. Leave the answer field empty and then the LLM will try to fill it in.
+
+Types of shot-based prompts:
+
+-  Zero-shot = Provide an instruction with no examples.
+-  One-shot = Provide an instruction with exactly 1 example.
+-  Few-shot = Provide an instruction with 2 or more examples.
+
+Few-shot prompting provides the best results compared to zero-shot and one-shot. [44]
+
+::
+
+   Question: Who is the captain?
+   Asnwer: Jean-Luc Picard
+   Question: Who is the doctor?
+   Answer: Beverly Crusher
+   Question: Who is the engineer?
+   Answer:
+
+::
+
+   Answer: Geordi La Forge
+
+The LLM can be told to roleplay to both think and provide answers in a different way. It is important to specify (1) the role it should play and (2) the tone it should use. [45]
+
+::
+
+   You are the new overly confident captain of the original U.S.S. Enterprise. You are on a peaceful mission to explore space. A Klingon Bird-of-Prey just de-cloaked near the port-bow which starts to divert power to their weapons. This is the first time your crew has experienced a real threat. What is the first order you give to the crew? Use only 1 sentence.
+
+::
+
+   "Raise shields, Sulu, and let's give these Klingons a cordial reminder that the Federation doesn't take kindly to unannounced visits!"
+
 History
 -------
 
@@ -502,3 +553,7 @@ Bibliography
 39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
 40. "A Guide to Quantization in LLMs." Symbl.ai. February 21, 2025. Accessed June 27, 2025. https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/
 41. "gemma3:27b." Ollama. April 18, 2025. Accessed June 27, 2025. `https://ollama.com/library/gemma3:27b <https://ollama.com/library/gemma3:27b>`__
+42. "What is Prompt Engineering?" AWS Cloud Computing Concepts Hub. Accessed June 30, 2025. https://aws.amazon.com/what-is/prompt-engineering/
+43. "Elements of a Prompt." Prompt Engineering Guide. April 24, 2025. Accessed June 30, 2025. https://www.promptingguide.ai/introduction/elements
+44. "Technique #3: Examples in Prompts: From Zero-Shot to Few-Shot." Learn Prompting. March 6, 2025. Accessed June 30, 2025. https://learnprompting.org/docs/basics/few_shot
+45. "Mastering Persona Prompts: A Guide to Leveraging Role-Playing in LLM-Based Applications like ChatGPT or Google Gemini." Medium Ankit Kumar. February 16, 2025. Accessed June 30, 2025. https://architectak.medium.com/mastering-persona-prompts-a-guide-to-leveraging-role-playing-in-llm-based-applications-1059c8b4de08
