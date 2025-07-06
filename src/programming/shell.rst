@@ -95,6 +95,20 @@ The keymap can also be set manually. [10]
    $ sudo -E ${EDITOR} /etc/vconsole.conf
    KEYMAP=us
 
+Loops
+-----
+
+While
+~~~~~
+
+Reading a file with ``cat`` will break the line up by whitespace. Use ``read`` instead to loop through each entire newline. [11]
+
+.. code-block:: sh
+
+   while read -r line; do
+       echo "${line}"
+   done < file_name_here.txt
+
 ANSI Colors
 -----------
 
@@ -227,3 +241,4 @@ Bibliography
 8. "System Locale and Keyboard Configuration." Fedora User Docs. December 9, 2024. Accessed December 10, 2024. https://docs.fedoraproject.org/en-US/fedora/f40/system-administrators-guide/basic-system-configuration/System_Locale_and_Keyboard_Configuration/
 9. "Locale." ArchWiki. December 1, 2024. Accessed December 10, 2024. https://wiki.archlinux.org/title/Locale
 10. "Setting Keyboard Layout." Fedora CoreOS. February 7, 2024. Accessed December 10, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/sysconfig-setting-keymap/
+11. "How to read complete line in 'for' loop with spaces." Ask Ubuntu. August 10, 2024. Accessed July 6, 2025. https://askubuntu.com/questions/344407/how-to-read-complete-line-in-for-loop-with-spaces
