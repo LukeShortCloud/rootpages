@@ -3,6 +3,21 @@ Windows Storage
 
 .. contents:: Table of Contents
 
+Invalid Characters
+------------------
+
+These are invalid characters to use for any file or directory name [14]:
+
+-  ``*``
+-  ``\``
+-  ``/``
+-  ``:``
+-  ``<``
+-  ``>``
+-  ``|``
+-  ``"``
+-  ``?``
+
 System Restore Point
 --------------------
 
@@ -179,3 +194,4 @@ Bibliography
 11. "How to Delete Old Boot Menu Options on Windows 10." MakeUseOf. November 8, 2022. Accessed August 9, 2023. https://www.makeuseof.com/tag/delete-boot-menu-options-windows/
 12. "Introduction to page files." Microsoft Learn. March 20, 2023. Accessed October 24, 2023. https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/introduction-to-the-page-file
 13. "What is a swap file (swap space or page file)?" TechTarget. Accessed October 24, 2023. https://www.techtarget.com/searchwindowsserver/definition/swap-file-swap-space-or-pagefile
+14. "Naming Files, Paths, and Namespaces." Microsoft Learn. August 28, 2024. Accessed July 6, 2025.  https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
