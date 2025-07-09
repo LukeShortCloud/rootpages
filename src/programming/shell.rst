@@ -98,6 +98,52 @@ The keymap can also be set manually. [10]
 Loops
 -----
 
+For
+~~~
+
+Loop through a list of strings.
+
+.. code-block:: sh
+
+   for color in red green blue; do
+       echo "${color}"
+    done
+
+::
+
+   red
+   green
+   blue
+
+Loop through a range of numbers. [12]
+
+.. code-block:: sh
+
+   for n in {0..2}; do
+       echo "${n}"
+   done
+
+::
+
+   0
+   1
+   2
+
+Loop through a range of numbers using a variable. [13]
+
+.. code-block:: sh
+
+   cars=3
+   for car in $(seq 0 $((cars - 1))); do
+       echo "${car}"
+   done
+
+::
+
+   0
+   1
+   2
+
 While
 ~~~~~
 
@@ -242,3 +288,5 @@ Bibliography
 9. "Locale." ArchWiki. December 1, 2024. Accessed December 10, 2024. https://wiki.archlinux.org/title/Locale
 10. "Setting Keyboard Layout." Fedora CoreOS. February 7, 2024. Accessed December 10, 2024. https://docs.fedoraproject.org/en-US/fedora-coreos/sysconfig-setting-keymap/
 11. "How to read complete line in 'for' loop with spaces." Ask Ubuntu. August 10, 2024. Accessed July 6, 2025. https://askubuntu.com/questions/344407/how-to-read-complete-line-in-for-loop-with-spaces
+12. "Introduction to Linux Bash programming: 5 `for` loop tips." Red Hat Blog. March 22, 2021. Accessed July 8, 2025. https://www.redhat.com/en/blog/bash-scripting-loops
+13. "How to Use seq With for Loop in Bash." LinuxOPsys. June 20, 2023. Accessed July 8, 2025. https://linuxopsys.com/use-seq-with-for-loop-in-bash
