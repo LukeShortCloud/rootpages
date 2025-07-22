@@ -435,6 +435,66 @@ Disable query generation to prevent rate limiting of most search engines with fr
 
 -  User > Admin Panel > Settings > Interface > Web Search Query Generation: Off > Save
 
+Modelfile
+^^^^^^^^^
+
+A Modelfile allows customizing an existing model for use with Ollama. The syntax for instructions is similar to a Containerfile.
+
+View a human-friendly overview of a model.
+
+.. code-block:: sh
+
+   $ ollama show ${model}:${tag}
+
+Save a model as a Modelfile to use as a starting point.
+
+.. code-block:: sh
+
+   $ ollama list
+   $ ollama show ${model}:${tag} --modelfile > ${model}.modelfile
+   $ less ${model}.modelfile
+
+Modelfile instructions [46][47]:
+
+-  **FROM** ``<MODEL>:<TAG>`` = Required. The model to use.
+-  ADAPTER = The LoRA adapters to use.
+-  LICENSE = The license to use.
+-  MESSAGE ``<ROLE>`` = One or more existing messages. These will appear as chat history when a user runs the model. This can be used for simple training. Role can be ``system`` (or use the ``SYSTEM`` instruction intead), ``user`` (the end-user), or ``assistant`` (the AI). For long multi-line messages, use triple quotes ``"""`` to start and end the message.
+-  **PARAMETER** = Configure model runtime settings.
+
+   -  min_p (float) = Use instead of top_p. Minimum probability of taking into account different but similar tokens. Default is 0.0.
+   -  **num_ctx (int)** = Context size. The higher the number, the more the model will remember. Default is 2048.
+   -  num_predict (int) = Predict how many tokens (how much processing) maximum is required to respond to the prompt. Default is -1 for infinity.
+   -  repeat_last_n (int) = How many messages a model can refer back to. Default is 64.
+   -  repeat_penalty (float) = Lower will be more repetitive. Higher will be less repetitive. Default is 1.1.
+   -  seed (int) = Configure a seed to get consistent output. Otherwise, Ollama will generate a random seed every time the model is loaded. Default is 0 for random.
+   -  **temperature (float)** = Higher will be more creative but less accurate. Default is 0.8.
+   -  stop (string) = One or more stop sequences that define when the AI should stop generating text.
+   -  top_k (int) = Higher will provide more varied output. Lower will be more focused. Default is 40.
+   -  top_p (float) = Use instead of min_p. Optionally use with top_k. Higher will provide more varied output. Lower will be more focused. Default is 0.9.
+
+-  **SYSTEM** = The persona the AI should have.
+-  TEMPLATE = The prompt template.
+
+Create a new model from the Modefile.
+
+.. code-block:: sh
+
+   $ ollama create <NEW_MODEL> --file <NEW_MODEL>.modelfile
+
+Example Modelfile [48]:
+
+::
+
+   FROM llama3.1:latest
+   PARAMETER num_ctx 4096
+   PARAMETER repeat_last_n 96
+   PARAMETER temperature 0.5
+   SYSTEM You are the world-class paleontologist Dr. Alan Grant from Jurassic Park.
+   MESSAGE user Tell me about yourself in two sentences.
+   MESSAGE assistant """My name is Dr. Alan Grant.
+   I'm a world-class plaeontologist who specializes in the study of velociraptors."""
+
 Training
 ^^^^^^^^
 
@@ -443,7 +503,7 @@ There are two types of quantization training strategies to lower the memory usag
 -  Post-training quantization (PTQ) = Easier but less accurate. Any existing LLM can be quantized and cached. Refer to the `quantization section <#quantization>`__.
 -  Quantization-aware training (QAT) = Harder but more accurate. The LLM must be specifically trained knowing that the data is quantized. For example, Gemma 3 models have QAT variants. [41]
 
-The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model.
+The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model. Alternatively, use a `Modefile <#modelfile>`__ to define ``MESSAGE`` instructions. When a user loads the model, the will see the message history.
 
 .. code-block:: sh
 
@@ -468,6 +528,7 @@ A good prompt will usually have the following [43]:
    -  Provide the education level that the answer should be in. For example, pre-school, middle school, college undergraduate, or PHD.
    -  Provide the tone. For example, academic, lighthearted, serious, etc.
    -  Provide the format of the output. For example, how many sentences, JSON or YAML, C or Rust code, etc.
+   -  Provide a persona. For example, customer support, game master, teacher, etc.
 
 The more instruction, context, input data, and output indicator, the higher chance of the answer being what is expected. Avoid being vague.
 
@@ -557,3 +618,6 @@ Bibliography
 43. "Elements of a Prompt." Prompt Engineering Guide. April 24, 2025. Accessed June 30, 2025. https://www.promptingguide.ai/introduction/elements
 44. "Technique #3: Examples in Prompts: From Zero-Shot to Few-Shot." Learn Prompting. March 6, 2025. Accessed June 30, 2025. https://learnprompting.org/docs/basics/few_shot
 45. "Mastering Persona Prompts: A Guide to Leveraging Role-Playing in LLM-Based Applications like ChatGPT or Google Gemini." Medium Ankit Kumar. February 16, 2025. Accessed June 30, 2025. https://architectak.medium.com/mastering-persona-prompts-a-guide-to-leveraging-role-playing-in-llm-based-applications-1059c8b4de08
+46. "Ollama Model File." GitHub ollama/ollama. July 11, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/blob/main/docs/modelfile.md
+47. "How to Customize LLM Models with Ollama’s Modelfile?" Collabnix. March 20, 2025. https://collabnix.com/how-to-customize-llm-models-with-ollamas-modelfile/
+48. "Ollama - Building a Custom Model." Unmesh Gundecha. October 22, 2023. Accessed July 22, 2025. https://unmesh.dev/post/ollama_custom_model/
