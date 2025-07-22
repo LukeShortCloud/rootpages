@@ -88,6 +88,29 @@ Installation [9]:
 
    -  `Download the latest Windows version <https://ollama.com/download/OllamaSetup.exe>`__.
 
+Uninstall:
+
+-  Linux [49]
+
+   .. code-block:: sh
+
+      $ sudo systemctl disable --now ollama
+      $ sudo rm --force /etc/systemd/system/ollama.service
+      $ sudo rm --force /usr/local/bin/ollama
+      $ sudo rm --recursive --force /usr/local/lib/ollama/
+
+-  macOS [50][51]
+
+   .. code-block:: sh
+
+      $ killall Ollama ollama
+      $ rm /usr/local/bin/ollama
+      $ rm --recursive --force ~/Library/Application\ Support/Ollama
+
+Upgrade:
+
+-  Uninstall and then install Ollama again.
+
 Ollama provides many different models. These are categorized by how many billions (B) of parameters the use. The higher the number, the more accurate it is but at the cost of more memory usage. [10] Refer to the `models section <#models>`__ for the top models. Refer to the `quantization section <#quantization>`__ for more information about the size and accuracy of models.
 
 Starter models to try:
@@ -621,3 +644,6 @@ Bibliography
 46. "Ollama Model File." GitHub ollama/ollama. July 11, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/blob/main/docs/modelfile.md
 47. "How to Customize LLM Models with Ollama’s Modelfile?" Collabnix. March 20, 2025. https://collabnix.com/how-to-customize-llm-models-with-ollamas-modelfile/
 48. "Ollama - Building a Custom Model." Unmesh Gundecha. October 22, 2023. Accessed July 22, 2025. https://unmesh.dev/post/ollama_custom_model/
+49. "How to uninstall Ollama." Collabnix. April 15, 2024. Accessed July 22, 2025. https://collabnix.com/how-to-uninstall-ollama/
+50. "Stop Ollama #690." GitHub ollama/ollama. July 20, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/690
+51. "how to remove ollama from macos? #2028." GitHub ollama/ollama. June 26, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/2028
