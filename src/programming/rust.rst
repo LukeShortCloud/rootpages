@@ -240,6 +240,8 @@ Overview
 
 [16][17]
 
+By default, variables cannot have a null value. Use ``Option<VARIABLE_TYPE>`` (replacing ``VARIABLE_TYPE``) when defining a variable to allow this.
+
 Variable Declaration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -463,6 +465,8 @@ Structs and Enums
 ~~~~~~~~~~~~~~~~~
 
 A ``struct`` is a custom data type. It can hold zero or many variables of different data types.
+
+If there is any possibility that a value for a variable may be null, then use ``Option<VARIABLE_TYPE>`` (replacing ``VARIABLE_TYPE``). This is common when importing from JSON or YAML.
 
 -  Create a ``struct`` that uses every data type in Rust.
 
