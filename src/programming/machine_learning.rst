@@ -499,7 +499,7 @@ Modelfile instructions [46][47]:
 -  **SYSTEM** = The persona the AI should have.
 -  TEMPLATE = The prompt template.
 
-Create a new model from the Modefile.
+Create a new model from the Modelfile.
 
 .. code-block:: sh
 
@@ -526,7 +526,7 @@ There are two types of quantization training strategies to lower the memory usag
 -  Post-training quantization (PTQ) = Easier but less accurate. Any existing LLM can be quantized and cached. Refer to the `quantization section <#quantization>`__.
 -  Quantization-aware training (QAT) = Harder but more accurate. The LLM must be specifically trained knowing that the data is quantized. For example, Gemma 3 models have QAT variants. [41]
 
-The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model. Alternatively, use a `Modefile <#modelfile>`__ to define ``MESSAGE`` instructions. When a user loads the model, the will see the message history.
+The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model. Alternatively, use a `Modelfile <#modelfile>`__ to define ``MESSAGE`` instructions. When a user loads the model, the will see the message history.
 
 .. code-block:: sh
 
