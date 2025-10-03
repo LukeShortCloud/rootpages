@@ -568,7 +568,7 @@ Few-shot prompting provides the best results compared to zero-shot and one-shot.
 ::
 
    Question: Who is the captain?
-   Asnwer: Jean-Luc Picard
+   Answer: Jean-Luc Picard
    Question: Who is the doctor?
    Answer: Beverly Crusher
    Question: Who is the engineer?
