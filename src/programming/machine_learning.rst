@@ -345,7 +345,7 @@ Most LLMs available to download use, at most, a floating-point value of 16. It i
    INT5 (Q5_K/Q5_K_M), 0.6, "'Very low quality loss.'"
    INT4 (Q4_K/Q4_K_M), 0.5, "'Balanced quality.' [20][27]"
 
-Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be up to 100x slower. [39]
+Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be anywhere from 30x to 100x slower. [52][39]
 
 Configure a quantization value.
 
@@ -647,3 +647,4 @@ Bibliography
 49. "How to uninstall Ollama." Collabnix. April 15, 2024. Accessed July 22, 2025. https://collabnix.com/how-to-uninstall-ollama/
 50. "Stop Ollama #690." GitHub ollama/ollama. July 20, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/690
 51. "how to remove ollama from macos? #2028." GitHub ollama/ollama. June 26, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/2028
+52. "Sizing VRAM to Generative AI & LLM Workloads." Puget Systems. July 18, 2025. Accessed October 3, 2025. https://www.pugetsystems.com/labs/articles/sizing-vram-to-generative-ai-and-llm-workloads/
