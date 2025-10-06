@@ -76,9 +76,15 @@ Installation [9]:
 
 -  Linux
 
-   .. code-block:: sh
+   -  Install the latest version or optionally specify an `Ollama version tag to install <https://github.com/ollama/ollama/tags>`__ (without the ``v`` in it).
 
-      $ curl -fsSL https://ollama.com/install.sh | sh
+      .. code-block:: sh
+
+         $ curl -fsSL https://ollama.com/install.sh | sh
+
+      .. code-block:: sh
+
+         $ curl -fsSL https://ollama.com/install.sh | OLLAMA_VERSION="<OLLAMA_VERSION_TAG>" sh
 
 -  macOS
 
