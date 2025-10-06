@@ -175,7 +175,11 @@ Delete all models.
 Models
 ^^^^^^
 
-Top local LLMs for literature as of 2025 [28]:
+As of mid-2025, the best overall model is `Gemma 3 <https://ollama.com/library/gemma3>`__. It supports over 140 languages, supports 128,000 context tokens, and has image recognition (except for the 1B and 270M variants). Gemma 3 27B is better than Llama 405B and Deepseek v3 671B. [53] It is available in 270M, 1B, 4B, 12B, and 27B sizes. [54]
+
+-  ``ollama run gemma3:27b``
+
+Top local LLMs for literature as of early 2025 [28]:
 
 -  32B or less:
 
@@ -203,7 +207,7 @@ Top local LLMs for literature as of 2025 [28]:
 
       - ``ollama run llama3.1``
 
-Top local LLms for programming that are 32B or smaller as of 2025:
+Top local LLms for programming that are 32B or smaller as of early 2025:
 
 -  32B or less:
 
@@ -654,3 +658,5 @@ Bibliography
 50. "Stop Ollama #690." GitHub ollama/ollama. July 20, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/690
 51. "how to remove ollama from macos? #2028." GitHub ollama/ollama. June 26, 2025. Accessed July 22, 2025. https://github.com/ollama/ollama/issues/2028
 52. "Sizing VRAM to Generative AI & LLM Workloads." Puget Systems. July 18, 2025. Accessed October 3, 2025. https://www.pugetsystems.com/labs/articles/sizing-vram-to-generative-ai-and-llm-workloads/
+53. "Gemma 3: A 27B Multimodal LLM Better Than Really Big Models." Medium. March 12, 2025. Accessed October 6, 2025. https://medium.com/@elmo92/gemma-3-a-27b-multimodal-llm-better-than-really-big-models-b4fe0f4949b4
+54. "Gemma 3 model overview." Google AI for Developers. August 14, 2024. Accessed October 6, 2025. https://ai.google.dev/gemma/docs/core
