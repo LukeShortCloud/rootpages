@@ -97,8 +97,11 @@ Tiled window managers specialize in splitting up windows into tiles/boxes that c
 Desktop Environments
 --------------------
 
+Stacking Window Managers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Introduction
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 Desktop environments (DEs) are built on top of windows managers. They provide the full functionality of a graphical desktop by bundling applications for managing media, files, and network connections. Some DEs have created their own custom window managers as well. [1]
 
@@ -112,7 +115,7 @@ Desktop environments (DEs) are built on top of windows managers. They provide th
    Xfce, GTK, Xfwm, Low
 
 Cinnamon
-~~~~~~~~
+^^^^^^^^
 
 Installation:
 
@@ -122,7 +125,7 @@ Installation:
 -  Fedora: ``$ sudo dnf groupinstall "Cinnamon Desktop"``
 
 GNOME
-~~~~~
+^^^^^
 
 Installation:
 
@@ -140,8 +143,8 @@ Suggested tweaks:
 -  Top Bar > Battery Percentage > On
 -  Window Titlebars > Titlebar Buttons > [Maximize|Minimize] > On
 
-KDE
-~~~
+KDE Plasma
+^^^^^^^^^^
 
 Installation:
 
@@ -151,7 +154,7 @@ Installation:
 -  Fedora: ``$ sudo dnf groupinstall "KDE Plasma Workspaces"``
 
 Xfce
-~~~~
+^^^^
 
 Installation:
 
@@ -159,6 +162,61 @@ Installation:
 -  Debian (manual): ``$ sudo apt-get install xfce4``
 -  Debian (automatic): ``$ sudo apt-get install task-xfce-desktop``
 -  Fedora: ``$ sudo dnf groupinstall "Xfce Desktop"``
+
+Tiling Window Managers
+~~~~~~~~~~~~~~~~~~~~~~
+
+Introduction
+^^^^^^^^^^^^
+
+Window tiling managers are a simplified desktop environments that rely on keyboard shortcuts (and sometimes a mouse) to open windows, move them, and resize them. Windows do not float, overlap, or stack. [15][16]
+
+Hyprland
+^^^^^^^^
+
+Hyprland works best on rolling distributions as it requires the latest updates to Wayland and related components.
+
+Fully supported Linux distributions:
+
+-  Arch Linux
+-  NixOS
+
+Partially supported:
+
+-  Fedora
+-  openSUSE Leap
+
+Not supported:
+
+-  Debian
+-  Ubuntu
+
+Installation [17]:
+
+-  Arch Linux: ``$ sudo pacman -S hyprland kitty wofi``
+-  Debian (not recommended): ``$ sudo apt-get install hyrpland kitty wofi``
+-  Fedora: ``$ sudo dnf install hyprland kitty wofi``
+
+Default shortcuts:
+
+-  ``WINDOWS`` + ``q`` = Open the terminal (``kitty`` by default).
+-  ``WINDOWS`` + ``r`` = Open the app launcher (``wofi`` by default).
+-  ``WINDOWS`` + ``c`` = Close a window.
+-  ``WINDOWS`` + ``<ARROW_KEY>`` = Change the focus to a different window. Or move the mouse over the desired window to be focused.
+-  ``WINDOWS`` + ``<MOUSE_LEFT_CLICK>`` = Move the position of a window with the mouse.
+-  ``WINDOWS`` + ``m`` = Exit the Hyprland session.
+
+Use the configuration file to change the layout, keybindings, and default applications.
+
+-  ``~/.config/hypr/hyprland.conf``
+
+`Complete setups can be found here <https://wiki.hypr.land/Getting-Started/Preconfigured-setups/>`__. Most of those make a lot of changes to the operating system and require a manual uninstall to remove.
+
+Reload Hyprland to load changes without having to log out and log back in again.
+
+.. code-block:: sh
+
+   $ hyprctl reload
 
 Display Usage
 -------------
@@ -332,3 +390,6 @@ Bibliography
 12. "How do I rotate my display when not using an X Server?" Ask Ubuntu. June 6, 2014. Accessed March 5, 2024. https://askubuntu.com/questions/237963/how-do-i-rotate-my-display-when-not-using-an-x-server
 13. "Configure a user default session." GNOME Library. Accessed March 30, 2024. https://help.gnome.org/admin/system-admin-guide/stable/session-user.html.en
 14. "Chapter 8. Setting a default desktop session for all users." Red Hat Customer Portal. Accessed March 30, 2024. https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/administering_the_system_using_the_gnome_desktop_environment/proc_setting-a-default-desktop-session-for-all-users_administering-the-system-using-the-gnome-desktop-environment
+15. "Tiling Window Managers are Simply Better." Arnav Dixit. January 25, 2021. Accessed October 6, 2025. https://arnavdixit.netlify.app/p/2021/01/25/tiling-window-managers-are-simply-better/
+16. "Comparison of tiling window managers." ArchWiki. December 8, 2024. Accessed October 6, 2025. https://wiki.archlinux.org/title/Comparison_of_tiling_window_managers
+17. "Installation." Hyprland Wiki. October 5, 2025. Accessed October 6, 2025. https://wiki.hypr.land/Getting-Started/Installation/
