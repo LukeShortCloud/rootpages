@@ -197,7 +197,7 @@ Installation [17]:
 -  Debian (not recommended): ``$ sudo apt-get install hyrpland kitty wofi``
 -  Fedora: ``$ sudo dnf install hyprland kitty wofi``
 
-Default shortcuts:
+Default Hyprland shortcuts:
 
 -  ``WINDOWS`` + ``q`` = Open the terminal (``kitty`` by default).
 -  ``WINDOWS`` + ``r`` = Open the app launcher (``wofi`` by default).
@@ -205,6 +205,12 @@ Default shortcuts:
 -  ``WINDOWS`` + ``<ARROW_KEY>`` = Change the focus to a different window. Or move the mouse over the desired window to be focused.
 -  ``WINDOWS`` + ``<MOUSE_LEFT_CLICK>`` = Move the position of a window with the mouse.
 -  ``WINDOWS`` + ``m`` = Exit the Hyprland session.
+
+Default Kitty shortcuts:
+
+-  ``CTRL`` + ``SHIFT`` + ``t`` = Open a new tab.
+-  ``CTRL`` + ``TAB`` = Switch between tabs.
+-  ``CTRL`` + ``SHIFT`` + ``c`` = Copy text.
 
 Use the configuration file to change the layout, keybindings, and default applications.
 
