@@ -14,10 +14,19 @@ Each kernel new kernel in development normally goes through 7 to 9 weeks of rele
 
 The types of Linux kernel releases include:
 
--  mainline = The latest development release that is working towards a stable release.
--  stable = The current stable release.
--  longterm = Long-term supported kernels are older versions that primarily only receive bug fixes.
 -  linux-next = Daily unstable development releases from the "master" git branch.
+
+   -  ``https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git``
+
+-  mainline = The latest development release candidate that is working towards a stable release.
+
+   -  ``https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git``
+
+-  stable = The current stable release.
+
+   -  ``https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git``
+
+-  longterm = Long-term supported kernels are older versions that primarily only receive bug fixes. The source code for these can be found in the "stable" repository under the branch names "``linux-<MAJOR_VERSION>-<MINOR_VERSION>.y``".
 
 System Calls
 ------------
