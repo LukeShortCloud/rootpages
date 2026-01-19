@@ -110,8 +110,8 @@ Uninstall:
    .. code-block:: sh
 
       $ killall Ollama ollama
-      $ rm /usr/local/bin/ollama
-      $ rm --recursive --force ~/Library/Application\ Support/Ollama
+      $ sudo rm -f /usr/local/bin/ollama
+      $ rm -r -f ~/Library/Application\ Support/Ollama
 
 Upgrade:
 
