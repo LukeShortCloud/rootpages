@@ -463,6 +463,30 @@ File: /etc/dracut.conf
 Build
 -----
 
+Mailing List Patches
+~~~~~~~~~~~~~~~~~~~~
+
+All upstream patches must go through review on the Linux kernel mailing list (LKML) by e-mailing ``linux-kernel@vger.kernel.org``. [49]
+
+Download git commits from the mailing list:
+
+1.  Search for a patch series: https://lore.kernel.org/lkml/
+2.  Find the "Message-ID" (within the ``<`` and ``>`` characters).
+
+   -  If it is not on that page, select the "raw" button to see it.
+
+3.  Download the entire e-mail thread as a single "mbx" text file.
+
+   .. code-block:: sh
+
+      $ b4 am <MESSAGE_ID>
+
+4.  Import all of the git commits from a ``linux`` git repository. [50]
+
+   .. code-block:: sh
+
+      $ git am ./*.mbx
+
 Configure Features
 ~~~~~~~~~~~~~~~~~~
 
@@ -838,3 +862,5 @@ Bibliography
 46. "Optimizing Ubuntu to run from a USB key or SD card." Steve Hanov's Blog. 2009. Accessed May 3, 2025. https://stevehanov.ca/blog/?id=48
 47. "Files b27d68a rpm-sources/baseos/kernel/6.14/config." GitHub Nobara-Project/rpm-sources. May 18, 2025. Accessed June 18, 2025. https://github.com/Nobara-Project/rpm-sources/blob/b27d68abdd1864a712d5401b67dc9fee18ed3344/baseos/kernel/6.14/config
 48. "Files f42/kernel-x86_64.config." Fedora Package Sources rpm/kernel. May 18, 2025. Accessed June 16, 2025. https://src.fedoraproject.org/rpms/kernel/blob/f42/f/kernel-x86_64-fedora.config
+49. "vger.kernel.org." Subspace mailing list server. 2023. Accessed January 19, 2026. https://subspace.kernel.org/vger.kernel.org.html
+50. "am,shazam: retrieving and applying patches." B4 end-user docs. 2022. Accessed January 19, 2026. https://b4.docs.kernel.org/en/latest/maintainer/am-shazam.html
