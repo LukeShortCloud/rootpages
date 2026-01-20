@@ -712,9 +712,10 @@ Fedora
 
             $ sed -i s'/%define with_debug     %{?_without_debug:     0} %{?!_without_debug:     1}/%define with_debug 0/'g kernel.spec
             $ sed -i s'/%define with_debuginfo %{?_without_debuginfo: 0} %{?!_without_debuginfo: 1}/%define with_debuginfo 0/'g kernel.spec
-            $ sed -i s'/%define with_release   %{?_with_release:      1} %{?!_with_release:      0}/%define with_release 1/'g kernel.spec
             $ sed -i s'/%define with_headers   %{?_without_headers:   0} %{?!_without_headers:   1}/%define with_headers 1/'g kernel.spec
             $ sed -i s'/with_headers 0/with_headers 1/'g kernel.spec
+            $ sed -i s'/%define with_release   %{?_with_release:      1} %{?!_with_release:      0}/%define with_release 1/'g kernel.spec
+            $ sed -i s'/%define with_selftests %{?_without_selftests: 0} %{?!_without_selftests: 1}/%define with_selftests 0/'g kernel.spec
             $ fedpkg --release f38 srpm
 
       -  The resulting SRPM will be saved to the current working directory.
