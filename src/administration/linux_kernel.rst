@@ -647,7 +647,7 @@ Upstream
 
       .. code-block:: sh
 
-         $ sudo rpm -iU ~/rpmbuild/RPMS/x86_64/kernel-*.rpm
+         $ sudo rpm -iU ./rpmbuild/RPMS/<CPU_ARCHITECTURE>/kernel-*.rpm
 
 [18][19]
 
