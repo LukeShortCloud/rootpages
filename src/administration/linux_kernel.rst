@@ -626,6 +626,8 @@ Upstream
 
       .. code-block:: sh
 
+         $ sudo dnf install dnf5-plugins
+         $ sudo dnf builddep ./scripts/package/kernel.spec
          $ make -j $(nproc) binrpm-pkg
 
 -  Install the Linux kernel:
@@ -678,7 +680,7 @@ Fedora
 
    .. code-block:: sh
 
-      $ sudo dnf install 'dnf-command(builddep)'
+      $ sudo dnf install dnf5-plugins
       $ sudo dnf builddep kernel.spec
       $ fedpkg sources
 
