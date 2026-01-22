@@ -547,8 +547,8 @@ Upstream
 
 -  Download the Linux kernel source code:
 
-   -  Using the newest kernels from `here <https://www.kernel.org/>`__.
-   -  Or using any kernel version from `here <https://mirrors.edge.kernel.org/pub/linux/kernel/>`__.
+   -  Using the newest kernel tarball from here: https://www.kernel.org/
+   -  Or using any kernel version tarball from here: https://www.kernel.org/pub/linux/kernel/
    -  Or from the stable kernel git repository:
 
       -  Using a specific version tag:
@@ -562,6 +562,17 @@ Upstream
          .. code-block:: sh
 
             $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ --depth=1 --branch linux-<VERSION_MAJOR>.<VERSION_MINOR>.y
+
+      -  Or all history from the git repository where you can select any version after downloading (this will take a long time):
+
+         .. code-block:: sh
+
+            $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+            $ cd linux
+            $ git remote add stable https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+            $ git fetch stable
+            $ git remote add next https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+            $ git fetch next
 
 -  Add the kernel headers to the system to help with building DKMS modules in the future. The "linux" folder will need to later be renamed to reflect the output of ``uname -r`` of the installed kernel.
 
