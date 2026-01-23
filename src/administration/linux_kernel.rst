@@ -611,7 +611,7 @@ Upstream
          $ cp arch/<CPU_ARCHITECTURE>/configs/<CONFIG>.config .config
          $ make olddefconfig
 
-   -  Or merge two configurations together:
+   -  Or merge two configurations together. If an option is configured in both files, then the option from ``<CONFIG_2>`` is applied. If an option is undefined in ``<CONFIG_2>``, then the option from ``<CONFIG_1>`` is applied.
 
       .. code-block:: sh
 
