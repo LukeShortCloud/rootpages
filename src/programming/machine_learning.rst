@@ -367,7 +367,7 @@ Below is an example of how context length affects memory usage with the Qwen3 1.
    ``114688`` (112K), 8x, 16
    ``131072`` (128K), 9x, 18
 
-Configure a quantization value. [55]
+Configure a context length value. [55]
 
 -  Linux:
 
