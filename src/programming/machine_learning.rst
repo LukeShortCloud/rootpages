@@ -340,6 +340,51 @@ Create and enter the Distrobox container. [19]
 LLM Tuning
 ^^^^^^^^^^
 
+Context Length
+''''''''''''''
+
+The context length determines how much information a LLM can process. A larger context length can process larger files and remember older parts of the conversation for longer. For local models, it is recommended to use a minimum context length of 64K for advanced use-cases. [55] For comparison, as of early 2026, remote models such as ChatGPT offer 16K, 32K, and 128K depending on the subscription. [56]
+
+Ollama defaults based on VRAM size [57]:
+
+-  Below 24 GiB = ``4096`` (4K)
+-  Between 24 and 48 GiB = ``32768`` (32K)
+-  At or above 48 GiB = ``262144`` (256K)
+
+Below is an example of how context length affects memory usage with the Qwen3 1.7B model. The exact model and size will affect the real memory usage. [39]
+
+.. csv-table::
+   :header: Context Length, Memory Increase Multiplier from 4K, Example Memory Usage (GiB)
+   :widths: 20, 20, 20
+
+   ``4096`` (4K), 1x, 2
+   ``16384`` (16K), 2x, 4
+   ``32768`` (32K), 3x, 6
+   ``49152`` (48K), 4x, 8
+   ``65536`` (64K), 5x, 10
+   ``81920`` (80K), 6x, 12
+   ``98304`` (96k), 7x, 14
+   ``114688`` (112K), 8x, 16
+   ``131072`` (128K), 9x, 18
+
+Configure a quantization value. [55]
+
+-  Linux:
+
+   .. code-block:: sh
+
+      $ sudo systemctl edit ollama.service
+      [Service]
+      Environment="OLLAMA_CONTEXT_LENGTH=<VALUE>"
+      $ sudo systemctl daemon-reload
+      $ sudo systemctl restart ollama
+
+-  macOS:
+
+   .. code-block:: sh
+
+      $ launchctl setenv OLLAMA_CONTEXT_LENGTH <VALUE>
+
 Quantization
 ''''''''''''
 
@@ -355,7 +400,7 @@ Most LLMs available to download use, at most, a floating-point value of 16. It i
    INT5 (Q5_K/Q5_K_M), 0.6, "'Very low quality loss.'"
    INT4 (Q4_K/Q4_K_M), 0.5, "'Balanced quality.' [20][27]"
 
-Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be anywhere from 30x to 100x slower. [52][39]
+Anything below INT4 results in a huge loss in quality and is not usable. [20] If a model cannot fit into VRAM, then the extra size is placed into system RAM which can be anywhere from 30x to 50x slower. [39][52]
 
 Configure a quantization value.
 
@@ -363,7 +408,7 @@ Configure a quantization value.
 
    .. code-block:: sh
 
-      $ sudo -E ${EDITOR} /etc/systemd/system/ollama.service
+      $ sudo systemctl edit ollama.service
       [Service]
       Environment="OLLAMA_KV_CACHE_TYPE=<QUANTIZATION_VALUE>"
       Environment="OLLAMA_FLASH_ATTENTION=1"
@@ -638,13 +683,13 @@ Bibliography
 30. "So what is now the best local AI for coding?" Reddit r/LocalLLaMA. February 25, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1ia0j9o/so_what_is_now_the_best_local_ai_for_coding/
 31. "Codestral 22B, Owen 2.5 Coder B, and DeepSeek V2 Coder: Which AI Coder Should You Choose?" Deepgram. October 10, 2024. Accessed June 24, 2025. https://deepgram.com/learn/best-local-coding-llm
 32. "In Feb 2025, what’s your LLM stack for productivity?" Reddit r/LocalLLaMA. February 8, 2025. Accessed June 24, 2025. https://www.reddit.com/r/LocalLLaMA/comments/1ik6fy3/in_feb_2025_whats_your_llm_stack_for_productivity/
-33. https://symflower.com/en/company/blog/2025/dev-quality-eval-v1.0-anthropic-s-claude-3.7-sonnet-is-the-king-with-help-and-deepseek-r1-disappoints/
+33. "Anthropic's Claude 3.7 Sonnet is the new king of code generation (but only with help), and DeepSeek R1 disappoints (Deep dives from the DevQualityEval v1.0)." Symflower. 2025. Accessed February 5, 2026. https://symflower.com/en/company/blog/2025/dev-quality-eval-v1.0-anthropic-s-claude-3.7-sonnet-is-the-king-with-help-and-deepseek-r1-disappoints/
 34. "Stable Code 3B: Coding on the Edge." Hacker News. January 20, 2025. Accessed June 24, 2025. https://news.ycombinator.com/item?id=39019532
 35. "DeepSeek Coder". GitHub deepseek-ai/DeepSeek-Coder. March 6, 2024. Accessed June 24, 2025. https://github.com/deepseek-ai/deepseek-coder
 36. "Comparing quants of QwQ Preview in Ollama." December 17, 2024. Accessed June 24, 2025. leikareipa.github.io. https://leikareipa.github.io/blog/comparing-quants-of-qwq-preview-in-ollama/
 37. "Question on model sizes vs. GPU." Reddit r/ollama. September 4, 2024. Accessed June 26, 2025. https://www.reddit.com/r/ollama/comments/1d4ofem/question_on_model_sizes_vs_gpu/
 38. "How much VRAM do I need for LLM model fine-tuning?" Modal Blog. September 1, 2024. Accessed June 26, 2025. https://modal.com/blog/how-much-vram-need-fine-tuning
-39. "Tech Primer: What hardware do you need to run a local LLM?" Puget Systems. August 12, 2024. Accessed June 26, 2025. https://www.pugetsystems.com/labs/articles/tech-primer-what-hardware-do-you-need-to-run-a-local-llm/
+39. "Context Kills VRAM: How to Run LLMs on consumer GPUs." Medium Lyx. May 9, 2025. Accessed February 5, 2026. https://medium.com/@lyx_62906/context-kills-vram-how-to-run-llms-on-consumer-gpus-a785e8035632
 40. "A Guide to Quantization in LLMs." Symbl.ai. February 21, 2025. Accessed June 27, 2025. https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/
 41. "gemma3:27b." Ollama. April 18, 2025. Accessed June 27, 2025. `https://ollama.com/library/gemma3:27b <https://ollama.com/library/gemma3:27b>`__
 42. "What is Prompt Engineering?" AWS Cloud Computing Concepts Hub. Accessed June 30, 2025. https://aws.amazon.com/what-is/prompt-engineering/
@@ -660,3 +705,6 @@ Bibliography
 52. "Sizing VRAM to Generative AI & LLM Workloads." Puget Systems. July 18, 2025. Accessed October 3, 2025. https://www.pugetsystems.com/labs/articles/sizing-vram-to-generative-ai-and-llm-workloads/
 53. "Gemma 3: A 27B Multimodal LLM Better Than Really Big Models." Medium. March 12, 2025. Accessed October 6, 2025. https://medium.com/@elmo92/gemma-3-a-27b-multimodal-llm-better-than-really-big-models-b4fe0f4949b4
 54. "Gemma 3 model overview." Google AI for Developers. August 14, 2024. Accessed October 6, 2025. https://ai.google.dev/gemma/docs/core
+55. "Context length." Ollama's documentation. Accessed February 5, 2026. https://docs.ollama.com/context-length
+56. "Pricing." ChatGPT Plans. 2026. Accessed February 5, 2026. https://chatgpt.com/pricing/
+57. "server: use tiered VRAM-based default context length." GitHub ollama/ollama. February 2, 2026. Accessed February 5, 2026. https://github.com/ollama/ollama/commit/0334ffa6250752c0e5e3d7f4467b0f50cc906fde
