@@ -3,6 +3,15 @@ KazetaOS
 
 .. contents:: Table of Contents
 
+User Access
+-----------
+
+Access the console by pressing ``CTRL``, ``ALT``, and ``F3``. Go back to the Kazeta app by pressing ``CTRL``, ``ALT``, and ``F1``.
+
+The default username and password are both ``gamer``. The password cannot be changed because ``/etc/`` is part of the read-only file system. The ``/home/`` directory is also read-only. [2]
+
+There is no official support for SSH.
+
 Networking
 ----------
 
