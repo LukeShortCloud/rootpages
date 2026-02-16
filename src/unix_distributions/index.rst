@@ -7,6 +7,7 @@
    asahi_linux
    chromium_os
    fedora
+   kazetaos
    macos
    raspberry_pi_os
    steamos
