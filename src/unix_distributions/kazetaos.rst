@@ -19,6 +19,23 @@ In newer versions of KazetaOS, DHCP is automatically configured on all Ethernet 
 
 There is no official support for Wi-Fi.
 
+Updates
+-------
+
+Update to the latest stable version. [2]
+
+.. code-block:: sh
+
+   $ sudo frzr-deploy
+   $ sudo reboot
+
+Update to the latest development version from GitHub. [3][4]
+
+.. code-block:: sh
+
+   $ sudo frzr-deploy kazetaos/kazeta:unstable
+   $ sudo reboot
+
 History
 -------
 
@@ -28,3 +45,6 @@ Bibliography
 ------------
 
 1. "Connect to network automatically if ethernet cable is connected." GitHub kazetaos/kazeta. January 11, 2026. Accessed February 16, 2026. https://github.com/kazetaos/kazeta/commit/1dc334c0d0066114b73f42f760fe42b22d028c11
+2. "Technical Details." GitHub kazetaos/kazeta. August 20, 2025. Accessed Feburary 16, 2026. https://github.com/kazetaos/kazeta/wiki/Technical-Details
+3. "Development." GitHub ChimeraOS/chimeraos. August 5, 2024. Accessed February 16, 2026. https://github.com/ChimeraOS/chimeraos/wiki/Development
+4. "Releases." GitHub kazetaos/kazeta. January 13, 2026. Accessed February 16, 2026. https://github.com/kazetaos/kazeta/releases
