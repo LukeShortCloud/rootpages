@@ -189,12 +189,12 @@ Steam
 
 Steam is a hybrid application that uses both x86_64 and x86_32 libraries on Linux. Most legacy games are also only 32-bit. Both Box64 and Box86 need to be installed for Steam to work. It currently does not work with Box32.
 
-Install Steam using the script that Box86 provides. This is similar to the manual steps that FEX recommends.
+Install Steam using the script that Box64 provides. This is similar to the manual steps that FEX recommends.
 
 .. code-block:: sh
 
-   $ git clone https://github.com/ptitSeb/box86
-   $ cd box86
+   $ git clone https://github.com/ptitSeb/box64
+   $ cd box64
    $ ./install_steam.sh
 
 Verify that Steam works with Box. [8]
