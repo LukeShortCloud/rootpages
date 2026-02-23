@@ -203,6 +203,38 @@ Verify that Steam works with Box. [8]
 
    $ steam
 
+For debugging Steam, launch Steam with Box64 configured as the debugger. Steam will now use a single thread which makes it easier to debug.
+
+.. code-block:: sh
+
+   $ DEBUGGER=box64 steam
+
+After launching Steam, you can uncomment these lines (except the "\*_EMULATED" lines), recompile Box64, and then launch a game for additional trace logs to be placed in the ``/tmp/`` directory. This helps to avoid launching all of Steam with debugging enabled which can be so slow that it crashes.
+
+.. code-block:: sh
+
+   $ cd box64/build/
+   $ ${EDITOR} ../src/steam.c
+       //setenv("BOX64_PREFER_EMULATED", "1", 1);
+       //setenv("BOX86_PREFER_EMULATED", "1", 1);
+       setenv("BOX64_TRACE_FILE", "/tmp/trace64-%pid.txt", 1);
+       setenv("BOX86_TRACE_FILE", "/tmp/trace86-%pid.txt", 1);
+       setenv("BOX86_LOG", "1", 1);
+       setenv("BOX64_LOG", "1", 1);
+       setenv("BOX86_SHOWSEGV", "1", 1);
+       setenv("BOX64_DLSYM_ERROR", "1", 1);
+       setenv("BOX64_SHOWSEGV", "1", 1);
+       setenv("BOX64_SHOWBT", "1", 1);
+       setenv("BOX64_DYNAREC_LOG", "1", 1);
+   $ make -j $(nproc)
+   $ sudo make install
+
+Look in the trace logs for "Signal 11" (segmentation fault) and other bad signals.
+
+.. code-block:: sh
+
+   $ grep -l -r "Signal 11" /tmp/trace*
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
