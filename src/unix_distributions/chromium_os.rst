@@ -432,15 +432,15 @@ Setup the Chromium OS SDK. Once complete, this will change the prompt as it chan
 
    $ export PATH="$(pwd)/chromite/bin/:$PATH"
    $ cros_sdk
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $
 
 Find the board name for the Chromebook from `here <https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices>`__. Alternatively, visit ``chrome://version`` on the Chromebook and look for "Platform:". The board name is the last word on that line. Use it to setup the Gentoo packages that mirror what is being used by the latest version of that Chromebook. If using a generic Chromium OS image, it is possible to target ``BOARD=amd64-generic``.
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ export BOARD=<CHROMEBOOK_BOARD_NAME>
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ setup_board --board=${BOARD}
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ export BOARD=<CHROMEBOOK_BOARD_NAME>
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ setup_board --board=${BOARD}
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
 
 **Update:**
 
@@ -503,20 +503,20 @@ Do a search to ensure that the relevant branch or tag exists.
 .. code-block:: sh
 
    $ cros_sdk
-   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ git branch -a | grep release-R91
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ git branch -a | grep release-R91
      remotes/cros/release-R91-13904.B
 
 .. code-block:: sh
 
    $ cros_sdk
-   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ git tag | grep stabilize-13904.55.B
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ git tag | grep stabilize-13904.55.B
      remotes/cros/stabilize-13904.55.B
 
 Resync the repositories to use the specified branch.
 
 .. code-block:: sh
 
-   (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ exit
+   (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ exit
    $ repo init -u https://chromium.googlesource.com/chromiumos/manifest.git -b release-R91-13904.B
    $ repo sync -j 16
    $ cros_sdk
@@ -800,7 +800,7 @@ It is not recommended to use an unmodified upstream Linux kernel. Chromium OS pr
 
    .. code-block:: sh
 
-      (cr) ((<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
+      (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_packages --board=${BOARD}
       (cr) ((<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ ./build_image --board=${BOARD} --noenable_rootfs_verification <IMAGE_TYPE>
 
 [34]
@@ -879,7 +879,7 @@ In the ``cros_sdk`` chroot, change into the directory of the kernel source code.
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ cd ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cd ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/
 
 On the Chromebook, take note of the ``chrome://version`` "Platform:" details.
 
@@ -891,19 +891,19 @@ Using the major release number (13729 in this example), the kernel version, and 
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git branch -a | egrep "release-.*13729.*-chromeos-4.14"
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git branch -a | egrep "release-.*13729.*-chromeos-4.14"
    remotes/cros/release-R89-13729.B-chromeos-4.14
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git checkout cros/release-R89-13729.B-chromeos-4.14
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel/v4.14/ $ git checkout cros/release-R89-13729.B-chromeos-4.14
 
 Build the kernel or just the modules.
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make
 
 .. code-block:: sh
 
-   (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make modules
+   (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/third_party/kernel/v<KERNEL_VERSION_MAJOR>.<KERNEL_VERSION_MINOR>/ $ make modules
 
 [28]
 
@@ -944,7 +944,7 @@ Building
       $ cd chromiumos
       $ export PATH="$(pwd)/chromite/bin/:$PATH"
       $ cros_sdk
-      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $
+      (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $
 
 -  Download a Chrome OS recovery image from `cros.tech <https://cros.tech/>`__ depending on the processor of the device that Chrome OS will be installed onto. Unzip the archive that was downloaded.
 
@@ -957,22 +957,22 @@ Building
 
    .. code-block:: sh
 
-      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ mkdir ~/brunch/
-      (cr) (main/(<COMMIT>...)) <USER>@<HOTSNAME> ~/trunk/src/scripts $ cd ~/brunch/
-      (cr) <USER>@<HOTSNAME> ~/brunch $ wget https://github.com/sebanc/brunch/releases/download/r<CHROME_OS_RELEASE>-stable-<DATE>/brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
-      (cr) <USER>@<HOTSNAME> ~/brunch $ tar -x -f brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
+      (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ mkdir ~/brunch/
+      (cr) (main/(<COMMIT>...)) <USER>@<HOSTNAME> ~/trunk/src/scripts $ cd ~/brunch/
+      (cr) <USER>@<HOSTNAME> ~/brunch $ wget https://github.com/sebanc/brunch/releases/download/r<CHROME_OS_RELEASE>-stable-<DATE>/brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
+      (cr) <USER>@<HOSTNAME> ~/brunch $ tar -x -f brunch_r<CHROME_OS_RELEASE>_stable_<DATE>.tar.gz
 
 -  Create a Brunch installer image for Chrome OS. This wil be 14 GB in size.
 
    .. code-block:: sh
 
-      (cr) <USER>@<HOTSNAME> ~/brunch $ sudo ./chromeos-install.sh -src <CHROME_OS_RECOVERY_IMAGE>.bin -dst brunch.bin
+      (cr) <USER>@<HOSTNAME> ~/brunch $ sudo ./chromeos-install.sh -src <CHROME_OS_RECOVERY_IMAGE>.bin -dst brunch.bin
 
 -  Flash the installer image to an external drive.
 
    .. code-block:: sh
 
-      (cr) <USER>@<HOTSNAME> ~/brunch $ sudo dd if="/home/${USER}/brunch/brunch.bin" of=/dev/<DEVICE>
+      (cr) <USER>@<HOSTNAME> ~/brunch $ sudo dd if="/home/${USER}/brunch/brunch.bin" of=/dev/<DEVICE>
 
 [37]
 
