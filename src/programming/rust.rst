@@ -96,7 +96,7 @@ Variables
 ~~~~~~~~~
 
 -  Variable names should use ``snake_case``.
--  Constant names should use ``SCREAMING_SNAME_CASE``. [35][36]
+-  Constant names should use ``SCREAMING_SNAKE_CASE``. [35][36]
 
 Comments
 ~~~~~~~~
