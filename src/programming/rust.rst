@@ -33,34 +33,38 @@ Installation
 
 It is recommended to install Rust in one of two ways. Either (1) globally for users to run Rust programs or (2) locally for a single user who needs to develop Rust programs and packages. The Rust project recommends the use of the second method [10] which can be installed by non-root users and will install the latest stable version.
 
--  Users of Rust programs:
-
-   -  Arch Linux [7]:
-
-      .. code-block:: sh
-
-         $ sudo pacman -S rust
-
-   -  Debian [8]:
-
-      .. code-block:: sh
-
-         $ sudo apt-get update
-         $ sudo apt-get install rust cargo
-
-   -  Fedora [9]:
-
-      .. code-block:: sh
-
-         $ sudo dnf install rust cargo
+Rust programs are statically linked and mostly portable. No dependencies are required for end-users.
 
 -  Developers of Rust programs:
 
-   -  On Linux or macOS, install Rust. [10]
+   -  Install Rust.
 
-      .. code-block:: sh
+      -  On Linux or macOS using the official installer. [10]
 
-         $ curl -sSf https://sh.rustup.rs | bash -s -- -y
+         .. code-block:: sh
+
+            $ curl -sSf https://sh.rustup.rs | bash -s -- -y
+
+      -  Using a package manager.
+
+         -  Arch Linux [7]:
+
+            .. code-block:: sh
+
+               $ sudo pacman -S rust
+
+         -  Debian [8]:
+
+            .. code-block:: sh
+
+               $ sudo apt-get update
+               $ sudo apt-get install rust cargo
+
+         -  Fedora [9]:
+
+            .. code-block:: sh
+
+               $ sudo dnf install rust cargo
 
    -  Load the local environment to be able to use the Rust tools. [11]
 
