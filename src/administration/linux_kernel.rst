@@ -543,7 +543,7 @@ Upstream
 
       .. code-block:: sh
 
-         $ sudo dnf install bc bison diffutils elfutils-libelf-devel findutils flex git gcc make openssl-devel rpm-build rsync
+         $ sudo dnf install bc bison diffutils dwarves elfutils-devel elfutils-libelf-devel findutils flex git gcc make openssl openssl-devel perl rpm-build rsync
 
 -  Download the Linux kernel source code:
 
