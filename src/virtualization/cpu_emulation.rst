@@ -84,6 +84,12 @@ Configure build options.
 
       $ export BOX64_BUILD_OPTS="-D LD80BITS=1 -D NOALIGN=1"
 
+-  RISC-V:
+
+   .. code-block:: sh
+
+      $ export BOX64_BUILD_OPTS="-D RV64=1 -D RV64_DYNAREC=ON"
+
 -  Apple Silicon (Asahi Linux) with 16K page size:
 
    .. code-block:: sh
