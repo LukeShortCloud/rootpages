@@ -576,12 +576,15 @@ Example Modelfile [48]:
 Training
 ^^^^^^^^
 
+Introduction
+''''''''''''
+
 There are two types of quantization training strategies to lower the memory usage of a LLM [40]:
 
 -  Post-training quantization (PTQ) = Easier but less accurate. Any existing LLM can be quantized and cached. Refer to the `quantization section <#quantization>`__.
 -  Quantization-aware training (QAT) = Harder but more accurate. The LLM must be specifically trained knowing that the data is quantized. For example, Gemma 3 models have QAT variants. [41]
 
-The easiest way to train an existing LLM is to run it with Ollama, provide it with the information and instructions on what to do, and then save the model. Alternatively, use a `Modelfile <#modelfile>`__ to define ``MESSAGE`` instructions. When a user loads the model, the will see the message history.
+Although it is not training, the easiest way to make a LLM aware of your data is to give it context first. Run the LLM with Ollama, provide it with the information and instructions on what to do, and then save the model. Alternatively, use a `Modelfile <#modelfile>`__ to define ``MESSAGE`` instructions. When a user loads the model, they will see the message history.
 
 .. code-block:: sh
 
@@ -590,6 +593,153 @@ The easiest way to train an existing LLM is to run it with Ollama, provide it wi
    /bye
    $ ollama list
    $ ollama run <NEW_MODEL>
+
+LLama Factory
+'''''''''''''
+
+Unlike most tools for training LLMs which require writing custom Python programs, Llama Factory provides a CLI and standardized configuration format. Despite it listing support for training LLaVA models (such as Gemma3) that also support parsing visual images, it does not work. Only text-based LLMs work. [58]
+
+Memory requirements [59]:
+
+.. csv-table::
+   :header: Training Method, Quantization, Memory Usage of Model
+   :widths: 20, 20, 20
+
+   LoRA, FP16, 2x
+   QLoRA, INT8 (Q8_0), 1x
+   QLoRA, INT4 (Q4_K/Q4_K_M), 0.5x
+
+Installation:
+
+-  Find the `latest release version of Llama Factory <https://github.com/hiyouga/LlamaFactory/releases>`__.
+-  Create a container with all of the dependencies pre-installed.
+
+   -  AMD [60]
+
+      .. code-block:: sh
+
+         $ git clone --branch v0.9.4 https://github.com/hiyouga/LlamaFactory.git
+         $ cd LlamaFactory
+         $ cd docker/docker-rocm/
+         $ sudo docker compose up -d
+         $ sudo docker exec -it llamafactory /bin/bash
+
+   -  NVIDIA [59]
+
+      .. code-block:: sh
+
+         $ git clone --branch v0.9.4 https://github.com/hiyouga/LlamaFactory.git
+         $ cd LlamaFactory
+         $ cd docker/docker-cuda/
+         $ sudo docker compose up -d
+         $ sudo docker exec -it llamafactory /bin/bash
+
+Usage:
+
+-  Create a read-only access token in HuggingFace.
+
+   -  Settings > Access Tokens > +Create new token > Token type: Read, Token name: llama-factory > Create token
+
+-  Set that token as an environment variable.
+
+   .. code-block:: sh
+
+      $ export HF_TOKEN="<HUGGING_FACE_ACCESS_TOKEN>"
+
+-  Visit the LLM page on `HuggingFace.co <https://huggingface.co/>`__. Most require the end-user to accept a usage agreement. Most examples use `Qwen/Qwen3-4B-Instruct-2507 <https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507>`__.
+-  Configure the training to use less memory. [61]
+
+   .. code-block:: sh
+
+      $ ${EDITOR} examples/train_qlora/qwen3_lora_sft_otfq.yaml
+      # Lower memory usage.
+      ## Use optimized training backends.
+      enable_liger_kernel: true
+      use_unsloth_gc: true
+      ## Optimize RAM usage by using quantization during training only.
+      optim: paged_adamw_8bit
+      ## Optionally save the resulting model with 4-bit quantization.
+      #quantization_bit: 4
+      ## Train on one dataset at a time.
+      ## This is set by default in the example.
+      #per_device_train_batch_size: 1
+
+-  Optionally define your own dataset for training instead of the examples.
+
+   -  Create a minimum example of a ``data/dataset_info.json``. The default formatting is ``alpaca`` unless configured to be ``sharegpt``. [62]
+
+      .. code-block:: json
+
+         {
+           "<DATASET_NAME_1>": {
+             "file_name": "<DATASET_FILE_1>.json",
+             "formatting": "alpaca",
+             "columns": {
+               "<INSTRUCTION_NAME_USED_IN_DATASET>": "instruction",
+               "<INPUT_FIELD_NAME_USED_IN_DATASET>": "input",
+               "<OUTPUT_FIELD_NAME_USED_IN_DATASET>": "output",
+             },
+           }
+           "<DATASET_NAME_2>": {
+             "file_name": "<DATASET_FILE_2>.json",
+             "formatting": "alpaca",
+             "columns": {
+               "<INSTRUCTION_NAME_USED_IN_DATASET>": "instruction",
+               "<INPUT_FIELD_NAME_USED_IN_DATASET>": "input",
+               "<OUTPUT_FIELD_NAME_USED_IN_DATASET>": "output",
+             }
+           }
+         }
+
+      .. code-block:: sh
+
+         $ ${EDITOR} examples/train_qlora/qwen3_lora_sft_otfq.yaml
+         dataset=<DATASET_NAME_1>,<DATASET_NAME_2>
+
+-  Optionally configure a different "instruction" (or "it" for short) model before training. This example uses `google/gemma-3-27b-it <https://huggingface.co/google/gemma-3-27b-it/tree/main>`__ which is a LLaVA model that does not fully work.
+
+   -  First, find supported models.
+
+      .. code-block:: sh
+
+         $ grep -P "^    name=" ./src/llamafactory/data/template.py
+
+   -  Modify the examples.
+
+      .. code-block:: sh
+
+         $ sed -i 's/Qwen\/Qwen3-4B-Instruct-2507/google\/gemma-3-27b-it/g' examples/*/*.yaml
+         $ sed -i 's/qwen3-4b/gemma3-27b/g' examples/*/*.yaml
+         $ sed -i 's/template: qwen3_nothink/template: gemma3/g' examples/*/*.yaml
+
+-  Optionally disable the iGPU to force the use of the dGPU.
+
+   -  AMD [63]
+
+      .. code-block:: sh
+
+         $ export GPU_DEVICE_ORDINAL="0"
+         $ export HIP_VISIBLE_DEVICES="0"
+         $ export OMP_DEFAULT_DEVICE="0"
+         $ export ROCR_VISIBLE_DEVICES="0"
+
+-  Train the model with the efficient QLoRA method. This qunatizes the model before training. The resulting trained difference is then applied to the non-quantized model at the end.
+
+   .. code-block:: sh
+
+      $ llamafactory-cli train examples/train_qlora/qwen3_lora_sft_otfq.yaml
+
+-  Try the trained model.
+
+   .. code-block:: sh
+
+      $ llamafactory-cli chat examples/inference/qwen3_lora_sft.yaml
+
+-  Save the model for use with Ollama. [59]
+
+   .. code-block:: sh
+
+      $ llamafactory-cli export examples/merge_lora/qwen3_lora_sft.yaml
 
 Prompt Engineering
 ~~~~~~~~~~~~~~~~~~
@@ -708,3 +858,9 @@ Bibliography
 55. "Context length." Ollama's documentation. Accessed February 5, 2026. https://docs.ollama.com/context-length
 56. "Pricing." ChatGPT Plans. 2026. Accessed February 5, 2026. https://chatgpt.com/pricing/
 57. "server: use tiered VRAM-based default context length." GitHub ollama/ollama. February 2, 2026. Accessed February 5, 2026. https://github.com/ollama/ollama/commit/0334ffa6250752c0e5e3d7f4467b0f50cc906fde
+58. "Serious misalignment in LLaVA implementation #6008." GitHub hiyouga/LlamaFactory. February 18, 2026. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory/issues/6008
+59. "LLaMA-Factory Easy and Efficient LLM Fine-Tuning." GitHub hiyouga/LlamaFactory. March 3, 2026. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory
+60. "Fine-tune Llama-3.1 8B with Llama-Factory." 2026. Accessed March 3, 2026. https://rocm.docs.amd.com/projects/ai-developer-hub/en/latest/notebooks/fine_tune/llama_factory_llama3.html
+61. "FAQ." GitHub hiyouga/LlamaFactory. March 3, 2026. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory/issues/4614
+62. "LlamaFactory/data/README.md." GitHub hiyouga/LlamaFactory. June 25, 2025. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory/blob/main/data/README.md
+63. "How to install ROCm on Linux." wasdtech. July 6, 2025. Accessed March 3, 2026. https://wasdtech.altervista.org/installation-of-rocm/
