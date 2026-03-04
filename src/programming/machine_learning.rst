@@ -44,7 +44,25 @@ More than half of all machine learning programs are built using Python. [4] Here
 Graphics Card Vendors
 ---------------------
 
+Introduction
+~~~~~~~~~~~~
+
 NVIDIA provides the best support for machine learning with its proprietary CUDA library. It is possible to use AMD and Intel graphics cards by using the open source OpenCL library [7] but NVIDIA provides the best performance and compatibility. [6]
+
+AMD ROCm
+~~~~~~~~
+
+AMD's Radeon Open Compute (ROCm) is a driver used for running workloads on a GPU instead of a CPU. The Heterogeneous Computer Compiler (HCC) is a fork of CLANG that provides support for optimizing compiled code for GPUs. Heterogeneous-compute Interface for Portability (HIP) is a C++ framework that is mostly a drop-in replacement for CUDA. [64]
+
+If the GPU is not supported by a ROCm program, it is possible to set the environment variable ``HSA_OVERRIDE_GFX_VERSION`` to enable support. [65] This does not guarantee that it will work. Here is a `partial ROCm compatibility list <https://github.com/ROCm/ROCm/discussions/4276>`__.
+
+.. code-block:: sh
+
+   $ rocminfo | grep gfx
+     Name:                    gfx1151                            
+         Name:                    amdgcn-amd-amdhsa--gfx1151         
+         Name:                    amdgcn-amd-amdhsa--gfx11-generic   
+   $ export HSA_OVERRIDE_GFX_VERSION=11.5.1
 
 Resources
 ---------
@@ -864,3 +882,5 @@ Bibliography
 61. "FAQ." GitHub hiyouga/LlamaFactory. March 3, 2026. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory/issues/4614
 62. "LlamaFactory/data/README.md." GitHub hiyouga/LlamaFactory. June 25, 2025. Accessed March 3, 2026. https://github.com/hiyouga/LlamaFactory/blob/main/data/README.md
 63. "How to install ROCm on Linux." wasdtech. July 6, 2025. Accessed March 3, 2026. https://wasdtech.altervista.org/installation-of-rocm/
+64. "Multi your Threads #4: ROCm Roll!" The Great Refactoring. Accessed March 3, 2026. https://vilelasagna.ddns.net/multi-your-threads/multi-your-threads-4-rocm-roll
+65. "Docker Compose." Open WebUI. September 21, 2024. Accessed March 3, 2026. https://open-webui.com/docker-compose/
