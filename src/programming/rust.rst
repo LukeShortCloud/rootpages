@@ -246,6 +246,26 @@ Overview
 
 By default, variables cannot have a null value. Use ``Option<VARIABLE_TYPE>`` (replacing ``VARIABLE_TYPE``) when defining a variable to allow this.
 
+Converting variables:
+
+-  Convert from a String to a boolean, integer, or float. [75]
+
+   -  Syntax:
+
+      .. code-block:: rust
+
+         let <NUMBER_VARIABLE>: <DATA_TYPE> = <STRING_VARIABLE>.parse().unwrap();
+         // Alternative:
+         // let <NUMBER_VARIABLE> = <STRING_VARIABLE>.parse::<<DATA_TYPE>>().unwrap();
+
+   -  Example:
+
+      .. code-block:: rust
+
+         let number: i32 = input_text.parse().expect("No number found.");
+         // Alternative:
+         // let num = input_text.parse::<i32>().expect("No number found.");
+
 Variable Declaration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1919,3 +1939,4 @@ Bibliography
 72. "Releases." GitHub dtolnay/serde-yaml. March 24, 2024. Accessed June 10, 2024. https://github.com/dtolnay/serde-yaml/releases
 73. "How can I put the current thread to sleep?" Stack Overflow. September 14, 2021. Accessed June 30, 2024. https://stackoverflow.com/questions/28952938/how-can-i-put-the-current-thread-to-sleep
 74. "Quick start." The Rust Rand Book. March 3, 2026. https://rust-random.github.io/book/quick-start.html
+75. "Converting a String to int in Rust." Rust Jobs. September 7, 2023. Accessed March 3, 2026. https://rustjobs.dev/blog/convert-string-to-int-in-rust
