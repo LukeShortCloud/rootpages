@@ -1659,6 +1659,33 @@ Create a sleep thread and wait for a specified amount of millliseconds before co
        println!("Done");
    }
 
+rand
+~~~~
+
+``rand`` is a library that provides a random number generator.
+
+-  Add ``rand`` as a dependency in the ``Cargo.toml`` file of the project.
+
+   .. code-block:: ini
+
+      [dependencies]
+      rand = "*"
+
+-  Generate a random number between 1 and 20 (including 1 and 20). [74]
+
+   .. code-block:: rust
+
+      // This imports the most common functions.
+      use rand::prelude::*;
+
+      fn main() {
+          let mut random_number_generator = rand::rng();
+          let num: i32 = random_number_generator.random_range(1..21);
+          // This provides the same result.
+          //let num: i32 = random_number_generator.random_range(1..=20);
+          println!("{}", num);
+      }
+
 Serde
 ~~~~~
 
@@ -1891,3 +1918,4 @@ Bibliography
 71. "Ownership and Borrowing in Rust: A Comprehensive Guide." Tech Savvy Scribe - Medium. June 15, 2023. Accessed January 9, 2024. https://medium.com/@TechSavvyScribe/ownership-and-borrowing-in-rust-a-comprehensive-guide-1400d2bae02a
 72. "Releases." GitHub dtolnay/serde-yaml. March 24, 2024. Accessed June 10, 2024. https://github.com/dtolnay/serde-yaml/releases
 73. "How can I put the current thread to sleep?" Stack Overflow. September 14, 2021. Accessed June 30, 2024. https://stackoverflow.com/questions/28952938/how-can-i-put-the-current-thread-to-sleep
+74. "Quick start." The Rust Rand Book. March 3, 2026. https://rust-random.github.io/book/quick-start.html
