@@ -1857,6 +1857,22 @@ The ``?`` operator is used to end a function immediately if there is an error. U
 
 [49][50]
 
+Although not recommended, it is possible to use ``unwrap`` to fail with a generic panic message.
+
+.. code-block:: rust
+
+   let file = File::open("foobar.txt").unwrap();
+
+Errors can also be completely ignored by setting the output of Result to a null ``_`` variable. [76]
+
+.. code-block:: rust
+
+   use std::fs;
+   
+   fn main() {
+       let _ = fs::remove_file("data.txt");
+   }
+
 History
 -------
 
@@ -1940,3 +1956,4 @@ Bibliography
 73. "How can I put the current thread to sleep?" Stack Overflow. September 14, 2021. Accessed June 30, 2024. https://stackoverflow.com/questions/28952938/how-can-i-put-the-current-thread-to-sleep
 74. "Quick start." The Rust Rand Book. March 3, 2026. https://rust-random.github.io/book/quick-start.html
 75. "Converting a String to int in Rust." Rust Jobs. September 7, 2023. Accessed March 3, 2026. https://rustjobs.dev/blog/convert-string-to-int-in-rust
+76. "Understanding Result , unwrap." The Rust Programming Language Forum. July 14, 2022. Accessed March 4, 2026. https://users.rust-lang.org/t/understanding-result-unwrap/74312
