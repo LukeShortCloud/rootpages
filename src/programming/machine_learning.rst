@@ -193,7 +193,7 @@ Delete all models.
 Models
 ^^^^^^
 
-As of mid-2025, the best overall model is `Gemma 3 <https://ollama.com/library/gemma3>`__. It supports over 140 languages, supports 128,000 context tokens, and has image recognition (except for the 1B and 270M variants). Gemma 3 27B is better than Llama 405B and Deepseek v3 671B. [53] It is available in 270M, 1B, 4B, 12B, and 27B sizes. [54]
+As of mid-2025, the best overall model is `Gemma 3 <https://ollama.com/library/gemma3>`__. It supports over 140 languages, supports 128,000 context tokens, and has image recognition (except for the 1B and 270M variants). Gemma 3 27B is better than Llama 405B and Deepseek v3 671B. [53] It is available in 270M, 1B, 4B, 12B, and 27B sizes. [54] One downside is that it does not support tools.
 
 -  ``ollama run gemma3:27b``
 
@@ -811,6 +811,87 @@ The LLM can be told to roleplay to both think and provide answers in a different
 
    "Raise shields, Sulu, and let's give these Klingons a cordial reminder that the Federation doesn't take kindly to unannounced visits!"
 
+Agents
+~~~~~~
+
+OpenCode
+^^^^^^^^
+
+OpenCode is a programming agent. It provides both a Plan (read-only) and Build (writable) mode to assist with programming and CLI tasks.
+
+OpenCode requires a LLM that has tool support. For example, Gemma3 is not supported. Even if a LLM has tool support, it may not work through the service provider. For example, Qwen3-Coder does not have tool support through Ollama but it works with LM Studio. When using Ollama, make sure the LLM page has tags for both ``thinking`` (not required but recommended) and ``tools``. [70]
+
+Installation:
+
+-  For the best results, install and use a GPU-accelerated terminal emulator such as Alacritty, Ghostty, Kitty, or WezTerm.
+-  Install OpenCode. [66]
+
+   .. code-block:: sh
+
+      $ curl -fsSL https://opencode.ai/install | bash
+
+-  If using a private Ollama server, configure that first. Optionally set the default LLM by configuring the top-level ``model`` field. [67][68]
+
+   -  Recommended models:
+
+      -  2025 = `Qwen3-Coder-30B-A3B-Instruct <https://huggingface.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF>`__ [69]
+
+   .. code-block:: sh
+
+      $ ${EDITOR} ~/.config/opencode/config.json
+      {
+        "$schema": "https://opencode.ai/config.json",
+        "model": "ollama/qwen3-coder:30b",
+        "provider": {
+          "ollama": {
+            "npm": "@ai-sdk/openai-compatible",
+            "options": {
+              "baseURL": "http://127.0.0.1:11434/v1"
+            },
+            "models": {
+              "qwen3-coder:30b": {
+                "reasoning": true,
+                "tools": true
+              },
+              "<LLM2>: {
+                "reasoning": true,
+                "tools": true
+              }
+            }
+          }
+        }
+      }
+
+-  Launch OpenCode in the directory of the programming project.
+
+   .. code-block:: sh
+
+      $ opencode
+
+-  If using a remote model, configure that now.
+
+   -  Recommended models:
+
+      -  2025 = `GitHub Copilot - Claude Opus 4.5 <https://apex-testing.org/leaderboard>`__
+
+   ::
+
+      /connect
+
+-  First change to Plan mode by pressing the "TAB" key. OpenCode defaults to opening in Build mode. Once a good solution has been determined, switch back to Build mode to implement it.
+-  Use the "at" symbol to mention a file name: ``@<PATH_TO_FILE>``. Tab completion can also be used to fill out the entire path.
+-  Switch to the model.
+
+   ::
+
+      /models
+
+-  Exit OpenCode.
+
+   ::
+
+      /exit
+
 History
 -------
 
@@ -884,3 +965,8 @@ Bibliography
 63. "How to install ROCm on Linux." wasdtech. July 6, 2025. Accessed March 3, 2026. https://wasdtech.altervista.org/installation-of-rocm/
 64. "Multi your Threads #4: ROCm Roll!" The Great Refactoring. Accessed March 3, 2026. https://vilelasagna.ddns.net/multi-your-threads/multi-your-threads-4-rocm-roll
 65. "Docker Compose." Open WebUI. September 21, 2024. Accessed March 3, 2026. https://open-webui.com/docker-compose/
+66. "Intro." opencode.ai. March 4, 2026. Accessed March 4, 2026. https://opencode.ai/docs/
+67. "From Zero to Local AI: Running OpenCode with Ollama on Your Machine." Medium Hanns Juarez. November 16, 2025. Accessed March 6, 2026. https://medium.com/@hannsflip/from-zero-to-local-ai-running-opencode-with-ollama-on-your-machine-8a12cc4f551e
+68. "Providers." OpenCode. March 6, 2026. Accessed March 6, 2026. https://opencode.ai/docs/providers/
+69. "Best Local models to run OpenCode?" Reddit r/LocalLLaMA. January 18, 2026. Accessed March 6, 2026. https://www.reddit.com/r/LocalLLaMA/comments/1mncd7i/best_local_models_to_run_opencode/
+70. "qwen3-coder:latest does not support tools #1619." GitHub anomalyco/opencode. October 25, 2025. Accessed March 6, 2026. https://github.com/anomalyco/opencode/issues/1619
