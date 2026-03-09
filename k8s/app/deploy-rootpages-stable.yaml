@@ -21,7 +21,7 @@ spec:
     spec:
       initContainers:
         - name: sphinx
-          image: sphinxdoc/sphinx:3.4.3
+          image: sphinxdoc/sphinx:8.2.3
           command:
             - /bin/sh
             - -c
@@ -35,7 +35,7 @@ spec:
           workingDir: /tmp
       containers:
         - name: nginx
-          image: nginx:1.19.0
+          image: nginx:1.29.5
           ports:
             - name: http
               containerPort: 80
