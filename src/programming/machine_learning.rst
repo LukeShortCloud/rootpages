@@ -886,7 +886,7 @@ Installation:
 
       /models
 
--  Exit OpenCode.
+-  Exit OpenCode. It will automatically update to the latest version after this.
 
    ::
 
