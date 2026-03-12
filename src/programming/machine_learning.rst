@@ -824,7 +824,7 @@ OpenCode requires a LLM that has tool support. For example, Gemma3 is not suppor
 Installation:
 
 -  For the best results, install and use a GPU-accelerated terminal emulator such as Alacritty, Ghostty, Kitty, or WezTerm.
--  Install OpenCode. [66]
+-  Install OpenCode on Linux or macOS. [66]
 
    .. code-block:: sh
 
