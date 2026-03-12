@@ -892,6 +892,17 @@ Installation:
 
       /exit
 
+-  Start OpenCode again with the last session or a specific session. This loads all of the context. [71]
+
+   .. code-block:: sh
+
+      $ opencode --continue
+
+   .. code-block:: sh
+
+      $ opencode session list
+      $ opencode --session <OPENCODE_SESSION_ID>
+
 History
 -------
 
@@ -970,3 +981,4 @@ Bibliography
 68. "Providers." OpenCode. March 6, 2026. Accessed March 6, 2026. https://opencode.ai/docs/providers/
 69. "Best Local models to run OpenCode?" Reddit r/LocalLLaMA. January 18, 2026. Accessed March 6, 2026. https://www.reddit.com/r/LocalLLaMA/comments/1mncd7i/best_local_models_to_run_opencode/
 70. "qwen3-coder:latest does not support tools #1619." GitHub anomalyco/opencode. October 25, 2025. Accessed March 6, 2026. https://github.com/anomalyco/opencode/issues/1619
+71. "OpenCode CLI Commands." OpenCode Guide. Accessed March 12, 2026. https://opencodeguide.com/en/cli-commands/
