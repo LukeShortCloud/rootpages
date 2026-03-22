@@ -115,6 +115,27 @@ Clonezilla can clone from one drive to another.
 
 After the drive has been cloned, it is required to resize and/or move the partitions to take advantage of the increased space. [6]
 
+Troubleshooting
+---------------
+
+Errors
+~~~~~~
+
+Error after inserting external storage (usually a SD card or USB drive) that was previously not safely unmounted.
+
+.. code-block:: sh
+
+   $ sudo dmesg
+   [ 2311.160776] exFAT-fs (<DEVICE>): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+
+Solution:
+
+-  Run a file system check and repair any errors. [10]
+
+   .. code-block:: sh
+
+      $ sudo fsck.exfat -v -y /dev/<DEVICE>
+
 History
 -------
 
@@ -132,3 +153,4 @@ Bibliography
 7. "DRBL/Clonezilla FAQ/Q&A." DRBL. July 1, 2023. Accessed July 30, 2023. https://drbl.org/fine-print.php?path=./faq/2_System/25_restore_larger_disk_to_smaller_one.faq#25_restore_larger_disk_to_smaller_one.faq
 8. "Backup to and Restore from a Disk Image in Linux." COMFILE Technology's Documentation Library. March 6, 2024. Accessed July 19, 2024. http://comfilewiki.co.kr/en/doku.php?id=cupc:backup_restore:index
 9. "compressing and decompressing dd image - zstd instead of gzip." Unix & Linux Stack Exchange. September 10, 2022. Accessed July 19, 2024. https://unix.stackexchange.com/questions/492773/compressing-and-decompressing-dd-image-zstd-instead-of-gzip
+10. "exFAT corrupt mount fix." Miakha'el's Blog. May 16, 2024. Accessed March 21, 2026. https://michalzuber.wordpress.com/2024/05/16/exfat-corrupt-mount-fix/
