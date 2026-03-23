@@ -106,7 +106,7 @@ Windows XP (32-bit):
    - Modified driver = NVIDIA GeForce GTX 980 Ti [42]
 
 -  Best NVIDIA card for the era = NVIDIA GeForce 8800 GT [9]
--  Best AMD cards = AMD Radeon HD 7970 [10][11] and AMD Radeon R9 280X [12]
+-  Best AMD cards = AMD Radeon HD 7970 [10][11] and AMD Radeon R9 270 [12][45]
 -  Best low-profile
 
    -  AMD = AMD Radeon HD 7750
@@ -225,7 +225,7 @@ Bibliography
 9. "Best WinXP Video Card." VOGONS. February 16, 2018. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=47815&start=80
 10. "WinXP retro gaming PC." Linus Tech Tips. August 11, 2022. Accessed July 11, 2023. https://linustechtips.com/topic/1408436-winxp-retro-gaming-pc/
 11. "HD7990 in WinXP?" VOGONS. April 24, 2022. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=79494
-12. "What would be the fastest XP Setup with XP Era Hardware?" VOGONS. June 22, 2019. Accessed July 11, 2023. https://www.vogons.org/viewtopic.php?t=66873&start=60
+12. "Radeon R9 280 drivers." Reddit r/windowsxp. February 3, 2025. Accessed March 22, 2026. https://www.reddit.com/r/windowsxp/comments/1ifu3ow/radeon_r9_280_drivers/
 13. "Without attaching additional power cables, how much can a PCIe x16 graphics card draw from the motherboard's slot?" TechSpot. Accessed August 3, 2023. https://www.techspot.com/trivia/27-without-attaching-additional-power-cables-how-much-can/
 14. "PCI-E 3.0 Slot Power." Overclock.net. August 2, 2013. Accessed August 3, 2023. https://www.overclock.net/threads/pci-e-3-0-slot-power.1414801/
 15. "PCIe Gen5 "12VHPWR" Connector to Deliver Up to 600 Watts of Power for Next-Generation Graphics Cards." TechPowerUp. October 11, 2021. Accessed August 3, 2023. https://www.techpowerup.com/287682/pcie-gen5-12vhpwr-connector-to-deliver-up-to-600-watts-of-power-for-next-generation-graphics-cards
@@ -258,3 +258,4 @@ Bibliography
 42. "Has Anyone Made Any Modded Drivers to Get RTX Card Working on XP?" Reddit r/windowsxp. December 11, 2021. Accessed September 30, 2024. https://www.reddit.com/r/windowsxp/comments/ram8xo/has_anyone_made_any_modded_drivers_to_get_rtx/
 43. "RTX 4090 / RX 7900XTX on Windows 7." Reddit r/windows7. June 27, 2023. Accessed September 30, 2024. https://www.reddit.com/r/windows7/comments/12v8aox/rtx_4090_rx_7900xtx_on_windows_7/
 44. "Low Profile Graphics Cards comparison for Windows XP Retro Gaming on Small Form Factor Pre Built PCs." YouTube - PhilsComputerLab. June 6, 2018. Accessed October 1, 2024. https://www.youtube.com/watch?v=C5QjZJvook8
+45. "Drivers and Support for Processors and Graphics." AMD Customer Support. Accessed March 22, 2026. https://www.amd.com/en/support/download/drivers.html
