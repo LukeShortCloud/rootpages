@@ -62,6 +62,19 @@ Steam Deck shortcuts for Big Picture Mode [26][27]:
    Take a screenshot, ``STEAM`` + ``RIGHT_BUMPER``, ""
    Force close a game, ``STEAM`` + ``B``, Hold down ``B`` for 3 seconds
 
+External Display Resolution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, SteamOS will automatically set the display resolution for the Steam Big Picture Mode UI to the same resolution as the external monitor when docked. However, games will still render at a 720p or 800p resolution to mirror the Steam Deck's built-in monitor. This can be changed to a higher value for a more crisp image at the cost of performance.
+
+Globally:
+
+-  STEAM > Display > ADVANCED > Maximum Game Resolution > (set a higher resolution)
+
+Per-game:
+
+-  STEAM > Library > (find and select the game) > (select the cog settings icon on the right) > Properties... > General > Maximum Game Resolution > (set a higher resolution)
+
 Decky Loader
 ~~~~~~~~~~~~
 
