@@ -502,11 +502,12 @@ Examples
       %attr(0755, root, root) /usr/bin/foobar
       %attr(0640, , ) /var/lib/foobar/database.db
 
--  Build a RPM that requires a specific version of a library. In this example, any 0.2.Y version can be installed. Using ``= 0.2`` will not work. [53]
+-  Build a RPM that requires a specific version of a library. Either using the full release version or ignoring it. [53] Use ``dnf info ${PACKAGE_NAME}`` to find the ``${VERSION}-${RELEASE}`` to use.
 
    ::
 
-      Requires: wireplumber >= 0.2.0, wireplumber < 0.3.0
+      Requires: wireplumber = 0.5.13-1.fc43
+      #Requires: wireplumber >= 0.5.13-1, wireplumber < 0.5.13-2
 
 -  Build a RPM with more than one dependency. [25]
 
