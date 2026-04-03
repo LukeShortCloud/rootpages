@@ -457,7 +457,7 @@ Examples
       * Sat Dec 24 2020 Foo Bar <foobar@foobar.tld> 1.0-1
       - Initial RPM release
 
--  Automatically extract an archive and change into the directory of it. This assumes that both the archive name (without the extension) and the directory name will be exactly the same.
+-  Automatically extract an archive and change into the directory of it. This assumes that both the archive name (without the extension) and the directory name will be exactly the same. By default, it looks for an archive that starts with the name ``%{name}-%{version}`` unless a name is explicitly defined with ``-n``.
 
    ::
 
