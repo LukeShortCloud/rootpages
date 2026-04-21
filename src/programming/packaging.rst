@@ -55,6 +55,9 @@ Signing a binary package with a GPG key ensures that it has not been tampered wi
 DEB (Debian)
 ------------
 
+Introduction
+~~~~~~~~~~~~
+
 Official guides for building Debian packages:
 
 -  https://wiki.debian.org/BuildingTutorial
@@ -189,10 +192,13 @@ Many macros exist for helping to build and install Debian packages.
 
 [3]
 
-RPM (Red Hat)
--------------
+RPM (Fedora)
+------------
 
-An RPM is built from a "spec" file. This modified shell script contains
+Introduction
+~~~~~~~~~~~~
+
+The Red Hat Package Manager (RPM) is a package built from a "spec" file. This modified shell script contains
 all of the information about the program and on how to install and
 uninstall it. It is used to build the RPM.
 
