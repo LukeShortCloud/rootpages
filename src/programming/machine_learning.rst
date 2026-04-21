@@ -903,6 +903,17 @@ Installation:
       $ opencode session list
       $ opencode --session <OPENCODE_SESSION_ID>
 
+Vibe Coding
+~~~~~~~~~~~
+
+Vibe coding is when AI is used to generate most, if not all, of the code for a project. [72]
+
+Here are tips to get the best results when vibe coding:
+
+-  Before generating code, plan and document the architecture in one or more files. It is recommended to start with at least a specification markdown file ``SPEC.md``. Continue to keep this updated as the project grows. [73][74]
+-  Each source code file should be around 1000 lines or less. [73][75]
+-  Generate unit and/or integration tests. Optionally follow test-driven development (TDD) to create tests before the actual implementation. [73][76]
+
 History
 -------
 
@@ -982,3 +993,8 @@ Bibliography
 69. "Best Local models to run OpenCode?" Reddit r/LocalLLaMA. January 18, 2026. Accessed March 6, 2026. https://www.reddit.com/r/LocalLLaMA/comments/1mncd7i/best_local_models_to_run_opencode/
 70. "qwen3-coder:latest does not support tools #1619." GitHub anomalyco/opencode. October 25, 2025. Accessed March 6, 2026. https://github.com/anomalyco/opencode/issues/1619
 71. "OpenCode CLI Commands." OpenCode Guide. Accessed March 12, 2026. https://opencodeguide.com/en/cli-commands/
+72. "What is vibe coding?" Google Cloud. March 20, 2026. Accessed April 20, 2026. https://cloud.google.com/discover/what-is-vibe-coding
+73. "How to Build Complex Software with AI (What Actually Works)." Giga AI Blog. November 4, 2025. Accessed April 20, 2026. https://gigamind.dev/blog/ai-complex-software-workflow
+74. "Using spec-driven development with Claude Code." Medium Heeki Park. February 28, 2026. Accessed April 20, 2026. https://heeki.medium.com/using-spec-driven-development-with-claude-code-4a1ebe5d9f29
+75. "AI Can't Even Code 1,000 Lines Properly, Why Are We Pretending It Will Replace Developers?" Reddit r/compsci. May 1, 2025. Accessed April 20, 2026. https://www.reddit.com/r/compsci/comments/1kc9zyz/ai_cant_even_code_1000_lines_properly_why_are_we/
+76. "An Idiot’s Guide To Bigger Projects." Cursor Community Forum. March 26, 2026. Accessed April 20, 2026. https://forum.cursor.com/t/an-idiots-guide-to-bigger-projects/23646
