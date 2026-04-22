@@ -111,6 +111,77 @@ The ``ubuntu-drivers`` package provides a user-friendly way to install proprieta
 
    $ sudo ubuntu-drivers {autoinstall,devices,list}
 
+Nixpkg
+------
+
+Introduction
+~~~~~~~~~~~~
+
+Nixpkgs are designed for NixOS but can also be installed on most Linux distributions with the Nix package manager. [21]
+
+Install the Nix package manager.
+
+-  Official packages (recommended).
+
+   -  Install the official package first.
+
+      -  Arch Linux [22]
+
+         .. code-block:: sh
+
+            $ sudo pacman -S -y
+            $ sudo pacman -S nix
+
+      -  Debian [23]
+
+         .. code-block:: sh
+
+            $ sudo apt-get update
+            $ sudo apt install nix-setup-systemd
+
+      -  Fedora [24]
+
+         -  `Permanently disable SELinux first <../security/mandatory_access_control.html#id2>`__ before installing ``nix`` packages.
+
+            .. code-block:: sh
+
+               $ sudo dnf install nix nix-daemon
+
+   -  Enable the service and then configure the unstable (rolling) Nixpkgs repository. [23]
+
+      .. code-block:: sh
+
+         $ sudo systemctl enable nix-daemon
+         $ sudo adduser $(whoami) nix-users
+         $ sudo reboot
+         $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+         $ nix-channel --update
+
+-  Other Linux distributions that use systemd or macOS. This is the recommended multi-user installation.
+
+   .. code-block:: sh
+
+      $ curl -L https://nixos.org/nix/install | sh -s -- --daemon
+
+-  Other Linux distributions that do not use systemd. This single-user installation is insecure and not recommended. [25]
+
+   .. code-block:: sh
+
+      $ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+
+-  Verify that Nix is working.
+
+   .. code-block:: sh
+
+      $ nix-shell -p nix-info --run "nix-info -m"
+       - system: `"x86_64-linux"`
+       - host os: `Linux 6.19.8-100.fc42.x86_64, Fedora Linux, 42 (KDE Plasma Desktop Edition), nobuild`
+       - multi-user?: `yes`
+       - sandbox: `yes`
+       - version: `nix-env (Nix) 2.34.6`
+       - channels(root): `"nixpkgs"`
+       - nixpkgs: `/nix/store/ykmccwh1wizbdg331djsyv0imp6z0r1x-nixpkgs/nixpkgs`
+
 PKGBUILD
 --------
 
@@ -345,3 +416,8 @@ Bibliography
 18. "LTSEnablementStack." Ubuntu Wiki. January 27, 2021. Accessed February 23, 2021. https://wiki.ubuntu.com/Kernel/LTSEnablementStack
 19. "How do I exclude kernel or other packages from getting updated in Red Hat Enterprise Linux while updating system via yum?" Red Hat Customer Portal. August 15, 2022. Accessed July 31, 2023. https://www.tecmint.com/exclude-package-updates-yum-dnf-command/
 20. "How to Disable Package Updates Using YUM/DNF in RHEL Linux." TecMint. December 9, 2021. Accessed July 31, 2023. https://access.redhat.com/solutions/10185
+21. "Nixpkgs Reference Manual." Nix and NixOS. Accessed April 9, 2026. https://nixos.org/manual/nixpkgs/stable/
+22. "Nix." ArchWiki. April 6, 2026. Accessed April 9, 2026. https://wiki.archlinux.org/title/Nix
+23. "Guide: Install the Nix package manager on Debian for up-to-date packages." Reddit r/debian. December 6, 2025. https://www.reddit.com/r/debian/comments/1jabrct/guide_install_the_nix_package_manager_on_debian/
+24. "Changes/Nix package tool." Fedora Project Wiki. Accessed April 9, 2026. https://fedoraproject.org/wiki/Changes/Nix_package_tool
+25. "Installation." Nix Reference Manual. Accessed April 9, 2026. https://nix.dev/manual/nix/2.34/installation/
