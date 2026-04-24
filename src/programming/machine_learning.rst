@@ -830,7 +830,7 @@ Installation:
 
       $ curl -fsSL https://opencode.ai/install | bash
 
--  If using a private Ollama server, configure that first. Optionally set the default LLM by configuring the top-level ``model`` field. [67][68]
+-  If using a private Ollama server, configure that first. Optionally set the default LLM by configuring the top-level ``model`` field. [67][68] However, there are `many known issues when using an Ollama server with OpenCode <https://github.com/anomalyco/opencode/issues/22132#issuecomment-4251848213>`__.
 
    -  Recommended models:
 
