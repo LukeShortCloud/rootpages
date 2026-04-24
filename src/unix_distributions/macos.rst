@@ -3,6 +3,17 @@ macOS
 
 .. contents:: Table of Contents
 
+Disable Updates
+---------------
+
+Automatic updates are enabled by default. Disable automatic updates:
+
+-  System Settings > General > Software Update > Automatic Updates > "(i)" > (Disable all options listed) > Done
+
+If a manual update check was made, a subjectively annoying red dot appears on the System Settings app in the dock. It shows the number of available updates. Either remove System Settings from the dock or replace it with an alias. [8]
+
+-  (Open Finder) > Applications > (right-click on "System Settings") > Make Alias
+
 Window Positioning
 ------------------
 
@@ -85,3 +96,4 @@ Bibliography
 5. "If you need to install Rosetta on your Mac." Apple Support. June 26, 2023. Accessed July 5, 2023. https://support.apple.com/en-us/HT211861
 6. "How to Install x86_64 Homebrew Packages on Apple M1 MacBook." Medium. July 26, 2021. Accessed July 5, 2023. https://medium.com/mkdir-awesome/how-to-install-x86-64-homebrew-packages-on-apple-m1-macbook-54ba295230f
 7. "How to get true window snapping in MacOS." ZDNET. July 5, 2023. Accessed July 31, 2023. https://www.zdnet.com/article/how-to-get-true-window-snapping-in-macos/
+8. "Remove the Red notification dot from System Settings icon in the dock." Reddit r/MacOS. March 28, 2026. Accessed April 23, 2026. https://www.reddit.com/r/MacOS/comments/1r5lkgp/remove_the_red_notification_dot_from_system/
