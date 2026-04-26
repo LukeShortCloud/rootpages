@@ -814,10 +814,83 @@ The LLM can be told to roleplay to both think and provide answers in a different
 Agents
 ~~~~~~
 
+Nanocoder
+^^^^^^^^^
+
+Nanocoder is a TUI programming agent. It focuses on local and private model usage. [78]
+
+Installation [79]:
+
+-  Linux
+
+   -  Arch Linux
+
+      .. code-block:: sh
+
+         $ sudo pacman -S -y
+         $ sudo pacman -S npm
+         $ sudo npm install -g @nanocollective/nanocoder
+         $ nanocoder
+
+   -  Debian
+
+      .. code-block:: sh
+
+         $ sudo apt-get update
+         $ sudo apt-get install nodejs
+         $ sudo npm install -g @nanocollective/nanocoder
+         $ nanocoder
+
+   -  Fedora
+
+      .. code-block:: sh
+
+         $ sudo dnf install nodejs-npm
+         $ sudo npm install -g @nanocollective/nanocoder
+         $ nanocoder
+
+-  macOS
+
+   .. code-block:: sh
+
+      $ brew tap nano-collective/nanocoder https://github.com/Nano-Collective/nanocoder
+      $ brew install nanocoder
+      $ nanocoder
+
+Usage [80][81]:
+
+-  Navigate to the source code directory.
+-  Run ``nanocoder``.
+-  Follow the instructions to configure a LLM server to connect to. Those settings are saved to:
+
+   -  Linux = ``~/.config/nanocoder/agents.config.json``
+   -  macOS = ``~/Library/Preferences/nanocoder/agents.config.json``
+
+-  Use the two keys ``SHIFT`` and ``TAB`` to change the mode. [82]
+
+   -  normal (default) = Always asks for permission before making changes.
+   -  auto-accept = Runs most safe commands without asking.
+   -  yolo = Runs all commands without asking.
+   -  plan = Read-only mode.
+
+-  Use the two keys ``CTRL`` and ``j`` to enter a newline (``ENTER`` submits the prompt to the LLM).
+-  Manage tasks manually. Otherwise, you can ask the AI to generate tasks. These are saved to ``.nanocoder/tasks.json``.
+
+   -  ``/tasks <DESCRIBE> <TASK> <HERE>`` to create a task.
+   -  ``/tasks`` to view all tasks.
+   -  ``/tasks remove <NUMBER>`` to delete a task.
+
+-  Use ``/explorer`` to interactively select files to mention. Alternatively, use ``@<FILE_NAME>`` or ``@<FILE_NAME>:<LINE_NUMBER>`` in chat.
+-  Use ``/compact`` to compress old context manually. Otherwise, context is compressed automatically when it reaches over 60% usage.
+-  Use ``/clear`` to remove all context.
+-  Create a checkpoint before doing a major overhaul with ``/checkpoint create <CHECKPOINT_NAME>`` and restore with ``/checkpoint load <CHECKPOINT_NAME>``.
+-  Use ``/exit`` to return back to the CLI.
+-  Use ``/resume`` to resume a previous session.
+
 OpenCode
 ^^^^^^^^
 
-OpenCode is a programming agent. It provides both a Plan (read-only) and Build (writable) mode to assist with programming and CLI tasks.
+OpenCode is a TUI programming agent. It provides both a Plan (read-only) and Build (writable) mode to assist with programming and CLI tasks.
 
 OpenCode requires a LLM that has tool support. For example, Gemma3 is not supported. Even if a LLM has tool support, it may not work through the service provider. For example, Qwen3-Coder does not have tool support through Ollama but it works with LM Studio. When using Ollama, make sure the LLM page has tags for both ``thinking`` (not required but recommended) and ``tools``. [70]
 
@@ -830,7 +903,7 @@ Installation:
 
       $ curl -fsSL https://opencode.ai/install | bash
 
--  If using a private Ollama server, configure that first. Optionally set the default LLM by configuring the top-level ``model`` field. [67][68] However, there are `many known issues when using an Ollama server with OpenCode <https://github.com/anomalyco/opencode/issues/22132#issuecomment-4251848213>`__.
+-  If using a private Ollama server, configure that first. Optionally set the default LLM by configuring the top-level ``model`` field. [67][68] However, there are `many known issues when using an Ollama server with OpenCode <https://github.com/anomalyco/opencode/issues/22132#issuecomment-4251848213>`__. Consider using `Nanocoder <#nanocoder>`__ instead. [77]
 
    -  Recommended models:
 
@@ -998,3 +1071,9 @@ Bibliography
 74. "Using spec-driven development with Claude Code." Medium Heeki Park. February 28, 2026. Accessed April 20, 2026. https://heeki.medium.com/using-spec-driven-development-with-claude-code-4a1ebe5d9f29
 75. "AI Can't Even Code 1,000 Lines Properly, Why Are We Pretending It Will Replace Developers?" Reddit r/compsci. May 1, 2025. Accessed April 20, 2026. https://www.reddit.com/r/compsci/comments/1kc9zyz/ai_cant_even_code_1000_lines_properly_why_are_we/
 76. "An Idiot’s Guide To Bigger Projects." Cursor Community Forum. March 26, 2026. Accessed April 20, 2026. https://forum.cursor.com/t/an-idiots-guide-to-bigger-projects/23646
+77. "CLI coding client - alternative to (not so) OpenCode." Reddit r/LocalLLaMA. March 20, 2026. Accessed April 24, 2026. https://www.reddit.com/r/LocalLLaMA/comments/1ryxusb/cli_coding_client_alternative_to_not_so_opencode/
+78. "Introduction." "Nanocoder Documentation." Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2
+79. "Installation." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/getting-started/installation
+80. "Features." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features
+81. "Commands." Nanocoder Documentation. Accessed April 26, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features/commands
+82. "Development Modes." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features/development-modes
