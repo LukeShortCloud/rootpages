@@ -106,13 +106,16 @@ Introduction
 Desktop environments (DEs) are built on top of windows managers. They provide the full functionality of a graphical desktop by bundling applications for managing media, files, and network connections. Some DEs have created their own custom window managers as well. [1]
 
 .. csv-table::
-   :header: DE Name, Graphical Toolkit, WM, Resource Usage
+   :header: DE Name, Graphical Toolkit, Window Manager, Resource Usage
    :widths: 20, 20, 20, 20
 
    Cinnamon, GTK, Muffin, Medium
+   COSMIC, iced, cosmic-comp, Medium
    GNOME, GTK, Mutter, Medium
    KDE, Qt, Kwin, High
    Xfce, GTK, Xfwm, Low
+
+[18][19]
 
 Cinnamon
 ^^^^^^^^
@@ -123,6 +126,15 @@ Installation:
 -  Debian (manual): ``$ sudo apt-get install cinnamon``
 -  Debian (automatic): ``$ sudo apt-get install task-cinnamon-desktop``
 -  Fedora: ``$ sudo dnf groupinstall "Cinnamon Desktop"``
+
+COSMIC
+^^^^^^
+
+Installation:
+
+-  Arch Linux: ``$ sudo pacman -S cosmic-session`` [20]
+-  Debian and Ubuntu = COSMIC is not officially supported. It is recommended to use `Pop!_OS <https://system76.com/pop/>`__ instead. [21][22]
+-  Fedora: ``$ sudo dnf group install cosmic-desktop`` [23]
 
 GNOME
 ^^^^^
@@ -399,3 +411,9 @@ Bibliography
 15. "Tiling Window Managers are Simply Better." Arnav Dixit. January 25, 2021. Accessed October 6, 2025. https://arnavdixit.netlify.app/p/2021/01/25/tiling-window-managers-are-simply-better/
 16. "Comparison of tiling window managers." ArchWiki. December 8, 2024. Accessed October 6, 2025. https://wiki.archlinux.org/title/Comparison_of_tiling_window_managers
 17. "Installation." Hyprland Wiki. October 5, 2025. Accessed October 6, 2025. https://wiki.hypr.land/Getting-Started/Installation/
+18. "Comparison and List of Desktop Environments." eylenburg.github.io. February 27, 2026. Accessed April 29, 2026. https://eylenburg.github.io/de_comparison.htm
+19. "Linux DE's resource usage compared." EndeavourOS. August 1, 2025. Accessed April 29, 2026. https://forum.endeavouros.com/t/linux-des-resource-usage-compared/70060
+20. "COSMIC." ArchWiki. April 29, 2026. Accessed April 26, 2026. https://wiki.archlinux.org/title/COSMIC
+21. "cosmic-debian-installer." Codeberg.org ashimokawa/cosmic-debian-installer. March 14, 2026. Accessed April 29, 2026. https://codeberg.org/ashimokawa/cosmic-debian-installer
+22. "Installing Cosmic DE on Ubuntu." Ubuntu Community Hub. December 17, 2025. Accessed April 29, 2026. https://discourse.ubuntu.com/t/installing-cosmic-de-on-ubuntu/73633
+23. "Reinstalling Cosmic desktop." Fedora Discussion. November 1, 2025. Accessed April 29, 2026. https://discussion.fedoraproject.org/t/reinstalling-cosmic-desktop/171443
