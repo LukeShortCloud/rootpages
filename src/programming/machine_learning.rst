@@ -983,9 +983,33 @@ Vibe coding is when AI is used to generate most, if not all, of the code for a p
 
 Here are tips to get the best results when vibe coding:
 
--  Before generating code, plan and document the architecture in one or more files. It is recommended to start with at least a specification markdown file ``SPEC.md``. Continue to keep this updated as the project grows. [73][74]
+-  Vibe coding works best for projects that are isolated. [83]
+
+    -  It can be easily refactored or replaced later.
+
+-  Before generating code, plan and document the architecture in one or more files.[73][74][83]
+
+    -  If using a coding agent, start with the "plan" mode before switching to "build" mode.
+    -  It is recommended to start with at least a specification markdown file ``SPEC.md``.
+    -  Use a checklist to keep track of what has and has not been implemented.
+    -  Continue to keep all documents updated as the project grows.
+
 -  Each source code file should be around 1000 lines or less. [73][75]
--  Generate unit and/or integration tests. Optionally follow test-driven development (TDD) to create tests before the actual implementation. [73][76]
+
+    -  Around 500 lines is optimal.
+    -  Modern agents struggle with more than 1000.
+
+-  Generate unit and/or integration tests. Optionally follow test-driven development (TDD) to create tests before the actual implementation. [73][76][83]
+
+    -  Tests should not be too generic that they are not useful. Tests should also not be too implementation specific.
+    -  If possible, a human should write the tests of what is expected from the program.
+
+-  Use different context sizes. [84]
+
+    -  Large context (128K) for research tasks.
+    -  Medium context (32K) for implementing a new feature.
+    -  Small context (8K) for small refactors.
+    -  When done, start a new session to have more context available. Optionally save and load a summary of the previous session if related.
 
 History
 -------
@@ -1077,3 +1101,5 @@ Bibliography
 80. "Features." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features
 81. "Commands." Nanocoder Documentation. Accessed April 26, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features/commands
 82. "Development Modes." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features/development-modes
+83. "Evan Luthra on X." X. April 20, 2026. Accessed April 30, 2026. https://x.com/evanluthra/status/2046240203480936608
+84. "What context lengths do people actually run their models at?" Reddit r/LocalLLaMA. February 14, 2026. Accessed April 30, 2026.  https://www.reddit.com/r/LocalLLaMA/comments/1mfi8ly/what_context_lengths_do_people_actually_run_their/
