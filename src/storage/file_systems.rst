@@ -1006,6 +1006,7 @@ macOS Client
 
 macOS defaults to using NFS version 3 but also supports version 4. [46]
 
+-  Configure the Linux NFS server to use the "insecure" export option. [47] macOS uses non-standard client ports. [48]
 -  Configure the macOS client to use NFS version 4 by default instead of 3.
 
    .. code-block:: sh
@@ -1013,7 +1014,20 @@ macOS defaults to using NFS version 3 but also supports version 4. [46]
       $ sudo nano /etc/nfs.conf
       nfs.client.mount.options = vers=4
 
--  Configure the Linux NFS server to use the "insecure" export option. [47] macOS uses non-standard client ports. [48]
+-  Configure the macOS disable to disable the creation of hidden ``.DS_Store`` files. These will clutter the NFS file server. [87]
+
+   .. code-block:: sh
+
+      $ defaults write com.apple.desktopservices DSDontWriteNetworkStores true
+
+Other file prefixes that may be created and need to be manually deleted includes [88]:
+
+-  ``.apDisk``
+-  ``.fseventsd``
+-  ``.Spotlight-V100``
+-  ``.TemporaryItems``
+-  ``.Trash``
+-  ``.Trashes``
 
 Windows Client
 ^^^^^^^^^^^^^^
@@ -1949,3 +1963,5 @@ Bibliography
 84. "ext4 commit= mount option and dirty_writeback_centisecs." Stack Overflow. July 13, 2021. Accessed June 19, 2025. https://stackoverflow.com/questions/32393458/ext4-commit-mount-option-and-dirty-writeback-centisecs
 85. "Module Parameters." OpenZFS documentation. September 24, 2024. Accessed June 19, 2025. https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Module%20Parameters.html
 86. "Best way to mount /tmp in fstab?" Ask Ubuntu. February 20, 2022. Accessed June 20, 2025. https://askubuntu.com/questions/550589/best-way-to-mount-tmp-in-fstab
+87. "can I stop OSX from storing hidden files on my flash drive?" Apple Community Support. September 18, 2012. Accessed April 30, 2026. https://discussions.apple.com/thread/4308127
+88. "Why are dot underscore ._ files created, and how can I avoid them?" Ask Different. August 30, 2024. Accessed April 30, 2026. https://apple.stackexchange.com/questions/14980/why-are-dot-underscore-files-created-and-how-can-i-avoid-them
