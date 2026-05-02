@@ -549,6 +549,12 @@ Most modern Linux installers will default to installing GRUB with UEFI support. 
 
 [8]
 
+Disable USB autosuspend to prevent power related issues. This can be configured as a kernel boot argument. [27]
+
+::
+
+   usbcore.autosuspend=-1
+
 Linux Boot Order
 ~~~~~~~~~~~~~~~~
 
@@ -768,3 +774,4 @@ Bibliography
 24. "Signing a Linux Kernel for Secure Boot." Ubuntu for Azure Developers. Accessed April 21, 2024. https://gloveboxes.github.io/Ubuntu-for-Azure-Developers/docs/signing-kernel-for-secure-boot.html
 25. "How to change the 10 seconds timeout allotted to enter the "Shim UEFI key management" utility." Red Hat Customer Portal. September 14, 2023. Accessed April 21, 2024. https://access.redhat.com/solutions/6722091
 26. "GRUB." ArchWiki. October 23, 2024. Accessed November 9, 2024. https://wiki.archlinux.org/title/GRUB
+27. "Disabling USB Auto-Suspend on Ubuntu." GitHub Gist thiagozs/ubuntu-usb-disable-usb-autosuspend.md. July 23, 2025. Accessed May 2, 2026. https://gist.github.com/thiagozs/e608e3a111f64322d6246b0df83ec699
