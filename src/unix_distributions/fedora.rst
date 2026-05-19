@@ -1446,7 +1446,26 @@ Otherwise, non-bootc systems will show:
 Package Layering
 ~~~~~~~~~~~~~~~~~
 
-bootc requires a Containerfile to make customizations such as installing new packages. It only manages container updates via an OCI container image and does not have any deep package manager integration. In the future, the DNF 5 client will be updated to support package layering with bootc. A prototype implementation can be found `here <https://github.com/ericcurtin/dnf-bootc>`__. It creates a Containerfile and appends package management operations to it. [55][56]
+**Temporary**
+
+Enable a temporary writable overlay for ``/opt/`` and ``/usr/`` that will be wiped on reboot:
+
+.. code-block:: sh
+
+   $ sudo systemctl start ostree-state-overlay@opt.service
+   $ sudo mount -o remount,rw /boot
+   $ sudo bootc usroverlay
+
+**Persistent**
+
+Enable a persistent writable overlay for ``/opt/`` and ``/usr/`` that will not be wiped on reboot:
+
+.. code-block:: sh
+
+   $ sudo systemctl enable --now ostree-state-overlay@opt.service
+   $ sudo ostree admin unlock --hotfix
+
+However, the bootc project recommends using a Containerfile to make persistent customizations such as installing new packages. It only manages container updates via an OCI container image and does not have any deep package manager integration. In the future, the DNF 5 client will be updated to support package layering with bootc. A prototype implementation can be found `here <https://github.com/ericcurtin/dnf-bootc>`__. It creates a Containerfile and appends package management operations to it. [55][56]
 
 ``rpm-ostree install`` technically works with ``bootc`` but it actually prevents system upgrades from working. It is recommended to use a Containerfile instead. [57]
 
