@@ -9,10 +9,18 @@ Display Managers
 Introduction
 ~~~~~~~~~~~~
 
-The display manager (DM) is responsible for authenticating a user and launching a desktop environment. Here are a few popular DMs available on Linux distributions [6][7]:
+The display manager (DM) is responsible for authenticating a user and launching a desktop environment session. Here are a few popular DMs available on Linux distributions [6][7]:
 
 -  GNOME Display Manager (GDM) = Specific to the GNOME desktop environment.
--  Light Display Manager (LightDM) = Generic DM used to launch any desktop environment (including GNOME).
+-  Light Display Manager (LightDM) = Generic DM used to launch any desktop environment (including GNOME or Plasma).
+-  Plasma Login Manager (PLM) = Specific to the KDE Plasma desktop environment. It is a fork of SDDM.
+-  Simple Desktop Display Manager (SDDM) = Made by KDE to be a generic DM. It was replaced in 2026 by the Plasma Login Manager.
+
+View which display manager is currently active:
+
+.. code-block:: sh
+
+   $ sudo systemctl status display-manager
 
 Automatically Login User
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -49,6 +57,123 @@ Here is how to automatically login a user after a given timeout. A reboot is req
       autlogin-user = <USER>
       autologin-user-timeout = <SECONDS>
 
+-  PLM [24]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/plasmalogin.conf.d/autologin.conf
+
+   .. code-block:: ini
+
+      [Autologin]
+      User=<USER>
+      Session=<SESSION>
+
+   -  There is no way to set a timeout for PLM.
+
+-  SDDM [25]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/sddm.conf.d/autologin.conf
+
+   .. code-block:: ini
+
+      [Autologin]
+      User=<USER>
+      Session=<SESSION>
+
+   -  There is no way to set a timeout for SDDM. [26]
+
+Passwordless Login
+~~~~~~~~~~~~~~~~~~
+
+-  GDM [27]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pam.d/gdm-password
+
+   ::
+
+      #%PAM-1.0
+      auth       sufficient   pam_succeed_if.so user ingroup nopasswdlogin
+      auth       include      system-login
+      account    include      system-login
+      session    include      system-login
+      password   include      system-login
+
+   .. code-block:: sh
+
+      $ sudo groupadd nopasswdlogin
+      $ sudo usermod -a -G nopasswdlogin <USER>
+
+-  PLM [24]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pam.d/plasmalogin
+
+   ::
+
+      #%PAM-1.0
+      auth       sufficient   pam_succeed_if.so user ingroup nopasswdlogin
+      auth       include      system-login
+      account    include      system-login
+      session    include      system-login
+      password   include      system-login
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pam.d/kde
+
+   ::
+
+      #%PAM-1.0
+      auth       sufficient   pam_succeed_if.so user ingroup nopasswdlogin
+      auth       include      system-login
+      account    include      system-login
+      session    include      system-login
+      password   include      system-login
+
+   .. code-block:: sh
+
+      $ sudo groupadd nopasswdlogin
+      $ sudo usermod -a -G nopasswdlogin <USER>
+
+-  SDDM [25]:
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pam.d/sddm
+
+   ::
+
+      #%PAM-1.0
+      auth       sufficient   pam_succeed_if.so user ingroup nopasswdlogin
+      auth       include      system-login
+      account    include      system-login
+      session    include      system-login
+      password   include      system-login
+
+   .. code-block:: sh
+
+      $ sudo -E ${EDITOR} /etc/pam.d/kde
+
+   ::
+
+      #%PAM-1.0
+      auth       sufficient   pam_succeed_if.so user ingroup nopasswdlogin
+      auth       include      system-login
+      account    include      system-login
+      session    include      system-login
+      password   include      system-login
+
+   .. code-block:: sh
+
+      $ sudo groupadd nopasswdlogin
+      $ sudo usermod -a -G nopasswdlogin <USER>
+
 Default Session
 ~~~~~~~~~~~~~~~
 
@@ -77,6 +202,7 @@ Window Managers
 
 Window managers (WMs) control the look and feel of windows.
 
+-  cosmic-comp = This is also the compositor for COSMIC.
 -  Compiz
 -  FluxBox
 -  Kwin
@@ -89,7 +215,9 @@ Tiled window managers specialize in splitting up windows into tiles/boxes that c
 
 -  Awesome
 -  Dwm
+-  Hyprland
 -  i3
+-  Sway = This is also the compositor for Sway.
 -  Wmii
 
 [1]
@@ -417,3 +545,7 @@ Bibliography
 21. "cosmic-debian-installer." Codeberg.org ashimokawa/cosmic-debian-installer. March 14, 2026. Accessed April 29, 2026. https://codeberg.org/ashimokawa/cosmic-debian-installer
 22. "Installing Cosmic DE on Ubuntu." Ubuntu Community Hub. December 17, 2025. Accessed April 29, 2026. https://discourse.ubuntu.com/t/installing-cosmic-de-on-ubuntu/73633
 23. "Reinstalling Cosmic desktop." Fedora Discussion. November 1, 2025. Accessed April 29, 2026. https://discussion.fedoraproject.org/t/reinstalling-cosmic-desktop/171443
+24. "Plasma Login Manager." ArchWiki. April 6, 2026. Accessed May 3, 2026. https://wiki.archlinux.org/title/Plasma_Login_Manager
+25. "SDDM." ArchWiki. March 14, 2026. Accessed May 3, 2026. https://wiki.archlinux.org/title/SDDM
+26. "[Feature request]Please, add "Autologin delay" #1640." GitHub sddm/sddm. July 11, 2025. Accessed May 3, 2026. https://github.com/sddm/sddm/issues/1640
+27. "GDM." ArchWiki. April 23, 2026. Accessed May 3, 2026. https://wiki.archlinux.org/title/GDM
