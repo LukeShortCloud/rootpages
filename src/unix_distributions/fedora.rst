@@ -14,12 +14,13 @@ Comparison:
    :header: FEATURE, RHEL, Oracle Linux, AlmaLinux, Rocky Linux
    :widths: 20, 20, 20, 20, 20
 
-   Years of support, >= 12 [1], 10, 10, 10
+   Years of support, 14 [1][64], 10, 10, 10
    Organization type, Profit, Profit, Non-profit [2], Profit
    Price, Free up to 16 servers [3], Free, Free, Free
    Optional paid support, Yes, Yes, Yes, Yes
-   Btrfs support, No, Yes [4], No, No
+   Btrfs support, No, Yes [4], Yes [62], No
    Old hardware support, No, No, Yes [44], No
+   32-bit packages, No, No, Yes [63], No
 
 Most popular EL distributions [29]:
 
@@ -1645,7 +1646,7 @@ History
 Bibliography
 ------------
 
-1. "Red Hat Enterprise Linux Life Cycle." Red Hat Customer Portal. Accessed July 14, 2022. https://access.redhat.com/support/policy/updates/errata
+1. "Red Hat Enterprise Linux Life Cycle." Red Hat Customer Portal. Accessed May 19, 2026. https://access.redhat.com/support/policy/updates/errata
 2. "The AlmaLinux OS Foundation." AlmaLinux Wiki. Accessed July 14, 2022. https://wiki.almalinux.org/Transparency.html#we-strive-to-be-transparent
 3. "No-cost Red Hat Enterprise Linux Individual Developer Subscription: FAQs." Red Hat Developer. February 5, 2021. Accessed July 14, 2022. https://developers.redhat.com/articles/faqs-no-cost-red-hat-enterprise-linux
 4. "Get Started With the Btrfs File System on Oracle Linux." Oracle Help Center. Accessed July 14, 2022. https://docs.oracle.com/en/learn/btrfs-ol8/index.html
@@ -1706,3 +1707,6 @@ Bibliography
 59. "man bootc-container-lint." bootc. Accessed December 18, 2024. https://containers.github.io/bootc/man/bootc-container-lint.html
 60. "osbuild/bootc-image-builder." GitHub. December 10, 2024. Accessed December 30, 2024. https://github.com/osbuild/bootc-image-builder
 61. "Streamlining podman + bootc interactions." GitHub containeres/podman-bootc. November 8, 2024. Accessed January 6, 2025. https://github.com/containers/podman-bootc
+62. "General Availability of AlmaLinux OS 10.1 Stable!" AlmaLinux OS. November 24, 2026. Accessed May 19, 2026. https://almalinux.org/blog/2025-11-24-almalinux_101_release/
+63. "AlmaLinux OS Kitten 10 expands community support with i686 userspace." AlmaLinux OS. April 16, 2026. Accessed May 19, 2026. https://almalinux.org/blog/2026-04-16-almalinux-kitten-10-i686/
+64. "Enabling long-term stability: Introducing Red Hat Enterprise Linux Extended Life Cycle, Premium." Red Hat Blog. April 2, 2026. Accessed May 19, 2026. https://www.redhat.com/en/blog/ensuring-long-term-stability-introducing-red-hat-enterprise-linux-extended-life-cycle-premium-rhel-extended-life-cycle
