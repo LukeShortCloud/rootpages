@@ -182,16 +182,48 @@ Install the Nix package manager.
        - channels(root): `"nixpkgs"`
        - nixpkgs: `/nix/store/ykmccwh1wizbdg331djsyv0imp6z0r1x-nixpkgs/nixpkgs`
 
-PKGBUILD
---------
+Home Manager
+~~~~~~~~~~~~
 
-Pacman
-~~~~~~
+Home Manager helps to manage packages and configuration files specific to a user. It is most useful for immutable operating systems with a single user such as SteamOS. The official Nixpkg installer assumes that there is at least a writable ``/nix/`` directory owned by the user. [26]
+
+-  Install Home Manager.
+
+   -  Standalone installation for Linux distributions that are not NixOS or for macOS. [27]
+
+      .. code-block:: sh
+
+         $ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+         $ nix-channel --update
+         $ nix-shell '<home-manager>' -A install
+
+-  Initialize Home Manager. [28]
+
+   .. code-block:: sh
+
+      $ nix run --extra-experimental-features nix-command --extra-experimental-features flakes home-manager/master -- init --switch
+
+-  Configure the Nix flake created at ``${HOME}/.config/home-manager/home.nix``. It contains essential configuration options and examples. First view all of the Home Manager specific configuration options.
+
+   .. code-block:: sh
+
+      $ man home-configuration.nix
+      $ ${EDITOR} ${HOME}/.config/home-manager/home.nix
+      # This command can be run anywhere.
+      $ home-manager switch
+
+-  For packages that install CLI tools, they can be accessed by the root user with ``sudo $(which <CLI_TOOL>)``.
+
+Pacman (PKGBUILD)
+-----------------
+
+Introduction
+~~~~~~~~~~~~
 
 Arch Linux uses ``pacman`` as the default package manager to manage PKGBUILD packages.
 
 Parallel Downloads
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 The ``pacman`` package manager only downloads a single package at a time by default. It is recommended configure this to download five packages in parallel at a time. [4]
 
@@ -421,3 +453,6 @@ Bibliography
 23. "Guide: Install the Nix package manager on Debian for up-to-date packages." Reddit r/debian. December 6, 2025. https://www.reddit.com/r/debian/comments/1jabrct/guide_install_the_nix_package_manager_on_debian/
 24. "Changes/Nix package tool." Fedora Project Wiki. Accessed April 9, 2026. https://fedoraproject.org/wiki/Changes/Nix_package_tool
 25. "Installation." Nix Reference Manual. Accessed April 9, 2026. https://nix.dev/manual/nix/2.34/installation/
+26. "Trying to comprehend Nix on SteamOS (Steam Deck)." NixOS Discourse. April 16, 2026. Accessed July 13, 2026. https://discourse.nixos.org/t/trying-to-comprehend-nix-on-steamos-steam-deck/63092
+27. "Standalone installer." Home Manager Manual. Accessed July 13, 2026. https://nix-community.github.io/home-manager/installation/standalone.html#sec-install-standalone
+28. "Standalone setup." Home Manager Manual. Accessed July 13, 2026. https://nix-community.github.io/home-manager/nix-flakes/standalone.html

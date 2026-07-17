@@ -462,6 +462,29 @@ Users can create ``*.conf`` files in the ``/etc/atomic-update.conf.d/`` director
    /etc/foobar/settings.conf
    /etc/foobar/settings.conf.d/**
 
+Nixpkg
+~~~~~~~
+
+Only the single-user installation of Nixpkg is officially supported on SteamOS. [30][31]
+
+.. code-block:: sh
+
+   $ sudo chown deck:deck /nix
+   $ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+   $ . /home/deck/.nix-profile/etc/profile.d/nix.sh
+
+There are two primary ways to manage Nixpkgs on SteamOS:
+
+-  Nix environments (not recommended) = Easily install, view, or remove packages. [32]
+
+   .. code-block:: sh
+
+      $ nix-env -iA nixpkgs.<PACKAGE>
+      $ nix-env -q
+      $ nix-env -e <PACKAGE>-<VERSION>
+
+-  `Nix Home Manager <../administration/package_managers.html#home-manager>`__ (recommended) = Define the expected state of configurations, packages, and services.
+
 Steam Deck BIOS
 ---------------
 
@@ -701,3 +724,6 @@ Bibliography
 27. "Steam Deck shortcuts you need to know." AllGamers. February 13, 2023. Accessed November 6, 2023. https://ag.hyperxgaming.com/article/13255/steam-deck-shortcuts-you-need-to-know
 28. "Keeping your system-wide configuration files intact after updating SteamOS." Alberto Garcia's blog. Accessed March 16, 2025. https://blogs.igalia.com/berto/2025/02/05/keeping-your-system-wide-configuration-files-intact-after-updating-steamos/
 29. "How to disable swap file?" Steam Deck General Discussions. January 14, 2024. Accessed March 16, 2025. https://steamcommunity.com/app/1675200/discussions/0/3812910207848149333/
+30. "Steam Deck support #7173." GitHub NixOS/nix. September 3, 2025. Accessed July 13, 2026. https://github.com/NixOS/nix/issues/7173
+31. "Installation." Nix Reference Manual. Accessed July 13, 2026. https://nix.dev/manual/nix/2.34/installation/
+32. "More ways to install software in SteamOS: Distrobox and Nix." The world won't listen Alberto Garcia's blog. November 12, 2024. Accessed July 13, 2026. https://blogs.igalia.com/berto/2024/06/05/more-ways-to-install-software-in-steamos-distrobox-and-nix/
