@@ -37,6 +37,24 @@ Restore the backup:
 
 [4]
 
+Repair Windows Files
+--------------------
+
+It is possible for a Windows installation to be corrupt. This can cause instability and performance issues.
+
+-  Open a Command Prompt as Administrator.
+-  Use the Deployment Image Servicing and Management (DISM) tool to first fix the Windows Component Store. It includes a copy of known good Windows DLLs and executables. [15] This will not work if the Windows Update service has been disabled. [16]
+
+   ::
+
+      C:\> DISM.exe /Online /Cleanup-image /Restorehealth
+
+-  Then use the System File Checker (SFC) tool to find and replace individually corrupted Windows DLLs and executables. [17]
+
+   ::
+
+      C:\> sfc /scannow
+
 Page (Swap) File
 ----------------
 
@@ -195,3 +213,6 @@ Bibliography
 12. "Introduction to page files." Microsoft Learn. March 20, 2023. Accessed October 24, 2023. https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/introduction-to-the-page-file
 13. "What is a swap file (swap space or page file)?" TechTarget. Accessed October 24, 2023. https://www.techtarget.com/searchwindowsserver/definition/swap-file-swap-space-or-pagefile
 14. "Naming Files, Paths, and Namespaces." Microsoft Learn. August 28, 2024. Accessed July 6, 2025.  https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+15. "DISM Overview." Microsoft Learn. December 15, 2001. Accessed July 19, 2026. https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/what-is-dism?view=windows-11
+16. "Fix Windows Update corruptions and installation failures." Microsoft Learn. February 12, 2026. Accessed July 19, 2026. https://learn.microsoft.com/en-us/troubleshoot/windows-server/installing-updates-features-roles/fix-windows-update-errors
+17. "Use the System File Checker tool to repair missing or corrupted system files." Microsoft Support. Accessed July 19, 2026. https://support.microsoft.com/en-us/topic/use-the-system-file-checker-tool-to-repair-missing-or-corrupted-system-files-79aa86cb-ca52-166a-92a3-966e85d4094e

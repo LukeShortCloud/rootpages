@@ -162,6 +162,11 @@ This process takes a long time and a lot of system resources. A consumer HDD onl
 
       Disk Defragmenter (dfrgui.exe) > Schedule: > Configure schedule... > uncheck "Run on a schedule (recommended)" > OK
 
+Repair Windows Files
+--------------------
+
+`Repair Windows files <storage.html#repair-windows-files>`__. A corrupt Windows installation  can cause instability and performance issues.
+
 Windows Updates
 ---------------
 
