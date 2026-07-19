@@ -407,7 +407,7 @@ Common channels:
 -  relay = Calls between builtin or native DLLs.
 -  seh = Windows exceptions (Structured Exception Handling).
 -  server = RPC communication to wineserver.
--  snoop = Calls between native DLLS.
+-  snoop = Calls between native DLLs.
 -  synchronous = Use X11's synchronous mode.
 -  tid = Provides the process ID from where each call came from.
 -  timestamp = Provides a timestamp for each log.
