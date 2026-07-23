@@ -537,7 +537,7 @@ Upstream
 
       .. code-block:: sh
 
-         $ sudo apt-get install bc build-essential cpio dwarves findutils flex git kmod libelf-dev libncurses5-dev libssl-dev linux-source rsync
+         $ sudo apt-get install bc bison build-essential cpio debhelper dwarves findutils flex git kmod libdw-dev libelf-dev libncurses5-dev libssl-dev linux-source rpm rsync
 
    -  Fedora:
 
