@@ -886,6 +886,25 @@ Usage [80][81]:
 -  Create a checkpoint before doing a major overhaul with ``/checkpoint create <CHECKPOINT_NAME>`` and restore with ``/checkpoint load <CHECKPOINT_NAME>``.
 -  Use ``/exit`` to return back to the CLI.
 -  Use ``/resume`` to resume a previous session.
+-  Optionally enable the ``web_search`` tool. `Brave has a free service <https://brave.com/search/api/>`__ that allows for 1 query a second and 2000 queries a month. It requires an account with a credit card on file. It is currently the only supported web search provider for Nanocoder.
+
+   -  ``/setup-config`` = View all available configuration files.
+   -  ``/setup-config 1`` = Edit the global configuration.
+   -  Add the following configuration [85]:
+
+      .. code-block:: json
+
+         {
+           "nanocoder": {
+             "nanocoderTools": {
+               "webSearch": {
+                 "apiKey": "<BRAVE_SEARCH_API_KEY>"
+               }
+             }
+           }
+         }
+
+   -  Continue to use Nanocoder as normal. If Nanocoder determines an online web search is required, the tool will be used automatically. The text "Ran 1 web search" will appear.
 
 OpenCode
 ^^^^^^^^
@@ -1103,3 +1122,4 @@ Bibliography
 82. "Development Modes." Nanocoder Documentation. Accessed April 24, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.25.2/features/development-modes
 83. "Evan Luthra on X." X. April 20, 2026. Accessed April 30, 2026. https://x.com/evanluthra/status/2046240203480936608
 84. "What context lengths do people actually run their models at?" Reddit r/LocalLLaMA. February 14, 2026. Accessed April 30, 2026.  https://www.reddit.com/r/LocalLLaMA/comments/1mfi8ly/what_context_lengths_do_people_actually_run_their/
+85. "Configuration." Nanocoder Documentation. Accessed July 25, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.28.1/configuration/
