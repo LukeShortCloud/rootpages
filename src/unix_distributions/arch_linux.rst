@@ -23,6 +23,14 @@ By default, the live environment only provides 256 MB of writable space by using
 
       $ mount -o remount,size=<WRITIABLE_SPACE>G /run/archiso/cowspace
 
+CDN Mirrors
+-----------
+
+These mirrors can be added to ``/etc/pacman.d/mirrorlist`` and will use a Content Delivery Network (CDN) to find a nearby server using geolocation.
+
+-  ``Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch``
+-  ``Server = https://mirror.rackspace.com/archlinux/$repo/os/$arch``
+
 Faster Updates
 --------------
 
