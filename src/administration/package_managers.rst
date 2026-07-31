@@ -201,7 +201,7 @@ Home Manager helps to manage packages and configuration files specific to a user
 
    .. code-block:: sh
 
-      $ nix run --extra-experimental-features nix-command --extra-experimental-features flakes home-manager/master -- init --switch
+      $ nix run --extra-experimental-features 'flakes nix-command' home-manager/master -- init --switch
 
 -  Configure the Nix flake created at ``${HOME}/.config/home-manager/home.nix``. It contains essential configuration options and examples. First view all of the Home Manager specific configuration options.
 
@@ -211,6 +211,19 @@ Home Manager helps to manage packages and configuration files specific to a user
       $ ${EDITOR} ${HOME}/.config/home-manager/home.nix
       # This command can be run anywhere.
       $ home-manager switch
+
+   -  It is recommended to permanently enable experimental features in the ``home.nix`` file while editing it. [29]
+
+      ::
+
+         { config, pkgs, ... }:
+         
+         {
+           nix = {
+             package = pkgs.nix;
+             settings.experimental-features = [ "flakes" "nix-command" ];
+           };
+         }
 
 -  For packages that install CLI tools, they can be accessed by the root user with ``sudo $(which <CLI_TOOL>)``.
 
@@ -456,3 +469,4 @@ Bibliography
 26. "Trying to comprehend Nix on SteamOS (Steam Deck)." NixOS Discourse. April 16, 2026. Accessed July 13, 2026. https://discourse.nixos.org/t/trying-to-comprehend-nix-on-steamos-steam-deck/63092
 27. "Standalone installer." Home Manager Manual. Accessed July 13, 2026. https://nix-community.github.io/home-manager/installation/standalone.html#sec-install-standalone
 28. "Standalone setup." Home Manager Manual. Accessed July 13, 2026. https://nix-community.github.io/home-manager/nix-flakes/standalone.html
+29. "Flakes." NixOS Wiki. Accessed July 29, 2026. https://nixos.wiki/wiki/flakes
