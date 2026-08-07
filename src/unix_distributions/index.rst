@@ -9,5 +9,6 @@
    fedora
    kazetaos
    macos
+   nixos
    raspberry_pi_os
    steamos
