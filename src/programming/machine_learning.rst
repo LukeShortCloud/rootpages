@@ -759,6 +759,46 @@ Usage:
 
       $ llamafactory-cli export examples/merge_lora/qwen3_lora_sft.yaml
 
+llama.cpp
+~~~~~~~~~
+
+Usage
+^^^^^
+
+-  Download pre-built binaries and libraries from the `llama.cpp GitHub releases page <https://github.com/ggml-org/llama.cpp/releases/>`__. For example, use the ``b10375`` release. It is recommended to use the "cuda" variant for NVIDIA GPUs and the "vulkan" variant for AMD and Intel GPUs.
+
+   -  Linux
+
+      .. code-block:: sh
+
+         $ curl -LO https://github.com/ggml-org/llama.cpp/releases/download/b<BUILD_NUMBER>/llama-b<BUILD_NUMBER>-bin-ubuntu-vulkan-x64.tar.gz
+
+      .. code-block:: sh
+
+         $ curl -LO https://github.com/ggml-org/llama.cpp/releases/download/b10375/llama-b10375-bin-ubuntu-vulkan-x64.tar.gz
+
+-  Extract the archive.
+
+   .. code-block:: sh
+
+      $ tar --extract --file llama-b<BUILD_NUMBER>-bin-ubuntu-vulkan-x64.tar.gz
+      $ cd llama-b<BUILD_NUMBER>
+
+   .. code-block:: sh
+
+      $ tar --extract --file llama-b10375-bin-ubuntu-vulkan-x64.tar.gz
+      $ cd llama-b10375
+
+-  Download and run a model from HuggingFace. For example, ``https://huggingface.co/unsloth/Qwen3.6-35B-A3B-MTP-GGUF``. [86]
+
+   .. code-block:: sh
+
+      ./llama-cli -hf unsloth/Qwen3.6-35B-A3B-MTP-GGUF
+
+   .. code-block:: sh
+
+      ./llama-cli -hf <USER>/<MODEL>
+
 Prompt Engineering
 ~~~~~~~~~~~~~~~~~~
 
@@ -1123,3 +1163,4 @@ Bibliography
 83. "Evan Luthra on X." X. April 20, 2026. Accessed April 30, 2026. https://x.com/evanluthra/status/2046240203480936608
 84. "What context lengths do people actually run their models at?" Reddit r/LocalLLaMA. February 14, 2026. Accessed April 30, 2026.  https://www.reddit.com/r/LocalLLaMA/comments/1mfi8ly/what_context_lengths_do_people_actually_run_their/
 85. "Configuration." Nanocoder Documentation. Accessed July 25, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.28.1/configuration/
+86. "Llama.cpp." ArchWiki. July 15, 2026. Accessed August 12, 2026. https://wiki.archlinux.org/title/Llama.cpp
