@@ -233,6 +233,31 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
 
 [4]
 
+-  Enable support for non-NixOS Linux binaries. The list of packages to get libraries from needs to be defined and is separate from the system packages. It is recommended to start with ``steam-run`` which includes many common libraries.
+
+   ::
+
+      { config, pkgs, ... }
+      {
+          services.envfs.enable = true;
+          programs.nix-ld = {
+            enable = true;
+            libraries = pkgs.steam-run.args.multiPkgs pkgs;
+          };
+      }
+
+   -  If a library is still missing, search to see if a NixOS package provides it. For example, search for the ``libzstd.so.1`` Zstandard library file. [7]
+
+      .. code-block:: sh
+
+         $ nix run github:nix-community/nix-index-database lib/<LIBRARY_NAME>
+
+      .. code-block:: sh
+
+         $ nix run github:nix-community/nix-index-database lib/libzstd.so.1
+         zstd.out                                              0 s /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1
+         zstd.out                                        905,672 x /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1.5.7
+
 History
 -------
 
@@ -247,3 +272,4 @@ Bibliography
 4. "Version 26.05." NixOS Manual. Accessed August 7, 2026. https://nixos.org/manual/nixos/stable/
 5. "services.xserver naming is confusing #94799." GitHub NixOS/nixpkgs. June 23, 2026. Accessed August 7, 2026. https://github.com/NixOS/nixpkgs/issues/94799
 6. "Linux kernel." NixOS Wiki. Accessed August 7, 2026. https://nixos.wiki/wiki/Linux_kernel
+7. "Nix-ld." Official NixOS Wiki. June 16, 2026. Accessed August 12, 2026. https://wiki.nixos.org/wiki/Nix-ld
