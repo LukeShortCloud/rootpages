@@ -241,6 +241,19 @@ Look in the trace logs for "Signal 11" (segmentation fault) and other bad signal
 
    $ grep -l -r "Signal 11" /tmp/trace*
 
+Known Issues
+~~~~~~~~~~~~
+
+These types of applications are known to have issues when run with Box64:
+
+-  `AppImage <https://github.com/ptitSeb/box64/issues/1672>`__ = If there are issues with an AppImage program, run it with the ``--appimage-extract`` argument to help.
+-  `C programs compiled without glibc <https://github.com/ptitSeb/box64/issues/2012>`__ = For example, musl programs.
+-  `Complex C++ libraries <https://github.com/ptitSeb/box64/issues/287>`__ = For example, Qt.
+-  `Electron <https://github.com/ptitSeb/box64/issues/2280>`__ = If there are issues with an Electron program, run it with ``BOX64_MALLOC_HACK=2``.
+-  `Java <https://github.com/ptitSeb/box64/issues/4289>`__
+-  `Multi-threading <https://github.com/ptitSeb/box64/issues/3210>`__ = Although a more rare issue, Box64 can experience syncing issues with threads.
+-  `Static programs <https://github.com/ptitSeb/box64/issues/83>`__ = For example, Go programs.
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
