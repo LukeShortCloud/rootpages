@@ -906,6 +906,7 @@ Usage [80][81]:
    -  Linux = ``~/.config/nanocoder/agents.config.json``
    -  macOS = ``~/Library/Preferences/nanocoder/agents.config.json``
 
+-  Providers can be configured later with: ``/setup-providers`` > Providers > Configure Providers > + Add a provider... > Global user config > Add another provider.
 -  Use the two keys ``SHIFT`` and ``TAB`` to change the mode. [82]
 
    -  normal (default) = Always asks for permission before making changes.
@@ -928,21 +929,27 @@ Usage [80][81]:
 -  Use ``/resume`` to resume a previous session.
 -  Optionally enable the ``web_search`` tool. `Brave has a free service <https://brave.com/search/api/>`__ that allows for 1 query a second and 2000 queries a month. It requires an account with a credit card on file. It is currently the only supported web search provider for Nanocoder.
 
-   -  ``/setup-config`` = View all available configuration files.
-   -  ``/setup-config 1`` = Edit the global configuration.
-   -  Add the following configuration [85]:
+   -  Interactively:
 
-      .. code-block:: json
+      -  ``/setup-providers`` > Providers > Web Search > (press "ENTER" to add) > (add the Brave Search API key) > (press "ENTER" to save)
 
-         {
-           "nanocoder": {
-             "nanocoderTools": {
-               "webSearch": {
-                 "apiKey": "<BRAVE_SEARCH_API_KEY>"
-               }
-             }
-           }
-         }
+   -  Configuration file:
+
+      -  ``/setup-config`` = View all available configuration files.
+      -  ``/setup-config 1`` = Edit the global configuration.
+      -  Add the following configuration [85]:
+
+         .. code-block:: json
+
+            {
+              "nanocoder": {
+                "nanocoderTools": {
+                  "webSearch": {
+                    "apiKey": "<BRAVE_SEARCH_API_KEY>"
+                  }
+                }
+              }
+            }
 
    -  Continue to use Nanocoder as normal. If Nanocoder determines an online web search is required, the tool will be used automatically. The text "Ran 1 web search" will appear.
 
