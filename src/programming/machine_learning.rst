@@ -1042,6 +1042,162 @@ Installation:
       $ opencode session list
       $ opencode --session <OPENCODE_SESSION_ID>
 
+Pi (pi.dev)
+^^^^^^^^^^^
+
+Pi from pi.dev is a minimal TUI coding agent. It works with both local and remote LLMs. It can be easily expanded by installing extensions.
+
+Installation:
+
+-  Linux and macOS
+
+   .. code-block:: sh
+
+      $ curl -fsSL https://pi.dev/install.sh | sh
+
+Usage:
+
+-  Launch Pi in the directory of the programming project.
+
+   .. code-block:: sh
+
+      $ pi
+
+-  Configure a cloud LLM.
+
+   ::
+
+      /login
+
+-  Configure a local Ollama server. [87]
+
+   .. code-block:: sh
+
+      $ ${EDITOR} ~/.pi/agent/models.json
+
+   ::
+
+      {
+        "providers": {
+          "ollama_remote": {
+            "baseUrl": "http://127.0.0.1:11434/v1",
+            "api": "openai-completions",
+            "apiKey": "ollama",
+            "models": [
+              {
+                "id": "qwen3-coder:30b",
+                "contextWindow": 262144,
+                "compat": {
+                  "supportsDeveloperRole": false,
+                  "supportsReasoningEffort": false
+                }
+              },
+              {
+                "id": "<LLM>",
+                "contextWindow": <CONTEXT_SIZE>,
+                "compat": {
+                  "supportsDeveloperRole": false,
+                  "supportsReasoningEffort": false
+                }
+              }
+            ]
+          }
+        }
+      }
+
+-  Change models.
+
+   ::
+
+      /model
+
+-  Set the thinking level (default is "medium").
+
+   ::
+
+      /thinking
+
+-  Exit Pi.
+
+   ::
+
+      /quit
+
+[88][89]
+
+Extensions:
+
+-  Find new extensions from the `Package Catalog <https://pi.dev/packages>`__.
+-  View help information with: ``/<EXTENSION> ?``.
+-  `Caveman <https://pi.dev/packages/pi-caveman>`__ = Lower token usage for both inputs and outputs. By default, this is enabled and set to "full". Change to less compression with ``/caveman lite`` or more compression with ``/caveman ultra``. Disable Caveman temporarily with ``/caveman stop``. Configure the default settings with ``/caveman config``.
+
+   .. code-block:: sh
+
+      $ pi install npm:pi-caveman
+
+-  `Context Mode <https://pi.dev/packages/context-mode>`__ = Lower context usage by storing only results and now all of the raw data. The raw data is stored in a SQLite database for reference. Works with Caveman.
+
+   .. code-block:: sh
+
+      $ pi install npm:context-mode
+
+-  `Goal X <https://pi.dev/packages/pi-goal-x>`__ = Set and track goals with ``/goal``.
+
+   .. code-block:: sh
+
+      $ pi install npm:pi-goal-x
+
+-  `Powerline-style UI <https://pi.dev/packages/pi-powerline>`__ = Shows more useful information in the Pi TUI.
+
+   .. code-block:: sh
+
+      $ pi install npm:pi-powerline
+
+-  `Ultracode <https://pi.dev/packages/pi-ultracode>`__ = Handles complex programming tasks.
+
+   .. code-block:: sh
+
+      $ pi install npm:pi-ultracode
+
+-  `Web Access <https://pi.dev/packages/pi-web-access>`__ = Online web search support. Configure one or more API keys.
+
+   .. code-block:: sh
+
+      $ pi install npm:pi-web-access
+      $ ${EDITOR} ~/.pi/agent/web-search.json
+
+   ::
+
+      {
+        "bochaApiKey": "<API_KEY>",
+        "braveApiKey": "<API_KEY>",
+        "exaApiKey": "<API_KEY>",
+        "geminiApiKey": "<API_KEY>",
+        "jinaApiKey": "<API_KEY>",
+        "mistralApiKey": "<API_KEY>",
+        "openaiApiKey": "<API_KEY>",
+        "perplexityApiKey": "<API_KEY>",
+        "queritApiKey": "<API_KEY>",
+        "search1apiApiKey": "<API_KEY>",
+        "searchinfinityApiKey": "<API_KEY>",
+        "tinyfishApiKey": "<API_KEY>"
+      }
+
+-  `YOLO <https://pi.dev/packages/@pify/yolo>`__ = Allow the LLM to automatically run some or all commands. The most dangerous commands are always blocked in all modes. Modes in order of most safe to least: ``strict``, ``approve`` (default), ``auto``, and ``yolo``. Change the mode with ``/yolo <MODE>``.
+
+   .. code-block:: sh
+
+      $ pi install npm:@pify/yolo
+
+Update Pi and all extensions:
+
+-  Linux and macOS
+
+   .. code-block:: sh
+
+      $ pi update
+      $ pi update --extensions
+
 Vibe Coding
 ~~~~~~~~~~~
 
@@ -1171,3 +1327,6 @@ Bibliography
 84. "What context lengths do people actually run their models at?" Reddit r/LocalLLaMA. February 14, 2026. Accessed April 30, 2026.  https://www.reddit.com/r/LocalLLaMA/comments/1mfi8ly/what_context_lengths_do_people_actually_run_their/
 85. "Configuration." Nanocoder Documentation. Accessed July 25, 2026. https://docs.nanocollective.org/nanocoder/docs/v1.28.1/configuration/
 86. "Llama.cpp." ArchWiki. July 15, 2026. Accessed August 12, 2026. https://wiki.archlinux.org/title/Llama.cpp
+87. "Run Coding Agents on Local AI - Zero Cloud, Full Control." Dale Nguyen - DEV Community. June 6, 2026. Accessed September 22, 2026. https://dev.to/dalenguyen/run-coding-agents-on-local-ai-zero-cloud-full-control-5e9e
+88. "Quickstart." Pi Documentation. September 22, 2026. Accessed September 22, 2026. https://pi.dev/docs/latest/quickstart
+89. "Usage." Pi Documentation. September 22, 2026. Accessed September 22, 2026. https://pi.dev/docs/latest/usage
