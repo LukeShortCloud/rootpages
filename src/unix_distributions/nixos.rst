@@ -54,17 +54,6 @@ The NixOS configuration is defined in ``/etc/nixos/configuration.nix``. After ed
       { config, pkgs, ... }:
       {
         i18n.defaultLocale = "<LOCALE>";
-        i18n.extraLocaleSettings = {
-          LC_ADDRESS = "<LOCALE>";
-          LC_IDENTIFICATION = "<LOCALE>";
-          LC_MEASUREMENT = "<LOCALE>";
-          LC_MONETARY = "<LOCALE>";
-          LC_NAME = "<LOCALE>";
-          LC_NUMERIC = "<LOCALE>";
-          LC_PAPER = "<LOCALE>";
-          LC_TELEPHONE = "<LOCALE>";
-          LC_TIME = "<LOCALE>";
-        };
       }
 
 -  Allow proprietary software.
@@ -121,6 +110,61 @@ The NixOS configuration is defined in ``/etc/nixos/configuration.nix``. After ed
       }
 
 [4]
+
+-  Only configure Linux kernel modules options on specific versions. For example, Linux kernel 6.19 enabled the ``amdgpu`` driver for older AMD dGPUs (GCN 1.0 and 1.1) by default. This configuration enables it correctly for older Linux kernel versions. [8]
+
+   ::
+
+      { config, lib, pkgs, ... }:
+      {
+        boot.extraModprobeConfig = lib.mkIf (lib.versionOlder config.boot.kernelPackages.kernel.version "6.19") ''
+          options radeon si_support=0 cik_support=0
+          options amdgpu si_support=1 cik_support=1
+        '';
+      }
+
+-  Install CPU microcode updates.
+
+   ::
+
+      { config, pkgs, ... }:
+      {
+        hardware.cpu.amd.updateMicrocode = true;
+        hardware.cpu.intel.updateMicrocode = true;
+      }
+
+-  Create a user account that has ``sudo`` access. The initial password is world-readable because a copy of the configuration is saved in ``/nix/store/``. Run ``passwd`` after the first login to change it. [4][9]
+
+   ::
+
+      { config, pkgs, ... }:
+      {
+        # Enable passwordless "sudo" usage.
+        security.sudo.wheelNeedsPassword = false;
+        users.users.<USER_NAME> = {
+          extraGroups = [ "wheel" ];
+          initialPassword = "<USER_PASSWORD>";
+          isNormalUser = true;
+        };
+      }
+
+-  Enable Bluetooth support. If a desktop environment is installed, related Bluetooth applications for it are also installed. [10]
+
+   ::
+
+      { config, pkgs, ... }:
+      {
+        # GNOME and KDE Plasma.
+        hardware.bluetooth.enable = true;
+        # Xfce also needs Blueman enabled.
+        #services.blueman.enable = true;
+      }
+
+-  Build all Nix packages and system configurations but do not switch to the new build. ``<NAME>`` is usually the same as the hostname (which is ``nixos`` by default). [11]
+
+   .. code-block:: sh
+
+      $ nix build .#nixosConfigurations.<NAME>.config.system.build.toplevel
 
 Experimental Nix Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,6 +302,28 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
          zstd.out                                              0 s /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1
          zstd.out                                        905,672 x /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1.5.7
 
+Flakes
+------
+
+-  Create a default ``flake.nix`` file. This does not do git initialization (only flake).
+
+   .. code-block:: sh
+
+      $ nix --extra-experimental-features 'nix-command flakes' flake init
+
+-  If a Flake is managed inside a local git repository, all files must be added with ``git add`` first (a ``git commit`` is not required). [11]
+-  View tree-style information about attributes from a flake in the current git project directory.
+
+   .. code-block:: sh
+
+      $ nix --extra-experimental-features 'nix-command flakes' flake show
+
+-  View that information when it is in a local git repository but has not been added with ``git add`` yet. [12]
+
+   .. code-block:: sh
+
+      $ nix --extra-experimental-features 'nix-command flakes' flake show path:.
+
 History
 -------
 
@@ -269,7 +335,12 @@ Bibliography
 1. "Declarative builds & deployments." Nix & NixOS. Accessed July 29, 2026. https://nixos.org/
 2. "Introduction to NixOS." Medium - Omkar Chandorkar. May 27, 2020. Accessed July 29, 2026. https://medium.com/the-script-group/introduction-to-nixos-a9dac91399a7
 3. "NixOS." endoflife.date. May 28, 2026. Accessed July 29, 2026. https://endoflife.date/nixos
-4. "Version 26.05." NixOS Manual. Accessed August 7, 2026. https://nixos.org/manual/nixos/stable/
+4. "Version 26.05." NixOS Manual. Accessed October 26, 2026. https://nixos.org/manual/nixos/stable/
 5. "services.xserver naming is confusing #94799." GitHub NixOS/nixpkgs. June 23, 2026. Accessed August 7, 2026. https://github.com/NixOS/nixpkgs/issues/94799
 6. "Linux kernel." NixOS Wiki. Accessed August 7, 2026. https://nixos.wiki/wiki/Linux_kernel
 7. "Nix-ld." Official NixOS Wiki. June 16, 2026. Accessed August 12, 2026. https://wiki.nixos.org/wiki/Nix-ld
+8. "AMD GCN 1.0/1.1 GPUs Will Default To AMDGPU Driver In Linux 6.19, SMART POWER OLED Added." Phoronix. November 14, 2025. Accessed October 26, 2026. https://www.phoronix.com/news/Linux-6.19-AMDGPU-GCN-1.0-1.1
+9. "Appendix A. Configuration Options." NixOS Manual. Accessed October 26, 2026. https://nixos.org/manual/nixos/stable/options
+10. "Bluetooth." Official NixOS Wiki. May 10, 2026. Accessed October 26, 2026. https://wiki.nixos.org/wiki/Bluetooth
+11. "Flakes." Official NixOS Wiki. October 25, 2026. Accessed October 26, 2026. https://wiki.nixos.org/wiki/Flakes
+12. "nix flake." Nix Reference Manual. Accessed October 26, 2026. https://nix.dev/manual/nix/2.35/command-ref/new-cli/nix3-flake.html
