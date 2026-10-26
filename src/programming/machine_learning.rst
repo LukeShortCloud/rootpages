@@ -1135,7 +1135,7 @@ Extensions:
 
       $ pi install npm:pi-caveman
 
--  `Context Mode <https://pi.dev/packages/context-mode>`__ = Lower context usage by storing only results and now all of the raw data. The raw data is stored in a SQLite database for reference. Works with Caveman.
+-  `Context Mode <https://pi.dev/packages/context-mode>`__ = Lower context usage by storing only results and not all of the raw data. Instead, the raw data is stored in a SQLite database for reference. Works with Caveman.
 
    .. code-block:: sh
 
