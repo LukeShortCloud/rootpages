@@ -100,7 +100,7 @@ The NixOS configuration is defined in ``/etc/nixos/configuration.nix``. After ed
           #services.openssh.settings.PermitRootLogin = "no";
       }
 
--  Install a specific version of the Linux kernel. Otherwise, the latest long-term support (LTS) kernel is installed by default. [6]
+-  Install a specific version of the Linux kernel. Otherwise, the latest long-term support (LTS) kernel is installed by default. [4][6]
 
    ::
 
@@ -108,8 +108,6 @@ The NixOS configuration is defined in ``/etc/nixos/configuration.nix``. After ed
       {
           boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_13;
       }
-
-[4]
 
 -  Only configure Linux kernel modules options on specific versions. For example, Linux kernel 6.19 enabled the ``amdgpu`` driver for older AMD dGPUs (GCN 1.0 and 1.1) by default. This configuration enables it correctly for older Linux kernel versions. [8]
 
@@ -230,30 +228,30 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
 
    ::
 
-      { config, pkgs, ... }
+      { config, lib, pkgs, ... }:
       {
-        environment.systemPacks = with pkgs; [
+        environment.systemPackages = with pkgs; [
           firefox
-        ] ++ lib.optionals stdenv.isx86_64 [
+        ] ++ lib.optionals stdenv.hostPlatform.isx86_64 [
           thermald
-        ] ++ lib.optionals stdenv.isAarch64 [
+        ] ++ lib.optionals stdenv.hostPlatform.isAarch64 [
           box64
         ];
       }
 
    ::
 
-      { config, pkgs, ... }
+      { config, pkgs, ... }:
       {
           programs.firefox.enable = true;
-          services.thermald.enable = pkgs.stdenv.isx86_64;
+          services.thermald.enable = pkgs.stdenv.hostPlatform.isx86_64;
       }
 
 -  `Enable AppImage support. <https://nixos.org/manual/nixos/stable/#sec-custom-packages-prebuilt>`__
 
    ::
 
-      { config, pkgs, ... }
+      { config, pkgs, ... }:
       {
           programs.appimage.enable = true;
           programs.appimage.binfmt = true;
@@ -263,7 +261,7 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
 
    ::
 
-      { config, pkgs, ... }
+      { config, pkgs, ... }:
       {
           services.flatpak.enable = true;
           xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -281,7 +279,7 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
 
    ::
 
-      { config, pkgs, ... }
+      { config, pkgs, ... }:
       {
           services.envfs.enable = true;
           programs.nix-ld = {
@@ -302,8 +300,146 @@ Search for packages with either ``nix search nixpkgs`` (where ``nixpkgs`` is the
          zstd.out                                              0 s /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1
          zstd.out                                        905,672 x /nix/store/9nizcmvz2699nkrbzxx8xsp5d8jp686w-zstd-1.5.7/lib/libzstd.so.1.5.7
 
+Modules
+-------
+
+Introduction
+~~~~~~~~~~~~
+
+The ``/etc/nixos/configuration.nix`` file is a NixOS module. A module is a function that takes arguments (such as ``config``, ``lib``, and ``pkgs``) and returns an attribute set with up to three attributes:
+
+-  ``imports`` = A list of other modules to load.
+-  ``options`` = New options that this module declares.
+-  ``config`` = Values for options that are declared by this module or other modules.
+
+::
+
+   { config, lib, pkgs, ... }:
+   {
+     imports = [
+       ./<MODULE>.nix
+     ];
+     options = {
+       # Option declarations.
+     };
+     config = {
+       # Option definitions.
+     };
+   }
+
+A module that does not declare any options can skip the ``config`` attribute and define options at the top-level. Every example in the "Global Configuration" section uses this abbreviated form.
+
+The ``...`` in the function arguments is required. It allows NixOS to pass other arguments that the module does not use. [4]
+
+Options
+~~~~~~~
+
+Declaring an option makes it available to be configured by every other module. It is invalid to define an option that has not been declared by any module.
+
+-  Declare a custom service with an option to enable it, an option to change the package, and an option for the log level. The configuration is only applied when the service is enabled.
+
+   ::
+
+      { config, lib, pkgs, ... }:
+      let
+        cfg = config.services.<SERVICE>;
+      in
+      {
+        options.services.<SERVICE> = {
+          enable = lib.mkEnableOption "<SERVICE>";
+          package = lib.mkPackageOption pkgs "<PACKAGE>" { };
+          logLevel = lib.mkOption {
+            type = lib.types.enum [ "debug" "info" "warn" "error" ];
+            default = "info";
+            description = "The log level for <SERVICE>.";
+          };
+        };
+
+        config = lib.mkIf cfg.enable {
+          environment.systemPackages = [ cfg.package ];
+          systemd.services.<SERVICE> = {
+            wantedBy = [ "multi-user.target" ];
+            environment.LOG_LEVEL = cfg.logLevel;
+            serviceConfig.ExecStart = "${lib.getExe cfg.package}";
+          };
+        };
+      }
+
+   -  Then enable it from any other module.
+
+      ::
+
+         { config, pkgs, ... }:
+         {
+           services.<SERVICE>.enable = true;
+         }
+
+-  Functions for declaring options:
+
+   -  ``lib.mkEnableOption "<NAME>"`` = A boolean option that defaults to ``false``. Its description is "Whether to enable <NAME>."
+   -  ``lib.mkPackageOption <PACKAGE_SET> "<PACKAGE>" { }`` = An option for the package that a module uses. The default is ``<PACKAGE_SET>.<PACKAGE>``. A different package set can be used, such as the packages from a flake. Package options are recommended over overlays because overlays make evaluation of nixpkgs significantly slower.
+   -  ``lib.mkOption { type; default; example; description; }`` = Any other option. Common types include ``lib.types.bool``, ``str``, ``int``, ``path``, ``package``, ``enum [ <VALUES> ]``, ``listOf <TYPE>``, and ``attrsOf <TYPE>``.
+
+-  Use ``lib.mkIf`` instead of ``if`` for configuration that depends on an option. ``if config.services.<SERVICE>.enable then { ... } else { }`` fails with an "infinite recursion" error because the value of the option depends on the configuration being created. ``lib.mkIf`` moves the condition into each option definition instead. [4]
+
+Priorities
+~~~~~~~~~~
+
+When two or more modules define the same option, NixOS merges the values. Lists (such as ``environment.systemPackages``) are combined. Other types (such as a string) cause an error if the values are different.
+
+-  Use a priority to choose which value wins. The lowest number has the highest priority. All other definitions are discarded.
+
+   .. csv-table::
+      :header: Function, Priority, Description
+      :widths: 20, 20, 20
+
+      ``lib.mkForce <VALUE>``, 50, Override all regular definitions.
+      ``<VALUE>``, 100, A regular definition.
+      ``lib.mkDefault <VALUE>``, 1000, A default that any regular definition overrides. This is useful for shared modules.
+      ``lib.mkOption { default = <VALUE>; }``, 1500, The default value of an option.
+      ``lib.mkOverride <NUMBER> <VALUE>``, <NUMBER>, A custom priority.
+
+   ::
+
+      { config, lib, pkgs, ... }:
+      {
+        services.openssh.enable = lib.mkForce false;
+        nix.gc.automatic = lib.mkDefault true;
+      }
+
+-  Use ``lib.mkBefore`` or ``lib.mkAfter`` to change where a value is placed in a merged list. This does not change if the value is used. [4]
+
+   ::
+
+      { config, lib, pkgs, ... }:
+      {
+        boot.kernelModules = lib.mkBefore [ "kvm-intel" ];
+      }
+
+CPU Architecture
+~~~~~~~~~~~~~~~~
+
+-  Use ``pkgs.stdenv.hostPlatform`` to find information about the CPU architecture of the system. For example, ``pkgs.stdenv.hostPlatform.system`` returns a string such as ``x86_64-linux`` or ``aarch64-linux``. Do not use the older ``pkgs.stdenv.isx86_64`` and ``pkgs.stdenv.isAarch64`` attributes because they are deprecated and show a warning. Use ``pkgs.stdenv.hostPlatform.isx86_64`` and ``pkgs.stdenv.hostPlatform.isAarch64`` instead. [17]
+
+   ::
+
+      { config, lib, pkgs, ... }:
+      {
+        services.thermald.enable = pkgs.stdenv.hostPlatform.isx86_64;
+        environment.systemPackages = lib.optionals pkgs.stdenv.hostPlatform.isAarch64 [
+          pkgs.box64
+        ];
+      }
+
 Flakes
 ------
+
+Introduction
+~~~~~~~~~~~~
+
+A flake is a directory with a ``flake.nix`` file. It defines ``inputs`` (dependencies such as nixpkgs and other flakes) and ``outputs`` (a function that returns packages, NixOS modules, NixOS configurations, and more). Nix pins the exact version of every input in a ``flake.lock`` file. Commit this file to git so that every build uses the same versions. [12]
+
+The ``flakes`` and ``nix-command`` experimental features need to be enabled. Otherwise, add ``--extra-experimental-features 'nix-command flakes'`` to every ``nix`` command.
 
 -  Create a default ``flake.nix`` file. This does not do git initialization (only flake).
 
@@ -323,6 +459,208 @@ Flakes
    .. code-block:: sh
 
       $ nix --extra-experimental-features 'nix-command flakes' flake show path:.
+
+-  Structure of a ``flake.nix`` file. Every input is passed as an argument to ``outputs``. ``self`` refers to this flake. [12]
+
+   ::
+
+      {
+        description = "<DESCRIPTION>";
+
+        inputs = {
+          nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+          <INPUT> = {
+            url = "<FLAKE_URL>";
+            inputs.nixpkgs.follows = "nixpkgs";
+          };
+        };
+
+        outputs = { self, nixpkgs, <INPUT>, ... }: {
+          # Outputs.
+        };
+      }
+
+   -  ``inputs.<INPUT>.inputs.nixpkgs.follows = "nixpkgs";`` makes the input use the same nixpkgs as this flake. This avoids downloading and evaluating more than one version of nixpkgs. [11][12]
+
+-  Update all inputs to their latest versions. This updates the ``flake.lock`` file. [14]
+
+   .. code-block:: sh
+
+      $ nix flake update
+
+-  Update only one input. [14]
+
+   .. code-block:: sh
+
+      $ nix flake update <INPUT>
+
+Outputs
+~~~~~~~
+
+Common outputs [11]:
+
+-  ``packages.<SYSTEM>.<PACKAGE>`` = A package for a specific system (such as ``x86_64-linux``). ``packages.<SYSTEM>.default`` is used when no package name is given.
+-  ``nixosModules.<MODULE>`` = A NixOS module that other flakes can import. ``nixosModules.default`` is the default module.
+-  ``nixosConfigurations.<NAME>`` = A full NixOS system.
+-  ``templates.<TEMPLATE>`` = A directory that can be copied to create a new flake. ``templates.default`` is the default template.
+-  ``devShells.<SYSTEM>.<NAME>`` = A development shell for ``nix develop``.
+
+Examples:
+
+-  Provide a package and a NixOS module.
+
+   ::
+
+      {
+        inputs.nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+
+        outputs = { self, nixpkgs, ... }: {
+          packages.x86_64-linux.<PACKAGE> = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/<PACKAGE>/package.nix { };
+          nixosModules.default = ./modules/default.nix;
+        };
+      }
+
+-  Build or run a package from the flake in the current directory.
+
+   .. code-block:: sh
+
+      $ nix build .#<PACKAGE>
+      $ nix run .#<PACKAGE>
+
+NixOS Configurations
+~~~~~~~~~~~~~~~~~~~~
+
+-  Define a NixOS system with ``nixpkgs.lib.nixosSystem``. ``nixos-rebuild switch`` uses ``/etc/nixos/flake.nix`` instead of ``/etc/nixos/configuration.nix`` if it exists. [15]
+
+   ::
+
+      {
+        inputs.nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+
+        outputs = { self, nixpkgs, ... }: {
+          nixosConfigurations.<NAME> = nixpkgs.lib.nixosSystem {
+            modules = [
+              ./configuration.nix
+            ];
+          };
+        };
+      }
+
+   -  The ``system`` argument for ``nixosSystem`` (such as ``system = "x86_64-linux";``) is a legacy option. The CPU architecture is already set by ``nixpkgs.hostPlatform`` in the generated ``hardware-configuration.nix`` file. [16]
+
+-  ``nixos-rebuild`` uses the hostname of the current system to find which ``nixosConfigurations.<NAME>`` to use. Use a different configuration by adding ``#<NAME>``. [15]
+
+   .. code-block:: sh
+
+      $ sudo nixos-rebuild switch --flake /etc/nixos#<NAME>
+
+-  Use ``specialArgs`` to pass extra arguments to every module. For example, pass all of the flake inputs. Then a module can import NixOS modules from other flakes. [15][16]
+
+   ::
+
+      {
+        inputs = {
+          nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+          <INPUT>.url = "<FLAKE_URL>";
+        };
+
+        outputs = { self, nixpkgs, ... }@inputs: {
+          nixosConfigurations.<NAME> = nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit inputs; };
+            modules = [
+              ./configuration.nix
+            ];
+          };
+        };
+      }
+
+   ::
+
+      { config, pkgs, inputs, ... }:
+      {
+        imports = [
+          inputs.<INPUT>.nixosModules.default
+        ];
+      }
+
+-  Build a system that is based on another flake's NixOS module. ``inputs.nixpkgs.follows = "<INPUT>/nixpkgs";`` makes this flake use the same nixpkgs as the other flake. This keeps the system on the version of nixpkgs that the other flake was tested with. [12]
+
+   ::
+
+      {
+        inputs = {
+          <INPUT>.url = "<FLAKE_URL>";
+          nixpkgs.follows = "<INPUT>/nixpkgs";
+        };
+
+        outputs = { self, nixpkgs, <INPUT>, ... }: {
+          nixosConfigurations.<NAME> = nixpkgs.lib.nixosSystem {
+            modules = [
+              <INPUT>.nixosModules.default
+              ./configuration.nix
+            ];
+          };
+        };
+      }
+
+Templates
+~~~~~~~~~
+
+A template is a directory that is copied to create a new flake. This is useful for sharing a starting configuration, such as a ``flake.nix`` and ``configuration.nix`` for a new NixOS system. [13]
+
+-  Define a template. The ``welcomeText`` is shown after the template is copied and supports Markdown.
+
+   ::
+
+      {
+        outputs = { self, ... }: {
+          templates = {
+            <TEMPLATE> = {
+              path = ./templates/<TEMPLATE>;
+              description = "<DESCRIPTION>";
+              welcomeText = ''
+                # <TITLE>
+                Run `sudo nixos-rebuild switch` to apply the configuration.
+              '';
+            };
+            default = self.templates.<TEMPLATE>;
+          };
+        };
+      }
+
+-  List the templates provided by a flake.
+
+   .. code-block:: sh
+
+      $ nix flake show <FLAKE_URL>
+
+-  Create a new flake in the current directory from a template. Existing files are not overwritten. Without ``-t``, the default template from the official ``templates`` flake is used. [13]
+
+   .. code-block:: sh
+
+      $ nix flake init -t <FLAKE_URL>#<TEMPLATE>
+
+Flake References
+~~~~~~~~~~~~~~~~
+
+A flake reference (``<FLAKE_URL>``) is the location of a flake. It is used for inputs and for commands such as ``nix build`` and ``nix flake init``. [12]
+
+.. csv-table::
+   :header: Reference, Description
+   :widths: 20, 20
+
+   ``github:<OWNER>/<REPOSITORY>``, The default branch of a GitHub repository.
+   ``github:<OWNER>/<REPOSITORY>?ref=<BRANCH>``, A specific branch or tag of a GitHub repository.
+   ``git+https://<DOMAIN>/<OWNER>/<REPOSITORY>?ref=<BRANCH>``, A git repository over HTTPS.
+   ``git+ssh://git@<DOMAIN>/<OWNER>/<REPOSITORY>.git?ref=<BRANCH>``, A git repository over SSH. This works with private repositories by using the SSH key of the current user.
+   ``git+file://<ABSOLUTE_PATH>``, A local git repository. Only files added with ``git add`` are used.
+   ``path:<DIRECTORY>``, A local directory. All files are used even if they are not tracked by git.
+
+-  Test a local copy of an input instead of the version in ``flake.lock``. This does not change the ``flake.lock`` file. [18]
+
+   .. code-block:: sh
+
+      $ nix build --override-input <INPUT> path:<DIRECTORY> .#nixosConfigurations.<NAME>.config.system.build.toplevel
 
 History
 -------
@@ -344,3 +682,9 @@ Bibliography
 10. "Bluetooth." Official NixOS Wiki. May 10, 2026. Accessed October 26, 2026. https://wiki.nixos.org/wiki/Bluetooth
 11. "Flakes." Official NixOS Wiki. October 25, 2026. Accessed October 26, 2026. https://wiki.nixos.org/wiki/Flakes
 12. "nix flake." Nix Reference Manual. Accessed October 26, 2026. https://nix.dev/manual/nix/2.35/command-ref/new-cli/nix3-flake.html
+13. "nix flake init." Nix Reference Manual. Accessed October 26, 2026. https://nix.dev/manual/nix/2.35/command-ref/new-cli/nix3-flake-init.html
+14. "nix flake update." Nix Reference Manual. Accessed October 26, 2026. https://nix.dev/manual/nix/2.35/command-ref/new-cli/nix3-flake-update.html
+15. "NixOS system configuration." Official NixOS Wiki. October 25, 2026. Accessed October 26, 2026. https://wiki.nixos.org/wiki/NixOS_system_configuration
+16. "nixpkgs/flake.nix." GitHub NixOS/nixpkgs. July 24, 2026. Accessed October 26, 2026. https://github.com/NixOS/nixpkgs/blob/nixos-unstable/flake.nix
+17. "nixpkgs/pkgs/stdenv/generic/default.nix." GitHub NixOS/nixpkgs. August 12, 2026. Accessed October 26, 2026. https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/stdenv/generic/default.nix
+18. "nix build." Nix Reference Manual. Accessed October 26, 2026. https://nix.dev/manual/nix/2.35/command-ref/new-cli/nix3-build.html
