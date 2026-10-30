@@ -12,8 +12,11 @@ spec:
     matchLabels:
       app: rootpages-main
   strategy:
-    # This deals with a situation where a Kubernetes node reboots which leads to the "emptyDir" ephemeral storage being lost.
-    type: Recreate
+    # Keep the existing Pods serving traffic until the new Pods have finished building the documentation and are ready.
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -25,13 +28,14 @@ spec:
           command:
             - /bin/sh
             - -c
-            - "pip install sphinx_rtd_theme && apt-get update && apt-get -y install git && rm -rf rootpages && git clone --branch main https://github.com/ekultails/rootpages.git && cd rootpages && make html && cd .. && mv ./rootpages/build/html/* ./ && rm -rf rootpages"
+            - "pip install sphinx_rtd_theme && apt-get update && apt-get -y install git && rm -rf rootpages && git clone --depth 1 --branch main https://github.com/ekultails/rootpages.git && make -C rootpages html && find /html -mindepth 1 -delete && cp -a rootpages/build/html/. /html/"
           env:
             - name: DEBIAN_FRONTEND
               value: noninteractive
+          # The "emptyDir" volume persists across a node reboot so the init container must replace any existing build.
           volumeMounts:
             - name: tmp-dir
-              mountPath: /tmp
+              mountPath: /html
           workingDir: /tmp
       containers:
         - name: nginx
